@@ -5,9 +5,9 @@
 
 ## 🚀 Phase 1: 基础设施 (进行中)
 
-### ✅ Step 1: 项目初始化与基础配置 (已完成)
+### ✅ Step 1: 项目初始化与基础配置 (已完成 + 优化)
 **完成时间:** 2025-10-01
-**耗时:** ~45 分钟
+**耗时:** ~60 分钟（含优化）
 
 #### 完成内容
 - [x] 项目初始化 (Next.js 14.2 + TypeScript)
@@ -41,7 +41,7 @@
 - **框架:** Next.js 14.2
 - **语言:** TypeScript 5.4+
 - **样式:** Tailwind CSS 3.4
-- **数据库:** PostgreSQL (Prisma ORM)
+- **数据库:** PostgreSQL (Drizzle ORM)
 - **缓存:** Redis (Upstash)
 - **搜索:** Meilisearch
 - **图片:** Cloudinary
@@ -49,7 +49,7 @@
 - **包管理:** pnpm
 
 #### 下一步
-- [ ] Step 2: 数据库 Schema 设计与 Prisma 配置
+- [ ] Step 2: 数据库 Schema 设计与 Drizzle 配置
 - [ ] Step 3: 外部服务配置与验证
 
 ---
@@ -83,3 +83,13 @@
 - 项目名称包含中文，package.json 使用 "game-hub" 作为合法标识
 - 所有依赖安装成功，部分包有更新版本可用
 - 需要后续配置外部服务 (Cloudinary, Meilisearch, Redis)
+
+### 优化记录 (基于 GPT-5 Codex 建议)
+1. **ORM 切换:** 移除 Prisma，切换到 Drizzle ORM
+   - 移除依赖: @prisma/client, prisma
+   - 添加依赖: drizzle-orm, drizzle-kit, postgres, @neondatabase/serverless
+   - 创建 drizzle.config.ts 和 db/ 目录结构
+2. **字体修复:** 删除 globals.css 中的 `font-family: Arial` 避免覆盖 Inter 字体
+3. **Cloudinary Preset:** 拆分为三个 preset（thumbnail/screenshot/icon）
+4. **目录保持:** 添加 .gitkeep 到所有空目录，保持 Git 结构可见
+5. **文档同步:** 更新 README.md 和 progress.md 反映 Drizzle 使用

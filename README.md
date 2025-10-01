@@ -35,7 +35,7 @@ GameHub 是一个现代化的在线游戏聚合平台，为用户提供丰富的
 
 | 技术 | 用途 |
 |------|------|
-| **PostgreSQL** | 主数据库 (Prisma ORM) |
+| **PostgreSQL** | 主数据库 (Drizzle ORM) |
 | **Redis** (Upstash) | 缓存 + 限流 |
 | **Meilisearch** | 搜索引擎 |
 
@@ -101,18 +101,20 @@ MEILISEARCH_API_KEY="your_master_key"
 CLOUDINARY_CLOUD_NAME="your_cloud_name"
 CLOUDINARY_API_KEY="your_api_key"
 CLOUDINARY_API_SECRET="your_api_secret"
-CLOUDINARY_UPLOAD_PRESET="your_upload_preset"
+CLOUDINARY_PRESET_THUMBNAIL="preset-game-thumbnails"
+CLOUDINARY_PRESET_SCREENSHOT="preset-game-screenshots"
+CLOUDINARY_PRESET_ICON="preset-category-icons"
 ```
 
 ### 3. 初始化数据库
 
 ```bash
-# Prisma 迁移
-pnpm prisma generate
-pnpm prisma db push
+# Drizzle 迁移
+pnpm db:generate
+pnpm db:push
 
-# 运行种子数据（可选）
-pnpm prisma db seed
+# 运行种子数据（可选，在 Step 2 之后）
+# pnpm db:seed
 ```
 
 ### 4. 启动开发服务器
@@ -156,7 +158,9 @@ pnpm start
 │   └── utils/            # 工具函数
 ├── services/              # 业务逻辑层
 ├── types/                 # TypeScript 类型定义
-├── prisma/               # Prisma Schema
+├── db/                    # Drizzle Schema & Migrations
+│   ├── schema/           # 数据库 Schema 定义
+│   └── migrations/       # 迁移文件
 ├── public/               # 静态资源
 ├── docs/                 # 项目文档
 └── scripts/              # 运维脚本
@@ -191,17 +195,20 @@ pnpm type-check
 ### 数据库命令
 
 ```bash
-# 生成 Prisma Client
-pnpm prisma generate
+# 生成迁移文件
+pnpm db:generate
 
 # 推送 Schema 到数据库
-pnpm prisma db push
+pnpm db:push
 
-# 查看数据库
-pnpm prisma studio
+# 查看数据库（Drizzle Studio）
+pnpm db:studio
 
-# 运行种子数据
-pnpm prisma db seed
+# 运行迁移
+pnpm db:migrate
+
+# 运行种子数据（Step 2 后）
+# pnpm db:seed
 ```
 
 ---
