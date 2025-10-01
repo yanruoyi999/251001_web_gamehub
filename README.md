@@ -108,8 +108,10 @@ CLOUDINARY_PRESET_ICON="preset-category-icons"
 
 ### 3. 初始化数据库
 
+⚠️ **注意：** 以下命令需要在完成 **Step 2（数据库 Schema 设计）** 后才能执行，否则会因缺少 Schema 文件而报错。
+
 ```bash
-# Drizzle 迁移
+# Drizzle 迁移（需要先完成 Step 2）
 pnpm db:generate
 pnpm db:push
 
@@ -193,6 +195,8 @@ pnpm type-check
 ```
 
 ### 数据库命令
+
+⚠️ **注意：** 以下命令需要在完成 **Step 2（数据库 Schema 设计）** 后才能执行。
 
 ```bash
 # 生成迁移文件

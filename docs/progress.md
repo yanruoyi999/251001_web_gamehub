@@ -17,15 +17,17 @@
   - lib/ - 核心库 (db, redis, meilisearch, utils)
   - services/ - 业务逻辑层
   - types/ - TypeScript 类型
-  - prisma/ - 数据库 Schema
+  - db/schema/ - Drizzle Schema 定义
+  - db/migrations/ - 数据库迁移文件
   - public/ - 静态资源
   - docs/ - 项目文档
   - scripts/ - 运维脚本
   - tests/ - 测试文件
-- [x] 依赖包安装 (406 个包)
+- [x] 依赖包安装 (468 个包，含优化后的 Drizzle)
 - [x] 配置文件创建
   - tsconfig.json (TypeScript 严格模式)
   - next.config.js (图片域名、i18n)
+  - drizzle.config.ts (Drizzle ORM 配置)
   - .eslintrc.json (ESLint 规则)
   - .prettierrc (代码格式化)
   - tailwind.config.ts (Tailwind CSS)
