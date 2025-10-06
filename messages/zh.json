@@ -1,0 +1,222 @@
+{
+  "Home": {
+    "title": "游戏聚合站",
+    "subtitle": "项目基础设施与核心服务已经就绪",
+    "tech": "技术栈：Next.js 14 · TypeScript · Drizzle ORM",
+    "cta": "开始探索最新的在线游戏",
+    "featureTitle": "核心功能",
+    "featureDesc": "浏览、搜索、评论、分享 —— 一站式体验",
+    "featurePoints": [
+      "浏览最新、最热门的在线小游戏",
+      "搜索并筛选不同分类与标签",
+      "提交评分与评论，分享体验"
+    ],
+    "popularTitle": "热门推荐",
+    "popularDesc": "精选游戏、实时热度排行",
+    "popularPoints": [
+      "实时热度排行与精选内容",
+      "自动聚合评分与播放次数",
+      "支持多设备、多语言访问"
+    ]
+  },
+  "nav": {
+    "home": "首页",
+    "games": "全部游戏",
+    "cta": "发布游戏",
+    "searchPlaceholder": "搜索游戏…",
+    "searchLoading": "正在搜索…",
+    "searchNoResult": "暂无匹配结果"
+  },
+  "Games": {
+    "title": "全部游戏",
+    "desc": "浏览平台当前收录的热门与最新游戏。",
+    "backToHome": "返回首页",
+    "category": "分类：{value}",
+    "playCount": "总游玩次数：{value}",
+    "rating": "综合评分：{value}",
+    "published": "上线时间：{value}",
+    "empty": "暂时没有满足条件的游戏，敬请期待。",
+    "status": {
+      "active": "状态：已上架",
+      "inactive": "状态：已下架",
+      "pending": "状态：待发布"
+    },
+    "filters": {
+      "title": "筛选",
+      "searchPlaceholder": "搜索游戏名称或描述",
+      "categoryLabel": "分类",
+      "categoryAll": "全部分类",
+      "tagLabel": "标签",
+      "tagAll": "全部标签",
+      "onlyNew": "仅显示新品",
+      "onlyHot": "仅显示热门",
+      "onlyFeatured": "仅显示精选",
+      "onlyFavorites": "仅显示收藏",
+      "sortLabel": "排序",
+      "sort": {
+        "publishedAt": "最新上线",
+        "playCount": "游玩次数",
+        "averageRating": "评分",
+        "title": "标题"
+      },
+      "sortOrderAsc": "升序",
+      "sortOrderDesc": "降序",
+      "submit": "应用筛选",
+      "reset": "重置"
+    },
+    "resultSummary": "共 {value} 款游戏",
+    "badges": {
+      "new": "新品",
+      "hot": "热门",
+      "featured": "精选"
+    },
+    "pagination": {
+      "prev": "上一页",
+      "next": "下一页",
+      "pageLabel": "第 {current} / 共 {total} 页"
+    },
+    "actions": {
+      "favorite": "收藏",
+      "unfavorite": "取消收藏"
+    }
+  },
+  "GameDetails": {
+    "back": "返回游戏列表",
+    "categories": "所属分类",
+    "tags": "标签",
+    "instructions": "玩法说明",
+    "statistics": {
+      "title": "统计数据",
+      "playCount": "总游玩次数",
+      "today": "今日游玩",
+      "rating": "平均评分",
+      "ratingCount": "评分次数"
+    },
+    "playButton": "立即开始",
+    "screenshots": "游戏截图",
+    "notFound": "未找到对应的游戏。",
+    "ratingForm": {
+      "title": "提交评分",
+      "hint": "评分会匿名提交，管理员审核后会上线。",
+      "commentPlaceholder": "分享你的游玩体验（可选）",
+      "submit": "提交评分",
+      "submitting": "提交中…",
+      "success": "感谢你的反馈！我们已收到你的评分。",
+      "error": {
+        "generic": "提交失败，请稍后再试。",
+        "rateLimit": "提交过于频繁，请稍后再试。",
+        "duplicate": "你近期已经提交过评分。"
+      },
+      "validation": {
+        "required": "请选择一个评分星级"
+      },
+      "starLabel": "评分 {value} 分"
+    }
+  },
+  "Search": {
+    "title": "搜索结果",
+    "subtitle": "探索平台内的在线游戏，支持中文与英文关键词。",
+    "summary": {
+      "withQuery": "“{query}” 共有 {total} 个匹配结果",
+      "empty": "请输入关键词开始搜索"
+    },
+    "emptyPrompt": "输入游戏名称、玩法或标签，即可快速查找内容。",
+    "emptyResult": "没有找到与 “{query}” 匹配的结果。您可以尝试使用其他关键词。",
+    "playCount": "游玩次数：{value}",
+    "rating": "评分：{value}",
+    "published": "上线时间：{date}",
+    "viewDetails": "查看详情",
+    "pagination": {
+      "prev": "上一页",
+      "next": "下一页",
+      "label": "第 {current} / 共 {total} 页"
+    }
+  },
+  "footer": {
+    "copyright": "© 2025 GameHub. 保留所有权利",
+    "github": "GitHub",
+    "support": "联系我们"
+  },
+  "MonsterSurvivors": {
+    "title": "Monster Survivors",
+    "tagline": "精选游戏",
+    "summary": "进入这款节奏紧凑的生存竞技场，在无尽的怪物浪潮中顽强坚持。",
+    "backToList": "返回全部游戏",
+    "playSection": {
+      "title": "立即游玩",
+      "description": "完整游戏直接在浏览器中加载，开启全屏即可获得沉浸体验。",
+      "hint": "如果无法加载，请关闭拦截器或刷新页面后重试。"
+    },
+    "details": {
+      "title": "游戏信息",
+      "description": "开局前先了解这些关键要点。",
+      "genre": {
+        "label": "类型",
+        "value": "动作 · 生存 · Roguelike"
+      },
+      "session": {
+        "label": "平均时长",
+        "value": "5-15 分钟"
+      },
+      "controls": {
+        "label": "操作方式",
+        "value": "键鼠或手柄"
+      },
+      "devices": {
+        "label": "推荐设备",
+        "value": "桌面端与平板浏览器"
+      }
+    },
+    "tips": {
+      "title": "快速提示",
+      "description": "在进场前参考以下建议。",
+      "items": [
+        "前期优先收集光点，快速滚雪球升级。",
+        "保持移动以牵制怪物集群并规避爆发伤害。",
+        "被包围前及时启动冲刺或护盾技能。",
+        "利用每日词条组合刷新高分榜。"
+      ]
+    }
+  },
+  "Solitaire": {
+    "title": "纸牌接龙",
+    "tagline": "经典休闲纸牌游戏",
+    "summary": "全球最受欢迎的单人纸牌游戏！将所有牌按花色和顺序整理到目标区域，挑战你的策略思维。",
+    "backToList": "返回全部游戏",
+    "playSection": {
+      "title": "立即游玩",
+      "description": "完整游戏直接在浏览器中加载，随时随地享受纸牌乐趣。",
+      "hint": "如果无法加载，请关闭拦截器或刷新页面后重试。"
+    },
+    "details": {
+      "title": "游戏信息",
+      "description": "开始游玩前了解这些关键要点。",
+      "genre": {
+        "label": "类型",
+        "value": "纸牌 · 益智 · 休闲"
+      },
+      "session": {
+        "label": "平均时长",
+        "value": "5-10 分钟/局"
+      },
+      "controls": {
+        "label": "操作方式",
+        "value": "鼠标点击或触屏拖动"
+      },
+      "devices": {
+        "label": "推荐设备",
+        "value": "全平台支持（桌面、平板、手机）"
+      }
+    },
+    "tips": {
+      "title": "游玩技巧",
+      "description": "掌握这些技巧，提高胜率。",
+      "items": [
+        "优先翻开大牌堆中的牌，增加可操作空间。",
+        "尽量保持空列，用于临时存放牌序。",
+        "先移动小牌，避免阻塞大牌的移动路径。",
+        "使用撤销功能尝试不同策略，找到最优解法。"
+      ]
+    }
+  }
+}

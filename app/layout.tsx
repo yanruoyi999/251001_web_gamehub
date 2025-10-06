@@ -1,8 +1,6 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import './globals.css';
-
-const inter = Inter({ subsets: ['latin'] });
+import { defaultLocale } from '@/i18n/config';
 
 export const metadata: Metadata = {
   title: '游戏聚合站',
@@ -15,8 +13,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN">
-      <body className={inter.className}>{children}</body>
+    <html lang={defaultLocale}>
+      <body className="font-sans antialiased bg-white text-gray-900">{children}</body>
     </html>
   );
 }

@@ -1,0 +1,20 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1759316476595,
+      "tag": "0000_wide_chameleon",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1759316477000,
+      "tag": "0001_add_favorites",
+      "breakpoints": true
+    }
+  ]
+}

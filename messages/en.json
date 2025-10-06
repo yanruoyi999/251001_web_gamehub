@@ -1,0 +1,222 @@
+{
+  "Home": {
+    "title": "GameHub",
+    "subtitle": "Infrastructure and core services are ready",
+    "tech": "Tech stack: Next.js 14 · TypeScript · Drizzle ORM",
+    "cta": "Start exploring the latest online games",
+    "featureTitle": "Key Features",
+    "featureDesc": "Browse, search, review and share in one place",
+    "featurePoints": [
+      "Discover the latest and most popular browser games",
+      "Filter by categories and tags with ease",
+      "Leave reviews and ratings to share your thoughts"
+    ],
+    "popularTitle": "Top Picks",
+    "popularDesc": "Curated games and live popularity rankings",
+    "popularPoints": [
+      "Live popularity charts and curated collections",
+      "Automatic aggregation of ratings and play counts",
+      "Optimised for multiple devices and languages"
+    ]
+  },
+  "nav": {
+    "home": "Home",
+    "games": "Games",
+    "cta": "Publish",
+    "searchPlaceholder": "Search games…",
+    "searchLoading": "Searching…",
+    "searchNoResult": "No matches yet"
+  },
+  "Games": {
+    "title": "All Games",
+    "desc": "Browse the latest and most popular games hosted on the platform.",
+    "backToHome": "Back to home",
+    "category": "Category: {value}",
+    "playCount": "Total plays: {value}",
+    "rating": "Average rating: {value}",
+    "published": "Published on {value}",
+    "empty": "No games match your filters yet.",
+    "status": {
+      "active": "Status: Live",
+      "inactive": "Status: Unlisted",
+      "pending": "Status: Pending"
+    },
+    "filters": {
+      "title": "Filters",
+      "searchPlaceholder": "Search by title or description",
+      "categoryLabel": "Category",
+      "categoryAll": "All categories",
+      "tagLabel": "Tag",
+      "tagAll": "All tags",
+      "onlyNew": "Show new only",
+      "onlyHot": "Show popular only",
+      "onlyFeatured": "Show featured only",
+      "onlyFavorites": "Show favorites only",
+      "sortLabel": "Sort by",
+      "sort": {
+        "publishedAt": "Latest",
+        "playCount": "Play count",
+        "averageRating": "Rating",
+        "title": "Title"
+      },
+      "sortOrderAsc": "Ascending",
+      "sortOrderDesc": "Descending",
+      "submit": "Apply",
+      "reset": "Reset"
+    },
+    "resultSummary": "{value} games found",
+    "badges": {
+      "new": "New",
+      "hot": "Hot",
+      "featured": "Featured"
+    },
+    "pagination": {
+      "prev": "Previous",
+      "next": "Next",
+      "pageLabel": "{current} / {total}"
+    },
+    "actions": {
+      "favorite": "Save",
+      "unfavorite": "Remove"
+    }
+  },
+  "GameDetails": {
+    "back": "Back to list",
+    "categories": "Categories",
+    "tags": "Tags",
+    "instructions": "How to play",
+    "statistics": {
+      "title": "Statistics",
+      "playCount": "Total plays",
+      "today": "Plays today",
+      "rating": "Average rating",
+      "ratingCount": "Ratings"
+    },
+    "playButton": "Play now",
+    "screenshots": "Screenshots",
+    "notFound": "The game you are looking for could not be found.",
+    "ratingForm": {
+      "title": "Leave your rating",
+      "hint": "Submissions are anonymous and will appear once approved.",
+      "commentPlaceholder": "Share your play experience (optional)",
+      "submit": "Submit rating",
+      "submitting": "Submitting…",
+      "success": "Thanks! Your rating has been received.",
+      "error": {
+        "generic": "Something went wrong. Please try again later.",
+        "rateLimit": "You are submitting too frequently. Please try again later.",
+        "duplicate": "You already submitted a rating recently."
+      },
+      "validation": {
+        "required": "Please select a star rating"
+      },
+      "starLabel": "Rate {value} star"
+    }
+  },
+  "Search": {
+    "title": "Search results",
+    "subtitle": "Find games on the platform with Chinese or English keywords.",
+    "summary": {
+      "withQuery": "{total} results for “{query}”",
+      "empty": "Start typing to search"
+    },
+    "emptyPrompt": "Type a game title, mechanic or tag to explore the catalogue.",
+    "emptyResult": "No results matched “{query}”. Try different keywords.",
+    "playCount": "Plays: {value}",
+    "rating": "Rating: {value}",
+    "published": "Published on {date}",
+    "viewDetails": "View details",
+    "pagination": {
+      "prev": "Previous",
+      "next": "Next",
+      "label": "{current} / {total}"
+    }
+  },
+  "footer": {
+    "copyright": "© 2025 GameHub. All rights reserved",
+    "github": "GitHub",
+    "support": "Contact"
+  },
+  "MonsterSurvivors": {
+    "title": "Monster Survivors",
+    "tagline": "Featured Game",
+    "summary": "Dive into a fast-paced survival arena and hold the line against relentless waves of monsters.",
+    "backToList": "Back to all games",
+    "playSection": {
+      "title": "Play instantly",
+      "description": "The complete experience loads directly in your browser. Hit fullscreen for total immersion.",
+      "hint": "If the game does not load, disable aggressive ad blockers or refresh the page."
+    },
+    "details": {
+      "title": "Game details",
+      "description": "Core facts to get you started quickly.",
+      "genre": {
+        "label": "Genre",
+        "value": "Action survival roguelike"
+      },
+      "session": {
+        "label": "Average session",
+        "value": "5-15 minutes"
+      },
+      "controls": {
+        "label": "Controls",
+        "value": "Keyboard & mouse or controller"
+      },
+      "devices": {
+        "label": "Best on",
+        "value": "Desktop and tablet browsers"
+      }
+    },
+    "tips": {
+      "title": "Quick tips",
+      "description": "A few hints before you jump into the arena.",
+      "items": [
+        "Collect glowing shards early to snowball upgrades.",
+        "Keep moving to kite enemy clusters and avoid damage spikes.",
+        "Trigger dash or shield abilities before you are cornered.",
+        "Experiment with daily modifiers to climb the leaderboard."
+      ]
+    }
+  },
+  "Solitaire": {
+    "title": "Solitaire",
+    "tagline": "Classic Card Game",
+    "summary": "The world's most popular single-player card game! Arrange all cards by suit and sequence to the foundation. Challenge your strategic thinking.",
+    "backToList": "Back to all games",
+    "playSection": {
+      "title": "Play instantly",
+      "description": "The complete game loads directly in your browser. Enjoy solitaire anytime, anywhere.",
+      "hint": "If the game does not load, disable ad blockers or refresh the page."
+    },
+    "details": {
+      "title": "Game details",
+      "description": "Key information before you start playing.",
+      "genre": {
+        "label": "Genre",
+        "value": "Card · Puzzle · Casual"
+      },
+      "session": {
+        "label": "Average session",
+        "value": "5-10 minutes per game"
+      },
+      "controls": {
+        "label": "Controls",
+        "value": "Mouse click or touch drag"
+      },
+      "devices": {
+        "label": "Best on",
+        "value": "All platforms (desktop, tablet, mobile)"
+      }
+    },
+    "tips": {
+      "title": "Gameplay tips",
+      "description": "Master these tips to improve your win rate.",
+      "items": [
+        "Prioritize uncovering cards from the stock pile to increase options.",
+        "Keep columns empty when possible for temporary card storage.",
+        "Move smaller cards first to avoid blocking larger cards.",
+        "Use the undo feature to try different strategies and find optimal solutions."
+      ]
+    }
+  }
+}

@@ -108,16 +108,20 @@ CLOUDINARY_PRESET_ICON="preset-category-icons"
 
 ### 3. 初始化数据库
 
-⚠️ **注意：** 以下命令需要在完成 **Step 2（数据库 Schema 设计）** 后才能执行，否则会因缺少 Schema 文件而报错。
+✅ **数据库 Schema 已就绪！** (Step 2 已完成)
 
 ```bash
-# Drizzle 迁移（需要先完成 Step 2）
-pnpm db:generate
+# 推送 Schema 到数据库
 pnpm db:push
 
-# 运行种子数据（可选，在 Step 2 之后）
-# pnpm db:seed
+# 运行种子数据（可选，导入示例数据）
+pnpm db:seed
+
+# 查看数据库（Drizzle Studio）
+pnpm db:studio
 ```
+
+**提示：** `pnpm db:generate` 已经运行过，迁移文件位于 `db/migrations/`。
 
 ### 4. 启动开发服务器
 
@@ -129,6 +133,19 @@ pnpm dev
 - **前台**：http://localhost:3000
 - **管理后台**：http://localhost:3000/admin
 
+### 管理后台登录
+
+- 在 `.env.local` 中设置 `ADMIN_PASSWORD`（参考 `.env.example`）
+- 本地运行时访问 `http://localhost:3000/admin/login` 输入密码
+- 成功登录后可在仪表盘查看基础统计，并执行后续后台功能
+- 登录后可通过导航进入 **Games**、**Ratings** 页面，分别进行游戏管理与评分审核
+
+### 运维工具
+
+- 健康检查：`/api/health`（可作为负载均衡或监控探针）
+- 运维巡检：`pnpm ops:status`（终端检查数据库/Redis/Meilisearch 状态）
+
+
 ### 5. 构建生产版本
 
 ```bash
@@ -138,6 +155,8 @@ pnpm build
 # 启动生产服务器
 pnpm start
 ```
+
+> 首次运行端到端测试前，请执行 `npx playwright install` 安装浏览器。
 
 ---
 
@@ -192,14 +211,23 @@ pnpm format
 
 # 类型检查
 pnpm type-check
+
+# 单元测试
+pnpm test
+
+# 单元测试（监听模式）
+pnpm test:watch
+
+# 端到端测试（需先启动应用并安装浏览器）
+pnpm test:e2e
 ```
 
 ### 数据库命令
 
-⚠️ **注意：** 以下命令需要在完成 **Step 2（数据库 Schema 设计）** 后才能执行。
+✅ **数据库 Schema 已就绪！**
 
 ```bash
-# 生成迁移文件
+# 生成迁移文件（已执行，迁移文件已生成）
 pnpm db:generate
 
 # 推送 Schema 到数据库
@@ -211,9 +239,16 @@ pnpm db:studio
 # 运行迁移
 pnpm db:migrate
 
-# 运行种子数据（Step 2 后）
-# pnpm db:seed
+# 运行种子数据（导入示例游戏/分类/标签）
+pnpm db:seed
 ```
+
+**数据库结构：**
+- 10个核心表（games, game_stats, categories, tags, ratings, screenshots, play_counters, admin_logs, 等）
+- 多语言支持（中英文）
+- 完整的关联关系（游戏-分类、游戏-标签）
+- 统计数据拆分（game_stats 独立表，支持分时段统计）
+- 审计日志（管理员操作记录）
 
 ---
 
@@ -224,8 +259,19 @@ pnpm db:migrate
 ### 当前状态
 
 - ✅ **Phase 1 - Step 1**：项目初始化与基础配置（已完成）
-- ⏳ **Phase 1 - Step 2**：数据库 Schema 设计（待开始）
-- ⏳ **Phase 1 - Step 3**：外部服务配置（待开始）
+- ✅ **Phase 1 - Step 2**：数据库 Schema 设计（已完成）
+- ✅ **Phase 1 - Step 3**：外部服务配置与验证（已完成）
+- ✅ **Phase 2 - Step 4**：核心业务逻辑开发（已完成）
+- ✅ **Phase 2 - Step 5**：API 路由层开发（已完成）
+- ✅ **Phase 2 - Step 6**：国际化配置（已完成）
+- ✅ **Phase 2 - Step 7**：设计系统与基础组件（已完成）
+- ✅ **Phase 2 - Step 8**：前台列表与详情页（已完成）
+
+**最新更新：**
+- ✅ **Phase 1 完成！** 基础设施搭建完毕
+- ✅ **Phase 2 - Step 4-8 完成！** 服务层、API、多语言、前台页面全面打通
+- 🔌 外部服务客户端已配置（Cloudinary / Meilisearch / Redis）
+- 📚 配置文档完整：[docs/setup/external-services.md](docs/setup/external-services.md)
 
 ---
 
@@ -267,3 +313,9 @@ chore: 构建/工具链更新
 <p align="center">
   <sub>最后更新: 2025-10-01</sub>
 </p>
+
+## 🚀 部署与运维
+
+- 仓库提供 GitHub Actions 工作流（`.github/workflows/ci.yml`）自动执行 lint / type-check / 单元测试
+- 推荐使用 Vercel 部署：导入仓库 → 配置环境变量 → `pnpm build` 即可
+- 更详细说明见 [docs/setup/deployment.md](docs/setup/deployment.md)
