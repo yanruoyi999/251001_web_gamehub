@@ -9,6 +9,7 @@ import { FavoriteService, GameService, RatingService } from '@/services';
 import { getMockGameBySlug } from '@/lib/mock-games';
 import type { GameDetail } from '@/services/game.service';
 import type { MockGame } from '@/lib/mock-games';
+import { buildAbsoluteUrl } from '@/lib/seo';
 
 type RatingDistribution = Awaited<ReturnType<typeof RatingService.getRatingDistribution>>;
 type RatingsResult = Awaited<ReturnType<typeof RatingService.listGameRatings>>;
@@ -147,6 +148,99 @@ export default async function GamePage({ params }: GamePageProps) {
   const ratingCount = stats?.ratingCount ?? ratingsResult.total ?? 0;
   const playCount = stats?.playCount ?? 0;
   const publishedLabel = formatDate(game.publishedAt);
+  const resolveLabel = (name?: string | null, nameEn?: string | null) =>
+    locale === 'en'
+      ? pickLocalized(nameEn, name)
+      : pickLocalized(name, nameEn);
+  const categoryLabels = game.categories.map((category) =>
+    resolveLabel(category.name, category.nameEn)
+  );
+  const tagLabels = game.tags.map((tag) => resolveLabel(tag.name, tag.nameEn));
+  const pageUrl = buildAbsoluteUrl(`/${locale}/games/${game.slug}`);
+  const publishedIso = (() => {
+    if (!game.publishedAt) return undefined;
+    const value = game.publishedAt instanceof Date ? game.publishedAt : new Date(game.publishedAt);
+    return Number.isNaN(value.getTime()) ? undefined : value.toISOString();
+  })();
+
+  const videoGameSchema: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'VideoGame',
+    name: title,
+    url: pageUrl,
+    inLanguage: localeTag,
+    description,
+    image: game.thumbnailUrl,
+    applicationCategory: 'GameApplication',
+    operatingSystem: 'Web Browser',
+    playMode: 'SinglePlayer',
+    genre:
+      game.categories && game.categories.length > 0
+        ? game.categories.map((category) =>
+            resolveLabel(category.name, category.nameEn) || 'Browser Game',
+          )
+        : ['Browser Game'],
+    offers: {
+      '@type': 'Offer',
+      price: 0,
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'GameHub',
+    },
+  };
+
+  if (publishedIso) {
+    videoGameSchema.datePublished = publishedIso;
+  }
+
+  if (tagLabels.length > 0) {
+    videoGameSchema.keywords = tagLabels.join(', ');
+  }
+
+  if (playCount) {
+    videoGameSchema.interactionStatistic = {
+      '@type': 'InteractionCounter',
+      interactionType: { '@type': 'PlayAction' },
+      userInteractionCount: Number(playCount),
+    };
+  }
+
+  if (averageRating > 0 && ratingCount > 0) {
+    videoGameSchema.aggregateRating = {
+      '@type': 'AggregateRating',
+      ratingValue: averageRating.toFixed(1),
+      ratingCount,
+    };
+  }
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: locale === 'zh' ? '首页' : 'Home',
+        item: buildAbsoluteUrl(`/${locale}`),
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: locale === 'zh' ? '全部游戏' : 'All Games',
+        item: buildAbsoluteUrl(`/${locale}/games`),
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: title,
+        item: pageUrl,
+      },
+    ],
+  };
+  const structuredData = [videoGameSchema, breadcrumbSchema];
 
   const distributionByStars: Record<1 | 2 | 3 | 4 | 5, number> = {
     1: ratingDistribution['1'] ?? (ratingDistribution as Record<number, number>)[1] ?? 0,
@@ -178,17 +272,6 @@ export default async function GamePage({ params }: GamePageProps) {
 
   const canFavorite = !interactionLimited && game.status === 'active';
 
-  const resolveLabel = (name?: string | null, nameEn?: string | null) =>
-    locale === 'en'
-      ? pickLocalized(nameEn, name)
-      : pickLocalized(name, nameEn);
-
-  const categoryLabels = game.categories.map((category) =>
-    resolveLabel(category.name, category.nameEn)
-  );
-
-  const tagLabels = game.tags.map((tag) => resolveLabel(tag.name, tag.nameEn));
-
   const statusChips = [
     locale === 'zh' ? '上线' : 'Active',
     ...(game.featured ? [locale === 'zh' ? '精选' : 'Featured'] : []),
@@ -203,6 +286,13 @@ export default async function GamePage({ params }: GamePageProps) {
   return (
     <div className="w-full bg-gradient-to-b from-gray-50 to-white">
       <div className="mx-auto w-full max-w-7xl px-6 py-8">
+        {structuredData.map((schema, index) => (
+          <script
+            key={index}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          />
+        ))}
         {/* Breadcrumb */}
         <div className="mb-6 flex items-center gap-2 text-sm text-gray-600">
           <Link href={`/${locale}`} className="hover:text-indigo-600">

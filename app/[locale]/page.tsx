@@ -179,52 +179,61 @@ export default async function LocalizedHomePage({ params }: LocalizedHomePagePro
             </Link>
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {mockGames.map((game) => (
-              <Link
-                key={game.id}
-                href={`/${locale}/games/${game.slug}`}
-                className="group"
-              >
-                <Card className="flex h-full flex-col overflow-hidden transition-all hover:shadow-xl">
-                  <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-indigo-100 to-purple-100">
-                    <Image
-                      src={game.thumbnailUrl}
-                      alt={locale === 'zh' ? game.title : game.titleEn}
-                      width={400}
-                      height={300}
-                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
-                      unoptimized
-                    />
-                    <div className="absolute right-2 top-2 flex gap-1">
-                      {game.isNew && (
-                        <span className="rounded-full bg-green-500 px-2 py-1 text-xs font-semibold text-white shadow-lg">
-                          {locale === 'zh' ? '新' : 'NEW'}
-                        </span>
-                      )}
-                      {game.isHot && (
-                        <span className="rounded-full bg-red-500 px-2 py-1 text-xs font-semibold text-white shadow-lg">
-                          {locale === 'zh' ? '热' : 'HOT'}
-                        </span>
-                      )}
+            {mockGames.map((game) => {
+              const localizedTitle = locale === 'zh' ? game.title : game.titleEn;
+              const localizedDescription = locale === 'zh' ? game.description : game.descriptionEn;
+              const coverAlt =
+                locale === 'zh'
+                  ? `${localizedTitle} 浏览器小游戏封面插画，突出 ${localizedDescription}`
+                  : `${localizedTitle} browser mini game cover art highlighting ${localizedDescription}`;
+
+              return (
+                <Link
+                  key={game.id}
+                  href={`/${locale}/games/${game.slug}`}
+                  className="group"
+                >
+                  <Card className="flex h-full flex-col overflow-hidden transition-all hover:shadow-xl">
+                    <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-indigo-100 to-purple-100">
+                      <Image
+                        src={game.thumbnailUrl}
+                        alt={coverAlt}
+                        width={400}
+                        height={300}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+                      />
+                      <div className="absolute right-2 top-2 flex gap-1">
+                        {game.isNew && (
+                          <span className="rounded-full bg-green-500 px-2 py-1 text-xs font-semibold text-white shadow-lg">
+                            {locale === 'zh' ? '新' : 'NEW'}
+                          </span>
+                        )}
+                        {game.isHot && (
+                          <span className="rounded-full bg-red-500 px-2 py-1 text-xs font-semibold text-white shadow-lg">
+                            {locale === 'zh' ? '热' : 'HOT'}
+                          </span>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                  <CardHeader className="flex flex-col gap-3 pb-3">
-                    <CardTitle className="line-clamp-1 text-lg group-hover:text-indigo-600">
-                      {locale === 'zh' ? game.title : game.titleEn}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="flex flex-1 flex-col justify-between gap-4 px-6 pb-6 pt-0">
-                    <p className="line-clamp-2 min-h-[48px] text-sm text-gray-600">
-                      {locale === 'zh' ? game.description : game.descriptionEn}
-                    </p>
-                    <div className="mt-4 flex items-center justify-between text-xs text-gray-500">
-                      <span>⭐ 4.5</span>
-                      <span>🎮 1.2K {locale === 'zh' ? '次游玩' : 'plays'}</span>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
+                    <CardHeader className="flex flex-col gap-3 pb-3">
+                      <CardTitle className="line-clamp-1 text-lg group-hover:text-indigo-600">
+                        {locale === 'zh' ? game.title : game.titleEn}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex flex-1 flex-col justify-between gap-4 px-6 pb-6 pt-0">
+                      <p className="line-clamp-2 min-h-[48px] text-sm text-gray-600">
+                        {localizedDescription}
+                      </p>
+                      <div className="mt-4 flex items-center justify-between text-xs text-gray-500">
+                        <span>⭐ 4.5</span>
+                        <span>🎮 1.2K {locale === 'zh' ? '次游玩' : 'plays'}</span>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>

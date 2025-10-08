@@ -1,3 +1,5 @@
+import { statSync } from 'node:fs';
+import path from 'node:path';
 import type { Locale } from '@/i18n/config';
 
 export interface SeoLandingSection {
@@ -38,6 +40,15 @@ export interface SeoLandingPage {
   locales: Record<Locale, SeoLandingLocaleContent>;
 }
 
+const seoContentUpdatedAt = (() => {
+  try {
+    const stats = statSync(path.join(process.cwd(), 'lib', 'seo-landing-content.ts'));
+    return stats.mtime.toISOString();
+  } catch {
+    return new Date().toISOString();
+  }
+})();
+
 const SEO_LANDING_PAGES: SeoLandingPage[] = [
   {
     slug: 'free-games-no-ads',
@@ -48,7 +59,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       'free games without popups',
       'no ads puzzle games',
     ],
-    updatedAt: '2025-02-01',
+    updatedAt: seoContentUpdatedAt,
     relatedSlugs: ['ad-free-games', 'games-to-play-when-bored'],
     locales: {
       en: {
@@ -207,7 +218,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       'clean browser games',
       'ad-free strategy games',
     ],
-    updatedAt: '2025-02-01',
+    updatedAt: seoContentUpdatedAt,
     relatedSlugs: ['free-games-no-ads', 'best-free-iphone-games'],
     locales: {
       en: {
@@ -352,7 +363,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       'mobile friendly puzzle games',
       'touch friendly free games',
     ],
-    updatedAt: '2025-02-01',
+    updatedAt: seoContentUpdatedAt,
     relatedSlugs: ['ad-free-games', 'games-to-play-when-bored'],
     locales: {
       en: {
@@ -497,7 +508,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       'casual browser games',
       'short session games',
     ],
-    updatedAt: '2025-02-01',
+    updatedAt: seoContentUpdatedAt,
     relatedSlugs: ['free-games-no-ads', 'best-free-iphone-games'],
     locales: {
       en: {

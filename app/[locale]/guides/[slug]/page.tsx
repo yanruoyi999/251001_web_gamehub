@@ -16,6 +16,7 @@ import {
   type SeoLandingPage,
 } from '@/lib/seo-landing-content';
 import { mockGames } from '@/lib/mock-games';
+import { buildAbsoluteUrl, getSiteBaseUrl } from '@/lib/seo';
 
 export const dynamic = 'force-static';
 
@@ -97,12 +98,85 @@ export default function GuidePage({ params }: GuidePageProps) {
     notFound();
   }
 
+  const siteBaseUrl = getSiteBaseUrl();
   const content = page.locales[locale] ?? page.locales.zh;
-
+  const pageUrl = buildAbsoluteUrl(`/${locale}/guides/${page.slug}`);
+  const jsonLdArticle = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: content.heading,
+    description: content.metaDescription,
+    mainEntityOfPage: pageUrl,
+    inLanguage: locale === 'zh' ? 'zh-CN' : 'en-US',
+    author: {
+      '@type': 'Organization',
+      name: 'GameHub Editorial',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'GameHub',
+      url: siteBaseUrl,
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://via.placeholder.com/512x512.png?text=GameHub',
+      },
+    },
+    datePublished: page.updatedAt,
+    dateModified: page.updatedAt,
+    articleSection: 'Browser Games',
+    keywords: page.keywords.join(', '),
+  };
+  const jsonLdFaq = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: content.faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  };
+  const breadcrumbLabels = locale === 'zh'
+    ? ['首页', '专题合集', content.heading]
+    : ['Home', 'Guides', content.heading];
+  const jsonLdBreadcrumb = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: breadcrumbLabels[0],
+        item: buildAbsoluteUrl(`/${locale}`),
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: breadcrumbLabels[1],
+        item: buildAbsoluteUrl(`/${locale}/guides`),
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: breadcrumbLabels[2],
+        item: pageUrl,
+      },
+    ],
+  };
+  const structuredData = [jsonLdArticle, jsonLdFaq, jsonLdBreadcrumb];
   const relatedPages = getRelatedPages(page, locale);
 
   return (
     <article className="mx-auto w-full max-w-5xl px-6 py-12">
+      {structuredData.map((schema, index) => (
+        <script
+          key={index}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
       <nav className="mb-6 text-sm text-gray-500">
         <Link href={`/${locale}/guides`} className="hover:text-indigo-600">
           {locale === 'zh' ? '← 返回专题合集' : '← Back to guides'}
@@ -181,9 +255,12 @@ export default function GuidePage({ params }: GuidePageProps) {
                     <Link
                       href={`/${locale}/games/${item.slug}`}
                       className="inline-flex items-center text-indigo-600 transition hover:text-indigo-800"
-                      prefetch
                     >
-                      {locale === 'zh' ? '前往游戏详情' : 'Open game details'} →
+                      {locale === 'zh'
+                        ? `查看 ${gameTitle} 游戏详情`
+                        : `See ${gameTitle} browser game details`}
+                      {' '}
+                      →
                     </Link>
                   </div>
                 </CardContent>

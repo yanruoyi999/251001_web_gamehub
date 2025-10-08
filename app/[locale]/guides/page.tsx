@@ -72,7 +72,7 @@ export default function GuidesPage({ params }: GuidesPageProps) {
 
       <div className="grid gap-6 md:grid-cols-2">
         {pages.map((page) => {
-          const content = page.locales[locale];
+          const content = page.locales[locale] ?? page.locales.zh;
           const href = `/${locale}/guides/${page.slug}`;
           const summary = content.overview[0] ?? '';
 
