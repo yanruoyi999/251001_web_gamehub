@@ -101,16 +101,16 @@ export function Header() {
         {/* Right Side Actions */}
         <div className="flex items-center gap-3">
           <SearchInput locale={currentLocaleSegment} />
-          <Link href={`/${currentLocaleSegment}/admin`}>
-            <Button
-              variant="primary"
-              size="sm"
-              className="hidden bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 md:inline-flex"
-            >
+          <Button
+            asChild
+            size="sm"
+            className="hidden bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700 shadow-sm md:inline-flex"
+          >
+            <Link href={`/${currentLocaleSegment}/admin`}>
               <span className="mr-1">🎯</span>
               {t('cta')}
-            </Button>
-          </Link>
+            </Link>
+          </Button>
           <LanguageSwitcher />
         </div>
       </div>
