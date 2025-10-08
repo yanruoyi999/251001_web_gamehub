@@ -4,6 +4,7 @@ import { getTranslations } from 'next-intl/server';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { mockGames } from '@/lib/mock-games';
+import { getSeoLandingPages } from '@/lib/seo-landing-content';
 
 export const dynamic = 'force-dynamic';
 
@@ -36,6 +37,41 @@ export default async function LocalizedHomePage({ params }: LocalizedHomePagePro
     { name: locale === 'zh' ? '射击' : 'Shooting', icon: '🎯', count: 10 },
     { name: locale === 'zh' ? '策略' : 'Strategy', icon: '🎲', count: 9 },
   ];
+
+  const typedLocale = locale === 'zh' ? 'zh' : 'en';
+  const guides = getSeoLandingPages();
+  const highlightGuideSlugs = [
+    'free-games-no-ads',
+    'best-free-iphone-games',
+    'games-to-play-when-bored',
+  ];
+
+  const featuredGuides = highlightGuideSlugs
+    .map((slug) => {
+      const guide = guides.find((item) => item.slug === slug);
+      if (!guide) {
+        return null;
+      }
+      const localized = guide.locales[typedLocale] ?? guide.locales.zh;
+      return {
+        slug: guide.slug,
+        heading: localized.heading,
+        summary: localized.overview[0] ?? '',
+      };
+    })
+    .filter((guide): guide is { slug: string; heading: string; summary: string } => Boolean(guide));
+
+  const guidesToDisplay =
+    featuredGuides.length > 0
+      ? featuredGuides
+      : guides.slice(0, 3).map((guide) => {
+          const localized = guide.locales[typedLocale] ?? guide.locales.zh;
+          return {
+            slug: guide.slug,
+            heading: localized.heading,
+            summary: localized.overview[0] ?? '',
+          };
+        });
 
   return (
     <div className="w-full">
@@ -238,6 +274,48 @@ export default async function LocalizedHomePage({ params }: LocalizedHomePagePro
                   : 'Perfect for desktop, tablet and mobile, enjoy games anytime, anywhere.'}
               </CardContent>
             </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Guides Section */}
+      <section className="bg-white py-16">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="mb-12 text-center">
+            <h2 className="mb-3 text-3xl font-bold text-gray-900">
+              {locale === 'zh' ? '📚 热门专题攻略' : '📚 Featured Guides'}
+            </h2>
+            <p className="text-gray-600">
+              {locale === 'zh'
+                ? '快速进入“free games no ads”“best free iPhone games”等专题，按场景挑选合适的作品。'
+                : 'Jump into guides for free games with no ads, best free iPhone games, and more tailored collections.'}
+            </p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-3">
+            {guidesToDisplay.map((guide) => (
+              <Card
+                key={guide.slug}
+                className="flex h-full flex-col justify-between border border-gray-200"
+              >
+                <CardHeader>
+                  <CardTitle className="text-xl font-semibold text-gray-900">
+                    {guide.heading}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="flex flex-1 flex-col justify-between gap-4 text-sm text-gray-600">
+                  <p className="line-clamp-4">{guide.summary}</p>
+                  <div className="mt-auto">
+                    <Link
+                      href={`/${locale}/guides/${guide.slug}`}
+                      className="inline-flex items-center text-indigo-600 transition hover:text-indigo-800"
+                      prefetch
+                    >
+                      {locale === 'zh' ? '查看专题' : 'View guide'} →
+                    </Link>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>

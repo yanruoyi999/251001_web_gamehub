@@ -43,6 +43,21 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href={`/${locale}/guides`} className="hover:text-indigo-600">
+                  {locale === 'zh' ? '专题合集' : 'Guides'}
+                </Link>
+              </li>
+              <li>
+                <Link href={`/${locale}/guides/free-games-no-ads`} className="hover:text-indigo-600">
+                  {locale === 'zh' ? '无广告小游戏' : 'Free Games No Ads'}
+                </Link>
+              </li>
+              <li>
+                <Link href={`/${locale}/guides/games-to-play-when-bored`} className="hover:text-indigo-600">
+                  {locale === 'zh' ? '打发时间小游戏' : 'Games to Play When Bored'}
+                </Link>
+              </li>
+              <li>
                 <Link href={`/${locale}/search`} className="hover:text-indigo-600">
                   {locale === 'zh' ? '搜索' : 'Search'}
                 </Link>

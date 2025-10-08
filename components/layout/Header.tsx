@@ -13,6 +13,7 @@ import { trackEvent } from '@/lib/gtag';
 const navItems = [
   { href: '/', labelKey: 'home' },
   { href: '/games', labelKey: 'games' },
+  { href: '/guides', labelKey: 'guides' },
 ];
 
 function LanguageSwitcher() {

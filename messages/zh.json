@@ -22,6 +22,7 @@
   "nav": {
     "home": "首页",
     "games": "全部游戏",
+    "guides": "攻略指南",
     "cta": "发布游戏",
     "searchPlaceholder": "搜索游戏…",
     "searchLoading": "正在搜索…",

@@ -22,6 +22,7 @@
   "nav": {
     "home": "Home",
     "games": "Games",
+    "guides": "Guides",
     "cta": "Publish",
     "searchPlaceholder": "Search games…",
     "searchLoading": "Searching…",
