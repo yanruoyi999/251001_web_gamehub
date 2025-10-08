@@ -12,6 +12,8 @@ declare global {
   }
 }
 
+type EventParams = Record<string, string | number | boolean | undefined>;
+
 export const pageview = (url: string) => {
   if (!GA_TRACKING_ID || typeof window === 'undefined') return;
 
@@ -20,4 +22,11 @@ export const pageview = (url: string) => {
   window.gtag('config', GA_TRACKING_ID, {
     page_path: url,
   } satisfies GtagParams);
+};
+
+export const trackEvent = (action: string, params: EventParams = {}) => {
+  if (!GA_TRACKING_ID || typeof window === 'undefined') return;
+  if (typeof window.gtag !== 'function') return;
+
+  window.gtag('event', action, params);
 };

@@ -4,6 +4,7 @@ import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from 're
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import clsx from 'clsx';
+import { trackEvent } from '@/lib/gtag';
 
 interface SearchInputProps {
   locale: string;
@@ -106,17 +107,29 @@ export function SearchInput({ locale }: SearchInputProps) {
     const nextQuery = trimmedQuery;
     if (!nextQuery) return;
     setOpen(false);
+    trackEvent('search_submit', {
+      query: nextQuery,
+      locale,
+      suggestion_count: suggestions.length,
+    });
     router.push(`/${locale}/search?q=${encodeURIComponent(nextQuery)}`);
   };
 
   const handleSelect = useCallback(
     (item: SuggestionItem) => {
+      const currentQuery = trimmedQuery;
       setOpen(false);
       setQuery('');
       const target = item.slug ?? String(item.id);
+      trackEvent('search_suggestion_click', {
+        query: currentQuery || undefined,
+        locale,
+        suggestion_id: item.id,
+        suggestion_slug: item.slug ?? undefined,
+      });
       router.push(`/${locale}/games/${target}`);
     },
-    [locale, router]
+    [locale, router, trimmedQuery]
   );
 
   const suggestionList = useMemo(() => {

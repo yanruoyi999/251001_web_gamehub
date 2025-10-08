@@ -8,6 +8,7 @@ import clsx from 'clsx';
 import { locales } from '@/i18n/config';
 import { Button } from '@/components/ui/button';
 import { SearchInput } from '@/components/game/search-input';
+import { trackEvent } from '@/lib/gtag';
 
 const navItems = [
   { href: '/', labelKey: 'home' },
@@ -41,6 +42,13 @@ function LanguageSwitcher() {
               ? 'bg-indigo-600 text-white'
               : 'text-gray-600 hover:bg-gray-100'
           )}
+          onClick={() =>
+            trackEvent('language_switch', {
+              language: item.code,
+              previous_language: activeLocale,
+              path: pathname,
+            })
+          }
         >
           {item.label}
         </Link>
@@ -65,6 +73,12 @@ export function Header() {
         <Link
           href={`/${currentLocaleSegment}`}
           className="group flex items-center gap-2 transition-transform hover:scale-105"
+          onClick={() =>
+            trackEvent('nav_logo_click', {
+              locale: currentLocaleSegment,
+              path: pathname,
+            })
+          }
         >
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-600 to-purple-600 text-white shadow-lg">
             <span className="text-lg font-bold">G</span>
@@ -88,6 +102,12 @@ export function Header() {
                     ? 'text-indigo-600'
                     : 'text-gray-600 hover:text-gray-900'
                 )}
+                onClick={() =>
+                  trackEvent('nav_link_click', {
+                    target: item.href === '/' ? 'home' : item.href.replace('/', ''),
+                    locale: currentLocaleSegment,
+                  })
+                }
               >
                 {t(item.labelKey)}
                 {isActive && (
@@ -106,7 +126,15 @@ export function Header() {
             size="sm"
             className="hidden bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700 shadow-sm md:inline-flex"
           >
-            <Link href={`/${currentLocaleSegment}/admin`}>
+            <Link
+              href={`/${currentLocaleSegment}/admin`}
+              onClick={() =>
+                trackEvent('cta_click', {
+                  action: 'open_admin',
+                  locale: currentLocaleSegment,
+                })
+              }
+            >
               <span className="mr-1">🎯</span>
               {t('cta')}
             </Link>
