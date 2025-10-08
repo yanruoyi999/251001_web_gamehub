@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import Script from 'next/script';
 import './globals.css';
 import { defaultLocale } from '@/i18n/config';
@@ -32,7 +33,9 @@ export default function RootLayout({
                 gtag('config', '${GA_TRACKING_ID}', { page_path: window.location.pathname });
               `}
             </Script>
-            <AnalyticsListener />
+            <Suspense fallback={null}>
+              <AnalyticsListener />
+            </Suspense>
           </>
         ) : null}
         {children}
