@@ -78,8 +78,18 @@
     },
     "actions": {
       "favorite": "Save",
-      "unfavorite": "Remove"
+    "unfavorite": "Remove"
     }
+  },
+  "Imported4399": {
+    "title": "4399 Embed Trial",
+    "desc": "Preview a small batch of games imported from the 4399 catalogue.",
+    "backToGames": "Back to all games",
+    "notice": "If the embed fails to load, try opening the original page in a new tab.",
+    "viewOriginal": "Open original page",
+    "sourceLabel": "Source URL",
+    "domainLabel": "Host: {host}",
+    "empty": "Sample data is not available yet."
   },
   "GameDetails": {
     "back": "Back to list",

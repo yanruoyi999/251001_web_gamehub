@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Suspense } from 'react';
 import Script from 'next/script';
 import { headers } from 'next/headers';
@@ -71,10 +71,11 @@ export const metadata: Metadata = {
       'Discover curated browser games with zero intrusive ads. Mobile friendly, quick to launch, and perfect when you need a new favorite.',
     images: ['https://via.placeholder.com/1200x630.png?text=GameHub'],
   },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-  },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
   themeColor: '#312e81',
 };
 

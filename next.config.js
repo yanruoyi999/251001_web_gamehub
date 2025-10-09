@@ -12,7 +12,7 @@ const securityHeaders = [
       "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com",
       "style-src 'self' 'unsafe-inline'",
       "connect-src 'self' https://res.cloudinary.com https://www.google-analytics.com https://www.googletagmanager.com",
-      "frame-src 'self' https://*.github.io https://sudoku.tn1ck.com http://patorjk.com https://playpager.com https://cloud.onlinegames.io",
+      "frame-src 'self' https://*.github.io https://sudoku.tn1ck.com http://patorjk.com https://playpager.com https://cloud.onlinegames.io https://*.4399.com https://www.friv2018.com",
       "frame-ancestors 'none'",
     ].join('; '),
   },
