@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2025-10-08T23:45:09.460Z",
-  "total": 6,
+  "generatedAt": "2025-10-10T22:37:13.880Z",
+  "total": 24,
   "games": [
     {
       "slug": "adam-and-eve-4",
@@ -54,6 +54,168 @@
       "iframeUrl": "https://szhong.4399.com/4399swf//upload_swf/ftp31/chenling/20200218/04/index.htm",
       "sourcePageUrl": "https://ad-freegames.github.io/4399/adam-and-eve-8.html",
       "sourcePath": "4399/adam-and-eve-8.html",
+      "sourceHost": "szhong.4399.com"
+    },
+    {
+      "slug": "adam-and-eve-aliens",
+      "title": "Adam and Eve: Aliens",
+      "titleEn": "Adam and Eve: Aliens",
+      "iframeUrl": "https://szhong.4399.com/4399swf//upload_swf/ftp34/chenling/20201105/08/index.htm",
+      "sourcePageUrl": "https://ad-freegames.github.io/4399/adam-and-eve-aliens.html",
+      "sourcePath": "4399/adam-and-eve-aliens.html",
+      "sourceHost": "szhong.4399.com"
+    },
+    {
+      "slug": "adam-and-eve-astronaut",
+      "title": "Adam and Eve: Astronaut",
+      "titleEn": "Adam and Eve: Astronaut",
+      "iframeUrl": "https://szhong.4399.com/4399swf//upload_swf/ftp29/chenweihong/20191024/4/index.htm",
+      "sourcePageUrl": "https://ad-freegames.github.io/4399/adam-and-eve-astronaut.html",
+      "sourcePath": "4399/adam-and-eve-astronaut.html",
+      "sourceHost": "szhong.4399.com"
+    },
+    {
+      "slug": "adam-and-eve-go-2",
+      "title": "Adam and Eve Go 2",
+      "titleEn": "Adam and Eve Go 2",
+      "iframeUrl": "https://szhong.4399.com/4399swf//upload_swf/ftp35/gamehwq/20210319/02/index.html",
+      "sourcePageUrl": "https://ad-freegames.github.io/4399/adam-and-eve-go-2.html",
+      "sourcePath": "4399/adam-and-eve-go-2.html",
+      "sourceHost": "szhong.4399.com"
+    },
+    {
+      "slug": "adam-and-eve-go-3",
+      "title": "Adam and Eve Go 3",
+      "titleEn": "Adam and Eve Go 3",
+      "iframeUrl": "https://szhong.4399.com/4399swf//upload_swf/ftp36/gamehwq/20210603/12/index.html",
+      "sourcePageUrl": "https://ad-freegames.github.io/4399/adam-and-eve-go-3.html",
+      "sourcePath": "4399/adam-and-eve-go-3.html",
+      "sourceHost": "szhong.4399.com"
+    },
+    {
+      "slug": "adam-and-eve-go-xmas",
+      "title": "Adam and Eve Go: Xmas",
+      "titleEn": "Adam and Eve Go: Xmas",
+      "iframeUrl": "https://szhong.4399.com/4399swf//upload_swf/ftp34/gamehwq/20201218/11/index.html",
+      "sourcePageUrl": "https://ad-freegames.github.io/4399/adam-and-eve-go-xmas.html",
+      "sourcePath": "4399/adam-and-eve-go-xmas.html",
+      "sourceHost": "szhong.4399.com"
+    },
+    {
+      "slug": "adam-and-eve-go",
+      "title": "Adam and Eve Go",
+      "titleEn": "Adam and Eve Go",
+      "iframeUrl": "https://szhong.4399.com/4399swf//upload_swf/ftp32/chenling/20200420/04/index.htm",
+      "sourcePageUrl": "https://ad-freegames.github.io/4399/adam-and-eve-go.html",
+      "sourcePath": "4399/adam-and-eve-go.html",
+      "sourceHost": "szhong.4399.com"
+    },
+    {
+      "slug": "adam-and-eve-night",
+      "title": "Adam and Eve: Night",
+      "titleEn": "Adam and Eve: Night",
+      "iframeUrl": "https://szhong.4399.com/4399swf//upload_swf/ftp33/gamehwq/20201020/11/index.html",
+      "sourcePageUrl": "https://ad-freegames.github.io/4399/adam-and-eve-night.html",
+      "sourcePath": "4399/adam-and-eve-night.html",
+      "sourceHost": "szhong.4399.com"
+    },
+    {
+      "slug": "adam-and-eve-sleepwalker",
+      "title": "Adam and Eve: Sleepwalker",
+      "titleEn": "Adam and Eve: Sleepwalker",
+      "iframeUrl": "https://szhong.4399.com/4399swf//upload_swf/ftp24/gamehwq/20180123/09/index.htm",
+      "sourcePageUrl": "https://ad-freegames.github.io/4399/adam-and-eve-sleepwalker.html",
+      "sourcePath": "4399/adam-and-eve-sleepwalker.html",
+      "sourceHost": "szhong.4399.com"
+    },
+    {
+      "slug": "adam-and-eve-snow",
+      "title": "Adam and Eve: Snow",
+      "titleEn": "Adam and Eve: Snow",
+      "iframeUrl": "https://szhong.4399.com/4399swf//upload_swf/ftp30/gamehwq/20191203/07/index.htm",
+      "sourcePageUrl": "https://ad-freegames.github.io/4399/adam-and-eve-snow.html",
+      "sourcePath": "4399/adam-and-eve-snow.html",
+      "sourceHost": "szhong.4399.com"
+    },
+    {
+      "slug": "adam-and-eve-zombies",
+      "title": "Adam and Eve: Zombies",
+      "titleEn": "Adam and Eve: Zombies",
+      "iframeUrl": "https://szhong.4399.com/4399swf//upload_swf/ftp24/gamehwq/20180116/04/index.htm",
+      "sourcePageUrl": "https://ad-freegames.github.io/4399/adam-and-eve-zombies.html",
+      "sourcePath": "4399/adam-and-eve-zombies.html",
+      "sourceHost": "szhong.4399.com"
+    },
+    {
+      "slug": "adam-and-eve-adam-the-ghost",
+      "title": "Adam and Eve: Adam the Ghost",
+      "titleEn": "Adam and Eve: Adam the Ghost",
+      "iframeUrl": "https://szhong.4399.com/4399swf//upload_swf/ftp24/chenling/20180208/12/index.htm",
+      "sourcePageUrl": "https://ad-freegames.github.io/4399/adam-the-ghost.html",
+      "sourcePath": "4399/adam-the-ghost.html",
+      "sourceHost": "szhong.4399.com"
+    },
+    {
+      "slug": "animator-v-animation-se-free-online-games-no-ads-no-downloads",
+      "title": "Animator v Animation SE - Free Online Games No Ads No Downloads",
+      "titleEn": "Animator v Animation SE - Free Online Games No Ads No Downloads",
+      "iframeUrl": "https://szhong.4399.com/4399swf//upload_swf/ftp40/chenling/20220924/06/index.html",
+      "sourcePageUrl": "https://ad-freegames.github.io/4399/animator-v-animation-se.html",
+      "sourcePath": "4399/animator-v-animation-se.html",
+      "sourceHost": "szhong.4399.com"
+    },
+    {
+      "slug": "apple-knight-mini-dungeons-free-online-games-no-ads-no-downloads",
+      "title": "Apple Knight: Mini Dungeons - Free Online Games No Ads No Downloads",
+      "titleEn": "Apple Knight: Mini Dungeons - Free Online Games No Ads No Downloads",
+      "iframeUrl": "https://szhong.4399.com/4399swf//upload_swf/ftp44/gamehwq/20230808/10a/index.html",
+      "sourcePageUrl": "https://ad-freegames.github.io/4399/apple-knight-mini-dungeons.html",
+      "sourcePath": "4399/apple-knight-mini-dungeons.html",
+      "sourceHost": "szhong.4399.com"
+    },
+    {
+      "slug": "apple-knight",
+      "title": "Apple Knight",
+      "titleEn": "Apple Knight",
+      "iframeUrl": "https://szhong.4399.com/4399swf//upload_swf/ftp37/cwb/20211202/02/index.html",
+      "sourcePageUrl": "https://ad-freegames.github.io/4399/apple-knight.html",
+      "sourcePath": "4399/apple-knight.html",
+      "sourceHost": "szhong.4399.com"
+    },
+    {
+      "slug": "assemble-and-drive-road-monsters-free-online-games-no-ads-no-downloads",
+      "title": "Assemble and Drive: Road Monsters - Free Online Games No Ads No Downloads",
+      "titleEn": "Assemble and Drive: Road Monsters - Free Online Games No Ads No Downloads",
+      "iframeUrl": "https://szhong.4399.com/4399swf//upload_swf/ftp44/chenling/20230830/04/index.html",
+      "sourcePageUrl": "https://ad-freegames.github.io/4399/assemble-and-drive-road-monsters.html",
+      "sourcePath": "4399/assemble-and-drive-road-monsters.html",
+      "sourceHost": "szhong.4399.com"
+    },
+    {
+      "slug": "avalanche-free-online-games-no-ads-no-downloads",
+      "title": "Avalanche - Free Online Games No Ads No Downloads",
+      "titleEn": "Avalanche - Free Online Games No Ads No Downloads",
+      "iframeUrl": "https://szhong.4399.com/4399swf//upload_swf/ftp41/liuxinyu/20221210/1/index.html",
+      "sourcePageUrl": "https://ad-freegames.github.io/4399/avalanche.html",
+      "sourcePath": "4399/avalanche.html",
+      "sourceHost": "szhong.4399.com"
+    },
+    {
+      "slug": "bad-ice-cream-2",
+      "title": "Bad Ice Cream 2",
+      "titleEn": "Bad Ice Cream 2",
+      "iframeUrl": "https://szhong.4399.com/4399swf//upload_swf/ftp35/liuxinyu/20210128/x6/index.html",
+      "sourcePageUrl": "https://ad-freegames.github.io/4399/bad-ice-cream-2.html",
+      "sourcePath": "4399/bad-ice-cream-2.html",
+      "sourceHost": "szhong.4399.com"
+    },
+    {
+      "slug": "bad-ice-cream-3",
+      "title": "Bad Ice Cream 3",
+      "titleEn": "Bad Ice Cream 3",
+      "iframeUrl": "https://szhong.4399.com/4399swf//upload_swf/ftp35/liuxinyu/20210128/x5/index.html",
+      "sourcePageUrl": "https://ad-freegames.github.io/4399/bad-ice-cream-3.html",
+      "sourcePath": "4399/bad-ice-cream-3.html",
       "sourceHost": "szhong.4399.com"
     }
   ]

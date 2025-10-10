@@ -1,7 +1,9 @@
 /**
- * Mock games data for MVP
- * Temporarily used before database is set up
+ * Mock games data generated from 4399 iframe dataset.
+ * Used for local development fallback before the database is wired up.
  */
+
+import sampleData from '@/public/data/4399-sample.json';
 
 export interface MockGame {
   id: number;
@@ -17,18 +19,67 @@ export interface MockGame {
   isHot: boolean;
 }
 
-export const mockGames: MockGame[] = [
+interface SampleGameEntry {
+  slug?: string;
+  title?: string;
+  titleEn?: string;
+  iframeUrl?: string;
+}
+
+const COLOR_PALETTE = [
+  '4C1D95',
+  '7C3AED',
+  '2563EB',
+  '0EA5E9',
+  '059669',
+  'F59E0B',
+  'EF4444',
+  'EC4899',
+];
+
+function createSvgPlaceholder(title: string, color: string): string {
+  const safeText = title.replace(/[^a-zA-Z0-9\s]/g, '').trim().slice(0, 12) || 'Game';
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect width="400" height="300" rx="24" fill="#${color}" /><text x="200" y="165" text-anchor="middle" fill="#FFFFFF" font-size="36" font-family="Arial, Helvetica, sans-serif">${safeText}</text></svg>`;
+  return `data:image/svg+xml,${encodeURIComponent(svg)}`;
+}
+
+function buildMockGamesFromSample(entries: SampleGameEntry[]): MockGame[] {
+  return entries.slice(0, 24).map((entry, index) => {
+    const slug = (entry.slug ?? `game-${index + 1}`).trim();
+    const englishTitle = (entry.titleEn ?? entry.title ?? `Game ${index + 1}`).trim();
+    const title = englishTitle;
+    const iframeUrl = entry.iframeUrl?.trim() ?? '';
+    const color = COLOR_PALETTE[index % COLOR_PALETTE.length];
+
+    return {
+      id: index + 1,
+      slug,
+      title,
+      titleEn: englishTitle,
+      description: `来自 4399 的 HTML5 小游戏《${englishTitle}》，打开即可游玩，无需下载。`,
+      descriptionEn: `Play “${englishTitle}”, an HTML5 mini game sourced from 4399. No downloads required.`,
+      iframeUrl,
+      thumbnailUrl: createSvgPlaceholder(englishTitle, color),
+      featured: index < 6,
+      isNew: index < 12,
+      isHot: index % 3 === 0,
+    };
+  });
+}
+
+// Fallback少量演示数据，防止本地缺失 JSON 时页面为空
+const FALLBACK_GAMES: MockGame[] = [
   {
     id: 1,
     slug: '2048',
     title: '2048',
     titleEn: '2048',
-    description: '风靡全球的数字拼图游戏！滑动方块合并相同数字，挑战 2048！',
-    descriptionEn: 'The addictive number puzzle game! Slide tiles to merge same numbers and reach 2048!',
+    description: '经典数字拼图游戏，向任意方向滑动方块合并数字，挑战 2048。',
+    descriptionEn: 'Classic sliding number puzzle—merge tiles to reach 2048.',
     iframeUrl: 'https://yanruoyi999.github.io/2048/',
-    thumbnailUrl: 'https://via.placeholder.com/400x300/EDC22E/ffffff?text=2048',
+    thumbnailUrl: createSvgPlaceholder('2048', COLOR_PALETTE[0]),
     featured: true,
-    isNew: true,
+    isNew: false,
     isHot: true,
   },
   {
@@ -36,271 +87,61 @@ export const mockGames: MockGame[] = [
     slug: 'hextris',
     title: 'Hextris',
     titleEn: 'Hextris',
-    description: '创新六边形拼图游戏！受俄罗斯方块启发，旋转六边形消除彩色方块！',
-    descriptionEn: 'Innovative hexagonal puzzle game! Inspired by Tetris, rotate hexagon to eliminate colored blocks!',
+    description: '六边形版俄罗斯方块，旋转容器让下落方块组合出高分。',
+    descriptionEn: 'Hexagonal twist on Tetris—rotate the core to stack falling blocks.',
     iframeUrl: 'https://dj-dk.github.io/Hextris/',
-    thumbnailUrl: 'https://via.placeholder.com/400x300/FF6B6B/ffffff?text=Hextris',
+    thumbnailUrl: createSvgPlaceholder('Hextris', COLOR_PALETTE[1]),
     featured: true,
-    isNew: true,
+    isNew: false,
     isHot: true,
   },
   {
     id: 3,
-    slug: 'minesweeper',
-    title: '扫雷',
-    titleEn: 'Minesweeper',
-    description: '经典扫雷游戏！通过数字提示找出所有地雷，考验你的逻辑推理能力！',
-    descriptionEn: 'Classic Minesweeper game! Use number clues to find all mines and test your logic!',
-    iframeUrl: 'https://yanruoyi999.github.io/minesweeper/',
-    thumbnailUrl: 'https://via.placeholder.com/400x300/4ECDC4/ffffff?text=Minesweeper',
-    featured: true,
-    isNew: false,
-    isHot: true,
-  },
-  {
-    id: 4,
     slug: 'super-sudoku',
     title: '超级数独',
     titleEn: 'Super Sudoku',
-    description: '功能完整的数独游戏！3000+ 题目，5 个难度，智能提示助你成为数独大师！',
-    descriptionEn: 'Full-featured Sudoku game! 3000+ puzzles, 5 difficulty levels, smart hints to master Sudoku!',
+    description: '功能完整的数独体验，支持多种难度与提示机制。',
+    descriptionEn: 'Full Sudoku experience with multiple difficulty levels and assists.',
     iframeUrl: 'https://sudoku.tn1ck.com',
-    thumbnailUrl: 'https://via.placeholder.com/400x300/95E1D3/ffffff?text=Super+Sudoku',
+    thumbnailUrl: createSvgPlaceholder('Sudoku', COLOR_PALETTE[2]),
     featured: true,
     isNew: false,
-    isHot: false,
-  },
-  {
-    id: 5,
-    slug: 'snake',
-    title: '贪吃蛇',
-    titleEn: 'Snake',
-    description: '经典贪吃蛇游戏！控制蛇吃食物变长，小心不要撞到自己！',
-    descriptionEn: 'Classic Snake game! Control the snake to eat food and grow longer, avoid hitting yourself!',
-    iframeUrl: 'http://patorjk.com/games/snake/',
-    thumbnailUrl: 'https://via.placeholder.com/400x300/38ADA9/ffffff?text=Snake',
-    featured: false,
-    isNew: false,
-    isHot: false,
-  },
-  {
-    id: 6,
-    slug: '15-puzzle',
-    title: '15 拼图',
-    titleEn: '15 Puzzle',
-    description: '经典 15 块滑块拼图，考验空间思维与耐心。',
-    descriptionEn: 'Classic 15-tile sliding puzzle that tests spatial reasoning and patience.',
-    iframeUrl: 'https://yanruoyi999.github.io/15-Puzzle/',
-    thumbnailUrl: 'https://via.placeholder.com/400x300/6C5CE7/ffffff?text=15+Puzzle',
-    featured: true,
-    isNew: true,
-    isHot: false,
-  },
-  {
-    id: 7,
-    slug: 'crossword-puzzle',
-    title: '填字迷宫',
-    titleEn: 'Crossword Puzzle',
-    description: '在线填字游戏，拓展词汇与逻辑推理能力。',
-    descriptionEn: 'An online crossword puzzle to stretch vocabulary and logical thinking.',
-    iframeUrl: 'https://yanruoyi999.github.io/HTML5-Crossword-Puzzle-Game/',
-    thumbnailUrl: 'https://via.placeholder.com/400x300/FDCB6E/3d3d3d?text=Crossword',
-    featured: true,
-    isNew: true,
-    isHot: true,
-  },
-  {
-    id: 8,
-    slug: 'puzzle',
-    title: '拼图盒子',
-    titleEn: 'Puzzle Box',
-    description: '拖放拼图碎片，完成精美图案，适合休闲放松。',
-    descriptionEn: 'Drag-and-drop jigsaw puzzle pieces to complete beautiful patterns.',
-    iframeUrl: 'https://yanruoyi999.github.io/puzzle/',
-    thumbnailUrl: 'https://via.placeholder.com/400x300/00B894/ffffff?text=Puzzle+Box',
-    featured: false,
-    isNew: true,
-    isHot: false,
-  },
-  {
-    id: 9,
-    slug: 'xquest',
-    title: '星际探索者',
-    titleEn: 'XQuest',
-    description: '驾驶小飞船穿梭宇宙躲避障碍，体验复古街机风格的冒险。',
-    descriptionEn: 'Guide a tiny ship through space, dodge obstacles, and enjoy a retro arcade challenge.',
-    iframeUrl: 'https://yanruoyi999.github.io/xquestjs/',
-    thumbnailUrl: 'https://via.placeholder.com/400x300/0984E3/ffffff?text=XQuest',
-    featured: false,
-    isNew: true,
-    isHot: false,
-  },
-  {
-    id: 10,
-    slug: 'html5-tower-defense',
-    title: '塔防先锋',
-    titleEn: 'HTML5 Tower Defense',
-    description: '经典塔防玩法，布置炮塔抵御一波又一波的敌人进攻。',
-    descriptionEn: 'Classic tower defense gameplay—build turrets and withstand relentless waves of enemies.',
-    iframeUrl: 'https://yanruoyi999.github.io/html5-tower-defense/',
-    thumbnailUrl: 'https://via.placeholder.com/400x300/D63031/ffffff?text=Tower+Defense',
-    featured: true,
-    isNew: true,
-    isHot: true,
-  },
-  {
-    id: 11,
-    slug: 'tower-defense-game',
-    title: '塔防世界',
-    titleEn: 'Tower Defense Game',
-    description: '升级防御塔、规划路线，体验策略与操作结合的塔防挑战。',
-    descriptionEn: 'Upgrade towers, plan routes, and tackle strategic tower defense encounters.',
-    iframeUrl: 'https://yanruoyi999.github.io/Tower-Defense-Game/',
-    thumbnailUrl: 'https://via.placeholder.com/400x300/6C5CE7/ffffff?text=Tower+Defense',
-    featured: true,
-    isNew: true,
-    isHot: false,
-  },
-  {
-    id: 12,
-    slug: 'tower-defense-classic',
-    title: '塔防经典',
-    titleEn: 'Tower Defense Classic',
-    description: '回归原汁原味的经典塔防体验，合理分配资源守住阵线。',
-    descriptionEn: 'Return to classic tower defense roots—allocate resources wisely to hold the line.',
-    iframeUrl: 'https://yanruoyi999.github.io/tower-defense/',
-    thumbnailUrl: 'https://via.placeholder.com/400x300/00B894/ffffff?text=Classic+Defense',
-    featured: false,
-    isNew: true,
-    isHot: false,
-  },
-  {
-    id: 13,
-    slug: 'tower-game-starter',
-    title: '塔防起步套件',
-    titleEn: 'Tower Game Starter Kit',
-    description: '简洁明快的塔防体验，适合新手快速上手并了解核心规则。',
-    descriptionEn: 'A streamlined tower defense experience ideal for newcomers learning the core rules.',
-    iframeUrl: 'https://yanruoyi999.github.io/TowerGameStarterKit/',
-    thumbnailUrl: 'https://via.placeholder.com/400x300/FF7675/ffffff?text=Starter+Kit',
-    featured: false,
-    isNew: true,
-    isHot: false,
-  },
-  {
-    id: 14,
-    slug: 'awesome-open-source-games',
-    title: '开源游戏精选',
-    titleEn: 'Awesome Open Source Games',
-    description: '收录多款经典开源小游戏，体验社区打造的创意作品。',
-    descriptionEn: 'A curated hub of classic open-source mini games crafted by the community.',
-    iframeUrl: 'https://yanruoyi999.github.io/awesome-open-source-games/',
-    thumbnailUrl: 'https://via.placeholder.com/400x300/2D3436/ffffff?text=Open+Source',
-    featured: true,
-    isNew: true,
-    isHot: true,
-  },
-  {
-    id: 15,
-    slug: 'openfront-io',
-    title: 'OpenFront 策略',
-    titleEn: 'OpenFront IO',
-    description: '像素风即时战略，建造基地、召回兵种，保卫你的阵地。',
-    descriptionEn: 'Pixel-style RTS action—build structures, rally units, and defend your territory.',
-    iframeUrl: 'https://yanruoyi999.github.io/OpenFrontIO/',
-    thumbnailUrl: 'https://via.placeholder.com/400x300/1B9CFC/ffffff?text=OpenFront',
-    featured: false,
-    isNew: true,
-    isHot: false,
-  },
-  {
-    id: 16,
-    slug: 'circus-html5',
-    title: '马戏团冒险',
-    titleEn: 'Circus HTML5',
-    description: '控制小丑跳跃躲避障碍，挑战节奏与反应极限。',
-    descriptionEn: 'Guide a circus performer through obstacles in this fast-paced reflex challenge.',
-    iframeUrl: 'https://yanruoyi999.github.io/circushtml5/',
-    thumbnailUrl: 'https://via.placeholder.com/400x300/F39C12/ffffff?text=Circus',
-    featured: false,
-    isNew: true,
-    isHot: false,
-  },
-  {
-    id: 17,
-    slug: 'space-crusade',
-    title: '太空农场冒险',
-    titleEn: 'Rublox Space Farm',
-    description: '驾驶可爱飞船在银河农场收集能量作物，躲避太空障碍物。',
-    descriptionEn: 'Pilot a cute craft across a galactic farm, harvesting energy crops while dodging hazards.',
-    iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp39/gamehwq/20220520/14/index.htm',
-    thumbnailUrl: 'https://via.placeholder.com/400x300/6C5CE7/ffffff?text=Space+Farm',
-    featured: true,
-    isNew: true,
-    isHot: false,
-  },
-  {
-    id: 18,
-    slug: 'elemental-one',
-    title: '元素之心',
-    titleEn: 'Elemental One',
-    description: '操控元素力量解谜闯关，探索奇幻世界的秘密。',
-    descriptionEn: 'Harness elemental powers to solve puzzles and uncover a magical world.',
-    iframeUrl: 'https://yanruoyi999.github.io/elemental-one/',
-    thumbnailUrl: 'https://via.placeholder.com/400x300/00CEC9/ffffff?text=Elemental',
-    featured: false,
-    isNew: true,
-    isHot: false,
-  },
-  {
-    id: 19,
-    slug: 'ludum-dare-28',
-    title: '火男与水女孩6',
-    titleEn: 'Fireboy & Watergirl 6',
-    description: '操控火男与水女孩解开古老神庙谜题，协作通过机关。',
-    descriptionEn: 'Guide Fireboy and Watergirl through ancient temples using teamwork to solve elemental puzzles.',
-    iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp41/cwb/20221213/01/index.htm',
-    thumbnailUrl: 'https://via.placeholder.com/400x300/8E44AD/ffffff?text=F&W6',
-    featured: false,
-    isNew: true,
-    isHot: false,
-  },
-  {
-    id: 20,
-    slug: 'hexgl',
-    title: '未来竞速',
-    titleEn: 'HexGL',
-    description: '以极致速度穿梭未来赛道，躲避障碍、刷新纪录。',
-    descriptionEn: 'Race at breakneck speeds on futuristic tracks, dodging obstacles to set records.',
-    iframeUrl: 'https://yanruoyi999.github.io/HexGL/',
-    thumbnailUrl: 'https://via.placeholder.com/400x300/00A8FF/ffffff?text=HexGL',
-    featured: true,
-    isNew: true,
-    isHot: true,
-  },
-  {
-    id: 21,
-    slug: 'ludum-dare-29',
-    title: '终极忍者零',
-    titleEn: 'Final Ninja Zero',
-    description: '利用钩索和忍术在赛博城市潜行，击败敌方机器人。',
-    descriptionEn: 'Use a grapple hook and ninja skills to infiltrate a cyber city and defeat enemy robots.',
-    iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp41/liuxinyu/20221220/2/index.html',
-    thumbnailUrl: 'https://via.placeholder.com/400x300/1E3799/ffffff?text=Ninja',
-    featured: false,
-    isNew: true,
     isHot: false,
   },
 ];
+
+const sampleEntries = Array.isArray((sampleData as { games?: SampleGameEntry[] }).games)
+  ? (sampleData as { games: SampleGameEntry[] }).games
+  : [];
+
+const generatedMockGames = buildMockGamesFromSample(sampleEntries).filter((game) => game.iframeUrl);
+
+export const mockGames: MockGame[] =
+  generatedMockGames.length > 0 ? generatedMockGames : FALLBACK_GAMES;
+
+const legacySlugMap: Record<string, string> = {
+  'space-crusade': 'adam-and-eve-4',
+  'ludum-dare-28': 'adam-and-eve-5-part-1',
+  'ludum-dare-29': 'adam-and-eve-6',
+};
 
 export function getMockGameById(id: number): MockGame | undefined {
   return mockGames.find((game) => game.id === id);
 }
 
 export function getMockGameBySlug(slug: string): MockGame | undefined {
-  return mockGames.find((game) => game.slug === slug);
+  const normalized = slug.trim().toLowerCase();
+  const matched = mockGames.find((game) => game.slug === normalized);
+  if (matched) return matched;
+
+  const aliasTarget = legacySlugMap[normalized];
+  if (aliasTarget) {
+    return mockGames.find((game) => game.slug === aliasTarget);
+  }
+  return undefined;
 }
 
 export function getFeaturedMockGames(): MockGame[] {
   return mockGames.filter((game) => game.featured);
 }
+
