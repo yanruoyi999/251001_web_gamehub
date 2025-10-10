@@ -228,7 +228,7 @@ export const mockGames: MockGame[] = [
   },
   {
     id: 17,
-    slug: 'rublox-space-farm',
+    slug: 'space-crusade',
     title: '太空农场冒险',
     titleEn: 'Rublox Space Farm',
     description: '驾驶可爱飞船在银河农场收集能量作物，躲避太空障碍物。',
@@ -254,7 +254,7 @@ export const mockGames: MockGame[] = [
   },
   {
     id: 19,
-    slug: 'fireboy-and-watergirl-6',
+    slug: 'ludum-dare-28',
     title: '火男与水女孩6',
     titleEn: 'Fireboy & Watergirl 6',
     description: '操控火男与水女孩解开古老神庙谜题，协作通过机关。',
@@ -280,7 +280,7 @@ export const mockGames: MockGame[] = [
   },
   {
     id: 21,
-    slug: 'final-ninja-zero',
+    slug: 'ludum-dare-29',
     title: '终极忍者零',
     titleEn: 'Final Ninja Zero',
     description: '利用钩索和忍术在赛博城市潜行，击败敌方机器人。',
