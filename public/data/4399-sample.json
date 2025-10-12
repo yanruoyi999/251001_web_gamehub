@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2025-10-10T22:37:13.880Z",
-  "total": 24,
+  "generatedAt": "2025-10-12T02:35:58.053Z",
+  "total": 32,
   "games": [
     {
       "slug": "adam-and-eve-4",
@@ -216,6 +216,78 @@
       "iframeUrl": "https://szhong.4399.com/4399swf//upload_swf/ftp35/liuxinyu/20210128/x5/index.html",
       "sourcePageUrl": "https://ad-freegames.github.io/4399/bad-ice-cream-3.html",
       "sourcePath": "4399/bad-ice-cream-3.html",
+      "sourceHost": "szhong.4399.com"
+    },
+    {
+      "slug": "bad-ice-cream",
+      "title": "Bad Ice Cream",
+      "titleEn": "Bad Ice Cream",
+      "iframeUrl": "https://szhong.4399.com/4399swf//upload_swf/ftp35/liuxinyu/20210128/x4/index.html",
+      "sourcePageUrl": "https://ad-freegames.github.io/4399/bad-ice-cream.html",
+      "sourcePath": "4399/bad-ice-cream.html",
+      "sourceHost": "szhong.4399.com"
+    },
+    {
+      "slug": "balance-duel-free-online-games-no-ads-no-downloads",
+      "title": "Balance Duel - Free Online Games No Ads No Downloads",
+      "titleEn": "Balance Duel - Free Online Games No Ads No Downloads",
+      "iframeUrl": "https://szhong.4399.com/4399swf//upload_swf/ftp43/chenling/20230801/05/index.html",
+      "sourcePageUrl": "https://ad-freegames.github.io/4399/balance-duel.html",
+      "sourcePath": "4399/balance-duel.html",
+      "sourceHost": "szhong.4399.com"
+    },
+    {
+      "slug": "beat-line",
+      "title": "Beat Line",
+      "titleEn": "Beat Line",
+      "iframeUrl": "https://szhong.4399.com/4399swf//upload_swf/ftp36/gamehwq/20210426/15/index.html",
+      "sourcePageUrl": "https://ad-freegames.github.io/4399/beat-line.html",
+      "sourcePath": "4399/beat-line.html",
+      "sourceHost": "szhong.4399.com"
+    },
+    {
+      "slug": "big-tower-tiny-square-2",
+      "title": "Big Tower Tiny Square 2",
+      "titleEn": "Big Tower Tiny Square 2",
+      "iframeUrl": "https://szhong.4399.com/4399swf//upload_swf/ftp40/liuxinyu/20221028/2/index.html",
+      "sourcePageUrl": "https://ad-freegames.github.io/4399/big-tower-tiny-square-2.html",
+      "sourcePath": "4399/big-tower-tiny-square-2.html",
+      "sourceHost": "szhong.4399.com"
+    },
+    {
+      "slug": "big-tower-tiny-square",
+      "title": "Big Tower Tiny Square",
+      "titleEn": "Big Tower Tiny Square",
+      "iframeUrl": "https://szhong.4399.com/4399swf//upload_swf/ftp40/liuxinyu/20221028/1/index.html",
+      "sourcePageUrl": "https://ad-freegames.github.io/4399/big-tower-tiny-square.html",
+      "sourcePath": "4399/big-tower-tiny-square.html",
+      "sourceHost": "szhong.4399.com"
+    },
+    {
+      "slug": "blast-red",
+      "title": "Blast Red",
+      "titleEn": "Blast Red",
+      "iframeUrl": "https://szhong.4399.com/4399swf//upload_swf/ftp37/gamehwq/20220110/14/index.htm",
+      "sourcePageUrl": "https://ad-freegames.github.io/4399/blast-red.html",
+      "sourcePath": "4399/blast-red.html",
+      "sourceHost": "szhong.4399.com"
+    },
+    {
+      "slug": "blockman-climb-free-online-games-no-ads-no-downloads",
+      "title": "Blockman Climb - Free Online Games No Ads No Downloads",
+      "titleEn": "Blockman Climb - Free Online Games No Ads No Downloads",
+      "iframeUrl": "https://szhong.4399.com/4399swf//upload_swf/ftp42/gamehwq/20230406/11/index.htm",
+      "sourcePageUrl": "https://ad-freegames.github.io/4399/blockman-climb.html",
+      "sourcePath": "4399/blockman-climb.html",
+      "sourceHost": "szhong.4399.com"
+    },
+    {
+      "slug": "blumgi-ball",
+      "title": "Blumgi Ball",
+      "titleEn": "Blumgi Ball",
+      "iframeUrl": "https://szhong.4399.com/4399swf//upload_swf/ftp38/liuxinyu/20220329/7/index.html",
+      "sourcePageUrl": "https://ad-freegames.github.io/4399/blumgi-ball.html",
+      "sourcePath": "4399/blumgi-ball.html",
       "sourceHost": "szhong.4399.com"
     }
   ]

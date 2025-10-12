@@ -26,6 +26,10 @@ interface SampleGameEntry {
   iframeUrl?: string;
 }
 
+const MAX_IMPORTED_GAMES = 32;
+const FEATURED_COUNT = 6;
+const NEW_THRESHOLD = 18;
+
 const COLOR_PALETTE = [
   '4C1D95',
   '7C3AED',
@@ -44,7 +48,7 @@ function createSvgPlaceholder(title: string, color: string): string {
 }
 
 function buildMockGamesFromSample(entries: SampleGameEntry[]): MockGame[] {
-  return entries.slice(0, 24).map((entry, index) => {
+  return entries.slice(0, MAX_IMPORTED_GAMES).map((entry, index) => {
     const slug = (entry.slug ?? `game-${index + 1}`).trim();
     const englishTitle = (entry.titleEn ?? entry.title ?? `Game ${index + 1}`).trim();
     const title = englishTitle;
@@ -60,8 +64,8 @@ function buildMockGamesFromSample(entries: SampleGameEntry[]): MockGame[] {
       descriptionEn: `Play “${englishTitle}”, an HTML5 mini game sourced from 4399. No downloads required.`,
       iframeUrl,
       thumbnailUrl: createSvgPlaceholder(englishTitle, color),
-      featured: index < 6,
-      isNew: index < 12,
+      featured: index < FEATURED_COUNT,
+      isNew: index < NEW_THRESHOLD,
       isHot: index % 3 === 0,
     };
   });
@@ -144,4 +148,3 @@ export function getMockGameBySlug(slug: string): MockGame | undefined {
 export function getFeaturedMockGames(): MockGame[] {
   return mockGames.filter((game) => game.featured);
 }
-
