@@ -73,16 +73,27 @@ export default function PrivacyPage({ params }: PrivacyPageProps) {
           <h2 className="text-2xl font-semibold text-gray-900">
             {isZh ? '3. Cookies使用' : '3. Cookie Usage'}
           </h2>
-          <p className="mt-4 text-gray-700">
-            {isZh
-              ? '我们使用Cookie来改善用户体验。您可以通过浏览器设置管理Cookie偏好，但禁用Cookie可能影响网站功能。'
-              : 'We use cookies to improve user experience. You can manage cookie preferences through browser settings, but disabling cookies may affect website functionality.'}
-          </p>
-        </section>
+        <p className="mt-4 text-gray-700">
+          {isZh
+            ? '我们使用Cookie来改善用户体验。您可以通过浏览器设置管理Cookie偏好，但禁用Cookie可能影响网站功能。'
+            : 'We use cookies to improve user experience. You can manage cookie preferences through browser settings, but disabling cookies may affect website functionality.'}
+        </p>
+        <p className="mt-3 text-sm text-gray-600">
+          {isZh ? '了解更多：' : 'Learn more:'}{' '}
+          <a
+            href="https://www.allaboutcookies.org/"
+            target="_blank"
+            rel="noopener"
+            className="text-indigo-600 hover:text-indigo-500"
+          >
+            {isZh ? 'All About Cookies 指南' : 'All About Cookies guide'}
+          </a>
+        </p>
+      </section>
 
-        <section className="mt-8">
-          <h2 className="text-2xl font-semibold text-gray-900">
-            {isZh ? '4. 第三方服务' : '4. Third-Party Services'}
+      <section className="mt-8">
+        <h2 className="text-2xl font-semibold text-gray-900">
+          {isZh ? '4. 第三方服务' : '4. Third-Party Services'}
           </h2>
           <p className="mt-4 text-gray-700">
             {isZh ? '我们使用以下第三方服务：' : 'We use the following third-party services:'}
@@ -110,6 +121,30 @@ export default function PrivacyPage({ params }: PrivacyPageProps) {
                 className="text-indigo-600 hover:text-indigo-500"
               >
                 {isZh ? 'Google隐私政策' : 'Google Privacy Policy'}
+              </a>
+            </li>
+            <li>
+              <strong>Cloudinary</strong>:{' '}
+              {isZh ? '用于托管和优化图片资源' : 'For hosting and optimising media assets'} -{' '}
+              <a
+                href="https://cloudinary.com/privacy"
+                target="_blank"
+                rel="noopener"
+                className="text-indigo-600 hover:text-indigo-500"
+              >
+                {isZh ? 'Cloudinary 隐私政策' : 'Cloudinary Privacy Policy'}
+              </a>
+            </li>
+            <li>
+              <strong>Upstash Redis</strong>:{' '}
+              {isZh ? '用于缓存和速率限制' : 'For caching and rate limiting'} -{' '}
+              <a
+                href="https://upstash.com/docs/general/legal/privacy"
+                target="_blank"
+                rel="noopener"
+                className="text-indigo-600 hover:text-indigo-500"
+              >
+                {isZh ? 'Upstash 隐私政策' : 'Upstash Privacy Policy'}
               </a>
             </li>
           </ul>

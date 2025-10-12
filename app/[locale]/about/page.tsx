@@ -17,6 +17,44 @@ export async function generateMetadata({ params }: AboutPageProps): Promise<Meta
 
 export default function AboutPage({ params }: AboutPageProps) {
   const isZh = params.locale === 'zh';
+  const techStackItems = [
+    {
+      href: 'https://nextjs.org/',
+      name: 'Next.js 14',
+      descriptionZh: '（React 全栈框架）',
+      descriptionEn: ' (React Framework)',
+    },
+    {
+      href: 'https://www.typescriptlang.org/',
+      name: 'TypeScript',
+      descriptionZh: '（为 JavaScript 提供静态类型）',
+      descriptionEn: ' (Strongly typed JavaScript)',
+    },
+    {
+      href: 'https://tailwindcss.com/',
+      name: 'Tailwind CSS',
+      descriptionZh: '（原子化 CSS 框架）',
+      descriptionEn: ' (Utility-first CSS framework)',
+    },
+    {
+      href: 'https://www.postgresql.org/',
+      name: 'PostgreSQL',
+      descriptionZh: '（企业级关系型数据库）',
+      descriptionEn: ' (Relational database)',
+    },
+    {
+      href: 'https://redis.io/',
+      name: 'Redis',
+      descriptionZh: '（高性能内存缓存）',
+      descriptionEn: ' (In-memory cache)',
+    },
+    {
+      href: 'https://www.meilisearch.com/',
+      name: 'Meilisearch',
+      descriptionZh: '（开源全文搜索引擎）',
+      descriptionEn: ' (Open-source search engine)',
+    },
+  ];
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-12">
@@ -98,25 +136,25 @@ export default function AboutPage({ params }: AboutPageProps) {
           <p className="mt-4 text-gray-700">
             {isZh ? 'GameHub使用现代化的技术构建：' : 'GameHub is built with modern technologies:'}
           </p>
-          <ul className="mt-4 grid gap-2 md:grid-cols-2">
-            <li className="flex items-center gap-2 text-gray-700">
-              <span className="text-indigo-600">▶</span> Next.js 14 (React Framework)
-            </li>
-            <li className="flex items-center gap-2 text-gray-700">
-              <span className="text-indigo-600">▶</span> TypeScript
-            </li>
-            <li className="flex items-center gap-2 text-gray-700">
-              <span className="text-indigo-600">▶</span> Tailwind CSS
-            </li>
-            <li className="flex items-center gap-2 text-gray-700">
-              <span className="text-indigo-600">▶</span> PostgreSQL + Drizzle ORM
-            </li>
-            <li className="flex items-center gap-2 text-gray-700">
-              <span className="text-indigo-600">▶</span> Redis (Caching)
-            </li>
-            <li className="flex items-center gap-2 text-gray-700">
-              <span className="text-indigo-600">▶</span> MeiliSearch (Search Engine)
-            </li>
+          <ul className="mt-4 grid gap-3 md:grid-cols-2">
+            {techStackItems.map((item) => (
+              <li key={item.name} className="flex items-center gap-2 text-gray-700">
+                <span className="text-indigo-600">▶</span>
+                <span>
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener"
+                    className="text-indigo-600 transition hover:text-indigo-500"
+                  >
+                    {item.name}
+                  </a>
+                  <span className="text-gray-600">
+                    {isZh ? item.descriptionZh : item.descriptionEn}
+                  </span>
+                </span>
+              </li>
+            ))}
           </ul>
         </section>
 

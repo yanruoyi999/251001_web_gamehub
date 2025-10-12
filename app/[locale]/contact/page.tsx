@@ -150,6 +150,32 @@ export default function ContactPage({ params }: ContactPageProps) {
 
         <section className="mt-12">
           <h2 className="text-2xl font-semibold text-gray-900">
+            {isZh ? '📚 行业资源' : '📚 Industry Resources'}
+          </h2>
+          <p className="mt-4 text-gray-700">
+            {isZh
+              ? '想进一步优化您的 HTML5 游戏？以下资源为开发者提供最佳实践与审核指南：'
+              : 'Want to refine your HTML5 release? This resource shares best practices and review guidelines:'}
+          </p>
+          <ul className="mt-4 space-y-2 text-sm text-gray-600">
+            <li>
+              <a
+                href="https://developers.google.com/games"
+                target="_blank"
+                rel="noopener"
+                className="text-indigo-600 hover:text-indigo-500"
+              >
+                {isZh ? 'Google 游戏开发者文档' : 'Google Game Developers documentation'}
+              </a>
+              {isZh
+                ? ' —— 了解跨平台服务、AdSense 合规与盈利策略。'
+                : ' — Explore cross-platform services, AdSense compliance, and monetisation strategies.'}
+            </li>
+          </ul>
+        </section>
+
+        <section className="mt-12">
+          <h2 className="text-2xl font-semibold text-gray-900">
             {isZh ? '🌐 社交媒体' : '🌐 Social Media'}
           </h2>
           <p className="mt-4 text-gray-700">
