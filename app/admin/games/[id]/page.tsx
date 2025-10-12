@@ -40,6 +40,9 @@ export default async function AdminGameDetailPage({ params }: AdminGameDetailPag
     isNew: gameDetail.isNew,
     isHot: gameDetail.isHot,
     featured: gameDetail.featured,
+    developerName: gameDetail.developerName,
+    developerUrl: gameDetail.developerUrl,
+    sourceUrl: gameDetail.sourceUrl,
     categoryIds: gameDetail.categories.map((category) => category.id),
     tagIds: gameDetail.tags.map((tag) => tag.id),
   };

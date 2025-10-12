@@ -47,6 +47,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 0.75,
     },
+    // AdSense必需页面
+    {
+      path: '/privacy',
+      file: ['app', '[locale]', 'privacy', 'page.tsx'],
+      changeFrequency: 'monthly',
+      priority: 0.5,
+    },
+    {
+      path: '/about',
+      file: ['app', '[locale]', 'about', 'page.tsx'],
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
+    {
+      path: '/contact',
+      file: ['app', '[locale]', 'contact', 'page.tsx'],
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
   ];
   const guides = getSeoLandingPages();
   const mockGamesUpdatedAt = getFileLastModified('lib', 'mock-games.ts') ?? new Date();

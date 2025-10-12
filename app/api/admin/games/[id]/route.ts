@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { GameService } from '@/services';
 import { isAdminRequestAuthenticated } from '@/lib/auth/admin';
+import { isValidHttpsUrl } from '@/lib/utils/validation';
 
 export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
   if (!isAdminRequestAuthenticated(request)) {
@@ -68,6 +69,34 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
         .map((value: unknown) => Number(value))
         .filter((value: number) => Number.isInteger(value) && value > 0);
       updates.tagIds = tagIds;
+    }
+
+    if (typeof body.developerName === 'string') {
+      updates.developerName = body.developerName.trim() || null;
+    }
+
+    if (typeof body.developerUrl === 'string') {
+      const url = body.developerUrl.trim();
+      if (url) {
+        if (!isValidHttpsUrl(url)) {
+          return NextResponse.json({ error: 'Developer URL must be a valid HTTPS link' }, { status: 400 });
+        }
+        updates.developerUrl = url;
+      } else {
+        updates.developerUrl = null;
+      }
+    }
+
+    if (typeof body.sourceUrl === 'string') {
+      const url = body.sourceUrl.trim();
+      if (url) {
+        if (!isValidHttpsUrl(url)) {
+          return NextResponse.json({ error: 'Source URL must be a valid HTTPS link' }, { status: 400 });
+        }
+        updates.sourceUrl = url;
+      } else {
+        updates.sourceUrl = null;
+      }
     }
 
     if (Object.keys(updates).length === 0) {

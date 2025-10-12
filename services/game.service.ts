@@ -13,7 +13,7 @@ import { ensureUniqueSlug, generateSlug, isValidSlug } from '@/lib/utils/slug';
 import { GameCacheKeys, CacheTTL } from '@/lib/utils/cache-keys';
 import { getJson, setJson, delKey } from '@/lib/utils/redis-helper';
 import { redis } from '@/lib/redis';
-import { isValidId, validatePagination, isValidUrl } from '@/lib/utils/validation';
+import { isValidId, validatePagination, isValidUrl, isValidHttpsUrl } from '@/lib/utils/validation';
 
 export type GameRecord = typeof games.$inferSelect;
 export type GameStatsRecord = typeof gameStats.$inferSelect;
@@ -57,6 +57,9 @@ export interface CreateGameInput {
   isNew?: boolean;
   isHot?: boolean;
   status?: 'active' | 'inactive' | 'pending';
+  developerName?: string | null;
+  developerUrl?: string | null;
+  sourceUrl?: string | null;
   categoryIds?: number[];
   tagIds?: number[];
 }
@@ -74,6 +77,9 @@ export interface UpdateGameInput {
   isNew?: boolean;
   isHot?: boolean;
   status?: 'active' | 'inactive' | 'pending';
+  developerName?: string | null;
+  developerUrl?: string | null;
+  sourceUrl?: string | null;
   categoryIds?: number[];
   tagIds?: number[];
 }
@@ -293,8 +299,21 @@ export class GameService {
    * 创建游戏
    */
   static async createGame(input: CreateGameInput): Promise<GameRecord> {
-    if (!isValidUrl(input.iframeUrl)) {
+    const iframeUrl = input.iframeUrl?.trim();
+    if (!iframeUrl || !isValidUrl(iframeUrl)) {
       throw new Error('Invalid iframe URL');
+    }
+
+    const sanitizedDeveloperName = input.developerName?.trim() || null;
+    const sanitizedDeveloperUrl = input.developerUrl?.trim() || null;
+    const sanitizedSourceUrl = input.sourceUrl?.trim() || null;
+
+    if (sanitizedDeveloperUrl && !isValidHttpsUrl(sanitizedDeveloperUrl)) {
+      throw new Error('Developer URL must be a valid HTTPS link');
+    }
+
+    if (sanitizedSourceUrl && !isValidHttpsUrl(sanitizedSourceUrl)) {
+      throw new Error('Source URL must be a valid HTTPS link');
     }
 
     const slugSource = input.slug ?? generateSlug(input.title);
@@ -316,11 +335,14 @@ export class GameService {
         instructions: input.instructions,
         instructionsEn: input.instructionsEn,
         thumbnailUrl: input.thumbnailUrl,
-        iframeUrl: input.iframeUrl,
+        iframeUrl,
         slug: uniqueSlug,
         isNew: input.isNew ?? true,
         isHot: input.isHot ?? false,
         status: input.status ?? 'active',
+        developerName: sanitizedDeveloperName,
+        developerUrl: sanitizedDeveloperUrl,
+        sourceUrl: sanitizedSourceUrl,
       })
       .returning();
 
@@ -363,6 +385,39 @@ export class GameService {
 
     if (updates.iframeUrl && !isValidUrl(updates.iframeUrl)) {
       throw new Error('Invalid iframe URL');
+    }
+
+    if (Object.prototype.hasOwnProperty.call(updates, 'developerName')) {
+      if (typeof updates.developerName === 'string') {
+        const trimmed = updates.developerName.trim();
+        updates.developerName = trimmed ? trimmed : null;
+      } else {
+        updates.developerName = null;
+      }
+    }
+
+    if (Object.prototype.hasOwnProperty.call(updates, 'developerUrl')) {
+      const raw = typeof updates.developerUrl === 'string' ? updates.developerUrl.trim() : '';
+      if (raw) {
+        if (!isValidHttpsUrl(raw)) {
+          throw new Error('Developer URL must be a valid HTTPS link');
+        }
+        updates.developerUrl = raw;
+      } else {
+        updates.developerUrl = null;
+      }
+    }
+
+    if (Object.prototype.hasOwnProperty.call(updates, 'sourceUrl')) {
+      const raw = typeof updates.sourceUrl === 'string' ? updates.sourceUrl.trim() : '';
+      if (raw) {
+        if (!isValidHttpsUrl(raw)) {
+          throw new Error('Source URL must be a valid HTTPS link');
+        }
+        updates.sourceUrl = raw;
+      } else {
+        updates.sourceUrl = null;
+      }
     }
 
     const [updated] = await db

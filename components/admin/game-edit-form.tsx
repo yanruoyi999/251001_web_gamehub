@@ -24,6 +24,9 @@ interface AdminGameEditFormProps {
     isNew?: boolean | null;
     isHot?: boolean | null;
     featured?: boolean | null;
+    developerName?: string | null;
+    developerUrl?: string | null;
+    sourceUrl?: string | null;
     categoryIds: number[];
     tagIds: number[];
   };
@@ -50,6 +53,9 @@ export function AdminGameEditForm({ game, categories, tags }: AdminGameEditFormP
   const [isNew, setIsNew] = useState(Boolean(game.isNew));
   const [isHot, setIsHot] = useState(Boolean(game.isHot));
   const [featured, setFeatured] = useState(Boolean(game.featured));
+  const [developerName, setDeveloperName] = useState(game.developerName ?? '');
+  const [developerUrl, setDeveloperUrl] = useState(game.developerUrl ?? '');
+  const [sourceUrl, setSourceUrl] = useState(game.sourceUrl ?? '');
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
@@ -80,6 +86,9 @@ export function AdminGameEditForm({ game, categories, tags }: AdminGameEditFormP
             isNew,
             isHot,
             featured,
+            developerName: developerName.trim() || null,
+            developerUrl: developerUrl.trim() || null,
+            sourceUrl: sourceUrl.trim() || null,
             categoryIds: selectedCategories,
             tagIds: selectedTags,
           }),
@@ -179,19 +188,59 @@ export function AdminGameEditForm({ game, categories, tags }: AdminGameEditFormP
         />
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="space-y-2">
+        <label className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+          Thumbnail URL
+        </label>
+        <input
+          type="url"
+          value={thumbnailUrl}
+          onChange={(event) => setThumbnailUrl(event.target.value)}
+          className="w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          placeholder="https://..."
+        />
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-3">
         <div className="space-y-2">
           <label className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-            Thumbnail URL
+            Developer Name (SEO)
+          </label>
+          <input
+            type="text"
+            value={developerName}
+            onChange={(event) => setDeveloperName(event.target.value)}
+            className="w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            placeholder="Game Studio"
+          />
+        </div>
+        <div className="space-y-2">
+          <label className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+            Developer URL (SEO)
           </label>
           <input
             type="url"
-            value={thumbnailUrl}
-            onChange={(event) => setThumbnailUrl(event.target.value)}
+            value={developerUrl}
+            onChange={(event) => setDeveloperUrl(event.target.value)}
             className="w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            placeholder="https://..."
+            placeholder="https://developer.com"
           />
         </div>
+        <div className="space-y-2">
+          <label className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+            Source/Official URL (SEO)
+          </label>
+          <input
+            type="url"
+            value={sourceUrl}
+            onChange={(event) => setSourceUrl(event.target.value)}
+            className="w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            placeholder="https://official-game.com"
+          />
+        </div>
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-2">
         <div className="grid grid-cols-3 gap-3">
           <label className="flex items-center gap-2 text-xs text-slate-300">
             <input
@@ -301,6 +350,9 @@ export function AdminGameEditForm({ game, categories, tags }: AdminGameEditFormP
             setIsNew(Boolean(game.isNew));
             setIsHot(Boolean(game.isHot));
             setFeatured(Boolean(game.featured));
+            setDeveloperName(game.developerName ?? '');
+            setDeveloperUrl(game.developerUrl ?? '');
+            setSourceUrl(game.sourceUrl ?? '');
             setError(null);
             setSuccess(null);
           }}

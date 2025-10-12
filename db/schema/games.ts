@@ -24,6 +24,11 @@ export const games = pgTable('games', {
   thumbnailUrl: varchar('thumbnail_url', { length: 500 }),
   iframeUrl: varchar('iframe_url', { length: 500 }).notNull(),
 
+  // SEO 外链字段
+  developerName: varchar('developer_name', { length: 255 }), // 开发者名称
+  developerUrl: varchar('developer_url', { length: 500 }), // 开发者官网
+  sourceUrl: varchar('source_url', { length: 500 }), // 游戏原始链接/官方页面
+
   // 分类标记
   featured: boolean('featured').default(false), // 精选游戏
   isNew: boolean('is_new').default(true), // 新游戏（可通过定时任务自动更新）

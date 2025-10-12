@@ -95,6 +95,9 @@ export async function POST(request: NextRequest) {
       isNew: body.isNew,
       isHot: body.isHot,
       status: body.status,
+      developerName: body.developerName,
+      developerUrl: body.developerUrl,
+      sourceUrl: body.sourceUrl,
       categoryIds: body.categoryIds,
       tagIds: body.tagIds,
     });

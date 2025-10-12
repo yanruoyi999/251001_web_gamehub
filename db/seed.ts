@@ -87,6 +87,10 @@ async function seed() {
         isNew: false,
         isHot: true,
         status: 'active' as const,
+        // SEO外链字段示例
+        developerName: 'Space Games Studio',
+        developerUrl: 'https://www.kongregate.com',
+        sourceUrl: 'https://www.kongregate.com/games/space-shooter',
       },
       {
         slug: 'sudoku-master',
@@ -102,6 +106,10 @@ async function seed() {
         isNew: true,
         isHot: false,
         status: 'active' as const,
+        // SEO外链字段示例
+        developerName: 'Puzzle Masters Inc',
+        developerUrl: 'https://itch.io',
+        sourceUrl: 'https://itch.io/games/sudoku-master',
       },
       {
         slug: 'mystery-island',
@@ -117,6 +125,10 @@ async function seed() {
         isNew: true,
         isHot: true,
         status: 'active' as const,
+        // SEO外链字段示例
+        developerName: 'Adventure Labs',
+        developerUrl: 'https://gamejolt.com',
+        sourceUrl: 'https://gamejolt.com/games/mystery-island',
       },
       {
         slug: 'tower-defense',

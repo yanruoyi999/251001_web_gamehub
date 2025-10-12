@@ -16,6 +16,7 @@
     "db:seed": "tsx db/seed.ts",
     "verify:services": "tsx scripts/verify-services.ts",
     "meilisearch:setup": "tsx scripts/meilisearch-setup.ts",
+    "check:links": "tsx scripts/check-external-links.ts",
     "test": "vitest",
     "test:watch": "vitest --watch",
     "test:e2e": "playwright test",

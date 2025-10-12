@@ -31,6 +31,9 @@ function buildGameDetailFromMock(mock: MockGame): GameDetail {
     isNew: mock.isNew,
     isHot: mock.isHot,
     status: 'active',
+    developerName: null,
+    developerUrl: null,
+    sourceUrl: null,
     publishedAt: now,
     createdAt: now,
     updatedAt: now,
@@ -563,6 +566,54 @@ export default async function GamePage({ params }: GamePageProps) {
                   </div>
                   <div className="text-gray-600">{publishedLabel}</div>
                 </div>
+                {game.developerName && (
+                  <div className="rounded-lg border border-indigo-100 bg-indigo-50/50 p-3">
+                    <div className="mb-1 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-indigo-700">
+                      <span>👨‍💻</span>
+                      {locale === 'zh' ? '官方开发者' : 'Official Developer'}
+                    </div>
+                    {game.developerUrl ? (
+                      <a
+                        href={game.developerUrl}
+                        target="_blank"
+                        rel="noopener"
+                        className="inline-flex items-center gap-1 text-sm font-medium text-indigo-600 hover:text-indigo-500"
+                        title={locale === 'zh' ? '访问开发者官网' : 'Visit developer website'}
+                      >
+                        <span>{game.developerName}</span>
+                        <span className="text-xs">↗</span>
+                      </a>
+                    ) : (
+                      <div className="text-sm font-medium text-gray-800">{game.developerName}</div>
+                    )}
+                    <p className="mt-1 text-xs text-gray-600">
+                      {locale === 'zh' ? '已验证的游戏开发商' : 'Verified game developer'}
+                    </p>
+                  </div>
+                )}
+                {game.sourceUrl && (
+                  <div className="rounded-lg border border-green-100 bg-green-50/50 p-3">
+                    <div className="mb-1 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-green-700">
+                      <span>🔗</span>
+                      {locale === 'zh' ? '官方来源' : 'Official Source'}
+                    </div>
+                    <a
+                      href={game.sourceUrl}
+                      target="_blank"
+                      rel="noopener"
+                      className="inline-flex items-center gap-2 rounded-md bg-green-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-green-700"
+                      title={locale === 'zh' ? '在官方网站体验完整版' : 'Play full version on official site'}
+                    >
+                      <span>{locale === 'zh' ? '访问官方网站' : 'Visit Official Site'}</span>
+                      <span>↗</span>
+                    </a>
+                    <p className="mt-2 text-xs text-gray-600">
+                      {locale === 'zh'
+                        ? '此链接将跳转到游戏官方网站'
+                        : 'This link redirects to the official game site'}
+                    </p>
+                  </div>
+                )}
                 <div>
                   <div className="mb-1 font-medium text-gray-900">
                     {locale === 'zh' ? '游戏地址' : 'Game URL'}
