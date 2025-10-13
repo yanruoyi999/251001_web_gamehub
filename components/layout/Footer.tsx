@@ -153,8 +153,24 @@ export function Footer() {
               Game Jolt
             </a>
             <span className="text-gray-300">|</span>
+            <a href="https://www.crazygames.com" target="_blank" rel="noopener" className="text-gray-600 hover:text-indigo-600">
+              CrazyGames
+            </a>
+            <span className="text-gray-300">|</span>
+            <a href="https://poki.com" target="_blank" rel="noopener" className="text-gray-600 hover:text-indigo-600">
+              Poki
+            </a>
+            <span className="text-gray-300">|</span>
             <a href="https://html5games.com" target="_blank" rel="noopener" className="text-gray-600 hover:text-indigo-600">
               HTML5 Games
+            </a>
+            <span className="text-gray-300">|</span>
+            <a href="https://www.adfreegames.com" target="_blank" rel="noopener" className="text-gray-600 hover:text-indigo-600">
+              AdFreeGames
+            </a>
+            <span className="text-gray-300">|</span>
+            <a href="https://ad-freegames.github.io" target="_blank" rel="noopener" className="text-gray-600 hover:text-indigo-600">
+              Ad-Free Games Hub
             </a>
             <span className="text-gray-300">|</span>
             <a href="https://phaser.io" target="_blank" rel="noopener" className="text-gray-600 hover:text-indigo-600">

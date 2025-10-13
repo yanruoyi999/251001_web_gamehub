@@ -25,7 +25,11 @@ const FOOTER_LINKS = [
   { name: 'Kongregate', url: 'https://www.kongregate.com', category: 'Platform' },
   { name: 'Newgrounds', url: 'https://www.newgrounds.com/games', category: 'Platform' },
   { name: 'Game Jolt', url: 'https://gamejolt.com', category: 'Platform' },
+  { name: 'CrazyGames', url: 'https://www.crazygames.com', category: 'Platform' },
+  { name: 'Poki', url: 'https://poki.com', category: 'Platform' },
   { name: 'HTML5 Games', url: 'https://html5games.com', category: 'Resource' },
+  { name: 'AdFreeGames', url: 'https://www.adfreegames.com', category: 'Curated' },
+  { name: 'Ad-Free Games Hub', url: 'https://ad-freegames.github.io', category: 'Curated' },
   { name: 'Phaser', url: 'https://phaser.io', category: 'Framework' },
   { name: 'PlayCanvas', url: 'https://playcanvas.com', category: 'Framework' },
 ];
@@ -80,7 +84,7 @@ async function checkLink(url: string): Promise<LinkCheckResult> {
  * 检查页脚友情链接
  */
 async function checkFooterLinks(): Promise<void> {
-  console.log('\n📋 检查页脚友情链接 (共 7 个)\n');
+  console.log('\n📋 检查页脚友情链接 (共 11 个)\n');
   console.log('─'.repeat(80));
 
   let failedCount = 0;

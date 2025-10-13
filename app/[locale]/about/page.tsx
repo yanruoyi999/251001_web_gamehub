@@ -176,6 +176,42 @@ export default function AboutPage({ params }: AboutPageProps) {
               Kongregate
             </a>
             <span className="text-gray-300">|</span>
+            <a
+              href="https://www.crazygames.com"
+              target="_blank"
+              rel="noopener"
+              className="text-indigo-600 hover:text-indigo-500"
+            >
+              {isZh ? 'CrazyGames（全球网页游戏平台）' : 'CrazyGames (Global web arcade)'}
+            </a>
+            <span className="text-gray-300">|</span>
+            <a
+              href="https://poki.com"
+              target="_blank"
+              rel="noopener"
+              className="text-indigo-600 hover:text-indigo-500"
+            >
+              {isZh ? 'Poki（热门休闲游戏合集）' : 'Poki (Casual hits collection)'}
+            </a>
+            <span className="text-gray-300">|</span>
+            <a
+              href="https://www.adfreegames.com"
+              target="_blank"
+              rel="noopener"
+              className="text-indigo-600 hover:text-indigo-500"
+            >
+              {isZh ? 'AdFreeGames（无广告游戏目录）' : 'AdFreeGames (Ad-free library)'}
+            </a>
+            <span className="text-gray-300">|</span>
+            <a
+              href="https://ad-freegames.github.io"
+              target="_blank"
+              rel="noopener"
+              className="text-indigo-600 hover:text-indigo-500"
+            >
+              {isZh ? 'Ad-Free Games Hub（GitHub）' : 'Ad-Free Games Hub (GitHub)'}
+            </a>
+            <span className="text-gray-300">|</span>
             <a href="https://phaser.io" target="_blank" rel="noopener" className="text-indigo-600 hover:text-indigo-500">
               Phaser
             </a>
