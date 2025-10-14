@@ -1,7 +1,7 @@
 import { statSync } from 'node:fs';
 import path from 'node:path';
 import type { MetadataRoute } from 'next';
-import { locales } from '@/i18n/config';
+import { defaultLocale, locales } from '@/i18n/config';
 import { getSeoLandingPages } from '@/lib/seo-landing-content';
 import { mockGames } from '@/lib/mock-games';
 import { buildAbsoluteUrl } from '@/lib/seo';
@@ -81,6 +81,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
         changeFrequency: staticPath.changeFrequency,
         priority: staticPath.priority,
       });
+
+      if (locale === defaultLocale && staticPath.path === '/') {
+        entries.push({
+          url: buildAbsoluteUrl('/'),
+          lastModified,
+          changeFrequency: staticPath.changeFrequency,
+          priority: staticPath.priority,
+        });
+      }
     }
 
     for (const guide of guides) {
