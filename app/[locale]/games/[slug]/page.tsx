@@ -16,6 +16,8 @@ type RatingsResult = Awaited<ReturnType<typeof RatingService.listGameRatings>>;
 
 function buildGameDetailFromMock(mock: MockGame): GameDetail {
   const now = new Date();
+  const instructionsZh = mock.instructions.zh.join('\n');
+  const instructionsEn = mock.instructions.en.join('\n');
   return {
     id: mock.id,
     slug: mock.slug,
@@ -23,8 +25,8 @@ function buildGameDetailFromMock(mock: MockGame): GameDetail {
     titleEn: mock.titleEn,
     description: mock.description,
     descriptionEn: mock.descriptionEn,
-    instructions: null,
-    instructionsEn: null,
+    instructions: instructionsZh.length > 0 ? instructionsZh : null,
+    instructionsEn: instructionsEn.length > 0 ? instructionsEn : null,
     thumbnailUrl: mock.thumbnailUrl,
     iframeUrl: mock.iframeUrl,
     featured: mock.featured,
@@ -38,8 +40,19 @@ function buildGameDetailFromMock(mock: MockGame): GameDetail {
     createdAt: now,
     updatedAt: now,
     stats: null,
-    categories: [],
-    tags: [],
+    categories: mock.categories.map((category) => ({
+      ...category,
+      description: category.description ?? null,
+      descriptionEn: category.descriptionEn ?? null,
+      iconUrl: category.iconUrl ?? null,
+      createdAt: new Date(category.createdAt),
+      updatedAt: new Date(category.updatedAt),
+    })),
+    tags: mock.tags.map((tag) => ({
+      ...tag,
+      createdAt: new Date(tag.createdAt),
+      updatedAt: new Date(tag.updatedAt),
+    })),
     screenshots: [],
   } satisfies GameDetail;
 }
