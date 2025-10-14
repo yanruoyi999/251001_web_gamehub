@@ -82,14 +82,13 @@
     }
   },
   "Imported4399": {
-    "title": "4399 Embed Trial",
-    "desc": "Preview a small batch of games imported from the 4399 catalogue.",
+    "title": "Featured Mini-Game Showcase",
+    "desc": "Try a curated selection of mini-games that run directly on our site.",
     "backToGames": "Back to all games",
-    "notice": "If the embed fails to load, try opening the original page in a new tab.",
-    "viewOriginal": "Open original page",
-    "sourceLabel": "Source URL",
-    "domainLabel": "Host: {host}",
-    "empty": "Sample data is not available yet."
+    "notice": "If something fails to load, refresh the page or try again later.",
+    "cta": "View details and play here",
+    "onsiteHint": "Play instantly on this site—no external redirects.",
+    "empty": "Sample content is not available yet. Please check back soon."
   },
   "GameDetails": {
     "back": "Back to list",

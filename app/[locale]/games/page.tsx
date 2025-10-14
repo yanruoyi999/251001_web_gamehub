@@ -60,7 +60,13 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
 
   const headersList = headers();
   const favoriteContext = FavoriteService.getContextFromHeaders(headersList);
-  const favoriteIds = await FavoriteService.listFavoriteIds(favoriteContext);
+  let favoriteIds: number[] = [];
+  try {
+    favoriteIds = await FavoriteService.listFavoriteIds(favoriteContext);
+  } catch (error) {
+    console.warn('Failed to load favorite ids, using empty list:', error);
+    favoriteIds = [];
+  }
 
   const [categoryOptions, tagOptions, list] = await Promise.all([
     CategoryService.listAll(),
@@ -330,8 +336,9 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
                     <div className="flex-shrink-0">
                       <FavoriteToggleButton
                         gameId={game.id}
-                        initialFavorite={game.isFavorite}
+                        initialFavorite={Boolean(game.isFavorite)}
                         labels={favoriteLabels}
+                        fallbackKey={game.slug ? `slug:${game.slug.toLowerCase()}` : `id:${game.id}`}
                       />
                     </div>
                   </div>

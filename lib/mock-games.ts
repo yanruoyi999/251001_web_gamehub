@@ -1,5 +1,5 @@
 /**
- * Mock games data generated from 4399 iframe dataset.
+ * Mock games data generated from an external iframe dataset.
  * Used for local development fallback before the database is wired up.
  */
 
@@ -60,8 +60,8 @@ function buildMockGamesFromSample(entries: SampleGameEntry[]): MockGame[] {
       slug,
       title,
       titleEn: englishTitle,
-      description: `来自 4399 的 HTML5 小游戏《${englishTitle}》，打开即可游玩，无需下载。`,
-      descriptionEn: `Play “${englishTitle}”, an HTML5 mini game sourced from 4399. No downloads required.`,
+      description: `热门 HTML5 小游戏《${englishTitle}》，点击即可游玩，无需下载。`,
+      descriptionEn: `Play “${englishTitle}”, a curated HTML5 mini game that runs instantly in your browser.`,
       iframeUrl,
       thumbnailUrl: createSvgPlaceholder(englishTitle, color),
       featured: index < FEATURED_COUNT,

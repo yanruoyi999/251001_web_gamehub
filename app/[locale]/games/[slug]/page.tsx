@@ -81,8 +81,6 @@ export default async function GamePage({ params }: GamePageProps) {
   let ratingsResult: RatingsResult;
   let isFavorite = false;
 
-  let interactionLimited = isMockGame;
-
   if (isMockGame) {
     ratingDistribution = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 } as RatingDistribution;
     ratingsResult = { ratings: [], total: 0, page: 1, limit: 3, totalPages: 0 } as RatingsResult;
@@ -103,7 +101,6 @@ export default async function GamePage({ params }: GamePageProps) {
       ratingDistribution = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 } as RatingDistribution;
       ratingsResult = { ratings: [], total: 0, page: 1, limit: 3, totalPages: 0 } as RatingsResult;
       isFavorite = false;
-      interactionLimited = true;
     }
   }
 
@@ -273,7 +270,10 @@ export default async function GamePage({ params }: GamePageProps) {
     unfavorite: locale === 'zh' ? '取消收藏' : 'Unfavorite',
   };
 
-  const canFavorite = !interactionLimited && game.status === 'active';
+  const canFavorite = game.status === 'active';
+  const favoriteFallbackKey = game.slug?.trim()
+    ? `slug:${game.slug.trim().toLowerCase()}`
+    : `id:${game.id}`;
 
   const statusChips = [
     locale === 'zh' ? '上线' : 'Active',
@@ -363,6 +363,7 @@ export default async function GamePage({ params }: GamePageProps) {
                 gameId={game.id}
                 initialFavorite={isFavorite}
                 labels={favoriteLabels}
+                fallbackKey={favoriteFallbackKey}
               />
             ) : (
               <Button variant="outline" size="lg" disabled>
@@ -396,17 +397,13 @@ export default async function GamePage({ params }: GamePageProps) {
                   </div>
                 </div>
                 <div className="bg-gradient-to-r from-indigo-50 to-purple-50 p-4">
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-center">
                     <p className="text-sm text-gray-600">
                       <span className="mr-2">💡</span>
                       {locale === 'zh'
                         ? '点击游戏内全屏按钮获得最佳体验'
                         : 'Click fullscreen button for best experience'}
                     </p>
-                    <Button size="sm" className="bg-gradient-to-r from-indigo-600 to-purple-600">
-                      <span className="mr-1">🎮</span>
-                      {locale === 'zh' ? '开始游戏' : 'Start Game'}
-                    </Button>
                   </div>
                 </div>
               </CardContent>

@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { loadImported4399Games } from '@/lib/games/imported-4399';
@@ -46,20 +45,15 @@ export default async function Imported4399SamplePage({ params }: PageProps) {
           {games.map((game) => (
             <Card key={game.slug} className="overflow-hidden">
               <CardHeader className="space-y-3 bg-gray-50">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <CardTitle className="text-lg font-semibold text-gray-900">
-                      {game.title || game.titleEn}
-                    </CardTitle>
-                    {game.titleEn && game.titleEn !== game.title ? (
-                      <p className="text-sm text-gray-500">{game.titleEn}</p>
-                    ) : null}
-                  </div>
-                  <Badge variant="secondary">
-                    {t('domainLabel', { host: game.sourceHost || 'unknown' })}
-                  </Badge>
+                <div>
+                  <CardTitle className="text-lg font-semibold text-gray-900">
+                    {game.title || game.titleEn}
+                  </CardTitle>
+                  {game.titleEn && game.titleEn !== game.title ? (
+                    <p className="text-sm text-gray-500">{game.titleEn}</p>
+                  ) : null}
                 </div>
-                <p className="text-sm text-gray-600">{game.sourcePath}</p>
+                <p className="text-sm text-gray-500">{t('onsiteHint')}</p>
               </CardHeader>
 
               <CardContent className="space-y-4">
@@ -76,14 +70,9 @@ export default async function Imported4399SamplePage({ params }: PageProps) {
                   />
                 </div>
 
-                <div className="flex flex-col gap-2 text-sm text-gray-600">
-                  <span className="font-medium text-gray-700">{t('sourceLabel')}</span>
-                  <span className="truncate">{game.sourcePageUrl}</span>
-                </div>
-
-                <Button asChild variant="outline" className="w-full">
-                  <Link href={game.sourcePageUrl} target="_blank" rel="noreferrer">
-                    {t('viewOriginal')}
+                <Button asChild className="w-full">
+                  <Link href={`/${locale}/games/${game.slug}`}>
+                    {t('cta')}
                   </Link>
                 </Button>
               </CardContent>
