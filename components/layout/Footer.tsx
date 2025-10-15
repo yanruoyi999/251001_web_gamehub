@@ -149,8 +149,8 @@ export function Footer() {
               Newgrounds
             </a>
             <span className="text-gray-300">|</span>
-            <a href="https://gamejolt.com" target="_blank" rel="noopener" className="text-gray-600 hover:text-indigo-600">
-              Game Jolt
+            <a href="https://armorgames.com" target="_blank" rel="noopener" className="text-gray-600 hover:text-indigo-600">
+              Armor Games
             </a>
             <span className="text-gray-300">|</span>
             <a href="https://www.crazygames.com" target="_blank" rel="noopener" className="text-gray-600 hover:text-indigo-600">
@@ -163,6 +163,10 @@ export function Footer() {
             <span className="text-gray-300">|</span>
             <a href="https://html5games.com" target="_blank" rel="noopener" className="text-gray-600 hover:text-indigo-600">
               HTML5 Games
+            </a>
+            <span className="text-gray-300">|</span>
+            <a href="https://www.coolmathgames.com" target="_blank" rel="noopener" className="text-gray-600 hover:text-indigo-600">
+              Coolmath Games
             </a>
             <span className="text-gray-300">|</span>
             <a href="https://www.gamestop.com" target="_blank" rel="noopener" className="text-gray-600 hover:text-indigo-600">
@@ -179,6 +183,10 @@ export function Footer() {
             <span className="text-gray-300">|</span>
             <a href="https://ad-freegames.github.io" target="_blank" rel="noopener" className="text-gray-600 hover:text-indigo-600">
               Ad-Free Games Hub
+            </a>
+            <span className="text-gray-300">|</span>
+            <a href="https://opengameart.org" target="_blank" rel="noopener" className="text-gray-600 hover:text-indigo-600">
+              OpenGameArt
             </a>
             <span className="text-gray-300">|</span>
             <a href="https://phaser.io" target="_blank" rel="noopener" className="text-gray-600 hover:text-indigo-600">

@@ -24,14 +24,19 @@ const FOOTER_LINKS = [
   { name: 'Itch.io', url: 'https://itch.io', category: 'Platform' },
   { name: 'Kongregate', url: 'https://www.kongregate.com', category: 'Platform' },
   { name: 'Newgrounds', url: 'https://www.newgrounds.com/games', category: 'Platform' },
-  { name: 'Game Jolt', url: 'https://gamejolt.com', category: 'Platform' },
+  { name: 'Armor Games', url: 'https://armorgames.com', category: 'Platform' },
   { name: 'CrazyGames', url: 'https://www.crazygames.com', category: 'Platform' },
   { name: 'Poki', url: 'https://poki.com', category: 'Platform' },
   { name: 'HTML5 Games', url: 'https://html5games.com', category: 'Resource' },
+  { name: 'Coolmath Games', url: 'https://www.coolmathgames.com', category: 'Resource' },
   { name: 'GameStop', url: 'https://www.gamestop.com', category: 'Retail' },
   { name: 'Board Game Arena', url: 'https://en.boardgamearena.com', category: 'Tabletop' },
   { name: 'AdFreeGames', url: 'https://www.adfreegames.com', category: 'Curated' },
   { name: 'Ad-Free Games Hub', url: 'https://ad-freegames.github.io', category: 'Curated' },
+  { name: 'OpenGameArt', url: 'https://opengameart.org', category: 'Assets' },
+  { name: 'MDN Games', url: 'https://developer.mozilla.org/en-US/docs/Games', category: 'Documentation' },
+  { name: 'Game Developer', url: 'https://www.gamedeveloper.com/', category: 'Industry' },
+  { name: 'GDC Vault', url: 'https://www.gdcvault.com/free/gdc-2019', category: 'Education' },
   { name: 'Phaser', url: 'https://phaser.io', category: 'Framework' },
   { name: 'PlayCanvas', url: 'https://playcanvas.com', category: 'Framework' },
 ];
@@ -86,7 +91,7 @@ async function checkLink(url: string): Promise<LinkCheckResult> {
  * 检查页脚友情链接
  */
 async function checkFooterLinks(): Promise<void> {
-  console.log('\n📋 检查页脚友情链接 (共 13 个)\n');
+  console.log('\n📋 检查页脚友情链接 (共 16 个)\n');
   console.log('─'.repeat(80));
 
   let failedCount = 0;

@@ -154,8 +154,8 @@ export default function ContactPage({ params }: ContactPageProps) {
           </h2>
           <p className="mt-4 text-gray-700">
             {isZh
-              ? '想进一步优化您的 HTML5 游戏？以下资源为开发者提供最佳实践与审核指南：'
-              : 'Want to refine your HTML5 release? This resource shares best practices and review guidelines:'}
+              ? '想进一步优化您的 HTML5 游戏？以下资源为开发者提供最佳实践、素材与审核指南：'
+              : 'Want to refine your HTML5 release? These resources cover best practices, assets, and review guidance:'}
           </p>
           <ul className="mt-4 space-y-2 text-sm text-gray-600">
             <li>
@@ -170,6 +170,58 @@ export default function ContactPage({ params }: ContactPageProps) {
               {isZh
                 ? ' —— 了解跨平台服务、AdSense 合规与盈利策略。'
                 : ' — Explore cross-platform services, AdSense compliance, and monetisation strategies.'}
+            </li>
+            <li>
+              <a
+                href="https://developer.mozilla.org/en-US/docs/Games"
+                target="_blank"
+                rel="noopener"
+                className="text-indigo-600 hover:text-indigo-500"
+              >
+                {isZh ? 'MDN Games（Web 游戏开发指南）' : 'MDN Games (Web development guide)'}
+              </a>
+              {isZh
+                ? ' —— 掌握 WebGL 性能优化与输入处理。'
+                : ' — Master WebGL performance and input handling.'}
+            </li>
+            <li>
+              <a
+                href="https://opengameart.org"
+                target="_blank"
+                rel="noopener"
+                className="text-indigo-600 hover:text-indigo-500"
+              >
+                {isZh ? 'OpenGameArt（免费游戏素材）' : 'OpenGameArt (Free game assets)'}
+              </a>
+              {isZh
+                ? ' —— 寻找可商用的像素、音效与 UI 资源。'
+                : ' — Source CC-licensed sprites, audio, and UI packs.'}
+            </li>
+            <li>
+              <a
+                href="https://www.gamedeveloper.com/"
+                target="_blank"
+                rel="noopener"
+                className="text-indigo-600 hover:text-indigo-500"
+              >
+                {isZh ? 'Game Developer（行业文章与分析）' : 'Game Developer (Industry insights)'}
+              </a>
+              {isZh
+                ? ' —— 跟进运营、变现与设计趋势。'
+                : ' — Track business, monetisation, and design trends.'}
+            </li>
+            <li>
+              <a
+                href="https://www.gdcvault.com/free/gdc-2019"
+                target="_blank"
+                rel="noopener"
+                className="text-indigo-600 hover:text-indigo-500"
+              >
+                {isZh ? 'GDC Vault 精选公开课' : 'GDC Vault featured sessions'}
+              </a>
+              {isZh
+                ? ' —— 吸收顶级工作室的设计与市场经验。'
+                : ' — Learn from world-class studios on design and market strategy.'}
             </li>
           </ul>
         </section>

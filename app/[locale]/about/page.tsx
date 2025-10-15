@@ -177,6 +177,15 @@ export default function AboutPage({ params }: AboutPageProps) {
             </a>
             <span className="text-gray-300">|</span>
             <a
+              href="https://armorgames.com"
+              target="_blank"
+              rel="noopener"
+              className="text-indigo-600 hover:text-indigo-500"
+            >
+              {isZh ? 'Armor Games（经典网页街机）' : 'Armor Games (Classic web arcade)'}
+            </a>
+            <span className="text-gray-300">|</span>
+            <a
               href="https://www.crazygames.com"
               target="_blank"
               rel="noopener"
@@ -213,6 +222,15 @@ export default function AboutPage({ params }: AboutPageProps) {
             </a>
             <span className="text-gray-300">|</span>
             <a
+              href="https://www.coolmathgames.com"
+              target="_blank"
+              rel="noopener"
+              className="text-indigo-600 hover:text-indigo-500"
+            >
+              {isZh ? 'Coolmath Games（益智游戏精选）' : 'Coolmath Games (Brain teasers)'}
+            </a>
+            <span className="text-gray-300">|</span>
+            <a
               href="https://www.adfreegames.com"
               target="_blank"
               rel="noopener"
@@ -236,6 +254,15 @@ export default function AboutPage({ params }: AboutPageProps) {
             <span className="text-gray-300">|</span>
             <a href="https://playcanvas.com" target="_blank" rel="noopener" className="text-indigo-600 hover:text-indigo-500">
               PlayCanvas
+            </a>
+            <span className="text-gray-300">|</span>
+            <a
+              href="https://opengameart.org"
+              target="_blank"
+              rel="noopener"
+              className="text-indigo-600 hover:text-indigo-500"
+            >
+              {isZh ? 'OpenGameArt（免费游戏素材库）' : 'OpenGameArt (Open asset library)'}
             </a>
           </div>
         </section>
