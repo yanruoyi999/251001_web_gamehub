@@ -195,6 +195,24 @@ export default function AboutPage({ params }: AboutPageProps) {
             </a>
             <span className="text-gray-300">|</span>
             <a
+              href="https://www.gamestop.com"
+              target="_blank"
+              rel="noopener"
+              className="text-indigo-600 hover:text-indigo-500"
+            >
+              {isZh ? 'GameStop（全球游戏零售与资讯）' : 'GameStop (Global retail & news)'}
+            </a>
+            <span className="text-gray-300">|</span>
+            <a
+              href="https://en.boardgamearena.com"
+              target="_blank"
+              rel="noopener"
+              className="text-indigo-600 hover:text-indigo-500"
+            >
+              {isZh ? 'Board Game Arena（桌游线上平台）' : 'Board Game Arena (Online tabletop)'}
+            </a>
+            <span className="text-gray-300">|</span>
+            <a
               href="https://www.adfreegames.com"
               target="_blank"
               rel="noopener"

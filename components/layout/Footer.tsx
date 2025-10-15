@@ -165,6 +165,14 @@ export function Footer() {
               HTML5 Games
             </a>
             <span className="text-gray-300">|</span>
+            <a href="https://www.gamestop.com" target="_blank" rel="noopener" className="text-gray-600 hover:text-indigo-600">
+              GameStop
+            </a>
+            <span className="text-gray-300">|</span>
+            <a href="https://en.boardgamearena.com" target="_blank" rel="noopener" className="text-gray-600 hover:text-indigo-600">
+              Board Game Arena
+            </a>
+            <span className="text-gray-300">|</span>
             <a href="https://www.adfreegames.com" target="_blank" rel="noopener" className="text-gray-600 hover:text-indigo-600">
               AdFreeGames
             </a>
