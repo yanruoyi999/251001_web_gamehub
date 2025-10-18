@@ -264,6 +264,51 @@ export default function AboutPage({ params }: AboutPageProps) {
             >
               {isZh ? 'OpenGameArt（免费游戏素材库）' : 'OpenGameArt (Open asset library)'}
             </a>
+            <span className="text-gray-300">|</span>
+            <a
+              href="https://www.construct.net"
+              target="_blank"
+              rel="noopener"
+              className="text-indigo-600 hover:text-indigo-500"
+            >
+              {isZh ? 'Construct（可视化 HTML5 引擎）' : 'Construct (Visual HTML5 engine)'}
+            </a>
+            <span className="text-gray-300">|</span>
+            <a
+              href="https://godotengine.org"
+              target="_blank"
+              rel="noopener"
+              className="text-indigo-600 hover:text-indigo-500"
+            >
+              {isZh ? 'Godot Engine（开源 2D/3D 引擎）' : 'Godot Engine (Open-source 2D/3D engine)'}
+            </a>
+            <span className="text-gray-300">|</span>
+            <a
+              href="https://docs.unity3d.com/Manual/webgl-gettingstarted.html"
+              target="_blank"
+              rel="noopener"
+              className="text-indigo-600 hover:text-indigo-500"
+            >
+              {isZh ? 'Unity WebGL 指南' : 'Unity WebGL guide'}
+            </a>
+            <span className="text-gray-300">|</span>
+            <a
+              href="https://gameanalytics.com"
+              target="_blank"
+              rel="noopener"
+              className="text-indigo-600 hover:text-indigo-500"
+            >
+              {isZh ? 'GameAnalytics（免费数据平台）' : 'GameAnalytics (Free analytics)'}
+            </a>
+            <span className="text-gray-300">|</span>
+            <a
+              href="https://www.indiedb.com"
+              target="_blank"
+              rel="noopener"
+              className="text-indigo-600 hover:text-indigo-500"
+            >
+              {isZh ? 'Indie DB（独立游戏曝光平台）' : 'Indie DB (Indie showcase)'}
+            </a>
           </div>
         </section>
 

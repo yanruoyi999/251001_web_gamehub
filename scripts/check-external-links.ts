@@ -34,9 +34,14 @@ const FOOTER_LINKS = [
   { name: 'AdFreeGames', url: 'https://www.adfreegames.com', category: 'Curated' },
   { name: 'Ad-Free Games Hub', url: 'https://ad-freegames.github.io', category: 'Curated' },
   { name: 'OpenGameArt', url: 'https://opengameart.org', category: 'Assets' },
+  { name: 'Construct', url: 'https://www.construct.net', category: 'Engine' },
+  { name: 'Godot Engine', url: 'https://godotengine.org', category: 'Engine' },
+  { name: 'Unity WebGL Guide', url: 'https://docs.unity3d.com/Manual/webgl-gettingstarted.html', category: 'Documentation' },
   { name: 'MDN Games', url: 'https://developer.mozilla.org/en-US/docs/Games', category: 'Documentation' },
   { name: 'Game Developer', url: 'https://www.gamedeveloper.com/', category: 'Industry' },
   { name: 'GDC Vault', url: 'https://www.gdcvault.com/free/gdc-2019', category: 'Education' },
+  { name: 'GameAnalytics', url: 'https://gameanalytics.com', category: 'Analytics' },
+  { name: 'Indie DB', url: 'https://www.indiedb.com', category: 'Community' },
   { name: 'Phaser', url: 'https://phaser.io', category: 'Framework' },
   { name: 'PlayCanvas', url: 'https://playcanvas.com', category: 'Framework' },
 ];
@@ -91,7 +96,7 @@ async function checkLink(url: string): Promise<LinkCheckResult> {
  * 检查页脚友情链接
  */
 async function checkFooterLinks(): Promise<void> {
-  console.log('\n📋 检查页脚友情链接 (共 16 个)\n');
+  console.log('\n📋 检查页脚友情链接 (共 23 个)\n');
   console.log('─'.repeat(80));
 
   let failedCount = 0;

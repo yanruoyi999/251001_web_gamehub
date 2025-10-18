@@ -223,6 +223,32 @@ export default function ContactPage({ params }: ContactPageProps) {
                 ? ' —— 吸收顶级工作室的设计与市场经验。'
                 : ' — Learn from world-class studios on design and market strategy.'}
             </li>
+            <li>
+              <a
+                href="https://gameanalytics.com"
+                target="_blank"
+                rel="noopener"
+                className="text-indigo-600 hover:text-indigo-500"
+              >
+                {isZh ? 'GameAnalytics（免费游戏数据平台）' : 'GameAnalytics (Free analytics suite)'}
+              </a>
+              {isZh
+                ? ' —— 监控玩家留存与变现表现，指导后续优化。'
+                : ' — Track retention and monetisation metrics to inform live ops.'}
+            </li>
+            <li>
+              <a
+                href="https://www.indiedb.com"
+                target="_blank"
+                rel="noopener"
+                className="text-indigo-600 hover:text-indigo-500"
+              >
+                {isZh ? 'Indie DB（独立游戏推广渠道）' : 'Indie DB (Indie promotion hub)'}
+              </a>
+              {isZh
+                ? ' —— 提交作品以获取曝光，并连接独立玩家社区。'
+                : ' — Submit builds for exposure and reach engaged indie audiences.'}
+            </li>
           </ul>
         </section>
 

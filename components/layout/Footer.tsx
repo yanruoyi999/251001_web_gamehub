@@ -189,6 +189,26 @@ export function Footer() {
               OpenGameArt
             </a>
             <span className="text-gray-300">|</span>
+            <a href="https://www.construct.net" target="_blank" rel="noopener" className="text-gray-600 hover:text-indigo-600">
+              Construct
+            </a>
+            <span className="text-gray-300">|</span>
+            <a href="https://godotengine.org" target="_blank" rel="noopener" className="text-gray-600 hover:text-indigo-600">
+              Godot Engine
+            </a>
+            <span className="text-gray-300">|</span>
+            <a href="https://docs.unity3d.com/Manual/webgl-gettingstarted.html" target="_blank" rel="noopener" className="text-gray-600 hover:text-indigo-600">
+              Unity WebGL Guide
+            </a>
+            <span className="text-gray-300">|</span>
+            <a href="https://gameanalytics.com" target="_blank" rel="noopener" className="text-gray-600 hover:text-indigo-600">
+              GameAnalytics
+            </a>
+            <span className="text-gray-300">|</span>
+            <a href="https://www.indiedb.com" target="_blank" rel="noopener" className="text-gray-600 hover:text-indigo-600">
+              Indie DB
+            </a>
+            <span className="text-gray-300">|</span>
             <a href="https://phaser.io" target="_blank" rel="noopener" className="text-gray-600 hover:text-indigo-600">
               Phaser
             </a>
