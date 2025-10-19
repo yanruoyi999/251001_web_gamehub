@@ -33,9 +33,9 @@ function buildGameDetailFromMock(mock: MockGame): GameDetail {
     isNew: mock.isNew,
     isHot: mock.isHot,
     status: 'active',
-    developerName: null,
-    developerUrl: null,
-    sourceUrl: null,
+    developerName: mock.developerName,
+    developerUrl: mock.developerUrl,
+    sourceUrl: mock.sourceUrl,
     publishedAt: now,
     createdAt: now,
     updatedAt: now,
@@ -53,7 +53,14 @@ function buildGameDetailFromMock(mock: MockGame): GameDetail {
       createdAt: new Date(tag.createdAt),
       updatedAt: new Date(tag.updatedAt),
     })),
-    screenshots: [],
+    screenshots: mock.screenshots.map((shot, index) => ({
+      id: mock.id * 100 + index,
+      gameId: mock.id,
+      url: shot.url,
+      publicId: null,
+      order: shot.order,
+      createdAt: now,
+    })),
   } satisfies GameDetail;
 }
 

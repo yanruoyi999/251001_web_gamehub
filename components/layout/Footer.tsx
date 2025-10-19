@@ -149,6 +149,10 @@ export function Footer() {
               Newgrounds
             </a>
             <span className="text-gray-300">|</span>
+            <a href="https://gamejolt.com" target="_blank" rel="noopener" className="text-gray-600 hover:text-indigo-600">
+              Game Jolt
+            </a>
+            <span className="text-gray-300">|</span>
             <a href="https://armorgames.com" target="_blank" rel="noopener" className="text-gray-600 hover:text-indigo-600">
               Armor Games
             </a>

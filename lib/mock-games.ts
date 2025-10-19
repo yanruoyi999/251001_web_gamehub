@@ -33,6 +33,11 @@ export interface MockInstructions {
   en: string[];
 }
 
+export interface MockScreenshot {
+  url: string;
+  order: number;
+}
+
 export interface MockGame {
   id: number;
   slug: string;
@@ -45,9 +50,13 @@ export interface MockGame {
   featured: boolean;
   isNew: boolean;
   isHot: boolean;
+  developerName: string;
+  developerUrl: string;
+  sourceUrl: string | null;
   categories: MockCategory[];
   tags: MockTag[];
   instructions: MockInstructions;
+  screenshots: MockScreenshot[];
 }
 
 interface SampleGameEntry {
@@ -55,11 +64,18 @@ interface SampleGameEntry {
   title?: string;
   titleEn?: string;
   iframeUrl?: string;
+  sourcePageUrl?: string;
+  sourceHost?: string;
 }
 
 const MAX_IMPORTED_GAMES = 32;
 const FEATURED_COUNT = 6;
 const NEW_THRESHOLD = 18;
+
+const DEFAULT_DEVELOPER = {
+  name: 'GameHub Editorial',
+  url: 'https://ad-freegames.github.io/',
+};
 
 const COLOR_PALETTE = [
   '4C1D95',
@@ -71,6 +87,62 @@ const COLOR_PALETTE = [
   'EF4444',
   'EC4899',
 ];
+
+function sanitizeHost(value?: string | null): string | null {
+  if (!value) return null;
+  try {
+    const url = value.startsWith('http') ? new URL(value) : new URL(`https://${value}`);
+    return url.hostname.toLowerCase();
+  } catch {
+    return value.replace(/^https?:\/\//, '').replace(/\/.*$/, '').toLowerCase();
+  }
+}
+
+function toTitleCase(input: string): string {
+  return input
+    .split(/[-_.]/)
+    .filter(Boolean)
+    .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
+    .join(' ');
+}
+
+function deriveDeveloperInfo(entry: SampleGameEntry, iframeUrl: string): { name: string; url: string } {
+  const candidates = [sanitizeHost(entry.sourceHost), sanitizeHost(iframeUrl)];
+  const host = candidates.find((item): item is string => Boolean(item));
+
+  if (!host) {
+    return DEFAULT_DEVELOPER;
+  }
+
+  if (host.includes('4399')) {
+    return { name: '4399 游戏平台', url: 'https://www.4399.com' };
+  }
+
+  if (host.includes('ad-freegames')) {
+    return { name: 'Ad-Free Games Hub', url: 'https://ad-freegames.github.io/' };
+  }
+
+  if (host.includes('itch.io')) {
+    return { name: 'Itch.io', url: 'https://itch.io' };
+  }
+
+  const normalized = host.replace(/^www\./, '');
+  return {
+    name: toTitleCase(normalized.split('.')[0] ?? normalized),
+    url: `https://${normalized}`,
+  };
+}
+
+function createScreenshotPlaceholders(title: string, baseIndex: number): MockScreenshot[] {
+  return Array.from({ length: 3 }, (_, variant) => {
+    const color = COLOR_PALETTE[(baseIndex + variant) % COLOR_PALETTE.length];
+    const label = `${title} ${variant + 1}`;
+    return {
+      url: createSvgPlaceholder(label, color),
+      order: variant,
+    };
+  });
+}
 
 const MOCK_CATEGORY_PRESETS: MockCategory[] = [
   {
@@ -434,6 +506,9 @@ function buildMockGamesFromSample(entries: SampleGameEntry[]): MockGame[] {
     const categories = buildCategoriesForGame(slug, index);
     const tags = buildTagsForGame(slug, categories, index);
     const instructions = buildInstructionsForGame(englishTitle, categories[0] ?? cloneCategory(MOCK_CATEGORY_PRESETS[0]));
+    const developer = deriveDeveloperInfo(entry, iframeUrl);
+    const sourceUrl = entry.sourcePageUrl?.trim() || null;
+    const screenshots = createScreenshotPlaceholders(englishTitle, index);
 
     return {
       id: index + 1,
@@ -447,25 +522,33 @@ function buildMockGamesFromSample(entries: SampleGameEntry[]): MockGame[] {
       featured: index < FEATURED_COUNT,
       isNew: index < NEW_THRESHOLD,
       isHot: index % 3 === 0,
+      developerName: developer.name,
+      developerUrl: developer.url,
+      sourceUrl,
       categories,
       tags,
       instructions,
+      screenshots,
     };
   });
 }
 
 function createFallbackGame(
-  base: Omit<MockGame, 'categories' | 'tags' | 'instructions'>,
+  base: Omit<MockGame, 'categories' | 'tags' | 'instructions' | 'screenshots'> & {
+    screenshots?: MockScreenshot[];
+  },
   index: number
 ): MockGame {
   const categories = buildCategoriesForGame(base.slug, index);
   const tags = buildTagsForGame(base.slug, categories, index);
   const instructions = buildInstructionsForGame(base.titleEn, categories[0] ?? cloneCategory(MOCK_CATEGORY_PRESETS[0]));
+  const screenshots = base.screenshots ?? createScreenshotPlaceholders(base.titleEn, index);
   return {
     ...base,
     categories,
     tags,
     instructions,
+    screenshots,
   };
 }
 
@@ -484,6 +567,9 @@ const FALLBACK_GAMES: MockGame[] = [
       featured: true,
       isNew: false,
       isHot: true,
+      developerName: DEFAULT_DEVELOPER.name,
+      developerUrl: DEFAULT_DEVELOPER.url,
+      sourceUrl: 'https://play2048.co/',
     },
     0
   ),
@@ -500,6 +586,9 @@ const FALLBACK_GAMES: MockGame[] = [
       featured: true,
       isNew: false,
       isHot: true,
+      developerName: DEFAULT_DEVELOPER.name,
+      developerUrl: DEFAULT_DEVELOPER.url,
+      sourceUrl: 'https://hextris.io/',
     },
     1
   ),
@@ -516,6 +605,9 @@ const FALLBACK_GAMES: MockGame[] = [
       featured: true,
       isNew: false,
       isHot: false,
+      developerName: DEFAULT_DEVELOPER.name,
+      developerUrl: DEFAULT_DEVELOPER.url,
+      sourceUrl: 'https://sudoku.com/',
     },
     2
   ),

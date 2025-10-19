@@ -186,6 +186,15 @@ export default function AboutPage({ params }: AboutPageProps) {
             </a>
             <span className="text-gray-300">|</span>
             <a
+              href="https://gamejolt.com"
+              target="_blank"
+              rel="noopener"
+              className="text-indigo-600 hover:text-indigo-500"
+            >
+              {isZh ? 'Game Jolt（小游戏社区）' : 'Game Jolt (Indie community)'}
+            </a>
+            <span className="text-gray-300">|</span>
+            <a
               href="https://www.crazygames.com"
               target="_blank"
               rel="noopener"

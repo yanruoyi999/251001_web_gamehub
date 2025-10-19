@@ -19,11 +19,12 @@ import { db } from '@/lib/db';
 import { games } from '@/db/schema';
 import { sql } from 'drizzle-orm';
 
-// 页脚友情链接配置（与 components/layout/Footer.tsx 保持一致）
+// 外链资源配置（合作伙伴 + 行业资源，与页面展示保持同步）
 const FOOTER_LINKS = [
   { name: 'Itch.io', url: 'https://itch.io', category: 'Platform' },
   { name: 'Kongregate', url: 'https://www.kongregate.com', category: 'Platform' },
   { name: 'Newgrounds', url: 'https://www.newgrounds.com/games', category: 'Platform' },
+  { name: 'Game Jolt', url: 'https://gamejolt.com', category: 'Platform' },
   { name: 'Armor Games', url: 'https://armorgames.com', category: 'Platform' },
   { name: 'CrazyGames', url: 'https://www.crazygames.com', category: 'Platform' },
   { name: 'Poki', url: 'https://poki.com', category: 'Platform' },
@@ -96,7 +97,7 @@ async function checkLink(url: string): Promise<LinkCheckResult> {
  * 检查页脚友情链接
  */
 async function checkFooterLinks(): Promise<void> {
-  console.log('\n📋 检查页脚友情链接 (共 23 个)\n');
+  console.log('\n📋 检查页脚友情链接 (共 24 个)\n');
   console.log('─'.repeat(80));
 
   let failedCount = 0;
