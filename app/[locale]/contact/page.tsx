@@ -249,6 +249,71 @@ export default function ContactPage({ params }: ContactPageProps) {
                 ? ' —— 提交作品以获取曝光，并连接独立玩家社区。'
                 : ' — Submit builds for exposure and reach engaged indie audiences.'}
             </li>
+            <li>
+              <a
+                href="https://support.google.com/adsense/answer/48182"
+                target="_blank"
+                rel="noopener"
+                className="text-indigo-600 hover:text-indigo-500"
+              >
+                {isZh ? 'AdSense 计划政策' : 'AdSense Program Policies'}
+              </a>
+              {isZh
+                ? ' —— 确认内容与广告位置符合谷歌最新规范。'
+                : ' — Verify your content and ad placements comply with Google rules.'}
+            </li>
+            <li>
+              <a
+                href="https://developers.google.com/adsense"
+                target="_blank"
+                rel="noopener"
+                className="text-indigo-600 hover:text-indigo-500"
+              >
+                {isZh ? 'AdSense 开发者指南' : 'AdSense developer guide'}
+              </a>
+              {isZh
+                ? ' —— 了解 API、自动化报表与与广告单元配置。'
+                : ' — Explore APIs, reporting automation, and unit configuration.'}
+            </li>
+            <li>
+              <a
+                href="https://developers.google.com/search/docs/fundamentals/seo-starter-guide"
+                target="_blank"
+                rel="noopener"
+                className="text-indigo-600 hover:text-indigo-500"
+              >
+                {isZh ? 'Google SEO 入门指南' : 'Google SEO starter guide'}
+              </a>
+              {isZh
+                ? ' —— 按官方建议优化结构、标题与内部链接。'
+                : ' — Follow official best practices for structure, titles, and internal linking.'}
+            </li>
+            <li>
+              <a
+                href="https://pagespeed.web.dev/"
+                target="_blank"
+                rel="noopener"
+                className="text-indigo-600 hover:text-indigo-500"
+              >
+                {isZh ? 'PageSpeed Insights 性能检测' : 'PageSpeed Insights performance audit'}
+              </a>
+              {isZh
+                ? ' —— 检查核心网页指标并优化加载速度。'
+                : ' — Audit Core Web Vitals and improve load speed.'}
+            </li>
+            <li>
+              <a
+                href="https://search.google.com/search-console/about"
+                target="_blank"
+                rel="noopener"
+                className="text-indigo-600 hover:text-indigo-500"
+              >
+                {isZh ? 'Google Search Console 介绍' : 'Google Search Console overview'}
+              </a>
+              {isZh
+                ? ' —— 监控索引状态、搜索展示与抓取问题。'
+                : ' — Monitor indexing status, search impressions, and crawl issues.'}
+            </li>
           </ul>
         </section>
 

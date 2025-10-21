@@ -240,6 +240,51 @@ export default function AboutPage({ params }: AboutPageProps) {
             </a>
             <span className="text-gray-300">|</span>
             <a
+              href="https://www.miniclip.com"
+              target="_blank"
+              rel="noopener"
+              className="text-indigo-600 hover:text-indigo-500"
+            >
+              {isZh ? 'Miniclip（经典街机合集）' : 'Miniclip (Arcade classics)'}
+            </a>
+            <span className="text-gray-300">|</span>
+            <a
+              href="https://www.agame.com"
+              target="_blank"
+              rel="noopener"
+              className="text-indigo-600 hover:text-indigo-500"
+            >
+              {isZh ? 'AGame.com（家庭向小游戏）' : 'AGame.com (Family-friendly arcade)'}
+            </a>
+            <span className="text-gray-300">|</span>
+            <a
+              href="https://www.addictinggames.com"
+              target="_blank"
+              rel="noopener"
+              className="text-indigo-600 hover:text-indigo-500"
+            >
+              {isZh ? 'Addicting Games（老牌社区）' : 'Addicting Games (Legacy community)'}
+            </a>
+            <span className="text-gray-300">|</span>
+            <a
+              href="https://www.y8.com"
+              target="_blank"
+              rel="noopener"
+              className="text-indigo-600 hover:text-indigo-500"
+            >
+              {isZh ? 'Y8 Games（多人共享平台）' : 'Y8 Games (Multiplayer hub)'}
+            </a>
+            <span className="text-gray-300">|</span>
+            <a
+              href="https://www.friv.com"
+              target="_blank"
+              rel="noopener"
+              className="text-indigo-600 hover:text-indigo-500"
+            >
+              {isZh ? 'Friv（快速休闲体验）' : 'Friv (Quick casual hits)'}
+            </a>
+            <span className="text-gray-300">|</span>
+            <a
               href="https://www.adfreegames.com"
               target="_blank"
               rel="noopener"

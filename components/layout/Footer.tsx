@@ -173,6 +173,26 @@ export function Footer() {
               Coolmath Games
             </a>
             <span className="text-gray-300">|</span>
+            <a href="https://www.miniclip.com" target="_blank" rel="noopener" className="text-gray-600 hover:text-indigo-600">
+              Miniclip
+            </a>
+            <span className="text-gray-300">|</span>
+            <a href="https://www.agame.com" target="_blank" rel="noopener" className="text-gray-600 hover:text-indigo-600">
+              AGame.com
+            </a>
+            <span className="text-gray-300">|</span>
+            <a href="https://www.addictinggames.com" target="_blank" rel="noopener" className="text-gray-600 hover:text-indigo-600">
+              Addicting Games
+            </a>
+            <span className="text-gray-300">|</span>
+            <a href="https://www.y8.com" target="_blank" rel="noopener" className="text-gray-600 hover:text-indigo-600">
+              Y8 Games
+            </a>
+            <span className="text-gray-300">|</span>
+            <a href="https://www.friv.com" target="_blank" rel="noopener" className="text-gray-600 hover:text-indigo-600">
+              Friv
+            </a>
+            <span className="text-gray-300">|</span>
             <a href="https://www.gamestop.com" target="_blank" rel="noopener" className="text-gray-600 hover:text-indigo-600">
               GameStop
             </a>

@@ -30,6 +30,11 @@ const FOOTER_LINKS = [
   { name: 'Poki', url: 'https://poki.com', category: 'Platform' },
   { name: 'HTML5 Games', url: 'https://html5games.com', category: 'Resource' },
   { name: 'Coolmath Games', url: 'https://www.coolmathgames.com', category: 'Resource' },
+  { name: 'Miniclip', url: 'https://www.miniclip.com', category: 'Platform' },
+  { name: 'AGame.com', url: 'https://www.agame.com', category: 'Platform' },
+  { name: 'Addicting Games', url: 'https://www.addictinggames.com', category: 'Platform' },
+  { name: 'Y8 Games', url: 'https://www.y8.com', category: 'Platform' },
+  { name: 'Friv', url: 'https://www.friv.com', category: 'Platform' },
   { name: 'GameStop', url: 'https://www.gamestop.com', category: 'Retail' },
   { name: 'Board Game Arena', url: 'https://en.boardgamearena.com', category: 'Tabletop' },
   { name: 'AdFreeGames', url: 'https://www.adfreegames.com', category: 'Curated' },
@@ -43,6 +48,11 @@ const FOOTER_LINKS = [
   { name: 'GDC Vault', url: 'https://www.gdcvault.com/free/gdc-2019', category: 'Education' },
   { name: 'GameAnalytics', url: 'https://gameanalytics.com', category: 'Analytics' },
   { name: 'Indie DB', url: 'https://www.indiedb.com', category: 'Community' },
+  { name: 'AdSense Policies', url: 'https://support.google.com/adsense/answer/48182', category: 'Compliance' },
+  { name: 'AdSense Developer', url: 'https://developers.google.com/adsense', category: 'Compliance' },
+  { name: 'SEO Starter Guide', url: 'https://developers.google.com/search/docs/fundamentals/seo-starter-guide', category: 'SEO' },
+  { name: 'PageSpeed Insights', url: 'https://pagespeed.web.dev/', category: 'Performance' },
+  { name: 'Search Console', url: 'https://search.google.com/search-console/about', category: 'SEO' },
   { name: 'Phaser', url: 'https://phaser.io', category: 'Framework' },
   { name: 'PlayCanvas', url: 'https://playcanvas.com', category: 'Framework' },
 ];
@@ -97,7 +107,7 @@ async function checkLink(url: string): Promise<LinkCheckResult> {
  * 检查页脚友情链接
  */
 async function checkFooterLinks(): Promise<void> {
-  console.log('\n📋 检查页脚友情链接 (共 24 个)\n');
+  console.log('\n📋 检查页脚友情链接 (共 34 个)\n');
   console.log('─'.repeat(80));
 
   let failedCount = 0;
