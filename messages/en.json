@@ -1,231 +1,155 @@
 {
-  "Home": {
-    "title": "GameHub · Free Browser Games Without Ads",
-    "subtitle": "Infrastructure and core services are ready",
-    "tech": "Tech stack: Next.js 14 · TypeScript · Drizzle ORM",
-    "cta": "Start exploring the latest online games",
-    "featureTitle": "Key Features",
-    "featureDesc": "Browse, search, review and share in one place",
-    "featurePoints": [
-      "Discover the latest and most popular browser games",
-      "Filter by categories and tags with ease",
-      "Leave reviews and ratings to share your thoughts"
-    ],
-    "popularTitle": "Top Picks",
-    "popularDesc": "Curated games and live popularity rankings",
-    "popularPoints": [
-      "Live popularity charts and curated collections",
-      "Automatic aggregation of ratings and play counts",
-      "Optimised for multiple devices and languages"
-    ]
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "backToHome": "← Back to Home",
+    "language": "Language"
   },
-  "nav": {
-    "home": "Home",
-    "games": "Games",
-    "guides": "Guides",
-    "cta": "Publish",
-    "searchPlaceholder": "Search games…",
-    "searchLoading": "Searching…",
-    "searchNoResult": "No matches yet"
-  },
-  "Games": {
-    "title": "All Games",
-    "desc": "Browse the latest and most popular games hosted on the platform.",
-    "backToHome": "Back to home",
-    "category": "Category: {value}",
-    "playCount": "Total plays: {value}",
-    "rating": "Average rating: {value}",
-    "published": "Published on {value}",
-    "empty": "No games match your filters yet.",
-    "status": {
-      "active": "Status: Live",
-      "inactive": "Status: Unlisted",
-      "pending": "Status: Pending"
+  "game": {
+    "title": "Samurai Sudoku",
+    "puzzle": "Puzzle",
+    "difficulty": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard",
+      "label": "Difficulty"
     },
+    "completed": "🎉 Congratulations! You solved the puzzle!",
+    "loadingPuzzle": "Loading puzzle...",
+    "puzzleNotFound": "Puzzle not found"
+  },
+  "stats": {
+    "time": "Time",
+    "progress": "Progress",
+    "hints": "Hints",
+    "moves": "Moves"
+  },
+  "actions": {
+    "newGame": "New Game",
+    "reset": "Reset",
+    "undo": "Undo",
+    "redo": "Redo",
+    "hint": "Hint",
+    "candidates": "Candidates",
+    "conflicts": "Conflicts",
+    "clear": "Clear",
+    "erase": "⌫",
+    "newGameConfirm": "Start a new puzzle? Current progress will be lost.",
+    "resetConfirm": "Are you sure you want to reset the puzzle? All progress will be lost.",
+    "pause": "Pause",
+    "resume": "Resume"
+  },
+  "hints": {
+    "noHint": "No hints available. Try using the undo button or clearing some cells.",
+    "nakedSingle": "This cell can only be {value}. All other numbers are already used in its row, column, or box.",
+    "hiddenSingle": "In this {unit}, the number {value} can only go in this cell.",
+    "units": {
+      "row": "row",
+      "column": "column",
+      "box": "box"
+    }
+  },
+  "archive": {
+    "title": "Puzzle Archive",
+    "description": "Browse and play all available Samurai Sudoku puzzles",
+    "playToday": "Play Today's Puzzle",
+    "browseMore": "Browse More Puzzles",
     "filters": {
-      "title": "Filters",
-      "searchPlaceholder": "Search by title or description",
-      "categoryLabel": "Category",
-      "categoryAll": "All categories",
-      "tagLabel": "Tag",
-      "tagAll": "All tags",
-      "onlyNew": "Show new only",
-      "onlyHot": "Show popular only",
-      "onlyFeatured": "Show featured only",
-      "onlyFavorites": "Show favorites only",
-      "sortLabel": "Sort by",
-      "sort": {
-        "publishedAt": "Latest",
-        "playCount": "Play count",
-        "averageRating": "Rating",
-        "title": "Title"
-      },
-      "sortOrderAsc": "Ascending",
-      "sortOrderDesc": "Descending",
-      "submit": "Apply",
-      "reset": "Reset"
+      "all": "All",
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard"
     },
-    "resultSummary": "{value} games found",
-    "badges": {
-      "new": "New",
-      "hot": "Hot",
-      "featured": "Featured"
+    "table": {
+      "id": "Puzzle ID",
+      "difficulty": "Difficulty",
+      "estimatedTime": "Est. Time",
+      "tags": "Tags",
+      "action": "Action"
     },
+    "play": "Play",
+    "noResults": "No puzzles found.",
     "pagination": {
-      "prev": "Previous",
-      "next": "Next",
-      "pageLabel": "{current} / {total}"
-    },
-    "actions": {
-      "favorite": "Save",
-    "unfavorite": "Remove"
+      "previous": "← Previous",
+      "next": "Next →",
+      "page": "Page",
+      "of": "of",
+      "showing": "Showing {start}-{end} of {total} puzzles"
     }
   },
-  "Imported4399": {
-    "title": "Featured Mini-Game Showcase",
-    "desc": "Try a curated selection of mini-games that run directly on our site.",
-    "backToGames": "Back to all games",
-    "notice": "If something fails to load, refresh the page or try again later.",
-    "cta": "View details and play here",
-    "onsiteHint": "Play instantly on this site—no external redirects.",
-    "empty": "Sample content is not available yet. Please check back soon."
-  },
-  "GameDetails": {
-    "back": "Back to list",
-    "categories": "Categories",
-    "tags": "Tags",
-    "instructions": "How to play",
-    "statistics": {
-      "title": "Statistics",
-      "playCount": "Total plays",
-      "today": "Plays today",
-      "rating": "Average rating",
-      "ratingCount": "Ratings"
-    },
-    "playButton": "Play now",
-    "screenshots": "Screenshots",
-    "notFound": "The game you are looking for could not be found.",
-    "ratingForm": {
-      "title": "Leave your rating",
-      "hint": "Submissions are anonymous and will appear once approved.",
-      "commentPlaceholder": "Share your play experience (optional)",
-      "submit": "Submit rating",
-      "submitting": "Submitting…",
-      "success": "Thanks! Your rating has been received.",
-      "error": {
-        "generic": "Something went wrong. Please try again later.",
-        "rateLimit": "You are submitting too frequently. Please try again later.",
-        "duplicate": "You already submitted a rating recently."
-      },
-      "validation": {
-        "required": "Please select a star rating"
-      },
-      "starLabel": "Rate {value} star"
+  "metadata": {
+    "title": "Samurai Sudoku - Daily Puzzle Challenge",
+    "description": "Play Samurai Sudoku online. Daily puzzles with offline support, hints, and progress tracking. Challenge yourself with 5 interconnected 9×9 grids.",
+    "keywords": "sudoku, samurai sudoku, evil sudoku, sudoku evil, puzzle, brain game, logic game, daily puzzle, online sudoku, free sudoku",
+    "og": {
+      "title": "Samurai Sudoku - Daily Puzzle Challenge",
+      "description": "Challenge yourself with daily Samurai Sudoku puzzles. Five 9×9 grids interconnected in perfect harmony."
     }
   },
-  "Search": {
-    "title": "Search results",
-    "subtitle": "Find games on the platform with Chinese or English keywords.",
-    "summary": {
-      "withQuery": "{total} results for “{query}”",
-      "empty": "Start typing to search"
+  "home": {
+    "title": "Samurai Sudoku",
+    "welcome": "Welcome to Samurai Sudoku",
+    "description": "Master Samurai Sudoku online with curated daily challenges, smart hints, and progress tracking across five overlapping 9×9 grids.",
+    "playNow": "Play Today's Puzzle",
+    "browseArchive": "Browse Archive",
+    "footer": "© 2025 Samurai Sudoku. Daily Samurai Sudoku puzzles for puzzle enthusiasts.",
+    "features": {
+      "title": "Features",
+      "offline": "Offline Support",
+      "offlineDesc": "Play anytime, anywhere. Your progress is saved locally.",
+      "intelligent": "Smart Hints",
+      "intelligentDesc": "Get intelligent hints when you're stuck, with detailed explanations.",
+      "candidates": "Candidate Marking",
+      "candidatesDesc": "Visualize possible numbers with automatic candidate detection",
+      "progress": "Track Progress",
+      "progressDesc": "Monitor your completion time, hints used, and improvement over time.",
+      "mobile": "Mobile Optimized",
+      "mobileDesc": "Seamless gameplay on any device with touch-friendly controls"
     },
-    "emptyPrompt": "Type a game title, mechanic or tag to explore the catalogue.",
-    "emptyResult": "No results matched “{query}”. Try different keywords.",
-    "playCount": "Plays: {value}",
-    "rating": "Rating: {value}",
-    "published": "Published on {date}",
-    "viewDetails": "View details",
-    "pagination": {
-      "prev": "Previous",
-      "next": "Next",
-      "label": "{current} / {total}"
-    }
-  },
-  "footer": {
-    "copyright": "© 2025 GameHub. All rights reserved",
-    "github": "GitHub",
-    "support": "Contact"
-  },
-  "MonsterSurvivors": {
-    "title": "Monster Survivors",
-    "tagline": "Featured Game",
-    "summary": "Dive into a fast-paced survival arena and hold the line against relentless waves of monsters.",
-    "backToList": "Back to all games",
-    "playSection": {
-      "title": "Play instantly",
-      "description": "The complete experience loads directly in your browser. Hit fullscreen for total immersion.",
-      "hint": "If the game does not load, disable aggressive ad blockers or refresh the page."
+    "seoSection": {
+      "title": "Why Samurai Sudoku Keeps Your Brain Sharp",
+      "description": "Samurai Sudoku links five classic Sudoku grids together, amplifying the logic required. Our platform helps you improve with:",
+      "pointHeading": "Samurai Sudoku Insight",
+      "points": [
+        "Daily Samurai Sudoku puzzles generated and validated for unique solutions and balanced difficulty.",
+        "Interactive Samurai Sudoku board with conflict detection, candidate notes, and timer tracking for speed runs.",
+        "Strategy-driven hints and tutorials that explain Samurai Sudoku solving patterns step by step."
+      ],
+      "cta": "Read more Samurai Sudoku strategies"
     },
-    "details": {
-      "title": "Game details",
-      "description": "Core facts to get you started quickly.",
-      "genre": {
-        "label": "Genre",
-        "value": "Action survival roguelike"
-      },
-      "session": {
-        "label": "Average session",
-        "value": "5-15 minutes"
-      },
-      "controls": {
-        "label": "Controls",
-        "value": "Keyboard & mouse or controller"
-      },
-      "devices": {
-        "label": "Best on",
-        "value": "Desktop and tablet browsers"
-      }
+    "evilSection": {
+      "title": "Master Evil Sudoku Difficulty",
+      "description": "Looking for the toughest Sudoku? Our evil Sudoku packs deliver 4.5+ difficulty ratings with handcrafted logic chains and optional hints.",
+      "points": [
+        "Play daily evil Sudoku grids with conflict-highlighting and candidate notes so you can tackle extreme logic safely.",
+        "Learn evil Sudoku techniques—X-Wing, Swordfish, coloring chains—through step-by-step visual hints.",
+        "Download printable evil Sudoku PDFs or stay online for timer-based challenges and streak tracking."
+      ],
+      "cta": "Browse evil Sudoku archives"
     },
-    "tips": {
-      "title": "Quick tips",
-      "description": "A few hints before you jump into the arena.",
+    "faq": {
+      "title": "Samurai Sudoku FAQ",
       "items": [
-        "Collect glowing shards early to snowball upgrades.",
-        "Keep moving to kite enemy clusters and avoid damage spikes.",
-        "Trigger dash or shield abilities before you are cornered.",
-        "Experiment with daily modifiers to climb the leaderboard."
-      ]
-    }
-  },
-  "Solitaire": {
-    "title": "Solitaire",
-    "tagline": "Classic Card Game",
-    "summary": "The world's most popular single-player card game! Arrange all cards by suit and sequence to the foundation. Challenge your strategic thinking.",
-    "backToList": "Back to all games",
-    "playSection": {
-      "title": "Play instantly",
-      "description": "The complete game loads directly in your browser. Enjoy solitaire anytime, anywhere.",
-      "hint": "If the game does not load, disable ad blockers or refresh the page."
-    },
-    "details": {
-      "title": "Game details",
-      "description": "Key information before you start playing.",
-      "genre": {
-        "label": "Genre",
-        "value": "Card · Puzzle · Casual"
-      },
-      "session": {
-        "label": "Average session",
-        "value": "5-10 minutes per game"
-      },
-      "controls": {
-        "label": "Controls",
-        "value": "Mouse click or touch drag"
-      },
-      "devices": {
-        "label": "Best on",
-        "value": "All platforms (desktop, tablet, mobile)"
-      }
-    },
-    "tips": {
-      "title": "Gameplay tips",
-      "description": "Master these tips to improve your win rate.",
-      "items": [
-        "Prioritize uncovering cards from the stock pile to increase options.",
-        "Keep columns empty when possible for temporary card storage.",
-        "Move smaller cards first to avoid blocking larger cards.",
-        "Use the undo feature to try different strategies and find optimal solutions."
+        {
+          "question": "What is Samurai Sudoku?",
+          "answer": "Samurai Sudoku is a five-grid variant of classic Sudoku where overlapping regions link each puzzle together. You must satisfy the rules in every grid at once, creating a deeper logical challenge."
+        },
+        {
+          "question": "How can I get better at Samurai Sudoku?",
+          "answer": "Focus on the overlapping zones first, track pencil marks, and use our guided hints to learn advanced Samurai Sudoku strategies such as cross-grid singles and elimination chains."
+        },
+        {
+          "question": "Is Samurai Sudoku harder than normal Sudoku?",
+          "answer": "Yes. Samurai Sudoku multiplies the search space with five interconnected grids. We grade each puzzle and offer easy, medium, and hard Samurai Sudoku levels so you can improve gradually."
+        },
+        {
+          "question": "What makes an evil Sudoku different?",
+          "answer": "Evil Sudoku puzzles use minimal givens and require advanced strategies—X-Wing, Swordfish, coloring, forcing chains—beyond basic elimination. Our generator validates every evil grid to guarantee a unique solution without random guessing."
+        },
+        {
+          "question": "Where can I practice evil Sudoku online?",
+          "answer": "Head to our evil Sudoku archive to play browser-based puzzles with candidate notes, conflict warnings, and optional walkthrough hints. You can also print PDFs if you prefer solving on paper."
+        }
       ]
     }
   }

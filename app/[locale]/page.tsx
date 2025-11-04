@@ -1,353 +1,230 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import { getTranslations } from 'next-intl/server';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { mockGames } from '@/lib/mock-games';
-import { getSeoLandingPages } from '@/lib/seo-landing-content';
+import Link from "next/link";
+import Script from "next/script";
+import { getLocale, getTranslations, getMessages } from 'next-intl/server';
 
-export const dynamic = 'force-dynamic';
+type FaqItem = { question: string; answer: string };
 
-interface LocalizedHomePageProps {
-  params: { locale: string };
-}
+type HomeMessages = {
+  title?: string;
+  seoSection?: {
+    title?: string;
+    description?: string;
+    pointHeading?: string;
+    points?: string[];
+    cta?: string;
+  };
+  evilSection?: {
+    title?: string;
+    description?: string;
+    points?: string[];
+    cta?: string;
+  };
+  faq?: {
+    title?: string;
+    items?: FaqItem[];
+  };
+};
 
-export default async function LocalizedHomePage({ params }: LocalizedHomePageProps) {
-  const { locale } = params;
-  const t = await getTranslations('Home');
+export default async function HomePage() {
+  const locale = await getLocale();
+  const t = await getTranslations('home');
 
-  const featurePoints = [
-    t('featurePoints.0'),
-    t('featurePoints.1'),
-    t('featurePoints.2'),
-  ];
+  const messages = (await getMessages({ locale })) as { home?: HomeMessages };
+  const homeMessages = messages.home ?? {};
+  const seoSection = homeMessages.seoSection ?? {};
+  const evilSection = homeMessages.evilSection ?? {};
+  const faqSection = homeMessages.faq ?? {};
 
-  const popularPoints = [
-    t('popularPoints.0'),
-    t('popularPoints.1'),
-    t('popularPoints.2'),
-  ];
+  const heroTitle = typeof homeMessages.title === 'string' ? homeMessages.title : t('title');
+  const seoPoints = Array.isArray(seoSection.points) ? seoSection.points : [];
+  const seoPointHeading = typeof seoSection.pointHeading === 'string' ? seoSection.pointHeading : t('seoSection.title');
+  const evilPoints = Array.isArray(evilSection.points) ? evilSection.points : [];
+  const faqItems = Array.isArray(faqSection.items) ? faqSection.items : [];
 
-  // Mock categories for UI display
-  const categories = [
-    { name: locale === 'zh' ? '动作' : 'Action', icon: '⚔️', count: 12 },
-    { name: locale === 'zh' ? '冒险' : 'Adventure', icon: '🗺️', count: 8 },
-    { name: locale === 'zh' ? '益智' : 'Puzzle', icon: '🧩', count: 15 },
-    { name: locale === 'zh' ? '竞速' : 'Racing', icon: '🏎️', count: 6 },
-    { name: locale === 'zh' ? '射击' : 'Shooting', icon: '🎯', count: 10 },
-    { name: locale === 'zh' ? '策略' : 'Strategy', icon: '🎲', count: 9 },
-  ];
-
-  const typedLocale = locale === 'zh' ? 'zh' : 'en';
-  const guides = getSeoLandingPages();
-  const highlightGuideSlugs = [
-    'free-games-no-ads',
-    'best-free-iphone-games',
-    'games-to-play-when-bored',
-  ];
-
-  const featuredGuides = highlightGuideSlugs
-    .map((slug) => {
-      const guide = guides.find((item) => item.slug === slug);
-      if (!guide) {
-        return null;
-      }
-      const localized = guide.locales[typedLocale] ?? guide.locales.zh;
-      return {
-        slug: guide.slug,
-        heading: localized.heading,
-        summary: localized.overview[0] ?? '',
-      };
-    })
-    .filter((guide): guide is { slug: string; heading: string; summary: string } => Boolean(guide));
-
-  const guidesToDisplay =
-    featuredGuides.length > 0
-      ? featuredGuides
-      : guides.slice(0, 3).map((guide) => {
-          const localized = guide.locales[typedLocale] ?? guide.locales.zh;
-          return {
-            slug: guide.slug,
-            heading: localized.heading,
-            summary: localized.overview[0] ?? '',
-          };
-        });
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
 
   return (
-    <div className="w-full">
-      {/* Hero Section with Gradient Background */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 py-20 text-white">
-        <div className="absolute inset-0 bg-black opacity-10"></div>
-        <div className="relative mx-auto max-w-6xl px-6 text-center">
-          <div className="mx-auto mb-6 inline-flex items-center rounded-full border border-white/30 bg-white/10 px-4 py-2 text-sm font-medium backdrop-blur-sm">
-            <span className="mr-2">✨</span>
-            {t('subtitle')}
-          </div>
-          <h1 className="mb-6 text-5xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl">
-            {t('title')}
+    <>
+      <main className="min-h-screen flex flex-col">
+      <section className="flex-1 flex items-center justify-center px-4 py-16 bg-gradient-to-br from-primary/10 via-background to-secondary/10">
+        <div className="max-w-4xl mx-auto text-center space-y-8">
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
+            {heroTitle}
           </h1>
-          <p className="mx-auto mb-8 max-w-2xl text-xl text-white/90">
-            {locale === 'zh'
-              ? '发现最好玩的在线小游戏，无需下载，随时随地畅玩！'
-              : 'Discover the best online mini-games, no downloads, play anywhere!'}
+
+          <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
+            {t('description')}
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link href={`/${locale}/games`}>
-              <Button size="lg" className="bg-white text-indigo-600 hover:bg-gray-100">
-                <span className="mr-2">🎮</span>
-                {locale === 'zh' ? '浏览全部游戏' : 'Browse All Games'}
-              </Button>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
+            <Link
+              href={`/${locale}/games/samurai`}
+              className="px-8 py-4 bg-primary text-primary-foreground rounded-lg font-semibold text-lg hover:bg-primary/90 transition-colors shadow-lg hover:shadow-xl"
+            >
+              {t('playNow')}
             </Link>
-            <Button size="lg" variant="outline" className="border-white/50 bg-white/10 text-white backdrop-blur-sm hover:bg-white/20">
-              <span className="mr-2">🔥</span>
-              {locale === 'zh' ? '查看热门' : 'View Trending'}
-            </Button>
+
+            <Link
+              href={`/${locale}/games/samurai/archive`}
+              className="px-8 py-4 border-2 border-primary text-primary rounded-lg font-semibold text-lg hover:bg-primary/10 transition-colors"
+            >
+              {t('browseArchive')}
+            </Link>
           </div>
 
-          {/* Stats */}
-          <div className="mt-12 grid grid-cols-3 gap-8 text-center">
-            <div>
-              <div className="text-4xl font-bold">50+</div>
-              <div className="text-sm text-white/80">{locale === 'zh' ? '精选游戏' : 'Games'}</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold">100K+</div>
-              <div className="text-sm text-white/80">{locale === 'zh' ? '游玩次数' : 'Plays'}</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold">24/7</div>
-              <div className="text-sm text-white/80">{locale === 'zh' ? '随时可玩' : 'Available'}</div>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-16">
+            <FeatureCard
+              icon="📱"
+              title={t('features.offline')}
+              description={t('features.offlineDesc')}
+            />
+            <FeatureCard
+              icon="💡"
+              title={t('features.intelligent')}
+              description={t('features.intelligentDesc')}
+            />
+            <FeatureCard
+              icon="📊"
+              title={t('features.progress')}
+              description={t('features.progressDesc')}
+            />
           </div>
-        </div>
-      </section>
 
-      {/* Categories Grid */}
-      <section className="bg-gray-50 py-16">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="mb-10 text-center">
-            <h2 className="mb-3 text-3xl font-bold text-gray-900">
-              {locale === 'zh' ? '🎯 游戏分类' : '🎯 Game Categories'}
+          <section className="mt-20 space-y-6 text-left">
+            <h2 className="text-3xl md:text-4xl font-semibold text-foreground text-center">
+              {seoSection.title ?? t('seoSection.title')}
             </h2>
-            <p className="text-gray-600">
-              {locale === 'zh' ? '探索不同类型的精彩游戏' : 'Explore different types of amazing games'}
+            <p className="text-base md:text-lg text-muted-foreground max-w-3xl mx-auto text-center">
+              {seoSection.description ?? t('seoSection.description')}
             </p>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {categories.map((category, index) => (
-              <Link
-                key={index}
-                href={`/${locale}/games`}
-                className="group"
-              >
-                <Card className="transition-all hover:scale-105 hover:shadow-lg">
-                  <CardContent className="flex items-center justify-between p-6">
-                    <div className="flex items-center gap-4">
-                      <div className="text-4xl">{category.icon}</div>
-                      <div>
-                        <div className="font-semibold text-gray-900">{category.name}</div>
-                        <div className="text-sm text-gray-500">
-                          {category.count} {locale === 'zh' ? '款游戏' : 'games'}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="text-gray-400 transition-transform group-hover:translate-x-1">→</div>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Games Section */}
-      <section className="py-16">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="mb-10 flex items-end justify-between">
-            <div>
-              <h2 className="mb-2 text-3xl font-bold text-gray-900">
-                🎮 {locale === 'zh' ? '热门游戏' : 'Featured Games'}
-              </h2>
-              <p className="text-gray-600">
-                {locale === 'zh' ? '最受欢迎的游戏推荐' : 'Most popular game recommendations'}
-              </p>
-            </div>
-            <Link href={`/${locale}/games`}>
-              <Button variant="ghost">
-                {locale === 'zh' ? '查看全部' : 'View All'} →
-              </Button>
-            </Link>
-          </div>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {mockGames.map((game) => {
-              const localizedTitle = locale === 'zh' ? game.title : game.titleEn;
-              const localizedDescription = locale === 'zh' ? game.description : game.descriptionEn;
-              const coverAlt =
-                locale === 'zh'
-                  ? `${localizedTitle} 浏览器小游戏封面插画，突出 ${localizedDescription}`
-                  : `${localizedTitle} browser mini game cover art highlighting ${localizedDescription}`;
-
-              return (
-                <Link
-                  key={game.id}
-                  href={`/${locale}/games/${game.slug}`}
-                  className="group"
+            <div className="grid gap-4 md:grid-cols-3">
+              {seoPoints.map((point, index) => (
+                <div
+                  key={index}
+                  className="p-5 rounded-lg border bg-background/80 shadow-sm"
                 >
-                  <Card className="flex h-full flex-col overflow-hidden transition-all hover:shadow-xl">
-                    <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-indigo-100 to-purple-100">
-                      <Image
-                        src={game.thumbnailUrl}
-                        alt={coverAlt}
-                        width={400}
-                        height={300}
-                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
-                      />
-                      <div className="absolute right-2 top-2 flex gap-1">
-                        {game.isNew && (
-                          <span className="rounded-full bg-green-500 px-2 py-1 text-xs font-semibold text-white shadow-lg">
-                            {locale === 'zh' ? '新' : 'NEW'}
-                          </span>
-                        )}
-                        {game.isHot && (
-                          <span className="rounded-full bg-red-500 px-2 py-1 text-xs font-semibold text-white shadow-lg">
-                            {locale === 'zh' ? '热' : 'HOT'}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                    <CardHeader className="flex flex-col gap-3 pb-3">
-                      <CardTitle className="line-clamp-1 text-lg group-hover:text-indigo-600">
-                        {locale === 'zh' ? game.title : game.titleEn}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="flex flex-1 flex-col justify-between gap-4 px-6 pb-6 pt-0">
-                      <p className="line-clamp-2 min-h-[48px] text-sm text-gray-600">
-                        {localizedDescription}
-                      </p>
-                      <div className="mt-4 flex items-center justify-between text-xs text-gray-500">
-                        <span>⭐ 4.5</span>
-                        <span>🎮 1.2K {locale === 'zh' ? '次游玩' : 'plays'}</span>
-                      </div>
-                    </CardContent>
-                  </Card>
+                  <h3 className="text-lg font-medium text-primary mb-2">
+                    {`${seoPointHeading} ${index + 1}`}
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {point}
+                  </p>
+                </div>
+              ))}
+            </div>
+            {seoSection.cta ? (
+              <div className="flex justify-center pt-2">
+                <Link
+                  href={`/${locale}/games/samurai/archive`}
+                  className="inline-flex items-center gap-2 px-6 py-3 border border-primary text-primary rounded-lg font-medium hover:bg-primary/10 transition-colors"
+                >
+                  {seoSection.cta}
+                  <span aria-hidden>→</span>
                 </Link>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+              </div>
+            ) : null}
+          </section>
 
-      {/* Features Section */}
-      <section className="bg-gradient-to-b from-gray-50 to-white py-16">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="mb-12 text-center">
-            <h2 className="mb-3 text-3xl font-bold text-gray-900">
-              {locale === 'zh' ? '✨ 为什么选择我们' : '✨ Why Choose Us'}
-            </h2>
-            <p className="text-gray-600">
-              {locale === 'zh' ? '为玩家打造的极致游戏体验' : 'Ultimate gaming experience for players'}
-            </p>
-          </div>
-          <div className="grid gap-8 md:grid-cols-3">
-            <Card className="border-t-4 border-t-indigo-500">
-              <CardHeader>
-                <div className="mb-2 text-3xl">🚀</div>
-                <CardTitle>{locale === 'zh' ? '无需下载' : 'No Downloads'}</CardTitle>
-              </CardHeader>
-              <CardContent className="text-sm text-gray-600">
-                {locale === 'zh'
-                  ? '所有游戏直接在浏览器中运行，即点即玩，无需等待下载和安装。'
-                  : 'All games run directly in your browser, play instantly without waiting for downloads.'}
-              </CardContent>
-            </Card>
-            <Card className="border-t-4 border-t-purple-500">
-              <CardHeader>
-                <div className="mb-2 text-3xl">🎨</div>
-                <CardTitle>{locale === 'zh' ? '精心挑选' : 'Carefully Curated'}</CardTitle>
-              </CardHeader>
-              <CardContent className="text-sm text-gray-600">
-                {locale === 'zh'
-                  ? '每款游戏都经过精心筛选和测试，确保高质量的游戏体验。'
-                  : 'Each game is carefully selected and tested to ensure high-quality gaming experience.'}
-              </CardContent>
-            </Card>
-            <Card className="border-t-4 border-t-pink-500">
-              <CardHeader>
-                <div className="mb-2 text-3xl">📱</div>
-                <CardTitle>{locale === 'zh' ? '多设备支持' : 'Multi-Device'}</CardTitle>
-              </CardHeader>
-              <CardContent className="text-sm text-gray-600">
-                {locale === 'zh'
-                  ? '完美适配桌面、平板和手机，随时随地享受游戏乐趣。'
-                  : 'Perfect for desktop, tablet and mobile, enjoy games anytime, anywhere.'}
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Guides Section */}
-      <section className="bg-white py-16">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="mb-12 text-center">
-            <h2 className="mb-3 text-3xl font-bold text-gray-900">
-              {locale === 'zh' ? '📚 热门专题攻略' : '📚 Featured Guides'}
-            </h2>
-            <p className="text-gray-600">
-              {locale === 'zh'
-                ? '快速进入“free games no ads”“best free iPhone games”等专题，按场景挑选合适的作品。'
-                : 'Jump into guides for free games with no ads, best free iPhone games, and more tailored collections.'}
-            </p>
-          </div>
-          <div className="grid gap-6 md:grid-cols-3">
-            {guidesToDisplay.map((guide) => (
-              <Card
-                key={guide.slug}
-                className="flex h-full flex-col justify-between border border-gray-200"
-              >
-                <CardHeader>
-                  <CardTitle className="text-xl font-semibold text-gray-900">
-                    {guide.heading}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="flex flex-1 flex-col justify-between gap-4 text-sm text-gray-600">
-                  <p className="line-clamp-4">{guide.summary}</p>
-                  <div className="mt-auto">
-                    <Link
-                      href={`/${locale}/guides/${guide.slug}`}
-                      className="inline-flex items-center text-indigo-600 transition hover:text-indigo-800"
-                      prefetch
-                    >
-                      {locale === 'zh' ? '查看专题' : 'View guide'} →
-                    </Link>
+          { (evilSection.title || evilSection.description || evilPoints.length > 0) && (
+            <section className="mt-16 space-y-6 text-left">
+              <h2 className="text-3xl md:text-4xl font-semibold text-foreground text-center">
+                {evilSection.title ?? t('evilSection.title')}
+              </h2>
+              <p className="text-base md:text-lg text-muted-foreground max-w-3xl mx-auto text-center">
+                {evilSection.description ?? t('evilSection.description')}
+              </p>
+              <div className="grid gap-4 md:grid-cols-2">
+                {evilPoints.map((point, index) => (
+                  <div
+                    key={index}
+                    className="p-5 rounded-lg border bg-background/80 shadow-sm"
+                  >
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {point}
+                    </p>
                   </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                ))}
+              </div>
+              {evilSection.cta ? (
+                <div className="flex justify-center pt-2">
+                  <Link
+                    href={`/${locale}/games/samurai/archive`}
+                    className="inline-flex items-center gap-2 px-6 py-3 border border-primary text-primary rounded-lg font-medium hover:bg-primary/10 transition-colors"
+                  >
+                    {evilSection.cta}
+                    <span aria-hidden>→</span>
+                  </Link>
+                </div>
+              ) : null}
+            </section>
+          )}
+
+          <section className="mt-16 space-y-6 text-left">
+            <h2 className="text-3xl md:text-4xl font-semibold text-foreground text-center">
+              {faqSection.title ?? t('faq.title')}
+            </h2>
+            <div className="max-w-3xl mx-auto space-y-4">
+              {faqItems.map((item, index) => (
+                <details
+                  key={index}
+                  className="group border rounded-lg bg-background/80 p-4 transition-all"
+                >
+                  <summary className="cursor-pointer text-lg font-medium text-foreground flex items-center justify-between">
+                    <span>{item.question}</span>
+                    <span className="text-primary group-open:rotate-90 transition-transform" aria-hidden>
+                      ➤
+                    </span>
+                  </summary>
+                  <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+                    {item.answer}
+                  </p>
+                </details>
+              ))}
+            </div>
+          </section>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="bg-gradient-to-r from-indigo-600 to-purple-600 py-16 text-white">
-        <div className="mx-auto max-w-4xl px-6 text-center">
-          <h2 className="mb-4 text-4xl font-bold">
-            {locale === 'zh' ? '准备好开始游戏了吗？' : 'Ready to Start Gaming?'}
-          </h2>
-          <p className="mb-8 text-xl text-white/90">
-            {locale === 'zh'
-              ? '加入数千名玩家，发现你的下一个最爱游戏！'
-              : 'Join thousands of players and discover your next favorite game!'}
-          </p>
-          <Link href={`/${locale}/games`}>
-            <Button size="lg" className="bg-white text-indigo-600 hover:bg-gray-100">
-              <span className="mr-2">🎯</span>
-              {locale === 'zh' ? '立即开始' : 'Get Started'}
-            </Button>
-          </Link>
-        </div>
-      </section>
+      <footer className="py-8 px-4 border-t text-center text-sm text-muted-foreground">
+        <p>{t('footer')}</p>
+      </footer>
+    </main>
+
+    <Script
+      id="faq-schema"
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      strategy="afterInteractive"
+    />
+    </>
+  );
+}
+
+function FeatureCard({
+  icon,
+  title,
+  description,
+}: {
+  icon: string;
+  title: string;
+  description: string;
+}) {
+  return (
+    <div className="p-6 rounded-lg border bg-card hover:shadow-md transition-shadow">
+      <div className="text-4xl mb-4">{icon}</div>
+      <h3 className="text-lg font-semibold mb-2">{title}</h3>
+      <p className="text-sm text-muted-foreground">{description}</p>
     </div>
   );
 }
