@@ -8,6 +8,8 @@ import { redis } from '@/lib/redis';
 import { GameStatsService } from './stats.service';
 import { isValidId, isValidRating, validatePagination } from '@/lib/utils/validation';
 
+export const MAX_RATING_COMMENT_LENGTH = 500;
+
 export interface SubmitRatingInput {
   gameId: number;
   rating: number;
@@ -40,13 +42,16 @@ export class RatingService {
 
     await this.checkRateLimit(ipHash);
     await this.ensureNotRatedRecently(input.gameId, ipHash, anonymousToken);
+    const comment = input.comment?.trim()
+      ? input.comment.trim().slice(0, MAX_RATING_COMMENT_LENGTH)
+      : undefined;
 
     const [created] = await db
       .insert(ratings)
       .values({
         gameId: input.gameId,
         rating: input.rating,
-        comment: input.comment,
+        comment,
         userIpHash: ipHash,
         anonymousToken,
         status: 'pending',

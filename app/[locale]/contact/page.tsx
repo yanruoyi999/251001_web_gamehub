@@ -251,7 +251,7 @@ export default function ContactPage({ params }: ContactPageProps) {
             </li>
             <li>
               <a
-                href="https://support.google.com/adsense/answer/48182"
+                href="https://transparency.google/intl/en/our-policies/product-terms/google-adsense/"
                 target="_blank"
                 rel="noopener"
                 className="text-indigo-600 hover:text-indigo-500"

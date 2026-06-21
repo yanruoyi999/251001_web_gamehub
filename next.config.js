@@ -1,6 +1,7 @@
 const createNextIntlPlugin = require('next-intl/plugin');
 
 const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 /** @type {import('next').NextConfig} */
 const securityHeaders = [
@@ -8,10 +9,10 @@ const securityHeaders = [
     key: 'Content-Security-Policy',
     value: [
       "default-src 'self'",
-      "img-src 'self' data: https://res.cloudinary.com https://via.placeholder.com https://www.google-analytics.com https://www.googletagmanager.com",
-      "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com",
+      "img-src 'self' data: https://res.cloudinary.com https://via.placeholder.com https://www.google-analytics.com https://www.googletagmanager.com https://*.clarity.ms",
+      `script-src 'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ''} https://www.googletagmanager.com https://www.clarity.ms`,
       "style-src 'self' 'unsafe-inline'",
-      "connect-src 'self' https://res.cloudinary.com https://www.google-analytics.com https://www.googletagmanager.com",
+      "connect-src 'self' https://res.cloudinary.com https://www.google-analytics.com https://www.googletagmanager.com https://*.clarity.ms",
       "frame-src 'self' https://*.github.io https://sudoku.tn1ck.com http://patorjk.com https://playpager.com https://cloud.onlinegames.io https://*.4399.com https://www.friv2018.com",
       "frame-ancestors 'none'",
     ].join('; '),

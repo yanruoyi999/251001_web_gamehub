@@ -8,6 +8,7 @@ import clsx from 'clsx';
 import { locales } from '@/i18n/config';
 import { Button } from '@/components/ui/button';
 import { SearchInput } from '@/components/game/search-input';
+import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { trackEvent } from '@/lib/gtag';
 
 const navItems = [
@@ -40,8 +41,8 @@ function LanguageSwitcher() {
           className={clsx(
             'rounded-md px-2.5 py-1 text-sm font-medium transition-colors',
             item.code === activeLocale
-              ? 'bg-indigo-600 text-white'
-              : 'text-gray-600 hover:bg-gray-100'
+              ? 'bg-primary text-primary-foreground'
+              : 'text-muted-foreground hover:bg-accent'
           )}
           onClick={() =>
             trackEvent('language_switch', {
@@ -68,7 +69,7 @@ export function Header() {
     : activeLocale;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-gray-200/50 bg-white/80 shadow-sm backdrop-blur-lg">
+    <header className="sticky top-0 z-50 border-b border-border bg-background/80 shadow-sm backdrop-blur-lg">
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-6">
         {/* Logo */}
         <Link
@@ -81,11 +82,11 @@ export function Header() {
             })
           }
         >
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-600 to-purple-600 text-white shadow-lg">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-lg shadow-primary/20">
             <span className="text-lg font-bold">G</span>
           </div>
-          <span className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-            GameHub
+          <span className="text-xl font-bold text-foreground">
+            Game<span className="text-primary">Hub</span>
           </span>
         </Link>
 
@@ -100,8 +101,8 @@ export function Header() {
                 className={clsx(
                   'relative text-sm font-medium transition-colors',
                   isActive
-                    ? 'text-indigo-600'
-                    : 'text-gray-600 hover:text-gray-900'
+                    ? 'text-primary'
+                    : 'text-muted-foreground hover:text-foreground'
                 )}
                 onClick={() =>
                   trackEvent('nav_link_click', {
@@ -112,7 +113,7 @@ export function Header() {
               >
                 {t(item.labelKey)}
                 {isActive && (
-                  <span className="absolute -bottom-[17px] left-0 right-0 h-0.5 bg-gradient-to-r from-indigo-600 to-purple-600"></span>
+                  <span className="absolute -bottom-[17px] left-0 right-0 h-0.5 bg-primary"></span>
                 )}
               </Link>
             );
@@ -122,10 +123,11 @@ export function Header() {
         {/* Right Side Actions */}
         <div className="flex items-center gap-3">
           <SearchInput locale={currentLocaleSegment} />
+          <ThemeToggle />
           <Button
             asChild
             size="sm"
-            className="hidden bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700 shadow-sm md:inline-flex"
+            className="hidden bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm shadow-primary/20 md:inline-flex"
           >
             <Link
               href={`/${currentLocaleSegment}/admin`}

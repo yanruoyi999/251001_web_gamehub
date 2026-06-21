@@ -294,12 +294,12 @@ export default function AboutPage({ params }: AboutPageProps) {
             </a>
             <span className="text-gray-300">|</span>
             <a
-              href="https://ad-freegames.github.io"
+              href="https://pages.github.com/"
               target="_blank"
               rel="noopener"
               className="text-indigo-600 hover:text-indigo-500"
             >
-              {isZh ? 'Ad-Free Games Hub（GitHub）' : 'Ad-Free Games Hub (GitHub)'}
+              {isZh ? 'GitHub Pages（静态托管）' : 'GitHub Pages (Static hosting)'}
             </a>
             <span className="text-gray-300">|</span>
             <a href="https://phaser.io" target="_blank" rel="noopener" className="text-indigo-600 hover:text-indigo-500">

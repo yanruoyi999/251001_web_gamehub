@@ -66,8 +66,8 @@ export default function GuidesPage({ params }: GuidesPageProps) {
   return (
     <div className="mx-auto w-full max-w-5xl px-6 py-12">
       <header className="mb-10 text-center">
-        <h1 className="text-4xl font-bold text-gray-900">{heading}</h1>
-        <p className="mt-4 text-base text-gray-600">{intro}</p>
+        <h1 className="text-4xl font-bold text-foreground">{heading}</h1>
+        <p className="mt-4 text-base text-muted-foreground">{intro}</p>
       </header>
 
       <div className="grid gap-6 md:grid-cols-2">
@@ -79,16 +79,16 @@ export default function GuidesPage({ params }: GuidesPageProps) {
           return (
             <Card key={page.slug} className="flex h-full flex-col justify-between">
               <CardHeader>
-                <CardTitle className="text-2xl font-semibold text-gray-900">
+                <CardTitle className="text-2xl font-semibold text-foreground">
                   {content.heading}
                 </CardTitle>
               </CardHeader>
-              <CardContent className="flex flex-1 flex-col justify-between gap-6 text-sm text-gray-600">
+              <CardContent className="flex flex-1 flex-col justify-between gap-6 text-sm text-muted-foreground">
                 <p>{summary}</p>
                 <div className="mt-auto">
                   <Link
                     href={href}
-                    className="inline-flex items-center text-indigo-600 transition hover:text-indigo-800"
+                    className="inline-flex items-center text-primary transition hover:text-primary/80"
                     prefetch
                   >
                     {locale === 'zh' ? '阅读完整攻略' : 'Read the full guide'} →
@@ -100,7 +100,7 @@ export default function GuidesPage({ params }: GuidesPageProps) {
         })}
       </div>
 
-      <footer className="mt-12 text-center text-sm text-gray-500">
+      <footer className="mt-12 text-center text-sm text-muted-foreground">
         {locale === 'zh'
           ? '提示：收藏本页，随时获取最新的无广告游戏与主题合集。'
           : 'Tip: Bookmark this page to see newly published ad-free and themed collections as soon as they land.'}

@@ -5,6 +5,7 @@ import { headers } from 'next/headers';
 import './globals.css';
 import { defaultLocale, locales } from '@/i18n/config';
 import AnalyticsListener from '@/components/layout/AnalyticsListener';
+import { ClarityConsent } from '@/components/analytics/ClarityConsent';
 import { GA_TRACKING_ID } from '@/lib/gtag';
 import { getSiteBaseUrl } from '@/lib/seo';
 
@@ -76,7 +77,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#312e81',
+  themeColor: '#0d1117',
 };
 
 export default function RootLayout({
@@ -102,8 +103,13 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }}
         />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(d)document.documentElement.classList.add('dark');}catch(e){}})();`,
+          }}
+        />
       </head>
-      <body className="font-sans antialiased bg-white text-gray-900">
+      <body className="font-sans antialiased bg-background text-foreground">
         {GA_TRACKING_ID ? (
           <>
             <Script
@@ -124,6 +130,7 @@ export default function RootLayout({
           </>
         ) : null}
         {children}
+        <ClarityConsent locale={htmlLang} privacyHref={`/${htmlLang}/privacy`} />
       </body>
     </html>
   );

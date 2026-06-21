@@ -64,7 +64,7 @@ export default function PrivacyPage({ params }: PrivacyPageProps) {
           <ul className="mt-4 list-disc space-y-2 pl-6 text-gray-700">
             <li>{isZh ? '提供和改进游戏服务' : 'Provide and improve game services'}</li>
             <li>{isZh ? '分析网站使用情况' : 'Analyze website usage'}</li>
-            <li>{isZh ? '展示相关广告（通过Google AdSense）' : 'Display relevant ads (via Google AdSense)'}</li>
+            <li>{isZh ? '收集反馈并排查游戏加载问题' : 'Collect feedback and troubleshoot game loading issues'}</li>
             <li>{isZh ? '防止欺诈和滥用' : 'Prevent fraud and abuse'}</li>
           </ul>
         </section>
@@ -100,8 +100,8 @@ export default function PrivacyPage({ params }: PrivacyPageProps) {
           </p>
           <ul className="mt-4 list-disc space-y-2 pl-6 text-gray-700">
             <li>
-              <strong>Google AdSense</strong>:{' '}
-              {isZh ? '用于展示广告' : 'For displaying advertisements'} -{' '}
+              <strong>Google Analytics</strong>:{' '}
+              {isZh ? '用于网站分析' : 'For website analytics'} -{' '}
               <a
                 href="https://policies.google.com/privacy"
                 target="_blank"
@@ -112,15 +112,27 @@ export default function PrivacyPage({ params }: PrivacyPageProps) {
               </a>
             </li>
             <li>
-              <strong>Google Analytics</strong>:{' '}
-              {isZh ? '用于网站分析' : 'For website analytics'} -{' '}
+              <strong>Microsoft Clarity</strong>:{' '}
+              {isZh ? '用于热图、会话回放和体验问题分析，仅在同意后启用' : 'For heatmaps, session recordings, and experience diagnostics, enabled only after consent'} -{' '}
               <a
-                href="https://policies.google.com/privacy"
+                href="https://privacy.microsoft.com/privacystatement"
                 target="_blank"
                 rel="noopener"
                 className="text-indigo-600 hover:text-indigo-500"
               >
-                {isZh ? 'Google隐私政策' : 'Google Privacy Policy'}
+                {isZh ? 'Microsoft 隐私声明' : 'Microsoft Privacy Statement'}
+              </a>
+            </li>
+            <li>
+              <strong>Typeform</strong>:{' '}
+              {isZh ? '用于收集用户反馈、游戏问题报告和开发者提交' : 'For user feedback, game issue reports, and developer submissions'} -{' '}
+              <a
+                href="https://www.typeform.com/privacy-policy/"
+                target="_blank"
+                rel="noopener"
+                className="text-indigo-600 hover:text-indigo-500"
+              >
+                {isZh ? 'Typeform 隐私政策' : 'Typeform Privacy Policy'}
               </a>
             </li>
             <li>

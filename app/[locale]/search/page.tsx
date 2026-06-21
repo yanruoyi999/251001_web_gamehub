@@ -70,12 +70,13 @@ export default async function SearchPage({ params, searchParams }: SearchPagePro
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {result.games.map((game: any) => {
               const displayTitle = locale === 'en' ? game.titleEn ?? game.title : game.title;
+              const gameHref = `/${locale}/games/${game.slug ?? game.id}`;
 
               return (
                 <Card key={game.id} className="flex h-full flex-col justify-between">
                   <CardHeader>
                     <CardTitle className="text-lg font-semibold text-gray-900">
-                      <Link href={`/${locale}/games/${game.id}`} className="hover:text-indigo-600">
+                      <Link href={gameHref} className="hover:text-indigo-600">
                         {displayTitle}
                       </Link>
                     </CardTitle>
@@ -91,7 +92,7 @@ export default async function SearchPage({ params, searchParams }: SearchPagePro
                     <p>{t('playCount', { value: formatNumber(game.playCount ?? 0) })}</p>
                     <p>{t('rating', { value: Number(game.averageRating ?? 0).toFixed(2) })}</p>
                     <Link
-                      href={`/${locale}/games/${game.id}`}
+                      href={gameHref}
                       className="inline-flex text-sm font-medium text-indigo-600 hover:text-indigo-500"
                     >
                       {t('viewDetails')}

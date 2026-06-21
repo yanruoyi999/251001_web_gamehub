@@ -5,6 +5,8 @@ import { db } from '@/lib/db';
 import { redis } from '@/lib/redis';
 import { getMeilisearchClient } from '@/lib/meilisearch';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   const summary: Record<string, { status: 'ok' | 'degraded' | 'error'; message?: string }> = {
     database: { status: 'ok' },

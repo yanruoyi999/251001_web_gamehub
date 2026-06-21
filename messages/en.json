@@ -2,155 +2,237 @@
   "common": {
     "loading": "Loading...",
     "error": "Error",
-    "backToHome": "← Back to Home",
+    "backToHome": "Back to Home",
     "language": "Language"
   },
-  "game": {
-    "title": "Samurai Sudoku",
-    "puzzle": "Puzzle",
-    "difficulty": {
-      "easy": "Easy",
-      "medium": "Medium",
-      "hard": "Hard",
-      "label": "Difficulty"
-    },
-    "completed": "🎉 Congratulations! You solved the puzzle!",
-    "loadingPuzzle": "Loading puzzle...",
-    "puzzleNotFound": "Puzzle not found"
+  "nav": {
+    "home": "Home",
+    "games": "Games",
+    "guides": "Guides",
+    "cta": "Admin",
+    "searchPlaceholder": "Search games",
+    "searchLoading": "Searching...",
+    "searchNoResult": "No games found"
   },
-  "stats": {
-    "time": "Time",
-    "progress": "Progress",
-    "hints": "Hints",
-    "moves": "Moves"
-  },
-  "actions": {
-    "newGame": "New Game",
-    "reset": "Reset",
-    "undo": "Undo",
-    "redo": "Redo",
-    "hint": "Hint",
-    "candidates": "Candidates",
-    "conflicts": "Conflicts",
-    "clear": "Clear",
-    "erase": "⌫",
-    "newGameConfirm": "Start a new puzzle? Current progress will be lost.",
-    "resetConfirm": "Are you sure you want to reset the puzzle? All progress will be lost.",
-    "pause": "Pause",
-    "resume": "Resume"
-  },
-  "hints": {
-    "noHint": "No hints available. Try using the undo button or clearing some cells.",
-    "nakedSingle": "This cell can only be {value}. All other numbers are already used in its row, column, or box.",
-    "hiddenSingle": "In this {unit}, the number {value} can only go in this cell.",
-    "units": {
-      "row": "row",
-      "column": "column",
-      "box": "box"
-    }
-  },
-  "archive": {
-    "title": "Puzzle Archive",
-    "description": "Browse and play all available Samurai Sudoku puzzles",
-    "playToday": "Play Today's Puzzle",
-    "browseMore": "Browse More Puzzles",
-    "filters": {
-      "all": "All",
-      "easy": "Easy",
-      "medium": "Medium",
-      "hard": "Hard"
-    },
-    "table": {
-      "id": "Puzzle ID",
-      "difficulty": "Difficulty",
-      "estimatedTime": "Est. Time",
-      "tags": "Tags",
-      "action": "Action"
-    },
-    "play": "Play",
-    "noResults": "No puzzles found.",
-    "pagination": {
-      "previous": "← Previous",
-      "next": "Next →",
-      "page": "Page",
-      "of": "of",
-      "showing": "Showing {start}-{end} of {total} puzzles"
-    }
-  },
-  "metadata": {
-    "title": "Samurai Sudoku - Daily Puzzle Challenge",
-    "description": "Play Samurai Sudoku online. Daily puzzles with offline support, hints, and progress tracking. Challenge yourself with 5 interconnected 9×9 grids.",
-    "keywords": "sudoku, samurai sudoku, evil sudoku, sudoku evil, puzzle, brain game, logic game, daily puzzle, online sudoku, free sudoku",
-    "og": {
-      "title": "Samurai Sudoku - Daily Puzzle Challenge",
-      "description": "Challenge yourself with daily Samurai Sudoku puzzles. Five 9×9 grids interconnected in perfect harmony."
-    }
+  "footer": {
+    "github": "GitHub",
+    "support": "Support",
+    "copyright": "© 2026 GameHub. Curated free browser games without downloads."
   },
   "home": {
-    "title": "Samurai Sudoku",
-    "welcome": "Welcome to Samurai Sudoku",
-    "description": "Master Samurai Sudoku online with curated daily challenges, smart hints, and progress tracking across five overlapping 9×9 grids.",
-    "playNow": "Play Today's Puzzle",
-    "browseArchive": "Browse Archive",
-    "footer": "© 2025 Samurai Sudoku. Daily Samurai Sudoku puzzles for puzzle enthusiasts.",
+    "title": "GameHub Free Browser Games",
+    "welcome": "Welcome to GameHub",
+    "description": "Play curated HTML5 games instantly in your browser. No downloads, no account required, and no intrusive interstitial ads.",
+    "playNow": "Browse Games",
+    "browseArchive": "Explore Guides",
+    "footer": "© 2026 GameHub. Free browser games for quick sessions on desktop and mobile.",
     "features": {
       "title": "Features",
-      "offline": "Offline Support",
-      "offlineDesc": "Play anytime, anywhere. Your progress is saved locally.",
-      "intelligent": "Smart Hints",
-      "intelligentDesc": "Get intelligent hints when you're stuck, with detailed explanations.",
-      "candidates": "Candidate Marking",
-      "candidatesDesc": "Visualize possible numbers with automatic candidate detection",
-      "progress": "Track Progress",
-      "progressDesc": "Monitor your completion time, hints used, and improvement over time.",
-      "mobile": "Mobile Optimized",
-      "mobileDesc": "Seamless gameplay on any device with touch-friendly controls"
+      "offline": "Instant Play",
+      "offlineDesc": "Open a game and start playing in seconds without installs or launchers.",
+      "intelligent": "Curated Picks",
+      "intelligentDesc": "Every title is organized by genre, tags, and practical play style.",
+      "progress": "Mobile Friendly",
+      "progressDesc": "Play lightweight browser games on desktop, tablet, and phone."
     },
     "seoSection": {
-      "title": "Why Samurai Sudoku Keeps Your Brain Sharp",
-      "description": "Samurai Sudoku links five classic Sudoku grids together, amplifying the logic required. Our platform helps you improve with:",
-      "pointHeading": "Samurai Sudoku Insight",
+      "title": "Free Games With No Downloads",
+      "description": "GameHub focuses on low-friction browser games for players who want quick, safe, and useful recommendations instead of noisy game portals.",
+      "pointHeading": "GameHub Advantage",
       "points": [
-        "Daily Samurai Sudoku puzzles generated and validated for unique solutions and balanced difficulty.",
-        "Interactive Samurai Sudoku board with conflict detection, candidate notes, and timer tracking for speed runs.",
-        "Strategy-driven hints and tutorials that explain Samurai Sudoku solving patterns step by step."
+        "Each game has its own crawlable detail page with descriptions, controls, category links, and structured data.",
+        "Collections target real search intent such as free games no ads, ad-free games, mobile browser games, and boredom busters.",
+        "The catalogue is split by categories and tags so users can move naturally between related games."
       ],
-      "cta": "Read more Samurai Sudoku strategies"
+      "cta": "Read the no-ads game guide"
     },
     "evilSection": {
-      "title": "Master Evil Sudoku Difficulty",
-      "description": "Looking for the toughest Sudoku? Our evil Sudoku packs deliver 4.5+ difficulty ratings with handcrafted logic chains and optional hints.",
+      "title": "Find Games For Every Short Break",
+      "description": "Use GameHub as a lightweight discovery engine: quick puzzles, action games, platformers, racing, and casual sessions are all grouped for faster browsing.",
       "points": [
-        "Play daily evil Sudoku grids with conflict-highlighting and candidate notes so you can tackle extreme logic safely.",
-        "Learn evil Sudoku techniques—X-Wing, Swordfish, coloring chains—through step-by-step visual hints.",
-        "Download printable evil Sudoku PDFs or stay online for timer-based challenges and streak tracking."
+        "Category pages collect action, puzzle, adventure, racing, strategy, and casual games into focused landing pages.",
+        "Tag pages highlight short-session games, keyboard controls, high-score challenges, and other gameplay patterns.",
+        "Guide pages connect commercial keywords with real game recommendations and internal links."
       ],
-      "cta": "Browse evil Sudoku archives"
+      "cta": "See games to play when bored"
     },
     "faq": {
-      "title": "Samurai Sudoku FAQ",
+      "title": "GameHub FAQ",
       "items": [
         {
-          "question": "What is Samurai Sudoku?",
-          "answer": "Samurai Sudoku is a five-grid variant of classic Sudoku where overlapping regions link each puzzle together. You must satisfy the rules in every grid at once, creating a deeper logical challenge."
+          "question": "Are the games free?",
+          "answer": "Yes. GameHub links to free browser games that can be opened directly without payment or app-store installation."
         },
         {
-          "question": "How can I get better at Samurai Sudoku?",
-          "answer": "Focus on the overlapping zones first, track pencil marks, and use our guided hints to learn advanced Samurai Sudoku strategies such as cross-grid singles and elimination chains."
+          "question": "Do I need to download anything?",
+          "answer": "No. The catalogue is built around HTML5 and embedded browser games, so you can play in a modern browser."
         },
         {
-          "question": "Is Samurai Sudoku harder than normal Sudoku?",
-          "answer": "Yes. Samurai Sudoku multiplies the search space with five interconnected grids. We grade each puzzle and offer easy, medium, and hard Samurai Sudoku levels so you can improve gradually."
+          "question": "Can I play on iPhone or Android?",
+          "answer": "Many games work on mobile browsers. We recommend checking the game detail page for controls and mobile suitability."
         },
         {
-          "question": "What makes an evil Sudoku different?",
-          "answer": "Evil Sudoku puzzles use minimal givens and require advanced strategies—X-Wing, Swordfish, coloring, forcing chains—beyond basic elimination. Our generator validates every evil grid to guarantee a unique solution without random guessing."
-        },
-        {
-          "question": "Where can I practice evil Sudoku online?",
-          "answer": "Head to our evil Sudoku archive to play browser-based puzzles with candidate notes, conflict warnings, and optional walkthrough hints. You can also print PDFs if you prefer solving on paper."
+          "question": "How are games organized?",
+          "answer": "Games are grouped by category, tags, and editorial guides so you can browse by genre, session length, device, and search intent."
         }
       ]
+    }
+  },
+  "Games": {
+    "title": "All Browser Games",
+    "desc": "Browse the GameHub catalogue by keyword, category, tag, freshness, popularity, and rating.",
+    "backToHome": "Back to Home",
+    "resultSummary": "{value} games found",
+    "empty": "No games match the current filters.",
+    "published": "Published {value}",
+    "playCount": "{value} plays",
+    "rating": "{value}/5 rating",
+    "filters": {
+      "title": "Filters",
+      "searchPlaceholder": "Search by title or description",
+      "categoryLabel": "Category",
+      "categoryAll": "All categories",
+      "tagLabel": "Tag",
+      "tagAll": "All tags",
+      "sortLabel": "Sort by",
+      "sort": {
+        "publishedAt": "Newest",
+        "playCount": "Most played",
+        "averageRating": "Top rated",
+        "title": "Title"
+      },
+      "sortOrderDesc": "Descending",
+      "sortOrderAsc": "Ascending",
+      "onlyNew": "New only",
+      "onlyHot": "Hot only",
+      "onlyFeatured": "Featured only",
+      "onlyFavorites": "Favorites only",
+      "submit": "Apply filters",
+      "reset": "Reset"
+    },
+    "actions": {
+      "favorite": "Favorite",
+      "unfavorite": "Unfavorite"
+    },
+    "status": {
+      "active": "Playable",
+      "inactive": "Unavailable",
+      "pending": "Pending review"
+    },
+    "badges": {
+      "featured": "Featured",
+      "hot": "Hot",
+      "new": "New"
+    },
+    "pagination": {
+      "prev": "Previous",
+      "next": "Next",
+      "pageLabel": "Page {current} of {total}"
+    }
+  },
+  "Search": {
+    "title": "Search Games",
+    "subtitle": "Find browser games by title, genre, or play style.",
+    "summary": {
+      "empty": "Enter a search term from the header search box.",
+      "withQuery": "Showing {total} results for \"{query}\"."
+    },
+    "emptyPrompt": "Search for a game name, genre, or keyword to begin.",
+    "emptyResult": "No games found for \"{query}\".",
+    "published": "Published {date}",
+    "playCount": "{value} plays",
+    "rating": "{value}/5 rating",
+    "viewDetails": "View details",
+    "pagination": {
+      "prev": "Previous",
+      "next": "Next",
+      "label": "Page {current} of {total}"
+    }
+  },
+  "GameDetails": {
+    "ratingForm": {
+      "title": "Rate this game",
+      "hint": "Share a quick rating to help other players choose.",
+      "starLabel": "Rate {value} stars",
+      "commentPlaceholder": "Optional comment",
+      "submit": "Submit rating",
+      "submitting": "Submitting...",
+      "success": "Thanks for your rating.",
+      "validation": {
+        "required": "Choose a star rating first."
+      },
+      "error": {
+        "generic": "Unable to submit rating right now.",
+        "rateLimit": "Please wait before rating again.",
+        "duplicate": "You already rated this game."
+      }
+    }
+  },
+  "Imported4399": {
+    "title": "Imported 4399 Game Preview",
+    "desc": "A quick preview of embedded games imported from the TSV catalogue.",
+    "backToGames": "Back to games",
+    "notice": "These entries are generated from the local iframe list and can be promoted into full game pages.",
+    "empty": "No imported games found.",
+    "onsiteHint": "Preview embed",
+    "cta": "Open full detail page"
+  },
+  "MonsterSurvivors": {
+    "tagline": "Survival action",
+    "title": "Monster Survivors",
+    "summary": "Survive waves, collect upgrades, and push each run further.",
+    "backToList": "Back to games",
+    "playSection": {
+      "title": "Play Monster Survivors",
+      "description": "Launch the embedded browser version instantly.",
+      "hint": "Use fullscreen mode for the best experience."
+    },
+    "details": {
+      "title": "Game details",
+      "description": "Quick facts before you play.",
+      "genre": { "label": "Genre", "value": "Action survival" },
+      "session": { "label": "Session", "value": "Short to medium runs" },
+      "controls": { "label": "Controls", "value": "Keyboard and mouse" },
+      "devices": { "label": "Devices", "value": "Desktop browser recommended" }
+    },
+    "tips": {
+      "title": "Tips",
+      "description": "Improve your first few runs.",
+      "items": {
+        "0": "Keep moving before the arena fills up.",
+        "1": "Prioritize upgrades that improve area control.",
+        "2": "Collect experience safely instead of chasing every drop.",
+        "3": "Save risky paths for moments when cooldowns are ready."
+      }
+    }
+  },
+  "Solitaire": {
+    "tagline": "Classic cards",
+    "title": "Solitaire",
+    "summary": "Play a familiar solitaire game directly in your browser.",
+    "backToList": "Back to games",
+    "playSection": {
+      "title": "Play Solitaire",
+      "description": "Start a clean classic card session without installing anything.",
+      "hint": "Fullscreen mode gives more space for card movement."
+    },
+    "details": {
+      "title": "Game details",
+      "description": "Quick facts before you play.",
+      "genre": { "label": "Genre", "value": "Card puzzle" },
+      "session": { "label": "Session", "value": "Relaxed short sessions" },
+      "controls": { "label": "Controls", "value": "Mouse or touch" },
+      "devices": { "label": "Devices", "value": "Desktop, tablet, and mobile browser" }
+    },
+    "tips": {
+      "title": "Tips",
+      "description": "Play more efficiently.",
+      "items": {
+        "0": "Reveal face-down cards before moving cards to foundations too early.",
+        "1": "Keep empty columns available for kings when possible.",
+        "2": "Cycle the stock carefully so you do not bury useful moves.",
+        "3": "Undo and review when a layout stops progressing."
+      }
     }
   }
 }

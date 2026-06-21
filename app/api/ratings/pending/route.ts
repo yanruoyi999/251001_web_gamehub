@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { RatingService } from '@/services';
+import { isAdminRequestAuthenticated } from '@/lib/auth/admin';
 
 export async function GET(request: NextRequest) {
+  if (!isAdminRequestAuthenticated(request)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
     const { searchParams } = new URL(request.url);
     const page = searchParams.get('page');

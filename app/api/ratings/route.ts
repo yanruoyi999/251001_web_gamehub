@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { RatingService } from '@/services';
+import { MAX_RATING_COMMENT_LENGTH } from '@/services/rating.service';
 
 function getClientIp(request: NextRequest) {
   if (request.ip && request.ip.trim().length > 0) {
@@ -46,7 +47,10 @@ export async function POST(request: NextRequest) {
     const result = await RatingService.submitRating({
       gameId: Number(body.gameId),
       rating: Number(body.rating),
-      comment: body.comment,
+      comment:
+        typeof body.comment === 'string'
+          ? body.comment.trim().slice(0, MAX_RATING_COMMENT_LENGTH)
+          : undefined,
       userIp: getClientIp(request),
       userAgent: request.headers.get('user-agent') ?? undefined,
       acceptLanguage: request.headers.get('accept-language') ?? undefined,
@@ -56,7 +60,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Failed to submit rating:', error);
     return NextResponse.json(
-      { error: (error as Error).message ?? 'Failed to submit rating' },
+      { error: 'Failed to submit rating' },
       { status: 400 }
     );
   }

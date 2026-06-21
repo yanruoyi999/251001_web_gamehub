@@ -2,156 +2,237 @@
   "common": {
     "loading": "加载中...",
     "error": "错误",
-    "backToHome": "← 返回首页",
+    "backToHome": "返回首页",
     "language": "语言"
   },
-  "game": {
-    "title": "武士数独",
-    "puzzle": "谜题",
-    "difficulty": {
-      "easy": "简单",
-      "medium": "中等",
-      "hard": "困难",
-      "label": "难度"
-    },
-    "completed": "🎉 恭喜！您已完成这个谜题！",
-    "loadingPuzzle": "加载谜题中...",
-    "puzzleNotFound": "未找到谜题"
+  "nav": {
+    "home": "首页",
+    "games": "游戏库",
+    "guides": "专题",
+    "cta": "后台",
+    "searchPlaceholder": "搜索游戏",
+    "searchLoading": "搜索中...",
+    "searchNoResult": "未找到游戏"
   },
-  "stats": {
-    "time": "时间",
-    "progress": "进度",
-    "hints": "提示",
-    "moves": "操作次数"
-  },
-  "actions": {
-    "newGame": "新游戏",
-    "reset": "重置",
-    "undo": "撤销",
-    "redo": "重做",
-    "hint": "提示",
-    "candidates": "候选",
-    "conflicts": "冲突",
-    "clear": "清空",
-    "erase": "⌫",
-    "newGameConfirm": "开始新的武士数独？当前进度将被清除。",
-    "resetConfirm": "确定要重置当前武士数独？所有进度将被清除。",
-    "pause": "暂停",
-    "resume": "继续",
-    "backHome": "← 返回首页"
-  },
-  "hints": {
-    "noHint": "暂无可用提示。可以尝试撤销步骤或清除部分单元格。",
-    "nakedSingle": "此单元格只有可能填 {value}。该行、列或宫格中的其他数字已被使用。",
-    "hiddenSingle": "在该{unit}中，数字 {value} 只能放在这个单元格。",
-    "units": {
-      "row": "行",
-      "column": "列",
-      "box": "宫格"
-    }
-  },
-  "archive": {
-    "title": "谜题归档",
-    "description": "浏览并挑战全部可用的武士数独谜题",
-    "playToday": "今日谜题",
-    "browseMore": "浏览更多谜题",
-    "filters": {
-      "all": "全部",
-      "easy": "简单",
-      "medium": "中等",
-      "hard": "困难"
-    },
-    "table": {
-      "id": "谜题 ID",
-      "difficulty": "难度",
-      "estimatedTime": "预计时间",
-      "tags": "标签",
-      "action": "操作"
-    },
-    "play": "开始",
-    "noResults": "未找到谜题。",
-    "pagination": {
-      "previous": "← 上一页",
-      "next": "下一页 →",
-      "page": "第",
-      "of": "页，共",
-      "showing": "显示第 {start}-{end} 个，共 {total} 个谜题"
-    }
-  },
-  "metadata": {
-    "title": "武士数独 - 每日谜题挑战",
-    "description": "在线游玩武士数独。每日全新谜题，支持离线、提示与进度统计，挑战五个互锁的 9×9 网格。",
-    "keywords": "数独, 武士数独, 恶魔数独, evil sudoku, 极难数独, 谜题, 益智游戏, 逻辑游戏, 每日谜题, 在线数独, 免费数独",
-    "og": {
-      "title": "武士数独 - 每日谜题挑战",
-      "description": "挑战每日武士数独谜题。五个 9×9 网格完美互连。"
-    }
+  "footer": {
+    "github": "GitHub",
+    "support": "支持",
+    "copyright": "© 2026 GameHub。精选免费浏览器小游戏，无需下载。"
   },
   "home": {
-    "title": "武士数独每日挑战",
-    "welcome": "欢迎来到武士数独",
-    "description": "在线掌握武士数独：每日精选挑战、智能提示与进度统计，五个互锁的 9×9 网格等你推理。",
-    "playNow": "今日谜题",
-    "browseArchive": "浏览归档",
-    "footer": "© 2025 武士数独。为数独爱好者提供每日武士数独谜题。",
+    "title": "GameHub 免费浏览器小游戏",
+    "welcome": "欢迎来到 GameHub",
+    "description": "精选 HTML5 小游戏，打开浏览器即可游玩。无需下载、无需注册，也不插入打断体验的弹窗广告。",
+    "playNow": "浏览游戏",
+    "browseArchive": "查看专题",
+    "footer": "© 2026 GameHub。为桌面端和移动端提供适合碎片时间的免费小游戏。",
     "features": {
       "title": "特性",
-      "offline": "离线支持",
-      "offlineDesc": "随时随地游玩，系统自动保存进度。",
-      "intelligent": "智能提示",
-      "intelligentDesc": "遇到难题时获取武士数独专属解题思路。",
-      "candidates": "候选标记",
-      "candidatesDesc": "自动标记可能数字，快速锁定答案。",
-      "progress": "进度追踪",
-      "progressDesc": "记录解题时间、提示使用次数与个人最佳。",
-      "mobile": "移动优化",
-      "mobileDesc": "触控友好的操作体验，适配手机与平板。"
+      "offline": "即开即玩",
+      "offlineDesc": "点击游戏即可开始，不需要安装客户端或启动器。",
+      "intelligent": "人工整理",
+      "intelligentDesc": "按类型、标签和玩法场景整理，减少无效翻找。",
+      "progress": "移动友好",
+      "progressDesc": "轻量浏览器游戏，适合电脑、平板和手机访问。"
     },
     "seoSection": {
-      "title": "为什么武士数独最能锻炼大脑",
-      "description": "武士数独将五个经典数独网格交错融合，逻辑深度倍增。我们的站点帮助你快速提升：",
-      "pointHeading": "武士数独要点",
+      "title": "无需下载的免费小游戏",
+      "description": "GameHub 聚焦低门槛浏览器游戏，给想快速开玩的人提供更干净、更容易筛选的游戏入口。",
+      "pointHeading": "GameHub 优势",
       "points": [
-        "每日武士数独谜题，生成后由算法与人工双重验证唯一解与难度等级。",
-        "互动式武士数独棋盘，提供冲突检测、候选标记与计时器，适合练习与速解。",
-        "策略提示与教程，循序讲解武士数独的交叉单、消除链等高级技巧。"
+        "每个游戏都有可收录详情页，包含介绍、操作说明、分类标签和结构化数据。",
+        "专题页覆盖 free games no ads、ad-free games、移动端小游戏和解闷小游戏等真实搜索需求。",
+        "游戏库按分类和标签拆分，用户可以自然跳转到相似游戏，提高浏览深度。"
       ],
-      "cta": "阅读武士数独策略指南"
+      "cta": "阅读无广告游戏专题"
     },
     "evilSection": {
-      "title": "挑战 Evil Sudoku 极难模式",
-      "description": "如果你在寻找难度天花板，evil Sudoku（恶魔数独）系列将考验你对高级逻辑的掌握。我们提供在线棋盘、打印版与完整攻略。",
+      "title": "为每一段碎片时间找游戏",
+      "description": "把 GameHub 当成轻量游戏发现引擎：益智、动作、平台跳跃、竞速和休闲玩法都按场景整理。",
       "points": [
-        "每日更新极难数独，支持冲突高亮、候选标记和计时器，方便你安全尝试高阶推理。",
-        "提供 X-Wing、Swordfish、链式消除等 evil Sudoku 专属技巧解析，遇到瓶颈即可查看提示。",
-        "可下载 PDF 打印练习，也可在浏览器中完成挑战并记录完成时间与提示次数。"
+        "分类页聚合动作、益智、冒险、竞速、策略和休闲游戏，形成更明确的搜索入口。",
+        "标签页突出碎片时间、键盘操作、高分挑战等玩法模式，方便继续浏览。",
+        "专题页把商业关键词和真实游戏推荐连接起来，增强站内链接结构。"
       ],
-      "cta": "查看 evil Sudoku 谜题库"
+      "cta": "查看解闷小游戏专题"
     },
     "faq": {
-      "title": "武士数独常见问题",
+      "title": "GameHub 常见问题",
       "items": [
         {
-          "question": "什么是武士数独？",
-          "answer": "武士数独由五个 9×9 数独组成，重叠区域共享数字，必须同时满足所有网格的规则，因此逻辑更复杂。"
+          "question": "这些游戏都是免费的吗？",
+          "answer": "是的。GameHub 收录的是可以直接打开的免费浏览器游戏，不需要付费或安装应用。"
         },
         {
-          "question": "如何提升武士数独水平？",
-          "answer": "先处理重叠区域，做好候选笔记，并结合我们的智能提示学习交叉单、区块消除等高级技巧。"
+          "question": "需要下载客户端吗？",
+          "answer": "不需要。站点以 HTML5 和可嵌入浏览器游戏为主，使用现代浏览器即可游玩。"
         },
         {
-          "question": "武士数独是否比普通数独更难？",
-          "answer": "是的。五个互锁网格扩大搜索空间，但我们提供简单、中等、困难三种武士数独难度，帮助你循序渐进。"
+          "question": "手机上可以玩吗？",
+          "answer": "很多游戏支持移动浏览器。具体操作方式和适配情况可以查看对应游戏详情页。"
         },
         {
-          "question": "什么是 Evil Sudoku（恶魔数独）？",
-          "answer": "Evil Sudoku 会减少 givens（已知数字），需要使用 X-Wing、Swordfish、着色链等高级技巧才能解出。我们的系统确保每一道 evil 谜题都拥有唯一解，且无需纯粹猜测。"
-        },
-        {
-          "question": "在哪里可以在线练习 evil Sudoku？",
-          "answer": "访问我们的 evil Sudoku 专区即可在线游玩，支持候选标记、冲突提示与分步提示；也可以下载 PDF 纸质版，随时随地训练极难数独。"
+          "question": "游戏是怎么整理的？",
+          "answer": "我们按分类、标签和编辑专题组织游戏，用户可以按类型、时长、设备和搜索意图继续浏览。"
         }
       ]
+    }
+  },
+  "Games": {
+    "title": "全部浏览器游戏",
+    "desc": "按关键词、分类、标签、新品、热门和评分筛选 GameHub 游戏库。",
+    "backToHome": "返回首页",
+    "resultSummary": "共找到 {value} 款游戏",
+    "empty": "当前筛选条件下没有匹配的游戏。",
+    "published": "发布于 {value}",
+    "playCount": "{value} 次游玩",
+    "rating": "评分 {value}/5",
+    "filters": {
+      "title": "筛选",
+      "searchPlaceholder": "按标题或介绍搜索",
+      "categoryLabel": "分类",
+      "categoryAll": "全部分类",
+      "tagLabel": "标签",
+      "tagAll": "全部标签",
+      "sortLabel": "排序",
+      "sort": {
+        "publishedAt": "最新发布",
+        "playCount": "最多游玩",
+        "averageRating": "最高评分",
+        "title": "标题"
+      },
+      "sortOrderDesc": "降序",
+      "sortOrderAsc": "升序",
+      "onlyNew": "只看新品",
+      "onlyHot": "只看热门",
+      "onlyFeatured": "只看精选",
+      "onlyFavorites": "只看收藏",
+      "submit": "应用筛选",
+      "reset": "重置"
+    },
+    "actions": {
+      "favorite": "收藏",
+      "unfavorite": "取消收藏"
+    },
+    "status": {
+      "active": "可游玩",
+      "inactive": "暂不可用",
+      "pending": "待审核"
+    },
+    "badges": {
+      "featured": "精选",
+      "hot": "热门",
+      "new": "新品"
+    },
+    "pagination": {
+      "prev": "上一页",
+      "next": "下一页",
+      "pageLabel": "第 {current} / {total} 页"
+    }
+  },
+  "Search": {
+    "title": "搜索游戏",
+    "subtitle": "按标题、类型或玩法关键词查找浏览器游戏。",
+    "summary": {
+      "empty": "请在顶部搜索框输入关键词。",
+      "withQuery": "“{query}”共找到 {total} 条结果。"
+    },
+    "emptyPrompt": "输入游戏名称、类型或关键词开始搜索。",
+    "emptyResult": "没有找到与“{query}”相关的游戏。",
+    "published": "发布于 {date}",
+    "playCount": "{value} 次游玩",
+    "rating": "评分 {value}/5",
+    "viewDetails": "查看详情",
+    "pagination": {
+      "prev": "上一页",
+      "next": "下一页",
+      "label": "第 {current} / {total} 页"
+    }
+  },
+  "GameDetails": {
+    "ratingForm": {
+      "title": "给这个游戏评分",
+      "hint": "留下一个快速评分，帮助其他玩家选择。",
+      "starLabel": "评分 {value} 星",
+      "commentPlaceholder": "可选评论",
+      "submit": "提交评分",
+      "submitting": "提交中...",
+      "success": "感谢你的评分。",
+      "validation": {
+        "required": "请先选择星级。"
+      },
+      "error": {
+        "generic": "暂时无法提交评分。",
+        "rateLimit": "请稍后再评分。",
+        "duplicate": "你已经评价过这个游戏。"
+      }
+    }
+  },
+  "Imported4399": {
+    "title": "4399 导入游戏预览",
+    "desc": "从本地 TSV iframe 列表生成的嵌入游戏预览。",
+    "backToGames": "返回游戏库",
+    "notice": "这些条目来自本地 iframe 清单，可继续提升为完整游戏详情页。",
+    "empty": "未找到导入游戏。",
+    "onsiteHint": "嵌入预览",
+    "cta": "打开完整详情页"
+  },
+  "MonsterSurvivors": {
+    "tagline": "生存动作",
+    "title": "Monster Survivors",
+    "summary": "抵御怪物浪潮，收集升级，让每一局坚持更久。",
+    "backToList": "返回游戏库",
+    "playSection": {
+      "title": "游玩 Monster Survivors",
+      "description": "直接启动嵌入式浏览器版本。",
+      "hint": "使用全屏模式可以获得更好的体验。"
+    },
+    "details": {
+      "title": "游戏信息",
+      "description": "开始前快速了解玩法。",
+      "genre": { "label": "类型", "value": "动作生存" },
+      "session": { "label": "时长", "value": "短到中等时长" },
+      "controls": { "label": "操作", "value": "键盘和鼠标" },
+      "devices": { "label": "设备", "value": "推荐桌面浏览器" }
+    },
+    "tips": {
+      "title": "技巧",
+      "description": "提升前几局表现。",
+      "items": {
+        "0": "在场面被怪物填满前保持移动。",
+        "1": "优先选择能扩大控场范围的升级。",
+        "2": "安全收集经验，不要为了每个掉落物冒险。",
+        "3": "冷却技能准备好时再走风险路线。"
+      }
+    }
+  },
+  "Solitaire": {
+    "tagline": "经典纸牌",
+    "title": "Solitaire",
+    "summary": "在浏览器里直接开始一局经典纸牌。",
+    "backToList": "返回游戏库",
+    "playSection": {
+      "title": "游玩 Solitaire",
+      "description": "无需安装，开始一局干净的经典纸牌。",
+      "hint": "全屏模式能给纸牌移动留出更多空间。"
+    },
+    "details": {
+      "title": "游戏信息",
+      "description": "开始前快速了解玩法。",
+      "genre": { "label": "类型", "value": "纸牌益智" },
+      "session": { "label": "时长", "value": "轻松碎片时间" },
+      "controls": { "label": "操作", "value": "鼠标或触控" },
+      "devices": { "label": "设备", "value": "电脑、平板和手机浏览器" }
+    },
+    "tips": {
+      "title": "技巧",
+      "description": "更高效地推进牌局。",
+      "items": {
+        "0": "优先翻开背面牌，不要太早把可用牌移到基础牌堆。",
+        "1": "尽量保留空列，方便移动 K。",
+        "2": "谨慎循环发牌堆，避免埋住关键移动。",
+        "3": "局面停滞时使用撤销回看思路。"
+      }
     }
   }
 }

@@ -63,7 +63,7 @@ export default async function Imported4399SamplePage({ params }: PageProps) {
                     src={game.iframeUrl}
                     title={game.title || game.titleEn}
                     loading="lazy"
-                    sandbox="allow-scripts allow-same-origin"
+                    sandbox="allow-scripts"
                     allow="fullscreen; gamepad; pointer-lock"
                     referrerPolicy="no-referrer"
                     className="h-full w-full"

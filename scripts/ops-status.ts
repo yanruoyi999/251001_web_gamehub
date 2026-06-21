@@ -1,8 +1,12 @@
 import { sql } from 'drizzle-orm';
 
+import './load-env';
+
 import { db } from '@/lib/db';
 import { redis } from '@/lib/redis';
 import { getMeilisearchClient } from '@/lib/meilisearch';
+
+const CHECK_TIMEOUT_MS = 5000;
 
 interface Result {
   name: string;
@@ -10,9 +14,21 @@ interface Result {
   detail?: string;
 }
 
+function withTimeout<T>(promise: Promise<T>, timeoutMs: number, label: string): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+
+  const timeout = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => reject(new Error(`${label} timed out after ${timeoutMs}ms`)), timeoutMs);
+  });
+
+  return Promise.race([promise, timeout]).finally(() => {
+    if (timer) clearTimeout(timer);
+  });
+}
+
 async function checkDatabase(): Promise<Result> {
   try {
-    await db.execute(sql`select 1`);
+    await withTimeout(db.execute(sql`select 1`), CHECK_TIMEOUT_MS, 'Database health check');
     return { name: 'database', status: 'ok' };
   } catch (error) {
     return { name: 'database', status: 'error', detail: (error as Error).message };
@@ -25,7 +41,7 @@ async function checkRedis(): Promise<Result> {
   }
 
   try {
-    await redis.ping();
+    await withTimeout(redis.ping(), CHECK_TIMEOUT_MS, 'Redis health check');
     return { name: 'redis', status: 'ok' };
   } catch (error) {
     return { name: 'redis', status: 'degraded', detail: (error as Error).message };
@@ -40,7 +56,7 @@ async function checkMeilisearch(): Promise<Result> {
   }
 
   try {
-    await meilisearch.health();
+    await withTimeout(meilisearch.health(), CHECK_TIMEOUT_MS, 'Meilisearch health check');
     return { name: 'meilisearch', status: 'ok' };
   } catch (error) {
     return { name: 'meilisearch', status: 'degraded', detail: (error as Error).message };
@@ -63,9 +79,7 @@ async function main() {
 
   console.log(`\nOverall: ${worst}\n`);
 
-  if (worst === 'error') {
-    process.exitCode = 1;
-  }
+  process.exit(worst === 'error' ? 1 : 0);
 }
 
 main();

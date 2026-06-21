@@ -1,9 +1,7 @@
 import { ReactNode } from 'react';
 import Link from 'next/link';
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 
-import { ADMIN_SESSION_COOKIE } from '@/lib/auth/admin';
+import { requireAdminAuth } from '@/lib/auth/admin';
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -16,11 +14,7 @@ const navItems = [
 ];
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
-  const session = cookies().get(ADMIN_SESSION_COOKIE);
-
-  if (!session) {
-    redirect('/admin/login');
-  }
+  requireAdminAuth();
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">

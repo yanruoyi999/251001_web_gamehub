@@ -10,6 +10,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { GamePlayerFacade } from '@/components/game/game-player-facade';
 import {
   getSeoLandingPage,
   getSeoLandingPages,
@@ -177,21 +178,48 @@ export default function GuidePage({ params }: GuidePageProps) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
       ))}
-      <nav className="mb-6 text-sm text-gray-500">
-        <Link href={`/${locale}/guides`} className="hover:text-indigo-600">
+      <nav className="mb-6 text-sm text-muted-foreground">
+        <Link href={`/${locale}/guides`} className="hover:text-primary">
           {locale === 'zh' ? '← 返回专题合集' : '← Back to guides'}
         </Link>
       </nav>
 
       <header className="mb-10 text-center">
-        <p className="text-sm font-semibold uppercase tracking-wide text-indigo-600">
+        <p className="text-sm font-semibold uppercase tracking-wide text-primary">
           {page.primaryKeyword}
         </p>
-        <h1 className="mt-2 text-4xl font-bold text-gray-900">{content.heading}</h1>
-        <p className="mt-4 text-lg text-gray-600">{content.subheading}</p>
+        <h1 className="mt-2 text-4xl font-bold text-foreground">{content.heading}</h1>
+        <p className="mt-4 text-lg text-muted-foreground">{content.subheading}</p>
       </header>
 
-      <section className="mx-auto max-w-3xl space-y-4 text-base leading-relaxed text-gray-700">
+      {page.embedGame ? (
+        <section className="mx-auto mb-12 max-w-4xl">
+          <div className="overflow-hidden rounded-2xl border border-border bg-black shadow-sm">
+            <div className="aspect-video">
+              <GamePlayerFacade
+                iframeUrl={page.embedGame.iframeUrl}
+                title={page.embedGame.title}
+                thumbnailUrl={page.embedGame.thumbnailUrl ?? null}
+                locale={locale}
+              />
+            </div>
+          </div>
+          {page.embedGame.playSlug ? (
+            <p className="mt-3 text-center text-sm text-muted-foreground">
+              <Link
+                href={`/${locale}/games/${page.embedGame.playSlug}`}
+                className="font-medium text-primary transition hover:text-primary/80"
+              >
+                {locale === 'zh'
+                  ? `打开 ${page.embedGame.title} 全屏游戏页 →`
+                  : `Open the full ${page.embedGame.title} game page →`}
+              </Link>
+            </p>
+          ) : null}
+        </section>
+      ) : null}
+
+      <section className="mx-auto max-w-3xl space-y-4 text-base leading-relaxed text-foreground/90">
         {content.overview.map((paragraph, index) => (
           <p key={index}>{paragraph}</p>
         ))}
@@ -199,11 +227,11 @@ export default function GuidePage({ params }: GuidePageProps) {
 
       <section className="mt-12 space-y-10">
         {content.sections.map((section) => (
-          <div key={section.title} className="rounded-2xl border border-gray-200 bg-white/80 p-6 shadow-sm">
-            <h2 className="text-2xl font-semibold text-gray-900">{section.title}</h2>
-            <p className="mt-3 text-base text-gray-700">{section.body}</p>
+          <div key={section.title} className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+            <h2 className="text-2xl font-semibold text-foreground">{section.title}</h2>
+            <p className="mt-3 text-base text-foreground/90">{section.body}</p>
             {section.bullets ? (
-              <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-gray-600">
+              <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-muted-foreground">
                 {section.bullets.map((item, bulletIndex) => (
                   <li key={bulletIndex}>{item}</li>
                 ))}
@@ -215,10 +243,10 @@ export default function GuidePage({ params }: GuidePageProps) {
 
       <section className="mt-16">
         <header className="mb-6 text-center">
-          <h2 className="text-3xl font-semibold text-gray-900">
+          <h2 className="text-3xl font-semibold text-foreground">
             {locale === 'zh' ? '精选推荐' : 'Featured Picks'}
           </h2>
-          <p className="mt-2 text-sm text-gray-600">
+          <p className="mt-2 text-sm text-muted-foreground">
             {locale === 'zh'
               ? '以下游戏均支持即开即玩，并保持无广告、无安装的体验。'
               : 'Each recommendation loads instantly in your browser and stays free of intrusive ads.'}
@@ -238,23 +266,23 @@ export default function GuidePage({ params }: GuidePageProps) {
                 : game?.descriptionEn ?? game?.description ?? '';
 
             return (
-              <Card key={item.slug} className="flex h-full flex-col justify-between border border-gray-200">
+              <Card key={item.slug} className="flex h-full flex-col justify-between border border-border">
                 <CardHeader>
-                  <CardTitle className="text-xl font-semibold text-gray-900">
+                  <CardTitle className="text-xl font-semibold text-foreground">
                     {gameTitle}
                   </CardTitle>
                   {gameDescription ? (
-                    <CardDescription className="text-sm text-gray-600">
+                    <CardDescription className="text-sm text-muted-foreground">
                       {gameDescription}
                     </CardDescription>
                   ) : null}
                 </CardHeader>
-                <CardContent className="flex flex-1 flex-col justify-between gap-4 text-sm text-gray-700">
+                <CardContent className="flex flex-1 flex-col justify-between gap-4 text-sm text-foreground/90">
                   <p>{item.pitch}</p>
                   <div className="mt-auto">
                     <Link
                       href={`/${locale}/games/${item.slug}`}
-                      className="inline-flex items-center text-indigo-600 transition hover:text-indigo-800"
+                      className="inline-flex items-center text-primary transition hover:text-primary/80"
                     >
                       {locale === 'zh'
                         ? `查看 ${gameTitle} 游戏详情`
@@ -270,15 +298,15 @@ export default function GuidePage({ params }: GuidePageProps) {
         </div>
       </section>
 
-      <section className="mt-16 rounded-2xl border border-gray-200 bg-gradient-to-br from-indigo-50 via-white to-purple-50 p-8">
-        <h2 className="text-2xl font-semibold text-gray-900">
+      <section className="mt-16 rounded-2xl border border-border bg-secondary p-8">
+        <h2 className="text-2xl font-semibold text-foreground">
           {locale === 'zh' ? '常见问题' : 'Frequently Asked Questions'}
         </h2>
         <dl className="mt-6 space-y-6">
           {content.faqs.map((faq, index) => (
-            <div key={index} className="rounded-xl border border-indigo-100 bg-white/70 p-5 shadow-sm">
-              <dt className="text-base font-semibold text-gray-900">{faq.question}</dt>
-              <dd className="mt-2 text-sm text-gray-700">{faq.answer}</dd>
+            <div key={index} className="rounded-xl border border-border bg-card p-5 shadow-sm">
+              <dt className="text-base font-semibold text-foreground">{faq.question}</dt>
+              <dd className="mt-2 text-sm text-foreground/90">{faq.answer}</dd>
             </div>
           ))}
         </dl>
@@ -288,18 +316,18 @@ export default function GuidePage({ params }: GuidePageProps) {
         <Button
           asChild
           size="lg"
-          className="bg-indigo-600 text-white shadow-md transition hover:bg-indigo-700"
+          className="bg-primary text-primary-foreground shadow-md transition hover:bg-primary/90"
         >
           <Link href={`/${locale}/games`}>
             {content.ctaLabel}
           </Link>
         </Button>
-        <p className="mt-3 text-sm text-gray-600">{content.ctaDescription}</p>
+        <p className="mt-3 text-sm text-muted-foreground">{content.ctaDescription}</p>
       </section>
 
       {relatedPages.length > 0 ? (
-        <section className="mt-16 border-t border-gray-200 pt-10">
-          <h2 className="text-2xl font-semibold text-gray-900">
+        <section className="mt-16 border-t border-border pt-10">
+          <h2 className="text-2xl font-semibold text-foreground">
             {locale === 'zh' ? '相关主题' : 'Related Guides'}
           </h2>
           <ul className="mt-4 space-y-3 text-sm">
@@ -307,7 +335,7 @@ export default function GuidePage({ params }: GuidePageProps) {
               <li key={related.slug}>
                 <Link
                   href={`/${locale}/guides/${related.slug}`}
-                  className="inline-flex items-center text-indigo-600 transition hover:text-indigo-800"
+                  className="inline-flex items-center text-primary transition hover:text-primary/80"
                   prefetch
                 >
                   {related.heading} →

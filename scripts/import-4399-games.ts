@@ -36,7 +36,10 @@ async function readTsv(filePath: string): Promise<RawRow[]> {
 }
 
 function normalizeTitle(title: string): string {
-  return title.replace(/\s+-\s+Play Free Online Games Without Ads/i, '').trim();
+  return title
+    .replace(/\s+-\s+Play Free Online Games Without Ads/i, '')
+    .replace(/\s+-\s+Free Online Games No Ads No Downloads/i, '')
+    .trim();
 }
 
 function buildGames(rows: RawRow[], limit?: number): ImportedGame[] {

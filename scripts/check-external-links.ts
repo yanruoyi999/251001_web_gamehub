@@ -15,9 +15,16 @@
  * - 发现死链后及时更新或删除
  */
 
+import './load-env';
+
 import { db } from '@/lib/db';
 import { games } from '@/db/schema';
 import { sql } from 'drizzle-orm';
+import { mockGames } from '@/lib/mock-games';
+
+const LINK_CHECK_TIMEOUT_MS = 10000;
+const DB_SAMPLE_TIMEOUT_MS = 5000;
+const LINK_CHECK_CONCURRENCY = 6;
 
 // 外链资源配置（合作伙伴 + 行业资源，与页面展示保持同步）
 const FOOTER_LINKS = [
@@ -38,7 +45,7 @@ const FOOTER_LINKS = [
   { name: 'GameStop', url: 'https://www.gamestop.com', category: 'Retail' },
   { name: 'Board Game Arena', url: 'https://en.boardgamearena.com', category: 'Tabletop' },
   { name: 'AdFreeGames', url: 'https://www.adfreegames.com', category: 'Curated' },
-  { name: 'Ad-Free Games Hub', url: 'https://ad-freegames.github.io', category: 'Curated' },
+  { name: 'GitHub Pages', url: 'https://pages.github.com/', category: 'Hosting' },
   { name: 'OpenGameArt', url: 'https://opengameart.org', category: 'Assets' },
   { name: 'Construct', url: 'https://www.construct.net', category: 'Engine' },
   { name: 'Godot Engine', url: 'https://godotengine.org', category: 'Engine' },
@@ -48,7 +55,11 @@ const FOOTER_LINKS = [
   { name: 'GDC Vault', url: 'https://www.gdcvault.com/free/gdc-2019', category: 'Education' },
   { name: 'GameAnalytics', url: 'https://gameanalytics.com', category: 'Analytics' },
   { name: 'Indie DB', url: 'https://www.indiedb.com', category: 'Community' },
-  { name: 'AdSense Policies', url: 'https://support.google.com/adsense/answer/48182', category: 'Compliance' },
+  {
+    name: 'AdSense Policies',
+    url: 'https://transparency.google/intl/en/our-policies/product-terms/google-adsense/',
+    category: 'Compliance',
+  },
   { name: 'AdSense Developer', url: 'https://developers.google.com/adsense', category: 'Compliance' },
   { name: 'SEO Starter Guide', url: 'https://developers.google.com/search/docs/fundamentals/seo-starter-guide', category: 'SEO' },
   { name: 'PageSpeed Insights', url: 'https://pagespeed.web.dev/', category: 'Performance' },
@@ -63,6 +74,76 @@ interface LinkCheckResult {
   status?: number;
   error?: string;
   responseTime?: number;
+  method?: 'HEAD' | 'GET';
+}
+
+interface GameLinkSample {
+  id: number;
+  title: string;
+  developerUrl: string | null;
+  sourceUrl: string | null;
+}
+
+function withTimeout<T>(promise: Promise<T>, timeoutMs: number, label: string): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+
+  const timeout = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => reject(new Error(`${label} timed out after ${timeoutMs}ms`)), timeoutMs);
+  });
+
+  return Promise.race([promise, timeout]).finally(() => {
+    if (timer) clearTimeout(timer);
+  });
+}
+
+async function fetchWithTimeout(url: string, method: 'HEAD' | 'GET'): Promise<Response> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), LINK_CHECK_TIMEOUT_MS);
+
+  try {
+    const response = await fetch(url, {
+      method,
+      signal: controller.signal,
+      redirect: 'follow',
+      headers: {
+        'User-Agent':
+          'Mozilla/5.0 (compatible; GameHub-Link-Checker/1.0; +https://gamehub.local)',
+        Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        ...(method === 'GET' ? { Range: 'bytes=0-2048' } : {}),
+      },
+    });
+
+    return response;
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
+function shouldRetryWithGet(result: Response) {
+  return [403, 405, 429, 500, 501].includes(result.status);
+}
+
+async function mapWithConcurrency<T, R>(
+  items: T[],
+  concurrency: number,
+  mapper: (item: T, index: number) => Promise<R>
+): Promise<R[]> {
+  const results = new Array<R>(items.length);
+  let nextIndex = 0;
+
+  async function worker() {
+    while (nextIndex < items.length) {
+      const currentIndex = nextIndex;
+      nextIndex += 1;
+      results[currentIndex] = await mapper(items[currentIndex], currentIndex);
+    }
+  }
+
+  await Promise.all(
+    Array.from({ length: Math.min(concurrency, items.length) }, () => worker())
+  );
+
+  return results;
 }
 
 /**
@@ -72,18 +153,14 @@ async function checkLink(url: string): Promise<LinkCheckResult> {
   const startTime = Date.now();
 
   try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10秒超时
+    let response = await fetchWithTimeout(url, 'HEAD');
+    let method: 'HEAD' | 'GET' = 'HEAD';
 
-    const response = await fetch(url, {
-      method: 'HEAD',
-      signal: controller.signal,
-      headers: {
-        'User-Agent': 'GameHub-Link-Checker/1.0',
-      },
-    });
+    if (!response.ok && shouldRetryWithGet(response)) {
+      response = await fetchWithTimeout(url, 'GET');
+      method = 'GET';
+    }
 
-    clearTimeout(timeoutId);
     const responseTime = Date.now() - startTime;
 
     return {
@@ -91,15 +168,66 @@ async function checkLink(url: string): Promise<LinkCheckResult> {
       ok: response.ok,
       status: response.status,
       responseTime,
+      method,
     };
   } catch (error) {
-    const responseTime = Date.now() - startTime;
-    return {
-      url,
-      ok: false,
-      error: error instanceof Error ? error.message : 'Unknown error',
-      responseTime,
-    };
+    try {
+      const response = await fetchWithTimeout(url, 'GET');
+      const responseTime = Date.now() - startTime;
+
+      return {
+        url,
+        ok: response.ok,
+        status: response.status,
+        responseTime,
+        method: 'GET',
+      };
+    } catch (getError) {
+      const responseTime = Date.now() - startTime;
+      return {
+        url,
+        ok: false,
+        error: getError instanceof Error ? getError.message : 'Unknown error',
+        responseTime,
+        method: 'GET',
+      };
+    }
+  }
+}
+
+async function loadGameLinkSample(sampleSize: number): Promise<GameLinkSample[]> {
+  try {
+    return await withTimeout(
+      db
+        .select({
+          id: games.id,
+          title: games.title,
+          developerUrl: games.developerUrl,
+          sourceUrl: games.sourceUrl,
+        })
+        .from(games)
+        .where(
+          sql`${games.developerUrl} IS NOT NULL OR ${games.sourceUrl} IS NOT NULL`
+        )
+        .orderBy(sql`RANDOM()`)
+        .limit(sampleSize),
+      DB_SAMPLE_TIMEOUT_MS,
+      'Game link database sample',
+    );
+  } catch (error) {
+    console.warn(
+      `⚠️  数据库抽样失败，改用本地游戏数据：${error instanceof Error ? error.message : String(error)}`
+    );
+
+    return mockGames
+      .filter((game) => game.developerUrl || game.sourceUrl)
+      .slice(0, sampleSize)
+      .map((game) => ({
+        id: game.id,
+        title: game.title,
+        developerUrl: game.developerUrl,
+        sourceUrl: game.sourceUrl,
+      }));
   }
 }
 
@@ -111,18 +239,23 @@ async function checkFooterLinks(): Promise<void> {
   console.log('─'.repeat(80));
 
   let failedCount = 0;
-  const results: Array<{ name: string; result: LinkCheckResult }> = [];
+  const results = await mapWithConcurrency(
+    FOOTER_LINKS,
+    LINK_CHECK_CONCURRENCY,
+    async (link) => ({
+      name: link.name,
+      result: await checkLink(link.url),
+    })
+  );
 
-  for (const link of FOOTER_LINKS) {
-    const result = await checkLink(link.url);
-    results.push({ name: link.name, result });
-
+  for (const { name, result } of results) {
     const icon = result.ok ? '✅' : '❌';
-    const statusInfo = result.status ? `HTTP ${result.status}` : result.error || 'Timeout';
+    const methodInfo = result.method ? `${result.method} ` : '';
+    const statusInfo = result.status ? `${methodInfo}HTTP ${result.status}` : result.error || 'Timeout';
     const timeInfo = result.responseTime ? `${result.responseTime}ms` : '-';
 
     console.log(
-      `${icon} ${link.name.padEnd(20)} ${statusInfo.padEnd(15)} ${timeInfo.padStart(8)} | ${link.url}`
+      `${icon} ${name.padEnd(20)} ${statusInfo.padEnd(15)} ${timeInfo.padStart(8)} | ${result.url}`
     );
 
     if (!result.ok) failedCount++;
@@ -150,20 +283,7 @@ async function checkGameLinks(sampleSize: number = 10): Promise<void> {
   console.log(`\n🎮 抽查游戏详情页外链 (抽样 ${sampleSize} 个)\n`);
   console.log('─'.repeat(80));
 
-  // 查询有外链的游戏（随机抽样）
-  const gamesWithLinks = await db
-    .select({
-      id: games.id,
-      title: games.title,
-      developerUrl: games.developerUrl,
-      sourceUrl: games.sourceUrl,
-    })
-    .from(games)
-    .where(
-      sql`${games.developerUrl} IS NOT NULL OR ${games.sourceUrl} IS NOT NULL`
-    )
-    .orderBy(sql`RANDOM()`)
-    .limit(sampleSize);
+  const gamesWithLinks = await loadGameLinkSample(sampleSize);
 
   if (gamesWithLinks.length === 0) {
     console.log('⚠️  没有找到配置了外链的游戏\n');

@@ -69,14 +69,14 @@ export default async function HomePage() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
             <Link
-              href={`/${locale}/games/samurai`}
+              href={`/${locale}/games`}
               className="px-8 py-4 bg-primary text-primary-foreground rounded-lg font-semibold text-lg hover:bg-primary/90 transition-colors shadow-lg hover:shadow-xl"
             >
               {t('playNow')}
             </Link>
 
             <Link
-              href={`/${locale}/games/samurai/archive`}
+              href={`/${locale}/guides`}
               className="px-8 py-4 border-2 border-primary text-primary rounded-lg font-semibold text-lg hover:bg-primary/10 transition-colors"
             >
               {t('browseArchive')}
@@ -126,7 +126,7 @@ export default async function HomePage() {
             {seoSection.cta ? (
               <div className="flex justify-center pt-2">
                 <Link
-                  href={`/${locale}/games/samurai/archive`}
+                  href={`/${locale}/guides/free-games-no-ads`}
                   className="inline-flex items-center gap-2 px-6 py-3 border border-primary text-primary rounded-lg font-medium hover:bg-primary/10 transition-colors"
                 >
                   {seoSection.cta}
@@ -159,7 +159,7 @@ export default async function HomePage() {
               {evilSection.cta ? (
                 <div className="flex justify-center pt-2">
                   <Link
-                    href={`/${locale}/games/samurai/archive`}
+                    href={`/${locale}/guides/games-to-play-when-bored`}
                     className="inline-flex items-center gap-2 px-6 py-3 border border-primary text-primary rounded-lg font-medium hover:bg-primary/10 transition-colors"
                   >
                     {evilSection.cta}

@@ -4,7 +4,12 @@ import type { MetadataRoute } from 'next';
 import { defaultLocale, locales } from '@/i18n/config';
 import { getSeoLandingPages } from '@/lib/seo-landing-content';
 import { mockGames } from '@/lib/mock-games';
+import { getCategoryEntries, getTagEntries } from '@/lib/game-taxonomy';
 import { buildAbsoluteUrl } from '@/lib/seo';
+
+export const dynamic = 'force-dynamic';
+
+const SITEMAP_DB_TIMEOUT_MS = 2000;
 
 function getFileLastModified(...segments: string[]): Date | undefined {
   try {
@@ -15,7 +20,55 @@ function getFileLastModified(...segments: string[]): Date | undefined {
   }
 }
 
-export default function sitemap(): MetadataRoute.Sitemap {
+interface SitemapGameEntry {
+  slug: string;
+  isNew: boolean | null;
+  lastModified?: Date | null;
+}
+
+async function getSitemapGames(fallbackLastModified: Date): Promise<SitemapGameEntry[]> {
+  try {
+    const [{ db }, { games }, { eq }] = await Promise.all([
+      import('@/lib/db'),
+      import('@/db/schema'),
+      import('drizzle-orm'),
+    ]);
+    const queryPromise = db
+      .select({
+        slug: games.slug,
+        isNew: games.isNew,
+        publishedAt: games.publishedAt,
+        updatedAt: games.updatedAt,
+      })
+      .from(games)
+      .where(eq(games.status, 'active'));
+
+    const rows = await Promise.race([
+      queryPromise,
+      new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error('Sitemap games database load timed out')), SITEMAP_DB_TIMEOUT_MS),
+      ),
+    ]);
+
+    if (rows.length > 0) {
+      return rows.map((game) => ({
+        slug: game.slug,
+        isNew: game.isNew,
+        lastModified: game.updatedAt ?? game.publishedAt,
+      }));
+    }
+  } catch (error) {
+    console.warn('Failed to load database games for sitemap, falling back to mock games:', error);
+  }
+
+  return mockGames.map((game) => ({
+    slug: game.slug,
+    isNew: game.isNew,
+    lastModified: fallbackLastModified,
+  }));
+}
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entries: MetadataRoute.Sitemap = [];
   const staticPaths: Array<{
     path: string;
@@ -68,7 +121,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
   const guides = getSeoLandingPages();
+  const categories = getCategoryEntries();
+  const tags = getTagEntries();
   const mockGamesUpdatedAt = getFileLastModified('lib', 'mock-games.ts') ?? new Date();
+  const sitemapGames = await getSitemapGames(mockGamesUpdatedAt);
 
   for (const locale of locales) {
     for (const staticPath of staticPaths) {
@@ -102,13 +158,31 @@ export default function sitemap(): MetadataRoute.Sitemap {
       });
     }
 
-    for (const game of mockGames) {
+    for (const game of sitemapGames) {
       const localizedPath = `/${locale}/games/${game.slug}`;
       entries.push({
         url: buildAbsoluteUrl(localizedPath),
-        lastModified: mockGamesUpdatedAt,
+        lastModified: game.lastModified ?? mockGamesUpdatedAt,
         changeFrequency: game.isNew ? 'weekly' : 'monthly',
         priority: 0.6,
+      });
+    }
+
+    for (const category of categories) {
+      entries.push({
+        url: buildAbsoluteUrl(`/${locale}/games/category/${category.item.slug}`),
+        lastModified: mockGamesUpdatedAt,
+        changeFrequency: 'weekly',
+        priority: 0.72,
+      });
+    }
+
+    for (const tag of tags) {
+      entries.push({
+        url: buildAbsoluteUrl(`/${locale}/games/tag/${tag.item.slug}`),
+        lastModified: mockGamesUpdatedAt,
+        changeFrequency: 'weekly',
+        priority: 0.68,
       });
     }
   }

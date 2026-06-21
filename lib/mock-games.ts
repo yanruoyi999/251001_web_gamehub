@@ -68,13 +68,13 @@ interface SampleGameEntry {
   sourceHost?: string;
 }
 
-const MAX_IMPORTED_GAMES = 32;
+const MAX_IMPORTED_GAMES = 500;
 const FEATURED_COUNT = 6;
 const NEW_THRESHOLD = 18;
 
 const DEFAULT_DEVELOPER = {
   name: 'GameHub Editorial',
-  url: 'https://ad-freegames.github.io/',
+  url: 'https://www.adfreegames.com',
 };
 
 const COLOR_PALETTE = [
@@ -119,7 +119,7 @@ function deriveDeveloperInfo(entry: SampleGameEntry, iframeUrl: string): { name:
   }
 
   if (host.includes('ad-freegames')) {
-    return { name: 'Ad-Free Games Hub', url: 'https://ad-freegames.github.io/' };
+    return { name: 'AdFreeGames', url: 'https://www.adfreegames.com' };
   }
 
   if (host.includes('itch.io')) {
@@ -507,7 +507,7 @@ function buildMockGamesFromSample(entries: SampleGameEntry[]): MockGame[] {
     const tags = buildTagsForGame(slug, categories, index);
     const instructions = buildInstructionsForGame(englishTitle, categories[0] ?? cloneCategory(MOCK_CATEGORY_PRESETS[0]));
     const developer = deriveDeveloperInfo(entry, iframeUrl);
-    const sourceUrl = entry.sourcePageUrl?.trim() || null;
+    const sourceUrl = iframeUrl || entry.sourcePageUrl?.trim() || null;
     const screenshots = createScreenshotPlaceholders(englishTitle, index);
 
     return {

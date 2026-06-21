@@ -5,6 +5,7 @@ import { getMessages } from 'next-intl/server';
 import { locales, defaultLocale, Locale } from '@/i18n/config';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import { TypeformFeedbackButton } from '@/components/feedback/TypeformFeedbackButton';
 
 interface LocaleLayoutProps {
   children: ReactNode;
@@ -29,10 +30,11 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider locale={typedLocale ?? defaultLocale} messages={messages}>
-      <div className="flex min-h-screen flex-col bg-gray-50 text-gray-900">
+      <div className="flex min-h-screen flex-col bg-background text-foreground">
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
+        <TypeformFeedbackButton locale={typedLocale} />
       </div>
     </NextIntlClientProvider>
   );

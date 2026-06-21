@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { headers } from 'next/headers';
 import { getTranslations } from 'next-intl/server';
 
@@ -6,8 +7,174 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { FavoriteToggleButton } from '@/components/game/favorite-toggle';
 import { CategoryService, FavoriteService, GameService, TagService } from '@/services';
+import { mockGames } from '@/lib/mock-games';
 
 export const dynamic = 'force-dynamic';
+
+const DB_LOAD_TIMEOUT_MS = 1500;
+const FAVORITE_LOAD_TIMEOUT_MS = 800;
+const SORT_OPTIONS = ['publishedAt', 'playCount', 'averageRating', 'title'] as const;
+
+type SortOption = (typeof SORT_OPTIONS)[number];
+type CategoryOption = Awaited<ReturnType<typeof CategoryService.listAll>>[number];
+type TagOption = Awaited<ReturnType<typeof TagService.listAll>>[number];
+type GameList = Awaited<ReturnType<typeof GameService.listGames>>;
+
+function canUseNextImage(src?: string | null) {
+  return Boolean(
+    src &&
+      (src.startsWith('/') ||
+        src.startsWith('https://res.cloudinary.com') ||
+        src.startsWith('https://via.placeholder.com')),
+  );
+}
+
+function withTimeout<T>(promise: Promise<T>, timeoutMs: number, label: string): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+
+  const timeout = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => {
+      reject(new Error(`${label} timed out after ${timeoutMs}ms`));
+    }, timeoutMs);
+  });
+
+  return Promise.race([promise, timeout]).finally(() => {
+    if (timer) clearTimeout(timer);
+  });
+}
+
+function uniqueMockCategories(): CategoryOption[] {
+  const byId = new Map<number, CategoryOption>();
+
+  for (const game of mockGames) {
+    for (const category of game.categories) {
+      byId.set(category.id, {
+        id: category.id,
+        name: category.name,
+        nameEn: category.nameEn,
+        slug: category.slug,
+      });
+    }
+  }
+
+  return Array.from(byId.values()).sort((a, b) => a.name.localeCompare(b.name));
+}
+
+function uniqueMockTags(): TagOption[] {
+  const byId = new Map<number, TagOption>();
+
+  for (const game of mockGames) {
+    for (const tag of game.tags) {
+      byId.set(tag.id, {
+        id: tag.id,
+        name: tag.name,
+        nameEn: tag.nameEn,
+        slug: tag.slug,
+      });
+    }
+  }
+
+  return Array.from(byId.values()).sort((a, b) => a.name.localeCompare(b.name));
+}
+
+function mockPublishedAt(gameId: number) {
+  return new Date(Date.UTC(2026, 0, 1) - gameId * 24 * 60 * 60 * 1000);
+}
+
+function mockPlayCount(gameId: number, isHot: boolean) {
+  return 1000 + gameId * 37 + (isHot ? 5000 : 0);
+}
+
+function mockAverageRating(gameId: number) {
+  return (4.05 + (gameId % 8) * 0.08).toFixed(2);
+}
+
+function buildFallbackGameList(options: {
+  page?: number;
+  limit: number;
+  categoryId?: number;
+  tagId?: number;
+  search?: string;
+  showNew: boolean;
+  showHot: boolean;
+  showFeatured: boolean;
+  favoritesOnly: boolean;
+  favoriteIds: number[];
+  sortBy?: SortOption;
+  sortOrder: 'asc' | 'desc';
+}): { categoryOptions: CategoryOption[]; tagOptions: TagOption[]; list: GameList } {
+  const favoriteSet = new Set(options.favoriteIds);
+  const keyword = options.search?.trim().toLowerCase();
+
+  const rows = mockGames
+    .filter((game) => {
+      if (options.categoryId && !game.categories.some((category) => category.id === options.categoryId)) return false;
+      if (options.tagId && !game.tags.some((tag) => tag.id === options.tagId)) return false;
+      if (options.showNew && !game.isNew) return false;
+      if (options.showHot && !game.isHot) return false;
+      if (options.showFeatured && !game.featured) return false;
+      if (options.favoritesOnly && !favoriteSet.has(game.id)) return false;
+
+      if (keyword) {
+        const haystack = [
+          game.title,
+          game.titleEn,
+          game.description,
+          game.descriptionEn,
+          ...game.categories.map((category) => `${category.name} ${category.nameEn}`),
+          ...game.tags.map((tag) => `${tag.name} ${tag.nameEn}`),
+        ]
+          .join(' ')
+          .toLowerCase();
+
+        if (!haystack.includes(keyword)) return false;
+      }
+
+      return true;
+    })
+    .map((game) => ({
+      id: game.id,
+      title: game.title,
+      titleEn: game.titleEn,
+      slug: game.slug,
+      status: 'active' as const,
+      thumbnailUrl: game.thumbnailUrl,
+      featured: game.featured,
+      isNew: game.isNew,
+      isHot: game.isHot,
+      publishedAt: mockPublishedAt(game.id),
+      playCount: mockPlayCount(game.id, game.isHot),
+      averageRating: mockAverageRating(game.id),
+      isFavorite: favoriteSet.has(game.id),
+    }));
+
+  const sortBy = options.sortBy ?? 'publishedAt';
+  const direction = options.sortOrder === 'asc' ? 1 : -1;
+  rows.sort((a, b) => {
+    if (sortBy === 'title') return a.title.localeCompare(b.title) * direction;
+    if (sortBy === 'playCount') return (Number(a.playCount) - Number(b.playCount)) * direction;
+    if (sortBy === 'averageRating') return (Number(a.averageRating) - Number(b.averageRating)) * direction;
+    return (a.publishedAt.getTime() - b.publishedAt.getTime()) * direction;
+  });
+
+  const requestedPage = Number.isInteger(options.page) && options.page && options.page > 0 ? options.page : 1;
+  const total = rows.length;
+  const totalPages = Math.ceil(total / options.limit);
+  const currentPage = totalPages > 0 ? Math.min(requestedPage, totalPages) : 1;
+  const offset = (currentPage - 1) * options.limit;
+
+  return {
+    categoryOptions: uniqueMockCategories(),
+    tagOptions: uniqueMockTags(),
+    list: {
+      games: rows.slice(offset, offset + options.limit),
+      total,
+      page: currentPage,
+      limit: options.limit,
+      totalPages,
+    },
+  };
+}
 
 interface GamesPageProps {
   params: { locale: string };
@@ -44,9 +211,6 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
   const showFeatured = searchParams.featured === '1';
   const favoritesOnly = searchParams.favoritesOnly === '1';
 
-  const SORT_OPTIONS = ['publishedAt', 'playCount', 'averageRating', 'title'] as const;
-  type SortOption = (typeof SORT_OPTIONS)[number];
-
   const sortByParam = typeof searchParams.sortBy === 'string' ? searchParams.sortBy : undefined;
   const sortBy = SORT_OPTIONS.find((option) => option === sortByParam);
 
@@ -62,31 +226,60 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
   const favoriteContext = FavoriteService.getContextFromHeaders(headersList);
   let favoriteIds: number[] = [];
   try {
-    favoriteIds = await FavoriteService.listFavoriteIds(favoriteContext);
+    favoriteIds = await withTimeout(
+      FavoriteService.listFavoriteIds(favoriteContext),
+      FAVORITE_LOAD_TIMEOUT_MS,
+      'Favorite ids database load',
+    );
   } catch (error) {
     console.warn('Failed to load favorite ids, using empty list:', error);
     favoriteIds = [];
   }
 
-  const [categoryOptions, tagOptions, list] = await Promise.all([
-    CategoryService.listAll(),
-    TagService.listAll(),
-    GameService.listGames({
+  let categoryOptions: CategoryOption[];
+  let tagOptions: TagOption[];
+  let list: GameList;
+
+  try {
+    [categoryOptions, tagOptions, list] = await withTimeout(Promise.all([
+      CategoryService.listAll(),
+      TagService.listAll(),
+      GameService.listGames({
+        page,
+        status: 'active',
+        categoryId,
+        tagId,
+        limit: 12,
+        search: search.trim() ? search : undefined,
+        isNew: showNew ? true : undefined,
+        isHot: showHot ? true : undefined,
+        featured: showFeatured ? true : undefined,
+        onlyFavorites: favoritesOnly,
+        favoriteGameIds: favoriteIds,
+        sortBy,
+        sortOrder,
+      }),
+    ]), DB_LOAD_TIMEOUT_MS, 'Games list database load');
+  } catch (error) {
+    console.warn('Failed to load games from database, using local fallback:', error);
+    const fallback = buildFallbackGameList({
       page,
-      status: 'active',
       categoryId,
       tagId,
       limit: 12,
       search: search.trim() ? search : undefined,
-      isNew: showNew ? true : undefined,
-      isHot: showHot ? true : undefined,
-      featured: showFeatured ? true : undefined,
-      onlyFavorites: favoritesOnly,
-      favoriteGameIds: favoriteIds,
+      showNew,
+      showHot,
+      showFeatured,
+      favoritesOnly,
+      favoriteIds,
       sortBy,
       sortOrder,
-    }),
-  ]);
+    });
+    categoryOptions = fallback.categoryOptions;
+    tagOptions = fallback.tagOptions;
+    list = fallback.list;
+  }
 
   const { games, total, totalPages, page: currentPage } = list;
 
@@ -135,12 +328,12 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
     <div className="mx-auto w-full max-w-6xl px-6 py-12">
       <header className="mb-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">{t('title')}</h1>
-          <p className="text-gray-600">{t('desc')}</p>
+          <h1 className="text-3xl font-bold text-foreground">{t('title')}</h1>
+          <p className="text-muted-foreground">{t('desc')}</p>
         </div>
         <Link
           href={`/${locale}`}
-          className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
+          className="text-sm font-medium text-primary hover:text-primary/80"
         >
           {t('backToHome')}
         </Link>
@@ -148,8 +341,8 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
 
       <Card className="mb-8">
         <CardHeader className="pb-4">
-          <CardTitle className="text-xl font-semibold text-gray-900">{t('filters.title')}</CardTitle>
-          <CardDescription className="text-sm text-gray-600">
+          <CardTitle className="text-xl font-semibold text-foreground">{t('filters.title')}</CardTitle>
+          <CardDescription className="text-sm text-muted-foreground">
             {t('resultSummary', { value: formatNumber(total) })}
           </CardDescription>
         </CardHeader>
@@ -163,7 +356,7 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
                   name="search"
                   defaultValue={search}
                   placeholder={t('filters.searchPlaceholder')}
-                  className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring"
                 />
               </label>
             </div>
@@ -174,7 +367,7 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
                 <select
                   name="categoryId"
                   defaultValue={categoryId ? String(categoryId) : ''}
-                  className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="">{t('filters.categoryAll')}</option>
                   {categoryOptions.map((category) => (
@@ -192,7 +385,7 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
                 <select
                   name="tagId"
                   defaultValue={tagId ? String(tagId) : ''}
-                  className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   <option value="">{t('filters.tagAll')}</option>
                   {tagOptions.map((tag) => (
@@ -211,7 +404,7 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
                   <select
                     name="sortBy"
                     defaultValue={sortBy ?? 'publishedAt'}
-                    className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring"
                   >
                     {SORT_OPTIONS.map((option) => {
                       const optionKey = `filters.sort.${option}` as const;
@@ -225,7 +418,7 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
                   <select
                     name="sortOrder"
                     defaultValue={sortOrder}
-                    className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring"
                   >
                     <option value="desc">{t('filters.sortOrderDesc')}</option>
                     <option value="asc">{t('filters.sortOrderAsc')}</option>
@@ -241,7 +434,7 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
                   name="isNew"
                   value="1"
                   defaultChecked={showNew}
-                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                  className="h-4 w-4 rounded border-input text-primary focus:ring-ring"
                 />
                 {t('filters.onlyNew')}
               </label>
@@ -251,7 +444,7 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
                   name="isHot"
                   value="1"
                   defaultChecked={showHot}
-                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                  className="h-4 w-4 rounded border-input text-primary focus:ring-ring"
                 />
                 {t('filters.onlyHot')}
               </label>
@@ -261,7 +454,7 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
                   name="featured"
                   value="1"
                   defaultChecked={showFeatured}
-                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                  className="h-4 w-4 rounded border-input text-primary focus:ring-ring"
                 />
                 {t('filters.onlyFeatured')}
               </label>
@@ -271,7 +464,7 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
                   name="favoritesOnly"
                   value="1"
                   defaultChecked={favoritesOnly}
-                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                  className="h-4 w-4 rounded border-input text-primary focus:ring-ring"
                 />
                 {t('filters.onlyFavorites')}
               </label>
@@ -283,7 +476,7 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
               </Button>
               <Link
                 href={`/${locale}/games`}
-                className="inline-flex items-center rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition hover:bg-gray-50"
+                className="inline-flex items-center rounded-md border border-input px-4 py-2 text-sm font-medium text-foreground shadow-sm transition hover:bg-accent"
               >
                 {t('filters.reset')}
               </Link>
@@ -293,7 +486,7 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
       </Card>
 
       {games.length === 0 ? (
-        <div className="rounded-lg border border-dashed border-gray-300 bg-white px-6 py-12 text-center text-gray-500">
+        <div className="rounded-lg border border-dashed border-border bg-card px-6 py-12 text-center text-muted-foreground">
           {t('empty')}
         </div>
       ) : (
@@ -304,9 +497,39 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
             const publishedLabel = t('published', {
               value: new Date(game.publishedAt).toLocaleDateString(locale),
             });
+            const thumbnailUrl = game.thumbnailUrl;
 
             return (
-              <Card key={game.id} className="flex h-full flex-col justify-between">
+              <Card key={game.id} className="flex h-full flex-col justify-between overflow-hidden">
+                <Link
+                  href={`/${locale}/games/${game.slug}`}
+                  className="relative block aspect-[4/3] overflow-hidden bg-slate-900"
+                  aria-label={displayTitle}
+                >
+                  {thumbnailUrl ? (
+                    canUseNextImage(thumbnailUrl) ? (
+                      <Image
+                        src={thumbnailUrl}
+                        alt={displayTitle}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover transition-transform duration-300 hover:scale-105"
+                      />
+                    ) : (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={thumbnailUrl}
+                        alt={displayTitle}
+                        loading="lazy"
+                        className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+                      />
+                    )
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center bg-slate-900 px-4 text-center text-lg font-semibold text-primary">
+                      {displayTitle}
+                    </div>
+                  )}
+                </Link>
                 <CardHeader>
                   {(game.featured || game.isHot || game.isNew) && (
                     <div className="mb-2 flex flex-wrap gap-2">
@@ -328,8 +551,8 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
                     </div>
                   )}
                   <div className="flex items-start justify-between gap-3">
-                    <CardTitle className="text-lg font-semibold text-gray-900">
-                      <Link href={`/${locale}/games/${game.slug}`} className="hover:text-indigo-600">
+                    <CardTitle className="text-lg font-semibold text-foreground">
+                      <Link href={`/${locale}/games/${game.slug}`} className="hover:text-primary">
                         {displayTitle}
                       </Link>
                     </CardTitle>
@@ -342,11 +565,11 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
                       />
                     </div>
                   </div>
-                  <CardDescription className="text-sm text-gray-500">
+                  <CardDescription className="text-sm text-muted-foreground">
                     {publishedLabel}
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-2 text-sm text-gray-600">
+                <CardContent className="space-y-2 text-sm text-muted-foreground">
                   <p>{statusLabel}</p>
                   <p>{t('playCount', { value: Number(game.playCount ?? 0).toLocaleString(locale) })}</p>
                   <p>{t('rating', { value: Number(game.averageRating ?? 0).toFixed(2) })}</p>
@@ -362,16 +585,16 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
           {prevPageHref ? (
             <Link
               href={prevPageHref}
-              className="rounded-md border border-gray-300 px-3 py-1.5 font-medium text-gray-700 transition hover:bg-gray-50"
+              className="rounded-md border border-input px-3 py-1.5 font-medium text-foreground transition hover:bg-accent"
             >
               ← {t('pagination.prev')}
             </Link>
           ) : (
-            <span className="rounded-md border border-gray-200 px-3 py-1.5 text-gray-400">
+            <span className="rounded-md border border-border px-3 py-1.5 text-muted-foreground/60">
               ←
             </span>
           )}
-          <span className="rounded-md border border-gray-200 px-3 py-1.5 text-gray-600">
+          <span className="rounded-md border border-border px-3 py-1.5 text-muted-foreground">
             {t('pagination.pageLabel', {
               current: formatNumber(currentPage),
               total: formatNumber(totalPages),
@@ -380,12 +603,12 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
           {nextPageHref ? (
             <Link
               href={nextPageHref}
-              className="rounded-md border border-gray-300 px-3 py-1.5 font-medium text-gray-700 transition hover:bg-gray-50"
+              className="rounded-md border border-input px-3 py-1.5 font-medium text-foreground transition hover:bg-accent"
             >
               {t('pagination.next')} →
             </Link>
           ) : (
-            <span className="rounded-md border border-gray-200 px-3 py-1.5 text-gray-400">
+            <span className="rounded-md border border-border px-3 py-1.5 text-muted-foreground/60">
               →
             </span>
           )}
