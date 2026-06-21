@@ -16,8 +16,7 @@ function canUseNextImage(src?: string | null) {
   return Boolean(
     src &&
       (src.startsWith('/') ||
-        src.startsWith('https://res.cloudinary.com') ||
-        src.startsWith('https://via.placeholder.com')),
+        src.startsWith('https://res.cloudinary.com')),
   );
 }
 
@@ -48,6 +47,8 @@ export function GamePlayerFacade({
         title={title}
         loading="lazy"
         allowFullScreen
+        allow="fullscreen; gamepad"
+        referrerPolicy="strict-origin-when-cross-origin"
         sandbox={sandbox}
         className="h-full w-full"
       />
@@ -89,6 +90,7 @@ export function GamePlayerFacade({
           type="button"
           size="lg"
           onClick={() => setLoaded(true)}
+          aria-label={locale === 'zh' ? `开始游玩 ${title}` : `Play ${title}`}
           className="bg-white text-slate-950 hover:bg-white/90"
         >
           {locale === 'zh' ? '开始游戏' : 'Play now'}

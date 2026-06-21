@@ -218,7 +218,7 @@ export default function PrivacyPage({ params }: PrivacyPageProps) {
             {isZh ? '如有隐私相关问题，请通过以下方式联系我们：' : 'For privacy-related questions, please contact us at:'}
           </p>
           <p className="mt-2 text-gray-700">
-            {isZh ? '邮箱' : 'Email'}: <a href="mailto:privacy@gamehub.com" className="text-indigo-600 hover:text-indigo-500">privacy@gamehub.com</a>
+            {isZh ? '邮箱' : 'Email'}: <a href="mailto:privacy@gamepapa.online" className="text-indigo-600 hover:text-indigo-500">privacy@gamepapa.online</a>
           </p>
         </section>
       </div>

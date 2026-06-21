@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
@@ -7,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { FavoriteToggleButton } from '@/components/game/favorite-toggle';
 import { GamePlayerFacade } from '@/components/game/game-player-facade';
 import { GameService, RatingService } from '@/services';
-import { getMockGameBySlug } from '@/lib/mock-games';
+import { getMockGameBySlug, mockGames } from '@/lib/mock-games';
 import type { GameDetail } from '@/services/game.service';
 import type { MockGame } from '@/lib/mock-games';
 import { buildAbsoluteUrl } from '@/lib/seo';
@@ -93,6 +94,20 @@ function pickLocalizedText(primary?: string | null, fallback?: string | null) {
   return primary?.trim() || fallback?.trim() || '';
 }
 
+function resolveMetadataImageUrl(thumbnailUrl?: string | null) {
+  if (!thumbnailUrl) return undefined;
+  if (thumbnailUrl.startsWith('data:')) return undefined;
+  return /^https?:\/\//i.test(thumbnailUrl) ? thumbnailUrl : buildAbsoluteUrl(thumbnailUrl);
+}
+
+function canUseNextImage(src?: string | null) {
+  return Boolean(
+    src &&
+      (src.startsWith('/') ||
+        src.startsWith('https://res.cloudinary.com')),
+  );
+}
+
 function resolveGameTitle(game: GameDetail, locale: string) {
   return locale === 'en'
     ? pickLocalizedText(game.titleEn, game.title)
@@ -159,11 +174,12 @@ export async function generateMetadata({ params }: GamePageProps): Promise<Metad
         : pickLocalizedText(tag.name, tag.nameEn),
     ),
   ].filter(Boolean);
+  const metadataImageUrl = resolveMetadataImageUrl(game.thumbnailUrl);
   const image =
-    game.thumbnailUrl && /^https?:\/\//i.test(game.thumbnailUrl)
+    metadataImageUrl
       ? [
           {
-            url: game.thumbnailUrl,
+            url: metadataImageUrl,
             alt: title,
           },
         ]
@@ -299,6 +315,17 @@ export default async function GamePage({ params }: GamePageProps) {
       label: resolveLabel(tag.name, tag.nameEn),
     }))
     .filter((tag) => Boolean(tag.label));
+  const relatedCategorySlugs = new Set(categoryEntries.map((category) => category.slug));
+  const relatedTagSlugs = new Set(tagEntries.map((tag) => tag.slug));
+  const relatedGames = mockGames
+    .filter((candidate) => {
+      if (candidate.slug === game.slug) return false;
+      return (
+        candidate.categories.some((category) => relatedCategorySlugs.has(category.slug)) ||
+        candidate.tags.some((tag) => relatedTagSlugs.has(tag.slug))
+      );
+    })
+    .slice(0, 3);
   const categoryLabels = categoryEntries.map((category) => category.label);
   const tagLabels = tagEntries.map((tag) => tag.label);
   const pageUrl = buildAbsoluteUrl(`/${locale}/games/${game.slug}`);
@@ -808,21 +835,81 @@ export default async function GamePage({ params }: GamePageProps) {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                {[1, 2, 3].map((i) => (
-                  <Link key={i} href={`/${locale}/games`} className="block">
-                    <div className="group rounded-lg border border-border p-3 transition-all hover:border-primary/50 hover:shadow-md">
-                      <div className="flex gap-3">
-                        <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg bg-muted"></div>
-                        <div className="flex-1">
-                          <div className="mb-1 font-medium text-foreground group-hover:text-primary">
-                            {locale === 'zh' ? '相似游戏' : 'Similar Game'} {i}
+                {relatedGames.length > 0 ? (
+                  relatedGames.map((relatedGame) => {
+                    const relatedTitle =
+                      locale === 'zh'
+                        ? pickLocalized(relatedGame.title, relatedGame.titleEn)
+                        : pickLocalized(relatedGame.titleEn, relatedGame.title);
+                    const relatedDescription =
+                      locale === 'zh'
+                        ? pickLocalized(relatedGame.description, relatedGame.descriptionEn)
+                        : pickLocalized(relatedGame.descriptionEn, relatedGame.description);
+
+                    return (
+                      <Link
+                        key={relatedGame.slug}
+                        href={`/${locale}/games/${relatedGame.slug}`}
+                        className="block"
+                      >
+                        <div className="group rounded-lg border border-border p-3 transition-all hover:border-primary/50 hover:shadow-md">
+                          <div className="flex gap-3">
+                            <div className="relative h-16 w-20 flex-shrink-0 overflow-hidden rounded-md bg-muted">
+                              {canUseNextImage(relatedGame.thumbnailUrl) ? (
+                                <Image
+                                  src={relatedGame.thumbnailUrl}
+                                  alt={relatedTitle}
+                                  fill
+                                  sizes="80px"
+                                  className="object-cover"
+                                />
+                              ) : (
+                                // eslint-disable-next-line @next/next/no-img-element
+                                <img
+                                  src={relatedGame.thumbnailUrl}
+                                  alt={relatedTitle}
+                                  loading="lazy"
+                                  className="h-full w-full object-cover"
+                                />
+                              )}
+                            </div>
+                            <div className="min-w-0">
+                              <div className="line-clamp-1 font-medium text-foreground group-hover:text-primary">
+                                {relatedTitle}
+                              </div>
+                              <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">
+                                {relatedDescription}
+                              </p>
+                            </div>
                           </div>
-                          <div className="text-xs text-muted-foreground">⭐ 4.2 · 🎮 5.2K</div>
                         </div>
-                      </div>
+                      </Link>
+                    );
+                  })
+                ) : (
+                  <div className="space-y-3">
+                    <p className="text-sm text-muted-foreground">
+                      {locale === 'zh'
+                        ? '暂时没有足够接近的推荐，可以继续浏览相关分类和标签。'
+                        : 'No close matches yet. Continue with the related categories and tags below.'}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {[...categoryEntries, ...tagEntries].slice(0, 6).map((entry) => (
+                        <Link
+                          key={`${entry.slug}-${entry.label}`}
+                          href={
+                            categoryEntries.some((category) => category.slug === entry.slug)
+                              ? `/${locale}/games/category/${entry.slug}`
+                              : `/${locale}/games/tag/${entry.slug}`
+                          }
+                          className="rounded-full border border-border px-3 py-1 text-xs font-medium text-muted-foreground hover:border-primary/60 hover:text-primary"
+                        >
+                          {entry.label}
+                        </Link>
+                      ))}
                     </div>
-                  </Link>
-                ))}
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>

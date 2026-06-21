@@ -24,8 +24,7 @@ function canUseNextImage(src?: string | null) {
   return Boolean(
     src &&
       (src.startsWith('/') ||
-        src.startsWith('https://res.cloudinary.com') ||
-        src.startsWith('https://via.placeholder.com')),
+        src.startsWith('https://res.cloudinary.com')),
   );
 }
 
@@ -349,7 +348,7 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
         <CardContent>
           <form className="grid gap-4 md:grid-cols-2 lg:grid-cols-3" method="get">
             <div className="md:col-span-2">
-              <label className="flex flex-col gap-2 text-sm font-medium text-gray-700">
+              <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
                 <span>{t('filters.searchPlaceholder')}</span>
                 <input
                   type="search"
@@ -362,7 +361,7 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
             </div>
 
             <div>
-              <label className="flex flex-col gap-2 text-sm font-medium text-gray-700">
+              <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
                 <span>{t('filters.categoryLabel')}</span>
                 <select
                   name="categoryId"
@@ -380,7 +379,7 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
             </div>
 
             <div>
-              <label className="flex flex-col gap-2 text-sm font-medium text-gray-700">
+              <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
                 <span>{t('filters.tagLabel')}</span>
                 <select
                   name="tagId"
@@ -398,7 +397,7 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
             </div>
 
             <div>
-              <label className="flex flex-col gap-2 text-sm font-medium text-gray-700">
+              <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
                 <span>{t('filters.sortLabel')}</span>
                 <div className="flex gap-2">
                   <select
@@ -428,7 +427,7 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
             </div>
 
             <div className="flex flex-wrap gap-4 md:col-span-2 lg:col-span-3">
-              <label className="inline-flex items-center gap-2 text-sm text-gray-700">
+              <label className="inline-flex items-center gap-2 text-sm text-foreground">
                 <input
                   type="checkbox"
                   name="isNew"
@@ -438,7 +437,7 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
                 />
                 {t('filters.onlyNew')}
               </label>
-              <label className="inline-flex items-center gap-2 text-sm text-gray-700">
+              <label className="inline-flex items-center gap-2 text-sm text-foreground">
                 <input
                   type="checkbox"
                   name="isHot"
@@ -448,7 +447,7 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
                 />
                 {t('filters.onlyHot')}
               </label>
-              <label className="inline-flex items-center gap-2 text-sm text-gray-700">
+              <label className="inline-flex items-center gap-2 text-sm text-foreground">
                 <input
                   type="checkbox"
                   name="featured"
@@ -458,7 +457,7 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
                 />
                 {t('filters.onlyFeatured')}
               </label>
-              <label className="inline-flex items-center gap-2 text-sm text-gray-700">
+              <label className="inline-flex items-center gap-2 text-sm text-foreground">
                 <input
                   type="checkbox"
                   name="favoritesOnly"

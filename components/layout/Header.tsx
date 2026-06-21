@@ -6,7 +6,6 @@ import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 
 import { locales } from '@/i18n/config';
-import { Button } from '@/components/ui/button';
 import { SearchInput } from '@/components/game/search-input';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { trackEvent } from '@/lib/gtag';
@@ -124,24 +123,6 @@ export function Header() {
         <div className="flex items-center gap-3">
           <SearchInput locale={currentLocaleSegment} />
           <ThemeToggle />
-          <Button
-            asChild
-            size="sm"
-            className="hidden bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm shadow-primary/20 md:inline-flex"
-          >
-            <Link
-              href={`/${currentLocaleSegment}/admin`}
-              onClick={() =>
-                trackEvent('cta_click', {
-                  action: 'open_admin',
-                  locale: currentLocaleSegment,
-                })
-              }
-            >
-              <span className="mr-1">🎯</span>
-              {t('cta')}
-            </Link>
-          </Button>
           <LanguageSwitcher />
         </div>
       </div>

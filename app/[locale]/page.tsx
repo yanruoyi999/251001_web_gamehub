@@ -56,8 +56,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <main className="min-h-screen flex flex-col">
-      <section className="flex-1 flex items-center justify-center px-4 py-16 bg-gradient-to-br from-primary/10 via-background to-secondary/10">
+      <section className="flex min-h-screen items-center justify-center px-4 py-16 bg-gradient-to-br from-primary/10 via-background to-secondary/10">
         <div className="max-w-4xl mx-auto text-center space-y-8">
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
             {heroTitle}
@@ -195,11 +194,6 @@ export default async function HomePage() {
           </section>
         </div>
       </section>
-
-      <footer className="py-8 px-4 border-t text-center text-sm text-muted-foreground">
-        <p>{t('footer')}</p>
-      </footer>
-    </main>
 
     <Script
       id="faq-schema"

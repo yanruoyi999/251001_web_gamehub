@@ -88,6 +88,33 @@ const COLOR_PALETTE = [
   'EC4899',
 ];
 
+const LOCAL_SCREENSHOT_SLUGS = new Set([
+  'adam-and-eve-4',
+  'adam-and-eve-5-part-1',
+  'adam-and-eve-5-part-2',
+  'adam-and-eve-6',
+  'adam-and-eve-7',
+  'adam-and-eve-8',
+  'adam-and-eve-adam-the-ghost',
+  'adam-and-eve-aliens',
+  'adam-and-eve-astronaut',
+  'adam-and-eve-go',
+  'adam-and-eve-go-2',
+  'adam-and-eve-go-3',
+  'adam-and-eve-go-xmas',
+  'adam-and-eve-night',
+  'adam-and-eve-sleepwalker',
+  'adam-and-eve-snow',
+  'adam-and-eve-zombies',
+  'apple-knight',
+  'apple-knight-mini-dungeons',
+  'assemble-and-drive-road-monsters',
+  'balance-duel',
+  'beat-line',
+  'big-tower-tiny-square',
+  'big-tower-tiny-square-2',
+]);
+
 function sanitizeHost(value?: string | null): string | null {
   if (!value) return null;
   try {
@@ -142,6 +169,29 @@ function createScreenshotPlaceholders(title: string, baseIndex: number): MockScr
       order: variant,
     };
   });
+}
+
+function getLocalScreenshotUrl(slug: string): string | null {
+  return LOCAL_SCREENSHOT_SLUGS.has(slug) ? `/game-screenshots/${slug}.png` : null;
+}
+
+function buildScreenshots(slug: string, title: string, baseIndex: number): MockScreenshot[] {
+  const localScreenshotUrl = getLocalScreenshotUrl(slug);
+  const placeholders = createScreenshotPlaceholders(title, baseIndex);
+
+  if (!localScreenshotUrl) return placeholders;
+
+  return [
+    { url: localScreenshotUrl, order: 0 },
+    ...placeholders.slice(0, 2).map((screenshot, index) => ({
+      ...screenshot,
+      order: index + 1,
+    })),
+  ];
+}
+
+function buildThumbnailUrl(slug: string, title: string, color: string): string {
+  return getLocalScreenshotUrl(slug) ?? createSvgPlaceholder(title, color);
 }
 
 const MOCK_CATEGORY_PRESETS: MockCategory[] = [
@@ -508,7 +558,7 @@ function buildMockGamesFromSample(entries: SampleGameEntry[]): MockGame[] {
     const instructions = buildInstructionsForGame(englishTitle, categories[0] ?? cloneCategory(MOCK_CATEGORY_PRESETS[0]));
     const developer = deriveDeveloperInfo(entry, iframeUrl);
     const sourceUrl = iframeUrl || entry.sourcePageUrl?.trim() || null;
-    const screenshots = createScreenshotPlaceholders(englishTitle, index);
+    const screenshots = buildScreenshots(slug, englishTitle, index);
 
     return {
       id: index + 1,
@@ -518,7 +568,7 @@ function buildMockGamesFromSample(entries: SampleGameEntry[]): MockGame[] {
       description: `热门 HTML5 小游戏《${englishTitle}》，点击即可游玩，无需下载。`,
       descriptionEn: `Play “${englishTitle}”, a curated HTML5 mini game that runs instantly in your browser.`,
       iframeUrl,
-      thumbnailUrl: createSvgPlaceholder(englishTitle, color),
+      thumbnailUrl: buildThumbnailUrl(slug, englishTitle, color),
       featured: index < FEATURED_COUNT,
       isNew: index < NEW_THRESHOLD,
       isHot: index % 3 === 0,

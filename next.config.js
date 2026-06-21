@@ -9,7 +9,7 @@ const securityHeaders = [
     key: 'Content-Security-Policy',
     value: [
       "default-src 'self'",
-      "img-src 'self' data: https://res.cloudinary.com https://via.placeholder.com https://www.google-analytics.com https://www.googletagmanager.com https://*.clarity.ms",
+      "img-src 'self' data: https://res.cloudinary.com https://www.google-analytics.com https://www.googletagmanager.com https://*.clarity.ms",
       `script-src 'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ''} https://www.googletagmanager.com https://www.clarity.ms`,
       "style-src 'self' 'unsafe-inline'",
       "connect-src 'self' https://res.cloudinary.com https://www.google-analytics.com https://www.googletagmanager.com https://*.clarity.ms",
@@ -41,10 +41,6 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'res.cloudinary.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'via.placeholder.com',
       },
     ],
   },

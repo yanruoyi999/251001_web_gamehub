@@ -119,7 +119,7 @@ export default function GuidePage({ params }: GuidePageProps) {
       url: siteBaseUrl,
       logo: {
         '@type': 'ImageObject',
-        url: 'https://via.placeholder.com/512x512.png?text=GameHub',
+        url: buildAbsoluteUrl('/og-gamehub.svg'),
       },
     },
     datePublished: page.updatedAt,

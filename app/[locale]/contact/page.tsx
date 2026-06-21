@@ -46,10 +46,10 @@ export default function ContactPage({ params }: ContactPageProps) {
               {isZh ? '游戏推荐、功能建议、使用问题' : 'Game recommendations, feature suggestions, usage questions'}
             </p>
             <a
-              href="mailto:support@gamehub.com"
+              href="mailto:support@gamepapa.online"
               className="inline-flex items-center gap-2 text-sm font-medium text-indigo-600 hover:text-indigo-500"
             >
-              <span>📧</span> support@gamehub.com
+              <span>📧</span> support@gamepapa.online
             </a>
           </div>
 
@@ -67,10 +67,10 @@ export default function ContactPage({ params }: ContactPageProps) {
               {isZh ? '广告投放、品牌合作、内容授权' : 'Advertising, brand partnerships, content licensing'}
             </p>
             <a
-              href="mailto:business@gamehub.com"
+              href="mailto:business@gamepapa.online"
               className="inline-flex items-center gap-2 text-sm font-medium text-indigo-600 hover:text-indigo-500"
             >
-              <span>📧</span> business@gamehub.com
+              <span>📧</span> business@gamepapa.online
             </a>
           </div>
 
@@ -88,10 +88,10 @@ export default function ContactPage({ params }: ContactPageProps) {
               {isZh ? '游戏提交、技术合作、API对接' : 'Game submissions, technical collaboration, API integration'}
             </p>
             <a
-              href="mailto:dev@gamehub.com"
+              href="mailto:dev@gamepapa.online"
               className="inline-flex items-center gap-2 text-sm font-medium text-indigo-600 hover:text-indigo-500"
             >
-              <span>📧</span> dev@gamehub.com
+              <span>📧</span> dev@gamepapa.online
             </a>
           </div>
 
@@ -109,10 +109,10 @@ export default function ContactPage({ params }: ContactPageProps) {
               {isZh ? '网站Bug反馈、游戏加载问题、浏览器兼容性' : 'Bug reports, game loading issues, browser compatibility'}
             </p>
             <a
-              href="mailto:support@gamehub.com"
+              href="mailto:support@gamepapa.online"
               className="inline-flex items-center gap-2 text-sm font-medium text-indigo-600 hover:text-indigo-500"
             >
-              <span>📧</span> support@gamehub.com
+              <span>📧</span> support@gamepapa.online
             </a>
           </div>
         </div>
@@ -135,8 +135,8 @@ export default function ContactPage({ params }: ContactPageProps) {
           </ul>
           <p className="mt-4 text-gray-700">
             {isZh ? '请发送邮件至' : 'Please email us at'}{' '}
-            <a href="mailto:dev@gamehub.com" className="text-indigo-600 hover:text-indigo-500">
-              dev@gamehub.com
+            <a href="mailto:dev@gamepapa.online" className="text-indigo-600 hover:text-indigo-500">
+              dev@gamepapa.online
             </a>{' '}
             {isZh ? '，并包含以下信息：' : 'with the following information:'}
           </p>

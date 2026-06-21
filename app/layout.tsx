@@ -25,11 +25,11 @@ const siteJsonLd = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteBaseUrl),
   title: {
-    default: 'GameHub | Free Browser Games Without Ads',
+    default: 'GameHub | Free Browser Games Online',
     template: '%s | GameHub',
   },
   description:
-    'GameHub curates ad-free browser games you can play instantly on desktop and mobile. Discover the best free iPhone games, quick boredom busters, and hand-picked collections without intrusive ads, complete with localized guides and themed playlists updated weekly.',
+    'GameHub curates free browser games you can play instantly on desktop and mobile. Discover mobile-friendly games, quick boredom busters, and hand-picked collections with helpful guides and themed playlists updated weekly.',
   keywords: [
     'free games no ads',
     'ad free games',
@@ -48,9 +48,9 @@ export const metadata: Metadata = {
     ),
   },
   openGraph: {
-    title: 'GameHub | Free Browser Games Without Ads',
+    title: 'GameHub | Free Browser Games Online',
     description:
-      'Play curated ad-free browser games instantly. Explore genres, find the best free iPhone games, and jump into quick boredom busters.',
+      'Play curated browser games instantly. Explore genres, find mobile-friendly games, and jump into quick boredom busters.',
     url: '/',
     siteName: 'GameHub',
     type: 'website',
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     alternateLocale: ['en-US'],
     images: [
       {
-        url: 'https://via.placeholder.com/1200x630.png?text=GameHub',
+        url: '/og-gamehub.svg',
         width: 1200,
         height: 630,
         alt: 'GameHub showcases curated ad-free browser games',
@@ -67,10 +67,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'GameHub | Free Browser Games Without Ads',
+    title: 'GameHub | Free Browser Games Online',
     description:
-      'Discover curated browser games with zero intrusive ads. Mobile friendly, quick to launch, and perfect when you need a new favorite.',
-    images: ['https://via.placeholder.com/1200x630.png?text=GameHub'],
+      'Discover curated browser games that are mobile friendly, quick to launch, and easy to browse when you need a new favorite.',
+    images: ['/og-gamehub.svg'],
   },
 };
 

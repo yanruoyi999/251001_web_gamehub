@@ -160,12 +160,12 @@ export default function AboutPage({ params }: AboutPageProps) {
 
         <section className="mt-8">
           <h2 className="text-2xl font-semibold text-gray-900">
-            {isZh ? '合作伙伴' : 'Partners'}
+            {isZh ? '我们参考的行业资源' : 'Industry Resources We Follow'}
           </h2>
           <p className="mt-4 text-gray-700">
             {isZh
-              ? '我们与多个知名游戏平台和开发工具保持合作关系：'
-              : 'We maintain partnerships with leading gaming platforms and development tools:'}
+              ? '以下链接是我们用来研究网页游戏体验、素材授权和技术趋势的公开资源，并不代表商业合作关系：'
+              : 'These public resources help us research browser game quality, asset licensing, and web game trends. They do not imply commercial partnerships:'}
           </p>
           <div className="mt-4 flex flex-wrap gap-4">
             <a href="https://itch.io" target="_blank" rel="noopener" className="text-indigo-600 hover:text-indigo-500">
@@ -376,8 +376,8 @@ export default function AboutPage({ params }: AboutPageProps) {
           <div className="mt-4 space-y-2">
             <p className="text-gray-700">
               📧 {isZh ? '邮箱' : 'Email'}:{' '}
-              <a href="mailto:support@gamehub.com" className="text-indigo-600 hover:text-indigo-500">
-                support@gamehub.com
+              <a href="mailto:support@gamepapa.online" className="text-indigo-600 hover:text-indigo-500">
+                support@gamepapa.online
               </a>
             </p>
             <p className="text-gray-700">

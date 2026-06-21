@@ -1,4 +1,4 @@
-const FALLBACK_APP_URL = 'http://localhost:3000';
+const FALLBACK_APP_URL = 'https://gamepapa.online';
 let cachedBaseUrl: string | null = null;
 let warnedAboutFallback = false;
 
