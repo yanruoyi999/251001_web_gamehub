@@ -20,6 +20,33 @@ interface ImportedGame {
   sourceHost: string;
 }
 
+// 已确认为 Flash 的游戏（Flash 2020 已停用，现代浏览器无法运行），从目录中排除以免展示破损游戏。
+// 高需求作品（Bad Ice Cream、Fancy Pants 等）建议后续手动换成可嵌入的 HTML5 源再放回。
+const DEAD_FLASH_SOURCE_PATHS = new Set<string>([
+  '4399/animator-v-animation-se.html',
+  '4399/avalanche.html',
+  '4399/bad-ice-cream.html',
+  '4399/bad-ice-cream-2.html',
+  '4399/bad-ice-cream-3.html',
+  '4399/bomba.html',
+  '4399/cave-chaos.html',
+  '4399/cave-chaos-2.html',
+  '4399/enemy-585.html',
+  '4399/final-ninja.html',
+  '4399/final-ninja-zero.html',
+  '4399/silly-sausage.html',
+  '4399/skywire.html',
+  '4399/slime-laboratory.html',
+  '4399/slime-laboratory-2.html',
+  '4399/swindler.html',
+  '4399/test-subject-blue.html',
+  '4399/test-subject-green.html',
+  '4399/fancy-pants-adventure-world-1.html',
+  '4399/fancy-pants-adventure-world-3.html',
+  '4399/twin-shot.html',
+  '4399/twin-shot-2.html',
+]);
+
 async function readTsv(filePath: string): Promise<RawRow[]> {
   const raw = await fs.readFile(filePath, 'utf8');
   return raw
@@ -32,7 +59,8 @@ async function readTsv(filePath: string): Promise<RawRow[]> {
         throw new Error(`TSV 数据格式错误：${line}`);
       }
       return { sourcePath, title, pageUrl, iframeUrl };
-    });
+    })
+    .filter((row) => !DEAD_FLASH_SOURCE_PATHS.has(row.sourcePath));
 }
 
 function normalizeTitle(title: string): string {
