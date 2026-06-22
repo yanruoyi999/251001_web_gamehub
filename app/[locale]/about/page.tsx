@@ -376,8 +376,8 @@ export default function AboutPage({ params }: AboutPageProps) {
           <div className="mt-4 space-y-2">
             <p className="text-gray-700">
               📧 {isZh ? '邮箱' : 'Email'}:{' '}
-              <a href="mailto:support@gamepapa.online" className="text-indigo-600 hover:text-indigo-500">
-                support@gamepapa.online
+              <a href="mailto:support@lumagamehub.com" className="text-indigo-600 hover:text-indigo-500">
+                support@lumagamehub.com
               </a>
             </p>
             <p className="text-gray-700">

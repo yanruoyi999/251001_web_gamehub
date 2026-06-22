@@ -1,4 +1,4 @@
-const FALLBACK_APP_URL = 'https://gamepapa.online';
+const FALLBACK_APP_URL = 'https://www.lumagamehub.com';
 let cachedBaseUrl: string | null = null;
 let warnedAboutFallback = false;
 
