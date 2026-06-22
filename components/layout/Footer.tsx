@@ -4,7 +4,7 @@ import { useLocale } from 'next-intl';
 export function Footer() {
   const locale = useLocale();
   const isZh = locale === 'zh';
-  const contactEmail = 'support@gamepapa.online';
+  const contactEmail = 'support@lumagamehub.com';
   const resourceLinks = [
     {
       href: 'https://developers.google.com/search/docs/fundamentals/seo-starter-guide',
