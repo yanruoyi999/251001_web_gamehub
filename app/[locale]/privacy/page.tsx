@@ -7,10 +7,10 @@ interface PrivacyPageProps {
 export async function generateMetadata({ params }: PrivacyPageProps): Promise<Metadata> {
   const isZh = params.locale === 'zh';
   return {
-    title: isZh ? '隐私政策 - GameHub' : 'Privacy Policy - GameHub',
+    title: isZh ? '隐私政策 - Luma Game Hub' : 'Privacy Policy - Luma Game Hub',
     description: isZh
-      ? '了解GameHub如何收集、使用和保护您的个人信息'
-      : 'Learn how GameHub collects, uses, and protects your personal information',
+      ? '了解Luma Game Hub如何收集、使用和保护您的个人信息'
+      : 'Learn how Luma Game Hub collects, uses, and protects your personal information',
   };
 }
 
@@ -34,8 +34,8 @@ export default function PrivacyPage({ params }: PrivacyPageProps) {
           </h2>
           <p className="mt-4 text-gray-700">
             {isZh
-              ? 'GameHub致力于保护用户隐私。我们收集的信息包括：'
-              : 'GameHub is committed to protecting user privacy. The information we collect includes:'}
+              ? 'Luma Game Hub致力于保护用户隐私。我们收集的信息包括：'
+              : 'Luma Game Hub is committed to protecting user privacy. The information we collect includes:'}
           </p>
           <ul className="mt-4 list-disc space-y-2 pl-6 text-gray-700">
             <li>

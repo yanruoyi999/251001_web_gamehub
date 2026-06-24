@@ -73,12 +73,12 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       en: {
         metaTitle: 'Free Games With No Ads | Distraction-Free Browser Games',
         metaDescription:
-          'Play free games with no ads on GameHub. Every title launches instantly, keeps your screen clean, and includes puzzle and arcade hits you can enjoy anywhere.',
+          'Play free games with no ads on Luma Game Hub. Every title launches instantly, keeps your screen clean, and includes puzzle and arcade hits you can enjoy anywhere.',
         heading: 'Free Games With No Ads',
         subheading: 'Instant-play browser hits curated to stay clean, fast, and distraction-free.',
         overview: [
           'Each game on this list was tested on desktop and mobile to ensure it launches without pre-roll videos, pop-up banners, or sneaky interstitials. If you crave a quiet gaming break, these titles keep the focus on gameplay.',
-          'Bookmark this hub to explore new ad-free additions as soon as they are reviewed by the GameHub editorial team.',
+          'Bookmark this hub to explore new ad-free additions as soon as they are reviewed by the Luma Game Hub editorial team.',
         ],
         sections: [
           {
@@ -91,7 +91,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             ],
           },
           {
-            title: 'How to Keep GameHub Clean',
+            title: 'How to Keep Luma Game Hub Clean',
             body: 'We monitor creator updates so new monetisation does not slip through. If a developer adds intrusive ad tech, we rotate the game out and highlight an alternative from the community backlog.',
           },
           {
@@ -149,7 +149,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       zh: {
         metaTitle: '免费无广告游戏 | 极速纯净的在线小游戏',
         metaDescription:
-          '在 GameHub 畅玩免费无广告游戏。所有作品均已实测，无需等待或忍受弹窗，随时在电脑与手机上享受益智、街机等不同体验。',
+          '在 Luma Game Hub 畅玩免费无广告游戏。所有作品均已实测，无需等待或忍受弹窗，随时在电脑与手机上享受益智、街机等不同体验。',
         heading: '免费无广告游戏推荐',
         subheading: '精挑细选，保证加载迅速、界面纯净、专注玩法体验。',
         overview: [
@@ -168,7 +168,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           },
           {
             title: '保持页面内容长期纯净',
-            body: '我们持续监控作者更新，若后续加入广告会及时下架，并用社区候选列表中的新作品补位，保持 GameHub 的“ad free games”形象。',
+            body: '我们持续监控作者更新，若后续加入广告会及时下架，并用社区候选列表中的新作品补位，保持 Luma Game Hub 的“ad free games”形象。',
           },
           {
             title: '不同心情的精选清单',
@@ -232,11 +232,11 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       en: {
         metaTitle: 'Ad-Free Games | Curated Collections for Every Device',
         metaDescription:
-          'Explore ad-free games by genre and device on GameHub. From puzzles to strategy hits, every pick loads instantly without pop-up interruptions.',
+          'Explore ad-free games by genre and device on Luma Game Hub. From puzzles to strategy hits, every pick loads instantly without pop-up interruptions.',
         heading: 'Ad-Free Games',
         subheading: 'Browse curated categories of clean gaming experiences on any screen.',
         overview: [
-          'GameHub tags each title with device support, play length, and input style so you can find the ad-free experience that fits your routine.',
+          'Luma Game Hub tags each title with device support, play length, and input style so you can find the ad-free experience that fits your routine.',
           'Use this guide as your starting point to discover new favourites and jump straight into gameplay without banners, timers, or idling offers.',
         ],
         sections: [
@@ -299,11 +299,11 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       zh: {
         metaTitle: 'Ad Free Games 精选 | 多设备无广告游戏合集',
         metaDescription:
-          '在 GameHub 按分类与设备探索 ad free games。益智、策略、街机等作品全部经过筛选，保证无弹窗、无广告，随开随玩。',
+          '在 Luma Game Hub 按分类与设备探索 ad free games。益智、策略、街机等作品全部经过筛选，保证无弹窗、无广告，随开随玩。',
         heading: 'Ad Free Games 合集',
         subheading: '按心情、设备、时长挑选干净的游戏体验，随时切换不失真。',
         overview: [
-          'GameHub 为每个作品标注设备适配、游玩时长与操作方式，帮助你快速找到符合需求的“ad free games”。',
+          'Luma Game Hub 为每个作品标注设备适配、游玩时长与操作方式，帮助你快速找到符合需求的“ad free games”。',
           '从此页出发即可快速发现新宠，保持零广告、零干扰的顺畅体验。',
         ],
         sections: [

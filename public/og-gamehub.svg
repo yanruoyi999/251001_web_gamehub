@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
-  <title id="title">GameHub</title>
+  <title id="title">Luma Game Hub</title>
   <desc id="desc">Curated free browser games for desktop and mobile play.</desc>
   <rect width="1200" height="630" fill="#0d1117"/>
   <rect x="72" y="72" width="1056" height="486" rx="36" fill="#111827" stroke="#2dd4bf" stroke-width="4"/>
@@ -8,7 +8,7 @@
   <rect x="182" y="158" width="16" height="68" rx="8" fill="#0d1117"/>
   <circle cx="278" cy="180" r="14" fill="#f97316"/>
   <circle cx="318" cy="214" r="14" fill="#facc15"/>
-  <text x="144" y="348" fill="#f9fafb" font-family="Arial, Helvetica, sans-serif" font-size="88" font-weight="700">GameHub</text>
+  <text x="144" y="348" fill="#f9fafb" font-family="Arial, Helvetica, sans-serif" font-size="88" font-weight="700">Luma Game Hub</text>
   <text x="148" y="420" fill="#cbd5e1" font-family="Arial, Helvetica, sans-serif" font-size="34">Free browser games, curated for quick play</text>
   <text x="148" y="476" fill="#2dd4bf" font-family="Arial, Helvetica, sans-serif" font-size="28">No downloads · Mobile friendly · Helpful guides</text>
 </svg>

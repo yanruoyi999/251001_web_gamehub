@@ -73,7 +73,7 @@ const FEATURED_COUNT = 6;
 const NEW_THRESHOLD = 18;
 
 const DEFAULT_DEVELOPER = {
-  name: 'GameHub Editorial',
+  name: 'Luma Game Hub Editorial',
   url: 'https://www.adfreegames.com',
 };
 

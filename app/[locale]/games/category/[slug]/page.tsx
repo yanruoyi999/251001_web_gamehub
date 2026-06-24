@@ -43,8 +43,8 @@ export function generateMetadata({ params }: CategoryPageProps): Metadata {
       : `${label} Browser Games - Free Online Games`;
   const description =
     locale === 'zh'
-      ? `在 GameHub 浏览 ${entry.games.length} 款${label}小游戏，全部支持浏览器即开即玩，无需下载。`
-      : `Browse ${entry.games.length} curated ${label.toLowerCase()} browser games on GameHub. Play instantly without downloads.`;
+      ? `在 Luma Game Hub 浏览 ${entry.games.length} 款${label}小游戏，全部支持浏览器即开即玩，无需下载。`
+      : `Browse ${entry.games.length} curated ${label.toLowerCase()} browser games on Luma Game Hub. Play instantly without downloads.`;
   const canonical = `/${locale}/games/category/${entry.item.slug}`;
 
   return {
@@ -105,8 +105,8 @@ export default function CategoryPage({ params }: CategoryPageProps) {
     description:
       description ||
       (locale === 'zh'
-        ? `GameHub ${label}小游戏合集`
-        : `GameHub collection of ${label} browser games`),
+        ? `Luma Game Hub ${label}小游戏合集`
+        : `Luma Game Hub collection of ${label} browser games`),
     mainEntity: {
       '@type': 'ItemList',
       numberOfItems: entry.games.length,

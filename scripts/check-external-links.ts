@@ -107,7 +107,7 @@ async function fetchWithTimeout(url: string, method: 'HEAD' | 'GET'): Promise<Re
       redirect: 'follow',
       headers: {
         'User-Agent':
-          'Mozilla/5.0 (compatible; GameHub-Link-Checker/1.0; +https://gamehub.local)',
+          'Mozilla/5.0 (compatible; LumaGameHub-Link-Checker/1.0; +https://www.lumagamehub.com)',
         Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
         ...(method === 'GET' ? { Range: 'bytes=0-2048' } : {}),
       },
@@ -330,7 +330,7 @@ async function checkGameLinks(sampleSize: number = 10): Promise<void> {
  * 主函数
  */
 async function main() {
-  console.log('\n🔍 GameHub 外链健康检查工具');
+  console.log('\n🔍 Luma Game Hub 外链健康检查工具');
   console.log('执行时间:', new Date().toLocaleString('zh-CN'));
   console.log('═'.repeat(80));
 

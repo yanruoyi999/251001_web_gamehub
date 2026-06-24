@@ -21,7 +21,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       <header className="border-b border-slate-800 bg-slate-900/80">
         <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-6">
           <Link href="/admin" className="text-lg font-semibold tracking-wide">
-            GameHub Admin
+            Luma Game Hub Admin
           </Link>
           <nav className="flex items-center gap-4 text-sm">
             {navItems.map((item) => (

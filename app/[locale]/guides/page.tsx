@@ -15,8 +15,8 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
   const heading = locale === 'zh' ? '游戏主题攻略与无广告合集' : 'Game Guides & Ad-Free Collections';
   const description =
     locale === 'zh'
-      ? '发现 GameHub 精选的主题攻略页面：无广告游戏、移动端体验以及随时解闷的轻量作品。'
-      : 'Explore GameHub’s curated guides: ad-free playlists, mobile-friendly picks, and quick boredom busters.';
+      ? '发现 Luma Game Hub 精选的主题攻略页面：无广告游戏、移动端体验以及随时解闷的轻量作品。'
+      : 'Explore Luma Game Hub’s curated guides: ad-free playlists, mobile-friendly picks, and quick boredom busters.';
 
   const basePath = `/${locale}/guides`;
 

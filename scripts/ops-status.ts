@@ -71,7 +71,7 @@ async function main() {
     return acc;
   }, 'ok');
 
-  console.log('GameHub Ops Status:\n');
+  console.log('Luma Game Hub Ops Status:\n');
   results.forEach((item) => {
     const icon = item.status === 'ok' ? '✅' : item.status === 'degraded' ? '⚠️ ' : '❌';
     console.log(`${icon} ${item.name}: ${item.status}${item.detail ? ` (${item.detail})` : ''}`);

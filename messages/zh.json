@@ -17,15 +17,15 @@
   "footer": {
     "github": "GitHub",
     "support": "支持",
-    "copyright": "© 2026 GameHub。精选免费浏览器小游戏，无需下载。"
+    "copyright": "© 2026 Luma Game Hub。精选免费浏览器小游戏，无需下载。"
   },
   "home": {
-    "title": "GameHub 免费浏览器小游戏",
-    "welcome": "欢迎来到 GameHub",
+    "title": "Luma Game Hub 免费浏览器小游戏",
+    "welcome": "欢迎来到 Luma Game Hub",
     "description": "精选 HTML5 小游戏，打开浏览器即可游玩。无需下载、无需注册，也不插入打断体验的弹窗广告。",
     "playNow": "浏览游戏",
     "browseArchive": "查看专题",
-    "footer": "© 2026 GameHub。为桌面端和移动端提供适合碎片时间的免费小游戏。",
+    "footer": "© 2026 Luma Game Hub。为桌面端和移动端提供适合碎片时间的免费小游戏。",
     "features": {
       "title": "特性",
       "offline": "即开即玩",
@@ -37,8 +37,8 @@
     },
     "seoSection": {
       "title": "无需下载的免费小游戏",
-      "description": "GameHub 聚焦低门槛浏览器游戏，给想快速开玩的人提供更干净、更容易筛选的游戏入口。",
-      "pointHeading": "GameHub 优势",
+      "description": "Luma Game Hub 聚焦低门槛浏览器游戏，给想快速开玩的人提供更干净、更容易筛选的游戏入口。",
+      "pointHeading": "Luma Game Hub 优势",
       "points": [
         "每个游戏都有可收录详情页，包含介绍、操作说明、分类标签和结构化数据。",
         "专题页覆盖 free games no ads、ad-free games、移动端小游戏和解闷小游戏等真实搜索需求。",
@@ -48,7 +48,7 @@
     },
     "evilSection": {
       "title": "为每一段碎片时间找游戏",
-      "description": "把 GameHub 当成轻量游戏发现引擎：益智、动作、平台跳跃、竞速和休闲玩法都按场景整理。",
+      "description": "把 Luma Game Hub 当成轻量游戏发现引擎：益智、动作、平台跳跃、竞速和休闲玩法都按场景整理。",
       "points": [
         "分类页聚合动作、益智、冒险、竞速、策略和休闲游戏，形成更明确的搜索入口。",
         "标签页突出碎片时间、键盘操作、高分挑战等玩法模式，方便继续浏览。",
@@ -57,11 +57,11 @@
       "cta": "查看解闷小游戏专题"
     },
     "faq": {
-      "title": "GameHub 常见问题",
+      "title": "Luma Game Hub 常见问题",
       "items": [
         {
           "question": "这些游戏都是免费的吗？",
-          "answer": "是的。GameHub 收录的是可以直接打开的免费浏览器游戏，不需要付费或安装应用。"
+          "answer": "是的。Luma Game Hub 收录的是可以直接打开的免费浏览器游戏，不需要付费或安装应用。"
         },
         {
           "question": "需要下载客户端吗？",
@@ -80,7 +80,7 @@
   },
   "Games": {
     "title": "全部浏览器游戏",
-    "desc": "按关键词、分类、标签、新品、热门和评分筛选 GameHub 游戏库。",
+    "desc": "按关键词、分类、标签、新品、热门和评分筛选 Luma Game Hub 游戏库。",
     "backToHome": "返回首页",
     "resultSummary": "共找到 {value} 款游戏",
     "empty": "当前筛选条件下没有匹配的游戏。",

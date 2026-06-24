@@ -82,7 +82,7 @@ pnpm tsx scripts/check-external-links.ts
 
 **预期输出**：
 ```
-🔍 GameHub 外链健康检查工具
+🔍 Luma Game Hub 外链健康检查工具
 执行时间: 2025-01-11 10:00:00
 ════════════════════════════════════════
 

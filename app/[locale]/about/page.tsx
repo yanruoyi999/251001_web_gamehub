@@ -8,10 +8,10 @@ interface AboutPageProps {
 export async function generateMetadata({ params }: AboutPageProps): Promise<Metadata> {
   const isZh = params.locale === 'zh';
   return {
-    title: isZh ? '关于我们 - GameHub' : 'About Us - GameHub',
+    title: isZh ? '关于我们 - Luma Game Hub' : 'About Us - Luma Game Hub',
     description: isZh
-      ? '了解GameHub - 精选免费在线游戏平台，无需下载即可畅玩'
-      : 'Learn about GameHub - Curated free online gaming platform, play instantly without downloads',
+      ? '了解Luma Game Hub - 精选免费在线游戏平台，无需下载即可畅玩'
+      : 'Learn about Luma Game Hub - Curated free online gaming platform, play instantly without downloads',
   };
 }
 
@@ -59,7 +59,7 @@ export default function AboutPage({ params }: AboutPageProps) {
   return (
     <div className="mx-auto max-w-4xl px-6 py-12">
       <h1 className="mb-8 text-4xl font-bold text-gray-900">
-        {isZh ? '关于 GameHub' : 'About GameHub'}
+        {isZh ? '关于 Luma Game Hub' : 'About Luma Game Hub'}
       </h1>
 
       <div className="prose prose-indigo max-w-none">
@@ -69,8 +69,8 @@ export default function AboutPage({ params }: AboutPageProps) {
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-gray-700">
             {isZh
-              ? 'GameHub致力于为全球玩家提供精选的免费在线游戏。我们相信游戏的乐趣应该人人可及，无需下载、无需等待，打开浏览器即可畅玩。'
-              : 'GameHub is dedicated to providing curated free online games to players worldwide. We believe gaming joy should be accessible to everyone - no downloads, no waiting, just open your browser and play.'}
+              ? 'Luma Game Hub致力于为全球玩家提供精选的免费在线游戏。我们相信游戏的乐趣应该人人可及，无需下载、无需等待，打开浏览器即可畅玩。'
+              : 'Luma Game Hub is dedicated to providing curated free online games to players worldwide. We believe gaming joy should be accessible to everyone - no downloads, no waiting, just open your browser and play.'}
           </p>
         </section>
 
@@ -134,7 +134,7 @@ export default function AboutPage({ params }: AboutPageProps) {
             {isZh ? '技术栈' : 'Technology Stack'}
           </h2>
           <p className="mt-4 text-gray-700">
-            {isZh ? 'GameHub使用现代化的技术构建：' : 'GameHub is built with modern technologies:'}
+            {isZh ? 'Luma Game Hub使用现代化的技术构建：' : 'Luma Game Hub is built with modern technologies:'}
           </p>
           <ul className="mt-4 grid gap-3 md:grid-cols-2">
             {techStackItems.map((item) => (
@@ -395,8 +395,8 @@ export default function AboutPage({ params }: AboutPageProps) {
           </h2>
           <p className="mt-3 text-sm text-indigo-800">
             {isZh
-              ? '如果您是游戏开发者，希望在GameHub上展示您的作品，请通过邮件联系我们。我们欢迎高质量的HTML5游戏！'
-              : 'If you\'re a game developer interested in showcasing your work on GameHub, please contact us via email. We welcome high-quality HTML5 games!'}
+              ? '如果您是游戏开发者，希望在Luma Game Hub上展示您的作品，请通过邮件联系我们。我们欢迎高质量的HTML5游戏！'
+              : 'If you\'re a game developer interested in showcasing your work on Luma Game Hub, please contact us via email. We welcome high-quality HTML5 games!'}
           </p>
         </section>
       </div>

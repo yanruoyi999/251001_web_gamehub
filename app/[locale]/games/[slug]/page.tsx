@@ -360,7 +360,7 @@ export default async function GamePage({ params }: GamePageProps) {
     },
     publisher: {
       '@type': 'Organization',
-      name: 'GameHub',
+      name: 'Luma Game Hub',
     },
   };
 

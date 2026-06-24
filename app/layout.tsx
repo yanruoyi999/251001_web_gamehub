@@ -13,7 +13,7 @@ const siteBaseUrl = getSiteBaseUrl();
 const siteJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  name: 'GameHub',
+  name: 'Luma Game Hub',
   url: siteBaseUrl,
   potentialAction: {
     '@type': 'SearchAction',
@@ -25,11 +25,11 @@ const siteJsonLd = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteBaseUrl),
   title: {
-    default: 'GameHub | Free Browser Games Online',
-    template: '%s | GameHub',
+    default: 'Luma Game Hub | Free Browser Games Online',
+    template: '%s | Luma Game Hub',
   },
   description:
-    'GameHub curates free browser games you can play instantly on desktop and mobile. Discover mobile-friendly games, quick boredom busters, and hand-picked collections with helpful guides and themed playlists updated weekly.',
+    'Luma Game Hub curates free browser games you can play instantly on desktop and mobile. Discover mobile-friendly games, quick boredom busters, and hand-picked collections with helpful guides and themed playlists updated weekly.',
   keywords: [
     'free games no ads',
     'ad free games',
@@ -48,11 +48,11 @@ export const metadata: Metadata = {
     ),
   },
   openGraph: {
-    title: 'GameHub | Free Browser Games Online',
+    title: 'Luma Game Hub | Free Browser Games Online',
     description:
       'Play curated browser games instantly. Explore genres, find mobile-friendly games, and jump into quick boredom busters.',
     url: '/',
-    siteName: 'GameHub',
+    siteName: 'Luma Game Hub',
     type: 'website',
     locale: 'zh-CN',
     alternateLocale: ['en-US'],
@@ -61,13 +61,13 @@ export const metadata: Metadata = {
         url: '/og-gamehub.svg',
         width: 1200,
         height: 630,
-        alt: 'GameHub showcases curated ad-free browser games',
+        alt: 'Luma Game Hub showcases curated ad-free browser games',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'GameHub | Free Browser Games Online',
+    title: 'Luma Game Hub | Free Browser Games Online',
     description:
       'Discover curated browser games that are mobile friendly, quick to launch, and easy to browse when you need a new favorite.',
     images: ['/og-gamehub.svg'],
@@ -97,7 +97,7 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="apple-mobile-web-app-title" content="GameHub" />
+        <meta name="apple-mobile-web-app-title" content="Luma Game Hub" />
         <meta name="format-detection" content="telephone=no" />
         <script
           type="application/ld+json"

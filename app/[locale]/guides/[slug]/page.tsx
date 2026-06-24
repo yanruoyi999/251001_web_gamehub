@@ -111,11 +111,11 @@ export default function GuidePage({ params }: GuidePageProps) {
     inLanguage: locale === 'zh' ? 'zh-CN' : 'en-US',
     author: {
       '@type': 'Organization',
-      name: 'GameHub Editorial',
+      name: 'Luma Game Hub Editorial',
     },
     publisher: {
       '@type': 'Organization',
-      name: 'GameHub',
+      name: 'Luma Game Hub',
       url: siteBaseUrl,
       logo: {
         '@type': 'ImageObject',

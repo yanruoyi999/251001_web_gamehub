@@ -39,8 +39,8 @@ export function generateMetadata({ params }: TagPageProps): Metadata {
   const label = pickLocalizedLabel(locale, entry.item.name, entry.item.nameEn);
   const title =
     locale === 'zh'
-      ? `${label}小游戏合集 - GameHub`
-      : `${label} Games Collection - GameHub`;
+      ? `${label}小游戏合集 - Luma Game Hub`
+      : `${label} Games Collection - Luma Game Hub`;
   const description =
     locale === 'zh'
       ? `发现 ${entry.games.length} 款适合${label}的免费浏览器小游戏，直接在线游玩。`
@@ -103,8 +103,8 @@ export default function TagPage({ params }: TagPageProps) {
     inLanguage: locale === 'zh' ? 'zh-CN' : 'en-US',
     description:
       locale === 'zh'
-        ? `GameHub ${label}小游戏合集`
-        : `GameHub collection of games tagged ${label}`,
+        ? `Luma Game Hub ${label}小游戏合集`
+        : `Luma Game Hub collection of games tagged ${label}`,
     mainEntity: {
       '@type': 'ItemList',
       numberOfItems: entry.games.length,

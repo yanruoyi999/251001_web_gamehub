@@ -8,10 +8,10 @@ interface ContactPageProps {
 export async function generateMetadata({ params }: ContactPageProps): Promise<Metadata> {
   const isZh = params.locale === 'zh';
   return {
-    title: isZh ? '联系我们 - GameHub' : 'Contact Us - GameHub',
+    title: isZh ? '联系我们 - Luma Game Hub' : 'Contact Us - Luma Game Hub',
     description: isZh
-      ? '联系GameHub团队 - 反馈建议、商务合作、技术支持'
-      : 'Contact GameHub team - Feedback, partnerships, technical support',
+      ? '联系Luma Game Hub团队 - 反馈建议、商务合作、技术支持'
+      : 'Contact Luma Game Hub team - Feedback, partnerships, technical support',
   };
 }
 
@@ -27,8 +27,8 @@ export default function ContactPage({ params }: ContactPageProps) {
       <div className="prose prose-indigo max-w-none">
         <p className="text-lg text-gray-700">
           {isZh
-            ? '感谢您对GameHub的关注！无论您有任何问题、建议或合作意向，我们都很乐意听取您的意见。'
-            : 'Thank you for your interest in GameHub! Whether you have questions, suggestions, or partnership inquiries, we\'d love to hear from you.'}
+            ? '感谢您对Luma Game Hub的关注！无论您有任何问题、建议或合作意向，我们都很乐意听取您的意见。'
+            : 'Thank you for your interest in Luma Game Hub! Whether you have questions, suggestions, or partnership inquiries, we\'d love to hear from you.'}
         </p>
 
         <div className="mt-8 grid gap-6 md:grid-cols-2">
@@ -123,8 +123,8 @@ export default function ContactPage({ params }: ContactPageProps) {
           </h2>
           <p className="mt-4 text-gray-700">
             {isZh
-              ? '如果您是游戏开发者，欢迎将您的HTML5游戏提交到GameHub平台。我们接受以下类型的游戏：'
-              : 'If you\'re a game developer, we welcome your HTML5 games on GameHub. We accept the following types:'}
+              ? '如果您是游戏开发者，欢迎将您的HTML5游戏提交到Luma Game Hub平台。我们接受以下类型的游戏：'
+              : 'If you\'re a game developer, we welcome your HTML5 games on Luma Game Hub. We accept the following types:'}
           </p>
           <ul className="mt-4 list-disc space-y-2 pl-6 text-gray-700">
             <li>{isZh ? 'HTML5/WebGL游戏' : 'HTML5/WebGL games'}</li>

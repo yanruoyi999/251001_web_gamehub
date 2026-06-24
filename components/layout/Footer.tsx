@@ -138,8 +138,8 @@ export function Footer() {
         <div className="mt-8 border-t border-border pt-8 text-center text-sm text-muted-foreground">
           <p>
             {isZh
-              ? '© 2026 GameHub。精选免费浏览器小游戏，无需下载。'
-              : '© 2026 GameHub. Curated free browser games, no downloads required.'}
+              ? '© 2026 Luma Game Hub。精选免费浏览器小游戏，无需下载。'
+              : '© 2026 Luma Game Hub. Curated free browser games, no downloads required.'}
           </p>
         </div>
       </div>

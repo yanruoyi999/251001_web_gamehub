@@ -17,15 +17,15 @@
   "footer": {
     "github": "GitHub",
     "support": "Support",
-    "copyright": "© 2026 GameHub. Curated free browser games without downloads."
+    "copyright": "© 2026 Luma Game Hub. Curated free browser games without downloads."
   },
   "home": {
-    "title": "GameHub Free Browser Games",
-    "welcome": "Welcome to GameHub",
+    "title": "Luma Game Hub Free Browser Games",
+    "welcome": "Welcome to Luma Game Hub",
     "description": "Play curated HTML5 games instantly in your browser. No downloads, no account required, and no intrusive interstitial ads.",
     "playNow": "Browse Games",
     "browseArchive": "Explore Guides",
-    "footer": "© 2026 GameHub. Free browser games for quick sessions on desktop and mobile.",
+    "footer": "© 2026 Luma Game Hub. Free browser games for quick sessions on desktop and mobile.",
     "features": {
       "title": "Features",
       "offline": "Instant Play",
@@ -37,8 +37,8 @@
     },
     "seoSection": {
       "title": "Free Games With No Downloads",
-      "description": "GameHub focuses on low-friction browser games for players who want quick, safe, and useful recommendations instead of noisy game portals.",
-      "pointHeading": "GameHub Advantage",
+      "description": "Luma Game Hub focuses on low-friction browser games for players who want quick, safe, and useful recommendations instead of noisy game portals.",
+      "pointHeading": "Luma Game Hub Advantage",
       "points": [
         "Each game has its own crawlable detail page with descriptions, controls, category links, and structured data.",
         "Collections target real search intent such as free games no ads, ad-free games, mobile browser games, and boredom busters.",
@@ -48,7 +48,7 @@
     },
     "evilSection": {
       "title": "Find Games For Every Short Break",
-      "description": "Use GameHub as a lightweight discovery engine: quick puzzles, action games, platformers, racing, and casual sessions are all grouped for faster browsing.",
+      "description": "Use Luma Game Hub as a lightweight discovery engine: quick puzzles, action games, platformers, racing, and casual sessions are all grouped for faster browsing.",
       "points": [
         "Category pages collect action, puzzle, adventure, racing, strategy, and casual games into focused landing pages.",
         "Tag pages highlight short-session games, keyboard controls, high-score challenges, and other gameplay patterns.",
@@ -57,11 +57,11 @@
       "cta": "See games to play when bored"
     },
     "faq": {
-      "title": "GameHub FAQ",
+      "title": "Luma Game Hub FAQ",
       "items": [
         {
           "question": "Are the games free?",
-          "answer": "Yes. GameHub links to free browser games that can be opened directly without payment or app-store installation."
+          "answer": "Yes. Luma Game Hub links to free browser games that can be opened directly without payment or app-store installation."
         },
         {
           "question": "Do I need to download anything?",
@@ -80,7 +80,7 @@
   },
   "Games": {
     "title": "All Browser Games",
-    "desc": "Browse the GameHub catalogue by keyword, category, tag, freshness, popularity, and rating.",
+    "desc": "Browse the Luma Game Hub catalogue by keyword, category, tag, freshness, popularity, and rating.",
     "backToHome": "Back to Home",
     "resultSummary": "{value} games found",
     "empty": "No games match the current filters.",

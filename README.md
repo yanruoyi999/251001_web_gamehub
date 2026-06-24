@@ -1,4 +1,4 @@
-# 🎮 GameHub - 游戏聚合网站
+# 🎮 Luma Game Hub - 游戏聚合网站
 
 [![Next.js](https://img.shields.io/badge/Next.js-14.2-black?logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.4-blue?logo=typescript)](https://www.typescriptlang.org/)
@@ -10,7 +10,7 @@
 
 ## 📖 项目简介
 
-GameHub 是一个现代化的在线游戏聚合平台，为用户提供丰富的在线游戏体验。项目采用最新的 Web 技术栈，注重性能、SEO 优化和用户体验。
+Luma Game Hub 是一个现代化的在线游戏聚合平台，为用户提供丰富的在线游戏体验。项目采用最新的 Web 技术栈，注重性能、SEO 优化和用户体验。
 
 ### 🎯 核心目标
 
