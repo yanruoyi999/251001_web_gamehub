@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { headers } from 'next/headers';
@@ -7,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { FavoriteToggleButton } from '@/components/game/favorite-toggle';
 import { CategoryService, FavoriteService, GameService, TagService } from '@/services';
+import { locales } from '@/i18n/config';
 import { mockGames } from '@/lib/mock-games';
 
 export const dynamic = 'force-dynamic';
@@ -188,6 +190,39 @@ interface GamesPageProps {
     sortBy?: string;
     sortOrder?: string;
     favoritesOnly?: string;
+  };
+}
+
+export function generateMetadata({ params }: GamesPageProps): Metadata {
+  const locale = params.locale === 'zh' ? 'zh' : 'en';
+  const isZh = locale === 'zh';
+  const canonical = `/${locale}/games`;
+
+  return {
+    title: isZh ? '免费在线小游戏大全' : 'Free Browser Games',
+    description: isZh
+      ? '浏览 Luma Game Hub 的免费浏览器小游戏，按分类、标签和热门程度筛选，无需下载即可开始。'
+      : 'Browse free browser games on Luma Game Hub by category, tag, and popularity. Start playing without a download.',
+    alternates: {
+      canonical,
+      languages: {
+        ...Object.fromEntries(
+          locales.map((loc) => [
+            loc === 'zh' ? 'zh-CN' : 'en-US',
+            `/${loc}/games`,
+          ]),
+        ),
+        'x-default': '/en/games',
+      },
+    },
+    openGraph: {
+      title: isZh ? '免费在线小游戏大全' : 'Free Browser Games',
+      description: isZh
+        ? '按分类、标签和热门程度浏览可直接打开的浏览器小游戏。'
+        : 'Browse browser games by category, tag, and popularity.',
+      url: canonical,
+      type: 'website',
+    },
   };
 }
 

@@ -1,16 +1,31 @@
 import { Metadata } from 'next';
 
+import { locales } from '@/i18n/config';
+
 interface PrivacyPageProps {
   params: { locale: string };
 }
 
 export async function generateMetadata({ params }: PrivacyPageProps): Promise<Metadata> {
-  const isZh = params.locale === 'zh';
+  const locale = params.locale === 'zh' ? 'zh' : 'en';
+  const isZh = locale === 'zh';
   return {
     title: isZh ? '隐私政策 - Luma Game Hub' : 'Privacy Policy - Luma Game Hub',
     description: isZh
       ? '了解Luma Game Hub如何收集、使用和保护您的个人信息'
       : 'Learn how Luma Game Hub collects, uses, and protects your personal information',
+    alternates: {
+      canonical: `/${locale}/privacy`,
+      languages: {
+        ...Object.fromEntries(
+          locales.map((loc) => [
+            loc === 'zh' ? 'zh-CN' : 'en-US',
+            `/${loc}/privacy`,
+          ]),
+        ),
+        'x-default': '/en/privacy',
+      },
+    },
   };
 }
 
@@ -25,7 +40,7 @@ export default function PrivacyPage({ params }: PrivacyPageProps) {
 
       <div className="prose prose-indigo max-w-none">
         <p className="text-sm text-gray-500">
-          {isZh ? '最后更新：2025年1月' : 'Last updated: January 2025'}
+          {isZh ? '最后更新：2026年6月25日' : 'Last updated: June 25, 2026'}
         </p>
 
         <section className="mt-8">

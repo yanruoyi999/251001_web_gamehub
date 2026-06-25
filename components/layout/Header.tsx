@@ -82,10 +82,10 @@ export function Header() {
           }
         >
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-lg shadow-primary/20">
-            <span className="text-lg font-bold">G</span>
+            <span className="text-lg font-bold">L</span>
           </div>
           <span className="text-xl font-bold text-foreground">
-            Game<span className="text-primary">Hub</span>
+            Luma <span className="text-primary">Game Hub</span>
           </span>
         </Link>
 

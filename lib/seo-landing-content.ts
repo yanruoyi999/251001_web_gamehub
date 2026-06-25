@@ -1971,6 +1971,143 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       },
     },
   },
+  {
+    slug: 'best-browser-games-5-minute-break',
+    primaryKeyword: 'best browser games for a 5 minute break',
+    keywords: [
+      'best browser games for a 5 minute break',
+      'quick browser games',
+      'short online games',
+      'free games for a quick break',
+    ],
+    updatedAt: seoContentUpdatedAt,
+    relatedSlugs: ['games-to-play-when-bored', 'games-like-ovo'],
+    locales: {
+      en: {
+        metaTitle: '5 Browser Games for a Quick 5-Minute Break',
+        metaDescription:
+          'Five free browser games for a short break, with real gameplay screenshots and direct links to puzzle, platform, action, and rhythm picks.',
+        heading: '5 Browser Games for a Quick 5-Minute Break',
+        subheading:
+          'Short on time? These five picks get to the main mechanic quickly and are easy to pause after a run or level.',
+        overview: [
+          'A useful break game should be quick to understand, start without an installation, and give you a natural stopping point. This list mixes point-and-click puzzles, platforming, physics, and rhythm so you can choose the kind of attention reset you need.',
+          'Every pick below is currently available in the Luma Game Hub catalogue and has a real gameplay screenshot. Open the game detail page, select Play, and stop after one level or attempt when your break is over.',
+        ],
+        sections: [
+          {
+            title: 'How these games were selected',
+            body: 'The list favors games with a clear central mechanic, short attempts or levels, and controls that do not require a long setup.',
+            bullets: [
+              'Adam and Eve 4 — a relaxed point-and-click puzzle when you want a low-pressure mental reset.',
+              'Apple Knight — compact action-platforming for a more energetic break.',
+              'Big Tower Tiny Square — precise jumping with frequent retry points.',
+              'Balance Duel — a physics challenge built around short attempts.',
+              'Beat Line — a rhythm-focused option for a quick change of pace.',
+            ],
+          },
+          {
+            title: 'Choose by the kind of break you need',
+            body: 'Pick Adam and Eve 4 when you want to slow down, Apple Knight or Big Tower Tiny Square when you want active focus, Balance Duel for a short physics challenge, and Beat Line when sound and timing help you reset.',
+          },
+          {
+            title: 'Keep a short session short',
+            body: 'Decide on one level or a fixed number of attempts before you start. Browser games make it easy to continue, so a clear stopping rule is more useful than relying on the game to end the session for you.',
+          },
+        ],
+        recommendations: [
+          { slug: 'adam-and-eve-4', pitch: 'A calm point-and-click puzzle with a simple goal and short scenes.' },
+          { slug: 'apple-knight', pitch: 'Action-platforming for a quick burst of movement and combat.' },
+          { slug: 'big-tower-tiny-square', pitch: 'Precision jumps and fast retries for focused challenge.' },
+          { slug: 'balance-duel', pitch: 'A compact physics game built around short attempts.' },
+          { slug: 'beat-line', pitch: 'A timing-based rhythm game for a quick change of pace.' },
+        ],
+        faqs: [
+          {
+            question: 'Can a browser game fit into a five-minute break?',
+            answer:
+              'Yes, when the game starts quickly and uses short levels or attempts. Set a one-level or fixed-attempt limit before playing.',
+          },
+          {
+            question: 'Do these games require a download?',
+            answer:
+              'No. Each game opens through a browser player from its Luma Game Hub detail page.',
+          },
+          {
+            question: 'Which pick is best for a relaxed break?',
+            answer:
+              'Adam and Eve 4 is the least intense option. It focuses on observing a scene and solving a small point-and-click puzzle.',
+          },
+          {
+            question: 'Which pick is best for an active break?',
+            answer:
+              'Apple Knight and Big Tower Tiny Square are the most active choices because both emphasize movement, timing, and quick retries.',
+          },
+        ],
+        ctaLabel: 'Browse all browser games',
+        ctaDescription: 'Choose another game by category, tag, or popularity.',
+      },
+      zh: {
+        metaTitle: '适合 5 分钟休息的 5 款浏览器小游戏',
+        metaDescription:
+          '5 款适合短暂休息的免费浏览器游戏，配真实游戏截图，并提供益智、平台、动作、物理和节奏玩法入口。',
+        heading: '适合 5 分钟休息的 5 款浏览器小游戏',
+        subheading: '时间不多时，选一款能快速进入核心玩法、玩完一关或一局就能停下的游戏。',
+        overview: [
+          '适合短暂休息的游戏应该容易理解、无需安装，并且有自然的停止点。这份清单覆盖点击解谜、平台动作、物理挑战和节奏玩法，方便你按当下需要选择。',
+          '下面每款游戏目前都在 Luma Game Hub 目录中，并使用真实游戏截图。进入详情页点击“开始游戏”，完成一关或一次尝试后即可结束休息。',
+        ],
+        sections: [
+          {
+            title: '选择标准',
+            body: '这份清单优先选择核心机制清楚、单局或单关较短、无需复杂设置的游戏。',
+            bullets: [
+              'Adam and Eve 4 —— 低压力的点击解谜，适合放慢节奏。',
+              'Apple Knight —— 紧凑动作平台，适合更有活力的休息。',
+              'Big Tower Tiny Square —— 精准跳跃和快速重试。',
+              'Balance Duel —— 围绕短局展开的物理挑战。',
+              'Beat Line —— 用节奏和时机快速切换注意力。',
+            ],
+          },
+          {
+            title: '按休息方式选择',
+            body: '想放慢节奏选 Adam and Eve 4；想集中注意力选 Apple Knight 或 Big Tower Tiny Square；想玩短局物理挑战选 Balance Duel；想换一种节奏选 Beat Line。',
+          },
+          {
+            title: '让短休息真的保持简短',
+            body: '开始前先规定只玩一关或固定次数。浏览器游戏很容易继续玩，明确停止规则比等游戏主动结束更可靠。',
+          },
+        ],
+        recommendations: [
+          { slug: 'adam-and-eve-4', pitch: '目标简单、场景短小的轻松点击解谜。' },
+          { slug: 'apple-knight', pitch: '用移动和战斗快速提神的动作平台游戏。' },
+          { slug: 'big-tower-tiny-square', pitch: '精准跳跃、失败后快速重试的集中挑战。' },
+          { slug: 'balance-duel', pitch: '围绕短局展开的紧凑物理游戏。' },
+          { slug: 'beat-line', pitch: '通过节奏和时机快速切换注意力。' },
+        ],
+        faqs: [
+          {
+            question: '浏览器游戏真的适合 5 分钟休息吗？',
+            answer: '可以，前提是游戏启动快、关卡或单局较短。开始前规定只玩一关或固定次数。',
+          },
+          {
+            question: '这些游戏需要下载吗？',
+            answer: '不需要。每款游戏都能从 Luma Game Hub 详情页打开浏览器播放器。',
+          },
+          {
+            question: '想轻松休息应该选哪款？',
+            answer: 'Adam and Eve 4 强度最低，主要是观察场景并完成一个小型点击谜题。',
+          },
+          {
+            question: '想活动注意力应该选哪款？',
+            answer: 'Apple Knight 和 Big Tower Tiny Square 更强调移动、时机和快速重试。',
+          },
+        ],
+        ctaLabel: '浏览全部浏览器游戏',
+        ctaDescription: '按分类、标签或热门程度选择下一款游戏。',
+      },
+    },
+  },
 ];
 
 export function getSeoLandingPages(): SeoLandingPage[] {

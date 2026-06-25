@@ -1,17 +1,32 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 
+import { locales } from '@/i18n/config';
+
 interface ContactPageProps {
   params: { locale: string };
 }
 
 export async function generateMetadata({ params }: ContactPageProps): Promise<Metadata> {
-  const isZh = params.locale === 'zh';
+  const locale = params.locale === 'zh' ? 'zh' : 'en';
+  const isZh = locale === 'zh';
   return {
     title: isZh ? '联系我们 - Luma Game Hub' : 'Contact Us - Luma Game Hub',
     description: isZh
       ? '联系Luma Game Hub团队 - 反馈建议、商务合作、技术支持'
       : 'Contact Luma Game Hub team - Feedback, partnerships, technical support',
+    alternates: {
+      canonical: `/${locale}/contact`,
+      languages: {
+        ...Object.fromEntries(
+          locales.map((loc) => [
+            loc === 'zh' ? 'zh-CN' : 'en-US',
+            `/${loc}/contact`,
+          ]),
+        ),
+        'x-default': '/en/contact',
+      },
+    },
   };
 }
 

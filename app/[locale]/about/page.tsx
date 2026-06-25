@@ -1,17 +1,32 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 
+import { locales } from '@/i18n/config';
+
 interface AboutPageProps {
   params: { locale: string };
 }
 
 export async function generateMetadata({ params }: AboutPageProps): Promise<Metadata> {
-  const isZh = params.locale === 'zh';
+  const locale = params.locale === 'zh' ? 'zh' : 'en';
+  const isZh = locale === 'zh';
   return {
     title: isZh ? '关于我们 - Luma Game Hub' : 'About Us - Luma Game Hub',
     description: isZh
       ? '了解Luma Game Hub - 精选免费在线游戏平台，无需下载即可畅玩'
       : 'Learn about Luma Game Hub - Curated free online gaming platform, play instantly without downloads',
+    alternates: {
+      canonical: `/${locale}/about`,
+      languages: {
+        ...Object.fromEntries(
+          locales.map((loc) => [
+            loc === 'zh' ? 'zh-CN' : 'en-US',
+            `/${loc}/about`,
+          ]),
+        ),
+        'x-default': '/en/about',
+      },
+    },
   };
 }
 

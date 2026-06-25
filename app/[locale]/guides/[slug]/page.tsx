@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { locales, type Locale } from '@/i18n/config';
@@ -248,8 +249,8 @@ export default function GuidePage({ params }: GuidePageProps) {
           </h2>
           <p className="mt-2 text-sm text-muted-foreground">
             {locale === 'zh'
-              ? '以下游戏均支持即开即玩，并保持无广告、无安装的体验。'
-              : 'Each recommendation loads instantly in your browser and stays free of intrusive ads.'}
+              ? '以下游戏可从详情页直接打开浏览器播放器，无需下载安装。'
+              : 'Each recommendation opens a browser player from its detail page with no download required.'}
           </p>
         </header>
 
@@ -267,6 +268,17 @@ export default function GuidePage({ params }: GuidePageProps) {
 
             return (
               <Card key={item.slug} className="flex h-full flex-col justify-between border border-border">
+                {game?.thumbnailUrl?.startsWith('/game-screenshots/') ? (
+                  <div className="relative aspect-video overflow-hidden border-b border-border bg-muted">
+                    <Image
+                      src={game.thumbnailUrl}
+                      alt={`${gameTitle} gameplay screenshot`}
+                      fill
+                      sizes="(min-width: 768px) 50vw, 100vw"
+                      className="object-cover"
+                    />
+                  </div>
+                ) : null}
                 <CardHeader>
                   <CardTitle className="text-xl font-semibold text-foreground">
                     {gameTitle}

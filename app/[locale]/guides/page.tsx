@@ -12,11 +12,11 @@ export function generateStaticParams() {
 
 export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
   const locale = (params.locale as Locale) ?? 'zh';
-  const heading = locale === 'zh' ? '游戏主题攻略与无广告合集' : 'Game Guides & Ad-Free Collections';
+  const heading = locale === 'zh' ? '游戏主题攻略与精选合集' : 'Game Guides & Curated Collections';
   const description =
     locale === 'zh'
-      ? '发现 Luma Game Hub 精选的主题攻略页面：无广告游戏、移动端体验以及随时解闷的轻量作品。'
-      : 'Explore Luma Game Hub’s curated guides: ad-free playlists, mobile-friendly picks, and quick boredom busters.';
+      ? '发现 Luma Game Hub 精选的主题攻略页面：移动端体验、短时游玩以及不同类型的浏览器游戏。'
+      : 'Explore Luma Game Hub’s curated guides for mobile play, short sessions, and different browser-game styles.';
 
   const basePath = `/${locale}/guides`;
 
@@ -25,8 +25,8 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
     description,
     keywords:
       locale === 'zh'
-        ? ['游戏攻略', '无广告小游戏', 'iPhone 游戏推荐', '打发时间的小游戏']
-        : ['game guides', 'ad-free games', 'best free iphone games', 'games to play when bored'],
+        ? ['游戏攻略', '浏览器小游戏', 'iPhone 游戏推荐', '打发时间的小游戏']
+        : ['game guides', 'browser games', 'best free iphone games', 'games to play when bored'],
     alternates: {
       canonical: basePath,
       languages: Object.fromEntries(
@@ -102,8 +102,8 @@ export default function GuidesPage({ params }: GuidesPageProps) {
 
       <footer className="mt-12 text-center text-sm text-muted-foreground">
         {locale === 'zh'
-          ? '提示：收藏本页，随时获取最新的无广告游戏与主题合集。'
-          : 'Tip: Bookmark this page to see newly published ad-free and themed collections as soon as they land.'}
+          ? '提示：收藏本页，随时查看新发布的浏览器游戏主题合集。'
+          : 'Tip: Bookmark this page to see newly published browser-game collections.'}
       </footer>
     </div>
   );

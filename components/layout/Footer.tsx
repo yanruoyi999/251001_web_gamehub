@@ -1,8 +1,10 @@
 import Link from 'next/link';
-import { useLocale } from 'next-intl';
 
-export function Footer() {
-  const locale = useLocale();
+interface FooterProps {
+  locale: string;
+}
+
+export function Footer({ locale }: FooterProps) {
   const isZh = locale === 'zh';
   const contactEmail = 'support@lumagamehub.com';
   const resourceLinks = [
@@ -27,10 +29,10 @@ export function Footer() {
           <div className="md:col-span-1">
             <div className="mb-4 flex items-center gap-2">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-lg shadow-primary/20">
-                <span className="text-lg font-bold">G</span>
+                <span className="text-lg font-bold">L</span>
               </div>
               <span className="text-xl font-bold text-foreground">
-                Game<span className="text-primary">Hub</span>
+                Luma <span className="text-primary">Game Hub</span>
               </span>
             </div>
             <p className="text-sm text-muted-foreground">
