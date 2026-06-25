@@ -22,7 +22,7 @@
   "home": {
     "title": "Luma Game Hub Free Browser Games",
     "welcome": "Welcome to Luma Game Hub",
-    "description": "Play curated HTML5 games instantly in your browser. No downloads, no account required, and no intrusive interstitial ads.",
+    "description": "Play curated HTML5 games instantly in your browser. No downloads or Luma account required; third-party game behavior can vary.",
     "playNow": "Browse Games",
     "browseArchive": "Explore Guides",
     "footer": "© 2026 Luma Game Hub. Free browser games for quick sessions on desktop and mobile.",
@@ -41,10 +41,10 @@
       "pointHeading": "Luma Game Hub Advantage",
       "points": [
         "Each game has its own crawlable detail page with descriptions, controls, category links, and structured data.",
-        "Collections target real search intent such as free games no ads, ad-free games, mobile browser games, and boredom busters.",
+        "Collections answer real search intent around lower-interruption play, mobile browser games, and quick boredom busters.",
         "The catalogue is split by categories and tags so users can move naturally between related games."
       ],
-      "cta": "Read the no-ads game guide"
+      "cta": "Read the low-interruption game guide"
     },
     "evilSection": {
       "title": "Find Games For Every Short Break",

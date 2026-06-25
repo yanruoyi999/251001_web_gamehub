@@ -5,6 +5,7 @@ import { headers } from 'next/headers';
 import './globals.css';
 import { defaultLocale, locales } from '@/i18n/config';
 import AnalyticsListener from '@/components/layout/AnalyticsListener';
+import LocaleDocumentSync from '@/components/layout/LocaleDocumentSync';
 import { GA_TRACKING_ID } from '@/lib/gtag';
 import { getSiteBaseUrl } from '@/lib/seo';
 
@@ -30,8 +31,6 @@ export const metadata: Metadata = {
   description:
     'Luma Game Hub curates free browser games you can play instantly on desktop and mobile. Discover mobile-friendly games, quick boredom busters, and hand-picked collections with helpful guides and themed playlists updated weekly.',
   keywords: [
-    'free games no ads',
-    'ad free games',
     'best free iphone games',
     'games to play when bored',
     'browser games',
@@ -60,7 +59,7 @@ export const metadata: Metadata = {
         url: '/og-gamehub.svg',
         width: 1200,
         height: 630,
-        alt: 'Luma Game Hub showcases curated ad-free browser games',
+        alt: 'Luma Game Hub showcases curated browser games',
       },
     ],
   },
@@ -99,6 +98,11 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="Luma Game Hub" />
         <meta name="format-detection" content="telephone=no" />
         <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var l=location.pathname.split('/')[1];if(l==='en'||l==='zh'){document.documentElement.lang=l;document.documentElement.dataset.locale=l;}})();`,
+          }}
+        />
+        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }}
         />
@@ -109,6 +113,9 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans antialiased bg-background text-foreground">
+        <Suspense fallback={null}>
+          <LocaleDocumentSync />
+        </Suspense>
         {GA_TRACKING_ID ? (
           <>
             <Script

@@ -60,8 +60,8 @@ export default function GuidesPage({ params }: GuidesPageProps) {
   const heading = locale === 'zh' ? '专题合集' : 'Curated Guides';
   const intro =
     locale === 'zh'
-      ? '从零广告玩法到移动端体验，我们为不同场景整理了精选游戏列表。选择一个主题，立即找到合适的浏览器游戏。'
-      : 'From ad-free sessions to mobile touch hits, these guides highlight the best browser games for every moment. Pick a theme and jump straight into play.';
+      ? '从低干扰玩法到移动端体验，我们按不同场景整理并复核浏览器游戏。选择一个主题，查看适配说明后开始游玩。'
+      : 'From lower-interruption picks to mobile browser candidates, these guides organize games by real play scenarios. Check the device notes, choose a theme, and start playing.';
 
   return (
     <div className="mx-auto w-full max-w-5xl px-6 py-12">

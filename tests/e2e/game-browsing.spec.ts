@@ -26,12 +26,19 @@ test.describe('游戏浏览流程', () => {
     if (navigationError) return;
 
     await expect(page.locator('body')).toBeVisible();
-    const languageToggle = page.getByRole('link', { name: /English|EN/i });
+    await expect(page.locator('html')).toHaveAttribute('lang', 'zh');
+    const languageToggle = page.getByRole('link', { name: 'EN', exact: true });
     const toggleVisible = await languageToggle.isVisible();
     test.skip(!toggleVisible, '界面上未找到语言切换控件');
     if (!toggleVisible) return;
 
     await languageToggle.click();
     await expect(page).toHaveURL(/\/en/);
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+  });
+
+  test('英文攻略页输出正确的文档语言', async ({ page }) => {
+    await page.goto('/en/guides/best-free-iphone-games');
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   });
 });
