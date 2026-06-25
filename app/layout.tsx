@@ -5,7 +5,6 @@ import { headers } from 'next/headers';
 import './globals.css';
 import { defaultLocale, locales } from '@/i18n/config';
 import AnalyticsListener from '@/components/layout/AnalyticsListener';
-import { ClarityConsent } from '@/components/analytics/ClarityConsent';
 import { GA_TRACKING_ID } from '@/lib/gtag';
 import { getSiteBaseUrl } from '@/lib/seo';
 
@@ -130,7 +129,6 @@ export default function RootLayout({
           </>
         ) : null}
         {children}
-        <ClarityConsent locale={htmlLang} privacyHref={`/${htmlLang}/privacy`} />
       </body>
     </html>
   );

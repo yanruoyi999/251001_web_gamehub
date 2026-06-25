@@ -5,6 +5,7 @@ import { getMessages } from 'next-intl/server';
 import { locales, defaultLocale, Locale } from '@/i18n/config';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import { ClarityConsent } from '@/components/analytics/ClarityConsent';
 import { TypeformFeedbackButton } from '@/components/feedback/TypeformFeedbackButton';
 
 interface LocaleLayoutProps {
@@ -34,6 +35,7 @@ export default async function LocaleLayout({
         <Header />
         <main className="flex-1">{children}</main>
         <Footer locale={typedLocale} />
+        <ClarityConsent locale={typedLocale} privacyHref={`/${typedLocale}/privacy`} />
         <TypeformFeedbackButton locale={typedLocale} />
       </div>
     </NextIntlClientProvider>
