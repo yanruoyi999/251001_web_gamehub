@@ -20,8 +20,6 @@ import {
 import { mockGames } from '@/lib/mock-games';
 import { buildAbsoluteUrl, getSiteBaseUrl } from '@/lib/seo';
 
-export const dynamic = 'force-static';
-
 export function generateStaticParams() {
   const pages = getSeoLandingPages();
   return locales.flatMap((locale) =>

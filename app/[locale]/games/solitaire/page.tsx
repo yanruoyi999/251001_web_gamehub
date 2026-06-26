@@ -1,13 +1,57 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { locales } from '@/i18n/config';
 
 interface SolitairePageProps {
   params: { locale: string };
 }
 
 export const dynamic = 'force-dynamic';
+
+export function generateMetadata({ params }: SolitairePageProps): Metadata {
+  const locale = params.locale === 'zh' ? 'zh' : 'en';
+  const title =
+    locale === 'zh'
+      ? 'Solitaire - 免费在线纸牌游戏'
+      : 'Solitaire - Free Online Card Game';
+  const description =
+    locale === 'zh'
+      ? '直接在浏览器中游玩经典 Solitaire 纸牌游戏，适合短时休闲，无需下载安装。'
+      : 'Play classic Solitaire directly in your browser for a quick card-game break with no download required.';
+  const canonical = `/${locale}/games/solitaire`;
+
+  return {
+    title,
+    description,
+    keywords:
+      locale === 'zh'
+        ? ['Solitaire', '纸牌游戏', '免费在线游戏', '浏览器游戏']
+        : ['Solitaire', 'card game', 'free online game', 'browser game'],
+    alternates: {
+      canonical,
+      languages: Object.fromEntries(
+        locales.map((loc) => [
+          loc === 'zh' ? 'zh-CN' : 'en-US',
+          `/${loc}/games/solitaire`,
+        ]),
+      ),
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+    },
+  };
+}
 
 export default async function SolitairePage({ params }: SolitairePageProps) {
   const { locale } = params;

@@ -12,8 +12,6 @@ import {
 } from '@/lib/game-taxonomy';
 import { buildAbsoluteUrl } from '@/lib/seo';
 
-export const dynamic = 'force-static';
-
 interface CategoryPageProps {
   params: { locale: string; slug: string };
 }
@@ -209,4 +207,3 @@ export default function CategoryPage({ params }: CategoryPageProps) {
     </div>
   );
 }
-

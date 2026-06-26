@@ -1,13 +1,57 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { locales } from '@/i18n/config';
 
 interface MonsterSurvivorsPageProps {
   params: { locale: string };
 }
 
 export const dynamic = 'force-dynamic';
+
+export function generateMetadata({ params }: MonsterSurvivorsPageProps): Metadata {
+  const locale = params.locale === 'zh' ? 'zh' : 'en';
+  const title =
+    locale === 'zh'
+      ? 'Monster Survivors - 免费在线生存动作游戏'
+      : 'Monster Survivors - Free Online Survival Action Game';
+  const description =
+    locale === 'zh'
+      ? '在线游玩 Monster Survivors，在浏览器中躲避怪物、升级技能并坚持更久，无需下载安装。'
+      : 'Play Monster Survivors online in your browser. Dodge monsters, upgrade skills, and survive longer with no download required.';
+  const canonical = `/${locale}/games/monster-survivors`;
+
+  return {
+    title,
+    description,
+    keywords:
+      locale === 'zh'
+        ? ['Monster Survivors', '生存游戏', '免费在线游戏', '浏览器动作游戏']
+        : ['Monster Survivors', 'survival game', 'free online game', 'browser action game'],
+    alternates: {
+      canonical,
+      languages: Object.fromEntries(
+        locales.map((loc) => [
+          loc === 'zh' ? 'zh-CN' : 'en-US',
+          `/${loc}/games/monster-survivors`,
+        ]),
+      ),
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+    },
+  };
+}
 
 export default async function MonsterSurvivorsPage({ params }: MonsterSurvivorsPageProps) {
   const { locale } = params;

@@ -4,8 +4,6 @@ import { locales, type Locale } from '@/i18n/config';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getSeoLandingPages } from '@/lib/seo-landing-content';
 
-export const dynamic = 'force-static';
-
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }

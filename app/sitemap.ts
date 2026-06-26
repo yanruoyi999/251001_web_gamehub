@@ -10,6 +10,7 @@ import { buildAbsoluteUrl } from '@/lib/seo';
 export const dynamic = 'force-dynamic';
 
 const SITEMAP_DB_TIMEOUT_MS = 2000;
+const standaloneGamePaths = ['/games/monster-survivors', '/games/solitaire'];
 
 function getFileLastModified(...segments: string[]): Date | undefined {
   try {
@@ -165,6 +166,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         lastModified: game.lastModified ?? mockGamesUpdatedAt,
         changeFrequency: game.isNew ? 'weekly' : 'monthly',
         priority: 0.6,
+      });
+    }
+
+    for (const gamePath of standaloneGamePaths) {
+      entries.push({
+        url: buildAbsoluteUrl(`/${locale}${gamePath}`),
+        lastModified: getFileLastModified('app', '[locale]', ...gamePath.split('/').filter(Boolean), 'page.tsx') ?? mockGamesUpdatedAt,
+        changeFrequency: 'monthly',
+        priority: 0.55,
       });
     }
 
