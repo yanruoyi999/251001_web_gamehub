@@ -4,6 +4,7 @@ import { getTranslations } from 'next-intl/server';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { locales } from '@/i18n/config';
+import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES } from '@/lib/seo';
 
 interface SolitairePageProps {
   params: { locale: string };
@@ -44,11 +45,13 @@ export function generateMetadata({ params }: SolitairePageProps): Metadata {
       description,
       url: canonical,
       type: 'website',
+      images: DEFAULT_OPEN_GRAPH_IMAGES,
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
+      images: DEFAULT_TWITTER_IMAGES,
     },
   };
 }

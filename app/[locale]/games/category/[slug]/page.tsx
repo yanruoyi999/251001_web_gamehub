@@ -10,7 +10,7 @@ import {
   getTagEntries,
   pickLocalizedLabel,
 } from '@/lib/game-taxonomy';
-import { buildAbsoluteUrl } from '@/lib/seo';
+import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES, buildAbsoluteUrl } from '@/lib/seo';
 
 interface CategoryPageProps {
   params: { locale: string; slug: string };
@@ -66,11 +66,13 @@ export function generateMetadata({ params }: CategoryPageProps): Metadata {
       description,
       url: canonical,
       type: 'website',
+      images: DEFAULT_OPEN_GRAPH_IMAGES,
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
+      images: DEFAULT_TWITTER_IMAGES,
     },
   };
 }

@@ -18,7 +18,12 @@ import {
   type SeoLandingPage,
 } from '@/lib/seo-landing-content';
 import { mockGames } from '@/lib/mock-games';
-import { buildAbsoluteUrl, getSiteBaseUrl } from '@/lib/seo';
+import {
+  DEFAULT_OPEN_GRAPH_IMAGES,
+  DEFAULT_TWITTER_IMAGES,
+  buildAbsoluteUrl,
+  getSiteBaseUrl,
+} from '@/lib/seo';
 
 export function generateStaticParams() {
   const pages = getSeoLandingPages();
@@ -65,11 +70,13 @@ export function generateMetadata({
       type: 'article',
       publishedTime: page.updatedAt,
       tags: page.keywords,
+      images: DEFAULT_OPEN_GRAPH_IMAGES,
     },
     twitter: {
       card: 'summary_large_image',
       title: content.metaTitle,
       description: content.metaDescription,
+      images: DEFAULT_TWITTER_IMAGES,
     },
   };
 }

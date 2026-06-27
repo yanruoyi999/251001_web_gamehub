@@ -11,7 +11,7 @@ import { GameService, RatingService } from '@/services';
 import { getMockGameBySlug, mockGames } from '@/lib/mock-games';
 import type { GameDetail } from '@/services/game.service';
 import type { MockGame } from '@/lib/mock-games';
-import { buildAbsoluteUrl } from '@/lib/seo';
+import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES, buildAbsoluteUrl } from '@/lib/seo';
 import { locales } from '@/i18n/config';
 
 type RatingDistribution = Awaited<ReturnType<typeof RatingService.getRatingDistribution>>;
@@ -213,13 +213,13 @@ export async function generateMetadata({ params }: GamePageProps): Promise<Metad
       description,
       url: canonical,
       type: 'website',
-      images: image,
+      images: image ?? DEFAULT_OPEN_GRAPH_IMAGES,
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: image?.map((item) => item.url),
+      images: image?.map((item) => item.url) ?? DEFAULT_TWITTER_IMAGES,
     },
   };
 }

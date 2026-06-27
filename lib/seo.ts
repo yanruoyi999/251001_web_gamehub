@@ -1,4 +1,16 @@
 const FALLBACK_APP_URL = 'https://www.lumagamehub.com';
+export const DEFAULT_OG_IMAGE = '/og-gamehub.svg';
+export const DEFAULT_OG_IMAGE_ALT = 'Luma Game Hub showcases curated free browser games';
+export const DEFAULT_OPEN_GRAPH_IMAGES = [
+  {
+    url: DEFAULT_OG_IMAGE,
+    width: 1200,
+    height: 630,
+    alt: DEFAULT_OG_IMAGE_ALT,
+  },
+];
+export const DEFAULT_TWITTER_IMAGES = [DEFAULT_OG_IMAGE];
+
 let cachedBaseUrl: string | null = null;
 let warnedAboutFallback = false;
 

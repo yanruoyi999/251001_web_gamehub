@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { locales, type Locale } from '@/i18n/config';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getSeoLandingPages } from '@/lib/seo-landing-content';
+import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES } from '@/lib/seo';
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -39,11 +40,13 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
       description,
       url: basePath,
       type: 'website',
+      images: DEFAULT_OPEN_GRAPH_IMAGES,
     },
     twitter: {
       card: 'summary_large_image',
       title: heading,
       description,
+      images: DEFAULT_TWITTER_IMAGES,
     },
   };
 }

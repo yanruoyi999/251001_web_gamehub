@@ -10,6 +10,7 @@ import { FavoriteToggleButton } from '@/components/game/favorite-toggle';
 import { CategoryService, FavoriteService, GameService, TagService } from '@/services';
 import { locales } from '@/i18n/config';
 import { mockGames } from '@/lib/mock-games';
+import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES } from '@/lib/seo';
 
 export const dynamic = 'force-dynamic';
 
@@ -222,6 +223,15 @@ export function generateMetadata({ params }: GamesPageProps): Metadata {
         : 'Browse browser games by category, tag, and popularity.',
       url: canonical,
       type: 'website',
+      images: DEFAULT_OPEN_GRAPH_IMAGES,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: isZh ? '免费在线小游戏大全' : 'Free Browser Games',
+      description: isZh
+        ? '按分类、标签和热门程度浏览可直接打开的浏览器小游戏。'
+        : 'Browse browser games by category, tag, and popularity.',
+      images: DEFAULT_TWITTER_IMAGES,
     },
   };
 }
