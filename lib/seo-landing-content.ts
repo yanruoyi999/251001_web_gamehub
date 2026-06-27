@@ -872,13 +872,16 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     primaryKeyword: 'google snake mods',
     keywords: [
       'google snake mods',
+      'google snake mod',
       'google snake menu mod',
       'how to get google snake mods',
       'google snake mod menu',
+      'snake game menu',
+      'google snake game menu',
       'google snake unblocked',
     ],
     updatedAt: seoContentUpdatedAt,
-    relatedSlugs: [],
+    relatedSlugs: ['string-theory-2-remastered-guide', 'games-to-play-when-bored'],
     embedGame: {
       iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp44/chenling/20230830/05/index.html',
       title: 'Google Snake',
@@ -886,16 +889,25 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     },
     locales: {
       en: {
-        metaTitle: 'Google Snake Mods: How to Get the Menu Mod (2 Easy Ways)',
+        metaTitle: 'Google Snake Mod Menu: How to Get Snake Game Mods',
         metaDescription:
-          'Learn how to get Google Snake mods and the menu mod in minutes. Two methods — bookmark import (no extension) and Tampermonkey — plus a no-setup way to play modded Snake free in your browser.',
+          'Learn how to get the Google Snake mod menu in minutes. Use the Snake Game Menu bookmark, Tampermonkey, or a no-setup browser version when you just want to play.',
         heading: 'Google Snake Mods: How to Install the Menu Mod',
-        subheading: 'Two simple methods — one needs no extension at all — plus an instant-play option if you do not want to install anything.',
+        subheading: 'Two simple methods for the Snake Game Menu - one needs no extension at all - plus an instant-play option if you do not want to install anything.',
         overview: [
           'The Google Snake “menu mod” adds a settings panel to the classic Google Snake game, letting you switch apple types, unlock challenge modes, change the board, and apply custom skins. It is a single-player offline game tied to no account, so using mods does not risk a ban — the worst that happens is a mod stops working after Google updates the game.',
           'There are two reliable ways to add the mods, and a third no-setup option if you just want to play. We walk through all three below, then you can jump straight into Snake at the bottom of this guide.',
         ],
         sections: [
+          {
+            title: 'Quick Answer: Which Google Snake Mod Should You Use?',
+            body: 'For most players, start with the Snake Game Menu bookmark import because it does not require a browser extension and can be removed by deleting one bookmark. Use Tampermonkey only if you already trust userscripts and want the mod menu to appear automatically every time.',
+            bullets: [
+              'Use the bookmark method when you want the lightest setup and a quick test.',
+              'Use Tampermonkey when you play often and want automatic loading.',
+              'Use the browser version on this page when extensions and bookmark imports are blocked.',
+            ],
+          },
           {
             title: 'What the Menu Mod Actually Adds',
             body: 'The menu mod injects an extra options panel into the game’s settings. Once loaded, you get controls that the default game hides.',
@@ -955,6 +967,11 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ],
         faqs: [
           {
+            question: 'What is the Snake Game Menu bookmark?',
+            answer:
+              'It is a bookmark file that runs the community menu mod on the Google Snake game page. Import the bookmark, start Snake from Google Search, open the game settings, then click the Snake Game Menu bookmark to show the mod options.',
+          },
+          {
             question: 'Can you get banned for using Google Snake mods?',
             answer:
               'No. Google Snake is a single-player offline game with no account or leaderboard tied to your Google profile, so mods cannot get you banned. They simply change how the local game looks and plays.',
@@ -984,16 +1001,25 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ctaDescription: 'Launch Snake free in your browser — no mods or setup needed to start playing.',
       },
       zh: {
-        metaTitle: 'Google Snake 模组安装教程:两种方法搞定 Menu Mod',
+        metaTitle: 'Google Snake Mod Menu 安装教程:蛇蛇菜单模组怎么用',
         metaDescription:
-          '几分钟学会安装 Google Snake 模组和 menu mod。两种方法——书签导入(免插件)和 Tampermonkey——外加一个免安装、直接在浏览器玩的方式。',
+          '几分钟学会安装 Google Snake mod menu。可用 Snake Game Menu 书签、Tampermonkey,也可以选择免安装浏览器版本直接开玩。',
         heading: 'Google Snake 模组:Menu Mod 安装教程',
-        subheading: '两种简单方法(其中一种完全免插件),外加一个不想装任何东西时的即开即玩方案。',
+        subheading: '两种 Snake Game Menu 安装方式(其中一种完全免插件),外加一个不想装任何东西时的即开即玩方案。',
         overview: [
           'Google Snake 的“menu mod(菜单模组)”会给经典的 Google 贪吃蛇加一个设置面板,让你切换苹果类型、解锁挑战模式、改棋盘、换皮肤。它是一款不绑定账号的单机离线游戏,所以用模组不会被封号——最坏的情况只是 Google 更新游戏后某个模组失效。',
           '加模组有两种可靠方法,外加第三个“只想玩”的免安装选项。下面三种都讲清楚,看完可以直接在本页底部开玩贪吃蛇。',
         ],
         sections: [
+          {
+            title: '快速结论:该用哪种 Google Snake 模组?',
+            body: '大多数玩家先用 Snake Game Menu 书签导入法,因为它不需要浏览器扩展,不想用了删掉一个书签即可。只有你本来就信任用户脚本、并且经常玩,才建议用 Tampermonkey 自动加载。',
+            bullets: [
+              '想轻量试用,选书签导入法。',
+              '经常玩并想自动加载,选 Tampermonkey。',
+              '学校或公司浏览器限制扩展和书签导入时,直接玩本页的浏览器版本。',
+            ],
+          },
           {
             title: 'Menu Mod 到底加了什么',
             body: 'menu mod 会往游戏设置里注入一个额外的选项面板。加载后,你能用到默认游戏里被藏起来的控制项。',
@@ -1053,6 +1079,11 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ],
         faqs: [
           {
+            question: 'Snake Game Menu 书签是什么?',
+            answer:
+              '它是一个会在 Google Snake 页面运行菜单模组的书签文件。导入书签后,先在 Google 搜索里启动 Snake,打开游戏设置,再点击 Snake Game Menu 书签,即可显示模组选项。',
+          },
+          {
             question: '用 Google Snake 模组会被封号吗?',
             answer:
               '不会。Google Snake 是单机离线游戏,不绑定账号和排行榜,模组不会导致封号。它只是改变本地游戏的外观和玩法。',
@@ -1080,6 +1111,358 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ],
         ctaLabel: '立即开玩贪吃蛇',
         ctaDescription: '在浏览器里免费启动贪吃蛇——免模组、免设置,点开就玩。',
+      },
+    },
+  },
+  {
+    slug: 'string-theory-2-remastered-guide',
+    primaryKeyword: 'string theory remastered',
+    keywords: [
+      'string theory remastered',
+      'string theory 2 remastered',
+      'string theory remastered game',
+      'string theory 2',
+      'string theory remastered walkthrough',
+    ],
+    updatedAt: seoContentUpdatedAt,
+    relatedSlugs: ['google-snake-mods', 'games-to-play-when-bored'],
+    embedGame: {
+      iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp37/gamehwq/20220124/13/index.htm',
+      title: 'String Theory 2 Remastered',
+      playSlug: 'string-theory-2-remastered',
+    },
+    locales: {
+      en: {
+        metaTitle: 'String Theory 2 Remastered: How to Play & Puzzle Tips',
+        metaDescription:
+          'Play String Theory 2 Remastered free in your browser and use this guide to understand the controls, timing puzzles, and how to reset your approach when a level feels stuck.',
+        heading: 'String Theory 2 Remastered Guide',
+        subheading: 'A focused browser puzzle guide for the String Theory Remastered series: controls, timing, and how to solve levels without guessing.',
+        overview: [
+          'String Theory 2 Remastered is a physics puzzle game built around timing, elastic movement, and small adjustments. The levels are not about clicking faster; they reward watching how the string, platforms, and targets react after each attempt.',
+          'Use this page as a play-and-read guide: start the game above, test one move, then come back to the sections below when a puzzle feels impossible.',
+        ],
+        sections: [
+          {
+            title: 'Controls and Basic Loop',
+            body: 'Each level asks you to move the object through a controlled path rather than force it straight to the goal. Make one change at a time, then watch the full reaction before trying again.',
+            bullets: [
+              'Click or tap the interactive objects only after you understand what they move.',
+              'Let the physics finish before resetting; a late bounce often solves the path.',
+              'If the same move fails twice, change the timing rather than repeating the click.',
+            ],
+          },
+          {
+            title: 'How to Solve Stuck Levels',
+            body: 'Most stuck moments come from treating the puzzle like a reflex game. Slow down and identify the constraint first: is the object missing height, arriving too early, or losing momentum before the target?',
+            bullets: [
+              'Need more height: trigger the elastic or launch element earlier.',
+              'Arriving too early: delay the first interaction and let gravity change the angle.',
+              'Losing momentum: avoid extra collisions and keep the path cleaner.',
+            ],
+          },
+          {
+            title: 'String Theory Remastered vs String Theory 2',
+            body: 'The first String Theory Remastered is a useful warm-up because it teaches the core physics language. String Theory 2 Remastered adds more demanding timing and cleaner remastered presentation, so play the original first if the sequel feels too abrupt.',
+          },
+          {
+            title: 'Why This Works as a Short Browser Game',
+            body: 'The game loads quickly, each attempt is short, and failure gives useful feedback. That makes it a good puzzle break: one level, one idea, one small improvement.',
+          },
+        ],
+        recommendations: [
+          {
+            slug: 'string-theory-remastered',
+            pitch:
+              'Start with the first String Theory Remastered if you want the gentler introduction before the sequel.',
+          },
+          {
+            slug: '2048',
+            pitch:
+              'A slower logic puzzle when you want planning instead of physics timing.',
+          },
+          {
+            slug: 'hextris',
+            pitch:
+              'A fast pattern game if you like compact puzzles with instant retries.',
+          },
+        ],
+        faqs: [
+          {
+            question: 'Is String Theory 2 Remastered free to play?',
+            answer:
+              'Yes. You can play it free in your browser on Luma Game Hub with no download or account required.',
+          },
+          {
+            question: 'What kind of game is String Theory 2 Remastered?',
+            answer:
+              'It is a physics puzzle game. You solve levels by adjusting timing, momentum, and object paths rather than by memorizing button combos.',
+          },
+          {
+            question: 'Should I play String Theory Remastered before String Theory 2?',
+            answer:
+              'If you are new to the series, the first game is a useful warm-up. If you already understand the physics, you can start with String Theory 2 Remastered.',
+          },
+          {
+            question: 'What should I do when a level feels impossible?',
+            answer:
+              'Stop repeating the same timing. Watch where the attempt fails, then change only one variable: start earlier, wait longer, or reduce extra collisions.',
+          },
+        ],
+        ctaLabel: 'Play more browser puzzle games',
+        ctaDescription: 'Try String Theory 2 Remastered now, then compare it with other quick puzzle picks.',
+      },
+      zh: {
+        metaTitle: 'String Theory 2 Remastered 攻略:玩法与解谜技巧',
+        metaDescription:
+          '免费在浏览器玩 String Theory 2 Remastered,并用这份攻略理解操作、物理时机和卡关时的调整方法。',
+        heading: 'String Theory 2 Remastered 攻略',
+        subheading: '围绕 String Theory Remastered 系列的物理解谜指南:操作、时机,以及不靠乱试的解题方法。',
+        overview: [
+          'String Theory 2 Remastered 是一款物理解谜游戏,核心是时机、弹性运动和细微调整。它不是比谁点得快,而是看你能不能观察每次尝试后绳子、平台和目标的反应。',
+          '建议边玩边看:先启动上方游戏,尝试一个操作,卡住时再回到下面的思路拆解。',
+        ],
+        sections: [
+          {
+            title: '操作与基础循环',
+            body: '每一关都不是让你把物体硬推到终点,而是让它沿着可控路径移动。一次只改一个动作,然后看完整反应再重试。',
+            bullets: [
+              '先看清每个可互动对象会推动什么,再点击或触碰。',
+              '不要太早重置;很多路径靠后段反弹才成立。',
+              '同一个操作失败两次后,优先改时机,不要机械重复。',
+            ],
+          },
+          {
+            title: '卡关时怎么拆',
+            body: '多数卡关不是反应慢,而是没找到约束:高度不够、到得太早,还是进目标前损失了动量。',
+            bullets: [
+              '高度不够:更早触发弹性或发射机关。',
+              '到得太早:延后第一步,让重力改变角度。',
+              '动量不够:减少多余碰撞,让路径更干净。',
+            ],
+          },
+          {
+            title: 'String Theory Remastered 与 2 的区别',
+            body: '第一部 String Theory Remastered 更适合热身,能学会基础物理语言。String Theory 2 Remastered 的时机要求更高、画面更清晰,如果续作上来太难,可以先玩第一部。',
+          },
+          {
+            title: '为什么适合短时浏览器游玩',
+            body: '游戏加载快,每次尝试很短,失败也能反馈原因。它适合当作短休息解谜:一关、一个想法、一次微调。',
+          },
+        ],
+        recommendations: [
+          {
+            slug: 'string-theory-remastered',
+            pitch:
+              '想更平缓入门,先玩第一部 String Theory Remastered。',
+          },
+          {
+            slug: '2048',
+            pitch:
+              '想要更慢的逻辑规划,2048 比物理时机更适合。',
+          },
+          {
+            slug: 'hextris',
+            pitch:
+              '想要即时重试和图形规律,Hextris 是更快节奏的选择。',
+          },
+        ],
+        faqs: [
+          {
+            question: 'String Theory 2 Remastered 免费吗?',
+            answer:
+              '免费。你可以在 Luma Game Hub 浏览器里直接玩,无需下载或注册账号。',
+          },
+          {
+            question: 'String Theory 2 Remastered 是什么类型?',
+            answer:
+              '它是物理解谜游戏。通关靠调整时机、动量和物体路径,而不是背复杂按键。',
+          },
+          {
+            question: '需要先玩 String Theory Remastered 第一部吗?',
+            answer:
+              '新手建议先玩第一部热身;如果你已经理解这个系列的物理逻辑,可以直接玩 String Theory 2 Remastered。',
+          },
+          {
+            question: '某一关看起来不可能怎么办?',
+            answer:
+              '不要重复同一套时机。先观察失败点,再只改一个变量:更早开始、等久一点,或减少多余碰撞。',
+          },
+        ],
+        ctaLabel: '查看更多浏览器解谜游戏',
+        ctaDescription: '先玩 String Theory 2 Remastered,再对比其他短局解谜推荐。',
+      },
+    },
+  },
+  {
+    slug: 'apple-knight-mini-dungeons-guide',
+    primaryKeyword: 'apple knight mini dungeons unblocked',
+    keywords: [
+      'apple knight mini dungeons unblocked',
+      'apple knight mini dungeons',
+      'apple knight mini dungeons game',
+      'apple knight unblocked',
+      'apple knight mini dungeons tips',
+    ],
+    updatedAt: seoContentUpdatedAt,
+    relatedSlugs: ['games-to-play-when-bored', 'ovo-walkthrough'],
+    embedGame: {
+      iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp44/gamehwq/20230808/10a/index.html',
+      title: 'Apple Knight: Mini Dungeons',
+      playSlug: 'apple-knight-mini-dungeons',
+    },
+    locales: {
+      en: {
+        metaTitle: 'Apple Knight Mini Dungeons Unblocked: Play & Tips',
+        metaDescription:
+          'Play Apple Knight: Mini Dungeons unblocked in your browser, learn the controls, and use practical combat tips for short dungeon runs.',
+        heading: 'Apple Knight: Mini Dungeons Unblocked Guide',
+        subheading: 'A compact action-platformer guide for quick dungeon runs: controls, combat rhythm, and when to slow down.',
+        overview: [
+          'Apple Knight: Mini Dungeons takes the Apple Knight formula and compresses it into short action-platforming stages. You move, jump, strike, dodge hazards, collect items, and try to clear a room without wasting health.',
+          'The game works best when you treat each room like a small route puzzle. Clear enemies safely, grab pickups only when the path is safe, and avoid rushing into blind corners.',
+        ],
+        sections: [
+          {
+            title: 'Controls and Combat Rhythm',
+            body: 'The important rhythm is move, strike, reposition. Standing still after an attack is what usually costs health.',
+            bullets: [
+              'Use quick taps to adjust position before attacking.',
+              'Jump before crowded hazards instead of trying to fight through them.',
+              'After each hit, step back or jump away so enemies cannot trade damage.',
+            ],
+          },
+          {
+            title: 'How to Clear Mini Dungeon Rooms',
+            body: 'Do not chase every pickup immediately. First make the room safe, then collect coins and items on the way out.',
+            bullets: [
+              'Clear low-risk enemies first so you have space to move.',
+              'Use platforms to split enemies instead of fighting a group at once.',
+              'If health is low, slow down and focus on avoiding contact damage.',
+            ],
+          },
+          {
+            title: 'Unblocked Browser Play Notes',
+            body: 'This version runs in the browser with no app install. Keyboard controls are the best fit on desktop or Chromebook; on mobile, test touch controls before committing to a longer run.',
+          },
+        ],
+        recommendations: [
+          {
+            slug: 'apple-knight',
+            pitch:
+              'Play the main Apple Knight game if you want longer platforming runs with the same combat feel.',
+          },
+          {
+            slug: 'big-tower-tiny-square',
+            pitch:
+              'A pure precision platformer when you want jumps and timing without combat.',
+          },
+          {
+            slug: 'ovo',
+            pitch:
+              'A faster parkour game built around momentum, wall jumps, and instant retries.',
+          },
+        ],
+        faqs: [
+          {
+            question: 'Can I play Apple Knight: Mini Dungeons unblocked?',
+            answer:
+              'Yes. The browser version on Luma Game Hub can be opened directly with no download or account required.',
+          },
+          {
+            question: 'Is Apple Knight: Mini Dungeons better on keyboard or mobile?',
+            answer:
+              'Keyboard is more reliable for movement and combat timing. Mobile can work, but test the touch controls first.',
+          },
+          {
+            question: 'What is the best beginner tip?',
+            answer:
+              'Do not stand still after attacking. Hit, move, then hit again so enemies cannot trade damage back into you.',
+          },
+          {
+            question: 'Is this the same as Apple Knight?',
+            answer:
+              'It is a smaller Mini Dungeons entry in the same action-platform style. The main Apple Knight game is better when you want longer stages.',
+          },
+        ],
+        ctaLabel: 'Browse more action browser games',
+        ctaDescription: 'Play Apple Knight: Mini Dungeons, then compare it with other quick action-platform picks.',
+      },
+      zh: {
+        metaTitle: 'Apple Knight Mini Dungeons 无屏蔽玩法与攻略',
+        metaDescription:
+          '在浏览器免费玩 Apple Knight: Mini Dungeons,了解操作、战斗节奏和短地牢通关技巧。',
+        heading: 'Apple Knight: Mini Dungeons 无屏蔽攻略',
+        subheading: '面向短地牢闯关的动作平台指南:操作、战斗节奏,以及什么时候该放慢。',
+        overview: [
+          'Apple Knight: Mini Dungeons 把 Apple Knight 的动作平台玩法压缩成更短的地牢关卡。你要移动、跳跃、攻击、躲陷阱、捡道具,并尽量少掉血地清完房间。',
+          '它更像一个小路线谜题:先安全清敌,确认路径后再捡道具,不要一头冲进看不见的角落。',
+        ],
+        sections: [
+          {
+            title: '操作与战斗节奏',
+            body: '核心节奏是移动、攻击、再调整位置。攻击后站在原地,通常就是掉血的原因。',
+            bullets: [
+              '攻击前用轻点微调位置。',
+              '面对密集陷阱先跳过去,不要硬打穿过去。',
+              '每次命中后后撤或跳开,避免和敌人互换伤害。',
+            ],
+          },
+          {
+            title: 'Mini Dungeon 房间怎么清',
+            body: '不要一开始就追所有金币和道具。先让房间安全,再在离开路线中顺手收集。',
+            bullets: [
+              '先清低风险敌人,给自己留移动空间。',
+              '利用平台把敌人分开,不要一次打一群。',
+              '血量低时放慢,优先避免接触伤害。',
+            ],
+          },
+          {
+            title: '浏览器无屏蔽游玩说明',
+            body: '本版本可直接在浏览器运行,无需安装 App。桌面和 Chromebook 上键盘手感最好;手机端建议先测试触屏按钮,再决定是否长时间游玩。',
+          },
+        ],
+        recommendations: [
+          {
+            slug: 'apple-knight',
+            pitch:
+              '想要更长的平台闯关,可以玩 Apple Knight 主线版本。',
+          },
+          {
+            slug: 'big-tower-tiny-square',
+            pitch:
+              '只想考验跳跃和时机,不想战斗时选 Big Tower Tiny Square。',
+          },
+          {
+            slug: 'ovo',
+            pitch:
+              '想玩更快的跑酷和蹬墙跳,OvO 是更高节奏选择。',
+          },
+        ],
+        faqs: [
+          {
+            question: 'Apple Knight: Mini Dungeons 能无屏蔽玩吗?',
+            answer:
+              '可以。Luma Game Hub 的浏览器版本可直接打开,不需要下载或注册账号。',
+          },
+          {
+            question: 'Apple Knight: Mini Dungeons 更适合键盘还是手机?',
+            answer:
+              '键盘更适合移动和攻击时机。手机也可以尝试,但建议先测试触屏控制。',
+          },
+          {
+            question: '新手最重要技巧是什么?',
+            answer:
+              '攻击后不要站着不动。命中、移动、再命中,才能避免敌人反打。',
+          },
+          {
+            question: '它和 Apple Knight 是同一个游戏吗?',
+            answer:
+              '它是同一动作平台风格下的 Mini Dungeons 小关卡版本。想玩更长关卡,可以玩 Apple Knight 主线版本。',
+          },
+        ],
+        ctaLabel: '查看更多动作浏览器游戏',
+        ctaDescription: '先玩 Apple Knight: Mini Dungeons,再比较其他短局动作平台游戏。',
       },
     },
   },
