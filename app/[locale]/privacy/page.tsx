@@ -128,7 +128,9 @@ export default function PrivacyPage({ params }: PrivacyPageProps) {
             </li>
             <li>
               <strong>Microsoft Clarity</strong>:{' '}
-              {isZh ? '用于热图、会话回放和体验问题分析，仅在同意后启用' : 'For heatmaps, session recordings, and experience diagnostics, enabled only after consent'} -{' '}
+              {isZh
+                ? '用于热图、会话回放和体验问题分析。拒绝时以无 Cookie 的有限模式运行；同意后启用更完整的分析'
+                : 'For heatmaps, session recordings, and experience diagnostics. It runs in limited cookieless mode when declined, and fuller analytics mode after consent'} -{' '}
               <a
                 href="https://privacy.microsoft.com/privacystatement"
                 target="_blank"

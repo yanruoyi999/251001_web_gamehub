@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from 'next';
 import { Suspense } from 'react';
 import Script from 'next/script';
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { headers } from 'next/headers';
 import './globals.css';
 import { defaultLocale, locales } from '@/i18n/config';
@@ -136,6 +138,8 @@ export default function RootLayout({
           </>
         ) : null}
         {children}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
