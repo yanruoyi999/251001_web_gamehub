@@ -9,8 +9,8 @@ const securityHeaders = [
     key: 'Content-Security-Policy',
     value: [
       "default-src 'self'",
-      "img-src 'self' data: https://res.cloudinary.com https://www.google-analytics.com https://www.googletagmanager.com https://*.clarity.ms",
-      `script-src 'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ''} https://www.googletagmanager.com https://www.clarity.ms`,
+      "img-src 'self' data: https://res.cloudinary.com https://www.google-analytics.com https://www.googletagmanager.com https://*.clarity.ms https://c.bing.com",
+      `script-src 'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ''} https://www.googletagmanager.com https://www.clarity.ms https://scripts.clarity.ms`,
       "style-src 'self' 'unsafe-inline'",
       "connect-src 'self' https://res.cloudinary.com https://www.google-analytics.com https://www.googletagmanager.com https://*.clarity.ms",
       "frame-src 'self' https://*.github.io https://sudoku.tn1ck.com http://patorjk.com https://playpager.com https://cloud.onlinegames.io https://*.4399.com https://www.friv2018.com",
