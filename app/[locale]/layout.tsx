@@ -72,7 +72,7 @@ export default async function LocaleLayout({
         <Header />
         <main className="flex-1">{children}</main>
         <Footer locale={typedLocale} />
-        <ClarityConsent locale={typedLocale} privacyHref={`/${typedLocale}/privacy`} />
+        <ClarityConsent />
         <TypeformFeedbackButton locale={typedLocale} />
       </div>
     </NextIntlClientProvider>
