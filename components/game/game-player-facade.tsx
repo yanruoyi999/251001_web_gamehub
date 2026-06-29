@@ -4,12 +4,15 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
+import { trackInteraction } from '@/lib/analytics/events';
 
 interface GamePlayerFacadeProps {
   iframeUrl: string;
   title: string;
   thumbnailUrl?: string | null;
   locale: string;
+  gameSlug?: string;
+  source?: string;
 }
 
 function canUseNextImage(src?: string | null) {
@@ -34,6 +37,8 @@ export function GamePlayerFacade({
   title,
   thumbnailUrl,
   locale,
+  gameSlug,
+  source = 'game_player',
 }: GamePlayerFacadeProps) {
   const [loaded, setLoaded] = useState(false);
   const sandbox = needsUnsandboxedIframe(iframeUrl)
@@ -89,7 +94,14 @@ export function GamePlayerFacade({
         <Button
           type="button"
           size="lg"
-          onClick={() => setLoaded(true)}
+          onClick={() => {
+            trackInteraction('game_play_start', {
+              game_slug: gameSlug ?? title,
+              locale,
+              source,
+            });
+            setLoaded(true);
+          }}
           aria-label={locale === 'zh' ? `开始游玩 ${title}` : `Play ${title}`}
           className="bg-white text-slate-950 hover:bg-white/90"
         >

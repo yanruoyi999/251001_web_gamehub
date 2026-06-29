@@ -563,6 +563,8 @@ export default async function GamePage({ params }: GamePageProps) {
                       title={title}
                       thumbnailUrl={game.thumbnailUrl}
                       locale={locale}
+                      gameSlug={game.slug}
+                      source="game_detail"
                     />
                   </div>
                 </div>

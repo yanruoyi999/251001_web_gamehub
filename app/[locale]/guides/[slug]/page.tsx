@@ -207,6 +207,8 @@ export default function GuidePage({ params }: GuidePageProps) {
                 title={page.embedGame.title}
                 thumbnailUrl={page.embedGame.thumbnailUrl ?? null}
                 locale={locale}
+                gameSlug={page.embedGame.playSlug ?? page.slug}
+                source="guide_embed"
               />
             </div>
           </div>

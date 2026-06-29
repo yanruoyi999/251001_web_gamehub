@@ -3,6 +3,8 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+import { trackInteraction } from '@/lib/analytics/events';
+
 const formUrl =
   process.env.NEXT_PUBLIC_GAMEHUB_TYPEFORM_URL ||
   process.env.NEXT_PUBLIC_TYPEFORM_URL ||
@@ -38,6 +40,13 @@ export function TypeformFeedbackButton({ locale }: TypeformFeedbackButtonProps) 
     return (
       <Link
         href={`/${locale}/contact`}
+        onClick={() =>
+          trackInteraction('feedback_open', {
+            locale,
+            page: pathname ?? '',
+            source: 'contact_fallback',
+          })
+        }
         className="fixed bottom-5 right-5 z-40 rounded-full border border-border bg-background px-4 py-2 text-sm font-semibold text-foreground shadow-lg transition hover:bg-accent"
       >
         {isZh ? '反馈问题' : 'Feedback'}
@@ -50,6 +59,13 @@ export function TypeformFeedbackButton({ locale }: TypeformFeedbackButtonProps) 
       href={typeformHref}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={() =>
+        trackInteraction('feedback_open', {
+          locale,
+          page: pathname ?? '',
+          source: 'typeform',
+        })
+      }
       className="fixed bottom-5 right-5 z-40 rounded-full border border-primary/20 bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-lg transition hover:bg-primary/90"
     >
       {isZh ? '反馈问题' : 'Feedback'}
