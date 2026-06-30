@@ -44,6 +44,30 @@ export interface ListGamesOptions {
   favoriteGameIds?: number[];
 }
 
+export type GameListItem = {
+  id: number;
+  title: string;
+  titleEn: string | null;
+  slug: string;
+  status: string | null;
+  thumbnailUrl: string | null;
+  featured: boolean | null;
+  isNew: boolean | null;
+  isHot: boolean | null;
+  publishedAt: Date;
+  playCount: number | null;
+  averageRating: string | null;
+  isFavorite: boolean;
+};
+
+export interface ListGamesResult {
+  games: GameListItem[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
 export interface CreateGameInput {
   title: string;
   titleEn?: string;
@@ -174,7 +198,7 @@ export class GameService {
   /**
    * 列表查询
    */
-  static async listGames(options: ListGamesOptions = {}) {
+  static async listGames(options: ListGamesOptions = {}): Promise<ListGamesResult> {
     const { page, limit, offset } = validatePagination(options.page, options.limit);
     const status = options.status ?? 'active';
 
@@ -199,6 +223,24 @@ export class GameService {
     const favoriteIds = Array.from(
       new Set((options.favoriteGameIds ?? []).filter((id) => Number.isInteger(id) && id > 0))
     ) as number[];
+
+    const listCacheKey = GameCacheKeys.list(buildListCacheHash({
+      page,
+      limit,
+      status,
+      categoryId: options.categoryId ?? null,
+      tagId: options.tagId ?? null,
+      search: options.search?.trim() || null,
+      sortBy: options.sortBy ?? 'publishedAt',
+      sortOrder: options.sortOrder ?? 'desc',
+      featured: options.featured ?? null,
+      isNew: options.isNew ?? null,
+      isHot: options.isHot ?? null,
+      onlyFavorites: options.onlyFavorites ?? false,
+      favoriteIds,
+    }));
+    const cached = await getJson<ListGamesResult>(redis, listCacheKey);
+    if (cached) return cached;
 
     if (options.onlyFavorites) {
       if (favoriteIds.length === 0) {
@@ -283,7 +325,7 @@ export class GameService {
 
     const favoriteSet = new Set(favoriteIds);
 
-    return {
+    const result = {
       games: rows.map((row) => ({
         ...row,
         isFavorite: favoriteSet.has(row.id),
@@ -293,6 +335,9 @@ export class GameService {
       limit,
       totalPages: Math.ceil(Number(count || 0) / limit),
     };
+
+    await setJson(redis, listCacheKey, result, CacheTTL.GAME_LIST);
+    return result;
   }
 
   /**
@@ -496,6 +541,10 @@ export class GameService {
 
 function or(...conditions: any[]) {
   return sql`${sql.join(conditions, sql` OR `)}`;
+}
+
+function buildListCacheHash(input: Record<string, unknown>) {
+  return Buffer.from(JSON.stringify(input)).toString('base64url');
 }
 
 function buildOrderExpression(

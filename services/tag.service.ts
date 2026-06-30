@@ -1,10 +1,17 @@
 import { db } from '@/lib/db';
 import { tags } from '@/db/schema';
 import { asc } from 'drizzle-orm';
+import { TaxonomyCacheKeys, CacheTTL } from '@/lib/utils/cache-keys';
+import { getJson, setJson } from '@/lib/utils/redis-helper';
+import { redis } from '@/lib/redis';
 
 export class TagService {
   static async listAll() {
-    return db
+    const cacheKey = TaxonomyCacheKeys.tags();
+    const cached = await getJson<TagListItem[]>(redis, cacheKey);
+    if (cached) return cached;
+
+    const rows = await db
       .select({
         id: tags.id,
         name: tags.name,
@@ -13,5 +20,15 @@ export class TagService {
       })
       .from(tags)
       .orderBy(asc(tags.name));
+
+    await setJson(redis, cacheKey, rows, CacheTTL.TAXONOMY);
+    return rows;
   }
 }
+
+type TagListItem = {
+  id: number;
+  name: string;
+  nameEn: string | null;
+  slug: string;
+};

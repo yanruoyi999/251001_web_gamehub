@@ -2,7 +2,8 @@ const NAMESPACE = 'gamehub';
 
 export const CacheTTL = {
   GAME_DETAILS: 60, // 1 minute
-  GAME_LIST: 60,
+  GAME_LIST: 300,
+  TAXONOMY: 3600,
   STATS: 300,
   PLAY_COUNT: 60,
   RATE_LIMIT: 3600,
@@ -14,6 +15,11 @@ export const GameCacheKeys = {
   byId: (id: number) => `${NAMESPACE}:game:${id}:details`,
   bySlug: (slug: string) => `${NAMESPACE}:game:slug:${slug}`,
   list: (hash: string) => `${NAMESPACE}:game:list:${hash}`,
+};
+
+export const TaxonomyCacheKeys = {
+  categories: () => `${NAMESPACE}:taxonomy:categories`,
+  tags: () => `${NAMESPACE}:taxonomy:tags`,
 };
 
 export const StatsCacheKeys = {
