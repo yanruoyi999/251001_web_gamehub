@@ -269,15 +269,17 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
   const headersList = headers();
   const favoriteContext = FavoriteService.getContextFromHeaders(headersList);
   let favoriteIds: number[] = [];
-  try {
-    favoriteIds = await withTimeout(
-      FavoriteService.listFavoriteIds(favoriteContext),
-      FAVORITE_LOAD_TIMEOUT_MS,
-      'Favorite ids database load',
-    );
-  } catch (error) {
-    console.warn('Failed to load favorite ids, using empty list:', error);
-    favoriteIds = [];
+  if (favoritesOnly) {
+    try {
+      favoriteIds = await withTimeout(
+        FavoriteService.listFavoriteIds(favoriteContext),
+        FAVORITE_LOAD_TIMEOUT_MS,
+        'Favorite ids database load',
+      );
+    } catch (error) {
+      console.warn('Failed to load favorite ids, using empty list:', error);
+      favoriteIds = [];
+    }
   }
 
   let categoryOptions: CategoryOption[];
