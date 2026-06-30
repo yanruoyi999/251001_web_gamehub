@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { locales, type Locale } from '@/i18n/config';
+import { getLocalizedPath, locales, type Locale } from '@/i18n/config';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getSeoLandingPages } from '@/lib/seo-landing-content';
 import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES } from '@/lib/seo';
@@ -17,7 +17,7 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
       ? '发现 Luma Game Hub 精选的主题攻略页面：移动端体验、短时游玩以及不同类型的浏览器游戏。'
       : 'Explore Luma Game Hub’s curated guides for mobile play, short sessions, and different browser-game styles.';
 
-  const basePath = `/${locale}/guides`;
+  const basePath = getLocalizedPath(locale, '/guides');
 
   return {
     title: locale === 'zh' ? '游戏攻略与主题合集' : 'Game Guides and Collections',
@@ -31,7 +31,7 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
       languages: Object.fromEntries(
         locales.map((loc) => [
           loc === 'zh' ? 'zh-CN' : 'en-US',
-          `/${loc}/guides`,
+          getLocalizedPath(loc, '/guides'),
         ]),
       ),
     },
@@ -74,7 +74,7 @@ export default function GuidesPage({ params }: GuidesPageProps) {
       <div className="grid gap-6 md:grid-cols-2">
         {pages.map((page) => {
           const content = page.locales[locale] ?? page.locales.zh;
-          const href = `/${locale}/guides/${page.slug}`;
+          const href = getLocalizedPath(locale, `/guides/${page.slug}`);
           const summary = content.overview[0] ?? '';
 
           return (

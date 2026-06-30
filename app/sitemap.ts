@@ -1,7 +1,7 @@
 import { statSync } from 'node:fs';
 import path from 'node:path';
 import type { MetadataRoute } from 'next';
-import { defaultLocale, locales } from '@/i18n/config';
+import { getLocalizedPath, locales } from '@/i18n/config';
 import { getSeoLandingPages } from '@/lib/seo-landing-content';
 import { mockGames } from '@/lib/mock-games';
 import { getCategoryEntries, getTagEntries } from '@/lib/game-taxonomy';
@@ -129,7 +129,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   for (const locale of locales) {
     for (const staticPath of staticPaths) {
-      const localizedPath = staticPath.path === '/' ? `/${locale}` : `/${locale}${staticPath.path}`;
+      const localizedPath = getLocalizedPath(locale, staticPath.path);
       const lastModified = getFileLastModified(...staticPath.file) ?? new Date();
 
       entries.push({
@@ -139,18 +139,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: staticPath.priority,
       });
 
-      if (locale === defaultLocale && staticPath.path === '/') {
-        entries.push({
-          url: buildAbsoluteUrl('/'),
-          lastModified,
-          changeFrequency: staticPath.changeFrequency,
-          priority: staticPath.priority,
-        });
-      }
     }
 
     for (const guide of guides) {
-      const localizedPath = `/${locale}/guides/${guide.slug}`;
+      const localizedPath = getLocalizedPath(locale, `/guides/${guide.slug}`);
       entries.push({
         url: buildAbsoluteUrl(localizedPath),
         lastModified: new Date(guide.updatedAt),
@@ -160,7 +152,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
 
     for (const game of sitemapGames) {
-      const localizedPath = `/${locale}/games/${game.slug}`;
+      const localizedPath = getLocalizedPath(locale, `/games/${game.slug}`);
       entries.push({
         url: buildAbsoluteUrl(localizedPath),
         lastModified: game.lastModified ?? mockGamesUpdatedAt,
@@ -171,7 +163,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     for (const gamePath of standaloneGamePaths) {
       entries.push({
-        url: buildAbsoluteUrl(`/${locale}${gamePath}`),
+        url: buildAbsoluteUrl(getLocalizedPath(locale, gamePath)),
         lastModified: getFileLastModified('app', '[locale]', ...gamePath.split('/').filter(Boolean), 'page.tsx') ?? mockGamesUpdatedAt,
         changeFrequency: 'monthly',
         priority: 0.55,
@@ -180,7 +172,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     for (const category of categories) {
       entries.push({
-        url: buildAbsoluteUrl(`/${locale}/games/category/${category.item.slug}`),
+        url: buildAbsoluteUrl(getLocalizedPath(locale, `/games/category/${category.item.slug}`)),
         lastModified: mockGamesUpdatedAt,
         changeFrequency: 'weekly',
         priority: 0.72,
@@ -189,7 +181,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     for (const tag of tags) {
       entries.push({
-        url: buildAbsoluteUrl(`/${locale}/games/tag/${tag.item.slug}`),
+        url: buildAbsoluteUrl(getLocalizedPath(locale, `/games/tag/${tag.item.slug}`)),
         lastModified: mockGamesUpdatedAt,
         changeFrequency: 'weekly',
         priority: 0.68,

@@ -3,6 +3,7 @@ import { getTranslations } from 'next-intl/server';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { getLocalizedPath } from '@/i18n/config';
 import { loadImported4399Games } from '@/lib/games/imported-4399';
 
 interface PageProps {
@@ -25,7 +26,7 @@ export default async function Imported4399SamplePage({ params }: PageProps) {
         </div>
 
         <Link
-          href={`/${locale}/games`}
+          href={getLocalizedPath(locale, '/games')}
           className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
         >
           {t('backToGames')}
@@ -71,7 +72,7 @@ export default async function Imported4399SamplePage({ params }: PageProps) {
                 </div>
 
                 <Button asChild className="w-full">
-                  <Link href={`/${locale}/games/${game.slug}`}>
+                  <Link href={getLocalizedPath(locale, `/games/${game.slug}`)}>
                     {t('cta')}
                   </Link>
                 </Button>

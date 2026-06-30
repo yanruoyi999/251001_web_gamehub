@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { locales } from '@/i18n/config';
+import { getLocalizedPath, locales } from '@/i18n/config';
 const SOLITAIRE_SCREENSHOT = '/game-screenshots/solitaire.png';
 
 interface SolitairePageProps {
@@ -22,7 +22,7 @@ export function generateMetadata({ params }: SolitairePageProps): Metadata {
     locale === 'zh'
         ? '直接在浏览器中游玩经典 Solitaire 纸牌游戏,适合短时休闲,无需下载安装。'
         : 'Play classic Solitaire online directly in your browser for a quick card-game break with no download required.';
-  const canonical = `/${locale}/games/solitaire`;
+  const canonical = getLocalizedPath(locale, '/games/solitaire');
 
   return {
     title,
@@ -36,7 +36,7 @@ export function generateMetadata({ params }: SolitairePageProps): Metadata {
       languages: Object.fromEntries(
         locales.map((loc) => [
           loc === 'zh' ? 'zh-CN' : 'en-US',
-          `/${loc}/games/solitaire`,
+          getLocalizedPath(loc, '/games/solitaire'),
         ]),
       ),
     },
@@ -83,7 +83,7 @@ export default async function SolitairePage({ params }: SolitairePageProps) {
           <p className="mt-3 max-w-3xl text-base text-gray-600">{t('summary')}</p>
         </div>
         <Link
-          href={`/${locale}/games`}
+          href={getLocalizedPath(locale, '/games')}
           className="inline-flex items-center rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition hover:bg-gray-50"
         >
           ← {t('backToList')}

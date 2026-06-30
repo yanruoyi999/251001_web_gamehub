@@ -2,6 +2,7 @@
 
 import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { getLocalizedPath } from '@/i18n/config';
 import { useTranslations } from 'next-intl';
 import clsx from 'clsx';
 import { trackEvent } from '@/lib/gtag';
@@ -112,7 +113,7 @@ export function SearchInput({ locale }: SearchInputProps) {
       locale,
       suggestion_count: suggestions.length,
     });
-    router.push(`/${locale}/search?q=${encodeURIComponent(nextQuery)}`);
+    router.push(`${getLocalizedPath(locale, '/search')}?q=${encodeURIComponent(nextQuery)}`);
   };
 
   const handleSelect = useCallback(
@@ -127,7 +128,7 @@ export function SearchInput({ locale }: SearchInputProps) {
         suggestion_id: item.id,
         suggestion_slug: item.slug ?? undefined,
       });
-      router.push(`/${locale}/games/${target}`);
+      router.push(getLocalizedPath(locale, `/games/${target}`));
     },
     [locale, router, trimmedQuery]
   );

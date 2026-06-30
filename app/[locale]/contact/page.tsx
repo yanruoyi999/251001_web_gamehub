@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 
-import { locales } from '@/i18n/config';
+import { getLocalizedPath, locales } from '@/i18n/config';
 
 interface ContactPageProps {
   params: { locale: string };
@@ -16,12 +16,12 @@ export async function generateMetadata({ params }: ContactPageProps): Promise<Me
       ? '联系Luma Game Hub团队 - 反馈建议、商务合作、技术支持'
       : 'Contact Luma Game Hub team - Feedback, partnerships, technical support',
     alternates: {
-      canonical: `/${locale}/contact`,
+      canonical: getLocalizedPath(locale, '/contact'),
       languages: {
         ...Object.fromEntries(
           locales.map((loc) => [
             loc === 'zh' ? 'zh-CN' : 'en-US',
-            `/${loc}/contact`,
+            getLocalizedPath(loc, '/contact'),
           ]),
         ),
         'x-default': '/en/contact',

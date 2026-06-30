@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { getLocalizedPath } from '@/i18n/config';
 import { SearchService } from '@/services';
 
 export const dynamic = 'force-dynamic';
@@ -39,7 +40,7 @@ export default async function SearchPage({ params, searchParams }: SearchPagePro
       .map(([key, value]) => `${key}=${encodeURIComponent(value as string)}`)
       .join('&');
 
-    return `/${locale}/search${queryString ? `?${queryString}` : ''}`;
+    return `${getLocalizedPath(locale, '/search')}${queryString ? `?${queryString}` : ''}`;
   };
 
   return (
@@ -70,7 +71,7 @@ export default async function SearchPage({ params, searchParams }: SearchPagePro
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {result.games.map((game: any) => {
               const displayTitle = locale === 'en' ? game.titleEn ?? game.title : game.title;
-              const gameHref = `/${locale}/games/${game.slug ?? game.id}`;
+              const gameHref = getLocalizedPath(locale, `/games/${game.slug ?? game.id}`);
 
               return (
                 <Card key={game.id} className="flex h-full flex-col justify-between">

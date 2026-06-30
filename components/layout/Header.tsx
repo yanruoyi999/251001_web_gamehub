@@ -5,7 +5,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 
-import { locales } from '@/i18n/config';
+import { getLocalizedPath, locales } from '@/i18n/config';
 import { SearchInput } from '@/components/game/search-input';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { trackEvent } from '@/lib/gtag';
@@ -36,7 +36,7 @@ function LanguageSwitcher() {
       {options.map((item) => (
         <Link
           key={item.code}
-          href={`/${item.code}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`}
+          href={getLocalizedPath(item.code, pathWithoutLocale)}
           className={clsx(
             'rounded-md px-2.5 py-1 text-sm font-medium transition-colors',
             item.code === activeLocale
@@ -72,7 +72,7 @@ export function Header() {
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-6">
         {/* Logo */}
         <Link
-          href={`/${currentLocaleSegment}`}
+          href={getLocalizedPath(currentLocaleSegment)}
           className="group flex items-center gap-2 transition-transform hover:scale-105"
           onClick={() =>
             trackEvent('nav_logo_click', {
@@ -92,11 +92,12 @@ export function Header() {
         {/* Navigation */}
         <nav className="hidden items-center gap-8 md:flex">
           {navItems.map((item) => {
-            const isActive = pathname === `/${currentLocaleSegment}${item.href === '/' ? '' : item.href}`;
+            const itemHref = getLocalizedPath(currentLocaleSegment, item.href);
+            const isActive = pathname === itemHref;
             return (
               <Link
                 key={item.href}
-                href={`/${currentLocaleSegment}${item.href === '/' ? '' : item.href}`}
+                href={itemHref}
                 className={clsx(
                   'relative text-sm font-medium transition-colors',
                   isActive

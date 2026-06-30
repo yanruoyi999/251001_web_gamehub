@@ -5,7 +5,7 @@ import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { headers } from 'next/headers';
 import './globals.css';
-import { defaultLocale, locales } from '@/i18n/config';
+import { defaultLocale, getLocalizedPath, locales } from '@/i18n/config';
 import AnalyticsListener from '@/components/layout/AnalyticsListener';
 import LocaleDocumentSync from '@/components/layout/LocaleDocumentSync';
 import { GA_TRACKING_ID } from '@/lib/gtag';
@@ -19,7 +19,7 @@ const siteJsonLd = {
   url: siteBaseUrl,
   potentialAction: {
     '@type': 'SearchAction',
-    target: `${siteBaseUrl}/${defaultLocale}/search?q={search_term_string}`,
+    target: `${siteBaseUrl}${getLocalizedPath(defaultLocale, '/search')}?q={search_term_string}`,
     'query-input': 'required name=search_term_string',
   },
 };
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     languages: Object.fromEntries(
       locales.map((locale) => [
         locale === 'zh' ? 'zh-CN' : 'en-US',
-        `/${locale}`,
+        getLocalizedPath(locale),
       ]),
     ),
   },

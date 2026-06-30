@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { locales } from '@/i18n/config';
+import { getLocalizedPath, locales } from '@/i18n/config';
 import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES } from '@/lib/seo';
 
 interface MonsterSurvivorsPageProps {
@@ -22,7 +22,7 @@ export function generateMetadata({ params }: MonsterSurvivorsPageProps): Metadat
     locale === 'zh'
       ? '在线游玩 Monster Survivors，在浏览器中躲避怪物、升级技能并坚持更久，无需下载安装。'
       : 'Play Monster Survivors online in your browser. Dodge monsters, upgrade skills, and survive longer with no download required.';
-  const canonical = `/${locale}/games/monster-survivors`;
+  const canonical = getLocalizedPath(locale, '/games/monster-survivors');
 
   return {
     title,
@@ -36,7 +36,7 @@ export function generateMetadata({ params }: MonsterSurvivorsPageProps): Metadat
       languages: Object.fromEntries(
         locales.map((loc) => [
           loc === 'zh' ? 'zh-CN' : 'en-US',
-          `/${loc}/games/monster-survivors`,
+          getLocalizedPath(loc, '/games/monster-survivors'),
         ]),
       ),
     },
@@ -76,7 +76,7 @@ export default async function MonsterSurvivorsPage({ params }: MonsterSurvivorsP
           <p className="mt-3 max-w-3xl text-base text-gray-600">{t('summary')}</p>
         </div>
         <Link
-          href={`/${locale}/games`}
+          href={getLocalizedPath(locale, '/games')}
           className="inline-flex items-center rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition hover:bg-gray-50"
         >
           ← {t('backToList')}

@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 
-import { locales } from '@/i18n/config';
+import { getLocalizedPath, locales } from '@/i18n/config';
 
 interface AboutPageProps {
   params: { locale: string };
@@ -16,12 +16,12 @@ export async function generateMetadata({ params }: AboutPageProps): Promise<Meta
       ? '了解Luma Game Hub - 精选免费在线游戏平台，无需下载即可畅玩'
       : 'Learn about Luma Game Hub - Curated free online gaming platform, play instantly without downloads',
     alternates: {
-      canonical: `/${locale}/about`,
+      canonical: getLocalizedPath(locale, '/about'),
       languages: {
         ...Object.fromEntries(
           locales.map((loc) => [
             loc === 'zh' ? 'zh-CN' : 'en-US',
-            `/${loc}/about`,
+            getLocalizedPath(loc, '/about'),
           ]),
         ),
         'x-default': '/en/about',

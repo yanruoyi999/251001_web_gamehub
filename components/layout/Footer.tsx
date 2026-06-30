@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { getLocalizedPath } from '@/i18n/config';
 
 interface FooterProps {
   locale: string;
@@ -6,6 +7,7 @@ interface FooterProps {
 
 export function Footer({ locale }: FooterProps) {
   const isZh = locale === 'zh';
+  const localizedPath = (pathname = '') => getLocalizedPath(locale, pathname);
   const contactEmail = 'support@lumagamehub.com';
   const resourceLinks = [
     {
@@ -48,32 +50,32 @@ export function Footer({ locale }: FooterProps) {
             </h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <Link href={`/${locale}`} className="hover:text-primary">
+                <Link href={localizedPath()} className="hover:text-primary">
                   {isZh ? '首页' : 'Home'}
                 </Link>
               </li>
               <li>
-                <Link href={`/${locale}/games`} className="hover:text-primary">
+                <Link href={localizedPath('/games')} className="hover:text-primary">
                   {isZh ? '全部游戏' : 'All Games'}
                 </Link>
               </li>
               <li>
-                <Link href={`/${locale}/guides`} className="hover:text-primary">
+                <Link href={localizedPath('/guides')} className="hover:text-primary">
                   {isZh ? '专题合集' : 'Guides'}
                 </Link>
               </li>
               <li>
-                <Link href={`/${locale}/about`} className="hover:text-primary">
+                <Link href={localizedPath('/about')} className="hover:text-primary">
                   {isZh ? '关于我们' : 'About Us'}
                 </Link>
               </li>
               <li>
-                <Link href={`/${locale}/contact`} className="hover:text-primary">
+                <Link href={localizedPath('/contact')} className="hover:text-primary">
                   {isZh ? '联系我们' : 'Contact Us'}
                 </Link>
               </li>
               <li>
-                <Link href={`/${locale}/privacy`} className="hover:text-primary">
+                <Link href={localizedPath('/privacy')} className="hover:text-primary">
                   {isZh ? '隐私政策' : 'Privacy Policy'}
                 </Link>
               </li>
@@ -86,22 +88,22 @@ export function Footer({ locale }: FooterProps) {
             </h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <Link href={`/${locale}/games/category/action`} className="hover:text-primary">
+                <Link href={localizedPath('/games/category/action')} className="hover:text-primary">
                   {isZh ? '动作游戏' : 'Action'}
                 </Link>
               </li>
               <li>
-                <Link href={`/${locale}/games/category/puzzle`} className="hover:text-primary">
+                <Link href={localizedPath('/games/category/puzzle')} className="hover:text-primary">
                   {isZh ? '益智游戏' : 'Puzzle'}
                 </Link>
               </li>
               <li>
-                <Link href={`/${locale}/games/category/adventure`} className="hover:text-primary">
+                <Link href={localizedPath('/games/category/adventure')} className="hover:text-primary">
                   {isZh ? '冒险游戏' : 'Adventure'}
                 </Link>
               </li>
               <li>
-                <Link href={`/${locale}/games/category/casual`} className="hover:text-primary">
+                <Link href={localizedPath('/games/category/casual')} className="hover:text-primary">
                   {isZh ? '休闲游戏' : 'Casual'}
                 </Link>
               </li>

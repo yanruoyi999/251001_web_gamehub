@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { locales, type Locale } from '@/i18n/config';
+import { getLocalizedPath, locales, type Locale } from '@/i18n/config';
 import {
   Card,
   CardContent,
@@ -48,7 +48,7 @@ export function generateMetadata({
 
   const locale = (params.locale as Locale) ?? 'zh';
   const content = page.locales[locale] ?? page.locales.zh;
-  const basePath = `/${locale}/guides/${page.slug}`;
+  const basePath = getLocalizedPath(locale, `/guides/${page.slug}`);
 
   return {
     title: content.metaTitle,
@@ -59,7 +59,7 @@ export function generateMetadata({
       languages: Object.fromEntries(
         locales.map((loc) => [
           loc === 'zh' ? 'zh-CN' : 'en-US',
-          `/${loc}/guides/${page.slug}`,
+          getLocalizedPath(loc, `/guides/${page.slug}`),
         ]),
       ),
     },
@@ -107,7 +107,7 @@ export default function GuidePage({ params }: GuidePageProps) {
 
   const siteBaseUrl = getSiteBaseUrl();
   const content = page.locales[locale] ?? page.locales.zh;
-  const pageUrl = buildAbsoluteUrl(`/${locale}/guides/${page.slug}`);
+  const pageUrl = buildAbsoluteUrl(getLocalizedPath(locale, `/guides/${page.slug}`));
   const jsonLdArticle = {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -156,13 +156,13 @@ export default function GuidePage({ params }: GuidePageProps) {
         '@type': 'ListItem',
         position: 1,
         name: breadcrumbLabels[0],
-        item: buildAbsoluteUrl(`/${locale}`),
+        item: buildAbsoluteUrl(getLocalizedPath(locale)),
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: breadcrumbLabels[1],
-        item: buildAbsoluteUrl(`/${locale}/guides`),
+        item: buildAbsoluteUrl(getLocalizedPath(locale, '/guides')),
       },
       {
         '@type': 'ListItem',
@@ -190,7 +190,7 @@ export default function GuidePage({ params }: GuidePageProps) {
         />
       ))}
       <nav className="mb-6 text-sm text-muted-foreground">
-        <Link href={`/${locale}/guides`} className="hover:text-primary">
+        <Link href={getLocalizedPath(locale, '/guides')} className="hover:text-primary">
           {locale === 'zh' ? '← 返回专题合集' : '← Back to guides'}
         </Link>
       </nav>
@@ -220,7 +220,7 @@ export default function GuidePage({ params }: GuidePageProps) {
           {page.embedGame.playSlug ? (
             <p className="mt-3 text-center text-sm text-muted-foreground">
               <Link
-                href={`/${locale}/games/${page.embedGame.playSlug}`}
+                href={getLocalizedPath(locale, `/games/${page.embedGame.playSlug}`)}
                 className="font-medium text-primary transition hover:text-primary/80"
               >
                 {locale === 'zh'
@@ -305,7 +305,7 @@ export default function GuidePage({ params }: GuidePageProps) {
                   <p>{item.pitch}</p>
                   <div className="mt-auto">
                     <Link
-                      href={`/${locale}/games/${item.slug}`}
+                      href={getLocalizedPath(locale, `/games/${item.slug}`)}
                       className="inline-flex items-center text-primary transition hover:text-primary/80"
                     >
                       {locale === 'zh'
@@ -342,7 +342,7 @@ export default function GuidePage({ params }: GuidePageProps) {
           size="lg"
           className="bg-primary text-primary-foreground shadow-md transition hover:bg-primary/90"
         >
-          <Link href={`/${locale}/games`}>
+          <Link href={getLocalizedPath(locale, '/games')}>
             {content.ctaLabel}
           </Link>
         </Button>
@@ -358,7 +358,7 @@ export default function GuidePage({ params }: GuidePageProps) {
             {relatedPages.map((related) => (
               <li key={related.slug}>
                 <Link
-                  href={`/${locale}/guides/${related.slug}`}
+                  href={getLocalizedPath(locale, `/guides/${related.slug}`)}
                   className="inline-flex items-center text-primary transition hover:text-primary/80"
                   prefetch
                 >

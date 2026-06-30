@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { locales, type Locale } from '@/i18n/config';
+import { getLocalizedPath, locales, type Locale } from '@/i18n/config';
 import {
   getCategoryEntries,
   getTagEntries,
@@ -43,7 +43,7 @@ export function generateMetadata({ params }: TagPageProps): Metadata {
     locale === 'zh'
       ? `发现 ${entry.games.length} 款适合${label}的免费浏览器小游戏，直接在线游玩。`
       : `Discover ${entry.games.length} free browser games tagged ${label}. Play instantly online.`;
-  const canonical = `/${locale}/games/tag/${entry.item.slug}`;
+  const canonical = getLocalizedPath(locale, `/games/tag/${entry.item.slug}`);
 
   return {
     title,
@@ -57,7 +57,7 @@ export function generateMetadata({ params }: TagPageProps): Metadata {
       languages: Object.fromEntries(
         locales.map((loc) => [
           loc === 'zh' ? 'zh-CN' : 'en-US',
-          `/${loc}/games/tag/${entry.item.slug}`,
+          getLocalizedPath(loc, `/games/tag/${entry.item.slug}`),
         ]),
       ),
     },
@@ -86,7 +86,7 @@ export default function TagPage({ params }: TagPageProps) {
   }
 
   const label = pickLocalizedLabel(locale, entry.item.name, entry.item.nameEn);
-  const pageUrl = buildAbsoluteUrl(`/${locale}/games/tag/${entry.item.slug}`);
+  const pageUrl = buildAbsoluteUrl(getLocalizedPath(locale, `/games/tag/${entry.item.slug}`));
   const relatedCategories = getCategoryEntries()
     .filter((categoryEntry) =>
       categoryEntry.games.some((game) => game.tags.some((tag) => tag.slug === entry.item.slug)),
@@ -111,7 +111,7 @@ export default function TagPage({ params }: TagPageProps) {
       itemListElement: entry.games.slice(0, 24).map((game, index) => ({
         '@type': 'ListItem',
         position: index + 1,
-        url: buildAbsoluteUrl(`/${locale}/games/${game.slug}`),
+        url: buildAbsoluteUrl(getLocalizedPath(locale, `/games/${game.slug}`)),
         name: pickLocalizedLabel(locale, game.title, game.titleEn),
       })),
     },
@@ -125,7 +125,7 @@ export default function TagPage({ params }: TagPageProps) {
       />
 
       <nav className="mb-6 text-sm text-gray-500">
-        <Link href={`/${locale}/games`} className="hover:text-indigo-600">
+        <Link href={getLocalizedPath(locale, '/games')} className="hover:text-indigo-600">
           {locale === 'zh' ? '返回全部游戏' : 'Back to all games'}
         </Link>
       </nav>
@@ -153,7 +153,7 @@ export default function TagPage({ params }: TagPageProps) {
             {relatedCategories.map((categoryEntry) => (
               <Link
                 key={categoryEntry.item.slug}
-                href={`/${locale}/games/category/${categoryEntry.item.slug}`}
+                href={getLocalizedPath(locale, `/games/category/${categoryEntry.item.slug}`)}
                 className="rounded-full border border-indigo-200 bg-white px-3 py-1 text-sm text-indigo-700 hover:bg-indigo-50"
               >
                 {pickLocalizedLabel(locale, categoryEntry.item.name, categoryEntry.item.nameEn)}
@@ -172,7 +172,7 @@ export default function TagPage({ params }: TagPageProps) {
             <Card key={game.slug} className="flex h-full flex-col justify-between">
               <CardHeader>
                 <CardTitle className="text-xl font-semibold text-gray-900">
-                  <Link href={`/${locale}/games/${game.slug}`} className="hover:text-indigo-600">
+                  <Link href={getLocalizedPath(locale, `/games/${game.slug}`)} className="hover:text-indigo-600">
                     {title}
                   </Link>
                 </CardTitle>
@@ -185,7 +185,7 @@ export default function TagPage({ params }: TagPageProps) {
                   {game.categories.slice(0, 3).map((category) => (
                     <Link
                       key={category.slug}
-                      href={`/${locale}/games/category/${category.slug}`}
+                      href={getLocalizedPath(locale, `/games/category/${category.slug}`)}
                       className="rounded-full bg-gray-100 px-2.5 py-1 text-xs text-gray-700 hover:bg-indigo-50 hover:text-indigo-700"
                     >
                       {pickLocalizedLabel(locale, category.name, category.nameEn)}
@@ -193,7 +193,7 @@ export default function TagPage({ params }: TagPageProps) {
                   ))}
                 </div>
                 <Link
-                  href={`/${locale}/games/${game.slug}`}
+                  href={getLocalizedPath(locale, `/games/${game.slug}`)}
                   className="mt-auto inline-flex text-sm font-medium text-indigo-600 hover:text-indigo-500"
                 >
                   {locale === 'zh' ? '打开游戏详情' : 'Open game details'} →

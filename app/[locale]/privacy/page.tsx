@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 
-import { locales } from '@/i18n/config';
+import { getLocalizedPath, locales } from '@/i18n/config';
 
 interface PrivacyPageProps {
   params: { locale: string };
@@ -15,12 +15,12 @@ export async function generateMetadata({ params }: PrivacyPageProps): Promise<Me
       ? '了解Luma Game Hub如何收集、使用和保护您的个人信息'
       : 'Learn how Luma Game Hub collects, uses, and protects your personal information',
     alternates: {
-      canonical: `/${locale}/privacy`,
+      canonical: getLocalizedPath(locale, '/privacy'),
       languages: {
         ...Object.fromEntries(
           locales.map((loc) => [
             loc === 'zh' ? 'zh-CN' : 'en-US',
-            `/${loc}/privacy`,
+            getLocalizedPath(loc, '/privacy'),
           ]),
         ),
         'x-default': '/en/privacy',

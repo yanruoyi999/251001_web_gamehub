@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+import { getLocalizedPath } from '@/i18n/config';
 import { trackInteraction } from '@/lib/analytics/events';
 
 const formUrl =
@@ -39,7 +40,7 @@ export function TypeformFeedbackButton({ locale }: TypeformFeedbackButtonProps) 
   if (!typeformHref) {
     return (
       <Link
-        href={`/${locale}/contact`}
+        href={getLocalizedPath(locale, '/contact')}
         onClick={() =>
           trackInteraction('feedback_open', {
             locale,

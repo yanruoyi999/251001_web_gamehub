@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { FavoriteToggleButton } from '@/components/game/favorite-toggle';
 import { CategoryService, FavoriteService, GameService, TagService } from '@/services';
-import { locales } from '@/i18n/config';
+import { getLocalizedPath, locales } from '@/i18n/config';
 import { mockGames } from '@/lib/mock-games';
 import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES } from '@/lib/seo';
 
@@ -197,7 +197,7 @@ interface GamesPageProps {
 export function generateMetadata({ params }: GamesPageProps): Metadata {
   const locale = params.locale === 'zh' ? 'zh' : 'en';
   const isZh = locale === 'zh';
-  const canonical = `/${locale}/games`;
+  const canonical = getLocalizedPath(locale, '/games');
 
   return {
     title: isZh ? '免费在线小游戏大全' : 'Free Browser Games',
@@ -210,7 +210,7 @@ export function generateMetadata({ params }: GamesPageProps): Metadata {
         ...Object.fromEntries(
           locales.map((loc) => [
             loc === 'zh' ? 'zh-CN' : 'en-US',
-            `/${loc}/games`,
+            getLocalizedPath(loc, '/games'),
           ]),
         ),
         'x-default': '/en/games',
@@ -351,8 +351,9 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
     return queryString ? `?${queryString}` : '';
   };
 
-  const prevPageHref = currentPage > 1 ? `/${locale}/games${buildQuery({ page: String(currentPage - 1) })}` : null;
-  const nextPageHref = currentPage < totalPages ? `/${locale}/games${buildQuery({ page: String(currentPage + 1) })}` : null;
+  const gamesPath = getLocalizedPath(locale, '/games');
+  const prevPageHref = currentPage > 1 ? `${gamesPath}${buildQuery({ page: String(currentPage - 1) })}` : null;
+  const nextPageHref = currentPage < totalPages ? `${gamesPath}${buildQuery({ page: String(currentPage + 1) })}` : null;
 
   const formatNumber = (value: number) => Number(value ?? 0).toLocaleString(locale);
 
@@ -376,7 +377,7 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
           <p className="text-muted-foreground">{t('desc')}</p>
         </div>
         <Link
-          href={`/${locale}`}
+          href={getLocalizedPath(locale)}
           className="text-sm font-medium text-primary hover:text-primary/80"
         >
           {t('backToHome')}
@@ -519,7 +520,7 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
                 {t('filters.submit')}
               </Button>
               <Link
-                href={`/${locale}/games`}
+                href={gamesPath}
                 className="inline-flex items-center rounded-md border border-input px-4 py-2 text-sm font-medium text-foreground shadow-sm transition hover:bg-accent"
               >
                 {t('filters.reset')}
@@ -546,7 +547,7 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
             return (
               <Card key={game.id} className="flex h-full flex-col justify-between overflow-hidden">
                 <Link
-                  href={`/${locale}/games/${game.slug}`}
+                  href={getLocalizedPath(locale, `/games/${game.slug}`)}
                   className="relative block aspect-[4/3] overflow-hidden bg-slate-900"
                   aria-label={displayTitle}
                 >
@@ -596,7 +597,7 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
                   )}
                   <div className="flex items-start justify-between gap-3">
                     <CardTitle className="text-lg font-semibold text-foreground">
-                      <Link href={`/${locale}/games/${game.slug}`} className="hover:text-primary">
+                      <Link href={getLocalizedPath(locale, `/games/${game.slug}`)} className="hover:text-primary">
                         {displayTitle}
                       </Link>
                     </CardTitle>

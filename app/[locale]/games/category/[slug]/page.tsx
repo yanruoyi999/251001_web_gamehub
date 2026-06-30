@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { locales, type Locale } from '@/i18n/config';
+import { getLocalizedPath, locales, type Locale } from '@/i18n/config';
 import {
   getCategoryEntries,
   getCategoryEntry,
@@ -43,7 +43,7 @@ export function generateMetadata({ params }: CategoryPageProps): Metadata {
     locale === 'zh'
       ? `在 Luma Game Hub 浏览 ${entry.games.length} 款${label}小游戏，全部支持浏览器即开即玩，无需下载。`
       : `Browse ${entry.games.length} curated ${label.toLowerCase()} browser games on Luma Game Hub. Play instantly without downloads.`;
-  const canonical = `/${locale}/games/category/${entry.item.slug}`;
+  const canonical = getLocalizedPath(locale, `/games/category/${entry.item.slug}`);
 
   return {
     title,
@@ -57,7 +57,7 @@ export function generateMetadata({ params }: CategoryPageProps): Metadata {
       languages: Object.fromEntries(
         locales.map((loc) => [
           loc === 'zh' ? 'zh-CN' : 'en-US',
-          `/${loc}/games/category/${entry.item.slug}`,
+          getLocalizedPath(loc, `/games/category/${entry.item.slug}`),
         ]),
       ),
     },
@@ -87,7 +87,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
 
   const label = pickLocalizedLabel(locale, entry.item.name, entry.item.nameEn);
   const description = pickLocalizedLabel(locale, entry.item.description, entry.item.descriptionEn);
-  const pageUrl = buildAbsoluteUrl(`/${locale}/games/category/${entry.item.slug}`);
+  const pageUrl = buildAbsoluteUrl(getLocalizedPath(locale, `/games/category/${entry.item.slug}`));
   const relatedTags = getTagEntries()
     .filter((tagEntry) =>
       tagEntry.games.some((game) => game.categories.some((category) => category.slug === entry.item.slug)),
@@ -113,7 +113,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
       itemListElement: entry.games.slice(0, 24).map((game, index) => ({
         '@type': 'ListItem',
         position: index + 1,
-        url: buildAbsoluteUrl(`/${locale}/games/${game.slug}`),
+        url: buildAbsoluteUrl(getLocalizedPath(locale, `/games/${game.slug}`)),
         name: pickLocalizedLabel(locale, game.title, game.titleEn),
       })),
     },
@@ -127,7 +127,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
       />
 
       <nav className="mb-6 text-sm text-gray-500">
-        <Link href={`/${locale}/games`} className="hover:text-indigo-600">
+        <Link href={getLocalizedPath(locale, '/games')} className="hover:text-indigo-600">
           {locale === 'zh' ? '返回全部游戏' : 'Back to all games'}
         </Link>
       </nav>
@@ -156,7 +156,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
             {relatedTags.map((tagEntry) => (
               <Link
                 key={tagEntry.item.slug}
-                href={`/${locale}/games/tag/${tagEntry.item.slug}`}
+                href={getLocalizedPath(locale, `/games/tag/${tagEntry.item.slug}`)}
                 className="rounded-full border border-indigo-200 bg-white px-3 py-1 text-sm text-indigo-700 hover:bg-indigo-50"
               >
                 {pickLocalizedLabel(locale, tagEntry.item.name, tagEntry.item.nameEn)}
@@ -175,7 +175,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
             <Card key={game.slug} className="flex h-full flex-col justify-between">
               <CardHeader>
                 <CardTitle className="text-xl font-semibold text-gray-900">
-                  <Link href={`/${locale}/games/${game.slug}`} className="hover:text-indigo-600">
+                  <Link href={getLocalizedPath(locale, `/games/${game.slug}`)} className="hover:text-indigo-600">
                     {title}
                   </Link>
                 </CardTitle>
@@ -188,7 +188,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                   {game.tags.slice(0, 3).map((tag) => (
                     <Link
                       key={tag.slug}
-                      href={`/${locale}/games/tag/${tag.slug}`}
+                      href={getLocalizedPath(locale, `/games/tag/${tag.slug}`)}
                       className="rounded-full bg-gray-100 px-2.5 py-1 text-xs text-gray-700 hover:bg-indigo-50 hover:text-indigo-700"
                     >
                       {pickLocalizedLabel(locale, tag.name, tag.nameEn)}
@@ -196,7 +196,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                   ))}
                 </div>
                 <Link
-                  href={`/${locale}/games/${game.slug}`}
+                  href={getLocalizedPath(locale, `/games/${game.slug}`)}
                   className="mt-auto inline-flex text-sm font-medium text-indigo-600 hover:text-indigo-500"
                 >
                   {locale === 'zh' ? '打开游戏详情' : 'Open game details'} →

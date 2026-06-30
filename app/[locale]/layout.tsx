@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { getMessages, getTranslations } from 'next-intl/server';
-import { locales, defaultLocale, Locale } from '@/i18n/config';
+import { getLocalizedPath, locales, defaultLocale, Locale } from '@/i18n/config';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { ClarityConsent } from '@/components/analytics/ClarityConsent';
@@ -28,11 +28,11 @@ export async function generateMetadata({
   }
 
   const t = await getTranslations({ locale: typedLocale, namespace: 'home' });
-  const canonical = `/${typedLocale}`;
+  const canonical = getLocalizedPath(typedLocale);
   const languageLinks = Object.fromEntries(
     locales.map((availableLocale) => [
       availableLocale === 'zh' ? 'zh-CN' : 'en-US',
-      `/${availableLocale}`,
+      getLocalizedPath(availableLocale),
     ]),
   );
   const ogLocale = typedLocale === 'zh' ? 'zh-CN' : 'en-US';

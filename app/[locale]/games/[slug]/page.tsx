@@ -12,7 +12,7 @@ import { getMockGameBySlug, mockGames } from '@/lib/mock-games';
 import type { GameDetail } from '@/services/game.service';
 import type { MockGame } from '@/lib/mock-games';
 import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES, buildAbsoluteUrl } from '@/lib/seo';
-import { locales } from '@/i18n/config';
+import { getLocalizedPath, locales } from '@/i18n/config';
 
 type RatingDistribution = Awaited<ReturnType<typeof RatingService.getRatingDistribution>>;
 type RatingsResult = Awaited<ReturnType<typeof RatingService.listGameRatings>>;
@@ -161,7 +161,7 @@ export async function generateMetadata({ params }: GamePageProps): Promise<Metad
   const { game } = resolved;
   const title = resolveGameTitle(game, locale);
   const description = resolveGameDescription(game, locale);
-  const canonical = `/${locale}/games/${game.slug}`;
+  const canonical = getLocalizedPath(locale, `/games/${game.slug}`);
   const taxonomyKeywords = [
     ...game.categories.map((category) =>
       locale === 'en'
@@ -204,7 +204,7 @@ export async function generateMetadata({ params }: GamePageProps): Promise<Metad
       languages: Object.fromEntries(
         locales.map((loc) => [
           loc === 'zh' ? 'zh-CN' : 'en-US',
-          `/${loc}/games/${game.slug}`,
+          getLocalizedPath(loc, `/games/${game.slug}`),
         ]),
       ),
     },
@@ -328,7 +328,7 @@ export default async function GamePage({ params }: GamePageProps) {
     .slice(0, 3);
   const categoryLabels = categoryEntries.map((category) => category.label);
   const tagLabels = tagEntries.map((tag) => tag.label);
-  const pageUrl = buildAbsoluteUrl(`/${locale}/games/${game.slug}`);
+  const pageUrl = buildAbsoluteUrl(getLocalizedPath(locale, `/games/${game.slug}`));
   const publishedIso = (() => {
     if (!game.publishedAt) return undefined;
     const value = game.publishedAt instanceof Date ? game.publishedAt : new Date(game.publishedAt);
@@ -396,13 +396,13 @@ export default async function GamePage({ params }: GamePageProps) {
         '@type': 'ListItem',
         position: 1,
         name: locale === 'zh' ? '首页' : 'Home',
-        item: buildAbsoluteUrl(`/${locale}`),
+        item: buildAbsoluteUrl(getLocalizedPath(locale)),
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: locale === 'zh' ? '全部游戏' : 'All Games',
-        item: buildAbsoluteUrl(`/${locale}/games`),
+        item: buildAbsoluteUrl(getLocalizedPath(locale, '/games')),
       },
       {
         '@type': 'ListItem',
@@ -470,11 +470,11 @@ export default async function GamePage({ params }: GamePageProps) {
         ))}
         {/* Breadcrumb */}
         <div className="mb-6 flex items-center gap-2 text-sm text-muted-foreground">
-          <Link href={`/${locale}`} className="hover:text-primary">
+          <Link href={getLocalizedPath(locale)} className="hover:text-primary">
             {locale === 'zh' ? '首页' : 'Home'}
           </Link>
           <span>/</span>
-          <Link href={`/${locale}/games`} className="hover:text-primary">
+          <Link href={getLocalizedPath(locale, '/games')} className="hover:text-primary">
             {locale === 'zh' ? '游戏' : 'Games'}
           </Link>
           <span>/</span>
@@ -681,7 +681,7 @@ export default async function GamePage({ params }: GamePageProps) {
                       categoryEntries.map((category) => (
                         <Link
                           key={category.slug}
-                          href={`/${locale}/games/category/${category.slug}`}
+                          href={getLocalizedPath(locale, `/games/category/${category.slug}`)}
                           className="rounded-full bg-secondary px-3 py-1 text-xs font-medium text-secondary-foreground"
                         >
                           {category.label}
@@ -703,7 +703,7 @@ export default async function GamePage({ params }: GamePageProps) {
                       tagEntries.map((tag) => (
                         <Link
                           key={tag.slug}
-                          href={`/${locale}/games/tag/${tag.slug}`}
+                          href={getLocalizedPath(locale, `/games/tag/${tag.slug}`)}
                           className="rounded-full bg-secondary px-3 py-1 text-xs font-medium text-secondary-foreground"
                         >
                           {tag.label}
@@ -851,7 +851,7 @@ export default async function GamePage({ params }: GamePageProps) {
                     return (
                       <Link
                         key={relatedGame.slug}
-                        href={`/${locale}/games/${relatedGame.slug}`}
+                        href={getLocalizedPath(locale, `/games/${relatedGame.slug}`)}
                         className="block"
                       >
                         <div className="group rounded-lg border border-border p-3 transition-all hover:border-primary/50 hover:shadow-md">
@@ -901,8 +901,8 @@ export default async function GamePage({ params }: GamePageProps) {
                           key={`${entry.slug}-${entry.label}`}
                           href={
                             categoryEntries.some((category) => category.slug === entry.slug)
-                              ? `/${locale}/games/category/${entry.slug}`
-                              : `/${locale}/games/tag/${entry.slug}`
+                              ? getLocalizedPath(locale, `/games/category/${entry.slug}`)
+                              : getLocalizedPath(locale, `/games/tag/${entry.slug}`)
                           }
                           className="rounded-full border border-border px-3 py-1 text-xs font-medium text-muted-foreground hover:border-primary/60 hover:text-primary"
                         >
