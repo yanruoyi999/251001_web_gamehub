@@ -3,7 +3,6 @@ import { Suspense } from 'react';
 import Script from 'next/script';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
-import { headers } from 'next/headers';
 import './globals.css';
 import { defaultLocale, getLocalizedPath, locales } from '@/i18n/config';
 import AnalyticsListener from '@/components/layout/AnalyticsListener';
@@ -94,12 +93,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const headerList = headers();
-  const requestedLocale = headerList.get('x-next-intl-locale');
-  const htmlLang = locales.find((locale) => locale === requestedLocale) ?? defaultLocale;
-
   return (
-    <html lang={htmlLang} data-locale={htmlLang} suppressHydrationWarning>
+    <html lang={defaultLocale} data-locale={defaultLocale} suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://www.google-analytics.com" crossOrigin="anonymous" />

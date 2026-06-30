@@ -1,21 +1,19 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
-import { headers } from 'next/headers';
 import { getTranslations } from 'next-intl/server';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { FavoriteToggleButton } from '@/components/game/favorite-toggle';
-import { CategoryService, FavoriteService, GameService, TagService } from '@/services';
+import { CategoryService, GameService, TagService } from '@/services';
 import { getLocalizedPath, locales } from '@/i18n/config';
 import { mockGames } from '@/lib/mock-games';
 import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES } from '@/lib/seo';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 300;
 
 const DB_LOAD_TIMEOUT_MS = 1500;
-const FAVORITE_LOAD_TIMEOUT_MS = 800;
 const SORT_OPTIONS = ['publishedAt', 'playCount', 'averageRating', 'title'] as const;
 
 type SortOption = (typeof SORT_OPTIONS)[number];
@@ -190,7 +188,6 @@ interface GamesPageProps {
     featured?: string;
     sortBy?: string;
     sortOrder?: string;
-    favoritesOnly?: string;
   };
 }
 
@@ -253,7 +250,7 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
   const showNew = searchParams.isNew === '1';
   const showHot = searchParams.isHot === '1';
   const showFeatured = searchParams.featured === '1';
-  const favoritesOnly = searchParams.favoritesOnly === '1';
+  const favoritesOnly = false;
 
   const sortByParam = typeof searchParams.sortBy === 'string' ? searchParams.sortBy : undefined;
   const sortBy = SORT_OPTIONS.find((option) => option === sortByParam);
@@ -266,21 +263,7 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
         ? 'asc'
         : 'desc';
 
-  const headersList = headers();
-  const favoriteContext = FavoriteService.getContextFromHeaders(headersList);
-  let favoriteIds: number[] = [];
-  if (favoritesOnly) {
-    try {
-      favoriteIds = await withTimeout(
-        FavoriteService.listFavoriteIds(favoriteContext),
-        FAVORITE_LOAD_TIMEOUT_MS,
-        'Favorite ids database load',
-      );
-    } catch (error) {
-      console.warn('Failed to load favorite ids, using empty list:', error);
-      favoriteIds = [];
-    }
-  }
+  const favoriteIds: number[] = [];
 
   let categoryOptions: CategoryOption[];
   let tagOptions: TagOption[];
@@ -336,7 +319,6 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
   if (showNew) baseParams.set('isNew', '1');
   if (showHot) baseParams.set('isHot', '1');
   if (showFeatured) baseParams.set('featured', '1');
-  if (favoritesOnly) baseParams.set('favoritesOnly', '1');
   if (sortBy) baseParams.set('sortBy', sortBy);
   if (sortOrder) baseParams.set('sortOrder', sortOrder);
 
@@ -504,16 +486,6 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
                   className="h-4 w-4 rounded border-input text-primary focus:ring-ring"
                 />
                 {t('filters.onlyFeatured')}
-              </label>
-              <label className="inline-flex items-center gap-2 text-sm text-foreground">
-                <input
-                  type="checkbox"
-                  name="favoritesOnly"
-                  value="1"
-                  defaultChecked={favoritesOnly}
-                  className="h-4 w-4 rounded border-input text-primary focus:ring-ring"
-                />
-                {t('filters.onlyFavorites')}
               </label>
             </div>
 
