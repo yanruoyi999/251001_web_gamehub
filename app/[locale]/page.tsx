@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Script from "next/script";
-import { getLocale, getTranslations, getMessages } from 'next-intl/server';
-import { getLocalizedPath } from '@/i18n/config';
+import { getTranslations, getMessages } from 'next-intl/server';
+import { getLocalizedPath, locales, type Locale } from '@/i18n/config';
 
 type FaqItem = { question: string; answer: string };
 
@@ -26,9 +26,21 @@ type HomeMessages = {
   };
 };
 
-export default async function HomePage() {
-  const locale = await getLocale();
-  const t = await getTranslations('home');
+export const dynamic = 'force-static';
+
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
+
+export default async function HomePage({
+  params,
+}: {
+  params: { locale: string };
+}) {
+  const locale = locales.includes(params.locale as Locale)
+    ? (params.locale as Locale)
+    : 'zh';
+  const t = await getTranslations({ locale, namespace: 'home' });
 
   const messages = (await getMessages({ locale })) as { home?: HomeMessages };
   const homeMessages = messages.home ?? {};

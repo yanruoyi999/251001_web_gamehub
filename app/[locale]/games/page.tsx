@@ -7,11 +7,12 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { FavoriteToggleButton } from '@/components/game/favorite-toggle';
 import { CategoryService, GameService, TagService } from '@/services';
-import { getLocalizedPath, locales } from '@/i18n/config';
+import { getLocalizedPath, locales, type Locale } from '@/i18n/config';
 import { mockGames } from '@/lib/mock-games';
 import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES } from '@/lib/seo';
 
 export const revalidate = 300;
+export const dynamic = 'force-static';
 
 const DB_LOAD_TIMEOUT_MS = 1500;
 const SORT_OPTIONS = ['publishedAt', 'playCount', 'averageRating', 'title'] as const;
@@ -191,6 +192,10 @@ interface GamesPageProps {
   };
 }
 
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
+
 export function generateMetadata({ params }: GamesPageProps): Metadata {
   const locale = params.locale === 'zh' ? 'zh' : 'en';
   const isZh = locale === 'zh';
@@ -234,8 +239,10 @@ export function generateMetadata({ params }: GamesPageProps): Metadata {
 }
 
 export default async function GamesPage({ params, searchParams }: GamesPageProps) {
-  const locale = params.locale;
-  const t = await getTranslations('Games');
+  const locale = locales.includes(params.locale as Locale)
+    ? (params.locale as Locale)
+    : 'zh';
+  const t = await getTranslations({ locale, namespace: 'Games' });
 
   const parseId = (value?: string) => {
     if (!value) return undefined;
