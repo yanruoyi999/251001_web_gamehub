@@ -208,17 +208,17 @@
   },
   "Solitaire": {
     "tagline": "经典纸牌",
-    "title": "Solitaire",
-    "summary": "在浏览器里直接开始一局经典纸牌。",
+    "title": "在线经典 Solitaire 纸牌",
+    "summary": "无需下载、无需账号,直接在浏览器里开始一局免费的经典 Solitaire 纸牌。",
     "backToList": "返回游戏库",
     "playSection": {
-      "title": "游玩 Solitaire",
-      "description": "无需安装，开始一局干净的经典纸牌。",
+      "title": "免费在线游玩 Solitaire",
+      "description": "无需安装,立刻开始一局干净的经典纸牌。",
       "hint": "全屏模式能给纸牌移动留出更多空间。"
     },
     "details": {
       "title": "游戏信息",
-      "description": "开始前快速了解玩法。",
+      "description": "开始经典纸牌前快速了解玩法。",
       "genre": { "label": "类型", "value": "纸牌益智" },
       "session": { "label": "时长", "value": "轻松碎片时间" },
       "controls": { "label": "操作", "value": "鼠标或触控" },

@@ -208,17 +208,17 @@
   },
   "Solitaire": {
     "tagline": "Classic cards",
-    "title": "Solitaire",
-    "summary": "Play a familiar solitaire game directly in your browser.",
+    "title": "Classic Solitaire Online",
+    "summary": "Play free online Solitaire directly in your browser with no download, account, or app install.",
     "backToList": "Back to games",
     "playSection": {
-      "title": "Play Solitaire",
-      "description": "Start a clean classic card session without installing anything.",
+      "title": "Play Free Online Solitaire",
+      "description": "Start a clean classic card session instantly in your browser.",
       "hint": "Fullscreen mode gives more space for card movement."
     },
     "details": {
       "title": "Game details",
-      "description": "Quick facts before you play.",
+      "description": "Quick facts before you start a classic solitaire round.",
       "genre": { "label": "Genre", "value": "Card puzzle" },
       "session": { "label": "Session", "value": "Relaxed short sessions" },
       "controls": { "label": "Controls", "value": "Mouse or touch" },

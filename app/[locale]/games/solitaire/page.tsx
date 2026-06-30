@@ -4,24 +4,24 @@ import { getTranslations } from 'next-intl/server';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { locales } from '@/i18n/config';
-import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES } from '@/lib/seo';
+const SOLITAIRE_SCREENSHOT = '/game-screenshots/solitaire.png';
 
 interface SolitairePageProps {
   params: { locale: string };
 }
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 86400;
 
 export function generateMetadata({ params }: SolitairePageProps): Metadata {
   const locale = params.locale === 'zh' ? 'zh' : 'en';
   const title =
     locale === 'zh'
-      ? 'Solitaire - 免费在线纸牌游戏'
-      : 'Solitaire - Free Online Card Game';
+        ? 'Solitaire - 免费在线经典纸牌游戏'
+        : 'Solitaire - Free Classic Solitaire Online';
   const description =
     locale === 'zh'
-      ? '直接在浏览器中游玩经典 Solitaire 纸牌游戏，适合短时休闲，无需下载安装。'
-      : 'Play classic Solitaire directly in your browser for a quick card-game break with no download required.';
+        ? '直接在浏览器中游玩经典 Solitaire 纸牌游戏,适合短时休闲,无需下载安装。'
+        : 'Play classic Solitaire online directly in your browser for a quick card-game break with no download required.';
   const canonical = `/${locale}/games/solitaire`;
 
   return {
@@ -29,8 +29,8 @@ export function generateMetadata({ params }: SolitairePageProps): Metadata {
     description,
     keywords:
       locale === 'zh'
-        ? ['Solitaire', '纸牌游戏', '免费在线游戏', '浏览器游戏']
-        : ['Solitaire', 'card game', 'free online game', 'browser game'],
+        ? ['Solitaire', '经典纸牌', '纸牌游戏', '免费在线游戏', '浏览器游戏']
+        : ['Solitaire', 'classic solitaire online', 'free online solitaire', 'card game', 'browser game'],
     alternates: {
       canonical,
       languages: Object.fromEntries(
@@ -45,13 +45,20 @@ export function generateMetadata({ params }: SolitairePageProps): Metadata {
       description,
       url: canonical,
       type: 'website',
-      images: DEFAULT_OPEN_GRAPH_IMAGES,
+      images: [
+        {
+          url: SOLITAIRE_SCREENSHOT,
+          width: 1280,
+          height: 720,
+          alt: locale === 'zh' ? 'Solitaire 经典纸牌游戏截图' : 'Classic Solitaire online card game screenshot',
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: DEFAULT_TWITTER_IMAGES,
+      images: [SOLITAIRE_SCREENSHOT],
     },
   };
 }
@@ -89,7 +96,10 @@ export default async function SolitairePage({ params }: SolitairePageProps) {
           <CardDescription className="text-sm text-gray-600">{t('playSection.description')}</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="overflow-hidden rounded-xl border border-gray-200 bg-black">
+          <div
+            className="overflow-hidden rounded-xl border border-gray-200 bg-black bg-cover bg-center"
+            style={{ backgroundImage: `url(${SOLITAIRE_SCREENSHOT})` }}
+          >
             <div className="aspect-video">
               <iframe
                 src="https://playpager.com/embed/solitaire/index.html"
