@@ -40,6 +40,22 @@ export default async function HomePage() {
   const seoPointHeading = typeof seoSection.pointHeading === 'string' ? seoSection.pointHeading : t('seoSection.title');
   const evilPoints = Array.isArray(evilSection.points) ? evilSection.points : [];
   const faqItems = Array.isArray(faqSection.items) ? faqSection.items : [];
+  const popularLinks =
+    locale === 'zh'
+      ? [
+          { href: `/${locale}/guides/google-snake-mods`, label: 'Google Snake Mods' },
+          { href: `/${locale}/games/solitaire`, label: '免费在线 Solitaire' },
+          { href: `/${locale}/guides/adam-and-eve-walkthrough`, label: 'Adam and Eve 攻略' },
+          { href: `/${locale}/guides/games-to-play-when-bored`, label: '解闷小游戏' },
+          { href: `/${locale}/guides/best-free-iphone-games`, label: 'iPhone 浏览器游戏' },
+        ]
+      : [
+          { href: `/${locale}/guides/google-snake-mods`, label: 'Google Snake Mods' },
+          { href: `/${locale}/games/solitaire`, label: 'Free Online Solitaire' },
+          { href: `/${locale}/guides/adam-and-eve-walkthrough`, label: 'Adam and Eve Walkthrough' },
+          { href: `/${locale}/guides/games-to-play-when-bored`, label: 'Games to Play When Bored' },
+          { href: `/${locale}/guides/best-free-iphone-games`, label: 'Best Free iPhone Games' },
+        ];
 
   const faqJsonLd = {
     "@context": "https://schema.org",
@@ -81,6 +97,29 @@ export default async function HomePage() {
               {t('browseArchive')}
             </Link>
           </div>
+
+          <section
+            aria-labelledby="popular-from-search"
+            className="mx-auto max-w-3xl border-y border-border/70 py-5 text-left"
+          >
+            <h2
+              id="popular-from-search"
+              className="text-center text-sm font-semibold uppercase tracking-wide text-muted-foreground"
+            >
+              {locale === 'zh' ? '近期搜索入口' : 'Popular from search'}
+            </h2>
+            <div className="mt-4 flex flex-wrap justify-center gap-x-5 gap-y-3 text-sm">
+              {popularLinks.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="border-b border-primary/30 pb-0.5 font-medium text-primary transition hover:border-primary hover:text-primary/80"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+          </section>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-16">
             <FeatureCard
