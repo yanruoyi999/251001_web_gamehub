@@ -174,6 +174,11 @@ export default function GuidePage({ params }: GuidePageProps) {
   };
   const structuredData = [jsonLdArticle, jsonLdFaq, jsonLdBreadcrumb];
   const relatedPages = getRelatedPages(page, locale);
+  const embedGameThumbnail =
+    page.embedGame?.thumbnailUrl ??
+    (page.embedGame?.playSlug
+      ? gameIndex.get(page.embedGame.playSlug)?.thumbnailUrl
+      : undefined);
 
   return (
     <article className="mx-auto w-full max-w-5xl px-6 py-12">
@@ -205,7 +210,7 @@ export default function GuidePage({ params }: GuidePageProps) {
               <GamePlayerFacade
                 iframeUrl={page.embedGame.iframeUrl}
                 title={page.embedGame.title}
-                thumbnailUrl={page.embedGame.thumbnailUrl ?? null}
+                thumbnailUrl={embedGameThumbnail ?? null}
                 locale={locale}
                 gameSlug={page.embedGame.playSlug ?? page.slug}
                 source="guide_embed"

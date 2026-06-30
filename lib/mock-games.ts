@@ -113,6 +113,8 @@ const LOCAL_SCREENSHOT_SLUGS = new Set([
   'beat-line',
   'big-tower-tiny-square',
   'big-tower-tiny-square-2',
+  'google-snake',
+  'string-theory-2-remastered',
 ]);
 
 function sanitizeHost(value?: string | null): string | null {
