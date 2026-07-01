@@ -25,6 +25,9 @@ import {
   getSiteBaseUrl,
 } from '@/lib/seo';
 
+export const dynamic = 'force-static';
+export const revalidate = 86400;
+
 export function generateStaticParams() {
   const pages = getSeoLandingPages();
   return locales.flatMap((locale) =>

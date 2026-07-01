@@ -5,6 +5,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getSeoLandingPages } from '@/lib/seo-landing-content';
 import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES } from '@/lib/seo';
 
+export const dynamic = 'force-static';
+export const revalidate = 86400;
+
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
