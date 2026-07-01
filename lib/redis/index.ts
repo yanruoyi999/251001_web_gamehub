@@ -32,11 +32,49 @@ export const REDIS_KEYS = {
 
 // Redis 客户端初始化
 let redisClient: Redis | null = null;
+let redisDisabledUntil = 0;
+let redisFailureCount = 0;
+let lastRedisFailureLogAt = 0;
+
+const REDIS_FAILURE_LOG_INTERVAL_MS = 60 * 1000;
+const REDIS_MIN_DISABLE_MS = 60 * 1000;
+const REDIS_MAX_DISABLE_MS = 5 * 60 * 1000;
+
+export function isRedisTemporarilyDisabled(now = Date.now()) {
+  return redisDisabledUntil > now;
+}
+
+export function recordRedisSuccess() {
+  redisFailureCount = 0;
+  redisDisabledUntil = 0;
+}
+
+export function recordRedisFailure(operation: string, error: unknown) {
+  const now = Date.now();
+  redisFailureCount += 1;
+  const backoffMs = Math.min(
+    REDIS_MAX_DISABLE_MS,
+    REDIS_MIN_DISABLE_MS * redisFailureCount,
+  );
+  redisDisabledUntil = now + backoffMs;
+
+  if (now - lastRedisFailureLogAt >= REDIS_FAILURE_LOG_INTERVAL_MS) {
+    lastRedisFailureLogAt = now;
+    console.warn(
+      `Redis ${operation} failed; skipping Redis cache for ${Math.round(backoffMs / 1000)}s:`,
+      error,
+    );
+  }
+}
 
 export function getRedisClient(): Redis | null {
   // 如果未配置，返回 null（降级到直接数据库操作）
   if (!process.env.UPSTASH_REDIS_URL || !process.env.UPSTASH_REDIS_TOKEN) {
     console.warn('Redis not configured, caching features will be degraded');
+    return null;
+  }
+
+  if (isRedisTemporarilyDisabled()) {
     return null;
   }
 

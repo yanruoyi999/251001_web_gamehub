@@ -1,18 +1,24 @@
 import type { Redis } from '@upstash/redis';
+import {
+  isRedisTemporarilyDisabled,
+  recordRedisFailure,
+  recordRedisSuccess,
+} from '@/lib/redis';
 
 export async function getJson<T>(client: Redis | null, key: string): Promise<T | null> {
-  if (!client) return null;
+  if (!client || isRedisTemporarilyDisabled()) return null;
   try {
     const value = await client.get<string>(key);
+    recordRedisSuccess();
     return value ? (JSON.parse(value) as T) : null;
   } catch (error) {
-    console.warn('Redis read failed:', error);
+    recordRedisFailure('read', error);
     return null;
   }
 }
 
 export async function setJson(client: Redis | null, key: string, value: unknown, ttlSeconds?: number) {
-  if (!client) return;
+  if (!client || isRedisTemporarilyDisabled()) return;
   try {
     const payload = JSON.stringify(value);
     if (ttlSeconds) {
@@ -20,16 +26,18 @@ export async function setJson(client: Redis | null, key: string, value: unknown,
     } else {
       await client.set(key, payload);
     }
+    recordRedisSuccess();
   } catch (error) {
-    console.warn('Redis write failed:', error);
+    recordRedisFailure('write', error);
   }
 }
 
 export async function delKey(client: Redis | null, key: string) {
-  if (!client) return;
+  if (!client || isRedisTemporarilyDisabled()) return;
   try {
     await client.del(key);
+    recordRedisSuccess();
   } catch (error) {
-    console.warn('Redis delete failed:', error);
+    recordRedisFailure('delete', error);
   }
 }
