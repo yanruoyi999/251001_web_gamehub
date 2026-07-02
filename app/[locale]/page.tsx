@@ -58,16 +58,16 @@ export default async function HomePage({
       ? [
           { href: getLocalizedPath(locale, '/guides/google-snake-mods'), label: 'Google Snake Mods' },
           { href: getLocalizedPath(locale, '/games/solitaire'), label: '免费在线 Solitaire' },
-          { href: getLocalizedPath(locale, '/guides/adam-and-eve-walkthrough'), label: 'Adam and Eve 攻略' },
-          { href: getLocalizedPath(locale, '/guides/games-to-play-when-bored'), label: '解闷小游戏' },
-          { href: getLocalizedPath(locale, '/guides/best-free-iphone-games'), label: 'iPhone 浏览器游戏' },
+          { href: getLocalizedPath(locale, '/guides/apple-knight-mini-dungeons-guide'), label: 'Apple Knight 攻略' },
+          { href: getLocalizedPath(locale, '/guides/ovo-walkthrough'), label: 'OvO 跑酷攻略' },
+          { href: getLocalizedPath(locale, '/guides/fireboy-and-watergirl-walkthrough'), label: '森林冰火人攻略' },
         ]
       : [
           { href: getLocalizedPath(locale, '/guides/google-snake-mods'), label: 'Google Snake Mods' },
           { href: getLocalizedPath(locale, '/games/solitaire'), label: 'Free Online Solitaire' },
-          { href: getLocalizedPath(locale, '/guides/adam-and-eve-walkthrough'), label: 'Adam and Eve Walkthrough' },
-          { href: getLocalizedPath(locale, '/guides/games-to-play-when-bored'), label: 'Games to Play When Bored' },
-          { href: getLocalizedPath(locale, '/guides/best-free-iphone-games'), label: 'Best Free iPhone Games' },
+          { href: getLocalizedPath(locale, '/guides/apple-knight-mini-dungeons-guide'), label: 'Apple Knight Guide' },
+          { href: getLocalizedPath(locale, '/guides/ovo-walkthrough'), label: 'OvO Walkthrough' },
+          { href: getLocalizedPath(locale, '/guides/fireboy-and-watergirl-walkthrough'), label: 'Fireboy and Watergirl Guide' },
         ];
 
   const faqJsonLd = {
