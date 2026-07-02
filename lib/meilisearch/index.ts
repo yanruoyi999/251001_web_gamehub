@@ -37,16 +37,23 @@ export interface GameSearchDocument {
 let meilisearchClient: MeiliSearch | null = null;
 
 export function getMeilisearchClient(): MeiliSearch | null {
+  const host = process.env.MEILISEARCH_HOST;
+
   // 如果未配置，返回 null（降级到数据库搜索）
-  if (!process.env.MEILISEARCH_HOST) {
+  if (!host) {
     console.warn('MEILISEARCH_HOST not configured, search features will be degraded');
+    return null;
+  }
+
+  if (process.env.NODE_ENV === 'production' && /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?\/?$/i.test(host)) {
+    console.warn('MEILISEARCH_HOST points to localhost in production; search features will be degraded');
     return null;
   }
 
   // 单例模式
   if (!meilisearchClient) {
     meilisearchClient = new MeiliSearch({
-      host: process.env.MEILISEARCH_HOST,
+      host,
       apiKey: process.env.MEILISEARCH_API_KEY || '',
     });
   }

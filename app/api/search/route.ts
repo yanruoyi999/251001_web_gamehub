@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { searchFallbackGames } from '@/lib/games/fallback-search';
 import { SearchService } from '@/services';
 
 export async function GET(request: NextRequest) {
@@ -19,7 +20,16 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(result);
   } catch (error) {
     console.error('Search failed:', error);
-    return NextResponse.json({ error: 'Search failed' }, { status: 500 });
+    const fallback = searchFallbackGames({
+      query,
+      page: searchParams.get('page') ? Number(searchParams.get('page')) : undefined,
+      limit: searchParams.get('limit') ? Number(searchParams.get('limit')) : undefined,
+    });
+
+    return NextResponse.json({
+      ...fallback,
+      degraded: true,
+    });
   }
 }
 

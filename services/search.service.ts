@@ -6,6 +6,7 @@ import { SearchCacheKeys, CacheTTL } from '@/lib/utils/cache-keys';
 import { sanitizeSearchQuery, validatePagination } from '@/lib/utils/validation';
 import { ilike, or, eq, desc, sql, and } from 'drizzle-orm';
 import { getJson, setJson } from '@/lib/utils/redis-helper';
+import { searchFallbackGames } from '@/lib/games/fallback-search';
 
 export interface SearchOptions {
   query: string;
@@ -82,9 +83,16 @@ export class SearchService {
       }
     }
 
-    const fallback = await this.searchWithDatabase(query, { page, limit, offset });
-    await setJson(redis, cacheKey, fallback, CacheTTL.SEARCH_RESULTS);
-    return fallback;
+    try {
+      const fallback = await this.searchWithDatabase(query, { page, limit, offset });
+      await setJson(redis, cacheKey, fallback, CacheTTL.SEARCH_RESULTS);
+      return fallback;
+    } catch (error) {
+      console.warn('Database search failed, using local fallback:', error);
+      const fallback = searchFallbackGames({ query, page, limit });
+      await setJson(redis, cacheKey, fallback, CacheTTL.SEARCH_RESULTS);
+      return fallback;
+    }
   }
 
   private static async searchWithDatabase(
