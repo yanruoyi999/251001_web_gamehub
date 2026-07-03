@@ -65,6 +65,21 @@ export function Footer({ locale }: FooterProps) {
                 </Link>
               </li>
               <li>
+                <Link href={localizedPath('/search')} className="hover:text-primary">
+                  {isZh ? '搜索游戏' : 'Search Games'}
+                </Link>
+              </li>
+              <li>
+                <Link href={localizedPath('/guides/free-games-no-ads')} className="hover:text-primary">
+                  {isZh ? '无广告游戏指南' : 'Ad-Free Games Guide'}
+                </Link>
+              </li>
+              <li>
+                <Link href={localizedPath('/guides/games-to-play-when-bored')} className="hover:text-primary">
+                  {isZh ? '无聊时玩什么' : 'Games When Bored'}
+                </Link>
+              </li>
+              <li>
                 <Link href={localizedPath('/about')} className="hover:text-primary">
                   {isZh ? '关于我们' : 'About Us'}
                 </Link>

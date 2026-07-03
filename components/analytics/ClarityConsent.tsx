@@ -19,6 +19,8 @@ const clarityProjectId =
   process.env.NEXT_PUBLIC_GAMEHUB_CLARITY_PROJECT_ID ||
   process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID ||
   '';
+const defaultAnalyticsConsent: AnalyticsConsent =
+  process.env.NEXT_PUBLIC_GAMEHUB_CLARITY_DEFAULT_CONSENT === 'denied' ? 'denied' : 'granted';
 
 function setClarityConsent(analyticsStorage: AnalyticsConsent) {
   const clarity = window.clarity;
@@ -58,7 +60,10 @@ export function ClarityConsent() {
   useEffect(() => {
     if (!clarityProjectId) return;
     const saved = window.localStorage.getItem(storageKey);
-    loadClarity(clarityProjectId, saved === 'granted' ? 'granted' : 'denied');
+    loadClarity(
+      clarityProjectId,
+      saved === 'granted' || saved === 'denied' ? saved : defaultAnalyticsConsent,
+    );
   }, []);
 
   return null;

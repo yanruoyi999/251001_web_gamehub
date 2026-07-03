@@ -26,46 +26,15 @@ const LINK_CHECK_TIMEOUT_MS = 10000;
 const DB_SAMPLE_TIMEOUT_MS = 5000;
 const LINK_CHECK_CONCURRENCY = 6;
 
-// 外链资源配置（合作伙伴 + 行业资源，与页面展示保持同步）
+// 外链资源配置（与 components/layout/Footer.tsx 的实际展示保持同步）
 const FOOTER_LINKS = [
-  { name: 'Itch.io', url: 'https://itch.io', category: 'Platform' },
-  { name: 'Kongregate', url: 'https://www.kongregate.com', category: 'Platform' },
-  { name: 'Newgrounds', url: 'https://www.newgrounds.com/games', category: 'Platform' },
-  { name: 'Game Jolt', url: 'https://gamejolt.com', category: 'Platform' },
-  { name: 'Armor Games', url: 'https://armorgames.com', category: 'Platform' },
-  { name: 'CrazyGames', url: 'https://www.crazygames.com', category: 'Platform' },
-  { name: 'Poki', url: 'https://poki.com', category: 'Platform' },
-  { name: 'HTML5 Games', url: 'https://html5games.com', category: 'Resource' },
-  { name: 'Coolmath Games', url: 'https://www.coolmathgames.com', category: 'Resource' },
-  { name: 'Miniclip', url: 'https://www.miniclip.com', category: 'Platform' },
-  { name: 'AGame.com', url: 'https://www.agame.com', category: 'Platform' },
-  { name: 'Addicting Games', url: 'https://www.addictinggames.com', category: 'Platform' },
-  { name: 'Y8 Games', url: 'https://www.y8.com', category: 'Platform' },
-  { name: 'Friv', url: 'https://www.friv.com', category: 'Platform' },
-  { name: 'GameStop', url: 'https://www.gamestop.com', category: 'Retail' },
-  { name: 'Board Game Arena', url: 'https://en.boardgamearena.com', category: 'Tabletop' },
-  { name: 'AdFreeGames', url: 'https://www.adfreegames.com', category: 'Curated' },
-  { name: 'GitHub Pages', url: 'https://pages.github.com/', category: 'Hosting' },
   { name: 'OpenGameArt', url: 'https://opengameart.org', category: 'Assets' },
-  { name: 'Construct', url: 'https://www.construct.net', category: 'Engine' },
-  { name: 'Godot Engine', url: 'https://godotengine.org', category: 'Engine' },
-  { name: 'Unity WebGL Guide', url: 'https://docs.unity3d.com/Manual/webgl-gettingstarted.html', category: 'Documentation' },
-  { name: 'MDN Games', url: 'https://developer.mozilla.org/en-US/docs/Games', category: 'Documentation' },
-  { name: 'Game Developer', url: 'https://www.gamedeveloper.com/', category: 'Industry' },
-  { name: 'GDC Vault', url: 'https://www.gdcvault.com/free/gdc-2019', category: 'Education' },
-  { name: 'GameAnalytics', url: 'https://gameanalytics.com', category: 'Analytics' },
-  { name: 'Indie DB', url: 'https://www.indiedb.com', category: 'Community' },
   {
     name: 'AdSense Policies',
     url: 'https://transparency.google/intl/en/our-policies/product-terms/google-adsense/',
     category: 'Compliance',
   },
-  { name: 'AdSense Developer', url: 'https://developers.google.com/adsense', category: 'Compliance' },
   { name: 'SEO Starter Guide', url: 'https://developers.google.com/search/docs/fundamentals/seo-starter-guide', category: 'SEO' },
-  { name: 'PageSpeed Insights', url: 'https://pagespeed.web.dev/', category: 'Performance' },
-  { name: 'Search Console', url: 'https://search.google.com/search-console/about', category: 'SEO' },
-  { name: 'Phaser', url: 'https://phaser.io', category: 'Framework' },
-  { name: 'PlayCanvas', url: 'https://playcanvas.com', category: 'Framework' },
 ];
 
 interface LinkCheckResult {
@@ -235,7 +204,7 @@ async function loadGameLinkSample(sampleSize: number): Promise<GameLinkSample[]>
  * 检查页脚友情链接
  */
 async function checkFooterLinks(): Promise<void> {
-  console.log('\n📋 检查页脚友情链接 (共 34 个)\n');
+  console.log(`\n📋 检查页脚友情链接 (共 ${FOOTER_LINKS.length} 个)\n`);
   console.log('─'.repeat(80));
 
   let failedCount = 0;

@@ -1324,6 +1324,204 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     },
   },
   {
+    slug: '0h-h1-binary-puzzle-guide',
+    primaryKeyword: '0h h1',
+    keywords: [
+      '0h h1',
+      '0h h1 game',
+      'binary sudoku',
+      'takuzu puzzle',
+      'logic puzzle game',
+      '0hh1',
+    ],
+    updatedAt: seoContentUpdatedAt,
+    relatedSlugs: ['free-games-no-ads', 'games-to-play-when-bored', 'best-free-iphone-games'],
+    embedGame: {
+      iframeUrl: 'https://0hh1.com/',
+      title: '0h h1',
+    },
+    locales: {
+      en: {
+        metaTitle: '0h h1 Binary Puzzle Guide: Play Takuzu Online',
+        metaDescription:
+          'Play 0h h1 in your browser and learn the three core binary puzzle rules: no triples, balanced rows, and unique lines.',
+        heading: '0h h1 Binary Puzzle Guide',
+        subheading:
+          'A calm Takuzu-style logic puzzle you can play in the browser: fill the grid, avoid triples, balance colors, and keep every row and column unique.',
+        overview: [
+          '0h h1 is a small logic game by Q42 and Martin Kool. The puzzle is also known as Takuzu or Binary Sudoku, but the experience is lighter than a classic number sudoku: every cell has only two possible colors.',
+          'The challenge is not speed. A good solve comes from reading constraints in the right order, marking forced cells, and resisting guesses until the board gives you a clean deduction.',
+          'Use the embedded browser version above for a quick round, then keep this guide open for the rule checklist and beginner solving path.',
+        ],
+        sections: [
+          {
+            title: 'The Three Rules That Solve the Board',
+            body: 'Every 0h h1 board follows three constraints. Once you learn to scan for them, most moves become forced rather than guessed.',
+            bullets: [
+              'No row or column may contain three adjacent tiles of the same color.',
+              'Each row and column must end with the same number of both colors.',
+              'No two completed rows or completed columns may be identical.',
+            ],
+          },
+          {
+            title: 'Beginner Solving Order',
+            body: 'Start with the safest deductions before thinking about uniqueness. This keeps the board clean and prevents accidental guesses.',
+            bullets: [
+              'First scan for two identical colors together; the cell before or after them is often forced.',
+              'Next count each row and column. If one color has reached its limit, the remaining blanks must be the other color.',
+              'Only after those checks, compare nearly finished rows or columns to avoid duplicates.',
+              'If a move is not forced by one of these rules, leave it blank and scan another line.',
+            ],
+          },
+          {
+            title: 'Common Mistakes',
+            body: 'Most failed boards come from treating 0h h1 like a guessing game. The puzzle is built to reward patience and repeatable checks.',
+            bullets: [
+              'Do not fill symmetrical-looking blanks just because the pattern feels right.',
+              'Do not solve one row in isolation; every move also changes a column.',
+              'When stuck, switch from pattern scanning to counting, then to uniqueness checks.',
+            ],
+          },
+          {
+            title: 'Source and Browser Notes',
+            body: 'This page links to the official 0h h1 web game. It loads in the browser and does not require a download from Luma. If a network blocks third-party game embeds, use a permitted network instead of looking for unofficial mirrors.',
+          },
+        ],
+        recommendations: [
+          {
+            slug: 'google-snake',
+            pitch:
+              'A faster grid game when you want movement and high-score pressure instead of pure deduction.',
+          },
+          {
+            slug: 'string-theory-2-remastered',
+            pitch:
+              'A short browser puzzle with physics timing rather than binary grid logic.',
+          },
+          {
+            slug: 'apple-knight-mini-dungeons',
+            pitch:
+              'Switch to light action-platforming when you want movement after a quiet logic round.',
+          },
+        ],
+        faqs: [
+          {
+            question: 'What is 0h h1?',
+            answer:
+              '0h h1 is a browser logic puzzle by Q42 and Martin Kool. It is also known as Takuzu or Binary Sudoku because each cell has two possible states.',
+          },
+          {
+            question: 'How do I play 0h h1?',
+            answer:
+              'Fill the board with two colors while following three rules: no three adjacent matching tiles, equal counts in each row and column, and no duplicate rows or columns.',
+          },
+          {
+            question: 'Do I need to guess?',
+            answer:
+              'Usually no. Check triples, counts, and duplicate-line risks before guessing. If none of those rules force a move, leave the cell blank and scan another line.',
+          },
+          {
+            question: 'Is 0h h1 free in the browser?',
+            answer:
+              'Yes. The official web game can be played in a browser without installing an app. Luma embeds the public web version and adds its own guide notes.',
+          },
+        ],
+        ctaLabel: 'Browse more browser puzzle games',
+        ctaDescription:
+          'Try 0h h1 first, then compare it with other short logic and puzzle games on Luma.',
+      },
+      zh: {
+        metaTitle: '0h h1 二进制逻辑谜题攻略：在线玩 Takuzu',
+        metaDescription:
+          '在浏览器玩 0h h1，学习二进制谜题的三条核心规则：不能三连、行列数量平衡、行列不能重复。',
+        heading: '0h h1 二进制谜题攻略',
+        subheading:
+          '一款安静的 Takuzu 风格逻辑谜题：补满棋盘、避免三连、平衡颜色，并让每一行每一列都不重复。',
+        overview: [
+          '0h h1 是 Q42 与 Martin Kool 制作的小型逻辑游戏，也常被称为 Takuzu 或 Binary Sudoku。它比传统数字数独更轻量：每个格子只有两种颜色选择。',
+          '它考验的不是手速，而是按正确顺序读取限制条件。好的解法来自确定格、数量统计和重复行列检查，而不是凭感觉猜。',
+          '你可以先在上方浏览器版本玩一局，再用这篇攻略对照规则和新手解题顺序。',
+        ],
+        sections: [
+          {
+            title: '解题靠这三条规则',
+            body: '0h h1 的每个棋盘都围绕三条限制展开。熟悉扫描方式后，大多数格子都能被规则推出，而不是靠猜。',
+            bullets: [
+              '任意一行或一列不能出现三个连续相同颜色。',
+              '每一行和每一列最终都要保持两种颜色数量相同。',
+              '任意两行不能完全相同，任意两列也不能完全相同。',
+            ],
+          },
+          {
+            title: '新手解题顺序',
+            body: '先做最稳的判断，再处理重复行列。这样能保持棋盘干净，减少误填。',
+            bullets: [
+              '先找两个相同颜色相邻的位置，它们前后经常会推出相反颜色。',
+              '再统计每一行和每一列。如果某个颜色数量已满，剩余空格就必须是另一种颜色。',
+              '最后比较快完成的行或列，避免形成完全相同的结果。',
+              '如果某一格无法被规则推出，先留空，去检查其他行列。',
+            ],
+          },
+          {
+            title: '常见失误',
+            body: '多数失败棋盘都来自把 0h h1 当成猜谜。它真正奖励的是耐心和可重复的检查流程。',
+            bullets: [
+              '不要因为图形看起来对称，就直接补空格。',
+              '不要只看一行；每个改动也会影响对应的列。',
+              '卡住时从“三连检查”切换到“数量统计”，再切换到“重复行列检查”。',
+            ],
+          },
+          {
+            title: '来源与浏览器说明',
+            body: '本页嵌入的是官方 0h h1 网页游戏。它可在浏览器中运行，Luma 不提供下载包。如果学校或公司网络屏蔽第三方游戏嵌入，请使用被允许的网络，不要寻找来路不明的镜像。',
+          },
+        ],
+        recommendations: [
+          {
+            slug: 'google-snake',
+            pitch:
+              '想要同样是网格玩法，但更强调移动和高分压力，可以玩 Google Snake。',
+          },
+          {
+            slug: 'string-theory-2-remastered',
+            pitch:
+              '想换成物理时机解谜，可以试 String Theory 2 Remastered。',
+          },
+          {
+            slug: 'apple-knight-mini-dungeons',
+            pitch:
+              '安静逻辑局结束后，想活动一下操作手感，可以玩 Apple Knight: Mini Dungeons。',
+          },
+        ],
+        faqs: [
+          {
+            question: '0h h1 是什么游戏?',
+            answer:
+              '0h h1 是 Q42 与 Martin Kool 制作的浏览器逻辑谜题，也被称为 Takuzu 或 Binary Sudoku，因为每个格子只有两种状态。',
+          },
+          {
+            question: '0h h1 怎么玩?',
+            answer:
+              '你需要用两种颜色填满棋盘，同时满足三条规则：不能出现三连、每行每列颜色数量相同、行与行或列与列不能重复。',
+          },
+          {
+            question: '0h h1 需要猜吗?',
+            answer:
+              '通常不需要。先检查三连、颜色数量和重复行列风险。如果没有规则能推出某一格，就先跳过它。',
+          },
+          {
+            question: '0h h1 可以免费在线玩吗?',
+            answer:
+              '可以。官方网页版本可直接在浏览器打开，不需要安装 App。Luma 嵌入公开网页版本，并补充自己的玩法说明。',
+          },
+        ],
+        ctaLabel: '查看更多浏览器解谜游戏',
+        ctaDescription:
+          '先玩 0h h1，再比较 Luma 上其他短局逻辑和解谜游戏。',
+      },
+    },
+  },
+  {
     slug: 'apple-knight-mini-dungeons-guide',
     primaryKeyword: 'apple knight mini dungeons unblocked',
     keywords: [
@@ -1350,15 +1548,17 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         overview: [
           'Apple Knight: Mini Dungeons takes the Apple Knight formula and compresses it into short action-platforming stages. You move, jump, strike, dodge hazards, collect items, and try to clear a room without wasting health.',
           'The game works best when you treat each room like a small route puzzle. Clear enemies safely, grab pickups only when the path is safe, and avoid rushing into blind corners.',
+          'Use this page as a play-first guide: start the browser version, learn the control rhythm, then return to the tips below when a room starts costing too much health.',
         ],
         sections: [
           {
             title: 'Controls and Combat Rhythm',
-            body: 'The important rhythm is move, strike, reposition. Standing still after an attack is what usually costs health.',
+            body: 'The important rhythm is move, strike, reposition. Standing still after an attack is what usually costs health, because enemies keep walking into your space while the attack animation finishes.',
             bullets: [
               'Use quick taps to adjust position before attacking.',
               'Jump before crowded hazards instead of trying to fight through them.',
               'After each hit, step back or jump away so enemies cannot trade damage.',
+              'On keyboard, keep movement and attack inputs deliberate instead of holding everything at once.',
             ],
           },
           {
@@ -1368,11 +1568,22 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               'Clear low-risk enemies first so you have space to move.',
               'Use platforms to split enemies instead of fighting a group at once.',
               'If health is low, slow down and focus on avoiding contact damage.',
+              'Before dropping into a lower lane, pause long enough to see whether an enemy patrol or spike trap is waiting.',
+            ],
+          },
+          {
+            title: 'Beginner Route for a First Run',
+            body: 'For the first few rooms, ignore perfect coin collection and play for survival. The goal is to learn enemy spacing, jump height, and how far your attack reaches before trying faster clears.',
+            bullets: [
+              'Open with a short test jump and attack to feel the delay.',
+              'Fight enemies from the edge of a platform when possible.',
+              'Take health or item pickups after the nearest hazard is gone, not while an enemy is still closing in.',
+              'Restarting early is fine if you lose several hearts before understanding the room pattern.',
             ],
           },
           {
             title: 'Unblocked Browser Play Notes',
-            body: 'This version runs in the browser with no app install. Keyboard controls are the best fit on desktop or Chromebook; on mobile, test touch controls before committing to a longer run.',
+            body: 'This version runs in the browser with no app install. Keyboard controls are the best fit on desktop or Chromebook; on mobile, test touch controls before committing to a longer run. If a school or workplace network blocks third-party game embeds, Luma cannot bypass that policy—use a permitted network and avoid unofficial downloads.',
           },
         ],
         recommendations: [
@@ -1409,6 +1620,16 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               'Do not stand still after attacking. Hit, move, then hit again so enemies cannot trade damage back into you.',
           },
           {
+            question: 'Does Apple Knight: Mini Dungeons require a download?',
+            answer:
+              'No. The Luma version is played in the browser embed. Avoid download mirrors or unofficial installers, because they are not needed for this page.',
+          },
+          {
+            question: 'Why does the game feel hard at first?',
+            answer:
+              'Most early mistakes come from rushing into contact damage. Treat each room as a small pattern: look first, clear one threat, then move to the next platform or pickup.',
+          },
+          {
             question: 'Is this the same as Apple Knight?',
             answer:
               'It is a smaller Mini Dungeons entry in the same action-platform style. The main Apple Knight game is better when you want longer stages.',
@@ -1426,15 +1647,17 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         overview: [
           'Apple Knight: Mini Dungeons 把 Apple Knight 的动作平台玩法压缩成更短的地牢关卡。你要移动、跳跃、攻击、躲陷阱、捡道具,并尽量少掉血地清完房间。',
           '它更像一个小路线谜题:先安全清敌,确认路径后再捡道具,不要一头冲进看不见的角落。',
+          '这页按“先玩、再查技巧”的方式整理:先打开浏览器版本熟悉节奏,遇到反复掉血的房间时,再回来看下面的操作和路线建议。',
         ],
         sections: [
           {
             title: '操作与战斗节奏',
-            body: '核心节奏是移动、攻击、再调整位置。攻击后站在原地,通常就是掉血的原因。',
+            body: '核心节奏是移动、攻击、再调整位置。攻击后站在原地,通常就是掉血的原因,因为攻击动作结束前敌人还会继续贴近你。',
             bullets: [
               '攻击前用轻点微调位置。',
               '面对密集陷阱先跳过去,不要硬打穿过去。',
               '每次命中后后撤或跳开,避免和敌人互换伤害。',
+              '用键盘玩时,移动和攻击要有节奏,不要一直按住所有按键。',
             ],
           },
           {
@@ -1444,11 +1667,22 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               '先清低风险敌人,给自己留移动空间。',
               '利用平台把敌人分开,不要一次打一群。',
               '血量低时放慢,优先避免接触伤害。',
+              '跳到下层前先停一下,确认下面有没有巡逻敌人或尖刺陷阱。',
+            ],
+          },
+          {
+            title: '第一次通关路线建议',
+            body: '前几个房间先不要追求金币全收集,目标是活下来。先熟悉敌人距离、跳跃高度和攻击范围,再尝试更快的清关路线。',
+            bullets: [
+              '开局先短跳和试攻击,感受动作延迟。',
+              '能站在平台边缘打敌人时,不要主动跳进敌人堆。',
+              '附近危险消失后再捡血量或道具,不要边被追边贪道具。',
+              '如果还没摸清房间规律就掉了很多血,早点重开比硬撑更有效。',
             ],
           },
           {
             title: '浏览器无屏蔽游玩说明',
-            body: '本版本可直接在浏览器运行,无需安装 App。桌面和 Chromebook 上键盘手感最好;手机端建议先测试触屏按钮,再决定是否长时间游玩。',
+            body: '本版本可直接在浏览器运行,无需安装 App。桌面和 Chromebook 上键盘手感最好;手机端建议先测试触屏按钮,再决定是否长时间游玩。如果学校或公司网络屏蔽第三方游戏嵌入,Luma 不会绕过网络规则;请使用被允许的网络,也不要下载来路不明的安装包。',
           },
         ],
         recommendations: [
@@ -1483,6 +1717,16 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             question: '新手最重要技巧是什么?',
             answer:
               '攻击后不要站着不动。命中、移动、再命中,才能避免敌人反打。',
+          },
+          {
+            question: 'Apple Knight: Mini Dungeons 需要下载吗?',
+            answer:
+              '不需要。Luma 页面使用浏览器嵌入版本,直接打开即可游玩。不要使用来路不明的下载镜像或安装包。',
+          },
+          {
+            question: '为什么一开始会觉得难?',
+            answer:
+              '多数失误来自冲得太快导致接触伤害。把每个房间当成小规律:先观察,清掉一个威胁,再去下一个平台或道具。',
           },
           {
             question: '它和 Apple Knight 是同一个游戏吗?',

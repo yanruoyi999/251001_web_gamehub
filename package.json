@@ -17,6 +17,8 @@
     "verify:services": "tsx scripts/verify-services.ts",
     "meilisearch:setup": "tsx scripts/meilisearch-setup.ts",
     "check:links": "tsx scripts/check-external-links.ts",
+    "ops:growth": "tsx scripts/growth-metrics.ts",
+    "ops:monitoring": "tsx scripts/monitoring-status.ts",
     "test": "vitest",
     "test:watch": "vitest --watch",
     "test:e2e": "playwright test",
