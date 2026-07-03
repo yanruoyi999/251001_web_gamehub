@@ -14,6 +14,7 @@ import { GameCacheKeys, CacheTTL } from '@/lib/utils/cache-keys';
 import { getJson, setJson, delKey } from '@/lib/utils/redis-helper';
 import { redis } from '@/lib/redis';
 import { isValidId, validatePagination, isValidUrl, isValidHttpsUrl } from '@/lib/utils/validation';
+import { isNextProductionBuild } from '@/lib/utils/build-phase';
 
 export type GameRecord = typeof games.$inferSelect;
 export type GameStatsRecord = typeof gameStats.$inferSelect;
@@ -201,6 +202,10 @@ export class GameService {
   static async listGames(options: ListGamesOptions = {}): Promise<ListGamesResult> {
     const { page, limit, offset } = validatePagination(options.page, options.limit);
     const status = options.status ?? 'active';
+
+    if (isNextProductionBuild()) {
+      throw new Error('Skipping game list database load during production build');
+    }
 
     const filters: any[] = [];
 
