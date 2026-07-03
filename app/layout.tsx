@@ -133,7 +133,7 @@ export default function RootLayout({
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
-                gtag('config', '${GA_TRACKING_ID}', { page_path: window.location.pathname });
+                gtag('config', '${GA_TRACKING_ID}', { page_path: window.location.pathname, send_page_view: false });
               `}
             </Script>
             <Suspense fallback={null}>
