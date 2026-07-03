@@ -8,13 +8,13 @@ import { isNextProductionBuild } from '@/lib/utils/build-phase';
 
 export class CategoryService {
   static async listAll() {
-    const cacheKey = TaxonomyCacheKeys.categories();
-    const cached = await getJson<CategoryListItem[]>(redis, cacheKey);
-    if (cached) return cached;
-
     if (isNextProductionBuild()) {
       throw new Error('Skipping category database load during production build');
     }
+
+    const cacheKey = TaxonomyCacheKeys.categories();
+    const cached = await getJson<CategoryListItem[]>(redis, cacheKey);
+    if (cached) return cached;
 
     const rows = await db
       .select({
