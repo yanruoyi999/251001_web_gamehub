@@ -1,5 +1,39 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import { getLocalizedPath, type Locale } from '@/i18n/config';
+import { getLocalizedPath, locales, type Locale } from '@/i18n/config';
+
+const PATH = '/guides/quick-play-guide';
+
+export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
+  const locale = (params.locale as Locale) ?? 'zh';
+  const isZh = locale === 'zh';
+  const title = isZh ? '快速游玩指南 | Luma Game Hub' : 'Quick Play Guide | Luma Game Hub';
+  const description = isZh
+    ? '选择启动快、规则清楚、容易暂停的在线小游戏，适合通勤、学习间隙和等待时间。'
+    : 'Choose online games that start quickly, explain themselves clearly, and are easy to pause for commutes, study breaks, and waiting time.';
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: getLocalizedPath(locale, PATH),
+      languages: Object.fromEntries(
+        locales.map((loc) => [loc === 'zh' ? 'zh-CN' : 'en-US', getLocalizedPath(loc, PATH)]),
+      ),
+    },
+    openGraph: {
+      title,
+      description,
+      url: getLocalizedPath(locale, PATH),
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary',
+      title,
+      description,
+    },
+  };
+}
 
 export default function Page({ params }: { params: { locale: string } }) {
   const locale = (params.locale as Locale) ?? 'zh';
