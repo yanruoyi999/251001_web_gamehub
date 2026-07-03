@@ -1002,3 +1002,60 @@
 - 优先排查 Vercel Runtime Logs 中数据库连接失败的真实错误，确认 `DATABASE_URL` 指向的主机是否仍有效。
 - 搜索 API 在 fallback 状态下虽然可用，但应以 `source=database` 或 `source=meilisearch` 为恢复标准。
 - 每次同步前继续以 `origin/main` 为基线创建隔离 worktree，避免把活跃仓库旧脏改动误合并到生产。
+
+---
+
+## 2026-07-03 搜索后端韧性与生产配置监测记录
+
+**触发来源:** 用户要求继续修复 Luma Game Hub 未解决问题
+**生产域名:** https://www.lumagamehub.com
+**本次目标:** 在外部 DB/Redis/Meilisearch 尚未恢复前，降低搜索接口被后端超时拖慢的风险，并让每日监测直接暴露生产配置问题
+
+### 检查结果
+
+- 生产 `DATABASE_URL` 结构为 Supabase direct host `db.atbmcpmdqrnetlxnchwv.supabase.co:5432`，不适合作为 Vercel serverless 生产流量的首选连接方式。
+- 生产 `MEILISEARCH_HOST` 指向 `http://localhost:7700`，生产代码会安全忽略该配置并降级搜索。
+- 使用现有生产数据库密码探测常见 Supavisor pooler 区域，未找到可直接连接的 pooler host；不能在未确认 region/URL 的情况下强改生产 `DATABASE_URL`。
+- `pnpm ops:monitoring` 之前只能看到 `public health` 和 `search api` degraded，不能明确指出配置风险。
+
+### 已完成修复
+
+- 新增 `lib/db/connection-policy.ts`，识别 local、Supabase direct、Supabase pooler、其他数据库连接形态。
+- `lib/db/index.ts` 改为按连接形态设置 postgres-js：
+  - Vercel/serverless 默认 `max=1`，避免单函数实例开过多连接。
+  - Supabase pooler 自动关闭 prepared statements。
+  - Supabase direct/pooler 自动要求 SSL。
+  - Supabase direct + serverless 输出明确 warning。
+- `services/search.service.ts` 给 Meilisearch 和数据库搜索增加短超时，后端不可达时更快降级到本地 fallback，避免用户搜索长时间等待。
+- `lib/utils/redis-helper.ts` 给 Redis get/set/delete 增加短超时，避免 Upstash 变慢时拖住主流程。
+- `scripts/monitoring-status.ts` 新增：
+  - `database config` 检查：生产目标站点下 Supabase direct URL 标为 degraded。
+  - `meilisearch config` 检查：生产目标站点下 localhost Meili 标为 degraded。
+- `docs/setup/external-services.md` 增加 Vercel + Supabase 生产连接要求，明确应使用 Supavisor pooler transaction URL。
+- 新增回归测试：
+  - `tests/db-connection-policy.test.ts`
+  - `tests/search.service.test.ts`
+
+### 验证结果
+
+- `pnpm type-check`: 通过。
+- `pnpm test -- --run`: 通过，9 个测试文件 / 26 个测试。
+- `pnpm build`: 通过，英文静态 HTML 修补 21/21。
+- `pnpm ops:monitoring`: 通过并正确标记：
+  - `database config`: degraded，Supabase direct URL in serverless runtime。
+  - `meilisearch config`: degraded，localhost Meili。
+  - `site` / `robots` / `sitemap` / `clarity tag`: ok。
+  - `public health` / `search api`: degraded。
+  - `gsc`: skipped，缺本地 GSC OAuth 凭据。
+
+### 仍需外部处理
+
+- 从 Supabase Dashboard 复制当前项目的 Supavisor transaction pooler URL，并替换 Vercel Production/Preview/Development 的 `DATABASE_URL`。
+- 配置真实生产 Meilisearch host，或确认暂时不使用 Meilisearch，把搜索恢复标准改为 `source=database`。
+- 补齐 GSC/GA4/Clarity/Typeform API 凭据后，让 `pnpm ops:growth` 自动读取真实数据。
+
+### 下一轮建议
+
+- 先完成 Supabase pooler URL 替换并重新部署；目标是 `/api/search?q=snake&limit=3` 返回 `source=database`，`/api/health` 中 database 恢复 `ok`。
+- 如果 Meilisearch 暂时不部署，保留 `meilisearch config` degraded，但不要让它阻塞内容增长；搜索恢复以数据库为主。
+- 后续内容优化继续围绕 GSC 已有点击信号：Google Snake Mods、Apple Knight、OvO。

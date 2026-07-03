@@ -5,10 +5,30 @@ import {
   recordRedisSuccess,
 } from '@/lib/redis';
 
+const DEFAULT_REDIS_TIMEOUT_MS = 1500;
+
+function redisTimeoutMs() {
+  const parsed = Number(process.env.REDIS_OPERATION_TIMEOUT_MS);
+  return Number.isInteger(parsed) && parsed > 0 ? parsed : DEFAULT_REDIS_TIMEOUT_MS;
+}
+
+function withRedisTimeout<T>(promise: Promise<T>, operation: string): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const timeout = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => {
+      reject(new Error(`Redis ${operation} timed out after ${redisTimeoutMs()}ms`));
+    }, redisTimeoutMs());
+  });
+
+  return Promise.race([promise, timeout]).finally(() => {
+    if (timer) clearTimeout(timer);
+  });
+}
+
 export async function getJson<T>(client: Redis | null, key: string): Promise<T | null> {
   if (!client || isRedisTemporarilyDisabled()) return null;
   try {
-    const value = await client.get<string>(key);
+    const value = await withRedisTimeout(client.get<string>(key), 'read');
     recordRedisSuccess();
     return value ? (JSON.parse(value) as T) : null;
   } catch (error) {
@@ -22,9 +42,9 @@ export async function setJson(client: Redis | null, key: string, value: unknown,
   try {
     const payload = JSON.stringify(value);
     if (ttlSeconds) {
-      await client.setex(key, ttlSeconds, payload);
+      await withRedisTimeout(client.setex(key, ttlSeconds, payload), 'write');
     } else {
-      await client.set(key, payload);
+      await withRedisTimeout(client.set(key, payload), 'write');
     }
     recordRedisSuccess();
   } catch (error) {
@@ -35,7 +55,7 @@ export async function setJson(client: Redis | null, key: string, value: unknown,
 export async function delKey(client: Redis | null, key: string) {
   if (!client || isRedisTemporarilyDisabled()) return;
   try {
-    await client.del(key);
+    await withRedisTimeout(client.del(key), 'delete');
     recordRedisSuccess();
   } catch (error) {
     recordRedisFailure('delete', error);

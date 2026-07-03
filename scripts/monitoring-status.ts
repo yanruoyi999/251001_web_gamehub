@@ -1,5 +1,6 @@
 import './load-env';
 
+import { getDatabaseConnectionMetadata } from '@/lib/db/connection-policy';
 import { getSiteBaseUrl } from '@/lib/seo';
 
 type CheckStatus = 'ok' | 'degraded' | 'skipped' | 'error';
@@ -12,6 +13,15 @@ interface CheckResult {
 
 const CHECK_TIMEOUT_MS = 15000;
 const GSC_SCOPE = 'https://www.googleapis.com/auth/webmasters.readonly';
+
+function isProductionTarget(siteUrl: string) {
+  try {
+    const host = new URL(siteUrl).hostname;
+    return host === 'lumagamehub.com' || host === 'www.lumagamehub.com';
+  } catch {
+    return false;
+  }
+}
 
 function withTimeout<T>(promise: Promise<T>, timeoutMs: number, label: string): Promise<T> {
   let timer: ReturnType<typeof setTimeout> | undefined;
@@ -234,12 +244,74 @@ async function checkClarity(): Promise<CheckResult> {
   }
 }
 
+function checkDatabaseConfig(siteUrl: string): CheckResult {
+  const targetEnv = isProductionTarget(siteUrl)
+    ? {
+        ...process.env,
+        VERCEL: process.env.VERCEL ?? '1',
+        VERCEL_ENV: process.env.VERCEL_ENV ?? 'production',
+      }
+    : process.env;
+  const metadata = getDatabaseConnectionMetadata(process.env.DATABASE_URL, targetEnv);
+  if (!metadata.configured) {
+    return {
+      name: 'database config',
+      status: 'error',
+      detail: 'DATABASE_URL is not configured',
+    };
+  }
+
+  if (metadata.warning) {
+    return {
+      name: 'database config',
+      status: 'degraded',
+      detail: `${metadata.provider} ${metadata.host ?? 'unknown-host'}:${metadata.port ?? 'unknown-port'} - ${metadata.warning}`,
+    };
+  }
+
+  return {
+    name: 'database config',
+    status: 'ok',
+    detail: `${metadata.provider} ${metadata.host ?? 'unknown-host'}:${metadata.port ?? 'unknown-port'}`,
+  };
+}
+
+function checkMeilisearchConfig(siteUrl: string): CheckResult {
+  const host = process.env.MEILISEARCH_HOST;
+  if (!host) {
+    return {
+      name: 'meilisearch config',
+      status: 'degraded',
+      detail: 'MEILISEARCH_HOST is not configured; database search fallback is required',
+    };
+  }
+
+  try {
+    const parsed = new URL(host);
+    const isLocalhost = parsed.hostname === 'localhost' || parsed.hostname === '127.0.0.1';
+    const localhostForProduction = isLocalhost && (process.env.NODE_ENV === 'production' || isProductionTarget(siteUrl));
+    return {
+      name: 'meilisearch config',
+      status: localhostForProduction ? 'degraded' : 'ok',
+      detail: `${parsed.protocol}//${parsed.hostname}${parsed.port ? `:${parsed.port}` : ''}`,
+    };
+  } catch {
+    return {
+      name: 'meilisearch config',
+      status: 'error',
+      detail: 'MEILISEARCH_HOST is not a valid URL',
+    };
+  }
+}
+
 async function main() {
   const siteUrl =
     process.env.MONITORING_SITE_URL ||
     process.env.GSC_SITE_URL ||
     (process.env.NODE_ENV === 'production' ? getSiteBaseUrl() : 'https://www.lumagamehub.com');
   const checks = await Promise.all([
+    Promise.resolve(checkDatabaseConfig(siteUrl)),
+    Promise.resolve(checkMeilisearchConfig(siteUrl)),
     checkUrl('site', siteUrl),
     checkUrl('robots', `${siteUrl}/robots.txt`),
     checkSitemap(siteUrl),

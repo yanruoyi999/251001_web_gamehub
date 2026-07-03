@@ -14,6 +14,26 @@ export interface SearchOptions {
   limit?: number;
 }
 
+const DEFAULT_SEARCH_BACKEND_TIMEOUT_MS = 2500;
+
+function searchBackendTimeoutMs() {
+  const parsed = Number(process.env.SEARCH_BACKEND_TIMEOUT_MS);
+  return Number.isInteger(parsed) && parsed > 0 ? parsed : DEFAULT_SEARCH_BACKEND_TIMEOUT_MS;
+}
+
+function withSearchTimeout<T>(promise: Promise<T>, label: string): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const timeout = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => {
+      reject(new Error(`${label} timed out after ${searchBackendTimeoutMs()}ms`));
+    }, searchBackendTimeoutMs());
+  });
+
+  return Promise.race([promise, timeout]).finally(() => {
+    if (timer) clearTimeout(timer);
+  });
+}
+
 export class SearchService {
   static async searchGames(options: SearchOptions) {
     const query = sanitizeSearchQuery(options.query);
@@ -38,11 +58,14 @@ export class SearchService {
     if (meilisearch) {
       try {
         const index = meilisearch.index('games');
-        const result = await index.search(query, {
-          limit,
-          offset,
-          filter: ['status = "active"'],
-        });
+        const result = await withSearchTimeout(
+          index.search(query, {
+            limit,
+            offset,
+            filter: ['status = "active"'],
+          }),
+          'Meilisearch lookup',
+        );
 
         const normalizedHits = result.hits
           .map((hit) => {
@@ -84,7 +107,10 @@ export class SearchService {
     }
 
     try {
-      const fallback = await this.searchWithDatabase(query, { page, limit, offset });
+      const fallback = await withSearchTimeout(
+        this.searchWithDatabase(query, { page, limit, offset }),
+        'Database search',
+      );
       await setJson(redis, cacheKey, fallback, CacheTTL.SEARCH_RESULTS);
       return fallback;
     } catch (error) {

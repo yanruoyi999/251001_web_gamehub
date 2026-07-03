@@ -6,6 +6,7 @@
 import { drizzle, type PostgresJsDatabase } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import * as schema from '@/db/schema';
+import { getDatabaseConnectionMetadata } from './connection-policy';
 
 type DatabaseClient = PostgresJsDatabase<typeof schema>;
 type PostgresClient = ReturnType<typeof postgres>;
@@ -22,10 +23,17 @@ function createDatabase(): DatabaseClient {
     );
   }
 
+  const connection = getDatabaseConnectionMetadata(connectionString);
+  if (connection.warning) {
+    console.warn(connection.warning);
+  }
+
   client = postgres(connectionString, {
-    max: process.env.NODE_ENV === 'production' ? 10 : 1,
+    max: connection.maxConnections,
     idle_timeout: 20,
-    connect_timeout: 10,
+    connect_timeout: connection.connectTimeoutSeconds,
+    prepare: connection.usePreparedStatements,
+    ...(connection.requiresSsl ? { ssl: 'require' as const } : {}),
   });
 
   return drizzle(client, { schema });

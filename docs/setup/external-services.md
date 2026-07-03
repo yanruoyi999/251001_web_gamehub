@@ -258,6 +258,27 @@ curl 'http://localhost:7700/indexes/games/search?q=太空' \
 cp .env.example .env.local
 ```
 
+#### 4.1.1 生产数据库连接要求（Vercel + Supabase）
+
+如果生产环境部署在 Vercel，并且数据库使用 Supabase，不要把下面这种 direct connection 当作生产首选：
+
+```bash
+DATABASE_URL="postgresql://postgres:***@db.<project-ref>.supabase.co:5432/postgres"
+```
+
+原因：Supabase direct endpoint 主要适合长连接或原生数据库工具；Vercel Serverless/Edge 这类临时运行环境更适合 Supavisor pooler，尤其是 transaction mode。生产应在 Supabase Dashboard 的 Database connection/Connection pooling 区域复制 pooler transaction URL，形态通常类似：
+
+```bash
+DATABASE_URL="postgresql://postgres.<project-ref>:***@aws-0-<region>.pooler.supabase.com:6543/postgres"
+```
+
+生产配置检查规则：
+
+- `DATABASE_URL` 指向 `*.pooler.supabase.com:6543`：推荐，用于 Vercel serverless 流量。
+- `DATABASE_URL` 指向 `db.<project-ref>.supabase.co:5432`：监测会标记为 degraded，除非已确认项目有 IPv4 add-on 且连接稳定。
+- `MEILISEARCH_HOST` 指向 `http://localhost:7700`：只允许本地开发；生产会被代码忽略并触发搜索降级。
+- 切换数据库 URL 后，先运行 `pnpm verify:services`，再部署生产。
+
 #### 4.2 填入真实凭证
 
 编辑 `.env.local`，填入前面获取的所有凭证：
