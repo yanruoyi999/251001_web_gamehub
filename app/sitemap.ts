@@ -101,6 +101,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly',
       priority: 0.75,
     },
+    {
+      path: '/guides/quick-play-guide',
+      file: ['app', '[locale]', 'guides', 'quick-play-guide', 'page.tsx'],
+      changeFrequency: 'monthly',
+      priority: 0.74,
+    },
     // AdSense必需页面
     {
       path: '/privacy',
