@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 
 export async function GET() {
   const summary = await getHealthSummary('public');
-  const isHealthy = summary.status === 'ok';
+  const isAvailable = summary.status !== 'error';
 
-  return NextResponse.json(summary, { status: isHealthy ? 200 : 503 });
+  return NextResponse.json(summary, { status: isAvailable ? 200 : 503 });
 }

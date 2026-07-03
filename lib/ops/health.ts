@@ -73,7 +73,7 @@ export async function checkDatabase(mode: HealthMode, timeoutMs = DEFAULT_CHECK_
   } catch (error) {
     return {
       name: 'database',
-      status: 'error',
+      status: mode === 'public' ? 'degraded' : 'error',
       message: toMessage(error, 'database', mode),
     } satisfies HealthCheckResult;
   }

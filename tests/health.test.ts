@@ -13,6 +13,7 @@ describe('sanitizeHealthResult', () => {
       'public',
     );
 
+    expect(result.status).toBe('error');
     expect(result.message).toBe('Database health check failed');
     expect(result.message).not.toContain('supabase.co');
   });
