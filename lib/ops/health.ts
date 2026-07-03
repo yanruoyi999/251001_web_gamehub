@@ -1,6 +1,10 @@
 import { sql } from 'drizzle-orm';
 
 import { db } from '@/lib/db';
+import {
+  getDatabaseConnectionMetadata,
+  shouldSkipSupabaseDirectInServerless,
+} from '@/lib/db/connection-policy';
 import { redis } from '@/lib/redis';
 import { getMeilisearchClient } from '@/lib/meilisearch';
 
@@ -67,6 +71,19 @@ export function withTimeout<T>(
 }
 
 export async function checkDatabase(mode: HealthMode, timeoutMs = DEFAULT_CHECK_TIMEOUT_MS) {
+  const connection = getDatabaseConnectionMetadata();
+  if (
+    mode === 'public' &&
+    process.env.HEALTH_ALLOW_SUPABASE_DIRECT_IN_SERVERLESS !== 'true' &&
+    shouldSkipSupabaseDirectInServerless(connection)
+  ) {
+    return {
+      name: 'database',
+      status: 'degraded',
+      message: publicMessage('database', 'degraded'),
+    } satisfies HealthCheckResult;
+  }
+
   try {
     await withTimeout(db.execute(sql`select 1`), timeoutMs, 'Database health check');
     return { name: 'database', status: 'ok' } satisfies HealthCheckResult;

@@ -91,3 +91,7 @@ export function getDatabaseConnectionMetadata(
     };
   }
 }
+
+export function shouldSkipSupabaseDirectInServerless(metadata: DatabaseConnectionMetadata) {
+  return metadata.provider === 'supabase-direct' && metadata.isServerlessRuntime;
+}

@@ -1,6 +1,9 @@
 import { describe, expect, it } from 'vitest';
 
-import { getDatabaseConnectionMetadata } from '@/lib/db/connection-policy';
+import {
+  getDatabaseConnectionMetadata,
+  shouldSkipSupabaseDirectInServerless,
+} from '@/lib/db/connection-policy';
 
 describe('getDatabaseConnectionMetadata', () => {
   it('flags Supabase direct URLs as risky in Vercel serverless runtimes', () => {
@@ -17,6 +20,7 @@ describe('getDatabaseConnectionMetadata', () => {
     expect(metadata.warning).toContain('Supabase direct database URL');
     expect(metadata.maxConnections).toBe(1);
     expect(metadata.requiresSsl).toBe(true);
+    expect(shouldSkipSupabaseDirectInServerless(metadata)).toBe(true);
   });
 
   it('uses pooler-safe options for Supabase pooler URLs', () => {
@@ -33,6 +37,6 @@ describe('getDatabaseConnectionMetadata', () => {
     expect(metadata.warning).toBeUndefined();
     expect(metadata.usePreparedStatements).toBe(false);
     expect(metadata.requiresSsl).toBe(true);
+    expect(shouldSkipSupabaseDirectInServerless(metadata)).toBe(false);
   });
 });
-

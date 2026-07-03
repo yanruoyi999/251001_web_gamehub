@@ -1,4 +1,8 @@
 import { db } from '@/lib/db';
+import {
+  getDatabaseConnectionMetadata,
+  shouldSkipSupabaseDirectInServerless,
+} from '@/lib/db/connection-policy';
 import { games, gameStats } from '@/db/schema';
 import { getMeilisearchClient } from '@/lib/meilisearch';
 import { redis } from '@/lib/redis';
@@ -104,6 +108,17 @@ export class SearchService {
       } catch (error) {
         console.warn('Meilisearch lookup failed, falling back to database:', error);
       }
+    }
+
+    const databaseConnection = getDatabaseConnectionMetadata();
+    if (
+      process.env.SEARCH_ALLOW_SUPABASE_DIRECT_IN_SERVERLESS !== 'true' &&
+      shouldSkipSupabaseDirectInServerless(databaseConnection)
+    ) {
+      console.warn('Skipping database search because Supabase direct URL is configured in serverless runtime');
+      const fallback = searchFallbackGames({ query, page, limit });
+      await setJson(redis, cacheKey, fallback, CacheTTL.SEARCH_RESULTS);
+      return fallback;
     }
 
     try {
