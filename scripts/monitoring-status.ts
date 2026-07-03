@@ -82,6 +82,40 @@ async function checkPublicHealth(siteUrl: string): Promise<CheckResult> {
   }
 }
 
+async function checkSearchEndpoint(siteUrl: string): Promise<CheckResult> {
+  try {
+    const { response, text } = await fetchText(`${siteUrl}/api/search?q=snake&limit=3`);
+    const payload = JSON.parse(text) as {
+      games?: unknown[];
+      total?: number;
+      source?: string;
+      degraded?: boolean;
+    };
+    const total = Number(payload.total ?? payload.games?.length ?? 0);
+    const source = payload.source ?? 'unknown';
+
+    if (!response.ok) {
+      return {
+        name: 'search api',
+        status: 'error',
+        detail: `HTTP ${response.status}, source=${source}, total=${total}`,
+      };
+    }
+
+    return {
+      name: 'search api',
+      status: total > 0 && source !== 'fallback' && !payload.degraded ? 'ok' : 'degraded',
+      detail: `HTTP ${response.status}, source=${source}, total=${total}`,
+    };
+  } catch (error) {
+    return {
+      name: 'search api',
+      status: 'error',
+      detail: error instanceof Error ? error.message : String(error),
+    };
+  }
+}
+
 async function getGoogleAccessToken(): Promise<string | null> {
   const clientId = process.env.GSC_CLIENT_ID;
   const clientSecret = process.env.GSC_CLIENT_SECRET;
@@ -210,6 +244,7 @@ async function main() {
     checkUrl('robots', `${siteUrl}/robots.txt`),
     checkSitemap(siteUrl),
     checkPublicHealth(siteUrl),
+    checkSearchEndpoint(siteUrl),
     checkGsc(siteUrl),
     checkClarity(),
   ]);

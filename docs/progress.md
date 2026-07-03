@@ -931,3 +931,74 @@
 
 - 合并部署后继续观察 Vercel Runtime Logs 中的 `Game detail database load timed out after 1500ms`，优先从数据库连接串、区域、Neon/Supabase 状态和连接池配置排查。
 - 补齐数据 API 凭据后把 `pnpm ops:growth` 纳入每日任务，避免再依赖手动浏览器截图读 GSC/Clarity。
+
+---
+
+## 2026-07-03 GitHub/Vercel 二次同步与监测补强记录
+
+**触发来源:** 用户确认 GPT5.5pro 可能已提交 GitHub，要求拉取 GitHub 与 Vercel 版本、对比本地版本、优化后合并入 `main`
+**生产域名:** https://www.lumagamehub.com
+**本次目标:** 以最新 `origin/main` 与当前 Vercel 生产部署为基线，判断本地未提交改动是否仍需合入，并补齐仍缺失的自动化监测项
+
+### 检查结果
+
+- 当前活跃仓库 `/Users/yanruoyi/ai-native/active/251001_web_游戏聚合网站` 不是干净状态，`main` 落后 `origin/main` 23 个提交，并存在未提交修改与未跟踪文件。
+- GitHub `origin/main` 最新提交为 `72efb8c perf(build): skip tag redis reads during static build`，已包含 2026-07-03 下午新增的 AdSense、搜索、guide 内容、构建期跳过 DB/Redis 读取等提交。
+- Vercel 当前生产部署 `dpl_DDQS2u1dvgKxCUWSsSHomEaY6b9p` 已 Ready，别名包含 `https://lumagamehub.com` 与 `https://www.lumagamehub.com`，创建时间为 2026-07-03 18:00:07 +0800。
+- 本地未提交改动与最新 `origin/main` 对比后，多数属于旧版本回退：会删除新增 guide、`ads.txt`、`llms.txt`、健康检查 helper、增长脚本，并会回退 GA4 pageview 去重、搜索 fallback、分页整数保护和构建期跳过 DB/Redis 读取。未整体合并。
+- 创建隔离 worktree `/tmp/luma-sync-gpt55-20260703-180823`，基于 `origin/main` 做本轮补强，未覆盖活跃仓库未提交内容。
+
+### 发现的问题
+
+- `pnpm ops:monitoring` 只检查 site、robots、sitemap、public health、GSC、Clarity tag，未覆盖用户每日巡检要求中的 `/api/search?q=snake&limit=3`。
+- 生产 `/api/health` 返回 HTTP 503，公开状态为 `database=error`、`redis=degraded`、`meilisearch=degraded`。
+- 生产 `/api/search?q=snake&limit=3` 返回 HTTP 200，但 `source=fallback`，说明搜索可用性由本地 fallback 兜底，真实 DB/Meilisearch 仍未恢复。
+
+### 已完成修复
+
+- 更新 `scripts/monitoring-status.ts`，新增 `search api` 检查项：
+  - 请求 `https://www.lumagamehub.com/api/search?q=snake&limit=3`。
+  - HTTP 非 2xx 记为 `error`。
+  - HTTP 200 但 `source=fallback`、`degraded=true` 或无结果时记为 `degraded`。
+  - 输出 `HTTP status`、`source`、`total`，便于每日任务区分“搜索不可用”和“搜索靠 fallback 可用”。
+
+### 验证结果
+
+- `pnpm install --frozen-lockfile`: 通过；pnpm 仍提示部分依赖 build scripts 被忽略。
+- `pnpm type-check`: 通过。
+- `pnpm test -- --run`: 通过，7 个测试文件 / 23 个测试全过。
+- `pnpm build`: 通过；构建期间按设计跳过数据库读取并使用 fallback，不阻断构建。
+- `pnpm ops:monitoring`: 通过并新增搜索项：
+  - `site`: ok，HTTP 200。
+  - `robots`: ok，HTTP 200。
+  - `sitemap`: ok，488 URLs。
+  - `public health`: degraded，HTTP 503，status=error。
+  - `search api`: degraded，HTTP 200，source=fallback，total=1。
+  - `gsc`: skipped，缺本地 GSC OAuth 凭据。
+  - `clarity tag`: skipped，临时 worktree 本地未配置 Clarity project id。
+- 线上抽查：
+  - `/`: HTTP 200。
+  - `/en`: HTTP 200。
+  - `/robots.txt`: HTTP 200。
+  - `/sitemap.xml`: HTTP 200。
+  - `/ads.txt`: HTTP 200。
+  - `/llms.txt`: HTTP 200。
+  - `/en/guides/quick-play-guide`: HTTP 200。
+  - `/en/guides/no-download-games`: HTTP 200。
+
+### 备份与回滚点
+
+- 本轮基线远端 tag：`backup/luma/20260703-180823-before-sync-gpt55`，指向同步前的 `origin/main`。
+- 本轮隔离分支：`automation/20260703-180823-luma-sync-gpt55`。
+- 本轮 manifest：`/Users/yanruoyi/ai-native/ops/daily-growth/backups/2026-07-03/luma-sync-gpt55/manifest.md`。
+
+### 仍需外部处理
+
+- 修复生产数据库、Redis、Meilisearch 的真实连通性；目前变量存在于 Vercel，但服务检查失败。
+- 若要 `pnpm ops:growth` 自动读取真实后台数据，仍需补齐本地或安全运行环境中的 `GA4_PROPERTY_ID`、Google OAuth/service-account、`CLARITY_API_TOKEN`、`TYPEFORM_TOKEN`。
+
+### 下一轮建议
+
+- 优先排查 Vercel Runtime Logs 中数据库连接失败的真实错误，确认 `DATABASE_URL` 指向的主机是否仍有效。
+- 搜索 API 在 fallback 状态下虽然可用，但应以 `source=database` 或 `source=meilisearch` 为恢复标准。
+- 每次同步前继续以 `origin/main` 为基线创建隔离 worktree，避免把活跃仓库旧脏改动误合并到生产。
