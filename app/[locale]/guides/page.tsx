@@ -75,6 +75,14 @@ export default function GuidesPage({ params }: GuidesPageProps) {
           ? '面向短时间休息、通勤和等待场景，整理启动快、规则清楚、容易暂停的在线小游戏选择标准。'
           : 'A practical guide for choosing quick online games that start fast, explain themselves clearly, and are easy to pause.',
     },
+    {
+      href: getLocalizedPath(locale, '/guides/no-download-games'),
+      title: locale === 'zh' ? '无需下载的在线小游戏' : 'No Download Games',
+      summary:
+        locale === 'zh'
+          ? '了解无需安装、无需注册、可直接打开的浏览器小游戏如何降低试玩门槛。'
+          : 'Learn how no-download browser games reduce install, sign-in, and app-store friction before a first test round.',
+    },
   ];
 
   return (
