@@ -8,13 +8,13 @@ import { isNextProductionBuild } from '@/lib/utils/build-phase';
 
 export class TagService {
   static async listAll() {
-    const cacheKey = TaxonomyCacheKeys.tags();
-    const cached = await getJson<TagListItem[]>(redis, cacheKey);
-    if (cached) return cached;
-
     if (isNextProductionBuild()) {
       throw new Error('Skipping tag database load during production build');
     }
+
+    const cacheKey = TaxonomyCacheKeys.tags();
+    const cached = await getJson<TagListItem[]>(redis, cacheKey);
+    if (cached) return cached;
 
     const rows = await db
       .select({
