@@ -107,6 +107,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly',
       priority: 0.74,
     },
+    {
+      path: '/guides/no-download-games',
+      file: ['app', '[locale]', 'guides', 'no-download-games', 'page.tsx'],
+      changeFrequency: 'monthly',
+      priority: 0.74,
+    },
     // AdSense必需页面
     {
       path: '/privacy',
