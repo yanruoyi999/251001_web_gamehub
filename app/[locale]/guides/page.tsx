@@ -66,6 +66,16 @@ export default function GuidesPage({ params }: GuidesPageProps) {
     locale === 'zh'
       ? '从低干扰玩法到移动端体验，我们按不同场景整理并复核浏览器游戏。选择一个主题，查看适配说明后开始游玩。'
       : 'From lower-interruption picks to mobile browser candidates, these guides organize games by real play scenarios. Check the device notes, choose a theme, and start playing.';
+  const extraGuides = [
+    {
+      href: getLocalizedPath(locale, '/guides/quick-play-guide'),
+      title: locale === 'zh' ? '快速游玩指南' : 'Quick Play Guide',
+      summary:
+        locale === 'zh'
+          ? '面向短时间休息、通勤和等待场景，整理启动快、规则清楚、容易暂停的在线小游戏选择标准。'
+          : 'A practical guide for choosing quick online games that start fast, explain themselves clearly, and are easy to pause.',
+    },
+  ];
 
   return (
     <div className="mx-auto w-full max-w-5xl px-6 py-12">
@@ -75,6 +85,23 @@ export default function GuidesPage({ params }: GuidesPageProps) {
       </header>
 
       <div className="grid gap-6 md:grid-cols-2">
+        {extraGuides.map((guide) => (
+          <Card key={guide.href} className="flex h-full flex-col justify-between border-primary/30">
+            <CardHeader>
+              <CardTitle className="text-2xl font-semibold text-foreground">
+                {guide.title}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="flex flex-1 flex-col justify-between gap-6 text-sm text-muted-foreground">
+              <p>{guide.summary}</p>
+              <div className="mt-auto">
+                <Link href={guide.href} className="inline-flex items-center text-primary transition hover:text-primary/80" prefetch>
+                  {locale === 'zh' ? '阅读完整指南' : 'Read the full guide'} →
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
         {pages.map((page) => {
           const content = page.locales[locale] ?? page.locales.zh;
           const href = getLocalizedPath(locale, `/guides/${page.slug}`);
