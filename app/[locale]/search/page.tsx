@@ -3,6 +3,7 @@ import { getTranslations } from 'next-intl/server';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { getLocalizedPath } from '@/i18n/config';
+import { searchFallbackGames } from '@/lib/games/fallback-search';
 import { SearchService } from '@/services';
 
 export const dynamic = 'force-dynamic';
@@ -10,6 +11,23 @@ export const dynamic = 'force-dynamic';
 interface SearchPageProps {
   params: { locale: string };
   searchParams: { q?: string; page?: string };
+}
+
+async function safeSearchGames(query: string, page: number) {
+  try {
+    return await SearchService.searchGames({ query, page, limit: 12 });
+  } catch (error) {
+    console.warn('[search-page-fallback]', {
+      query,
+      page,
+      message: error instanceof Error ? error.message : 'Unknown error',
+    });
+
+    return {
+      ...searchFallbackGames({ query, page, limit: 12 }),
+      degraded: true,
+    };
+  }
 }
 
 export default async function SearchPage({ params, searchParams }: SearchPageProps) {
@@ -23,7 +41,7 @@ export default async function SearchPage({ params, searchParams }: SearchPagePro
   const page = pageParam && Number.isInteger(pageParam) && pageParam > 0 ? pageParam : 1;
 
   const result = trimmedQuery
-    ? await SearchService.searchGames({ query: trimmedQuery, page, limit: 12 })
+    ? await safeSearchGames(trimmedQuery, page)
     : { games: [], total: 0, page: 1, limit: 12, source: 'empty' as const };
 
   const totalPages = Math.max(1, Math.ceil(result.total / result.limit));
