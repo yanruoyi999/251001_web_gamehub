@@ -1,10 +1,11 @@
 import type { Metadata, Viewport } from 'next';
 import { Suspense } from 'react';
 import Script from 'next/script';
+import { headers } from 'next/headers';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
-import { defaultLocale, getLocalizedPath, locales } from '@/i18n/config';
+import { defaultLocale, getLocalizedPath, isLocale, locales } from '@/i18n/config';
 import AnalyticsListener from '@/components/layout/AnalyticsListener';
 import LocaleDocumentSync from '@/components/layout/LocaleDocumentSync';
 import { GA_TRACKING_ID } from '@/lib/gtag';
@@ -93,8 +94,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const requestLocale = headers().get('x-next-intl-locale');
+  const documentLocale = isLocale(requestLocale) ? requestLocale : defaultLocale;
+
   return (
-    <html lang={defaultLocale} data-locale={defaultLocale} suppressHydrationWarning>
+    <html lang={documentLocale} data-locale={documentLocale} suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://www.google-analytics.com" crossOrigin="anonymous" />
