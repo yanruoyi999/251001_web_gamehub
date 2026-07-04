@@ -4,8 +4,12 @@ export type Locale = (typeof locales)[number];
 export const defaultLocale: Locale = 'zh';
 export const localePrefix = 'as-needed';
 
+export function isLocale(value: string | undefined | null): value is Locale {
+  return Boolean(value && (locales as readonly string[]).includes(value));
+}
+
 export function getLocalizedPath(locale: Locale | string, pathname = ''): string {
-  const resolvedLocale = locales.includes(locale as Locale) ? (locale as Locale) : defaultLocale;
+  const resolvedLocale = isLocale(locale) ? locale : defaultLocale;
   const normalizedPath =
     !pathname || pathname === '/'
       ? ''

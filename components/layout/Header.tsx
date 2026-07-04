@@ -5,7 +5,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 
-import { getLocalizedPath, locales } from '@/i18n/config';
+import { getLocalizedPath, isLocale } from '@/i18n/config';
 import { SearchInput } from '@/components/game/search-input';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { trackEvent } from '@/lib/gtag';
@@ -21,7 +21,7 @@ function LanguageSwitcher() {
   const pathname = usePathname();
 
   const segments = pathname.split('/').filter(Boolean);
-  const currentLocaleSegment = locales.includes(segments[0] as any) ? segments[0] : null;
+  const currentLocaleSegment = isLocale(segments[0]) ? segments[0] : null;
   const pathWithoutLocale = currentLocaleSegment
     ? `/${segments.slice(1).join('/')}`
     : pathname;
@@ -63,7 +63,7 @@ export function Header() {
   const activeLocale = useLocale();
   const pathname = usePathname();
   const segments = pathname.split('/').filter(Boolean);
-  const currentLocaleSegment = locales.includes(segments[0] as any)
+  const currentLocaleSegment = isLocale(segments[0])
     ? segments[0]
     : activeLocale;
 
