@@ -72,6 +72,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(result);
   } catch (error) {
     console.warn('Game database list failed, using local fallback:', error);
+    // Keep the public catalogue available for crawlers, reviewers, and users when database env vars are absent.
     return NextResponse.json({
       ...listFallbackGames(listOptions),
       degraded: true,
