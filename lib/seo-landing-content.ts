@@ -372,35 +372,53 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       'touch friendly free games',
     ],
     updatedAt: seoContentUpdatedAt,
-    relatedSlugs: ['best-browser-games-5-minute-break', 'games-to-play-when-bored'],
+    relatedSlugs: ['best-browser-games-5-minute-break', 'games-to-play-when-bored', 'free-games-no-ads'],
     locales: {
       en: {
-        metaTitle: 'Best Free iPhone Browser Games | No App Download',
+        metaTitle: 'Best Free iPhone Games to Play in Browser | No App',
         metaDescription:
-          'Try free iPhone browser games without an App Store download. Compare four live candidates, controls, orientation, and device limitations before playing.',
-        heading: 'Best Free iPhone Browser Games',
-        subheading: 'Four live browser candidates to test in Safari or Chrome before installing another app.',
+          'Try free iPhone games in Safari or Chrome with no App Store download. Compare tap controls, portrait fit, short sessions, and safe browser-game picks.',
+        heading: 'Best Free iPhone Games to Play in Your Browser',
+        subheading: 'A practical shortlist for Safari and Chrome: quick games, tap-friendly controls, no app install, and clear warnings when a game may feel better on desktop.',
         overview: [
-          'These games open in a browser and do not require an App Store installation. They are mobile candidates, not guaranteed one-handed or portrait experiences.',
-          'Touch controls, audio, orientation, and saved progress depend on each third-party game. Test one short round on your own iPhone before a longer session.',
+          'If you search for the best free iPhone games, you usually want something that starts now, does not ask for an App Store download, and still feels playable on a small touchscreen. This guide focuses on browser games you can test in Safari or Chrome before installing anything.',
+          'The important detail: browser-playable does not automatically mean perfect on every iPhone. Canvas size, audio permissions, landscape rotation, touch controls, and saved progress all depend on the third-party game build. Use the checks below to pick a short-session game that fits your device instead of guessing from a title alone.',
         ],
         sections: [
           {
             title: 'A 30-Second iPhone Compatibility Check',
-            body: 'Open the game in Safari, rotate once, tap the main controls, and start a short round. If the canvas is cropped or expects arrow keys, switch candidates.',
+            body: 'Before committing to a longer session, open the game in Safari, rotate once, tap the main controls, and play one short round. If the canvas is cropped, the play button is hidden, or the game expects physical arrow keys, switch candidates.',
             bullets: [
               'Confirm that the play button and controls fit without horizontal scrolling.',
+              'Try both portrait and landscape when the first view feels cramped.',
+              'Tap the main action two or three times to check input delay.',
               'Keep the browser online unless the game explicitly supports offline play.',
               'Do not assume progress is saved; test a short round before refreshing.',
             ],
           },
           {
-            title: 'Why Browser Games Beat Native Installs',
-            body: 'Browser games let you try a game before installing an app. They avoid an App Store download, although they still use network data and browser storage.',
+            title: 'Best Picks by Situation',
+            body: 'Choose the game by control style first. The best free iPhone game for a quick break is usually the one that matches your thumb input, not the one with the most complex mechanics.',
+            bullets: [
+              'Simple taps: Adam and Eve 4 is the safest first test because point-and-click puzzles translate well to touch.',
+              'Short physics rounds: Balance Duel is useful when you want a quick responsiveness check.',
+              'Rhythm and timing: Beat Line works for short attempts if audio and tap timing feel stable.',
+              'Complex controls: Apple Knight is included as a stress test; if virtual buttons feel cramped, move to desktop.',
+            ],
           },
           {
-            title: 'Choose by Control Style',
-            body: 'Point-and-click and simple timing games are usually easier to test on a phone than keyboard-heavy platformers.',
+            title: 'Why Browser Games Beat Native Installs',
+            body: 'Browser games let you try a game before installing an app. They avoid an App Store download, although they still use network data, browser storage, and third-party game resources.',
+          },
+          {
+            title: 'What to Avoid on iPhone',
+            body: 'A safe browser game should open in the page. Be cautious with pages that turn a simple game search into a download funnel or ask for unrelated permissions.',
+            bullets: [
+              'Do not download APK files for iPhone; iOS apps come through the App Store.',
+              'Avoid pages that require a profile install, configuration file, or unknown browser extension.',
+              'Avoid mirrors that cover the play area with fake start buttons or app-install prompts.',
+              'Use Luma links as browser-play candidates, not as a guarantee that every third-party save system will work on your device.',
+            ],
           },
         ],
         recommendations: [
@@ -428,6 +446,16 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               'No. They run in your browser, so you can launch them instantly without installing anything from the App Store.',
           },
           {
+            question: 'Which free iPhone browser game should I try first?',
+            answer:
+              'Start with a tap-first game such as Adam and Eve 4, then test timing games like Beat Line or physics games like Balance Duel. Save keyboard-heavy platformers for desktop if the on-screen controls feel cramped.',
+          },
+          {
+            question: 'Do browser games work in both Safari and Chrome on iPhone?',
+            answer:
+              'Most HTML5 games can open in either browser, but controls, audio prompts, and saved progress can differ. Test one short round before relying on a game for a longer session.',
+          },
+          {
             question: 'Will the games remember my progress?',
             answer:
               'Do not assume they will. Saving behavior varies by game and browser privacy settings. Test a short round first.',
@@ -442,32 +470,50 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ctaDescription: 'Open the catalogue and test controls, orientation, and saving behavior on your own device.',
       },
       zh: {
-        metaTitle: 'Best Free iPhone Browser Games | 无需安装应用',
+        metaTitle: 'Best Free iPhone Games | 浏览器里直接玩',
         metaDescription:
-          '尝试无需 App Store 下载的免费 iPhone 浏览器游戏，对比四款可访问候选的操作、方向与设备限制。',
-        heading: 'Best Free iPhone 浏览器游戏',
-        subheading: '先在 Safari 或 Chrome 中测试四款候选，再决定是否需要安装其他应用。',
+          '在 Safari 或 Chrome 中试玩免费 iPhone 游戏,无需 App Store 下载。对比触控、竖屏适配、短局体验和安全浏览器游戏候选。',
+        heading: 'Best Free iPhone Games: 浏览器里直接玩的免费游戏',
+        subheading: '面向 Safari 和 Chrome 的实用候选:短局、触控友好、无需安装应用,并标出哪些游戏可能更适合桌面端。',
         overview: [
-          '这些游戏可以在浏览器中打开，无需从 App Store 安装，但不代表全部支持单手或竖屏操作。',
-          '触控、声音、方向和存档由各第三方游戏决定。通勤或长时间游玩前，先在自己的 iPhone 上测试一小局。',
+          '搜索 best free iPhone games 时,多数人想要的是马上能玩、不需要 App Store 下载、并且在小屏触控上不别扭的游戏。本页只选可以在 Safari 或 Chrome 中测试的浏览器游戏,让你先试玩,再决定是否需要安装别的应用。',
+          '但“浏览器可玩”不等于每台 iPhone 都完美适配。画布尺寸、声音权限、横竖屏、触控按钮和存档都由第三方游戏版本决定。用下面的检查顺序,比只看标题更容易找到真正适合自己设备的短局游戏。',
         ],
         sections: [
           {
             title: '30 秒兼容性检查',
-            body: '在 Safari 中打开游戏、旋转一次屏幕、点击主要控件并开始一小局。如果画面裁切或必须使用方向键，就换另一个候选。',
+            body: '开始长时间游玩前,先在 Safari 中打开游戏、旋转一次屏幕、点击主要控件并开始一小局。如果画面裁切、开始按钮被挡住,或必须依赖实体方向键,就换另一个候选。',
             bullets: [
               '确认播放按钮和控制区无需横向滚动即可看全。',
+              '首屏拥挤时同时测试竖屏和横屏。',
+              '连续点击主要操作两三次,检查是否有明显输入延迟。',
               '除非游戏明确支持离线，否则保持网络连接。',
               '不要默认会保存进度，先用短局测试刷新后的表现。',
             ],
           },
           {
-            title: '为什么选择浏览器小游戏',
-            body: '浏览器游戏适合在安装 App 前先试玩。它们省去应用下载，但仍会使用网络流量和浏览器存储。',
+            title: '按场景选择首个游戏',
+            body: '先按操作方式选,不要只看游戏名。对 iPhone 来说,最好的免费游戏通常是最匹配手指操作的那一款。',
+            bullets: [
+              '简单点击:Adam and Eve 4 是最稳的首个测试,点击解谜比较适合触屏。',
+              '短局物理:Balance Duel 适合快速检查手机上的响应和布局。',
+              '节奏时机:Beat Line 适合短局尝试,但要确认声音和点击时机稳定。',
+              '复杂控制:Apple Knight 更像压力测试;如果虚拟按钮拥挤,建议换到桌面端。',
+            ],
           },
           {
-            title: '按操作方式选择',
-            body: '点击解谜和简单节奏游戏通常比键盘平台游戏更容易在手机上测试。',
+            title: '为什么选择浏览器小游戏',
+            body: '浏览器游戏适合在安装 App 前先试玩。它们省去应用下载,但仍会使用网络流量、浏览器存储和第三方游戏资源。',
+          },
+          {
+            title: 'iPhone 上要避开什么',
+            body: '安全的浏览器游戏应该能直接在页面里打开。如果一个页面把简单试玩变成下载流程,或要求无关权限,就要谨慎。',
+            bullets: [
+              '不要为 iPhone 下载 APK;iOS 应用应通过 App Store。',
+              '避免要求安装描述文件、配置文件或未知浏览器扩展的页面。',
+              '避开用假开始按钮、应用安装弹窗覆盖游戏区域的镜像站。',
+              'Luma 链接代表可在浏览器测试的候选,不保证每个第三方游戏都能在你的设备上保存进度。',
+            ],
           },
         ],
         recommendations: [
@@ -492,6 +538,16 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           {
             question: '这些 iPhone 游戏需要下载吗？',
             answer: '不需要，直接在浏览器中打开即可玩，不占用任何安装空间。',
+          },
+          {
+            question: '第一款免费 iPhone 浏览器游戏该试哪一个?',
+            answer:
+              '可以先试 Adam and Eve 4 这类点击游戏,再测试 Beat Line 这类节奏游戏或 Balance Duel 这类物理短局。若平台动作游戏的虚拟按钮太挤,就改用桌面端。',
+          },
+          {
+            question: 'Safari 和 Chrome 都能玩吗?',
+            answer:
+              '多数 HTML5 游戏都可以打开,但触控、声音提示和存档行为可能不同。建议先玩一小局,确认自己的浏览器表现。',
           },
           {
             question: '退出后下次还能接着玩吗？',
