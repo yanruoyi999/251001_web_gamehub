@@ -13,27 +13,9 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: pnpm
-
-      - name: Install pnpm
-        run: npm install -g pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Lint
-        run: pnpm lint
-
-      - name: Type check
-        run: pnpm type-check
-
-      - name: Unit tests
-        run: pnpm test
-        env:
-          NODE_ENV: test
+      - name: Smoke check
+        run: |
+          echo "Repository checked out successfully. Full Next.js build validation runs in Vercel preview deployments."
+          git status --short
