@@ -16,13 +16,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
-      - name: Enable pnpm
+      - name: Install pnpm
         run: |
-          corepack enable
-          corepack prepare pnpm@9 --activate
-
-      - name: Verify runtime
-        run: |
+          npm install -g pnpm@9
           node --version
           pnpm --version
 
