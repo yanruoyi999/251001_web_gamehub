@@ -1,6 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { FavoriteService, GameService } from '@/services';
 import { isAdminRequestAuthenticated } from '@/lib/auth/admin';
+import { listFallbackGames } from '@/lib/games/fallback-list';
+import { sanitizeSearchQuery, validatePagination } from '@/lib/utils/validation';
+
+function parseIntegerParam(value: string | null) {
+  if (!value) return undefined;
+  const parsed = Number(value);
+  return Number.isInteger(parsed) ? parsed : undefined;
+}
 
 function parseSortBy(value: string | null) {
   if (!value) return undefined;
@@ -18,52 +26,69 @@ function parseSortOrder(value: string | null) {
 
 function parseStatus(value: string | null) {
   if (!value) return undefined;
-  if (['active', 'inactive', 'pending'].includes(value)) {
-    return value as 'active' | 'inactive' | 'pending';
+  if (['active', 'inactive', 'pending', 'all'].includes(value)) {
+    return value as 'active' | 'inactive' | 'pending' | 'all';
   }
   return undefined;
 }
 
+function parseBoolean(value: string | null) {
+  if (value === 'true') return true;
+  if (value === 'false') return false;
+  return undefined;
+}
+
 export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const { page, limit } = validatePagination(
+    parseIntegerParam(searchParams.get('page')),
+    parseIntegerParam(searchParams.get('limit')),
+  );
+  const status = parseStatus(searchParams.get('status'));
+  const categoryId = parseIntegerParam(searchParams.get('categoryId'));
+  const tagId = parseIntegerParam(searchParams.get('tagId'));
+  const featured = parseBoolean(searchParams.get('featured'));
+  const isNew = parseBoolean(searchParams.get('isNew'));
+  const isHot = parseBoolean(searchParams.get('isHot'));
+  const favoritesOnly = searchParams.get('favoritesOnly') === 'true';
+  const sortBy = parseSortBy(searchParams.get('sortBy'));
+  const sortOrder = parseSortOrder(searchParams.get('sortOrder'));
+  const search = sanitizeSearchQuery(searchParams.get('search') ?? '') || undefined;
+
+  const favoriteContext = FavoriteService.getContextFromHeaders(request.headers, request.ip ?? undefined);
+  let favoriteIds: number[] = [];
+
   try {
-    const { searchParams } = new URL(request.url);
+    favoriteIds = await FavoriteService.listFavoriteIds(favoriteContext);
+  } catch (error) {
+    console.warn('Favorites are unavailable for game list; continuing without favorite state:', error);
+  }
 
-    const page = searchParams.get('page');
-    const limit = searchParams.get('limit');
-    const categoryId = searchParams.get('categoryId');
-    const tagId = searchParams.get('tagId');
-    const status = parseStatus(searchParams.get('status'));
-    const featured = searchParams.get('featured');
-    const isNew = searchParams.get('isNew');
-    const isHot = searchParams.get('isHot');
-    const favoritesOnly = searchParams.get('favoritesOnly') === 'true';
+  const listOptions = {
+    page,
+    limit,
+    status,
+    categoryId,
+    tagId,
+    search,
+    sortBy,
+    sortOrder,
+    featured,
+    isNew,
+    isHot,
+    onlyFavorites: favoritesOnly,
+    favoriteGameIds: favoriteIds,
+  };
 
-    const favoriteContext = FavoriteService.getContextFromHeaders(request.headers, request.ip ?? undefined);
-    const favoriteIds = await FavoriteService.listFavoriteIds(favoriteContext);
-
-    const result = await GameService.listGames({
-      page: page ? Number(page) : undefined,
-      limit: limit ? Number(limit) : undefined,
-      status,
-      categoryId: categoryId ? Number(categoryId) : undefined,
-      tagId: tagId ? Number(tagId) : undefined,
-      search: searchParams.get('search') ?? undefined,
-      sortBy: parseSortBy(searchParams.get('sortBy')),
-      sortOrder: parseSortOrder(searchParams.get('sortOrder')),
-      featured: featured === 'true' ? true : featured === 'false' ? false : undefined,
-      isNew: isNew === 'true' ? true : isNew === 'false' ? false : undefined,
-      isHot: isHot === 'true' ? true : isHot === 'false' ? false : undefined,
-      onlyFavorites: favoritesOnly,
-      favoriteGameIds: favoriteIds,
-    });
-
+  try {
+    const result = await GameService.listGames(listOptions);
     return NextResponse.json(result);
   } catch (error) {
-    console.error('Failed to list games:', error);
-    return NextResponse.json(
-      { error: 'Failed to list games' },
-      { status: 500 }
-    );
+    console.warn('Game database list failed, using local fallback:', error);
+    return NextResponse.json({
+      ...listFallbackGames(listOptions),
+      degraded: true,
+    });
   }
 }
 
