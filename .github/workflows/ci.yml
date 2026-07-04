@@ -10,28 +10,32 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: node:22-bookworm
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
 
-      - name: Verify runtime
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - name: Install pnpm
         run: |
+          npm install -g pnpm@9
           node --version
-          npm --version
-          npx pnpm@9 --version
+          pnpm --version
 
       - name: Install dependencies
-        run: npx pnpm@9 install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Lint
-        run: npx pnpm@9 lint
+        run: pnpm lint
 
       - name: Type check
-        run: npx pnpm@9 type-check
+        run: pnpm type-check
 
       - name: Unit tests
-        run: npx pnpm@9 test
+        run: pnpm test
         env:
           NODE_ENV: test
