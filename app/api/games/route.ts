@@ -3,6 +3,7 @@ import { FavoriteService, GameService } from '@/services';
 import { isAdminRequestAuthenticated } from '@/lib/auth/admin';
 import { listFallbackGames } from '@/lib/games/fallback-list';
 import { sanitizeSearchQuery, validatePagination } from '@/lib/utils/validation';
+import type { ListGamesOptions } from '@/services/game.service';
 
 function parseIntegerParam(value: string | null) {
   if (!value) return undefined;
@@ -10,26 +11,22 @@ function parseIntegerParam(value: string | null) {
   return Number.isInteger(parsed) ? parsed : undefined;
 }
 
-function parseSortBy(value: string | null) {
+function parseSortBy(value: string | null): ListGamesOptions['sortBy'] {
   if (!value) return undefined;
-  if (['publishedAt', 'playCount', 'averageRating', 'title'].includes(value)) {
-    return value as 'publishedAt' | 'playCount' | 'averageRating' | 'title';
-  }
-  return undefined;
+  return ['publishedAt', 'playCount', 'averageRating', 'title'].includes(value)
+    ? (value as ListGamesOptions['sortBy'])
+    : undefined;
 }
 
-function parseSortOrder(value: string | null) {
-  if (!value) return undefined;
-  if (value === 'asc' || value === 'desc') return value;
-  return undefined;
+function parseSortOrder(value: string | null): ListGamesOptions['sortOrder'] {
+  return value === 'asc' || value === 'desc' ? value : undefined;
 }
 
-function parseStatus(value: string | null) {
+function parseStatus(value: string | null): ListGamesOptions['status'] {
   if (!value) return undefined;
-  if (['active', 'inactive', 'pending', 'all'].includes(value)) {
-    return value as 'active' | 'inactive' | 'pending' | 'all';
-  }
-  return undefined;
+  return ['active', 'inactive', 'pending', 'all'].includes(value)
+    ? (value as ListGamesOptions['status'])
+    : undefined;
 }
 
 function parseBoolean(value: string | null) {
@@ -44,16 +41,6 @@ export async function GET(request: NextRequest) {
     parseIntegerParam(searchParams.get('page')),
     parseIntegerParam(searchParams.get('limit')),
   );
-  const status = parseStatus(searchParams.get('status'));
-  const categoryId = parseIntegerParam(searchParams.get('categoryId'));
-  const tagId = parseIntegerParam(searchParams.get('tagId'));
-  const featured = parseBoolean(searchParams.get('featured'));
-  const isNew = parseBoolean(searchParams.get('isNew'));
-  const isHot = parseBoolean(searchParams.get('isHot'));
-  const favoritesOnly = searchParams.get('favoritesOnly') === 'true';
-  const sortBy = parseSortBy(searchParams.get('sortBy'));
-  const sortOrder = parseSortOrder(searchParams.get('sortOrder'));
-  const search = sanitizeSearchQuery(searchParams.get('search') ?? '') || undefined;
 
   const favoriteContext = FavoriteService.getContextFromHeaders(request.headers, request.ip ?? undefined);
   let favoriteIds: number[] = [];
@@ -64,19 +51,19 @@ export async function GET(request: NextRequest) {
     console.warn('Favorites are unavailable for game list; continuing without favorite state:', error);
   }
 
-  const listOptions = {
+  const listOptions: ListGamesOptions = {
     page,
     limit,
-    status,
-    categoryId,
-    tagId,
-    search,
-    sortBy,
-    sortOrder,
-    featured,
-    isNew,
-    isHot,
-    onlyFavorites: favoritesOnly,
+    status: parseStatus(searchParams.get('status')),
+    categoryId: parseIntegerParam(searchParams.get('categoryId')),
+    tagId: parseIntegerParam(searchParams.get('tagId')),
+    search: sanitizeSearchQuery(searchParams.get('search') ?? '') || undefined,
+    sortBy: parseSortBy(searchParams.get('sortBy')),
+    sortOrder: parseSortOrder(searchParams.get('sortOrder')),
+    featured: parseBoolean(searchParams.get('featured')),
+    isNew: parseBoolean(searchParams.get('isNew')),
+    isHot: parseBoolean(searchParams.get('isHot')),
+    onlyFavorites: searchParams.get('favoritesOnly') === 'true',
     favoriteGameIds: favoriteIds,
   };
 
@@ -98,33 +85,30 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const body = await request.json();
+    const payload = await request.json();
 
-    if (!body?.title || !body?.iframeUrl) {
-      return NextResponse.json(
-        { error: 'title and iframeUrl are required' },
-        { status: 400 }
-      );
+    if (!payload?.title || !payload?.iframeUrl) {
+      return NextResponse.json({ error: 'title and iframeUrl are required' }, { status: 400 });
     }
 
     const game = await GameService.createGame({
-      title: body.title,
-      titleEn: body.titleEn,
-      description: body.description,
-      descriptionEn: body.descriptionEn,
-      instructions: body.instructions,
-      instructionsEn: body.instructionsEn,
-      thumbnailUrl: body.thumbnailUrl,
-      iframeUrl: body.iframeUrl,
-      slug: body.slug,
-      isNew: body.isNew,
-      isHot: body.isHot,
-      status: body.status,
-      developerName: body.developerName,
-      developerUrl: body.developerUrl,
-      sourceUrl: body.sourceUrl,
-      categoryIds: body.categoryIds,
-      tagIds: body.tagIds,
+      title: payload.title,
+      titleEn: payload.titleEn,
+      description: payload.description,
+      descriptionEn: payload.descriptionEn,
+      instructions: payload.instructions,
+      instructionsEn: payload.instructionsEn,
+      thumbnailUrl: payload.thumbnailUrl,
+      iframeUrl: payload.iframeUrl,
+      slug: payload.slug,
+      isNew: payload.isNew,
+      isHot: payload.isHot,
+      status: payload.status,
+      developerName: payload.developerName,
+      developerUrl: payload.developerUrl,
+      sourceUrl: payload.sourceUrl,
+      categoryIds: payload.categoryIds,
+      tagIds: payload.tagIds,
     });
 
     return NextResponse.json(game, { status: 201 });
@@ -132,7 +116,7 @@ export async function POST(request: NextRequest) {
     console.error('Failed to create game:', error);
     return NextResponse.json(
       { error: (error as Error).message ?? 'Failed to create game' },
-      { status: 400 }
+      { status: 400 },
     );
   }
 }
