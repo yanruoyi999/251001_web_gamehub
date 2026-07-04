@@ -4,6 +4,10 @@ export interface PaginationResult {
   offset: number;
 }
 
+const MAX_SEARCH_QUERY_LENGTH = 120;
+const CONTROL_CHARACTERS = /[\u0000-\u001F\u007F]/g;
+const SQL_LIKE_WILDCARDS = /[%_]/g;
+
 function normalizeInteger(value: number | undefined): number | undefined {
   return Number.isFinite(value) && Number.isInteger(value) ? value : undefined;
 }
@@ -31,7 +35,13 @@ export function validatePagination(page?: number, limit?: number): PaginationRes
 }
 
 export function sanitizeSearchQuery(query: string): string {
-  return query.trim();
+  return query
+    .replace(CONTROL_CHARACTERS, ' ')
+    .replace(SQL_LIKE_WILDCARDS, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, MAX_SEARCH_QUERY_LENGTH)
+    .trim();
 }
 
 export function isValidUrl(url: string): boolean {
