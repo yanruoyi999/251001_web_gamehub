@@ -21,11 +21,10 @@ jobs:
           version: 9
           run_install: false
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v5
-        with:
-          node-version: 22
-          cache: pnpm
+      - name: Verify runtime
+        run: |
+          node --version
+          pnpm --version
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
