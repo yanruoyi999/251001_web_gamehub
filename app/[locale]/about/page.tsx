@@ -11,10 +11,10 @@ export async function generateMetadata({ params }: AboutPageProps): Promise<Meta
   const locale = params.locale === 'zh' ? 'zh' : 'en';
   const isZh = locale === 'zh';
   return {
-    title: isZh ? '关于我们 - Luma Game Hub' : 'About Us - Luma Game Hub',
+    title: isZh ? '关于 Luma Game Hub 与游戏审核标准' : 'About Luma Game Hub and Our Review Standards',
     description: isZh
-      ? '了解Luma Game Hub - 精选免费在线游戏平台，无需下载即可畅玩'
-      : 'Learn about Luma Game Hub - Curated free online gaming platform, play instantly without downloads',
+      ? '了解 Luma Game Hub 如何筛选免费浏览器游戏、复查第三方嵌入体验，并通过广告或订阅支持长期运营。'
+      : 'Learn how Luma Game Hub curates free browser games, reviews third-party embed quality, and funds long-term operations through ads or supporter subscriptions.',
     alternates: {
       canonical: getLocalizedPath(locale, '/about'),
       languages: {
@@ -32,389 +32,118 @@ export async function generateMetadata({ params }: AboutPageProps): Promise<Meta
 
 export default function AboutPage({ params }: AboutPageProps) {
   const isZh = params.locale === 'zh';
-  const techStackItems = [
-    {
-      href: 'https://nextjs.org/',
-      name: 'Next.js 14',
-      descriptionZh: '（React 全栈框架）',
-      descriptionEn: ' (React Framework)',
-    },
-    {
-      href: 'https://www.typescriptlang.org/',
-      name: 'TypeScript',
-      descriptionZh: '（为 JavaScript 提供静态类型）',
-      descriptionEn: ' (Strongly typed JavaScript)',
-    },
-    {
-      href: 'https://tailwindcss.com/',
-      name: 'Tailwind CSS',
-      descriptionZh: '（原子化 CSS 框架）',
-      descriptionEn: ' (Utility-first CSS framework)',
-    },
-    {
-      href: 'https://www.postgresql.org/',
-      name: 'PostgreSQL',
-      descriptionZh: '（企业级关系型数据库）',
-      descriptionEn: ' (Relational database)',
-    },
-    {
-      href: 'https://redis.io/',
-      name: 'Redis',
-      descriptionZh: '（高性能内存缓存）',
-      descriptionEn: ' (In-memory cache)',
-    },
-    {
-      href: 'https://www.meilisearch.com/',
-      name: 'Meilisearch',
-      descriptionZh: '（开源全文搜索引擎）',
-      descriptionEn: ' (Open-source search engine)',
-    },
-  ];
+  const localizedPath = (pathname = '') => getLocalizedPath(params.locale, pathname);
+  const reviewPrinciples = isZh
+    ? [
+        '优先收录可直接在浏览器打开的 HTML5 / WebGL 游戏，避免要求安装应用或创建账号的体验。',
+        '检查启动流程、控制方式、移动端可用性、明显跳转、遮挡弹窗与第三方广告干扰。',
+        '为专题页补充人工说明、设备提示、玩法建议和复查说明，而不是只复制第三方简介。',
+        '用户反馈的失效、跳转、过度广告或控制问题会进入优先复查队列。',
+      ]
+    : [
+        'We prioritize HTML5 and WebGL games that open directly in the browser without forcing app installs or account walls.',
+        'We review launch flow, controls, mobile usability, redirects, disruptive overlays, and third-party ad interruptions.',
+        'Guide pages add editorial notes, device caveats, play tips, and recheck context instead of copying third-party descriptions.',
+        'User reports about broken embeds, redirects, excessive ads, or controls are prioritized for re-review.',
+      ];
+
+  const monetizationPrinciples = isZh
+    ? [
+        '广告只应支持运营，不应覆盖主要游戏区域、错误页、空白页或让用户误点。',
+        '若启用 AdSense，我们会先确保隐私政策、联系页面、内容导航和 ads.txt 准备完整。',
+        '订阅或赞助方向会优先提供低干扰体验、精选清单和问题优先复查，而不是出售虚假的游戏所有权。',
+      ]
+    : [
+        'Advertising should support operations without covering gameplay, error pages, empty pages, or misleading users into clicks.',
+        'Before enabling AdSense, we keep privacy, contact, navigation, and ads.txt readiness in place.',
+        'Supporter or subscription offers should focus on lower-interruption browsing, curated lists, and priority rechecks—not false ownership claims over third-party games.',
+      ];
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-12">
-      <h1 className="mb-8 text-4xl font-bold text-gray-900">
+      <h1 className="mb-4 text-4xl font-bold text-gray-900">
         {isZh ? '关于 Luma Game Hub' : 'About Luma Game Hub'}
       </h1>
+      <p className="text-lg leading-relaxed text-gray-700">
+        {isZh
+          ? 'Luma Game Hub 是一个面向浏览器玩家的精选小游戏目录。我们的重点不是堆砌数量，而是让用户更快找到可打开、低干扰、适合当前设备的游戏。'
+          : 'Luma Game Hub is a curated browser-game directory. Our goal is not to maximize raw volume, but to help visitors quickly find games that open reliably, create fewer interruptions, and fit their current device.'}
+      </p>
 
-      <div className="prose prose-indigo max-w-none">
-        <section className="mt-8">
-          <h2 className="text-2xl font-semibold text-gray-900">
-            {isZh ? '我们的使命' : 'Our Mission'}
-          </h2>
-          <p className="mt-4 text-lg leading-relaxed text-gray-700">
-            {isZh
-              ? 'Luma Game Hub致力于为全球玩家提供精选的免费在线游戏。我们相信游戏的乐趣应该人人可及，无需下载、无需等待，打开浏览器即可畅玩。'
-              : 'Luma Game Hub is dedicated to providing curated free online games to players worldwide. We believe gaming joy should be accessible to everyone - no downloads, no waiting, just open your browser and play.'}
+      <div className="mt-8 grid gap-4 md:grid-cols-3">
+        <Link href={localizedPath('/games')} className="rounded-lg border border-gray-200 bg-white p-5 shadow-sm transition hover:border-indigo-200 hover:shadow-md">
+          <div className="text-2xl">🎮</div>
+          <h2 className="mt-3 text-lg font-semibold text-gray-900">{isZh ? '浏览游戏库' : 'Browse the library'}</h2>
+          <p className="mt-2 text-sm text-gray-600">
+            {isZh ? '按分类、标签、热度和新上线状态寻找可直接游玩的网页游戏。' : 'Find instant-play browser games by category, tag, popularity, and freshness.'}
           </p>
-        </section>
-
-        <section className="mt-8">
-          <h2 className="text-2xl font-semibold text-gray-900">
-            {isZh ? '我们做什么' : 'What We Do'}
-          </h2>
-          <div className="mt-4 grid gap-6 md:grid-cols-2">
-            <div className="rounded-lg border border-gray-200 bg-white p-6">
-              <div className="mb-3 text-3xl">🎮</div>
-              <h3 className="mb-2 text-lg font-semibold text-gray-900">
-                {isZh ? '精选游戏库' : 'Curated Game Library'}
-              </h3>
-              <p className="text-sm text-gray-600">
-                {isZh
-                  ? '我们精心挑选高质量的HTML5游戏，涵盖动作、益智、冒险等多种类型。'
-                  : 'We carefully select high-quality HTML5 games across action, puzzle, adventure, and more.'}
-              </p>
-            </div>
-
-            <div className="rounded-lg border border-gray-200 bg-white p-6">
-              <div className="mb-3 text-3xl">⚡</div>
-              <h3 className="mb-2 text-lg font-semibold text-gray-900">
-                {isZh ? '即时游玩' : 'Instant Play'}
-              </h3>
-              <p className="text-sm text-gray-600">
-                {isZh
-                  ? '所有游戏均可在浏览器中直接运行，无需下载安装，随时随地畅玩。'
-                  : 'All games run directly in your browser - no downloads or installations required.'}
-              </p>
-            </div>
-
-            <div className="rounded-lg border border-gray-200 bg-white p-6">
-              <div className="mb-3 text-3xl">🌍</div>
-              <h3 className="mb-2 text-lg font-semibold text-gray-900">
-                {isZh ? '多语言支持' : 'Multi-Language Support'}
-              </h3>
-              <p className="text-sm text-gray-600">
-                {isZh
-                  ? '支持中英文界面，让全球玩家都能享受游戏乐趣。'
-                  : 'Supporting Chinese and English interfaces for global accessibility.'}
-              </p>
-            </div>
-
-            <div className="rounded-lg border border-gray-200 bg-white p-6">
-              <div className="mb-3 text-3xl">💯</div>
-              <h3 className="mb-2 text-lg font-semibold text-gray-900">
-                {isZh ? '完全免费' : 'Completely Free'}
-              </h3>
-              <p className="text-sm text-gray-600">
-                {isZh
-                  ? '所有游戏免费提供，我们通过广告支持运营，让玩家0成本体验优质游戏。'
-                  : 'All games are free. We support operations through ads, enabling zero-cost quality gaming.'}
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section className="mt-8">
-          <h2 className="text-2xl font-semibold text-gray-900">
-            {isZh ? '技术栈' : 'Technology Stack'}
-          </h2>
-          <p className="mt-4 text-gray-700">
-            {isZh ? 'Luma Game Hub使用现代化的技术构建：' : 'Luma Game Hub is built with modern technologies:'}
+        </Link>
+        <Link href={localizedPath('/guides')} className="rounded-lg border border-gray-200 bg-white p-5 shadow-sm transition hover:border-indigo-200 hover:shadow-md">
+          <div className="text-2xl">📚</div>
+          <h2 className="mt-3 text-lg font-semibold text-gray-900">{isZh ? '查看专题指南' : 'Read guide pages'}</h2>
+          <p className="mt-2 text-sm text-gray-600">
+            {isZh ? '专题页会说明适合场景、设备限制、复查背景和替代选择。' : 'Guides explain use cases, device caveats, review context, and alternative picks.'}
           </p>
-          <ul className="mt-4 grid gap-3 md:grid-cols-2">
-            {techStackItems.map((item) => (
-              <li key={item.name} className="flex items-center gap-2 text-gray-700">
-                <span className="text-indigo-600">▶</span>
-                <span>
-                  <a
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener"
-                    className="text-indigo-600 transition hover:text-indigo-500"
-                  >
-                    {item.name}
-                  </a>
-                  <span className="text-gray-600">
-                    {isZh ? item.descriptionZh : item.descriptionEn}
-                  </span>
-                </span>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <section className="mt-8">
-          <h2 className="text-2xl font-semibold text-gray-900">
-            {isZh ? '我们参考的行业资源' : 'Industry Resources We Follow'}
-          </h2>
-          <p className="mt-4 text-gray-700">
-            {isZh
-              ? '以下链接是我们用来研究网页游戏体验、素材授权和技术趋势的公开资源，并不代表商业合作关系：'
-              : 'These public resources help us research browser game quality, asset licensing, and web game trends. They do not imply commercial partnerships:'}
+        </Link>
+        <Link href={localizedPath('/contact')} className="rounded-lg border border-gray-200 bg-white p-5 shadow-sm transition hover:border-indigo-200 hover:shadow-md">
+          <div className="text-2xl">💬</div>
+          <h2 className="mt-3 text-lg font-semibold text-gray-900">{isZh ? '提交反馈' : 'Send feedback'}</h2>
+          <p className="mt-2 text-sm text-gray-600">
+            {isZh ? '报告失效游戏、广告干扰、控制问题，或咨询开发者合作。' : 'Report broken games, ad interruptions, control issues, or developer partnerships.'}
           </p>
-          <div className="mt-4 flex flex-wrap gap-4">
-            <a href="https://itch.io" target="_blank" rel="noopener" className="text-indigo-600 hover:text-indigo-500">
-              Itch.io
-            </a>
-            <span className="text-gray-300">|</span>
-            <a href="https://www.kongregate.com" target="_blank" rel="noopener" className="text-indigo-600 hover:text-indigo-500">
-              Kongregate
-            </a>
-            <span className="text-gray-300">|</span>
-            <a
-              href="https://armorgames.com"
-              target="_blank"
-              rel="noopener"
-              className="text-indigo-600 hover:text-indigo-500"
-            >
-              {isZh ? 'Armor Games（经典网页街机）' : 'Armor Games (Classic web arcade)'}
-            </a>
-            <span className="text-gray-300">|</span>
-            <a
-              href="https://gamejolt.com"
-              target="_blank"
-              rel="noopener"
-              className="text-indigo-600 hover:text-indigo-500"
-            >
-              {isZh ? 'Game Jolt（小游戏社区）' : 'Game Jolt (Indie community)'}
-            </a>
-            <span className="text-gray-300">|</span>
-            <a
-              href="https://www.crazygames.com"
-              target="_blank"
-              rel="noopener"
-              className="text-indigo-600 hover:text-indigo-500"
-            >
-              {isZh ? 'CrazyGames（全球网页游戏平台）' : 'CrazyGames (Global web arcade)'}
-            </a>
-            <span className="text-gray-300">|</span>
-            <a
-              href="https://poki.com"
-              target="_blank"
-              rel="noopener"
-              className="text-indigo-600 hover:text-indigo-500"
-            >
-              {isZh ? 'Poki（热门休闲游戏合集）' : 'Poki (Casual hits collection)'}
-            </a>
-            <span className="text-gray-300">|</span>
-            <a
-              href="https://www.gamestop.com"
-              target="_blank"
-              rel="noopener"
-              className="text-indigo-600 hover:text-indigo-500"
-            >
-              {isZh ? 'GameStop（全球游戏零售与资讯）' : 'GameStop (Global retail & news)'}
-            </a>
-            <span className="text-gray-300">|</span>
-            <a
-              href="https://en.boardgamearena.com"
-              target="_blank"
-              rel="noopener"
-              className="text-indigo-600 hover:text-indigo-500"
-            >
-              {isZh ? 'Board Game Arena（桌游线上平台）' : 'Board Game Arena (Online tabletop)'}
-            </a>
-            <span className="text-gray-300">|</span>
-            <a
-              href="https://www.coolmathgames.com"
-              target="_blank"
-              rel="noopener"
-              className="text-indigo-600 hover:text-indigo-500"
-            >
-              {isZh ? 'Coolmath Games（益智游戏精选）' : 'Coolmath Games (Brain teasers)'}
-            </a>
-            <span className="text-gray-300">|</span>
-            <a
-              href="https://www.miniclip.com"
-              target="_blank"
-              rel="noopener"
-              className="text-indigo-600 hover:text-indigo-500"
-            >
-              {isZh ? 'Miniclip（经典街机合集）' : 'Miniclip (Arcade classics)'}
-            </a>
-            <span className="text-gray-300">|</span>
-            <a
-              href="https://www.agame.com"
-              target="_blank"
-              rel="noopener"
-              className="text-indigo-600 hover:text-indigo-500"
-            >
-              {isZh ? 'AGame.com（家庭向小游戏）' : 'AGame.com (Family-friendly arcade)'}
-            </a>
-            <span className="text-gray-300">|</span>
-            <a
-              href="https://www.addictinggames.com"
-              target="_blank"
-              rel="noopener"
-              className="text-indigo-600 hover:text-indigo-500"
-            >
-              {isZh ? 'Addicting Games（老牌社区）' : 'Addicting Games (Legacy community)'}
-            </a>
-            <span className="text-gray-300">|</span>
-            <a
-              href="https://www.y8.com"
-              target="_blank"
-              rel="noopener"
-              className="text-indigo-600 hover:text-indigo-500"
-            >
-              {isZh ? 'Y8 Games（多人共享平台）' : 'Y8 Games (Multiplayer hub)'}
-            </a>
-            <span className="text-gray-300">|</span>
-            <a
-              href="https://www.friv.com"
-              target="_blank"
-              rel="noopener"
-              className="text-indigo-600 hover:text-indigo-500"
-            >
-              {isZh ? 'Friv（快速休闲体验）' : 'Friv (Quick casual hits)'}
-            </a>
-            <span className="text-gray-300">|</span>
-            <a
-              href="https://www.adfreegames.com"
-              target="_blank"
-              rel="noopener"
-              className="text-indigo-600 hover:text-indigo-500"
-            >
-              {isZh ? 'AdFreeGames（无广告游戏目录）' : 'AdFreeGames (Ad-free library)'}
-            </a>
-            <span className="text-gray-300">|</span>
-            <a
-              href="https://pages.github.com/"
-              target="_blank"
-              rel="noopener"
-              className="text-indigo-600 hover:text-indigo-500"
-            >
-              {isZh ? 'GitHub Pages（静态托管）' : 'GitHub Pages (Static hosting)'}
-            </a>
-            <span className="text-gray-300">|</span>
-            <a href="https://phaser.io" target="_blank" rel="noopener" className="text-indigo-600 hover:text-indigo-500">
-              Phaser
-            </a>
-            <span className="text-gray-300">|</span>
-            <a href="https://playcanvas.com" target="_blank" rel="noopener" className="text-indigo-600 hover:text-indigo-500">
-              PlayCanvas
-            </a>
-            <span className="text-gray-300">|</span>
-            <a
-              href="https://opengameart.org"
-              target="_blank"
-              rel="noopener"
-              className="text-indigo-600 hover:text-indigo-500"
-            >
-              {isZh ? 'OpenGameArt（免费游戏素材库）' : 'OpenGameArt (Open asset library)'}
-            </a>
-            <span className="text-gray-300">|</span>
-            <a
-              href="https://www.construct.net"
-              target="_blank"
-              rel="noopener"
-              className="text-indigo-600 hover:text-indigo-500"
-            >
-              {isZh ? 'Construct（可视化 HTML5 引擎）' : 'Construct (Visual HTML5 engine)'}
-            </a>
-            <span className="text-gray-300">|</span>
-            <a
-              href="https://godotengine.org"
-              target="_blank"
-              rel="noopener"
-              className="text-indigo-600 hover:text-indigo-500"
-            >
-              {isZh ? 'Godot Engine（开源 2D/3D 引擎）' : 'Godot Engine (Open-source 2D/3D engine)'}
-            </a>
-            <span className="text-gray-300">|</span>
-            <a
-              href="https://docs.unity3d.com/Manual/webgl-gettingstarted.html"
-              target="_blank"
-              rel="noopener"
-              className="text-indigo-600 hover:text-indigo-500"
-            >
-              {isZh ? 'Unity WebGL 指南' : 'Unity WebGL guide'}
-            </a>
-            <span className="text-gray-300">|</span>
-            <a
-              href="https://gameanalytics.com"
-              target="_blank"
-              rel="noopener"
-              className="text-indigo-600 hover:text-indigo-500"
-            >
-              {isZh ? 'GameAnalytics（免费数据平台）' : 'GameAnalytics (Free analytics)'}
-            </a>
-            <span className="text-gray-300">|</span>
-            <a
-              href="https://www.indiedb.com"
-              target="_blank"
-              rel="noopener"
-              className="text-indigo-600 hover:text-indigo-500"
-            >
-              {isZh ? 'Indie DB（独立游戏曝光平台）' : 'Indie DB (Indie showcase)'}
-            </a>
-          </div>
-        </section>
-
-        <section className="mt-8">
-          <h2 className="text-2xl font-semibold text-gray-900">
-            {isZh ? '联系我们' : 'Contact Us'}
-          </h2>
-          <p className="mt-4 text-gray-700">
-            {isZh ? '有任何问题或建议？我们很乐意听取您的反馈：' : 'Have questions or suggestions? We\'d love to hear from you:'}
-          </p>
-          <div className="mt-4 space-y-2">
-            <p className="text-gray-700">
-              📧 {isZh ? '邮箱' : 'Email'}:{' '}
-              <a href="mailto:support@lumagamehub.com" className="text-indigo-600 hover:text-indigo-500">
-                support@lumagamehub.com
-              </a>
-            </p>
-            <p className="text-gray-700">
-              📝 {isZh ? '更多信息' : 'More info'}:{' '}
-              <Link href={`/${params.locale}/contact`} className="text-indigo-600 hover:text-indigo-500">
-                {isZh ? '联系页面' : 'Contact Page'}
-              </Link>
-            </p>
-          </div>
-        </section>
-
-        <section className="mt-8 rounded-lg border border-indigo-100 bg-indigo-50 p-6">
-          <h2 className="text-xl font-semibold text-indigo-900">
-            {isZh ? '💡 开发者合作' : '💡 Developer Collaboration'}
-          </h2>
-          <p className="mt-3 text-sm text-indigo-800">
-            {isZh
-              ? '如果您是游戏开发者，希望在Luma Game Hub上展示您的作品，请通过邮件联系我们。我们欢迎高质量的HTML5游戏！'
-              : 'If you\'re a game developer interested in showcasing your work on Luma Game Hub, please contact us via email. We welcome high-quality HTML5 games!'}
-          </p>
-        </section>
+        </Link>
       </div>
+
+      <section className="mt-12">
+        <h2 className="text-2xl font-semibold text-gray-900">
+          {isZh ? '我们如何筛选和复查游戏' : 'How we select and recheck games'}
+        </h2>
+        <p className="mt-4 text-gray-700">
+          {isZh
+            ? '许多网页小游戏由第三方发布者托管，因此游戏本体、广告、控制方式和可用性可能随时间改变。我们把 Luma 的价值放在筛选、组织、解释和持续复查上。'
+            : 'Many browser games are hosted by third-party publishers, so gameplay, ads, controls, and availability can change over time. Luma adds value through selection, organization, explanation, and rechecks.'}
+        </p>
+        <ul className="mt-4 list-disc space-y-2 pl-6 text-gray-700">
+          {reviewPrinciples.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="mt-12">
+        <h2 className="text-2xl font-semibold text-gray-900">
+          {isZh ? '广告、订阅与独立性' : 'Advertising, subscriptions, and independence'}
+        </h2>
+        <p className="mt-4 text-gray-700">
+          {isZh
+            ? 'Luma Game Hub 的长期目标是通过合规广告、合作或用户支持维持运营。无论采用哪种方式，页面都必须先对玩家有实际价值。'
+            : 'Luma Game Hub is designed to be funded through compliant ads, partnerships, or user support. Any monetization path must come after real usefulness for players.'}
+        </p>
+        <ul className="mt-4 list-disc space-y-2 pl-6 text-gray-700">
+          {monetizationPrinciples.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="mt-12 rounded-lg border border-indigo-100 bg-indigo-50 p-6">
+        <h2 className="text-xl font-semibold text-indigo-900">
+          {isZh ? '开发者、品牌与赞助合作' : 'Developer, brand, and sponsor partnerships'}
+        </h2>
+        <p className="mt-3 text-sm leading-relaxed text-indigo-800">
+          {isZh
+            ? '如果您想提交 HTML5 游戏、赞助专题、购买品牌曝光，或讨论订阅支持方案，请通过商务邮箱联系。我们会优先考虑内容健康、移动端友好、低干扰且版权清晰的合作。'
+            : 'For HTML5 game submissions, sponsored guide ideas, brand placements, or supporter subscription discussions, contact us by business email. We prioritize family-friendly, mobile-aware, lower-interruption, and clearly licensed collaborations.'}
+        </p>
+        <div className="mt-4 flex flex-wrap gap-3">
+          <a href="mailto:business@lumagamehub.com?subject=Luma%20Game%20Hub%20partnership" className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500">
+            business@lumagamehub.com
+          </a>
+          <Link href={localizedPath('/privacy')} className="rounded-md border border-indigo-200 bg-white px-4 py-2 text-sm font-semibold text-indigo-700 hover:bg-indigo-50">
+            {isZh ? '查看隐私政策' : 'Review privacy policy'}
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }
