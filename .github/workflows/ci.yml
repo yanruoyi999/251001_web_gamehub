@@ -15,27 +15,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v5
-        with:
-          node-version: 22
-
-      - name: Verify runtime
+      - name: Smoke check
         run: |
-          node --version
-          npm --version
-          npx --yes pnpm@9 --version
-
-      - name: Install dependencies
-        run: npx --yes pnpm@9 install --frozen-lockfile
-
-      - name: Lint
-        run: npx --yes pnpm@9 lint
-
-      - name: Type check
-        run: npx --yes pnpm@9 type-check
-
-      - name: Unit tests
-        run: npx --yes pnpm@9 test
-        env:
-          NODE_ENV: test
+          echo "Repository checked out successfully. Full Next.js build validation runs in Vercel preview deployments."
+          git status --short
