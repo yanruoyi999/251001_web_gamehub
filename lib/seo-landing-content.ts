@@ -882,7 +882,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       'google snake unblocked',
     ],
     updatedAt: seoContentUpdatedAt,
-    relatedSlugs: ['string-theory-2-remastered-guide', 'games-to-play-when-bored'],
+    relatedSlugs: ['best-browser-games-5-minute-break', 'games-to-play-when-bored', 'free-games-no-ads'],
     embedGame: {
       iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp44/chenling/20230830/05/index.html',
       title: 'Google Snake',
@@ -890,256 +890,280 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     },
     locales: {
       en: {
-        metaTitle: 'Google Snake Mods & Snake Mod Menu: Install Guide',
+        metaTitle: 'Google Snake Mods: Best Menu, Mobile & Setup Options',
         metaDescription:
-          'Learn how to get the Google Snake mod menu in minutes. Use the Snake Game Menu bookmark, Tampermonkey, or a no-setup browser version when you just want to play.',
-        heading: 'Google Snake Mods: How to Install the Menu Mod',
-        subheading: 'Two simple methods for the Snake Game Menu - one needs no extension at all - plus an instant-play option if you do not want to install anything.',
+          'Compare current Google Snake mod options: the modded web version, userscript loader, menu mods, mobile limits, and a safe no-download fallback.',
+        heading: 'Google Snake Mods: Best Menu Mods and Setup Options',
+        subheading: 'A current player guide for snake mods: what still works, when to use the modded web version, when a userscript is worth it, and how to play without installing anything.',
         overview: [
-          'The Google Snake “menu mod” adds a settings panel to the classic Google Snake game, letting you switch apple types, unlock challenge modes, change the board, and apply custom skins. It is a single-player offline game tied to no account, so using mods does not risk a ban — the worst that happens is a mod stops working after Google updates the game.',
-          'There are two reliable ways to add the mods, and a third no-setup option if you just want to play. We walk through all three below, then you can jump straight into Snake at the bottom of this guide.',
+          'Google Snake mods are community-made changes for the classic Snake game. The useful ones add a menu, extra apple modes, mouse controls, level editing, custom boards, visibility changes, and practice settings that the normal game does not expose.',
+          'The old bookmark-import method is no longer the clean first recommendation. The DarkSnakeGang projects now point players toward the modded web version or a userscript loader, so this page is written as a decision guide rather than a download page. Luma does not host the mods here; we explain the options and provide a standard browser Snake fallback if you simply want to play.',
         ],
         sections: [
           {
-            title: 'Quick Answer: Which Google Snake Mod Should You Use?',
-            body: 'For most players, start with the Snake Game Menu bookmark import because it does not require a browser extension and can be removed by deleting one bookmark. Use Tampermonkey only if you already trust userscripts and want the mod menu to appear automatically every time.',
+            title: 'Quick Answer: Which Snake Mod Option Should You Use?',
+            body: 'Most players should start with the dedicated Google Snake Mods web version because it keeps the mods in one place and also works better on mobile. Use a userscript loader only if you specifically want mods inside the Google Search Snake game and you are comfortable managing browser extensions.',
             bullets: [
-              'Use the bookmark method when you want the lightest setup and a quick test.',
-              'Use Tampermonkey when you play often and want automatic loading.',
-              'Use the browser version on this page when extensions and bookmark imports are blocked.',
+              'Want the simplest current route: use the modded web version from the DarkSnakeGang project.',
+              'Want mods inside the Google Search game: use the Google Snake Mod Loader userscript.',
+              'On mobile: prefer the modded web version, because desktop extensions and userscripts are often unavailable.',
+              'At school, work, or on a locked browser: play standard Snake on Luma instead of bypassing device policies.',
             ],
           },
           {
-            title: 'What the Menu Mod Actually Adds',
-            body: 'The menu mod injects an extra options panel into the game’s settings. Once loaded, you get controls that the default game hides.',
+            title: 'What the Menu Mods Actually Add',
+            body: 'The best Google Snake mods are not just cosmetic skins. They change how you practice, route apples, and repeat high-score runs, which is why the menu mod remains the first feature most players look for.',
             bullets: [
-              'Apple mods: spawn multiple apples, golden apples, or “dimensions” variants.',
-              'Challenge modes: timed runs, no-wall mode, and harder rule sets.',
-              'Cosmetics: custom snake skins, board colours, and backgrounds.',
-              'Speed and grid tweaks for practice or speedrunning.',
+              'More Menu: extra count settings, speed settings, board sizes, and practice controls.',
+              'Mouse Mode: control the snake with the pointer instead of arrow keys.',
+              'Level Editor: build or replay custom board layouts.',
+              'Pudding and visibility-style mods: change apple behavior, board visibility, and challenge rules.',
+              'Theme and skin options: useful after you have chosen the gameplay settings you actually like.',
             ],
           },
           {
             title: 'Best Snake Mods to Try First',
-            body: 'If you searched for “snake mods” and only want the most useful changes, start with options that change practice and replay value before installing cosmetic packs.',
+            body: 'If you searched for “snake mods” and only want the highest-value changes, start with settings that change practice and replay value before spending time on visual packs.',
             bullets: [
-              'Multiple apples: creates faster routing decisions and higher-scoring practice runs.',
-              'No-wall mode: turns the board into a wraparound challenge for longer survival sessions.',
-              'Custom board and speed settings: useful when you want a harder Snake game without learning a new version.',
+              'Board size and speed settings: make the game harder or easier without learning a new ruleset.',
+              'Multiple apples and apple variants: create faster routing decisions and higher-scoring practice runs.',
+              'Mouse Mode: useful if keyboard controls feel cramped or you want a different challenge.',
+              'Level Editor: best after you already understand normal routing and want custom problems.',
             ],
           },
           {
-            title: 'Method 1 — Bookmark Import (No Extension)',
-            body: 'This is the safest, lightest method and works in any Chromium browser. It uses a single HTML bookmark file from the community DarkSnakeGang project — nothing is installed.',
+            title: 'Option 1 - Modded Web Version',
+            body: 'The easiest current path is the standalone Google Snake Mods web version maintained by the DarkSnakeGang community. It is built for players who want the mod panel without importing old bookmark files or editing browser settings.',
             bullets: [
-              'Download the “Moremenu.html” file from the DarkSnakeGang GitHub releases.',
-              'Press Ctrl+Shift+O to open the bookmark manager.',
-              'Click the three-dot menu (top right) and choose “Import bookmarks”, then pick Moremenu.html.',
-              'Rename the new bookmark to something like “Snake Game Menu”.',
-              'Search “Snake Game” on Google and start it, click the settings cog, then click your “Snake Game Menu” bookmark to load the mod options.',
+              'Use this when you want the fastest route to a mod menu.',
+              'Use this on mobile before trying any desktop-extension method.',
+              'Use this when you do not care whether the mod runs inside Google Search itself.',
+              'Avoid mirror sites that repackage the game with unrelated download buttons.',
             ],
           },
           {
-            title: 'Method 2 — Tampermonkey Userscript',
-            body: 'If you want mods to load automatically every time, the userscript method is more convenient. It needs the free Tampermonkey extension.',
+            title: 'Option 2 - Userscript Loader',
+            body: 'The userscript loader is the advanced route. It is useful when you want the mod panel to appear while playing Snake from Google Search or the standalone Google fbx page, but it requires a userscript manager such as Tampermonkey or a platform-specific equivalent.',
             bullets: [
-              'Install the Tampermonkey browser extension.',
-              'Install the “Google Snake Mod Loader” userscript via its Install button.',
-              'In the extension settings, enable “Allow access to search page results”.',
-              'Search “Snake Game” on Google, then click the “Change mod” button that appears (bottom right) to pick from the available mods.',
+              'Install userscripts only from the DarkSnakeGang loader project or a source it directly links.',
+              'Pick the loader version that matches where you play: search results, fbx page, or broader search pages.',
+              'Some browsers need permission for search result pages before the loader can appear.',
+              'If the panel disappears after an update, recheck the loader project before trying random copies.',
             ],
           },
           {
-            title: 'No-Setup Option — Play Snake Right Here',
-            body: 'Do not want to touch bookmarks or extensions? You can play Snake instantly in your browser on this site — no download, no account, and it works on school and work networks where the search game may be blocked. Scroll to the featured pick below to launch it.',
+            title: 'Safety Checklist Before You Install Anything',
+            body: 'Snake mods should be lightweight browser code, not a desktop download. Treat any installer, zip bundle, executable file, or page that pushes unrelated extensions as a warning sign.',
+            bullets: [
+              'Do not download EXE, DMG, APK, or browser “optimizer” packages for a Snake mod.',
+              'Do not paste code from comments, video descriptions, or unknown mirrors into the browser console.',
+              'Prefer the official DarkSnakeGang web version or its linked loader project.',
+              'Remember that Luma is not affiliated with Google or DarkSnakeGang; this is an editorial guide and a standard Snake play fallback.',
+            ],
           },
           {
-            title: 'Why Your Mod Stopped Working (and the Fix)',
-            body: 'Google occasionally updates the Snake game, which can break older mod loaders. If your menu disappears, you do not need a new method — just grab the latest Moremenu.html or update the Tampermonkey script from the same DarkSnakeGang project. Because the game is offline and single-player, there is no anti-cheat and no ban risk to worry about.',
+            title: 'No-Setup Option - Play Standard Snake on Luma',
+            body: 'If you do not want extensions, userscripts, or third-party mod pages, use the embedded standard Snake game above or open the full Google Snake game page from the link under the player. It is not a modded build, but it gives you the same short browser-game loop with no account, no client download, and an easy way back to related games.',
+          },
+          {
+            title: 'Why an Old Mod Method Stops Working',
+            body: 'Google Snake changes over time. When the game code changes, older bookmarklets or loaders can stop attaching to the game at the right moment. That is why current guides should point to maintained sources instead of promising that a years-old bookmark file will keep working forever.',
           },
         ],
         recommendations: [
           {
-            slug: 'snake',
+            slug: 'google-snake',
             pitch:
-              'Skip the setup — play a clean, touch-friendly Snake right now in your browser, no mods or installs required.',
+              'Skip the setup and play standard Google Snake right now in your browser, no mods or installs required.',
           },
           {
-            slug: '2048',
+            slug: 'tunnel-rush',
             pitch:
-              'If you like the simple-but-addictive loop of Snake, 2048 is the same one-more-go itch with number tiles instead of apples.',
+              'A pure reflex game when you want the same quick-restart pressure without menus or setup.',
           },
           {
-            slug: 'hextris',
+            slug: 'ovo',
             pitch:
-              'A fast arcade high-score game in the same retro spirit — easy to learn, hard to put down.',
+              'A precision platformer with fast retries if you like compact challenge loops.',
           },
         ],
         faqs: [
           {
-            question: 'What is the Snake Game Menu bookmark?',
+            question: 'What is the best way to play Google Snake mods now?',
             answer:
-              'It is a bookmark file that runs the community menu mod on the Google Snake game page. Import the bookmark, start Snake from Google Search, open the game settings, then click the Snake Game Menu bookmark to show the mod options.',
+              'For most players, the easiest current route is the dedicated Google Snake Mods web version from the DarkSnakeGang community. Use a userscript loader only if you specifically want mods inside the Google Search Snake game.',
           },
           {
             question: 'What are the best snake mods to try first?',
             answer:
-              'Start with multiple apples, no-wall mode, and speed or board-size tweaks. These change how the Snake game plays, while skins and colours are better saved for later.',
+              'Start with board size, speed settings, multiple apples, Mouse Mode, and Level Editor. These change how the game plays, while skins and colors are better saved for later.',
           },
           {
             question: 'Can you get banned for using Google Snake mods?',
             answer:
-              'No. Google Snake is a single-player offline game with no account or leaderboard tied to your Google profile, so mods cannot get you banned. They simply change how the local game looks and plays.',
+              'Google Snake is a casual single-player browser game rather than a competitive account game, so the normal concern is not a ban. The real risk is installing code from unsafe sources, which is why you should avoid unknown downloads and mirrors.',
           },
           {
             question: 'Do I need an extension to use Google Snake mods?',
             answer:
-              'No. The bookmark import method (Method 1) needs no extension at all — just a single HTML bookmark file. The Tampermonkey method is optional and only adds the convenience of mods loading automatically.',
+              'Not if you use the modded web version. You need a userscript manager only when you want the mod loader to run inside Google Search or another Google Snake page.',
           },
           {
-            question: 'Why did my Google Snake menu mod stop working?',
+            question: 'Why did the old Google Snake bookmark mod stop working?',
             answer:
-              'Google sometimes updates the Snake game, which breaks older mod loaders. Download the latest Moremenu.html or update the userscript from the DarkSnakeGang project and it will work again.',
+              'The DarkSnakeGang documentation says the old bookmark approach stopped working after changes in the Google Snake code. Current options use a modded web version or a userscript loader instead.',
           },
           {
             question: 'Can I use Google Snake mods on mobile?',
             answer:
-              'Mods rely on desktop browser bookmarks or extensions, so they are a desktop feature. On mobile you can still play standard Snake in your browser, including the instant-play version on this page.',
+              'Yes, but use the dedicated modded web version first. Desktop extension and userscript workflows are often awkward or unavailable on mobile browsers. On Luma you can also play standard Snake without mods.',
           },
           {
             question: 'Are Google Snake mods free?',
             answer:
-              'Yes. The community mod loaders are free and open source. You never need to pay or sign up to use them.',
+              'The known community mod options are free to use. You should not pay for a Snake mod installer or sign up on unrelated download sites.',
           },
         ],
-        ctaLabel: 'Play Snake now',
-        ctaDescription: 'Launch Snake free in your browser — no mods or setup needed to start playing.',
+        ctaLabel: 'Browse more browser games',
+        ctaDescription: 'Open the game catalogue for quick browser games that do not require downloads.',
       },
       zh: {
-        metaTitle: 'Google Snake Mod Menu 安装教程:蛇蛇菜单模组怎么用',
+        metaTitle: 'Google Snake Mods:菜单模组、手机与安装选择',
         metaDescription:
-          '几分钟学会安装 Google Snake mod menu。可用 Snake Game Menu 书签、Tampermonkey,也可以选择免安装浏览器版本直接开玩。',
-        heading: 'Google Snake 模组:Menu Mod 安装教程',
-        subheading: '两种 Snake Game Menu 安装方式(其中一种完全免插件),外加一个不想装任何东西时的即开即玩方案。',
+          '对比当前 Google Snake mods 选择:官方模组网页、userscript loader、菜单模组、手机限制与免下载玩法备选。',
+        heading: 'Google Snake Mods:菜单模组与安装选择指南',
+        subheading: '面向真实玩家的 snake mods 指南:哪些方式还可用、什么时候用模组网页、什么时候用用户脚本,以及不想安装时怎么直接玩。',
         overview: [
-          'Google Snake 的“menu mod(菜单模组)”会给经典的 Google 贪吃蛇加一个设置面板,让你切换苹果类型、解锁挑战模式、改棋盘、换皮肤。它是一款不绑定账号的单机离线游戏,所以用模组不会被封号——最坏的情况只是 Google 更新游戏后某个模组失效。',
-          '加模组有两种可靠方法,外加第三个“只想玩”的免安装选项。下面三种都讲清楚,看完可以直接在本页底部开玩贪吃蛇。',
+          'Google Snake mods 是玩家社区为经典贪吃蛇做的浏览器改动。真正有用的模组不只是换皮肤,而是加入菜单、额外苹果模式、鼠标控制、关卡编辑、自定义棋盘、可见性变化和练习设置。',
+          '旧的书签导入法已经不适合作为当前首选。DarkSnakeGang 项目现在更推荐模组网页或 userscript loader,所以本页按“怎么选择”来写,而不是诱导你下载文件。Luma 不托管这些模组,这里只解释选项,并提供一个不安装任何东西也能玩的标准 Snake 备选。',
         ],
         sections: [
           {
-            title: '快速结论:该用哪种 Google Snake 模组?',
-            body: '大多数玩家先用 Snake Game Menu 书签导入法,因为它不需要浏览器扩展,不想用了删掉一个书签即可。只有你本来就信任用户脚本、并且经常玩,才建议用 Tampermonkey 自动加载。',
+            title: '快速结论:现在该用哪种 Snake Mod?',
+            body: '大多数玩家先用 DarkSnakeGang 的 Google Snake Mods 网页版,因为模组集中在一个页面里,手机端也更容易使用。只有你明确想在 Google 搜索里的 Snake 游戏中加载模组,并且能管理浏览器扩展,才考虑 userscript loader。',
             bullets: [
-              '想轻量试用,选书签导入法。',
-              '经常玩并想自动加载,选 Tampermonkey。',
-              '学校或公司浏览器限制扩展和书签导入时,直接玩本页的浏览器版本。',
+              '想要最简单的当前路径:用 DarkSnakeGang 项目的模组网页。',
+              '想在 Google Search 的 Snake 游戏里加模组:用 Google Snake Mod Loader 用户脚本。',
+              '手机端:优先用模组网页,因为桌面扩展和用户脚本在手机浏览器里通常不好用。',
+              '学校、公司或受管设备:不要绕过设备策略,可以直接玩 Luma 的标准 Snake 版本。',
             ],
           },
           {
-            title: 'Menu Mod 到底加了什么',
-            body: 'menu mod 会往游戏设置里注入一个额外的选项面板。加载后,你能用到默认游戏里被藏起来的控制项。',
+            title: '菜单模组到底加了什么',
+            body: '最值得用的 Google Snake mods 不只是外观包。它们会改变练习方式、吃苹果路线和高分复盘,这也是玩家最常搜索 menu mod 的原因。',
             bullets: [
-              '苹果模组:刷出多个苹果、金苹果或“维度”变体。',
-              '挑战模式:限时跑、无墙模式、以及更难的规则。',
-              '外观:自定义蛇皮肤、棋盘配色和背景。',
-              '速度和网格调整,用于练习或速通。',
+              'More Menu:更多数量设置、速度设置、棋盘大小和练习控制。',
+              'Mouse Mode:用鼠标指针控制蛇,不用方向键。',
+              'Level Editor:创建或重玩自定义棋盘。',
+              'Pudding 与可见性类模组:改变苹果行为、棋盘可见性和挑战规则。',
+              '主题和皮肤:适合在确定玩法设置后再调整。',
             ],
           },
           {
             title: '最值得先试的 Snake Mods',
-            body: '如果你搜索的是“snake mods”,先试会真正改变练习和重玩价值的选项,再考虑皮肤和颜色包。',
+            body: '如果你搜索的是“snake mods”,先试会真正改变练习和重玩价值的选项,不要一开始就只换颜色和皮肤。',
             bullets: [
-              '多苹果模式:让路线选择更快,适合冲高分练习。',
-              '无墙模式:棋盘边缘可穿越,更适合长时间生存挑战。',
-              '棋盘大小和速度调整:不用换游戏,就能把经典贪吃蛇变难。',
+              '棋盘大小和速度设置:不用换游戏,就能把难度调高或调低。',
+              '多苹果和苹果变体:让路线选择更快,适合冲高分练习。',
+              'Mouse Mode:如果方向键手感拥挤,或想换一种挑战方式,可以先试。',
+              'Level Editor:熟悉普通路线后,再用它做自定义问题更合适。',
             ],
           },
           {
-            title: '方法一 —— 书签导入(免插件)',
-            body: '这是最安全、最轻量的方法,任何 Chromium 内核浏览器都能用。它只用社区项目 DarkSnakeGang 的一个 HTML 书签文件——不安装任何东西。',
+            title: '方案一 - 模组网页版本',
+            body: '当前最简单的路径是 DarkSnakeGang 社区维护的 Google Snake Mods 独立网页。它适合想快速打开模组面板、不想导入旧书签文件、也不想改浏览器设置的玩家。',
             bullets: [
-              '从 DarkSnakeGang 的 GitHub releases 下载“Moremenu.html”文件。',
-              '按 Ctrl+Shift+O 打开书签管理器。',
-              '点右上角三个点菜单,选“导入书签”,然后选中 Moremenu.html。',
-              '把新书签重命名成类似“Snake Game Menu”的名字。',
-              '在 Google 搜索“Snake Game”并启动游戏,点设置齿轮,再点你的“Snake Game Menu”书签,即可加载模组选项。',
+              '想最快打开模组菜单时,优先选它。',
+              '手机端先试这个,不要一开始就折腾桌面扩展方案。',
+              '如果你不在意模组是否运行在 Google Search 页面里,这个方案更省事。',
+              '避开重新打包游戏、同时塞下载按钮的镜像站。',
             ],
           },
           {
-            title: '方法二 —— Tampermonkey 用户脚本',
-            body: '如果你想每次都自动加载模组,用户脚本方法更省事。它需要免费的 Tampermonkey 扩展。',
+            title: '方案二 - Userscript Loader',
+            body: 'userscript loader 是进阶方案。它适合你想在 Google Search 或 Google fbx 页面打开 Snake 时自动出现模组面板,但需要 Tampermonkey 或对应平台的用户脚本管理器。',
             bullets: [
-              '安装 Tampermonkey 浏览器扩展。',
-              '通过 Install 按钮安装“Google Snake Mod Loader”用户脚本。',
-              '在扩展设置里开启“Allow access to search page results(允许访问搜索结果页)”。',
-              '在 Google 搜索“Snake Game”,点出现的“Change mod”按钮(右下角)选择模组。',
+              '只从 DarkSnakeGang loader 项目或它直接链接的来源安装用户脚本。',
+              '根据你在哪里玩选择版本:搜索结果页、fbx 页面或更广泛的搜索页。',
+              '部分浏览器需要允许扩展访问搜索结果页,否则面板不会出现。',
+              '如果面板在某次更新后消失,先回到 loader 项目看说明,不要随便找复制版脚本。',
             ],
           },
           {
-            title: '免安装方案 —— 直接在这里玩',
-            body: '不想碰书签和扩展?你可以直接在本站浏览器里即开即玩贪吃蛇——免下载、免账号,而且能在屏蔽了搜索小游戏的学校和公司网络里运行。滑到下方“精选推荐”即可启动。',
+            title: '安装前安全检查',
+            body: 'Snake mods 应该是轻量浏览器代码,不是桌面客户端。任何安装包、压缩包、可执行文件,或强推无关扩展的页面,都应该当作风险信号。',
+            bullets: [
+              '不要为了 Snake mod 下载 EXE、DMG、APK 或“浏览器优化器”。',
+              '不要把评论区、视频简介或未知镜像里的代码粘到浏览器控制台。',
+              '优先使用 DarkSnakeGang 官方模组网页或它链接的 loader 项目。',
+              'Luma 与 Google 或 DarkSnakeGang 没有关联;本页是编辑指南和标准 Snake 试玩备选。',
+            ],
           },
           {
-            title: '模组为什么失效了(以及怎么修)',
-            body: 'Google 偶尔会更新贪吃蛇游戏,这可能让旧的模组加载器失效。如果菜单不见了,你不用换方法——只要从同一个 DarkSnakeGang 项目重新下载最新的 Moremenu.html,或更新 Tampermonkey 脚本即可。因为游戏是离线单机、没有反作弊,完全不用担心封号。',
+            title: '免安装方案 - 在 Luma 玩标准 Snake',
+            body: '如果你不想碰扩展、用户脚本或第三方模组页面,可以直接玩上方嵌入的标准 Snake,也可以点击播放器下方链接打开完整 Google Snake 游戏页。它不是模组版本,但保留了短局浏览器游戏的核心循环:免账号、免客户端下载,玩完还能继续看相关游戏。',
+          },
+          {
+            title: '为什么旧模组方法会失效',
+            body: 'Google Snake 会随时间更新。当游戏代码变化后,旧书签或旧加载器可能无法在正确时机接入游戏。这也是为什么当前指南应该指向维护中的来源,而不是承诺多年以前的书签文件永远可用。',
           },
         ],
         recommendations: [
           {
-            slug: 'snake',
+            slug: 'google-snake',
             pitch:
-              '跳过所有设置——直接在浏览器里玩干净、适配触屏的贪吃蛇,免模组、免安装。',
+              '跳过所有设置,直接在浏览器里玩标准 Google Snake,免模组、免安装。',
           },
           {
-            slug: '2048',
+            slug: 'tunnel-rush',
             pitch:
-              '喜欢贪吃蛇那种简单又上瘾的循环?2048 是同样的“再来一局”手感,只是把苹果换成了数字方块。',
+              '想要同样快速重开、但完全拼反应的游戏,可以换到 Tunnel Rush。',
           },
           {
-            slug: 'hextris',
+            slug: 'ovo',
             pitch:
-              '同样复古气质的快节奏高分街机游戏——一学就会,一玩就停不下来。',
+              '喜欢短局挑战和快速重试时,OvO 是更偏精准跑酷的下一站。',
           },
         ],
         faqs: [
           {
-            question: 'Snake Game Menu 书签是什么?',
+            question: '现在玩 Google Snake mods 最简单的方式是什么?',
             answer:
-              '它是一个会在 Google Snake 页面运行菜单模组的书签文件。导入书签后,先在 Google 搜索里启动 Snake,打开游戏设置,再点击 Snake Game Menu 书签,即可显示模组选项。',
+              '大多数玩家可以先用 DarkSnakeGang 社区的 Google Snake Mods 网页版。只有你明确想在 Google 搜索里的 Snake 游戏中加载模组,才需要 userscript loader。',
           },
           {
             question: '最值得先试的 Snake Mods 是哪些?',
             answer:
-              '先试多苹果、无墙模式、速度和棋盘大小调整。这些会直接改变玩法;皮肤、颜色和背景可以放在后面再调。',
+              '先试棋盘大小、速度设置、多苹果、Mouse Mode 和 Level Editor。这些会直接改变玩法;皮肤、颜色和背景可以放在后面再调。',
           },
           {
             question: '用 Google Snake 模组会被封号吗?',
             answer:
-              '不会。Google Snake 是单机离线游戏,不绑定账号和排行榜,模组不会导致封号。它只是改变本地游戏的外观和玩法。',
+              'Google Snake 是休闲单人浏览器游戏,不是绑定竞技账号的游戏,普通玩家真正需要担心的不是封号,而是从不安全来源安装代码。因此不要用未知下载站和镜像脚本。',
           },
           {
             question: '用 Google Snake 模组一定要装扩展吗?',
             answer:
-              '不用。书签导入法(方法一)完全不需要扩展——只用一个 HTML 书签文件。Tampermonkey 方法是可选的,只是多了“自动加载模组”的便利。',
+              '如果使用模组网页版本,不一定需要扩展。只有你想让 loader 跑在 Google Search 或其他 Google Snake 页面里时,才需要用户脚本管理器。',
           },
           {
-            question: '我的 Google Snake 菜单模组为什么失效了?',
+            question: '旧的 Google Snake 书签模组为什么失效了?',
             answer:
-              'Google 有时会更新贪吃蛇游戏,导致旧模组加载器失效。从 DarkSnakeGang 项目下载最新的 Moremenu.html 或更新用户脚本即可恢复。',
+              'DarkSnakeGang 文档说明,旧书签方案在 Google Snake 代码变化后不再正常工作。当前方案主要是模组网页或 userscript loader。',
           },
           {
             question: 'Google Snake 模组能在手机上用吗?',
             answer:
-              '模组依赖桌面浏览器的书签或扩展,所以是桌面端功能。手机上你仍可在浏览器玩标准贪吃蛇,包括本页的即开即玩版本。',
+              '可以,但优先使用专门的模组网页。桌面扩展和用户脚本流程在手机浏览器里通常不好用。你也可以在 Luma 直接玩不带模组的标准 Snake。',
           },
           {
             question: 'Google Snake 模组免费吗?',
             answer:
-              '免费。社区模组加载器是免费开源的,无需付费或注册即可使用。',
+              '已知社区模组选项是免费使用的。不要为 Snake mod 安装器付费,也不要在无关下载站注册。',
           },
         ],
-        ctaLabel: '立即开玩贪吃蛇',
-        ctaDescription: '在浏览器里免费启动贪吃蛇——免模组、免设置,点开就玩。',
+        ctaLabel: '浏览更多网页游戏',
+        ctaDescription: '打开游戏库,继续寻找无需下载的短局浏览器游戏。',
       },
     },
   },
