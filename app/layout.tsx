@@ -11,6 +11,10 @@ import { GA_TRACKING_ID } from '@/lib/gtag';
 import { getSiteBaseUrl } from '@/lib/seo';
 
 const siteBaseUrl = getSiteBaseUrl();
+const googleSiteVerification =
+  process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ??
+  process.env.GOOGLE_SITE_VERIFICATION ??
+  '';
 const siteJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
@@ -25,6 +29,13 @@ const siteJsonLd = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteBaseUrl),
+  ...(googleSiteVerification
+    ? {
+        verification: {
+          google: googleSiteVerification,
+        },
+      }
+    : {}),
   title: {
     default: 'Luma Game Hub | Free Browser Games Online',
     template: '%s | Luma Game Hub',
@@ -99,8 +110,10 @@ export default function RootLayout({
         <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://www.google-analytics.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://www.clarity.ms" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://scripts.clarity.ms" />
         <link rel="dns-prefetch" href="https://form.typeform.com" />
+        <link rel="dns-prefetch" href="https://res.cloudinary.com" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
