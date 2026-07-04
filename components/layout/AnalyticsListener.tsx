@@ -13,8 +13,25 @@ const AnalyticsListener = () => {
     if (!GA_TRACKING_ID || !pathname) return;
 
     const url = search ? `${pathname}?${search}` : pathname;
+    let retryTimer: number | undefined;
+    let attempts = 0;
 
-    pageview(url);
+    const sendPageview = () => {
+      if (typeof window.gtag === 'function') {
+        pageview(url);
+        return;
+      }
+
+      if (attempts >= 10) return;
+      attempts += 1;
+      retryTimer = window.setTimeout(sendPageview, 300);
+    };
+
+    sendPageview();
+
+    return () => {
+      if (retryTimer) window.clearTimeout(retryTimer);
+    };
   }, [pathname, search]);
 
   return null;
