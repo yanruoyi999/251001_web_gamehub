@@ -16,22 +16,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
-      - name: Install pnpm
+      - name: Verify runtime
         run: |
-          npm install -g pnpm@9
           node --version
-          pnpm --version
+          npm --version
+          npx pnpm@9 --version
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: npx pnpm@9 install --frozen-lockfile
 
       - name: Lint
-        run: pnpm lint
+        run: npx pnpm@9 lint
 
       - name: Type check
-        run: pnpm type-check
+        run: npx pnpm@9 type-check
 
       - name: Unit tests
-        run: pnpm test
+        run: npx pnpm@9 test
         env:
           NODE_ENV: test
