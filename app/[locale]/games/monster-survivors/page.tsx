@@ -16,12 +16,12 @@ export function generateMetadata({ params }: MonsterSurvivorsPageProps): Metadat
   const locale = params.locale === 'zh' ? 'zh' : 'en';
   const title =
     locale === 'zh'
-      ? 'Monster Survivors - 免费在线生存动作游戏'
-      : 'Monster Survivors - Free Online Survival Action Game';
+      ? 'Monster Survivors - 免费在线生存动作游戏与玩法指南'
+      : 'Monster Survivors - Free Survival Action Game and Guide';
   const description =
     locale === 'zh'
-      ? '在线游玩 Monster Survivors，在浏览器中躲避怪物、升级技能并坚持更久，无需下载安装。'
-      : 'Play Monster Survivors online in your browser. Dodge monsters, upgrade skills, and survive longer with no download required.';
+      ? '在线游玩 Monster Survivors，查看移动、升级、控场技巧和常见问题，在浏览器中坚持更久，无需下载安装。'
+      : 'Play Monster Survivors online with practical movement, upgrade, controls, and survival tips for longer browser runs with no download required.';
   const canonical = getLocalizedPath(locale, '/games/monster-survivors');
 
   return {
@@ -66,9 +66,65 @@ export default async function MonsterSurvivorsPage({ params }: MonsterSurvivorsP
     t('tips.items.2'),
     t('tips.items.3'),
   ];
+  const howToPlaySteps = [
+    t('howToPlay.steps.0'),
+    t('howToPlay.steps.1'),
+    t('howToPlay.steps.2'),
+    t('howToPlay.steps.3'),
+  ];
+  const controlItems = [
+    { label: t('controls.items.move.label'), value: t('controls.items.move.value') },
+    { label: t('controls.items.aim.label'), value: t('controls.items.aim.value') },
+    { label: t('controls.items.upgrades.label'), value: t('controls.items.upgrades.value') },
+    { label: t('controls.items.fullscreen.label'), value: t('controls.items.fullscreen.value') },
+  ];
+  const faqItems = [
+    { question: t('faq.items.0.question'), answer: t('faq.items.0.answer') },
+    { question: t('faq.items.1.question'), answer: t('faq.items.1.answer') },
+    { question: t('faq.items.2.question'), answer: t('faq.items.2.answer') },
+    { question: t('faq.items.3.question'), answer: t('faq.items.3.answer') },
+  ];
+  const relatedLinks = [
+    {
+      href: getLocalizedPath(locale, '/games/solitaire'),
+      title: t('related.items.solitaire.title'),
+      description: t('related.items.solitaire.description'),
+    },
+    {
+      href: getLocalizedPath(locale, '/guides/quick-play-guide'),
+      title: t('related.items.quickPlay.title'),
+      description: t('related.items.quickPlay.description'),
+    },
+    {
+      href: getLocalizedPath(locale, '/guides/no-download-games'),
+      title: t('related.items.noDownload.title'),
+      description: t('related.items.noDownload.description'),
+    },
+    {
+      href: getLocalizedPath(locale, '/guides/games-to-play-when-bored'),
+      title: t('related.items.boredGames.title'),
+      description: t('related.items.boredGames.description'),
+    },
+  ];
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  };
 
   return (
     <div className="mx-auto w-full max-w-5xl px-6 py-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       <header className="mb-8 flex items-center justify-between gap-4">
         <div>
           <p className="text-sm font-medium text-indigo-600">{t('tagline')}</p>
@@ -102,6 +158,17 @@ export default async function MonsterSurvivorsPage({ params }: MonsterSurvivorsP
             </div>
           </div>
           <p className="mt-4 text-xs text-gray-500">{t('playSection.hint')}</p>
+        </CardContent>
+      </Card>
+
+      <Card className="mb-10">
+        <CardHeader>
+          <CardTitle className="text-2xl font-semibold text-gray-900">{t('overview.title')}</CardTitle>
+          <CardDescription className="text-sm text-gray-600">{t('overview.description')}</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4 text-sm leading-6 text-gray-700">
+          <p>{t('overview.body.0')}</p>
+          <p>{t('overview.body.1')}</p>
         </CardContent>
       </Card>
 
@@ -145,6 +212,75 @@ export default async function MonsterSurvivorsPage({ params }: MonsterSurvivorsP
           </CardContent>
         </Card>
       </div>
+
+      <div className="mt-6 grid gap-6 md:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg font-semibold text-gray-900">{t('howToPlay.title')}</CardTitle>
+            <CardDescription className="text-sm text-gray-600">{t('howToPlay.description')}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ol className="space-y-3 text-sm leading-6 text-gray-700">
+              {howToPlaySteps.map((item, index) => (
+                <li key={index} className="flex gap-3">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-indigo-50 text-xs font-semibold text-indigo-700">
+                    {index + 1}
+                  </span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ol>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg font-semibold text-gray-900">{t('controls.title')}</CardTitle>
+            <CardDescription className="text-sm text-gray-600">{t('controls.description')}</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3 text-sm text-gray-700">
+            {controlItems.map((item) => (
+              <p key={item.label}>
+                <span className="font-medium text-gray-900">{item.label}:</span> {item.value}
+              </p>
+            ))}
+          </CardContent>
+        </Card>
+      </div>
+
+      <Card className="mt-6">
+        <CardHeader>
+          <CardTitle className="text-lg font-semibold text-gray-900">{t('faq.title')}</CardTitle>
+          <CardDescription className="text-sm text-gray-600">{t('faq.description')}</CardDescription>
+        </CardHeader>
+        <CardContent className="grid gap-4 md:grid-cols-2">
+          {faqItems.map((item) => (
+            <div key={item.question} className="rounded-lg border border-gray-200 p-4">
+              <h2 className="text-sm font-semibold text-gray-900">{item.question}</h2>
+              <p className="mt-2 text-sm leading-6 text-gray-700">{item.answer}</p>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+
+      <Card className="mt-6">
+        <CardHeader>
+          <CardTitle className="text-lg font-semibold text-gray-900">{t('related.title')}</CardTitle>
+          <CardDescription className="text-sm text-gray-600">{t('related.description')}</CardDescription>
+        </CardHeader>
+        <CardContent className="grid gap-3 md:grid-cols-2">
+          {relatedLinks.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="rounded-lg border border-gray-200 p-4 transition hover:border-indigo-200 hover:bg-indigo-50"
+            >
+              <span className="text-sm font-semibold text-gray-900">{item.title}</span>
+              <span className="mt-2 block text-sm leading-6 text-gray-600">{item.description}</span>
+            </Link>
+          ))}
+        </CardContent>
+      </Card>
     </div>
   );
 }

@@ -179,13 +179,21 @@
   },
   "MonsterSurvivors": {
     "tagline": "Survival action",
-    "title": "Monster Survivors",
-    "summary": "Survive waves, collect upgrades, and push each run further.",
+    "title": "Monster Survivors Online: Survival Guide and Controls",
+    "summary": "Survive waves, collect upgrades, and use this guide to make smarter movement, upgrade, and escape decisions during each browser run.",
     "backToList": "Back to games",
     "playSection": {
       "title": "Play Monster Survivors",
       "description": "Launch the embedded browser version instantly.",
       "hint": "Use fullscreen mode for the best experience."
+    },
+    "overview": {
+      "title": "Why Monster Survivors needs a plan",
+      "description": "A practical guide for players who want more than a quick launch button.",
+      "body": {
+        "0": "Monster Survivors is a short-run survival action game where the first mistake is usually standing still for too long. The screen fills with enemies, experience drops, and upgrade choices, so a good run depends on reading space before it disappears. Instead of chasing every pickup immediately, strong players create safe loops, keep an exit path open, and collect rewards when the crowd has shifted away from the danger zone.",
+        "1": "The useful habit is to think in cycles. Move to thin out the nearest group, collect enough experience to trigger an upgrade, then choose upgrades that solve the current problem: wider area damage when enemies surround you, faster movement when the arena feels tight, or stronger single-target damage when larger enemies take too long to clear. This page keeps the rules, controls, and decision points visible so a new player can improve without leaving the game."
+      }
     },
     "details": {
       "title": "Game details",
@@ -204,17 +212,90 @@
         "2": "Collect experience safely instead of chasing every drop.",
         "3": "Save risky paths for moments when cooldowns are ready."
       }
+    },
+    "howToPlay": {
+      "title": "How to play Monster Survivors",
+      "description": "Use a simple survival loop instead of reacting late.",
+      "steps": {
+        "0": "Start moving as soon as the round begins. Watch the closest enemy group first, then steer toward open space instead of the biggest pile of rewards.",
+        "1": "Collect experience when it is safe. If a drop is inside a crowded lane, circle around and return after the enemies spread out.",
+        "2": "Choose upgrades that match the board. Area control helps when small enemies swarm, while movement and cooldown upgrades help you escape tight corners.",
+        "3": "Do not trap yourself at the edge. Use the outside of the arena only when you already have a path back toward the center."
+      }
+    },
+    "controls": {
+      "title": "Controls",
+      "description": "Desktop controls are the most reliable for this action game.",
+      "items": {
+        "move": { "label": "Move", "value": "Use the keyboard movement keys or on-screen controls, depending on the browser build, to keep distance from enemy groups." },
+        "aim": { "label": "Positioning", "value": "Most survival pressure is solved by positioning. Keep moving through gaps instead of waiting for enemies to reach you." },
+        "upgrades": { "label": "Upgrades", "value": "When an upgrade panel appears, choose the option that fixes your current weakness rather than the flashiest number." },
+        "fullscreen": { "label": "Fullscreen", "value": "Use fullscreen on desktop so you can see enemy lanes earlier and avoid accidental edge traps." }
+      }
+    },
+    "faq": {
+      "title": "Monster Survivors FAQ",
+      "description": "Common questions before starting a run.",
+      "items": {
+        "0": {
+          "question": "Is Monster Survivors better on desktop or mobile?",
+          "answer": "Desktop is recommended because movement-heavy survival games are easier to read with more screen space and keyboard-style control."
+        },
+        "1": {
+          "question": "What should I upgrade first?",
+          "answer": "Early upgrades should help you control space. Area damage, cooldown reduction, and movement safety usually matter more than chasing one high-damage option."
+        },
+        "2": {
+          "question": "Why do my runs end suddenly?",
+          "answer": "Most early losses come from walking into a corner, chasing unsafe experience drops, or saving an escape route too late. Plan the next open lane before you need it."
+        },
+        "3": {
+          "question": "Does this page require a download?",
+          "answer": "No. The game runs in the browser page and this guide does not offer installers, APK files, ROMs, or cracked downloads."
+        }
+      }
+    },
+    "related": {
+      "title": "Related games and guides",
+      "description": "Move between action runs, quick sessions, and safer browser-game discovery.",
+      "items": {
+        "solitaire": {
+          "title": "Classic Solitaire Online",
+          "description": "Switch to a slower card puzzle when you want a quiet short session."
+        },
+        "quickPlay": {
+          "title": "Quick play guide",
+          "description": "Find games that work well for breaks without a long setup."
+        },
+        "noDownload": {
+          "title": "No-download browser games",
+          "description": "Browse games that open directly in the browser without installers."
+        },
+        "boredGames": {
+          "title": "Games to play when bored",
+          "description": "Explore more casual and action picks for low-friction play."
+        }
+      }
     }
   },
   "Solitaire": {
     "tagline": "Classic cards",
-    "title": "Classic Solitaire Online",
-    "summary": "Play free online Solitaire directly in your browser with no download, account, or app install.",
+    "title": "Classic Solitaire Online: Play and Learn the Basics",
+    "summary": "Play free online Solitaire directly in your browser, then use this guide to understand the rules, controls, and practical moves that keep a card layout open.",
     "backToList": "Back to games",
     "playSection": {
       "title": "Play Free Online Solitaire",
       "description": "Start a clean classic card session instantly in your browser.",
       "hint": "Fullscreen mode gives more space for card movement."
+    },
+    "overview": {
+      "title": "What makes this Solitaire page useful",
+      "description": "A quick guide for players who want more than an embedded card table.",
+      "body": {
+        "0": "Classic Solitaire is a quiet card puzzle built around small choices: reveal hidden tableau cards, keep columns flexible, and move cards to the foundations only when doing so opens the board. This browser version is best treated as a clean Klondike-style session for short breaks. You do not need an account or a download, and the page keeps the core rules visible so new players can start without leaving the game.",
+        "1": "The main goal is to build four foundation piles from ace to king, one suit at a time. On the tableau, cards are arranged in descending order with alternating colors. A good round is rarely about speed; it is about preserving useful moves, checking whether a card should stay in the tableau, and using the stock pile only when the visible board has stopped offering progress.",
+        "2": "Use this page as a reference while you play: review the controls, compare your next move with the tips, then jump to related no-download games when you want a different pace."
+      }
     },
     "details": {
       "title": "Game details",
@@ -222,7 +303,8 @@
       "genre": { "label": "Genre", "value": "Card puzzle" },
       "session": { "label": "Session", "value": "Relaxed short sessions" },
       "controls": { "label": "Controls", "value": "Mouse or touch" },
-      "devices": { "label": "Devices", "value": "Desktop, tablet, and mobile browser" }
+      "devices": { "label": "Devices", "value": "Desktop, tablet, and mobile browser" },
+      "source": { "label": "Play source", "value": "Embedded browser game source; no installer, APK, ROM, or cracked download is offered on Luma." }
     },
     "tips": {
       "title": "Tips",
@@ -232,6 +314,70 @@
         "1": "Keep empty columns available for kings when possible.",
         "2": "Cycle the stock carefully so you do not bury useful moves.",
         "3": "Undo and review when a layout stops progressing."
+      }
+    },
+    "howToPlay": {
+      "title": "How to play Solitaire",
+      "description": "Follow the board in a stable order so you do not miss simple moves.",
+      "steps": {
+        "0": "Scan the tableau first. Move exposed cards into descending, alternating-color stacks and prioritize moves that reveal a face-down card.",
+        "1": "Start foundation piles with aces, then add cards by suit in order. Avoid moving a card to a foundation if it blocks a useful tableau move.",
+        "2": "Use empty columns for kings or king-led stacks. An empty column is valuable because it can unlock longer rearrangements later.",
+        "3": "Cycle the stock after the tableau stalls. Before drawing again, check whether the current waste card can open a hidden card or complete a foundation move."
+      }
+    },
+    "controls": {
+      "title": "Controls",
+      "description": "Simple browser controls for desktop and touch devices.",
+      "items": {
+        "move": { "label": "Move cards", "value": "Click or tap a card, then place it on a valid tableau stack, foundation pile, or open column." },
+        "stock": { "label": "Draw stock", "value": "Use the stock pile when no visible tableau move helps. Review the waste card before cycling again." },
+        "foundation": { "label": "Build foundations", "value": "Send aces and same-suit sequences upward only when the move keeps the tableau flexible." },
+        "fullscreen": { "label": "Fullscreen", "value": "Open fullscreen if cards feel cramped on a smaller display." }
+      }
+    },
+    "faq": {
+      "title": "Solitaire FAQ",
+      "description": "Common questions before starting a round.",
+      "items": {
+        "0": {
+          "question": "What version of Solitaire is this?",
+          "answer": "This page is written for classic Klondike-style Solitaire, the familiar layout with tableau columns, foundations, a stock pile, and a waste pile."
+        },
+        "1": {
+          "question": "Can I play Solitaire on mobile?",
+          "answer": "Yes. The game runs in a browser iframe and supports touch, though a tablet or desktop screen gives more room for reading card stacks."
+        },
+        "2": {
+          "question": "What should I do when there are no obvious moves?",
+          "answer": "Check hidden-card opportunities first, then look for an empty-column setup for a king. If the tableau is still locked, draw from the stock and reassess."
+        },
+        "3": {
+          "question": "Is this page safe for short casual play?",
+          "answer": "The page links to a browser-play source and does not offer ROMs, cracked downloads, installers, or gambling mechanics."
+        }
+      }
+    },
+    "related": {
+      "title": "Related games and guides",
+      "description": "Keep exploring quick browser games and low-friction play guides.",
+      "items": {
+        "noDownload": {
+          "title": "No-download browser games",
+          "description": "A guide to games that start in the browser without installers or account setup."
+        },
+        "quickPlay": {
+          "title": "Quick play guide",
+          "description": "Find short-session games that work well during a break."
+        },
+        "monsterSurvivors": {
+          "title": "Monster Survivors",
+          "description": "Switch from a quiet card puzzle to a short action-survival run."
+        },
+        "freeGames": {
+          "title": "Free games with low-friction play",
+          "description": "A curated guide for choosing free browser games without risky downloads."
+        }
       }
     }
   }
