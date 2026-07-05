@@ -8,11 +8,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { FavoriteToggleButton } from '@/components/game/favorite-toggle';
 import { CategoryService, GameService, TagService } from '@/services';
 import { getLocalizedPath, locales, type Locale } from '@/i18n/config';
+import { listFallbackGames } from '@/lib/games/fallback-list';
 import { mockGames } from '@/lib/mock-games';
 import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES } from '@/lib/seo';
 
-export const revalidate = 300;
-export const dynamic = 'force-static';
+export const dynamic = 'force-dynamic';
 
 const DB_LOAD_TIMEOUT_MS = 1500;
 const SORT_OPTIONS = ['publishedAt', 'playCount', 'averageRating', 'title'] as const;
@@ -78,18 +78,6 @@ function uniqueMockTags(): TagOption[] {
   return Array.from(byId.values()).sort((a, b) => a.name.localeCompare(b.name));
 }
 
-function mockPublishedAt(gameId: number) {
-  return new Date(Date.UTC(2026, 0, 1) - gameId * 24 * 60 * 60 * 1000);
-}
-
-function mockPlayCount(gameId: number, isHot: boolean) {
-  return 1000 + gameId * 37 + (isHot ? 5000 : 0);
-}
-
-function mockAverageRating(gameId: number) {
-  return (4.05 + (gameId % 8) * 0.08).toFixed(2);
-}
-
 function buildFallbackGameList(options: {
   page?: number;
   limit: number;
@@ -104,76 +92,23 @@ function buildFallbackGameList(options: {
   sortBy?: SortOption;
   sortOrder: 'asc' | 'desc';
 }): { categoryOptions: CategoryOption[]; tagOptions: TagOption[]; list: GameList } {
-  const favoriteSet = new Set(options.favoriteIds);
-  const keyword = options.search?.trim().toLowerCase();
-
-  const rows = mockGames
-    .filter((game) => {
-      if (options.categoryId && !game.categories.some((category) => category.id === options.categoryId)) return false;
-      if (options.tagId && !game.tags.some((tag) => tag.id === options.tagId)) return false;
-      if (options.showNew && !game.isNew) return false;
-      if (options.showHot && !game.isHot) return false;
-      if (options.showFeatured && !game.featured) return false;
-      if (options.favoritesOnly && !favoriteSet.has(game.id)) return false;
-
-      if (keyword) {
-        const haystack = [
-          game.title,
-          game.titleEn,
-          game.description,
-          game.descriptionEn,
-          ...game.categories.map((category) => `${category.name} ${category.nameEn}`),
-          ...game.tags.map((tag) => `${tag.name} ${tag.nameEn}`),
-        ]
-          .join(' ')
-          .toLowerCase();
-
-        if (!haystack.includes(keyword)) return false;
-      }
-
-      return true;
-    })
-    .map((game) => ({
-      id: game.id,
-      title: game.title,
-      titleEn: game.titleEn,
-      slug: game.slug,
-      status: 'active' as const,
-      thumbnailUrl: game.thumbnailUrl,
-      featured: game.featured,
-      isNew: game.isNew,
-      isHot: game.isHot,
-      publishedAt: mockPublishedAt(game.id),
-      playCount: mockPlayCount(game.id, game.isHot),
-      averageRating: mockAverageRating(game.id),
-      isFavorite: favoriteSet.has(game.id),
-    }));
-
-  const sortBy = options.sortBy ?? 'publishedAt';
-  const direction = options.sortOrder === 'asc' ? 1 : -1;
-  rows.sort((a, b) => {
-    if (sortBy === 'title') return a.title.localeCompare(b.title) * direction;
-    if (sortBy === 'playCount') return (Number(a.playCount) - Number(b.playCount)) * direction;
-    if (sortBy === 'averageRating') return (Number(a.averageRating) - Number(b.averageRating)) * direction;
-    return (a.publishedAt.getTime() - b.publishedAt.getTime()) * direction;
-  });
-
-  const requestedPage = Number.isInteger(options.page) && options.page && options.page > 0 ? options.page : 1;
-  const total = rows.length;
-  const totalPages = Math.ceil(total / options.limit);
-  const currentPage = totalPages > 0 ? Math.min(requestedPage, totalPages) : 1;
-  const offset = (currentPage - 1) * options.limit;
-
   return {
     categoryOptions: uniqueMockCategories(),
     tagOptions: uniqueMockTags(),
-    list: {
-      games: rows.slice(offset, offset + options.limit),
-      total,
-      page: currentPage,
+    list: listFallbackGames({
+      page: options.page,
       limit: options.limit,
-      totalPages,
-    },
+      categoryId: options.categoryId,
+      tagId: options.tagId,
+      search: options.search,
+      featured: options.showFeatured ? true : undefined,
+      isNew: options.showNew ? true : undefined,
+      isHot: options.showHot ? true : undefined,
+      onlyFavorites: options.favoritesOnly,
+      favoriteGameIds: options.favoriteIds,
+      sortBy: options.sortBy,
+      sortOrder: options.sortOrder,
+    }),
   };
 }
 
