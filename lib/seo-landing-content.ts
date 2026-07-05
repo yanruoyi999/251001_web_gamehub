@@ -18,6 +18,12 @@ export interface SeoLandingFaq {
   answer: string;
 }
 
+export interface SeoLandingExternalLink {
+  href: string;
+  label: string;
+  description: string;
+}
+
 export interface SeoLandingLocaleContent {
   metaTitle: string;
   metaDescription: string;
@@ -27,6 +33,7 @@ export interface SeoLandingLocaleContent {
   sections: SeoLandingSection[];
   recommendations: SeoLandingRecommendation[];
   faqs: SeoLandingFaq[];
+  externalLinks?: SeoLandingExternalLink[];
   ctaLabel: string;
   ctaDescription: string;
 }
@@ -718,9 +725,16 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       'drive mad tips',
       'drive mad unblocked',
       'drive mad monster truck levels',
+      'drive mad 攻略',
+      'drive mad 怎么过',
+      'drive mad why does my car flip',
+      'drive mad level tips',
+      'drive mad mobile controls',
+      'drive mad official',
+      'drive mad no download',
     ],
     updatedAt: seoContentUpdatedAt,
-    relatedSlugs: [],
+    relatedSlugs: ['ovo-walkthrough', 'games-like-ovo', 'games-to-play-when-bored'],
     embedGame: {
       iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp40/liuxinyu/20220928/1/index.html',
       title: 'Drive Mad',
@@ -728,16 +742,35 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     },
     locales: {
       en: {
-        metaTitle: 'Drive Mad Walkthrough: All Levels Tips & How to Beat Every Stage',
+        metaTitle: 'Drive Mad Walkthrough: Controls, Tips & Hard Level Fixes',
         metaDescription:
-          'A complete Drive Mad walkthrough covering controls, all 200 levels, and tips for the hardest balance, momentum, and monster truck stages. Learn how to beat Drive Mad and play it unblocked, free, with no downloads.',
-        heading: 'Drive Mad Walkthrough: Tips for Every Level',
-        subheading: 'Master the controls, read the physics, and clear all 200 stages — including the 2025 monster truck levels.',
+          'A practical Drive Mad walkthrough for stuck players: controls, landing fixes, balance tips, jump timing, monster truck levels, and safe browser play with no downloads.',
+        heading: 'Drive Mad Walkthrough: Controls, Tips & Hard Level Fixes',
+        subheading: 'Stuck on a flip, jump, seesaw, or monster truck stage? Start with the quick fixes, then use the level-type guide below.',
         overview: [
           'Drive Mad is a physics-based stunt driving game where one throttle controls everything: acceleration, mid-air rotation, balance, and how hard you land. There are over 200 levels, and the difficulty is almost never about speed — it is about timing and reading what each obstacle wants you to do.',
-          'This walkthrough is organised by the type of challenge rather than a dry level-by-level dump, because Drive Mad reuses the same five problem patterns over and over. Once you can recognise which pattern a stage belongs to, you can clear levels you have never seen before. Play Drive Mad free below, then use these tips to get unstuck.',
+          'This walkthrough is organised by the problem you are facing, not by a dry level-by-level dump. Drive Mad reuses the same patterns over and over: landing cleanly, keeping balance, carrying momentum, waiting for cycles, and using the vehicle weight. Once you recognise the pattern, you can solve new stages without memorising every level.',
         ],
         sections: [
+          {
+            title: 'Quick Answer: What to Try When You Are Stuck',
+            body: 'If a Drive Mad level feels impossible, slow down before changing the route. Most failed attempts come from landing with the gas held down, entering a ramp too fast, or fighting a moving obstacle instead of waiting for its cycle. The fastest fix is to release before landing, use tiny taps on balance sections, and commit with steady speed only on long jump or momentum stages.',
+            bullets: [
+              'Flipping on landing: release the gas earlier and let the nose drop before touch-down.',
+              'Falling off narrow rails: use short taps instead of holding the throttle.',
+              'Missing a jump: build speed before the ramp, then stop accelerating as the wheels leave it.',
+            ],
+          },
+          {
+            title: 'Search by Problem: Pick the Fix Fast',
+            body: 'Use this mini index if you came from a specific long-tail search. Drive Mad does not need a different secret route for every level; it needs the right fix for the failure pattern you keep seeing.',
+            bullets: [
+              '“Drive Mad why does my car flip?”: stop accelerating before the landing and tap only after the wheels settle.',
+              '“Drive Mad level tips”: identify whether the stage is timing, balance, momentum, landing, or mechanism-based before retrying.',
+              '“Drive Mad mobile controls”: use shorter taps than on keyboard, because touch pedals make it easy to over-hold the throttle.',
+              '“Drive Mad no download”: use the browser version first; avoid APK mirrors, mod downloads, and pages that ask for plugins.',
+            ],
+          },
           {
             title: 'Controls & the One Rule That Matters',
             body: 'You only really control the gas. Hold to accelerate, release to ease off — and that same throttle is how you tilt the vehicle in the air and settle it on landing. The single most important habit: let go of the gas before you land. Coasting onto a ramp or platform keeps the nose level, while flooring it launches the front end up and flips you onto your roof.',
@@ -806,6 +839,11 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               'Most hard levels are balance or landing puzzles. The key is releasing the gas before you land so the vehicle settles level instead of flipping, and using tiny throttle taps on seesaws and narrow rails instead of full acceleration.',
           },
           {
+            question: 'Why does my car keep flipping in Drive Mad?',
+            answer:
+              'You are usually holding the throttle too long. Release before the wheels touch down, let the front end drop, and use short taps after landing instead of immediately accelerating again.',
+          },
+          {
             question: 'What are the controls for Drive Mad?',
             answer:
               'You control a single throttle — hold to accelerate, release to ease off. That same input also rotates the vehicle in the air and controls how it lands, so learning when to let go of the gas is the whole game.',
@@ -820,21 +858,62 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             answer:
               'Yes. Drive Mad works in mobile browsers using on-screen pedals, with the same physics as the desktop version.',
           },
+          {
+            question: 'Where is the official Drive Mad source?',
+            answer:
+              'Drive Mad is a Fancade game by Martin Magni. The safest external references are the Fancade listing, DriveMad.com, and Martin Magni’s own website; avoid unofficial APK mirrors or pages that require plugins.',
+          },
+        ],
+        externalLinks: [
+          {
+            href: 'https://play.fancade.com/5F084A0BCE06B710',
+            label: 'Drive Mad on Fancade',
+            description: 'The Fancade listing for Drive Mad by Martin Magni.',
+          },
+          {
+            href: 'https://www.drivemad.com/',
+            label: 'DriveMad.com',
+            description: 'Official Drive Mad web hub with Fancade and creator context.',
+          },
+          {
+            href: 'https://martinmagni.com/',
+            label: 'Martin Magni',
+            description: 'Creator website for Drive Mad, Fancade, Mekorama, and related games.',
+          },
         ],
         ctaLabel: 'Play Drive Mad now',
         ctaDescription: 'Jump into Drive Mad free in your browser, then come back to this guide whenever a level traps you.',
       },
       zh: {
-        metaTitle: 'Drive Mad 全关攻略：通关技巧与每一关怎么过',
+        metaTitle: 'Drive Mad 攻略：怎么过关、操作与卡关技巧',
         metaDescription:
-          '完整的 Drive Mad 攻略，涵盖操作、全部 200 关，以及平衡关、惯性关和怪兽卡车关的通关技巧。学会怎么通关 Drive Mad，免下载、免注册、可在学校网络畅玩。',
-        heading: 'Drive Mad 全关攻略：每一关的通关技巧',
-        subheading: '吃透操作、读懂物理，通关全部 200 关——包含 2025 年新增的怪兽卡车关卡。',
+          '实用 Drive Mad 攻略：操作方法、翻车修正、平衡关、跳跃时机、怪兽卡车关和免下载浏览器玩法，帮你解决卡关。',
+        heading: 'Drive Mad 攻略：怎么过关、操作与卡关技巧',
+        subheading: '被翻车、跳跃、跷跷板或怪兽卡车关卡住？先看快速答案，再按关卡类型找解法。',
         overview: [
           'Drive Mad 是一款物理特技驾驶游戏,一个油门控制一切:加速、空中翻转、平衡、以及落地的轻重。游戏有 200 多关,难点几乎从来不是“快”,而是时机,以及读懂每个障碍想让你怎么做。',
-          '这份攻略按“挑战类型”来组织,而不是枯燥地一关一关罗列——因为 Drive Mad 反复使用同样的五种关卡套路。一旦你能认出某一关属于哪种套路,没见过的关也能通。先在下方免费玩 Drive Mad,卡住时再回来看技巧。',
+          '这份攻略按“你遇到的问题”来组织,而不是枯燥地一关一关罗列。Drive Mad 反复使用同样的套路:稳住落地、保持平衡、带足惯性、等机关周期、利用车身重量。认出套路之后,没见过的关也能自己拆解。',
         ],
         sections: [
+          {
+            title: '快速答案：Drive Mad 卡关先试这三件事',
+            body: '如果某一关看起来怎么都过不去,先别急着换路线。多数失败来自三个原因:落地时还按着油门、上坡前冲太快、或者硬顶移动机关。最快的修正是:落地前松油门,平衡路段只轻点油门,长跳和惯性关才保持稳定速度。',
+            bullets: [
+              '一落地就翻车:更早松油门,让车头先压下来再接触地面。',
+              '窄轨道总掉下去:用短促轻点,不要一直按住油门。',
+              '跳不过缺口:上坡前先攒速度,车轮离开坡面后立刻停止加速。',
+            ],
+          },
+          {
+            title: '按问题快速找解法',
+            body: '如果你是从具体问题搜进来,先用这个小索引定位。Drive Mad 不需要每一关都背路线,更重要的是判断你反复失败的类型。',
+            bullets: [
+              '“Drive Mad 为什么总翻车”:落地前松油门,等轮子稳住后再轻点加速。',
+              '“Drive Mad 关卡攻略”:先判断它是时机关、平衡关、惯性关、落地关还是机关关。',
+              '“Drive Mad 手机怎么玩”:手机踏板更容易按过头,触屏上要比键盘更短、更轻地点按。',
+              '“Drive Mad 免下载”:优先玩浏览器版本;避开 APK 镜像、插件安装和破解下载页。',
+            ],
+          },
           {
             title: '操作:只有一条规则最重要',
             body: '你真正能控制的只有油门。按住加速,松开减速——而同一个油门也决定车子在空中怎么转、落地时怎么稳。最重要的一个习惯:落地前先松油门。滑行着上坡或落到平台能让车头保持水平;而落地瞬间还在踩油门,车头会翘起来把你掀翻。',
@@ -903,6 +982,11 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               '大多数难关是平衡关或落地关。关键是落地前松油门,让车身回正而不是翻车;在跷跷板和窄轨道上用轻点油门,而不是全油加速。',
           },
           {
+            question: '为什么 Drive Mad 总是翻车?',
+            answer:
+              '通常是油门按太久。落地前先松开,让车头下压、四轮尽量同时接触地面;落地后也先轻点几下,不要马上全油冲出去。',
+          },
+          {
             question: 'Drive Mad 怎么操作?',
             answer:
               '你只控制一个油门——按住加速,松开减速。同一个操作也控制车子在空中的旋转和落地姿态,所以“什么时候松油门”就是这款游戏的全部精髓。',
@@ -916,6 +1000,28 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             question: 'Drive Mad 能在手机上玩吗?',
             answer:
               '可以。Drive Mad 在手机浏览器里用屏幕踏板操作,物理手感和电脑版一致。',
+          },
+          {
+            question: 'Drive Mad 的官方来源在哪里?',
+            answer:
+              'Drive Mad 是 Martin Magni 创作的 Fancade 游戏。更安全的外部参考是 Fancade 页面、DriveMad.com 和 Martin Magni 官网;不要使用要求安装插件、APK 或破解包的镜像站。',
+          },
+        ],
+        externalLinks: [
+          {
+            href: 'https://play.fancade.com/5F084A0BCE06B710',
+            label: 'Fancade 上的 Drive Mad',
+            description: 'Martin Magni 创作的 Drive Mad 在 Fancade 上的公开页面。',
+          },
+          {
+            href: 'https://www.drivemad.com/',
+            label: 'DriveMad.com',
+            description: 'Drive Mad 官方网页入口,提供 Fancade 与创作者相关信息。',
+          },
+          {
+            href: 'https://martinmagni.com/',
+            label: 'Martin Magni 官网',
+            description: 'Drive Mad、Fancade、Mekorama 等作品创作者网站。',
           },
         ],
         ctaLabel: '立即开玩 Drive Mad',

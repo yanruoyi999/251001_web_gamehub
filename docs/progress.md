@@ -1059,3 +1059,337 @@
 - 先完成 Supabase pooler URL 替换并重新部署；目标是 `/api/search?q=snake&limit=3` 返回 `source=database`，`/api/health` 中 database 恢复 `ok`。
 - 如果 Meilisearch 暂时不部署，保留 `meilisearch config` degraded，但不要让它阻塞内容增长；搜索恢复以数据库为主。
 - 后续内容优化继续围绕 GSC 已有点击信号：Google Snake Mods、Apple Knight、OvO。
+
+---
+
+## 2026-07-04 每日内容质量补强迭代记录
+
+**触发来源:** AdSense 准备定时任务
+**生产域名:** https://www.lumagamehub.com
+**本次目标:** 选择一个已有搜索或访问信号的薄内容游戏页，补强原创说明、玩法、操作、FAQ 和站内相关链接，让页面更像有独立价值的游戏指南页，而不是单纯 iframe 集合。
+
+### 检查结果
+
+- 已读取 `docs/google-adsense-end-to-end-sop.md`、`/Users/yanruoyi/ai-native/ops/daily-growth/sites/lumagamehub.com.md`、`/Users/yanruoyi/ai-native/ops/daily-growth/todo-current.md`。
+- 已复核 Google 官方 AdSense 文档：
+  - AdSense 申请前页面应有独特、相关、对访客有价值的内容和清晰导航。
+  - 低价值内容、抓取/搬运内容、缺少原创价值的页面会影响审核。
+  - `ads.txt` 非强制但推荐；正式 publisher ID 仍需用户在 AdSense 后台获得后人工处理。
+- 当前仓库已有未提交的 Solitaire 页面补强改动，且最近 Vercel Analytics 记录显示 `/en/games/solitaire` 有访问；因此本轮选择继续完成 Solitaire 页面，而不是另选低确定性页面。
+- 本轮未使用未确认授权的新图片、ROM、破解下载、APK、安装包或下载诱导。
+
+### 发现的问题
+
+- 原 Solitaire 页面偏薄，主要是可玩 iframe、基础信息和少量技巧，不足以支撑 AdSense 审核视角下的独立内容价值。
+- 需要补齐：
+  - 原创介绍。
+  - How to play。
+  - Controls。
+  - Tips。
+  - FAQ。
+  - Related games / guides。
+  - 来源与无下载风险说明。
+
+### 已完成修复
+
+- 更新 `app/[locale]/games/solitaire/page.tsx`：
+  - 更新 title / description。
+  - 新增 overview 正文渲染。
+  - 新增 How to play 步骤。
+  - 新增 Controls 区块。
+  - 新增 FAQ 区块并输出 `FAQPage` JSON-LD。
+  - 新增 Related games and guides 内链。
+  - 在详情区新增 play source / 游玩来源说明，明确 Luma 不提供 installer、APK、ROM 或 cracked download。
+- 更新 `messages/en.json` / `messages/zh.json`：
+  - 补充 Solitaire 中英文原创介绍、玩法、操作、FAQ、相关链接和来源说明。
+  - 英文原创介绍扩展到 150+ 词等效内容，中文同步补充可读说明。
+
+### 验证结果
+
+- `node JSON.parse(messages/*.json)`: 通过。
+- `pnpm type-check`: 通过。
+- `pnpm lint`: 通过，无 ESLint warnings/errors。
+- `pnpm test -- --run`: 通过，9 个测试文件 / 26 个测试。
+- `pnpm build`: 通过；构建完成 103 个静态页面，英文静态 HTML 修补 21/21。
+- `git diff --check`: 通过。
+- 构建产物抽查：可检索到新增 `What makes this Solitaire page useful`、`Play source`、`no installer` 等文案。
+
+### 仍需外部处理
+
+- 本轮未提交 git、未部署生产；需在确认当前未提交改动归属后再决定提交和部署。
+- 当前仓库还包含 `app/[locale]/games/monster-survivors/page.tsx` 与 `messages/en.json` 中 Monster Survivors 相关未提交改动；这些不是本轮选择的页面，后续提交前要单独确认是否一起纳入。
+- AdSense 后台账号、付款、身份验证、正式提交审核、publisher ID 和正式 `ads.txt` 行仍需用户人工处理。
+
+### 下一轮建议
+
+- 优先确认并提交/部署 Solitaire 内容补强；上线后抽查 `/en/games/solitaire`、`/games/solitaire` 的 title、description、H1、FAQ JSON-LD、related links 和 iframe 可玩性。
+- 继续按 GSC / Vercel 数据优先补强已有信号页：Google Snake Mods、Apple Knight、OvO、Solitaire。
+- 不要在 AdSense 申请前添加广告位；先继续补足 30 个高质量游戏页和 5-10 个高质量 guide / collection 页。
+
+---
+
+## 2026-07-04 历史未完成项闭环记录
+
+**触发来源:** 用户要求阅读历史记录并完成未完成项
+**生产域名:** https://www.lumagamehub.com
+**本次目标:** 汇总当前历史记录中可直接完成的本地事项，复核已有未提交改动，并把仍需外部凭据或用户信息的事项明确留下。
+
+### 已读取的记录
+
+- `docs/google-adsense-end-to-end-sop.md`
+- `/Users/yanruoyi/ai-native/ops/daily-growth/sites/lumagamehub.com.md`
+- `/Users/yanruoyi/ai-native/ops/daily-growth/todo-current.md`
+- `docs/progress.md` 最新记录
+- Luma 维护记忆中的日常流程约束
+- 当前 `git status --short` 与本地 diff
+
+### 已完成闭环
+
+- 复核当前未提交内容补强改动：
+  - `app/[locale]/games/solitaire/page.tsx`
+  - `app/[locale]/games/monster-survivors/page.tsx`
+  - `messages/en.json`
+  - `messages/zh.json`
+- 确认两页均已补齐原创 overview、how to play、controls、tips、FAQ、related links，并避免 ROM、APK、破解下载、安装包、成人、赌博或诱导点击内容。
+- 复核 AdSense 接入准备：
+  - 当前代码、`.env*` 和生产 HTML 均未发现真实 `ca-pub-...` publisher ID。
+  - 已在 SOP 中记录：没有真实 publisher ID 前，不写入占位 ID、不上线 AdSense script/meta、不伪造 `ads.txt` seller line、不添加广告容器。
+- 复核 JSON：
+  - `messages/en.json` 通过 `jq empty`。
+  - `messages/zh.json` 通过 `jq empty`。
+- 复核生产监测：
+  - `pnpm ops:monitoring` 通过运行。
+  - site / robots / sitemap / clarity tag 为 ok。
+  - public health 与 search api 仍为 degraded，原因仍是外部 DB/Meilisearch/Redis 配置未恢复。
+
+### 验证结果
+
+- 本轮继承并复核了前一轮验证结果：`pnpm lint`、`pnpm build`、重新运行后的 `pnpm type-check` 均通过。
+- 本轮新增复核：
+  - `jq empty messages/en.json`
+  - `jq empty messages/zh.json`
+  - `pnpm ops:monitoring`
+
+### 仍未完成但被外部信息阻塞
+
+- AdSense 代码正式接入：缺真实 AdSense publisher ID，需用户从 AdSense 后台提供 `ca-pub-xxxxxxxxxxxxxxxx`。
+- 生产真实数据源恢复：需有效 Supabase Supavisor transaction pooler `DATABASE_URL`，以及 Redis / Meilisearch 的生产可用配置。
+- 真实后台数据自动读取：缺 GSC OAuth、GA4 Data API、Clarity API、Typeform token 等凭据。
+- 当前本地内容补强尚未提交或部署；按维护流程，本轮不自动提交 git，不自动部署生产。
+
+### 下一轮建议
+
+- 用户提供真实 AdSense publisher ID 后，再接入 `NEXT_PUBLIC_ADSENSE_CLIENT` / `NEXT_PUBLIC_GOOGLE_ADSENSE_ACCOUNT`，并只在 production 输出一次 meta/script。
+- 确认当前 Solitaire 与 Monster Survivors 内容补强可以一起提交后，再走标准门禁并部署生产。
+- 在外部连接串恢复前，继续把 T-067 保持为 P0；fallback 可服务用户，但不能作为 AdSense 申请前的长期健康状态。
+
+---
+
+## 2026-07-04 全量代码检查与修正记录
+
+**触发来源:** 用户要求读取项目所有代码并进行全面检查修正
+**本次目标:** 在不提交、不部署、不覆盖既有未提交内容补强的前提下，对当前 Luma Game Hub 本地仓库做一次项目级静态扫描、构建验证和高风险小修。
+
+### 检查范围
+
+- 扫描项目源文件与配置文件约 210 个，排除 `.next`、`node_modules`、`coverage`、`playwright-report`、`test-results` 等生成目录。
+- 读取并复核核心配置：`package.json`、`next.config.mjs`、`middleware.ts`、`i18n/*`、`tsconfig.json`、`vitest.config.ts`、`playwright.config.ts`、`eslint.config.mjs`、`pnpm-workspace.yaml`。
+- 扫描 `TODO/FIXME`、`as any`、`debugger`、`console.log`、`localhost`、`example`、占位和 AdSense 相关关键字。
+- 复核当前脏工作区，保留已有 Solitaire / Monster Survivors 内容补强、AdSense SOP 补充和消息文案改动。
+
+### 实际修正
+
+- `i18n/config.ts`: 新增 `isLocale()` 类型守卫，集中处理 locale 校验。
+- `i18n/request.ts`: 使用 `isLocale()` 和 `defaultLocale` 兜底，移除 `as any`。
+- `components/layout/Header.tsx`: 语言切换路径判断改用 `isLocale()`，移除 `as any`。
+- `middleware.ts`: 为 `next-intl` middleware 增加 `localeDetection: false`，让 `/`、`/zh`、`/en` 在本地与生产 SSR 中按路径稳定解析，避免浏览器 `Accept-Language` 影响深层页面语言。
+- `package.json`: 将 `type-check` 改为 `tsc --noEmit --incremental false`，减少 `.tsbuildinfo` 或并行构建对类型检查的干扰。
+- `test-results/.last-run.json`: Playwright 运行会更新该缓存，本轮已恢复原内容，避免提交测试运行痕迹。
+
+### 验证结果
+
+- `pnpm type-check`: 通过。
+- `pnpm lint`: 通过。
+- `pnpm test -- --run`: 通过，9 个测试文件 / 26 个测试。
+- `pnpm build`: 通过；构建完成 103 个静态页面，英文静态 HTML 修补 21/21。
+- `PLAYWRIGHT_BASE_URL=http://127.0.0.1:3100 pnpm test:e2e`: 通过，3 passed / 1 skipped；确认 `/zh`、`/en` 和游戏浏览路径语言稳定。
+- `pnpm check:links`: 通过；抽样 footer 和游戏外链均为 HTTP 200。
+- `pnpm ops:growth`: 可运行，但 GA4 / GSC / Clarity / Typeform 指标读取因缺凭据全部跳过。
+- `pnpm ops:monitoring`: 可运行但状态仍 degraded；database 使用 Supabase direct URL、Meilisearch 为 `http://localhost:7700`、public health degraded、search api `source=fallback`，属于外部配置阻塞。
+- `git diff --check`: 通过。
+
+### 仍需外部处理
+
+- T-067 仍为 P0：需要有效 Supabase Supavisor transaction pooler `DATABASE_URL`、Redis、Meilisearch 生产配置；目标是 `/api/health status=ok` 且 search 不再 fallback。
+- T-083 仍为 P1：真实后台数据自动化读取缺 GSC OAuth、GA4 Data API、Clarity API、Typeform token。
+- AdSense 正式代码接入仍阻塞：当前未发现真实 `ca-pub-...` publisher ID；用户提供前不接入占位 publisher ID、不加广告容器。
+- 本轮未提交 git、未部署生产；当前修复是 local-ready，生产 `/en/*` 深层页面仍需部署后再抽查。
+
+### 下一轮建议
+
+- 确认本轮代码修复与 Solitaire / Monster Survivors 内容补强是否一起提交；若一起发布，部署后优先抽查 `/en/games`、`/en/games/solitaire`、`/en/games/monster-survivors` 的 `<html lang>`、canonical、title、FAQ JSON-LD 和 iframe。
+- 若只想先修复技术 SEO，可用当前代码变更单独提交 `i18n/*`、`middleware.ts`、`Header.tsx`、`package.json`，内容补强另开提交。
+- 外部配置未恢复前，不建议把 degraded 健康状态视为 AdSense 申请前达标。
+
+---
+
+## 2026-07-04 Chrome 后台数据读取与 GA4 修复记录
+
+**触发来源:** 用户指出 GA4 / GSC / Clarity / Typeform 均已在 Chrome 登录，要求仔细查找。
+**本次目标:** 通过已登录 Chrome 只读读取真实后台指标，并修复发现的 GA4 首次 pageview 可能丢失问题。
+
+### 后台读取结果
+
+- GSC `sc-domain:lumagamehub.com` Last 28 days：27 clicks / 1.58K impressions / CTR 1.7% / average position 20.3，Last update 3 hours ago。
+- GSC Top page：`/en/guides/google-snake-mods` 9 clicks / 634 impressions / CTR 1.4% / avg position 13.2。
+- GSC 机会词：`snake mods` 0 clicks / 62 impressions / avg position 6.6；`best free iphone games` 0 / 52 / 30.1；`snake mod` 0 / 24 / 9.0；`google snake game mod` 0 / 13 / 4.8。
+- GA4 Luma stream 已确认：stream name `Luma Game Hub`；URL `https://www.lumagamehub.com`；stream ID `15191555864`；Measurement ID `G-M5N3TXN56Z`。
+- GA4 当前状态：后台显示 `No data received in past 48 hours`；Last 7 days Active users / Event count / New users 均为 0；Realtime active users 0。
+- Clarity GameHub Last 7 days：57 sessions / 45 non-bot sessions / 57 unique users / avg scroll depth 38.31% / active time 8s；`game_play_start` 3 sessions；Google referrer 20。
+- Typeform GameHub Feedback All time：2 views / 1 start / 1 submission / completion rate 100% / time to complete 00:05；未打开单条 response 正文。
+
+### 实际修正
+
+- 修改 `components/layout/AnalyticsListener.tsx`：
+  - 原逻辑在 `window.gtag` 尚未 ready 时直接 return，首次 pageview 可能静默丢失。
+  - 新逻辑在 gtag 未 ready 时最多重试 10 次，每次 300ms；组件卸载时清理 timer。
+- 生产 HTML 复核：`https://www.lumagamehub.com/en` 已包含 `G-M5N3TXN56Z`、`gtag` 与 `googletagmanager`；本轮修复针对客户端发送时序，不是补 ID。
+
+### 验证结果
+
+- `pnpm lint`: 通过，无 ESLint warnings/errors。
+- `pnpm type-check`: 通过。
+- `pnpm test -- --run`: 通过，9 个测试文件 / 26 个测试。
+- `pnpm build`: 通过；构建完成 103 个静态页面，英文静态 HTML 修补 21/21。构建期仍出现已知的 Browserslist 数据过期提示和 DB fallback 提示。
+
+### 仍需跟进
+
+- GA4 pageview retry 修复已提交并部署到生产：commit `2a6a8c7`，deployment `dpl_7AvhmoGf7W6kbLxwM4Mz1KgBTTcP`，`https://www.lumagamehub.com/en` 已确认切到新部署并包含 `G-M5N3TXN56Z`、`gtag('config'...)`、`send_page_view`。
+- GA4 是否开始收数需要观察 24-48 小时；本轮未刻意制造浏览器访问来刷 Realtime。
+- API 自动化读取仍缺 GSC OAuth、GA4 Data API、Clarity Data Export token、Typeform token；Chrome 后台只读读取可作为短期替代口径。
+- Clarity 显示 LCP 5.4s、INP 550ms，首页和游戏目录首屏性能需要进入后续优化队列。
+
+---
+
+## 2026-07-04 优化队列推进记录
+
+**触发来源:** 用户要求按“其他可优化方向”顺序逐项完成。
+**执行原则:** 外部配置项先诊断并明确阻塞；可用代码项小步提交、验证、部署，不混入当前内容页脏改动。
+
+### P0 技术健康诊断
+
+- `pnpm ops:monitoring` 仍显示：
+  - `database config`: degraded，生产 `DATABASE_URL` 是 Supabase direct 5432，serverless 环境应改为 Supavisor pooler transaction mode。
+  - `meilisearch config`: degraded，生产 `MEILISEARCH_HOST` 仍是 `http://localhost:7700`。
+  - `public health`: HTTP 200 但 `status=degraded`。
+  - `search api`: HTTP 200 但 `source=fallback`。
+- Vercel production env 摘要确认：
+  - `DATABASE_URL`: `postgresql://db.atbmcpmdqrnetlxnchwv.supabase.co:5432`
+  - `UPSTASH_REDIS_URL`: `https://loved-ape-20290.upstash.io`
+  - `MEILISEARCH_HOST`: `http://localhost:7700`
+- Upstash host 本地 DNS 解析到 `198.18.3.6`，TLS 连接失败；生产 `/api/health` 也显示 Redis degraded。
+- 结论：P0 不是当前代码可安全修复的问题。需要外部提供/恢复：
+  - Supabase Supavisor pooler transaction `DATABASE_URL`。
+  - 可用 Upstash Redis REST URL/token 或替代 Redis。
+  - 可用生产 Meilisearch host/key，或决定正式移除 Meilisearch 依赖并接受 database-only search。
+
+### P1 locale 修复与部署
+
+- 第一阶段提交：`04e6a76 fix(i18n): stabilize locale routing`
+  - 修复 `middleware.ts`、`i18n/config.ts`、`i18n/request.ts`、`components/layout/Header.tsx`。
+  - 部署：`dpl_B46tMXdfVkU3KFC6DPhhgHCvXfmU`。
+  - 生产验证显示 `/en` 与 `/en/games` 正确，但 `/en/about`、`/en/contact`、`/en/privacy`、部分详情和分类仍为 `lang=zh`。
+- 根因补充提交：`93b56cb fix(i18n): render document locale from request`
+  - `app/layout.tsx` 根据 middleware 注入的 `x-next-intl-locale` 请求头输出服务端 `<html lang>` / `data-locale`。
+  - 本地验证：`pnpm build` 通过，`pnpm exec tsc --noEmit --incremental false` 通过；本地 production server 抽查所有 `/en/*` 为 `lang=en`，中文路径仍为 `zh`。
+  - 部署：`dpl_3cuTroFYYwbW6gxch351k7AmdCc9` Ready。
+  - 生产验证：
+    - `/en`、`/en/games`、`/en/games/category/puzzle`、`/en/games/solitaire`、`/en/about`、`/en/contact`、`/en/privacy` 均 HTTP 200 且 `<html lang="en" data-locale="en">`。
+    - `/`、`/games`、`/about`、`/contact`、`/privacy` 均 HTTP 200 且 `<html lang="zh" data-locale="zh">`。
+
+### 当前状态
+
+- P0 外部服务健康：blocked-external-config。
+- P1 locale 技术 SEO：deployed-fixed。
+- 下一项：优化 `/en/guides/google-snake-mods`，目标是提升 `snake mods` / `google snake mod` 相关 CTR。
+
+### T-085 Google Snake Mods CTR 优化
+
+- 选择原因：Chrome 后台读取到 GSC Last 28 days 中 `/en/guides/google-snake-mods` 为 9 clicks / 634 impressions / CTR 1.4% / avg position 13.2；`snake mods` 为 0 clicks / 62 impressions / avg position 6.6，属于已有曝光但 CTR 偏低的页面。
+- 来源复核：公开来源显示 DarkSnakeGang 旧 bookmark 方法已不再是当前首选；当前更推荐独立 modded web 版本或 userscript loader。本轮据此修正文案，避免继续给玩家过时安装步骤。
+- 实际改动：更新 Google Snake Mods 中英文 title、description、H1、overview、H2 sections、FAQ 与 related guides；新增安装前安全检查，明确不提供安装包、APK、ROM、破解或可疑下载；把推荐游戏链接改为当前数据中确实存在的 `google-snake`、`tunnel-rush`、`ovo`。
+- 验证结果：`pnpm exec tsc --noEmit --incremental false` 通过；`pnpm lint` 通过；`pnpm build` 通过。构建期仅保留已知 Browserslist 老化提示和 DB build fallback 提示。
+- 本地 production 验证：`/en/guides/google-snake-mods` 与 `/guides/google-snake-mods` 均 HTTP 200，输出新 title/description/H1/FAQ；相关游戏与专题链接本地均 200。
+- 提交部署：commit `688b401 improve google snake mods guide` 已推送 `origin/main`；Vercel production deployment `dpl_HcsqEvNzCZxmsB4ojPpeCX9Yxi1V` Ready，并挂载 `https://www.lumagamehub.com`。
+- 生产验证：`https://www.lumagamehub.com/en/guides/google-snake-mods` 与 `/guides/google-snake-mods` 均 HTTP 200；英文页为 `<html lang="en" data-locale="en">`，中文页为 `<html lang="zh" data-locale="zh">`；新 title、description、H1、FAQ、安全检查与 related links 均已上线；`/en/games/google-snake`、`/en/games/tunnel-rush`、`/en/games/ovo`、`/en/guides/best-browser-games-5-minute-break`、`/en/guides/free-games-no-ads` 均 HTTP 200。
+- 下一步：7-14 天后复查 GSC `snake mods`、`google snake mod`、`google snake game mod` 的 impressions/CTR/position。
+
+### T-097 Best Free iPhone Games CTR 优化
+
+- 选择原因：同一轮 GSC 机会词显示 `best free iphone games` 为 0 clicks / 52 impressions / avg position 30.1；现有页面内容可用但偏泛，首屏没有充分解释“iPhone 免费游戏、无需 App Store、触控适配、短局选择”的实际决策。
+- 实际改动：更新 `best-free-iphone-games` 中英文 title、description、H1、subheading、overview、sections 与 FAQ；新增“按场景选择首个游戏 / Best Picks by Situation”和“iPhone 上要避开什么 / What to Avoid on iPhone”；related guides 增加 `free-games-no-ads`。
+- 合规边界：未引入外部图片、安装包、APK、破解下载、ROM 或成人/赌博内容；明确 APK 不适用于 iPhone，避免可疑配置文件、未知扩展和假下载按钮。
+- 验证结果：`pnpm exec tsc --noEmit --incremental false` 通过；`pnpm lint` 通过；`pnpm build` 通过。构建期仅保留已知 Browserslist 老化提示和 DB build fallback 提示。
+- 本地 production 验证：`/en/guides/best-free-iphone-games` 与 `/guides/best-free-iphone-games` 均 HTTP 200，输出新 title/sections/FAQ；`/en/games/adam-and-eve-4`、`/en/games/balance-duel`、`/en/games/beat-line`、`/en/games/apple-knight`、`/en/guides/free-games-no-ads` 均 HTTP 200。
+- 提交部署：commit `e577146 improve iphone games guide` 已推送 `origin/main`；Vercel production deployment `dpl_Zmt9cs2APM3tbSoSmFcgZoRCzYd5` Ready，并挂载 `https://www.lumagamehub.com`。
+- 生产验证：`https://www.lumagamehub.com/en/guides/best-free-iphone-games` 与 `/guides/best-free-iphone-games` 均 HTTP 200；英文页为 `<html lang="en" data-locale="en">`，中文页为 `<html lang="zh" data-locale="zh">`；新 title、description、H1、FAQ、iPhone 避坑说明与 related links 均已上线；`/en/games/adam-and-eve-4`、`/en/games/balance-duel`、`/en/games/beat-line`、`/en/games/apple-knight`、`/en/guides/free-games-no-ads` 均 HTTP 200。
+- 下一步：7-14 天后复查 GSC `best free iphone games`、`iphone browser games`、`touch friendly free games` 的 impressions/CTR/position。
+
+### T-081 Solitaire 与 Monster Survivors 内容补强发布
+
+- 选择原因：两页此前已完成本地内容补强但尚未上线，属于最直接改善“薄 iframe 页”风险的存量改动；Solitaire 已有访问记录，Monster Survivors iframe 来源此前健康巡检为 HTTP 200。
+- 实际改动：提交 `app/[locale]/games/solitaire/page.tsx`、`app/[locale]/games/monster-survivors/page.tsx`、`messages/en.json`、`messages/zh.json`；两页均补充原创 overview、how to play、controls、FAQ、FAQPage JSON-LD、related games/guides 和无下载/无 ROM/无破解说明。
+- 验证结果：`jq empty messages/en.json && jq empty messages/zh.json` 通过；`pnpm exec tsc --noEmit --incremental false` 通过；`pnpm lint` 通过；`pnpm build` 通过；本地 production server 抽查两页中英文 URL 与相关链接均 200。
+- 提交部署：commit `8c560c4 improve solitaire and monster survivors pages` 已推送 `origin/main`；Vercel production deployment `dpl_2Z7sfMca71mAxrmeEiQNotirSQnz` Ready，并挂载 `https://www.lumagamehub.com`。
+- 生产验证：`/en/games/solitaire`、`/games/solitaire`、`/en/games/monster-survivors`、`/games/monster-survivors` 均 HTTP 200；英文页输出 `<html lang="en" data-locale="en">`，中文页输出 `<html lang="zh" data-locale="zh">`；新 title、overview、how-to、FAQ 和相关链接均已上线；`/en/guides/no-download-games`、`/en/guides/quick-play-guide`、`/en/guides/free-games-no-ads` 均 HTTP 200。
+- 下一步：7-14 天后结合 GSC/Vercel/Clarity 观察 `/en/games/solitaire` 与 `/en/games/monster-survivors` 的继续浏览、play event 和跳出趋势。
+
+### T-098 Guide 快速答案模块
+
+- 选择原因：远端 `fix/lumagamehub-monetization-readiness-v3-20260704` 中 `55fb33e` 提供了 guide 首屏快速答案思路；Google Snake Mods 与 Best Free iPhone Games 都属于搜索意图明确的 guide，首屏先给结论比先进入播放器或长正文更符合 CTR/跳出优化方向。
+- 实际改动：在 `app/[locale]/guides/[slug]/page.tsx` 中复用第一段 section 生成 `Quick answer / 快速答案` callout；提供 `Read the guide / 继续看指南`、`Play first / 先试玩游戏`、`See similar games / 看相似游戏` 锚点；为 play、guide details、recommendations 增加稳定锚点。
+- 验证结果：`pnpm exec tsc --noEmit --incremental false` 通过；`pnpm lint` 通过；`pnpm build` 通过；本地 production server 抽查 Google Snake Mods 与 Best Free iPhone Games 中英文页均 200，Quick answer 与锚点均存在。
+- 提交部署：commit `9787b8f surface quick answers on guide pages` 已推送 `origin/main`；Vercel production deployment `dpl_ATuTRMrfVrEp1q7MY2bKpMDpZZ8C` Ready，并挂载 `https://www.lumagamehub.com`。
+- 生产验证：`/en/guides/google-snake-mods`、`/guides/google-snake-mods`、`/en/guides/best-free-iphone-games`、`/guides/best-free-iphone-games` 均 HTTP 200；Quick answer、中文快速答案、guide/play/recommendation 锚点均已上线。
+- 下一步：观察 guide 页面 scroll depth、quick back、related click 与 play click；如首屏转化改善，再把此模板作为 guide 默认结构保留。
+
+### T-099 GA4 互动事件镜像
+
+- 选择原因：GA4 基础 pageview 已部署，但游戏启动、反馈等 `trackInteraction` 事件此前主要进入 Vercel Analytics；AdSense 申请前需要更完整的真实用户行为观察口径，不能靠人工刷新或人为触发造数。
+- 实际改动：在 `lib/analytics/events.ts` 中把清洗后的 interaction event 同步发送到 GA4 `gtag('event', ...)`，保留既有 Vercel Analytics `track` 调用；不新增广告位、不触发测试事件、不重复发送 page_view。
+- 验证结果：`pnpm exec tsc --noEmit --incremental false` 通过；`pnpm lint` 通过；`pnpm test -- --run` 通过，9 个测试文件 / 26 个测试用例通过；`pnpm build` 通过。测试 stderr 仅保留已知 Redis 未配置与搜索 fallback timeout 提示。
+- 提交部署：commit `d4a6e94 mirror interaction events to ga4` 已推送 `origin/main`；Vercel production deployment `dpl_6sc8XaJYX8FFUqBBTUemBwi8m2NC` Ready，并挂载 `https://www.lumagamehub.com`。
+- 生产验证：`/en/games/solitaire` 输出 `G-M5N3TXN56Z`、Google Tag Manager preload 与新 Solitaire 正文；`/en/guides/google-snake-mods` 输出 `Quick answer`、guide/play/recommendations 锚点与 `G-M5N3TXN56Z`；本轮未人为触发 `game_play_start`。
+- 下一步：24-48 小时后只读复查 GA4 Realtime/Events 与 Clarity，确认真实用户触发的 `game_play_start`、`feedback_open` 等事件是否开始进入 GA4。
+
+### T-100 API catalogue fallback guardrails
+
+- 选择原因：T-067 外部数据库/Meilisearch 配置仍未恢复，公开 `/api/search` 与 `/api/games` 需要在后端不可用时保持可抓取、可返回，不应因数据库连接长时间挂起而影响审核期可访问性。
+- 实际改动：`/api/search` 增加 query 清洗和分页规范化；`fallback-search` 改为 token 化评分排序；新增 `lib/games/fallback-list.ts` 作为公开游戏目录本地兜底；`/api/games` 增加收藏读取超时、game list 超时、serverless direct Supabase 风险配置短路，并在失败时返回 `degraded: true` 的本地 catalogue JSON。
+- 验证结果：`pnpm exec tsc --noEmit --incremental false` 通过；`pnpm test -- --run` 通过，11 个测试文件 / 32 个测试用例通过；`pnpm lint` 通过；`git diff --check` 通过；`pnpm build` 通过。测试/构建仅保留已知 Redis、Meilisearch、Browserslist 与 build-time database fallback 提示。
+- 本地 production 验证：`/api/search?q=snake&page=abc&limit=999` 返回 `page=1`、`limit=50`、`source=fallback`、`google-snake`；`/api/games?search=snake&page=abc&limit=5` 返回 `degraded=true`、`source=fallback`、`google-snake`，不再超过 15 秒挂起；空搜索仍返回 HTTP 400。
+- 提交部署：commit `6d0217c fix api catalogue fallbacks` 已推送 `origin/main`；Vercel production deployment `dpl_9umJQPN47v8uG27wtmMMpFbRouZs` Ready，并挂载 `https://www.lumagamehub.com`。
+- 生产验证：`https://www.lumagamehub.com/api/search?q=snake&page=abc&limit=999` 在 8 秒超时窗口内返回 `source=fallback`、`limit=50`、`google-snake`；`/api/games?search=snake&page=abc&limit=5` 返回 `degraded=true`、`source=fallback`、`google-snake`；空查询 `/api/search?q=%20%20` 返回 HTTP 400。
+- 下一步：T-067 外部配置仍需人工修复；本项只是公开 API 可用性兜底，不代表数据库、Redis、Meilisearch 已恢复。
+
+### T-112 Games directory filter rendering
+
+- 选择原因：T-100 本地验证时发现 `/en/games?search=snake` 页面曾返回 200 但仍显示默认 200 games，根因是游戏目录页 `force-static` 让 query filters 被静态缓存吞掉，玩家搜索/分类/排序表单不能稳定反映查询结果。
+- 实际改动：`app/[locale]/games/page.tsx` 改为动态渲染，并复用 `listFallbackGames`，删除页面内重复的 fallback 排序/分页逻辑；页面 fallback 与 `/api/games` 使用同一套搜索、筛选、排序口径。
+- 验证结果：`pnpm exec tsc --noEmit --incremental false` 通过；`pnpm test -- --run` 通过，11 个测试文件 / 32 个测试用例通过；`pnpm lint` 通过；`git diff --check` 通过；`pnpm build` 通过。
+- 本地 production 验证：`/en/games?search=snake` 返回 `<html lang="en" data-locale="en">`、`1 games found`、`defaultValue="snake"` 与 `Google Snake`；响应头 `Cache-Control: private, no-cache, no-store`。
+- 提交部署：commit `9728397 fix games filters fallback rendering` 已推送 `origin/main`；Vercel production deployment `dpl_GuGW73sh7Hc7CHMqYJdxu9DgyAAi` Ready，并挂载 `https://www.lumagamehub.com`。
+- 生产验证：`https://www.lumagamehub.com/en/games?search=snake` 返回 HTTP 200、`1 games found`、`defaultValue="snake"`、`Google Snake`，响应头为动态 no-store；`/api/games?search=snake&limit=5` 仍返回 `degraded=true`、`source=fallback`、`google-snake`。
+- 下一步：继续观察 `/en/games` 目录页的搜索使用、相关点击与 LCP/INP；如果动态渲染带来延迟，再考虑把筛选体验转为客户端读取 API。
+
+### T-113 Drive Mad 搜索意图补强
+
+- 选择原因：Chrome 只读读取 GSC Last 28 days 为 28 clicks / 1.68K impressions / CTR 1.7% / avg position 20.2；query 维度显示 `drive mad 攻略` 2 clicks / 7 impressions，Clarity Last 30 days 显示平均 1 page/session、scroll depth 38.31%、active time 8s，说明已有搜索入口但继续浏览和首屏答案仍需加强。
+- 监测检查：`pnpm ops:monitoring` 仍显示 site / robots / sitemap / Clarity tag ok，sitemap 488 URLs，public health degraded；`pnpm ops:growth` 因缺 GA4 Data API、GSC OAuth、Clarity Data Export、Typeform token 继续 skipped。Chrome 后台只读补足 GSC 与 Clarity，未用任何刷量或人工触发事件。
+- 实际改动：更新 `lib/seo-landing-content.ts` 中 `drive-mad-walkthrough`；新增 `drive mad 攻略` / `drive mad 怎么过` / `drive mad why does my car flip` / `drive mad mobile controls` / `drive mad official` / `drive mad no download` 等长尾关键词；缩短并聚焦中英文 title/description/H1/subheading；把首个 section 改成可进入 Quick answer 的卡关修复；新增“按问题快速找解法 / Search by Problem”问题索引、翻车 FAQ、官方来源 FAQ，以及 `ovo-walkthrough` / `games-like-ovo` / `games-to-play-when-bored` related guides。
+- GEO/外链改动：`app/[locale]/guides/[slug]/page.tsx` 新增可选 `Official & Reference Links / 官方与参考链接` 区块，并把外链写入 Article JSON-LD `citation`；Drive Mad 页面新增 Fancade、DriveMad.com、Martin Magni 官网 3 个可信外链，放在内部推荐和 FAQ 后，避免首屏把玩家直接带离站点。
+- 体验判断：页面现在形成“快速答案 -> 试玩 -> 详细问题索引 -> 相似游戏推荐 -> FAQ -> 站内 CTA -> 相关专题 -> 官方参考”的路径，比单一 iframe/长文更适合提升 scroll depth、play click、related click 和停留时间；外链区块用于信任和引用，不作为主 CTA。
+- 合规边界：未新增游戏 iframe 来源、图片、下载入口、广告容器或诱导点击文案；内容继续保持浏览器游玩、免下载、无 ROM/破解引导；外链仅指向公开官方/创作者相关页面。
+- 验证结果：`pnpm exec tsc --noEmit --incremental false` 通过；`pnpm lint` 通过；`git diff --check` 通过；`pnpm build` 通过。构建期仅保留已知 Browserslist/baseline-browser-mapping 老化提示。
+- 本地 production 验证：`pnpm exec next start -p 3011` 后抽查 `/en/guides/drive-mad-walkthrough` 与 `/guides/drive-mad-walkthrough` 均输出正确 `html lang`、新 title/H1、Quick answer / 快速答案、长尾问题索引、FAQ、related guide links、官方外链和 JSON-LD `citation`；`/en/guides/ovo-walkthrough`、`/en/guides/games-like-ovo`、`/en/guides/games-to-play-when-bored`、`/en/games/drive-mad` 均 HTTP 200。
+- 下一步：发布后 7-14 天复查 GSC `drive mad 攻略`、`drive mad walkthrough`、`how to beat drive mad` 的 CTR/position，并看 Clarity 是否改善 Drive Mad guide 的 scroll depth、play click 和 related guide click。

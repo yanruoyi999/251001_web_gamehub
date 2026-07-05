@@ -135,6 +135,7 @@ export default function GuidePage({ params }: GuidePageProps) {
     dateModified: page.updatedAt,
     articleSection: 'Browser Games',
     keywords: page.keywords.join(', '),
+    citation: content.externalLinks?.map((link) => link.href),
   };
   const jsonLdFaq = {
     '@context': 'https://schema.org',
@@ -411,6 +412,34 @@ export default function GuidePage({ params }: GuidePageProps) {
                 >
                   {related.heading} →
                 </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+
+      {content.externalLinks?.length ? (
+        <section className="mt-12 border-t border-border pt-10">
+          <h2 className="text-2xl font-semibold text-foreground">
+            {locale === 'zh' ? '官方与参考链接' : 'Official & Reference Links'}
+          </h2>
+          <p className="mt-2 text-sm text-muted-foreground">
+            {locale === 'zh'
+              ? '这些外部链接用于核对游戏来源和创作者信息，不代表 Luma 与相关站点存在商业合作。'
+              : 'Use these external links to verify the game source and creator context; they do not imply a commercial partnership with Luma.'}
+          </p>
+          <ul className="mt-4 grid gap-3 text-sm md:grid-cols-3">
+            {content.externalLinks.map((link) => (
+              <li key={link.href} className="rounded-xl border border-border bg-card p-4">
+                <a
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-medium text-primary transition hover:text-primary/80"
+                >
+                  {link.label} →
+                </a>
+                <p className="mt-2 text-muted-foreground">{link.description}</p>
               </li>
             ))}
           </ul>
