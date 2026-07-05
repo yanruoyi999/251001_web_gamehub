@@ -182,6 +182,9 @@ export default function GuidePage({ params }: GuidePageProps) {
     (page.embedGame?.playSlug
       ? gameIndex.get(page.embedGame.playSlug)?.thumbnailUrl
       : undefined);
+  const firstSection = content.sections[0];
+  const quickAnswerBody = firstSection?.body ?? content.overview[0];
+  const quickAnswerBullets = firstSection?.bullets?.slice(0, 3) ?? [];
 
   return (
     <article className="mx-auto w-full max-w-5xl px-6 py-12">
@@ -198,7 +201,7 @@ export default function GuidePage({ params }: GuidePageProps) {
         </Link>
       </nav>
 
-      <header className="mb-10 text-center">
+      <header className="mb-8 text-center">
         <p className="text-sm font-semibold uppercase tracking-wide text-primary">
           {page.primaryKeyword}
         </p>
@@ -206,8 +209,49 @@ export default function GuidePage({ params }: GuidePageProps) {
         <p className="mt-4 text-lg text-muted-foreground">{content.subheading}</p>
       </header>
 
+      <section className="mx-auto mb-10 max-w-4xl rounded-2xl border border-primary/20 bg-primary/5 p-6 shadow-sm">
+        <p className="text-sm font-semibold uppercase tracking-wide text-primary">
+          {locale === 'zh' ? '快速答案' : 'Quick answer'}
+        </p>
+        <h2 className="mt-2 text-2xl font-semibold text-foreground">
+          {firstSection?.title ?? (locale === 'zh' ? '先看核心结论' : 'Start with the core idea')}
+        </h2>
+        <p className="mt-3 text-base leading-relaxed text-foreground/90">{quickAnswerBody}</p>
+        {quickAnswerBullets.length > 0 ? (
+          <ul className="mt-4 grid gap-2 text-sm text-foreground/80 md:grid-cols-3">
+            {quickAnswerBullets.map((item) => (
+              <li key={item} className="rounded-xl border border-border bg-background/80 p-3">
+                {item}
+              </li>
+            ))}
+          </ul>
+        ) : null}
+        <div className="mt-5 flex flex-wrap justify-center gap-3 text-sm font-medium">
+          <a
+            href="#guide-details"
+            className="rounded-full bg-primary px-4 py-2 text-primary-foreground shadow-sm transition hover:bg-primary/90"
+          >
+            {locale === 'zh' ? '继续看指南' : 'Read the guide'}
+          </a>
+          {page.embedGame ? (
+            <a
+              href="#play"
+              className="rounded-full border border-primary/30 bg-background px-4 py-2 text-primary transition hover:bg-primary/10"
+            >
+              {locale === 'zh' ? '先试玩游戏' : 'Play first'}
+            </a>
+          ) : null}
+          <a
+            href="#recommendations"
+            className="rounded-full border border-border bg-background px-4 py-2 text-foreground transition hover:bg-secondary"
+          >
+            {locale === 'zh' ? '看相似游戏' : 'See similar games'}
+          </a>
+        </div>
+      </section>
+
       {page.embedGame ? (
-        <section className="mx-auto mb-12 max-w-4xl">
+        <section id="play" className="mx-auto mb-12 max-w-4xl scroll-mt-24">
           <div className="overflow-hidden rounded-2xl border border-border bg-black shadow-sm">
             <div className="aspect-video">
               <GamePlayerFacade
@@ -241,7 +285,7 @@ export default function GuidePage({ params }: GuidePageProps) {
         ))}
       </section>
 
-      <section className="mt-12 space-y-10">
+      <section id="guide-details" className="mt-12 space-y-10 scroll-mt-24">
         {content.sections.map((section) => (
           <div key={section.title} className="rounded-2xl border border-border bg-card p-6 shadow-sm">
             <h2 className="text-2xl font-semibold text-foreground">{section.title}</h2>
@@ -257,7 +301,7 @@ export default function GuidePage({ params }: GuidePageProps) {
         ))}
       </section>
 
-      <section className="mt-16">
+      <section id="recommendations" className="mt-16 scroll-mt-24">
         <header className="mb-6 text-center">
           <h2 className="text-3xl font-semibold text-foreground">
             {locale === 'zh' ? '精选推荐' : 'Featured Picks'}
