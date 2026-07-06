@@ -1,4 +1,5 @@
 import { mockGames, type MockCategory, type MockGame, type MockTag } from '@/lib/mock-games';
+import { shouldPromoteGameInCollections } from '@/lib/games/quality-policy';
 
 export interface TaxonomyEntry<TItem> {
   item: TItem;
@@ -10,7 +11,7 @@ function buildTaxonomyEntries<TItem extends { slug: string }>(
 ): TaxonomyEntry<TItem>[] {
   const entries = new Map<string, TaxonomyEntry<TItem>>();
 
-  for (const game of mockGames) {
+  for (const game of mockGames.filter((item) => shouldPromoteGameInCollections(item.slug))) {
     for (const item of pickItems(game)) {
       const existing = entries.get(item.slug);
       if (existing) {
@@ -53,4 +54,3 @@ export function pickLocalizedLabel(
     ? english?.trim() || primary?.trim() || ''
     : primary?.trim() || english?.trim() || '';
 }
-

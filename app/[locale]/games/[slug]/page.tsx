@@ -11,6 +11,7 @@ import { GameService, RatingService } from '@/services';
 import { getMockGameBySlug, mockGames } from '@/lib/mock-games';
 import type { GameDetail } from '@/services/game.service';
 import type { MockGame } from '@/lib/mock-games';
+import { getGameQualityTier, getManualReviewReason, shouldNoIndexGame, shouldPromoteGameInCollections } from '@/lib/games/quality-policy';
 import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES, buildAbsoluteUrl } from '@/lib/seo';
 import { getLocalizedPath, locales } from '@/i18n/config';
 
@@ -38,6 +39,7 @@ function buildGameDetailFromMock(mock: MockGame): GameDetail {
   const now = new Date();
   const instructionsZh = mock.instructions.zh.join('\n');
   const instructionsEn = mock.instructions.en.join('\n');
+  const promoted = shouldPromoteGameInCollections(mock.slug);
   return {
     id: mock.id,
     slug: mock.slug,
@@ -49,9 +51,9 @@ function buildGameDetailFromMock(mock: MockGame): GameDetail {
     instructionsEn: instructionsEn.length > 0 ? instructionsEn : null,
     thumbnailUrl: mock.thumbnailUrl,
     iframeUrl: mock.iframeUrl,
-    featured: mock.featured,
-    isNew: mock.isNew,
-    isHot: mock.isHot,
+    featured: promoted && mock.featured,
+    isNew: promoted && mock.isNew,
+    isHot: promoted && mock.isHot,
     status: 'active',
     developerName: mock.developerName,
     developerUrl: mock.developerUrl,
@@ -162,6 +164,7 @@ export async function generateMetadata({ params }: GamePageProps): Promise<Metad
   const title = resolveGameTitle(game, locale);
   const description = resolveGameDescription(game, locale);
   const canonical = getLocalizedPath(locale, `/games/${game.slug}`);
+  const noIndex = shouldNoIndexGame(game.slug);
   const taxonomyKeywords = [
     ...game.categories.map((category) =>
       locale === 'en'
@@ -208,6 +211,12 @@ export async function generateMetadata({ params }: GamePageProps): Promise<Metad
         ]),
       ),
     },
+    robots: noIndex
+      ? {
+          index: false,
+          follow: true,
+        }
+      : undefined,
     openGraph: {
       title,
       description,
@@ -320,6 +329,7 @@ export default async function GamePage({ params }: GamePageProps) {
   const relatedGames = mockGames
     .filter((candidate) => {
       if (candidate.slug === game.slug) return false;
+      if (!shouldPromoteGameInCollections(candidate.slug)) return false;
       return (
         candidate.categories.some((category) => relatedCategorySlugs.has(category.slug)) ||
         candidate.tags.some((tag) => relatedTagSlugs.has(tag.slug))
@@ -458,6 +468,9 @@ export default async function GamePage({ params }: GamePageProps) {
     statusChips.push(locale === 'zh' ? '演示数据' : 'Demo Data');
   }
 
+  const qualityTier = getGameQualityTier(game.slug);
+  const reviewReason = getManualReviewReason(game.slug);
+
   return (
     <div className="w-full bg-background">
       <div className="mx-auto w-full max-w-7xl px-6 py-8">
@@ -549,6 +562,22 @@ export default async function GamePage({ params }: GamePageProps) {
             </Button>
           </div>
         </div>
+
+        {qualityTier === 'review' ? (
+          <div className="mb-8 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+            <p className="font-semibold">
+              {locale === 'zh' ? '来源与内容复查中' : 'Source and content review in progress'}
+            </p>
+            <p className="mt-1">
+              {locale === 'zh'
+                ? '这个游戏仍可打开，但 Luma 正在复查来源、题材和 iframe 表现，复查完成前不会放入精选推荐。'
+                : 'This game remains playable, but Luma is rechecking source clarity, theme fit, and iframe behavior before featuring it.'}
+            </p>
+            {reviewReason ? (
+              <p className="mt-2 text-xs text-amber-800">{reviewReason}</p>
+            ) : null}
+          </div>
+        ) : null}
 
         <div className="grid gap-8 lg:grid-cols-3">
           {/* Main Content */}

@@ -5,6 +5,7 @@ import { getLocalizedPath, locales } from '@/i18n/config';
 import { getSeoLandingPages } from '@/lib/seo-landing-content';
 import { mockGames } from '@/lib/mock-games';
 import { getCategoryEntries, getTagEntries } from '@/lib/game-taxonomy';
+import { shouldIncludeGameInSitemap } from '@/lib/games/quality-policy';
 import { buildAbsoluteUrl } from '@/lib/seo';
 
 export const dynamic = 'force-dynamic';
@@ -52,21 +53,25 @@ async function getSitemapGames(fallbackLastModified: Date): Promise<SitemapGameE
     ]);
 
     if (rows.length > 0) {
-      return rows.map((game) => ({
-        slug: game.slug,
-        isNew: game.isNew,
-        lastModified: game.updatedAt ?? game.publishedAt,
-      }));
+      return rows
+        .filter((game) => shouldIncludeGameInSitemap(game.slug))
+        .map((game) => ({
+          slug: game.slug,
+          isNew: game.isNew,
+          lastModified: game.updatedAt ?? game.publishedAt,
+        }));
     }
   } catch (error) {
     console.warn('Failed to load database games for sitemap, falling back to mock games:', error);
   }
 
-  return mockGames.map((game) => ({
-    slug: game.slug,
-    isNew: game.isNew,
-    lastModified: fallbackLastModified,
-  }));
+  return mockGames
+    .filter((game) => shouldIncludeGameInSitemap(game.slug))
+    .map((game) => ({
+      slug: game.slug,
+      isNew: game.isNew,
+      lastModified: fallbackLastModified,
+    }));
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

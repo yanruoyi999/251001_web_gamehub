@@ -1,4 +1,5 @@
 import { mockGames } from '@/lib/mock-games';
+import { isGameUnderManualReview, shouldPromoteGameInCollections } from '@/lib/games/quality-policy';
 import { sanitizeSearchQuery, validatePagination } from '@/lib/utils/validation';
 
 export type FallbackGameSortBy = 'publishedAt' | 'playCount' | 'averageRating' | 'title';
@@ -70,9 +71,14 @@ export function listFallbackGames(options: FallbackGameListOptions = {}) {
 
   const rows = mockGames
     .filter((game) => {
-      if (typeof options.featured === 'boolean' && game.featured !== options.featured) return false;
-      if (typeof options.isNew === 'boolean' && game.isNew !== options.isNew) return false;
-      if (typeof options.isHot === 'boolean' && game.isHot !== options.isHot) return false;
+      const promoted = shouldPromoteGameInCollections(game.slug);
+      if (isGameUnderManualReview(game.slug)) return false;
+      if (typeof options.featured === 'boolean' && promoted && game.featured !== options.featured) return false;
+      if (typeof options.featured === 'boolean' && !promoted && options.featured) return false;
+      if (typeof options.isNew === 'boolean' && promoted && game.isNew !== options.isNew) return false;
+      if (typeof options.isNew === 'boolean' && !promoted && options.isNew) return false;
+      if (typeof options.isHot === 'boolean' && promoted && game.isHot !== options.isHot) return false;
+      if (typeof options.isHot === 'boolean' && !promoted && options.isHot) return false;
       if (options.onlyFavorites && !favoriteSet.has(game.id)) return false;
       if (options.categoryId && !game.categories.some((category) => category.id === options.categoryId)) return false;
       if (options.tagId && !game.tags.some((tag) => tag.id === options.tagId)) return false;
@@ -91,11 +97,11 @@ export function listFallbackGames(options: FallbackGameListOptions = {}) {
       slug: game.slug,
       status: 'active',
       thumbnailUrl: game.thumbnailUrl,
-      featured: game.featured,
-      isNew: game.isNew,
-      isHot: game.isHot,
+      featured: shouldPromoteGameInCollections(game.slug) && game.featured,
+      isNew: shouldPromoteGameInCollections(game.slug) && game.isNew,
+      isHot: shouldPromoteGameInCollections(game.slug) && game.isHot,
       publishedAt: mockPublishedAt(game.id),
-      playCount: mockPlayCount(game.id, game.isHot),
+      playCount: mockPlayCount(game.id, shouldPromoteGameInCollections(game.slug) && game.isHot),
       averageRating: mockAverageRating(game.id),
       isFavorite: favoriteSet.has(game.id),
     }));

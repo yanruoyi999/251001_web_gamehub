@@ -4,6 +4,7 @@
  */
 
 import sampleData from '@/public/data/4399-sample.json';
+import { shouldPromoteGameInCollections } from '@/lib/games/quality-policy';
 
 const BASE_TIMESTAMP = new Date('2024-01-01T00:00:00Z');
 
@@ -697,5 +698,5 @@ export function getMockGameBySlug(slug: string): MockGame | undefined {
 }
 
 export function getFeaturedMockGames(): MockGame[] {
-  return mockGames.filter((game) => game.featured);
+  return mockGames.filter((game) => game.featured && shouldPromoteGameInCollections(game.slug));
 }
