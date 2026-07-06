@@ -1484,3 +1484,16 @@
 - 生产验证：`/en/games/adam-and-eve-6`、`/en/games/adam-and-eve-7`、`/en/games/adam-and-eve-8`、`/en/games/big-tower-tiny-square-2`、`/en/games/blumgi-rocket`、`/games/adam-and-eve-6`、`/games/blumgi-rocket` 均 HTTP 200，输出新 title、guide heading、FAQPage JSON-LD、related guide links，且无 `noindex`；sitemap 仍为 284 URLs，并包含目标游戏详情页。
 - 部署后监测：`pnpm ops:monitoring` 显示 site / robots / sitemap / Clarity tag ok；public health、search api 仍因既有 Supabase direct URL、Redis/Meilisearch 配置降级，不是本轮内容改动新增问题。
 - 下一步：第六批可从仍为 `core-indexed` 且 thin description 的 `adam-and-eve-go`、`adam-and-eve-go-2`、`adam-and-eve-go-3`、`adam-and-eve-go-xmas`、`adam-and-eve-night` 中继续加厚；另行处理高价值页 placeholder thumbnail 和 T-067 外部配置。
+
+### T-123 Core game detail editorial upgrade batch 6
+
+- 选择原因：延续核心页小批次加厚策略，第六批选择 `adam-and-eve-go`、`adam-and-eve-go-2`、`adam-and-eve-go-3`、`adam-and-eve-go-xmas`、`adam-and-eve-night`。这 5 个均为 `core-indexed`，此前主要问题是 thin description，并且能与 `adam-and-eve-walkthrough`、短局游戏合集形成自然内链。
+- 实际改动：继续扩展 `lib/games/editorial-content.ts`，为第六批 5 个动态游戏详情页新增中英文原创摘要、overview、how to play、controls、tips、FAQ 和 related guides；不改播放器、iframe 来源、索引策略、广告位或下载路径。
+- 内链与体验：相关攻略指向 `adam-and-eve-walkthrough`、`best-browser-games-5-minute-break`、`games-to-play-when-bored`，全部已确认存在；页面继续采用“先玩、再读操作和卡点解法、再进入相关指南”的结构。
+- 合规边界：未新增 iframe、截图、广告容器、下载入口或诱导点击文案；文案继续强调 browser play/no download，避开 APK、安装器、插件、ROM 和破解导向。
+- 验证结果：`pnpm exec tsc --noEmit --incremental false` 通过；related guide slug 校验 `missing: []`；`pnpm exec tsx scripts/audit-game-quality.ts --write docs/game-quality-audit.md` 通过，目标页均不再命中 thin description，分数为 Adam and Eve Go 93、Adam and Eve Go 2 87、Adam and Eve Go 3 87、Adam and Eve Go Xmas 87、Adam and Eve Night 93；`pnpm lint` 通过；`git diff --check` 通过；`pnpm build` 通过。
+- 本地 production 验证：`pnpm exec next start -p 3021` 后抽查 `/en/games/adam-and-eve-go`、`/en/games/adam-and-eve-go-2`、`/en/games/adam-and-eve-go-3`、`/en/games/adam-and-eve-go-xmas`、`/en/games/adam-and-eve-night`、`/games/adam-and-eve-go`、`/games/adam-and-eve-night` 均 HTTP 200，输出对应新 title、guide heading、FAQPage JSON-LD、相关 guide 链接，且无 `noindex`。本地渲染仍出现已知 Redis/数据库超时回退日志，但页面内容完整。
+- 提交部署：commit `c1130de add sixth batch core game guides` 已推送 `origin/main`；为避免当前脏工作区进入部署包，已从干净临时 worktree `/tmp/luma-gamehub-deploy-c1130de` 手动执行 `vercel deploy --prod --yes`；Vercel production deployment `dpl_C4S9ijzj2Jk9H6b2x8ruqKr7DbXV` Ready，并挂载 `https://www.lumagamehub.com`。
+- 生产验证：`/en/games/adam-and-eve-go`、`/en/games/adam-and-eve-go-2`、`/en/games/adam-and-eve-go-3`、`/en/games/adam-and-eve-go-xmas`、`/en/games/adam-and-eve-night`、`/games/adam-and-eve-go`、`/games/adam-and-eve-night` 均 HTTP 200，输出新 title、guide heading、FAQPage JSON-LD、related guide links，且无 `noindex`；sitemap 仍为 284 URLs，并包含目标游戏详情页。
+- 部署后监测：`pnpm ops:monitoring` 显示 site / robots / sitemap / Clarity tag ok；public health、search api 仍因既有 Supabase direct URL、Redis/Meilisearch 配置降级，不是本轮内容改动新增问题。
+- 下一步：第七批可从仍为 `core-indexed` 且 thin description 的 `adam-and-eve-sleepwalker`、`adam-and-eve-snow`、`balance-duel`、`beat-line`、`castle-pals` 中继续加厚；另行处理高价值页 placeholder thumbnail 和 T-067 外部配置。
