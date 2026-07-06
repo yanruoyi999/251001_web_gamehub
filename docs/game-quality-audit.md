@@ -1,6 +1,6 @@
 # Luma Game Quality Audit
 
-Generated: 2026-07-06T12:26:55.193Z
+Generated: 2026-07-06T23:43:58.743Z
 
 This is a directional quality and indexing audit for Luma Game Hub. It is not a legal clearance report. Any game with source, IP, iframe, mobile, or content uncertainty still needs manual QA before being treated as AdSense-review-ready.
 
@@ -31,11 +31,11 @@ This is a directional quality and indexing audit for Luma Game Hub. It is not a 
 | 6 | adam-and-eve-8 | Adam And Eve 8 | core-indexed | 87 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | No immediate static-audit flags |
 | 7 | adam-and-eve-aliens | Adam and Eve: Aliens | catalogue-only | 70 | szhong.4399.com | Catalogue-only; keep playable but noindex until content/source QA is complete | thin description (16 en words / 47 zh chars) |
 | 8 | adam-and-eve-astronaut | Adam and Eve: Astronaut | catalogue-only | 70 | szhong.4399.com | Catalogue-only; keep playable but noindex until content/source QA is complete | thin description (16 en words / 50 zh chars) |
-| 9 | adam-and-eve-go-2 | Adam and Eve Go 2 | core-indexed | 80 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (17 en words / 44 zh chars) |
-| 10 | adam-and-eve-go-3 | Adam and Eve Go 3 | core-indexed | 80 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (17 en words / 44 zh chars) |
-| 11 | adam-and-eve-go-xmas | Adam and Eve Go: Xmas | core-indexed | 80 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (17 en words / 48 zh chars) |
-| 12 | adam-and-eve-go | Adam and Eve Go | core-indexed | 80 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (16 en words / 42 zh chars) |
-| 13 | adam-and-eve-night | Adam and Eve: Night | core-indexed | 80 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (16 en words / 46 zh chars) |
+| 9 | adam-and-eve-go-2 | Adam and Eve Go 2 | core-indexed | 87 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | No immediate static-audit flags |
+| 10 | adam-and-eve-go-3 | Adam and Eve Go 3 | core-indexed | 87 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | No immediate static-audit flags |
+| 11 | adam-and-eve-go-xmas | Adam and Eve Go: Xmas | core-indexed | 87 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | No immediate static-audit flags |
+| 12 | adam-and-eve-go | Adam and Eve Go | core-indexed | 93 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | No immediate static-audit flags |
+| 13 | adam-and-eve-night | Adam and Eve: Night | core-indexed | 93 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | No immediate static-audit flags |
 | 14 | adam-and-eve-sleepwalker | Adam and Eve: Sleepwalker | core-indexed | 80 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (16 en words / 52 zh chars) |
 | 15 | adam-and-eve-snow | Adam and Eve: Snow | core-indexed | 80 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (16 en words / 45 zh chars) |
 | 16 | adam-and-eve-zombies | Adam and Eve: Zombies | review | 52 | szhong.4399.com | Noindex; remove from sitemap/recommendations; manual source and content review | thin description (16 en words / 48 zh chars); Zombie theme; review tone, iframe behavior, and age suitability before indexing. |

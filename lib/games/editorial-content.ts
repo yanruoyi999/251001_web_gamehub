@@ -2850,6 +2850,571 @@ const GAME_EDITORIAL_CONTENT: Record<string, GameEditorialEntry> = {
       ],
     },
   },
+  'adam-and-eve-go': {
+    en: {
+      metaTitle: 'Adam and Eve Go Online - Controls, Level Tips and Safe Browser Play',
+      metaDescription:
+        'Play Adam and Eve Go online with movement controls, fruit and key tips, obstacle advice, FAQ answers, and no-download browser safety notes.',
+      title: 'Adam and Eve Go quick guide',
+      summary:
+        'Adam and Eve Go turns the point-and-click series into a simple side-scrolling puzzle platformer. Instead of only clicking scene objects, you move Adam through short levels, collect useful items, avoid hazards, and work out the safest route to Eve.',
+      overview: [
+        'The best runs come from reading the whole stage before moving too far. Check where the fruit, keys, ladders, doors, creatures, and traps sit, then decide which item must be collected first.',
+        'This page focuses on practical browser play. Use it when a level feels blocked, when mobile controls feel cramped, or when you want clear no-download guidance instead of installer or APK prompts.',
+      ],
+      howToPlay: [
+        'Move Adam through each level while collecting fruit, keys, or other required objects.',
+        'Watch hazards and creatures before committing to a jump or ladder route.',
+        'Reach Eve after the path is clear and the necessary items have been collected.',
+      ],
+      controls: [
+        { label: 'Move', value: 'Use the active arrow keys, WASD keys, or on-screen movement controls.' },
+        { label: 'Jump / climb', value: 'Use the browser build controls shown in the game for jumps, ladders, and platforms.' },
+        { label: 'Retry', value: 'Restart the level when an item order or hazard timing leaves the route blocked.' },
+      ],
+      tips: [
+        'Collect keys and route-opening items before rushing toward the exit.',
+        'Pause at ladders and platform edges so moving hazards reveal their pattern.',
+        'If a level seems impossible, check whether you skipped fruit or an object that changes another part of the stage.',
+        'On mobile, move in short taps because narrow platforms are easier to overshoot.',
+      ],
+      faqs: [
+        {
+          question: 'How is Adam and Eve Go different from the older Adam and Eve games?',
+          answer:
+            'Adam and Eve Go uses direct movement through small levels, while many older entries are mostly point-and-click scene puzzles.',
+        },
+        {
+          question: 'What should I do when a level is blocked?',
+          answer:
+            'Look for keys, fruit, ladders, or switches you passed earlier. The solution is usually an item order or route problem, not speed.',
+        },
+        {
+          question: 'Does Adam and Eve Go need a download?',
+          answer:
+            'No. Play it in the browser on Luma and avoid pages that ask for APKs, installers, or browser extensions.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'adam-and-eve-walkthrough',
+          title: 'Adam and Eve walkthrough',
+          description: 'Series-wide advice for puzzle order, obstacles, and getting unstuck.',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: 'Best browser games for a 5-minute break',
+          description: 'More quick browser games with simple rules and short levels.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Adam and Eve Go 在线玩 - 操作、关卡路线与安全浏览器玩法',
+      metaDescription:
+        '在线玩 Adam and Eve Go，查看移动操作、收集物顺序、障碍路线技巧、FAQ 和免下载浏览器安全说明。',
+      title: 'Adam and Eve Go 快速玩法指南',
+      summary:
+        'Adam and Eve Go 把系列从传统点击解谜变成更直接的横版关卡玩法。你需要控制 Adam 穿过短关卡，收集水果、钥匙或其他关键物品，避开危险，并找到通向 Eve 的安全路线。',
+      overview: [
+        '想稳定过关，先不要急着往前跑。进入关卡后先观察水果、钥匙、梯子、门、动物和陷阱的位置，再判断哪个物品必须先拿。',
+        '这个页面关注实际浏览器游玩。当某一关像是被挡住、手机操作显得拥挤，或你想确认不需要下载时，可以把这里当成快速参考。',
+      ],
+      howToPlay: [
+        '控制 Adam 在关卡中移动，并收集水果、钥匙或其他必要物品。',
+        '跳跃或爬梯前先观察危险和动物的移动节奏。',
+        '路线清理完成、必要物品收集后，到达 Eve 所在位置。',
+      ],
+      controls: [
+        { label: '移动', value: '使用当前游戏显示的方向键、WASD 或屏幕移动按钮。' },
+        { label: '跳跃 / 爬梯', value: '根据浏览器版本提示进行跳跃、爬梯和平台移动。' },
+        { label: '重试', value: '物品顺序或危险时机导致路线卡死时，重开当前关卡。' },
+      ],
+      tips: [
+        '先拿钥匙和能打开路线的物品，不要只盯着出口。',
+        '到梯子和平台边缘先停一下，看清移动危险的规律。',
+        '如果关卡看似无解，检查是否漏掉水果或能改变场景的物品。',
+        '手机端用短促点按移动，窄平台很容易冲过头。',
+      ],
+      faqs: [
+        {
+          question: 'Adam and Eve Go 和早期 Adam and Eve 有什么不同？',
+          answer: 'Go 版需要直接移动角色穿过小关卡，而很多早期作品主要是点击场景物体解谜。',
+        },
+        {
+          question: 'Adam and Eve Go 关卡被挡住怎么办？',
+          answer: '回头找钥匙、水果、梯子或开关。多数情况是物品顺序或路线选择问题，不是速度不够。',
+        },
+        {
+          question: 'Adam and Eve Go 需要下载吗？',
+          answer: '不需要。在 Luma 浏览器里直接玩即可，避开要求 APK、安装器或浏览器扩展的页面。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'adam-and-eve-walkthrough',
+          title: 'Adam and Eve 系列攻略',
+          description: '覆盖系列物品顺序、障碍处理和卡关思路的通用指南。',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: '适合 5 分钟休息的浏览器游戏',
+          description: '更多规则简单、关卡较短的浏览器小游戏。',
+        },
+      ],
+    },
+  },
+  'adam-and-eve-go-2': {
+    en: {
+      metaTitle: 'Adam and Eve Go 2 Online - Route Tips, Controls and Safe Play',
+      metaDescription:
+        'Play Adam and Eve Go 2 online with route planning tips, movement controls, item order advice, FAQs, and no-download browser guidance.',
+      title: 'Adam and Eve Go 2 quick guide',
+      summary:
+        'Adam and Eve Go 2 keeps the side-scrolling puzzle format and adds new level layouts that reward cleaner routing. The goal is still simple: collect what the stage asks for, avoid hazards, and guide Adam safely to Eve.',
+      overview: [
+        'Compared with the first Go game, the sequel puts more pressure on route order. A missed key, fruit, or ladder path can make the end of the level feel blocked even when the solution is only a few steps behind you.',
+        'Use this guide to make each attempt more deliberate. It covers controls, route reading, mobile notes, and safe browser play without directing players toward downloads or unofficial clients.',
+      ],
+      howToPlay: [
+        'Scan the level before moving and identify the required collectibles or route unlocks.',
+        'Move through platforms carefully, avoiding creatures, gaps, and timed obstacles.',
+        'Finish by reaching Eve after the correct item sequence is complete.',
+      ],
+      controls: [
+        { label: 'Move', value: 'Use the keyboard or touch movement controls shown in the embedded game.' },
+        { label: 'Jump / interact', value: 'Follow the in-game controls for jumps, ladders, doors, and route objects.' },
+        { label: 'Restart', value: 'Retry when the route order leaves Adam trapped or missing an item.' },
+      ],
+      tips: [
+        'Trace the route backward from Eve: what door, ladder, or item must be solved before the final approach?',
+        'Do not rush past collectibles near the start; they often matter later.',
+        'When an enemy patrols a small space, wait for a full movement cycle before crossing.',
+        'If touch controls feel imprecise, play slowly and avoid holding a direction for too long.',
+      ],
+      faqs: [
+        {
+          question: 'Is Adam and Eve Go 2 harder than Adam and Eve Go?',
+          answer:
+            'It uses the same basic controls, but the route order can be less forgiving, especially when keys or collectibles are placed off the direct path.',
+        },
+        {
+          question: 'How do I stop getting stuck near the end of a level?',
+          answer:
+            'Check whether you skipped a required item earlier. Many late blocks happen because the route was not prepared before reaching the exit.',
+        },
+        {
+          question: 'Can I play Adam and Eve Go 2 without installing anything?',
+          answer:
+            'Yes. Use the browser player on Luma and avoid third-party download prompts.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'adam-and-eve-walkthrough',
+          title: 'Adam and Eve walkthrough',
+          description: 'A broader guide to Adam and Eve puzzle logic and spin-off patterns.',
+        },
+        {
+          slug: 'games-to-play-when-bored',
+          title: 'Games to play when bored',
+          description: 'More casual browser games for short, low-pressure sessions.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Adam and Eve Go 2 在线玩 - 路线技巧、操作与安全玩法',
+      metaDescription:
+        '在线玩 Adam and Eve Go 2，查看路线规划、移动操作、物品顺序、FAQ 和免下载浏览器玩法说明。',
+      title: 'Adam and Eve Go 2 快速玩法指南',
+      summary:
+        'Adam and Eve Go 2 延续横版解谜关卡玩法，并加入更需要路线判断的新布局。目标依然清晰：收集关卡要求的物品，避开危险，把 Adam 安全带到 Eve 身边。',
+      overview: [
+        '相比第一作，续作更考验路线顺序。漏掉钥匙、水果或某条梯子路线后，关卡末尾可能看似被挡住，但真正答案往往在前面几步。',
+        '这个指南帮助你把每次尝试变得更有目的：先读路线，再移动，遇到卡点时检查物品顺序；全程浏览器游玩，不引导下载或第三方客户端。',
+      ],
+      howToPlay: [
+        '移动前先扫一遍关卡，确认必须收集的物品和打开路线的条件。',
+        '小心穿过平台、缺口、动物和计时障碍。',
+        '完成正确物品顺序后，到达 Eve 所在位置通关。',
+      ],
+      controls: [
+        { label: '移动', value: '使用嵌入游戏显示的键盘或触控移动按钮。' },
+        { label: '跳跃 / 互动', value: '根据游戏内提示处理跳跃、梯子、门和路线物体。' },
+        { label: '重开', value: '路线顺序错误、角色被困或漏掉物品时重试。' },
+      ],
+      tips: [
+        '从 Eve 的位置倒推路线：最后接近前需要先解决哪扇门、哪段梯子或哪个物品？',
+        '不要急着越过开局附近的收集物，它们经常在后面有用。',
+        '敌人或危险在小区域巡逻时，先看完一个完整循环再通过。',
+        '触屏不够精准时，放慢速度，不要长按方向键。',
+      ],
+      faqs: [
+        {
+          question: 'Adam and Eve Go 2 比第一作更难吗？',
+          answer: '基础操作相同，但路线顺序更容易出错，尤其是钥匙和收集物不在直线路径上时。',
+        },
+        {
+          question: '为什么我总在关卡末尾卡住？',
+          answer: '通常是前面漏掉了必要物品。很多末尾障碍需要提前准备路线，而不是到出口才解决。',
+        },
+        {
+          question: 'Adam and Eve Go 2 不安装可以玩吗？',
+          answer: '可以。在 Luma 使用浏览器播放器即可，避开第三方下载提示。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'adam-and-eve-walkthrough',
+          title: 'Adam and Eve 系列攻略',
+          description: '覆盖 Adam and Eve 解谜逻辑和衍生玩法的通用指南。',
+        },
+        {
+          slug: 'games-to-play-when-bored',
+          title: '无聊时可玩的浏览器小游戏',
+          description: '更多适合短时间轻松打开的休闲浏览器游戏。',
+        },
+      ],
+    },
+  },
+  'adam-and-eve-go-3': {
+    en: {
+      metaTitle: 'Adam and Eve Go 3 Online - Item Order, Controls and Level Tips',
+      metaDescription:
+        'Play Adam and Eve Go 3 online with item-order advice, movement controls, hazard tips, FAQ answers, and safe no-download browser play.',
+      title: 'Adam and Eve Go 3 quick guide',
+      summary:
+        'Adam and Eve Go 3 is a compact route-planning platform puzzle. Each level asks you to move Adam through a small scene, collect the right objects, avoid simple hazards, and keep the path open long enough to reach Eve.',
+      overview: [
+        'The third Go entry is useful for short sessions because levels are readable, but it still punishes careless movement. If you run straight ahead, you may miss a key item or enter a hazard at the wrong time.',
+        'Use this page as a practical checklist: read the route, collect deliberately, time hazards, and keep the experience in the browser rather than chasing downloads elsewhere.',
+      ],
+      howToPlay: [
+        'Identify the exit route, then note which collectibles or doors are required before you can finish.',
+        'Move Adam through platforms and ladders without rushing through hazards.',
+        'Complete the item order and reach Eve to clear the level.',
+      ],
+      controls: [
+        { label: 'Move', value: 'Use the keyboard or touch controls active in the game frame.' },
+        { label: 'Jump / climb', value: 'Use the shown action controls for jumps, ladders, and small platforms.' },
+        { label: 'Retry', value: 'Restart quickly when the first route choice blocks progress.' },
+      ],
+      tips: [
+        'Think of every level as an item-order puzzle before treating it like a platformer.',
+        'If a collectible sits away from the main path, assume it matters until the level proves otherwise.',
+        'Let moving hazards pass once before crossing, especially on mobile.',
+        'Avoid unknown APK or extension pages; the browser version is enough for normal play.',
+      ],
+      faqs: [
+        {
+          question: 'What is the main strategy for Adam and Eve Go 3?',
+          answer:
+            'Plan the item order first. Most problems come from collecting in the wrong sequence or skipping a route-opening object.',
+        },
+        {
+          question: 'Is Adam and Eve Go 3 good for quick play?',
+          answer:
+            'Yes. Levels are short, but they still have enough route logic to feel more satisfying than a simple runner.',
+        },
+        {
+          question: 'Is Adam and Eve Go 3 safe to play online?',
+          answer:
+            'Use the browser player on Luma and avoid pages that request downloads, installers, or extensions.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'adam-and-eve-walkthrough',
+          title: 'Adam and Eve walkthrough',
+          description: 'Series guidance for puzzle chains, route blockers, and common stuck points.',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: 'Best browser games for a 5-minute break',
+          description: 'More browser games that start quickly and stop cleanly.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Adam and Eve Go 3 在线玩 - 物品顺序、操作与关卡技巧',
+      metaDescription:
+        '在线玩 Adam and Eve Go 3，查看物品顺序、移动操作、障碍技巧、FAQ 和免下载安全浏览器玩法。',
+      title: 'Adam and Eve Go 3 快速玩法指南',
+      summary:
+        'Adam and Eve Go 3 是短小的路线规划平台解谜。每关都要控制 Adam 穿过小场景，收集正确物品，避开简单危险，并保持路线通畅直到见到 Eve。',
+      overview: [
+        '第三部 Go 适合短时间游玩，因为关卡容易读懂，但它仍然会惩罚粗心移动。一路往前冲，可能会漏掉关键物品，或在错误时机进入危险区域。',
+        '这个页面可以当作实用检查表：先读路线，有目的地收集，看清危险节奏，并坚持使用浏览器版本，不去追逐其他站点的下载提示。',
+      ],
+      howToPlay: [
+        '先确认出口路线，再判断通关前需要哪些收集物或门。',
+        '控制 Adam 穿过平台和梯子，不要急着冲过危险。',
+        '完成物品顺序后到达 Eve 即可过关。',
+      ],
+      controls: [
+        { label: '移动', value: '使用游戏框内当前启用的键盘或触控控制。' },
+        { label: '跳跃 / 爬梯', value: '根据画面提示处理跳跃、梯子和小平台。' },
+        { label: '重试', value: '第一条路线选择导致卡死时，快速重开。' },
+      ],
+      tips: [
+        '先把每关当成物品顺序谜题，再当成平台游戏。',
+        '如果收集物偏离主路线，先默认它有用，除非关卡证明不需要。',
+        '移动危险经过一次后再通过，手机端尤其要慢一点。',
+        '避开未知 APK 或扩展页面，浏览器版足够正常游玩。',
+      ],
+      faqs: [
+        {
+          question: 'Adam and Eve Go 3 的核心策略是什么？',
+          answer: '先规划物品顺序。多数问题来自收集顺序错误，或漏掉了打开路线的对象。',
+        },
+        {
+          question: 'Adam and Eve Go 3 适合短时间玩吗？',
+          answer: '适合。关卡较短，但仍有路线逻辑，比纯跑酷更有解谜感。',
+        },
+        {
+          question: 'Adam and Eve Go 3 在线玩安全吗？',
+          answer: '使用 Luma 浏览器播放器即可，避开要求下载、安装器或扩展的页面。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'adam-and-eve-walkthrough',
+          title: 'Adam and Eve 系列攻略',
+          description: '覆盖谜题链条、路线阻碍和常见卡关点的系列指南。',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: '适合 5 分钟休息的浏览器游戏',
+          description: '更多启动快、容易停下来的浏览器游戏。',
+        },
+      ],
+    },
+  },
+  'adam-and-eve-go-xmas': {
+    en: {
+      metaTitle: 'Adam and Eve Go Xmas Online - Holiday Level Tips and Safe Play',
+      metaDescription:
+        'Play Adam and Eve Go Xmas online with holiday route tips, movement controls, collectible advice, FAQs, and no-download browser safety notes.',
+      title: 'Adam and Eve Go Xmas quick guide',
+      summary:
+        'Adam and Eve Go Xmas is the seasonal version of the Go-style Adam and Eve levels. It keeps the same short route-planning structure, but wraps it in holiday scenes where gifts, platforms, and obstacles still need the right order.',
+      overview: [
+        'Do not let the festive theme make you rush. The level logic is still about reading paths, checking collectibles, and timing movement through hazards before Adam reaches Eve.',
+        'This guide is for players who want a quick browser session with clear controls and safe play notes. It avoids download framing and focuses on what actually helps during a stuck holiday level.',
+      ],
+      howToPlay: [
+        'Move Adam through the Xmas-themed stage and collect the required items.',
+        'Check whether a gift, key, door, or platform must be handled before the final route opens.',
+        'Avoid hazards and reach Eve once the route is prepared.',
+      ],
+      controls: [
+        { label: 'Move', value: 'Use the active keyboard or on-screen movement controls.' },
+        { label: 'Jump / route actions', value: 'Follow the in-game controls for platforms, ladders, and route objects.' },
+        { label: 'Restart', value: 'Retry when you miss a required item or mistime a hazard.' },
+      ],
+      tips: [
+        'Treat gifts and seasonal objects as possible puzzle items, not just decoration.',
+        'Look at the whole route before collecting the first nearby item.',
+        'When a hazard repeats, wait for the slowest safe crossing instead of forcing it.',
+        'Keep the game in the browser; no seasonal version should require an installer.',
+      ],
+      faqs: [
+        {
+          question: 'Is Adam and Eve Go Xmas a separate game?',
+          answer:
+            'Yes, it is a holiday-themed Go entry with familiar movement and route-planning mechanics.',
+        },
+        {
+          question: 'How do I solve Xmas levels faster?',
+          answer:
+            'Identify required items first, then move through the route in order. Seasonal objects may still be part of the puzzle.',
+        },
+        {
+          question: 'Does Adam and Eve Go Xmas require a download?',
+          answer:
+            'No. Play in the browser on Luma and avoid APK, installer, or extension prompts.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'adam-and-eve-walkthrough',
+          title: 'Adam and Eve walkthrough',
+          description: 'General Adam and Eve puzzle and route-solving advice.',
+        },
+        {
+          slug: 'games-to-play-when-bored',
+          title: 'Games to play when bored',
+          description: 'More quick browser games for casual sessions.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Adam and Eve Go Xmas 在线玩 - 节日关卡技巧与安全玩法',
+      metaDescription:
+        '在线玩 Adam and Eve Go Xmas，查看节日路线技巧、移动操作、收集物建议、FAQ 和免下载浏览器安全说明。',
+      title: 'Adam and Eve Go Xmas 快速玩法指南',
+      summary:
+        'Adam and Eve Go Xmas 是 Go 风格关卡的节日版本。它保留短路线规划结构，只是把场景换成圣诞主题；礼物、平台和障碍依然需要按正确顺序处理。',
+      overview: [
+        '不要因为节日主题看起来轻松就一路冲。关卡逻辑仍然是先读路线、检查收集物、看清危险节奏，再让 Adam 到达 Eve。',
+        '这个指南适合想快速玩一局浏览器节日关卡的玩家，重点放在操作、路线和安全游玩说明，不引导下载或安装。',
+      ],
+      howToPlay: [
+        '控制 Adam 穿过圣诞主题关卡，并收集必要物品。',
+        '检查礼物、钥匙、门或平台是否需要在最终路线前先处理。',
+        '避开危险，准备好路线后到达 Eve。',
+      ],
+      controls: [
+        { label: '移动', value: '使用当前键盘或屏幕移动按钮。' },
+        { label: '跳跃 / 路线动作', value: '根据游戏提示处理平台、梯子和路线物体。' },
+        { label: '重开', value: '漏掉必要物品或危险时机错误时重试。' },
+      ],
+      tips: [
+        '礼物和节日物件也可能是谜题物品，不只是装饰。',
+        '先看完整路线，再拿第一个最近的物品。',
+        '危险循环出现时，等最稳的空档通过，不要硬冲。',
+        '保持浏览器游玩，节日版本也不应该要求安装器。',
+      ],
+      faqs: [
+        {
+          question: 'Adam and Eve Go Xmas 是单独游戏吗？',
+          answer: '是，它是带圣诞主题的 Go 系列作品，操作和路线规划机制仍然熟悉。',
+        },
+        {
+          question: 'Adam and Eve Go Xmas 怎么更快过关？',
+          answer: '先确认必要物品，再按顺序走路线。节日物件也可能参与解谜。',
+        },
+        {
+          question: 'Adam and Eve Go Xmas 需要下载吗？',
+          answer: '不需要。在 Luma 浏览器里直接玩，避开 APK、安装器或扩展提示。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'adam-and-eve-walkthrough',
+          title: 'Adam and Eve 系列攻略',
+          description: '通用 Adam and Eve 解谜和路线规划建议。',
+        },
+        {
+          slug: 'games-to-play-when-bored',
+          title: '无聊时可玩的浏览器小游戏',
+          description: '更多适合休闲短局的浏览器游戏。',
+        },
+      ],
+    },
+  },
+  'adam-and-eve-night': {
+    en: {
+      metaTitle: 'Adam and Eve Night Online - Spooky Puzzle Tips and Safe Browser Play',
+      metaDescription:
+        'Play Adam and Eve Night online with scene-puzzle controls, spooky object-order tips, FAQ answers, and safe no-download browser guidance.',
+      title: 'Adam and Eve Night quick guide',
+      summary:
+        'Adam and Eve Night is a darker seasonal point-and-click entry in the Adam and Eve series. The tone changes, but the useful solving habit stays familiar: inspect the blocker, test nearby objects, watch what changes, then continue the chain.',
+      overview: [
+        'The night theme can make objects harder to notice, so slow scanning matters more than fast clicking. Small background details, creatures, or props may become the next step after another action changes the scene.',
+        'Use this page as a safe browser-play companion. It gives enough structure for stuck scenes without pushing downloads, horror bait, or unrelated installers.',
+      ],
+      howToPlay: [
+        'Inspect the whole scene and identify what keeps Adam from moving forward.',
+        'Click or tap likely objects one at a time, then wait for the full reaction.',
+        'Use each change as the clue for the next object until the path opens.',
+      ],
+      controls: [
+        { label: 'Interact', value: 'Click with a mouse or tap on touchscreens to use scene objects.' },
+        { label: 'Observe', value: 'Wait after each action so hidden changes are not missed.' },
+        { label: 'Restart', value: 'Reset the scene if the click order becomes confusing.' },
+      ],
+      tips: [
+        'Scan dark corners and background props; the night palette can hide useful objects.',
+        'Do not repeatedly click Adam. Solve the obstacle in front of him first.',
+        'If a creature blocks the route, look for what distracts, moves, or scares it.',
+        'Keep play in the browser and avoid pages that turn the game into a download.',
+      ],
+      faqs: [
+        {
+          question: 'Is Adam and Eve Night scary?',
+          answer:
+            'It has a spooky seasonal style, but it still plays like a light point-and-click puzzle rather than a horror game.',
+        },
+        {
+          question: 'How do I find hidden objects in Adam and Eve Night?',
+          answer:
+            'Start near the blocker, then scan dark edges and background props. Watch animations because new objects can become useful after a click.',
+        },
+        {
+          question: 'Can I play Adam and Eve Night safely online?',
+          answer:
+            'Yes. Use the browser player on Luma and avoid APK, installer, or extension prompts.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'adam-and-eve-walkthrough',
+          title: 'Adam and Eve walkthrough',
+          description: 'Point-and-click solving habits for the broader Adam and Eve series.',
+        },
+        {
+          slug: 'games-to-play-when-bored',
+          title: 'Games to play when bored',
+          description: 'More relaxed browser games for short sessions.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Adam and Eve Night 在线玩 - 夜间解谜技巧与安全浏览器玩法',
+      metaDescription:
+        '在线玩 Adam and Eve Night，查看场景点击操作、夜间物品顺序技巧、FAQ 和免下载浏览器安全说明。',
+      title: 'Adam and Eve Night 快速玩法指南',
+      summary:
+        'Adam and Eve Night 是 Adam and Eve 系列里氛围更暗的季节点击解谜作品。画面风格变了，但有效思路仍然熟悉：先看挡路点，测试附近物体，观察变化，再沿着连锁反应继续。',
+      overview: [
+        '夜间主题会让某些物体不那么显眼，所以慢慢扫描比快速乱点更重要。小背景细节、动物或道具，可能要在前一个动作改变场景后才会变得有用。',
+        '这个页面可以作为安全浏览器游玩的参考：帮你理解卡关场景，但不引导下载、恐怖噱头或无关安装器。',
+      ],
+      howToPlay: [
+        '先检查整个场景，找出阻止 Adam 前进的原因。',
+        '一次点击或点按一个可能对象，然后等完整反应结束。',
+        '把每次变化当成下一步线索，直到路线打开。',
+      ],
+      controls: [
+        { label: '互动', value: '用鼠标点击或触屏点按场景物体。' },
+        { label: '观察', value: '每次操作后等一下，避免漏掉隐藏变化。' },
+        { label: '重开', value: '点击顺序变得混乱时，重置当前场景。' },
+      ],
+      tips: [
+        '仔细扫暗角和背景道具，夜间配色可能会藏住有用物品。',
+        '不要反复点击 Adam 本人，先解决他前方的障碍。',
+        '如果动物挡路，找能吸引、移动或吓走它的对象。',
+        '保持浏览器游玩，避开把游戏包装成下载的页面。',
+      ],
+      faqs: [
+        {
+          question: 'Adam and Eve Night 吓人吗？',
+          answer: '它有夜间和轻微 spooky 风格，但玩法仍然是轻量点击解谜，不是恐怖游戏。',
+        },
+        {
+          question: 'Adam and Eve Night 怎么找隐藏物体？',
+          answer: '从挡路点附近开始，再扫暗色边缘和背景道具；注意动画变化，因为新对象可能在点击后才有用。',
+        },
+        {
+          question: 'Adam and Eve Night 可以安全在线玩吗？',
+          answer: '可以。使用 Luma 浏览器播放器即可，避开 APK、安装器或扩展提示。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'adam-and-eve-walkthrough',
+          title: 'Adam and Eve 系列攻略',
+          description: '覆盖更广 Adam and Eve 系列的点击解谜习惯。',
+        },
+        {
+          slug: 'games-to-play-when-bored',
+          title: '无聊时可玩的浏览器小游戏',
+          description: '更多适合短时间放松的浏览器游戏。',
+        },
+      ],
+    },
+  },
 };
 
 export function getGameEditorialContent(slug: string | null | undefined, locale: string): GameEditorialLocaleContent | null {
