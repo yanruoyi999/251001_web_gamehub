@@ -1415,4 +1415,7 @@
 - 审计结果：200 个游戏中 `core-indexed` 94 个、`catalogue-only` 88 个、`review` 18 个；当前策略下 106 个游戏页会 noindex，94 个唯一游戏进入 sitemap。
 - 合规边界：本轮没有删除页面、没有新增广告容器、没有新增 iframe、没有隐藏真实来源；只做可回滚的索引/推荐分层和复核提示。
 - 验证结果：`pnpm exec tsc --noEmit --incremental false` 通过；`pnpm lint` 通过；`pnpm build` 通过。本地 production server `:3014` 抽查显示 sitemap 总 URL 284、游戏 URL 192、风险页不在 sitemap；`/en/games/gun-battle-3` 输出 `noindex,follow` 和复查提示；`/en/games/drive-mad` 仍无 noindex；`/api/games?search=gun` 和 `/api/search?q=gun` 均不返回复核页。
-- 下一步：部署后生产抽查 sitemap URL 数、风险页 robots、核心页 robots、API search/list；随后从 `docs/game-quality-audit.md` 里按分数和真实数据挑 10 个核心页加厚。
+- 提交部署：commit `a951208 add game quality indexing policy` 已推送 `origin/main`；Vercel production deployment `dpl_CqRWqXpRe3e98iCyGQg8MU9ijwxF` Ready，并挂载 `https://www.lumagamehub.com`。
+- 生产验证：`https://www.lumagamehub.com/sitemap.xml` 输出 284 总 URL / 192 游戏 URL / 48 guide URL，首批复核页未进入 sitemap；`/en/games/gun-battle-3` 输出 `noindex,follow`、复查提示和复查原因；`/en/games/drive-mad` 仍可索引；`/api/games?search=gun&limit=10` 与 `/api/search?q=gun&limit=10` 均不返回复核页。
+- 部署后监测：`pnpm ops:monitoring` 显示 site / robots / sitemap / Clarity tag ok，sitemap 284 URLs；public health、search api 仍因既有 Supabase direct URL、Redis timeout、Meilisearch localhost 配置降级，不是本轮内容分层新增问题。
+- 下一步：从 `docs/game-quality-audit.md` 里按核心分层和真实数据挑 10 个核心页加厚；人工复核 18 个 `review` 游戏是否删除、替换或补授权来源；继续单独修复 T-067 外部 DB/Redis/Meilisearch 配置。
