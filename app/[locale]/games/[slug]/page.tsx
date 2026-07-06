@@ -11,6 +11,7 @@ import { GameService, RatingService } from '@/services';
 import { getMockGameBySlug, mockGames } from '@/lib/mock-games';
 import type { GameDetail } from '@/services/game.service';
 import type { MockGame } from '@/lib/mock-games';
+import { getGameEditorialContent } from '@/lib/games/editorial-content';
 import { getGameQualityTier, getManualReviewReason, shouldNoIndexGame, shouldPromoteGameInCollections } from '@/lib/games/quality-policy';
 import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES, buildAbsoluteUrl } from '@/lib/seo';
 import { getLocalizedPath, locales } from '@/i18n/config';
@@ -162,7 +163,13 @@ export async function generateMetadata({ params }: GamePageProps): Promise<Metad
 
   const { game } = resolved;
   const title = resolveGameTitle(game, locale);
-  const description = resolveGameDescription(game, locale);
+  const editorialContent = getGameEditorialContent(game.slug, locale);
+  const description = editorialContent?.metaDescription ?? resolveGameDescription(game, locale);
+  const metadataTitle =
+    editorialContent?.metaTitle ??
+    (locale === 'zh'
+      ? `${title} - 免费在线小游戏`
+      : `${title} - Free Browser Game`);
   const canonical = getLocalizedPath(locale, `/games/${game.slug}`);
   const noIndex = shouldNoIndexGame(game.slug);
   const taxonomyKeywords = [
@@ -189,10 +196,7 @@ export async function generateMetadata({ params }: GamePageProps): Promise<Metad
       : undefined;
 
   return {
-    title:
-      locale === 'zh'
-        ? `${title} - 免费在线小游戏`
-        : `${title} - Free Browser Game`,
+    title: metadataTitle,
     description:
       description ||
       (locale === 'zh'
@@ -218,7 +222,7 @@ export async function generateMetadata({ params }: GamePageProps): Promise<Metad
         }
       : undefined,
     openGraph: {
-      title,
+      title: metadataTitle,
       description,
       url: canonical,
       type: 'website',
@@ -226,7 +230,7 @@ export async function generateMetadata({ params }: GamePageProps): Promise<Metad
     },
     twitter: {
       card: 'summary_large_image',
-      title,
+      title: metadataTitle,
       description,
       images: image?.map((item) => item.url) ?? DEFAULT_TWITTER_IMAGES,
     },
@@ -287,7 +291,8 @@ export default async function GamePage({ params }: GamePageProps) {
   const pickLocalized = pickLocalizedText;
 
   const title = resolveGameTitle(game, locale);
-  const description = resolveGameDescription(game, locale);
+  const editorialContent = getGameEditorialContent(game.slug, locale);
+  const description = editorialContent?.summary ?? resolveGameDescription(game, locale);
 
   const instructions = locale === 'en'
     ? pickLocalized(game.instructionsEn, game.instructions)
@@ -423,6 +428,21 @@ export default async function GamePage({ params }: GamePageProps) {
     ],
   };
   const structuredData = [videoGameSchema, breadcrumbSchema];
+
+  if (editorialContent?.faqs.length) {
+    structuredData.push({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: editorialContent.faqs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: faq.answer,
+        },
+      })),
+    });
+  }
 
   const distributionByStars: Record<1 | 2 | 3 | 4 | 5, number> = {
     1: ratingDistribution['1'] ?? (ratingDistribution as Record<number, number>)[1] ?? 0,
@@ -609,6 +629,105 @@ export default async function GamePage({ params }: GamePageProps) {
                 </div>
               </CardContent>
             </Card>
+
+            {editorialContent ? (
+              <Card className="mb-8">
+                <CardHeader>
+                  <CardTitle className="text-2xl">{editorialContent.title}</CardTitle>
+                  <CardDescription className="text-base">
+                    {editorialContent.summary}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-8 text-sm leading-7 text-foreground/90">
+                  <section className="space-y-3">
+                    <h2 className="text-xl font-semibold text-foreground">
+                      {locale === 'zh' ? '这款游戏适合怎么玩' : 'What to focus on while playing'}
+                    </h2>
+                    {editorialContent.overview.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
+                  </section>
+
+                  <section className="space-y-3">
+                    <h2 className="text-xl font-semibold text-foreground">
+                      {locale === 'zh' ? 'How to play / 玩法步骤' : 'How to play'}
+                    </h2>
+                    <ol className="space-y-2">
+                      {editorialContent.howToPlay.map((step, index) => (
+                        <li key={step} className="flex gap-3">
+                          <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
+                            {index + 1}
+                          </span>
+                          <span>{step}</span>
+                        </li>
+                      ))}
+                    </ol>
+                  </section>
+
+                  <section className="space-y-3">
+                    <h2 className="text-xl font-semibold text-foreground">
+                      {locale === 'zh' ? 'Controls / 操作' : 'Controls'}
+                    </h2>
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      {editorialContent.controls.map((control) => (
+                        <div key={control.label} className="rounded-lg border border-border bg-muted/40 p-3">
+                          <p className="font-semibold text-foreground">{control.label}</p>
+                          <p className="mt-1 text-muted-foreground">{control.value}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+
+                  <section className="space-y-3">
+                    <h2 className="text-xl font-semibold text-foreground">
+                      {locale === 'zh' ? '实用技巧' : 'Practical tips'}
+                    </h2>
+                    <ul className="grid gap-2">
+                      {editorialContent.tips.map((tip) => (
+                        <li key={tip} className="flex gap-2">
+                          <span className="text-primary">✓</span>
+                          <span>{tip}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+
+                  <section className="space-y-3">
+                    <h2 className="text-xl font-semibold text-foreground">FAQ</h2>
+                    <dl className="space-y-4">
+                      {editorialContent.faqs.map((faq) => (
+                        <div key={faq.question}>
+                          <dt className="font-semibold text-foreground">{faq.question}</dt>
+                          <dd className="mt-1 text-muted-foreground">{faq.answer}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  </section>
+
+                  {editorialContent.relatedGuides.length > 0 ? (
+                    <section className="space-y-3">
+                      <h2 className="text-xl font-semibold text-foreground">
+                        {locale === 'zh' ? '相关攻略' : 'Related guides'}
+                      </h2>
+                      <div className="grid gap-3 sm:grid-cols-2">
+                        {editorialContent.relatedGuides.map((guide) => (
+                          <Link
+                            key={guide.slug}
+                            href={getLocalizedPath(locale, `/guides/${guide.slug}`)}
+                            className="rounded-lg border border-border p-4 transition hover:border-primary/50 hover:bg-muted/40"
+                          >
+                            <span className="font-semibold text-foreground">{guide.title}</span>
+                            <span className="mt-1 block text-sm text-muted-foreground">
+                              {guide.description}
+                            </span>
+                          </Link>
+                        ))}
+                      </div>
+                    </section>
+                  ) : null}
+                </CardContent>
+              </Card>
+            ) : null}
 
             {/* Reviews Section */}
             <Card className="mb-8">

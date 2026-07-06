@@ -1419,3 +1419,13 @@
 - 生产验证：`https://www.lumagamehub.com/sitemap.xml` 输出 284 总 URL / 192 游戏 URL / 48 guide URL，首批复核页未进入 sitemap；`/en/games/gun-battle-3` 输出 `noindex,follow`、复查提示和复查原因；`/en/games/drive-mad` 仍可索引；`/api/games?search=gun&limit=10` 与 `/api/search?q=gun&limit=10` 均不返回复核页。
 - 部署后监测：`pnpm ops:monitoring` 显示 site / robots / sitemap / Clarity tag ok，sitemap 284 URLs；public health、search api 仍因既有 Supabase direct URL、Redis timeout、Meilisearch localhost 配置降级，不是本轮内容分层新增问题。
 - 下一步：从 `docs/game-quality-audit.md` 里按核心分层和真实数据挑 10 个核心页加厚；人工复核 18 个 `review` 游戏是否删除、替换或补授权来源；继续单独修复 T-067 外部 DB/Redis/Meilisearch 配置。
+
+### T-117 Core game detail editorial upgrade batch 1
+
+- 选择原因：T-116 已把游戏库从“全量索引”转为分层治理，下一步应优先加厚已有搜索/站内信号的核心游戏页，而不是继续铺新 iframe。第一批选择 `drive-mad`、`google-snake`、`ovo`、`tunnel-rush`、`apple-knight-mini-dungeons`，原因是已有 guide/collection 内链、GSC 主题信号或高重试可玩性，且均属于 `core-indexed`。
+- 实际改动：新增 `lib/games/editorial-content.ts`，为 5 个动态游戏详情页提供中英文原创摘要、overview、how to play、controls、tips、FAQ 和 related guides；`app/[locale]/games/[slug]/page.tsx` 读取该内容并输出可见正文、FAQPage JSON-LD、专属 title/description；`lib/mock-games.ts` 将这些原创摘要同步到 fallback 目录/相似游戏描述。
+- 内链与体验：新增的 related guides 指向 `drive-mad-walkthrough`、`google-snake-mods`、`ovo-walkthrough`、`tunnel-rush-unblocked`、`apple-knight-mini-dungeons-guide`、`games-like-ovo`、`games-to-play-when-bored`；页面顺序保持“播放器 -> 玩法指南 -> 评价 -> 游戏信息/提示/相似游戏”，让玩家先玩再读卡点解法。
+- 合规边界：本轮没有新增 iframe、截图、广告容器、下载入口或诱导点击文案；文案明确 browser play/no download，并避免把第三方游戏描述成 Luma 自有 IP 或官方授权。
+- 验证结果：`pnpm exec tsx scripts/audit-game-quality.ts --write docs/game-quality-audit.md` 通过，5 个目标页均不再命中 thin description，分数为 Apple Knight Mini Dungeons 87、Drive Mad 87、Google Snake 87、OvO 81、Tunnel Rush 87；`pnpm exec tsc --noEmit --incremental false` 通过；`pnpm lint` 通过；`pnpm build` 通过；`git diff --check` 通过。
+- 本地 production 验证：`pnpm exec next start -p 3015` 后抽查 `/en/games/drive-mad`、`/en/games/google-snake`、`/en/games/ovo`、`/en/games/tunnel-rush`、`/en/games/apple-knight-mini-dungeons`、`/games/drive-mad`、`/games/google-snake` 均 HTTP 200，输出对应新 title、guide heading、FAQPage JSON-LD、相关 guide 链接，且无 `noindex`。
+- 下一步：部署后生产抽查同一批 URL 的 title、FAQPage、related guide links、robots；随后继续第二批核心页加厚，优先 `big-tower-tiny-square`、`g-switch-3`、`fireboy-watergirl-6`、`monkey-mart`、`dadish`。

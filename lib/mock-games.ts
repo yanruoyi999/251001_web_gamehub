@@ -5,6 +5,7 @@
 
 import sampleData from '@/public/data/4399-sample.json';
 import { shouldPromoteGameInCollections } from '@/lib/games/quality-policy';
+import { getGameEditorialDescription } from '@/lib/games/editorial-content';
 
 const BASE_TIMESTAMP = new Date('2024-01-01T00:00:00Z');
 
@@ -562,14 +563,18 @@ function buildMockGamesFromSample(entries: SampleGameEntry[]): MockGame[] {
     const developer = deriveDeveloperInfo(entry, iframeUrl);
     const sourceUrl = iframeUrl || entry.sourcePageUrl?.trim() || null;
     const screenshots = buildScreenshots(slug, englishTitle, index);
+    const editorialDescription = getGameEditorialDescription(slug, 'zh');
+    const editorialDescriptionEn = getGameEditorialDescription(slug, 'en');
 
     return {
       id: index + 1,
       slug,
       title,
       titleEn: englishTitle,
-      description: `热门 HTML5 小游戏《${englishTitle}》，点击即可游玩，无需下载。`,
-      descriptionEn: `Play “${englishTitle}”, a curated HTML5 mini game that runs instantly in your browser.`,
+      description: editorialDescription ?? `热门 HTML5 小游戏《${englishTitle}》，点击即可游玩，无需下载。`,
+      descriptionEn:
+        editorialDescriptionEn ??
+        `Play “${englishTitle}”, a curated HTML5 mini game that runs instantly in your browser.`,
       iframeUrl,
       thumbnailUrl: buildThumbnailUrl(slug, englishTitle, color),
       featured: index < FEATURED_COUNT,
