@@ -1392,4 +1392,17 @@
 - 合规边界：未新增游戏 iframe 来源、图片、下载入口、广告容器或诱导点击文案；内容继续保持浏览器游玩、免下载、无 ROM/破解引导；外链仅指向公开官方/创作者相关页面。
 - 验证结果：`pnpm exec tsc --noEmit --incremental false` 通过；`pnpm lint` 通过；`git diff --check` 通过；`pnpm build` 通过。构建期仅保留已知 Browserslist/baseline-browser-mapping 老化提示。
 - 本地 production 验证：`pnpm exec next start -p 3011` 后抽查 `/en/guides/drive-mad-walkthrough` 与 `/guides/drive-mad-walkthrough` 均输出正确 `html lang`、新 title/H1、Quick answer / 快速答案、长尾问题索引、FAQ、related guide links、官方外链和 JSON-LD `citation`；`/en/guides/ovo-walkthrough`、`/en/guides/games-like-ovo`、`/en/guides/games-to-play-when-bored`、`/en/games/drive-mad` 均 HTTP 200。
+- 提交部署：commit `470b08f improve drive mad guide seo` 已推送 `origin/main`；Vercel production deployment `dpl_FwcuazDMwsfhmNzgotMw6GazWeqN` Ready，并挂载 `https://www.lumagamehub.com`。
+- 生产验证：`/en/guides/drive-mad-walkthrough` 与 `/guides/drive-mad-walkthrough` 均 HTTP 200，输出新 title、长尾问题索引、官方外链区块、JSON-LD `citation` 和正确 `html lang`；`/en/guides/ovo-walkthrough`、`/en/guides/games-like-ovo`、`/en/guides/games-to-play-when-bored`、`/en/games/drive-mad`、`/robots.txt`、`/sitemap.xml` 均 HTTP 200。
+- 部署后监测：`pnpm ops:monitoring` 仍显示 site / robots / sitemap / Clarity tag ok，sitemap 488 URLs；外部 `database config`、`meilisearch config`、`public health status=degraded`、`search api source=fallback` 仍为既有阻塞。Vercel CLI 48.9.0 不支持 `vercel logs --level`，普通 logs 查询超过 75 秒未返回，已中止；本轮以 deployment inspect + production smoke + monitoring 脚本为验证依据。
 - 下一步：发布后 7-14 天复查 GSC `drive mad 攻略`、`drive mad walkthrough`、`how to beat drive mad` 的 CTR/position，并看 Clarity 是否改善 Drive Mad guide 的 scroll depth、play click 和 related guide click。
+
+### T-115 New browser games low-competition guide cluster
+
+- 选择原因：基于 2026-07-06 最新公开页面复核，Hide and Paint、Car Circle、Monkey Tag IO 均有近期公开可玩来源、明确操作/手机/官方来源搜索意图，且早期竞争页多为游戏入口或薄说明，适合先做原创 guide 而非直接嵌入。
+- 实际改动：新增 `hide-and-paint-guide`、`car-circle-guide`、`monkey-tag-io-guide` 三个中英文高质量攻略页；新增 `best-new-browser-games-july-2026` 集合页承接新词、新游戏和低竞争机会，并把三页与 Drive Mad、OvO、Tunnel Rush、Apple Knight 等站内页面串联。
+- GEO/SEO 处理：每页都有完整 title、description、H1、quick answer、原创 overview、how to play/controls/tips/FAQ、related games、related guides 和 Official & Reference Links；Article JSON-LD `citation` 自动引用公开来源链接。
+- 合规边界：本轮没有新增 iframe、截图、下载入口、广告容器或诱导点击文案；在未确认独立授权嵌入前只发布攻略和来源说明；明确避开 APK、插件、ROM、破解、成人、赌博、明显 IP 山寨和不清楚来源。
+- 验证结果：`pnpm exec tsc --noEmit --incremental false` 通过；`pnpm lint` 通过；`pnpm build` 通过；`git diff --check` 通过。构建期仅保留已知 Browserslist/baseline-browser-mapping 老化提示。
+- 本地 production 验证：`pnpm exec next start -p 3012` 后抽查 8 个新 URL：`/en/guides/hide-and-paint-guide`、`/guides/hide-and-paint-guide`、`/en/guides/car-circle-guide`、`/guides/car-circle-guide`、`/en/guides/monkey-tag-io-guide`、`/guides/monkey-tag-io-guide`、`/en/guides/best-new-browser-games-july-2026`、`/guides/best-new-browser-games-july-2026` 均输出正确 `html lang`、title、Quick answer / 快速答案、FAQ schema、官方来源链接和相关 guide 内链；本地 sitemap 已包含新中英文 URL。
+- 下一步：发布后 7-14 天复查 GSC/Clarity，优先看 `hide and paint`、`car circle game`、`monkey tag io controls`、`best new browser games July 2026` 是否出现曝光，以及这些 guide 的 scroll depth、related guide click 和 games catalogue click。

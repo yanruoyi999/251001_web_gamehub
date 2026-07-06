@@ -1030,6 +1030,1006 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     },
   },
   {
+    slug: 'hide-and-paint-guide',
+    primaryKeyword: 'hide and paint',
+    keywords: [
+      'hide and paint',
+      'hide and paint game',
+      'meccha chameleon game',
+      'paint hide and seek game',
+      'hide and paint controls',
+      'hide and paint mobile',
+      'hide and paint tips',
+      'hide and paint official',
+    ],
+    updatedAt: seoContentUpdatedAt,
+    relatedSlugs: ['best-new-browser-games-july-2026', 'games-like-ovo', 'free-games-no-ads'],
+    locales: {
+      en: {
+        metaTitle: 'Hide and Paint Guide: Controls, Mobile Tips & How to Win',
+        metaDescription:
+          'A practical Hide and Paint guide for new players: controls, hiding strategy, painting mistakes, mobile play, official source notes, and safe no-download tips.',
+        heading: 'Hide and Paint Guide: Controls, Mobile Tips & How to Win',
+        subheading:
+          'Learn how to blend in as a painted chameleon, pick safer hiding spots, and avoid the mistakes that make you easy to catch.',
+        overview: [
+          'Hide and Paint is a multiplayer hide-and-seek browser game where the main trick is not running faster. You start as a plain chameleon, move around the map, paint yourself to match a nearby surface, and freeze in a pose that looks natural enough to fool the hunters. The fun comes from a small decision loop: find a texture, copy its color, angle the camera, then decide whether to stay still or move before someone notices.',
+          'This page is built as a player guide rather than a mirror of the game page. Luma has not embedded the game here because a separate embed permission has not been verified. Use the official source link to play, then use the sections below to improve your hiding choices, mobile controls, and safety checks without downloading APKs or browser extensions.',
+        ],
+        sections: [
+          {
+            title: 'Quick Answer: How to Survive Longer',
+            body: 'The safest Hide and Paint strategy is to pick a surface with a clear flat color, paint only when you are close to that surface, and stop moving before hunters get line of sight. A perfect color is wasted if your pose sticks out, and a good pose fails if you keep adjusting at the last second.',
+            bullets: [
+              'Match big, simple surfaces before trying detailed patterns.',
+              'Freeze with your body aligned to the wall, floor, or prop shape.',
+              'Move early between rounds instead of sprinting after a hunter is near.',
+            ],
+          },
+          {
+            title: 'Controls and Camera Basics',
+            body: 'On desktop, movement uses WASD or arrow keys, the mouse controls camera direction, and the paint action is mapped to F on the official Poki listing. Treat the camera as part of the hiding mechanic: you need to look at the surface you want to copy and then check the angle a hunter would see.',
+            bullets: [
+              'Use short movements near the final hiding spot so your outline does not wobble into view.',
+              'Rotate the camera before freezing to check whether your body breaks the texture line.',
+              'If the paint action does not fire, click the game frame once and try again.',
+            ],
+          },
+          {
+            title: 'Choosing a Better Hiding Spot',
+            body: 'Good hiding spots are readable, not necessarily complicated. Large walls, floor corners, single-color props, and shadows are easier to match than detailed objects with multiple colors. The best spot is usually one step away from the obvious one: visible enough to reach quickly, but not the first corner every hunter checks.',
+            bullets: [
+              'Avoid the middle of open floors unless the floor pattern is very uniform.',
+              'Prefer corners where your outline can merge with another edge.',
+              'Do not hide beside moving players; their motion draws attention to you.',
+            ],
+          },
+          {
+            title: 'Common Mistakes That Reveal You',
+            body: 'Most new players lose because they keep treating Hide and Paint like a chase game. The paint only hides color, not movement, silhouette, or suspicious placement. If your body shape is floating away from the surface, hunters can still spot you even when the color is close.',
+            bullets: [
+              'Painting too early: you copy the wrong color, then stand next to a different texture.',
+              'Over-adjusting: tiny late movements are more visible than a slightly imperfect color.',
+              'Using a popular corner every round: hunters learn repeated hiding habits fast.',
+            ],
+          },
+          {
+            title: 'Mobile Play and Safe Source Notes',
+            body: 'The official listing says Hide and Paint supports desktop, phones, and tablets. On touchscreens, keep your camera movement slower than you would with a mouse because a sudden swipe can rotate you out of alignment. Use the public web version first, and avoid pages that ask you to download an APK, install a plugin, or unlock a mod menu.',
+          },
+        ],
+        recommendations: [
+          {
+            slug: 'ovo',
+            pitch:
+              'OvO is a fast precision platformer if you want movement mastery after a few stealth rounds.',
+          },
+          {
+            slug: 'tunnel-rush',
+            pitch:
+              'Tunnel Rush is pure reflex pressure, useful when you want a short solo challenge instead of multiplayer hiding.',
+          },
+          {
+            slug: 'big-tower-tiny-square',
+            pitch:
+              'Big Tower Tiny Square rewards patience and exact positioning, the same discipline that helps in Hide and Paint.',
+          },
+        ],
+        faqs: [
+          {
+            question: 'What is Hide and Paint?',
+            answer:
+              'Hide and Paint is a multiplayer browser game where you play as a chameleon, copy nearby colors, and hide from hunters by blending into the map.',
+          },
+          {
+            question: 'Is Hide and Paint the same as Meccha Chameleon?',
+            answer:
+              'The official Poki page groups it with Meccha Chameleon-inspired games. For SEO and player clarity, treat Hide and Paint as the specific game title and Meccha Chameleon as a related search theme.',
+          },
+          {
+            question: 'Can I play Hide and Paint on mobile?',
+            answer:
+              'Yes. The official listing supports desktop, phone, and tablet play. Mobile hiding is harder because camera and movement are less precise, so use slower touch inputs.',
+          },
+          {
+            question: 'Does Luma host or embed Hide and Paint?',
+            answer:
+              'No. This is currently a guide page with source links. Luma does not embed the game until an authorized stable embed source is verified.',
+          },
+          {
+            question: 'Is there a safe Hide and Paint download?',
+            answer:
+              'Use the browser version first. This guide does not recommend APK mirrors, mod downloads, plugins, or sites that require a client install.',
+          },
+        ],
+        externalLinks: [
+          {
+            href: 'https://poki.com/en/g/hide-and-paint',
+            label: 'Hide and Paint on Poki',
+            description: 'Public playable source listing with developer, controls, device support, and update details.',
+          },
+          {
+            href: 'https://onrush.studio/privacy.txt',
+            label: 'OnRush Studio Privacy Policy',
+            description: 'Developer privacy policy linked from the public game listing.',
+          },
+        ],
+        ctaLabel: 'Browse similar browser games',
+        ctaDescription:
+          'Use Luma picks for short, safe browser sessions while the official Hide and Paint source remains external.',
+      },
+      zh: {
+        metaTitle: 'Hide and Paint 攻略：操作、手机玩法与隐藏技巧',
+        metaDescription:
+          'Hide and Paint 实用攻略：变色龙隐藏技巧、操作方式、手机玩法、常见失误、官方来源说明和免下载安全提示。',
+        heading: 'Hide and Paint 攻略：操作、手机玩法与隐藏技巧',
+        subheading: '学会选位置、调颜色、摆姿势，在猎人靠近前把自己藏得更自然。',
+        overview: [
+          'Hide and Paint 是一款多人捉迷藏浏览器小游戏，核心不是跑得更快，而是把自己伪装得更像地图的一部分。你会扮演一只白色变色龙，在地图里寻找合适表面，给自己上色，然后用更自然的角度和姿势骗过猎人。',
+          '这不是游戏源站的复述，而是给真实玩家看的实用指南。由于 Luma 还没有确认独立、稳定、授权的嵌入来源，本页暂不嵌入游戏，只提供官方公开来源链接。你可以去官方页面游玩，再回到这里查看隐藏点选择、手机操作和安全注意事项。',
+        ],
+        sections: [
+          {
+            title: '快速答案：怎样活得更久',
+            body: 'Hide and Paint 最稳的思路是先找大面积、颜色明确的表面，靠近后再上色，并在猎人进入视野前停止移动。颜色再准，如果姿势突兀也会被发现；姿势很好，但最后一秒还在挪动，也会把自己暴露。',
+            bullets: [
+              '先匹配大块纯色表面，再尝试复杂图案。',
+              '身体方向要贴合墙面、地面或道具边缘。',
+              '换位置要趁早，不要等猎人靠近才突然冲刺。',
+            ],
+          },
+          {
+            title: '操作和视角基础',
+            body: '官方 Poki 页面显示，桌面端用 WASD 或方向键移动，鼠标控制视角，F 键上色。视角不是装饰，而是隐藏机制的一部分：你要看准要复制的表面，也要站在猎人可能看到的角度检查自己的轮廓。',
+            bullets: [
+              '接近最终隐藏点时只做短距离微调，避免轮廓晃动。',
+              '冻结前转一下视角，看身体是否破坏了墙面或地面线条。',
+              '如果 F 键无反应，先点一下游戏画面让浏览器聚焦。',
+            ],
+          },
+          {
+            title: '怎样选更好的隐藏点',
+            body: '好的隐藏点不一定复杂，反而要容易读懂。大墙面、地面角落、单色道具和阴影通常比多色细节更容易匹配。最好的位置往往不是最隐蔽的角落，而是“猎人不会第一眼检查，但你能快速到达”的地方。',
+            bullets: [
+              '除非地面图案很统一，否则不要站在开阔地中央。',
+              '优先找能让身体轮廓贴住边缘的角落。',
+              '不要贴着其他移动玩家藏，他们的动作会把注意力带到你身上。',
+            ],
+          },
+          {
+            title: '最容易暴露你的失误',
+            body: '新手常把 Hide and Paint 当成追逐游戏玩。上色只能隐藏颜色，不能隐藏动作、轮廓和奇怪的位置。如果你的身体离表面很突兀，即使颜色接近，猎人也很容易发现。',
+            bullets: [
+              '太早上色：复制了错误颜色，最后却站到另一种材质旁边。',
+              '反复微调：最后一秒的小动作比轻微色差更显眼。',
+              '每局都躲同一个角落：猎人很快会记住你的习惯。',
+            ],
+          },
+          {
+            title: '手机玩法和安全来源',
+            body: '官方页面显示 Hide and Paint 支持电脑、手机和平板。触屏上视角更容易转过头，所以移动和转向都要比鼠标慢一点。优先使用公开网页版，不要下载来路不明的 APK、插件、客户端或所谓 mod 菜单。',
+          },
+        ],
+        recommendations: [
+          {
+            slug: 'ovo',
+            pitch: 'OvO 是快节奏精准跑酷，想从隐藏切换到移动技巧训练时很适合。',
+          },
+          {
+            slug: 'tunnel-rush',
+            pitch: 'Tunnel Rush 是纯反应挑战，适合多人捉迷藏之后来一局短暂单人练习。',
+          },
+          {
+            slug: 'big-tower-tiny-square',
+            pitch: 'Big Tower Tiny Square 同样考验耐心和精准站位，这一点和 Hide and Paint 很接近。',
+          },
+        ],
+        faqs: [
+          {
+            question: 'Hide and Paint 是什么游戏？',
+            answer:
+              '它是一款多人浏览器捉迷藏游戏。玩家扮演变色龙，复制附近颜色，通过位置、姿势和停止移动来躲开猎人。',
+          },
+          {
+            question: 'Hide and Paint 和 Meccha Chameleon 是同一个吗？',
+            answer:
+              '官方页面把它归入 Meccha Chameleon inspired games 相关主题。站内内容把 Hide and Paint 作为具体游戏名，Meccha Chameleon 作为相关搜索意图处理。',
+          },
+          {
+            question: 'Hide and Paint 能在手机上玩吗？',
+            answer:
+              '可以。官方页面显示支持电脑、手机和平板。不过手机视角和移动更难精细控制，建议慢一点操作。',
+          },
+          {
+            question: 'Luma 是否托管或嵌入 Hide and Paint？',
+            answer:
+              '目前没有。本页是攻略和来源说明页，在确认授权、稳定的嵌入来源前，Luma 不直接嵌入游戏。',
+          },
+          {
+            question: 'Hide and Paint 有安全下载吗？',
+            answer:
+              '建议优先玩网页版。本指南不推荐 APK 镜像、破解、插件、客户端或 mod 下载。',
+          },
+        ],
+        externalLinks: [
+          {
+            href: 'https://poki.com/en/g/hide-and-paint',
+            label: 'Poki 上的 Hide and Paint',
+            description: '公开可玩来源页面，包含开发者、操作、设备支持和更新时间信息。',
+          },
+          {
+            href: 'https://onrush.studio/privacy.txt',
+            label: 'OnRush Studio 隐私政策',
+            description: '公开游戏页面引用的开发者隐私政策。',
+          },
+        ],
+        ctaLabel: '浏览相似浏览器游戏',
+        ctaDescription: '在官方来源保持外部访问的前提下，用 Luma 推荐继续寻找短时可玩的安全网页游戏。',
+      },
+    },
+  },
+  {
+    slug: 'car-circle-guide',
+    primaryKeyword: 'car circle',
+    keywords: [
+      'car circle',
+      'car circle game',
+      'car circle walkthrough',
+      'car circle controls',
+      'roundabout puzzle game',
+      'traffic puzzle game online',
+      'car circle mobile',
+      'car circle official',
+    ],
+    updatedAt: seoContentUpdatedAt,
+    relatedSlugs: ['best-new-browser-games-july-2026', 'drive-mad-walkthrough', 'best-browser-games-5-minute-break'],
+    locales: {
+      en: {
+        metaTitle: 'Car Circle Guide: Controls, Timing Tips & Roundabout Strategy',
+        metaDescription:
+          'Learn how to play Car Circle with timing tips, traffic puzzle strategy, mobile notes, official source checks, and related browser games.',
+        heading: 'Car Circle Guide: Controls, Timing Tips & Roundabout Strategy',
+        subheading:
+          'A clean guide for the 2026 traffic puzzle game: when to tap, how to avoid pile-ups, and how to read faster car waves.',
+        overview: [
+          'Car Circle is a traffic puzzle game about one tiny decision repeated under pressure: tap at the right moment so each car enters the roundabout without crashing. It looks simple because the control is just click or tap, but the real challenge is spacing. Every early tap can create a pile-up, and every late tap burns the timer.',
+          'This guide focuses on timing and pattern reading for players who search “Car Circle walkthrough” or “roundabout puzzle game.” Luma does not embed the game yet because the stable authorized embed path has not been confirmed. The official public source remains linked below, while this page adds original strategy, mobile notes, and related games already available on Luma.',
+        ],
+        sections: [
+          {
+            title: 'Quick Answer: The Safe Tap Rule',
+            body: 'Do not tap the moment a car appears. Watch the closest moving gap in the roundabout, then tap when the entering car can merge behind the last car, not in front of it. Car Circle rewards clean spacing more than bravery.',
+            bullets: [
+              'Aim for the back of a gap, not the front edge.',
+              'If two cars arrive close together, solve the first merge before thinking about the second.',
+              'When the speed increases, make smaller decisions instead of trying to plan the whole wave.',
+            ],
+          },
+          {
+            title: 'Controls',
+            body: 'Car Circle uses a single input: click or tap to send the next car into the circle. That simple control is why it works on desktop and mobile, but it also means every mistake is a timing mistake. If a run starts badly, restart mentally by watching two full rotations before the next tap.',
+            bullets: [
+              'Desktop: mouse click is more precise for fast waves.',
+              'Mobile: tap with one thumb and keep the other hand away from the screen to avoid accidental inputs.',
+              'Tablet: the larger screen helps you see spacing, but taps can feel slower if you reach across the display.',
+            ],
+          },
+          {
+            title: 'How to Read Traffic Gaps',
+            body: 'Think of the circle as a moving queue. A safe gap needs enough room for the new car plus a little recovery space after it joins. If the first half of the gap looks open but the exit side is crowded, wait one more beat.',
+            bullets: [
+              'Fast small gaps are riskier than slower medium gaps.',
+              'Do not chase a gap that has already passed the entry lane.',
+              'If the circle is dense, one patient wait can prevent three crashes later.',
+            ],
+          },
+          {
+            title: 'Timing Mistakes That Cause Pile-Ups',
+            body: 'Most crashes happen because the player reacts to the visible opening instead of predicting where the cars will be when the merge completes. You are not tapping for the current frame; you are tapping for the position a fraction of a second later.',
+            bullets: [
+              'Early tap: the new car blocks the path before the gap fully arrives.',
+              'Panic tap: a car is sent because the timer feels low, not because the spacing is safe.',
+              'Chain crash: one bad merge shrinks the next gap, creating another crash immediately after.',
+            ],
+          },
+          {
+            title: 'Mobile and Short-Session Fit',
+            body: 'Car Circle is a strong mobile candidate because it has one clear action, quick rounds, and no need for keyboard controls. It is also AdSense-friendly as a guide topic: no adult content, gambling loop, ROM download, or branded IP clone is involved. Still, players should use the browser source and avoid pages that repackage it as an installable mod.',
+          },
+        ],
+        recommendations: [
+          {
+            slug: 'drive-mad',
+            pitch:
+              'Drive Mad is another car-themed challenge, but the skill shifts from roundabout timing to physics balance.',
+          },
+          {
+            slug: '15-puzzle',
+            pitch:
+              '15 Puzzle is a slower logic option when you want planning instead of reaction timing.',
+          },
+          {
+            slug: 'hextris',
+            pitch:
+              'Hextris has the same short-session retry loop with faster pattern recognition.',
+          },
+        ],
+        faqs: [
+          {
+            question: 'How do you play Car Circle?',
+            answer:
+              'Click or tap to send cars into the roundabout. The goal is to merge every car without causing a crash before the timer runs out.',
+          },
+          {
+            question: 'Is Car Circle a driving game or a puzzle game?',
+            answer:
+              'It is best treated as a traffic timing puzzle. It uses cars visually, but the skill is spacing, rhythm, and merge timing.',
+          },
+          {
+            question: 'Can Car Circle be played on mobile?',
+            answer:
+              'Yes. The official listing supports desktop, phone, and tablet. Mobile works well because the game uses a single tap input.',
+          },
+          {
+            question: 'Does Car Circle need a download?',
+            answer:
+              'No. Use the browser version from a public source. Avoid APK mirrors, plugin prompts, or pages that claim to unlock special traffic mods.',
+          },
+          {
+            question: 'Why does my run collapse after one crash?',
+            answer:
+              'One bad merge often reduces the next gap and creates a chain crash. After a mistake, wait for a clean full gap instead of tapping immediately again.',
+          },
+        ],
+        externalLinks: [
+          {
+            href: 'https://poki.com/en/g/car-circle',
+            label: 'Car Circle on Poki',
+            description: 'Public playable listing with developer, device support, release date, and update information.',
+          },
+        ],
+        ctaLabel: 'Find more puzzle browser games',
+        ctaDescription: 'Play similar logic and timing games on Luma without installing a client.',
+      },
+      zh: {
+        metaTitle: 'Car Circle 攻略：圆环交通谜题操作与时机技巧',
+        metaDescription:
+          'Car Circle 实用攻略：点击时机、圆环交通合流技巧、手机玩法、官方来源说明和相似浏览器游戏推荐。',
+        heading: 'Car Circle 攻略：圆环交通谜题操作与时机技巧',
+        subheading: '这是一款 2026 年交通合流小游戏，难点不是操作复杂，而是每一次点击的间距判断。',
+        overview: [
+          'Car Circle 是一款交通谜题小游戏，核心是不断做同一个小判断：在正确时机点击，让每辆车安全进入圆环，避免追尾和连环堵车。它看起来很简单，因为操作只有点击或轻点，但真正的难点是车距。',
+          '本页面面向搜索 “Car Circle walkthrough” 或 “roundabout puzzle game” 的玩家。由于尚未确认稳定、授权的嵌入路径，Luma 暂不直接嵌入游戏，而是提供官方公开来源，并补充原创时机技巧、手机操作和站内相关游戏链接。',
+        ],
+        sections: [
+          {
+            title: '快速答案：安全点击规则',
+            body: '不要看到车出现就点。先看圆环里最近的空档，让新车并入上一辆车后方，而不是抢到它前面。Car Circle 奖励的是干净车距，不是冒险。',
+            bullets: [
+              '瞄准空档后半段，而不是刚出现的前缘。',
+              '两辆车连着来时，先解决第一辆合流，再考虑第二辆。',
+              '速度变快时，只判断眼前一个空档，不要试图提前规划整波车流。',
+            ],
+          },
+          {
+            title: '操作方式',
+            body: 'Car Circle 只有一个输入：点击或轻点，让下一辆车进入圆环。正因为操作简单，它适合电脑和手机，但也意味着每次失败基本都是时机失败。开局失误后，可以先观察两圈车流，再继续点击。',
+            bullets: [
+              '桌面端：鼠标点击在高速波次里更精确。',
+              '手机端：用一个拇指点击，另一只手不要碰屏幕，避免误触。',
+              '平板端：大屏更容易看车距，但跨屏点击可能稍慢。',
+            ],
+          },
+          {
+            title: '怎样读懂车流空档',
+            body: '把圆环想成一个移动队列。安全空档不仅要能塞进新车，还要留一点恢复距离。如果空档前半段看起来很大，但出口侧已经很挤，最好再等一下。',
+            bullets: [
+              '高速小空档比低速中等空档更危险。',
+              '已经错过入口线的空档不要硬追。',
+              '圆环很满时，多等一拍往往能避免后面三次撞车。',
+            ],
+          },
+          {
+            title: '导致连环撞车的常见错误',
+            body: '多数失败来自玩家只看当前画面的空档，而没有预测车辆完成合流后的相对位置。你不是为这一帧点击，而是为零点几秒后的车距点击。',
+            bullets: [
+              '点太早：新车提前挡住路径，真正空档还没到。',
+              '慌张点击：因为倒计时紧张而点，不是因为车距安全。',
+              '连环事故：一次坏合流会压缩下一个空档，马上引发第二次撞车。',
+            ],
+          },
+          {
+            title: '手机体验与短局适配',
+            body: 'Car Circle 很适合手机，因为它只有一个清晰动作、单局短、不需要键盘。作为 AdSense 审核期内容，它也比较干净：没有成人、赌博、ROM 下载或明显知名 IP 山寨风险。仍建议只玩公开网页版，避免把它重新包装成安装包或所谓 mod 的页面。',
+          },
+        ],
+        recommendations: [
+          {
+            slug: 'drive-mad',
+            pitch: 'Drive Mad 同样是车辆主题，但考验从圆环时机切换到物理平衡。',
+          },
+          {
+            slug: '15-puzzle',
+            pitch: '15 Puzzle 更慢、更偏逻辑，适合想从反应切换到规划时游玩。',
+          },
+          {
+            slug: 'hextris',
+            pitch: 'Hextris 也有短局重试循环，但更考验快速图形识别。',
+          },
+        ],
+        faqs: [
+          {
+            question: 'Car Circle 怎么玩？',
+            answer:
+              '点击或轻点屏幕，让车辆进入圆环。目标是在倒计时结束前让所有车辆安全合流，不发生碰撞。',
+          },
+          {
+            question: 'Car Circle 是驾驶游戏还是解谜游戏？',
+            answer:
+              '更适合把它当作交通时机谜题。画面使用汽车，但真正考验的是车距、节奏和合流判断。',
+          },
+          {
+            question: 'Car Circle 能在手机上玩吗？',
+            answer:
+              '可以。官方页面显示支持电脑、手机和平板。因为只需要点击，手机端适配度较高。',
+          },
+          {
+            question: 'Car Circle 需要下载吗？',
+            answer:
+              '不需要。建议使用公开网页版，不要下载 APK 镜像、插件或所谓特殊交通 mod。',
+          },
+          {
+            question: '为什么一次撞车后很容易连续失败？',
+            answer:
+              '一次错误合流会压缩后续空档，导致连环事故。失误后先等一个完整干净的空档，不要马上继续点击。',
+          },
+        ],
+        externalLinks: [
+          {
+            href: 'https://poki.com/en/g/car-circle',
+            label: 'Poki 上的 Car Circle',
+            description: '公开可玩来源页面，包含开发者、设备支持、发布日期和更新时间信息。',
+          },
+        ],
+        ctaLabel: '查找更多益智浏览器游戏',
+        ctaDescription: '继续在 Luma 上寻找免安装、短局可玩的逻辑和时机小游戏。',
+      },
+    },
+  },
+  {
+    slug: 'monkey-tag-io-guide',
+    primaryKeyword: 'monkey tag io',
+    keywords: [
+      'monkey tag io',
+      'monkey tag io game',
+      'monkey tag io controls',
+      'monkey tag io mobile',
+      'monkey tag io tips',
+      'monkey tag io official',
+      'monkey tag io unblocked',
+      'monkeytagio',
+    ],
+    updatedAt: seoContentUpdatedAt,
+    relatedSlugs: ['best-new-browser-games-july-2026', 'games-like-ovo', 'free-games-no-ads'],
+    locales: {
+      en: {
+        metaTitle: 'Monkey Tag IO Guide: Controls, Mobile Tips & Official Source',
+        metaDescription:
+          'A safe Monkey Tag IO guide covering controls, movement tips, mobile play, official source checks, and how to avoid unofficial downloads or clone pages.',
+        heading: 'Monkey Tag IO Guide: Controls, Mobile Tips & Official Source',
+        subheading:
+          'Run, climb, jump, and survive longer in the browser tag game while avoiding unofficial download traps.',
+        overview: [
+          'Monkey Tag IO is a multiplayer browser tag game built around movement. You run, jump, climb, and look around while chasing other players or escaping infection-style pressure. The theme makes it easy for search results to overlap with VR gorilla-tag content, fan pages, and “unblocked” mirrors, so a clean source and a clear guide matter.',
+          'Luma currently treats Monkey Tag IO as a guide opportunity, not a hosted game page. The official public listing identifies Petit Kyanpu as the developer and supports desktop, phone, and tablet play. Until a stable authorized embed is verified, this page focuses on practical controls, movement habits, mobile limitations, and safe source notes.',
+        ],
+        sections: [
+          {
+            title: 'Quick Answer: How to Stop Getting Tagged',
+            body: 'Monkey Tag IO is about route control more than raw speed. Keep moving toward climbable surfaces, use jumps to change height, and look around before crossing open ground. If you run in a straight line at floor level, faster players can predict your path.',
+            bullets: [
+              'Break line of sight by climbing or turning around corners.',
+              'Jump before a chase angle closes, not after the tagger reaches you.',
+              'Use the camera constantly so you know where the pressure is coming from.',
+            ],
+          },
+          {
+            title: 'Controls',
+            body: 'The public listing shows standard desktop controls: WASD or arrow keys to move, Space to jump, W or up arrow to climb, and mouse movement to look around. The control set is simple, but the skill ceiling is in combining camera movement with route changes.',
+            bullets: [
+              'Desktop: keep one finger ready for jump while steering with WASD.',
+              'Camera: turn early so you can see the next wall or escape lane before reaching it.',
+              'Climb: treat vertical surfaces as route changes, not only emergency escapes.',
+            ],
+          },
+          {
+            title: 'Movement Tips for Beginners',
+            body: 'New players often sprint across the center of a map because it feels faster. That is also the easiest route to read. Better runs use edges, corners, height changes, and quick reversals to make the tagger guess.',
+            bullets: [
+              'Do not spend the whole round on flat ground.',
+              'Change height after a corner so the chaser has to adjust both aim and route.',
+              'If you miss a jump, recover sideways instead of running straight ahead.',
+            ],
+          },
+          {
+            title: 'Mobile Play: What Changes',
+            body: 'Monkey Tag IO is listed as playable on phones and tablets, but mobile is more demanding than desktop because looking around and moving happen on the same glass surface. Use shorter camera swipes, avoid crowded map areas until you are comfortable, and expect climbing to feel less precise than keyboard play.',
+            bullets: [
+              'Use small camera corrections instead of full-screen swipes.',
+              'Practice climbing in low-pressure moments before relying on it during a chase.',
+              'If touch controls feel cramped, desktop keyboard and mouse will usually be easier.',
+            ],
+          },
+          {
+            title: 'Official Source and IP Risk Notes',
+            body: 'The name can attract searches for VR tag games and unofficial “unblocked” portals. This guide does not provide bypass instructions, mods, APKs, or client downloads. Use the official public browser listing first, and treat clone pages or fan domains as unverified unless they clearly identify their source, developer, and terms.',
+          },
+        ],
+        recommendations: [
+          {
+            slug: 'ovo',
+            pitch:
+              'OvO is the best Luma pick if you like movement mastery and want a solo precision challenge.',
+          },
+          {
+            slug: 'tunnel-rush',
+            pitch:
+              'Tunnel Rush keeps the reflex pressure but removes multiplayer chaos for a focused short run.',
+          },
+          {
+            slug: 'apple-knight',
+            pitch:
+              'Apple Knight adds combat and exploration if you want movement with a more traditional platform game structure.',
+          },
+        ],
+        faqs: [
+          {
+            question: 'What is Monkey Tag IO?',
+            answer:
+              'Monkey Tag IO is a multiplayer browser tag game where players run, jump, climb, chase, and escape across 3D maps.',
+          },
+          {
+            question: 'Is Monkey Tag IO the same as Gorilla Tag?',
+            answer:
+              'No. Monkey Tag IO is a browser game listing with its own developer attribution. Search results may overlap with VR tag games, so check the source before playing or linking.',
+          },
+          {
+            question: 'Can I play Monkey Tag IO on mobile?',
+            answer:
+              'Yes, the public listing says it works on phones and tablets. Desktop controls are usually easier because camera, movement, jump, and climb inputs are more precise.',
+          },
+          {
+            question: 'Does Monkey Tag IO need a download?',
+            answer:
+              'No. Use the browser source. Avoid APKs, plugins, mod menus, and client downloads claiming to unlock an “unblocked” version.',
+          },
+          {
+            question: 'Why do I keep getting tagged quickly?',
+            answer:
+              'You are probably running in predictable straight lines. Use walls, corners, height changes, and camera checks to make your route harder to read.',
+          },
+        ],
+        externalLinks: [
+          {
+            href: 'https://poki.com/en/g/monkey-tag-io',
+            label: 'Monkey Tag IO on Poki',
+            description: 'Public playable listing with developer, controls, device support, votes, and update details.',
+          },
+        ],
+        ctaLabel: 'Explore movement games on Luma',
+        ctaDescription:
+          'Try related browser games with clear controls, no client install, and practical player notes.',
+      },
+      zh: {
+        metaTitle: 'Monkey Tag IO 攻略：操作、手机玩法与官方来源',
+        metaDescription:
+          'Monkey Tag IO 攻略：操作方式、跑图技巧、手机体验、官方来源说明，以及如何避开非官方下载和克隆页面。',
+        heading: 'Monkey Tag IO 攻略：操作、手机玩法与官方来源',
+        subheading: '学习奔跑、跳跃、攀爬和视角判断，在多人追逐里活得更久，并避开非官方下载陷阱。',
+        overview: [
+          'Monkey Tag IO 是一款多人浏览器追逐游戏，核心是移动。你需要奔跑、跳跃、攀爬和转动视角，既可能追别人，也可能要在感染式压力下逃跑。因为名字容易和 VR 猴子追逐游戏、粉丝站、unblocked 镜像混在一起，清晰的来源说明和安全指南很重要。',
+          'Luma 目前把 Monkey Tag IO 作为攻略机会，而不是托管游戏页。公开页面标注开发者为 Petit Kyanpu，并显示支持电脑、手机和平板。在确认稳定授权嵌入来源之前，本页重点提供操作、跑图习惯、手机限制和安全来源说明。',
+        ],
+        sections: [
+          {
+            title: '快速答案：怎样减少被抓',
+            body: 'Monkey Tag IO 更考验路线控制，而不是一味直线跑。尽量朝可攀爬表面移动，用跳跃改变高度，穿过开阔地前先看清追击方向。如果一直在地面直线逃跑，经验玩家很容易预测你的路径。',
+            bullets: [
+              '通过攀爬和拐角打断对方视线。',
+              '在追击角度成形前跳跃，不要等对方贴脸才跳。',
+              '频繁看视角，确认压力来自哪里。',
+            ],
+          },
+          {
+            title: '操作方式',
+            body: '公开页面显示桌面端使用 WASD 或方向键移动，空格跳跃，W 或上方向键攀爬，鼠标控制视角。操作不复杂，但上限在于把视角和路线变化结合起来。',
+            bullets: [
+              '桌面端：用 WASD 移动，同时保持一个手指随时能按空格。',
+              '视角：提前转向，看清下一个墙面或逃跑路线。',
+              '攀爬：把垂直表面当作路线转换，不只是紧急逃生。',
+            ],
+          },
+          {
+            title: '新手跑图技巧',
+            body: '新手常觉得地图中央最快，于是一直在平地冲刺。但这也是最容易被读懂的路线。更好的逃跑方式会利用边缘、拐角、高低差和突然反向，让追击者不断重新判断。',
+            bullets: [
+              '不要整局都待在平地。',
+              '过拐角后立刻改变高度，让追击者同时调整视角和路线。',
+              '跳跃失败时往侧面补救，不要继续直线冲。',
+            ],
+          },
+          {
+            title: '手机玩法有什么不同',
+            body: 'Monkey Tag IO 公开页面显示可在手机和平板游玩，但手机比桌面更难，因为移动和看视角都集中在同一块玻璃屏幕上。用短一点的视角滑动，先避开拥挤区域，并接受攀爬手感不如键盘鼠标精确。',
+            bullets: [
+              '用小幅度视角修正，不要大幅甩屏。',
+              '在压力低的时候练习攀爬，不要第一次就用于逃命。',
+              '如果触屏太挤，桌面键鼠通常更容易上手。',
+            ],
+          },
+          {
+            title: '官方来源与 IP 风险说明',
+            body: '这个名字容易吸引 VR tag 游戏和非官方 unblocked 页面流量。本指南不提供绕过网络限制、mod、APK 或客户端下载。优先使用公开浏览器来源；对粉丝域名或克隆页面保持谨慎，除非它们清楚说明来源、开发者和使用条款。',
+          },
+        ],
+        recommendations: [
+          {
+            slug: 'ovo',
+            pitch: '如果喜欢移动技巧，OvO 是站内最适合切换到单人精准跑酷的选择。',
+          },
+          {
+            slug: 'tunnel-rush',
+            pitch: 'Tunnel Rush 保留反应压力，但去掉多人混乱，适合短时间集中挑战。',
+          },
+          {
+            slug: 'apple-knight',
+            pitch: 'Apple Knight 加入战斗和探索，适合想要更传统平台游戏结构的玩家。',
+          },
+        ],
+        faqs: [
+          {
+            question: 'Monkey Tag IO 是什么？',
+            answer:
+              '它是一款多人浏览器追逐游戏，玩家在 3D 地图中奔跑、跳跃、攀爬、追击或逃跑。',
+          },
+          {
+            question: 'Monkey Tag IO 和 Gorilla Tag 是同一个吗？',
+            answer:
+              '不是。Monkey Tag IO 是公开浏览器游戏页面上的独立条目，并有自己的开发者归属。搜索结果可能和 VR tag 游戏混在一起，游玩前要看清来源。',
+          },
+          {
+            question: 'Monkey Tag IO 能在手机上玩吗？',
+            answer:
+              '可以，公开页面显示支持手机和平板。但桌面端键鼠通常更容易，因为移动、跳跃、攀爬和视角都更精确。',
+          },
+          {
+            question: 'Monkey Tag IO 需要下载吗？',
+            answer:
+              '不需要。建议使用浏览器来源，不要下载 APK、插件、mod 菜单或所谓 unblocked 客户端。',
+          },
+          {
+            question: '为什么我很快就被抓？',
+            answer:
+              '通常是路线太直、太好预测。多用墙面、拐角、高低差和视角观察，让对手更难读出你的下一步。',
+          },
+        ],
+        externalLinks: [
+          {
+            href: 'https://poki.com/en/g/monkey-tag-io',
+            label: 'Poki 上的 Monkey Tag IO',
+            description: '公开可玩来源页面，包含开发者、操作、设备支持、票数和更新时间信息。',
+          },
+        ],
+        ctaLabel: '探索 Luma 上的移动技巧游戏',
+        ctaDescription: '继续尝试操作清晰、无需客户端安装、带玩家说明的浏览器游戏。',
+      },
+    },
+  },
+  {
+    slug: 'best-new-browser-games-july-2026',
+    primaryKeyword: 'best new browser games July 2026',
+    keywords: [
+      'best new browser games July 2026',
+      'new browser games 2026',
+      'new HTML5 games',
+      'new games no download',
+      'Poki new games',
+      'CrazyGames new games',
+      'itch io HTML5 games',
+      'mobile browser games 2026',
+    ],
+    updatedAt: seoContentUpdatedAt,
+    relatedSlugs: [
+      'hide-and-paint-guide',
+      'car-circle-guide',
+      'monkey-tag-io-guide',
+      'drive-mad-walkthrough',
+      'games-like-ovo',
+    ],
+    locales: {
+      en: {
+        metaTitle: 'Best New Browser Games July 2026: Low-Competition Picks',
+        metaDescription:
+          'A July 2026 shortlist of new browser game opportunities with player intent, mobile fit, source checks, safety notes, and related Luma guides.',
+        heading: 'Best New Browser Games to Watch in July 2026',
+        subheading:
+          'A curated low-competition watchlist for players and searchers who want fresh HTML5 games, clear controls, and safe no-download sources.',
+        overview: [
+          'New browser games are easier to cover well when the page solves a real player problem early: controls, mobile fit, official source, safety, and what to play next. That is why this July 2026 watchlist avoids giant red-ocean keywords and focuses on fresh titles with specific guide intent.',
+          'The three strongest Luma opportunities today are Hide and Paint, Car Circle, and Monkey Tag IO. Each has a public playable source, recent update signals, and search angles that are still guide-friendly. Luma is publishing guide pages first, not game embeds, because independent embed permission and long-term source stability need to be confirmed before adding iframes.',
+        ],
+        sections: [
+          {
+            title: 'Quick Answer: The 3 Pages Worth Building First',
+            body: 'Start with Hide and Paint, Car Circle, and Monkey Tag IO. They cover three different intents: multiplayer stealth, traffic timing puzzle, and movement tag. That gives Luma a broader internal link network than building three nearly identical arcade pages.',
+            bullets: [
+              'Hide and Paint: best for “Meccha Chameleon” and paint hide-and-seek searches.',
+              'Car Circle: best for roundabout puzzle, traffic timing, and mobile tap intent.',
+              'Monkey Tag IO: best for controls, mobile play, and official-source clarification.',
+            ],
+          },
+          {
+            title: 'Why These Are Lower-Competition Than Mature Game Terms',
+            body: 'Mature terms like “snake game” or “car games” are dominated by large portals. Fresh game names and specific player problems are easier to satisfy with original guide content because many early ranking pages are thin listings, auto-generated descriptions, or fan pages without source checks.',
+            bullets: [
+              'New-title queries often lack strong FAQ, controls, and mobile sections.',
+              'Early pages usually link to play but do not explain how to improve.',
+              'Safety and official-source notes are especially useful around “unblocked” and clone-heavy searches.',
+            ],
+          },
+          {
+            title: 'Selection Rules for Luma During AdSense Review',
+            body: 'A new game is not automatically worth adding. Luma should prefer public web play, clear developer/source attribution, short-session value, mobile viability, and low policy risk. Do not add ROMs, download clients, adult/gambling content, branded IP clones, or pages that need suspicious plugins.',
+            bullets: [
+              'Guide first when embed permission is unclear.',
+              'Game detail page only after iframe stability, source attribution, and mobile play are verified.',
+              'Collection pages should link to tested Luma pages, not scrape other portals.',
+            ],
+          },
+          {
+            title: 'How to Extend This Into GEO and SEO Content',
+            body: 'For generative search and classic SEO, the page needs direct answers, not keyword stuffing. Each new guide should answer “what is it,” “how do I play,” “what are the controls,” “can I play on mobile,” “is it official,” and “what should I play next.” Those blocks give search systems clean passages to cite and give players reasons to stay.',
+            bullets: [
+              'Add a quick-answer block near the top of every new guide.',
+              'Use FAQ language that mirrors real troubleshooting and source questions.',
+              'Connect every new guide to at least two existing Luma game pages and one related guide.',
+            ],
+          },
+          {
+            title: 'Next Watchlist Beyond the First Three',
+            body: 'Keep watching fresh HTML5 listings on Poki, CrazyGames, GamePix, Y8, and itch.io, but only promote a candidate after checking source clarity and player intent. Good next formats include “safe source” pages, mobile-controls guides, and “games like X” alternatives when a new title starts picking up fan mirrors.',
+            bullets: [
+              'Farm Merge Valley: possible merge/idle guide if source and embed rules are clear.',
+              'God Simulator: strategy guide angle, but review theme and policy fit first.',
+              'Y8/GamePix new listings: useful for discovery, but every iframe needs separate verification.',
+            ],
+          },
+        ],
+        recommendations: [
+          {
+            slug: 'drive-mad',
+            pitch:
+              'Drive Mad already has search signal on Luma and anchors the car/physics side of the new-game cluster.',
+          },
+          {
+            slug: 'ovo',
+            pitch:
+              'OvO connects movement-skill searches with Monkey Tag IO and broader precision platforming content.',
+          },
+          {
+            slug: 'tunnel-rush',
+            pitch:
+              'Tunnel Rush is a short-session reflex pick that pairs naturally with mobile browser game searches.',
+          },
+          {
+            slug: 'apple-knight',
+            pitch:
+              'Apple Knight gives the cluster a more traditional action-platform option with clear controls.',
+          },
+        ],
+        faqs: [
+          {
+            question: 'Why publish guides before embedding these new games?',
+            answer:
+              'Guides can add original value immediately while avoiding unauthorized iframe risk. Embeds should wait until source stability, permission, and mobile play are verified.',
+          },
+          {
+            question: 'What makes a new browser game good for Luma?',
+            answer:
+              'The best candidates have public web play, clear source attribution, low IP risk, simple controls, short-session value, and enough player questions to support an original guide.',
+          },
+          {
+            question: 'Are “unblocked” keywords safe to target?',
+            answer:
+              'They can be handled carefully, but the content should avoid bypass instructions. Focus on browser play, no-download safety, and source clarity instead.',
+          },
+          {
+            question: 'How often should this list be updated?',
+            answer:
+              'Weekly is enough while the site is in AdSense preparation. Daily discovery is useful, but publishing should stay selective so pages remain high quality.',
+          },
+          {
+            question: 'What is the next publishing step after these guides?',
+            answer:
+              'After 7-14 days, check GSC and behavior data. If a guide gets impressions or clicks, deepen that page first before adding another thin candidate.',
+          },
+        ],
+        externalLinks: [
+          {
+            href: 'https://poki.com/en/g/hide-and-paint',
+            label: 'Hide and Paint source',
+            description: 'Public source page used to verify developer, controls, device support, and July 2026 update context.',
+          },
+          {
+            href: 'https://poki.com/en/g/car-circle',
+            label: 'Car Circle source',
+            description: 'Public source page used to verify developer, release date, device support, and update context.',
+          },
+          {
+            href: 'https://poki.com/en/g/monkey-tag-io',
+            label: 'Monkey Tag IO source',
+            description: 'Public source page used to verify developer, controls, device support, votes, and update context.',
+          },
+          {
+            href: 'https://www.gamepix.com/new',
+            label: 'GamePix new games',
+            description: 'Discovery source for new instant browser games; every candidate still needs separate Luma review.',
+          },
+          {
+            href: 'https://www.y8.com/games_for_your_website',
+            label: 'Y8 games for websites',
+            description: 'Discovery and embed-reference source, not an automatic approval for every game.',
+          },
+          {
+            href: 'https://itch.io/games/html5',
+            label: 'itch.io HTML5 games',
+            description: 'Discovery source for web-playable indie games, with license/source checks required per title.',
+          },
+        ],
+        ctaLabel: 'Browse current Luma game picks',
+        ctaDescription:
+          'Use this monthly watchlist as a discovery layer, then play verified Luma picks from the main catalogue.',
+      },
+      zh: {
+        metaTitle: '2026 年 7 月新浏览器游戏推荐：低竞争机会清单',
+        metaDescription:
+          '2026 年 7 月新浏览器小游戏机会清单：低竞争关键词、玩家意图、手机体验、来源核查、安全风险和 Luma 站内延展建议。',
+        heading: '2026 年 7 月值得关注的新浏览器游戏',
+        subheading: '面向新词和低竞争机会的精选清单，优先覆盖 HTML5、免下载、操作清晰、可写原创攻略的游戏。',
+        overview: [
+          '新浏览器小游戏更适合从“真实玩家问题”切入：怎么操作、手机能不能玩、官方来源在哪、是否需要下载、玩完还能玩什么。相比直接抢 “snake game” 或 “car games” 这种红海词，新游戏名和具体问题更容易形成原创价值。',
+          '今天最值得 Luma 做的 3 个机会是 Hide and Paint、Car Circle 和 Monkey Tag IO。它们都有公开可玩来源、近期更新信号和明确攻略意图。由于独立嵌入授权和长期稳定性还没确认，本轮先发布 guide 页面，不直接加 iframe。',
+        ],
+        sections: [
+          {
+            title: '快速答案：最值得先做的 3 个页面',
+            body: '先做 Hide and Paint、Car Circle 和 Monkey Tag IO。它们分别覆盖多人隐藏、交通时机谜题和移动追逐三种不同意图，比连续做三个同质街机词更容易形成站内链接网络。',
+            bullets: [
+              'Hide and Paint：适合 Meccha Chameleon、paint hide and seek 相关搜索。',
+              'Car Circle：适合 roundabout puzzle、traffic timing、mobile tap 意图。',
+              'Monkey Tag IO：适合 controls、mobile play、official source 澄清意图。',
+            ],
+          },
+          {
+            title: '为什么这些词比成熟大词更好做',
+            body: '“snake game”“car games” 这类成熟词被大站长期占据。新游戏名和具体玩法问题更容易用原创内容满足，因为早期页面常见问题是只有一句介绍、自动生成文案、没有操作/手机/来源说明，或者是来源不明的粉丝站。',
+            bullets: [
+              '新词通常缺少完整 FAQ、controls 和 mobile sections。',
+              '早期竞争页多半只给游玩入口，不教玩家怎么提高。',
+              '“unblocked” 和克隆页面多的词，更需要安全来源说明。',
+            ],
+          },
+          {
+            title: 'AdSense 审核期的选择规则',
+            body: '新游戏不等于可以直接收录。Luma 应优先选择公开网页可玩、开发者/来源清晰、短局有价值、移动端可接受、政策风险低的游戏。不要收 ROM、下载客户端、成人/赌博内容、知名 IP 山寨或需要可疑插件的页面。',
+            bullets: [
+              '嵌入许可不清楚时，先做 guide 页面。',
+              '只有 iframe 稳定、来源归属清楚、手机可玩通过后，再考虑游戏详情页。',
+              '集合页要链接站内已测试内容，不抓取其他门户内容。',
+            ],
+          },
+          {
+            title: '怎样延展成 SEO 和 GEO 内容',
+            body: '无论传统搜索还是生成式搜索，页面都需要直接回答问题，而不是堆关键词。每个新 guide 都应回答：这是什么、怎么玩、怎么操作、手机能不能玩、官方来源在哪里、还可以玩什么。这些模块既方便搜索系统引用，也能让玩家停留更久。',
+            bullets: [
+              '每个新 guide 顶部放快速答案。',
+              'FAQ 使用真实搜索和排障语言。',
+              '每个新 guide 至少连接两个现有游戏页和一个相关 guide。',
+            ],
+          },
+          {
+            title: '下一批观察方向',
+            body: '继续关注 Poki、CrazyGames、GamePix、Y8 和 itch.io 的新 HTML5 列表，但只有完成来源清晰度和玩家意图检查后才进入制作。更适合 Luma 的格式包括安全来源说明页、手机操作攻略，以及当某个新游戏出现大量镜像时做 “games like X” 替代页。',
+            bullets: [
+              'Farm Merge Valley：如果来源和嵌入规则清楚，可做 merge/idle 攻略。',
+              'God Simulator：有策略攻略角度，但需先复核题材和政策适配。',
+              'Y8/GamePix 新列表：适合发现候选，但每个 iframe 都要单独核查。',
+            ],
+          },
+        ],
+        recommendations: [
+          {
+            slug: 'drive-mad',
+            pitch: 'Drive Mad 已经有站内搜索信号，可承接车辆/物理挑战相关内链。',
+          },
+          {
+            slug: 'ovo',
+            pitch: 'OvO 能把移动技巧类搜索和 Monkey Tag IO、精准平台内容连接起来。',
+          },
+          {
+            slug: 'tunnel-rush',
+            pitch: 'Tunnel Rush 是短局反应类代表，适合连接手机浏览器游戏需求。',
+          },
+          {
+            slug: 'apple-knight',
+            pitch: 'Apple Knight 提供更传统的动作平台方向，操作清晰、站内已有页面。',
+          },
+        ],
+        faqs: [
+          {
+            question: '为什么先发布攻略页，而不是直接嵌入游戏？',
+            answer:
+              '攻略页可以先提供原创价值，同时避免未授权 iframe 风险。嵌入应等待来源稳定性、授权和移动端可玩性确认。',
+          },
+          {
+            question: '什么样的新浏览器游戏适合 Luma？',
+            answer:
+              '适合的候选应有公开网页可玩来源、清晰归属、低 IP 风险、简单操作、短局价值，并且有足够玩家问题支撑原创攻略。',
+          },
+          {
+            question: '“unblocked” 关键词能做吗？',
+            answer:
+              '可以谨慎处理，但不能提供绕过网络限制的教程。内容应聚焦浏览器游玩、免下载安全和来源清晰。',
+          },
+          {
+            question: '这个清单应该多久更新一次？',
+            answer:
+              'AdSense 准备期每周更新一次即可。可以每天调研，但发布要克制，避免把站点变成薄内容列表。',
+          },
+          {
+            question: '这些页面发布后的下一步是什么？',
+            answer:
+              '7-14 天后看 GSC 和行为数据。如果某个 guide 获得曝光或点击，优先深挖该页，而不是继续铺薄候选。',
+          },
+        ],
+        externalLinks: [
+          {
+            href: 'https://poki.com/en/g/hide-and-paint',
+            label: 'Hide and Paint 来源',
+            description: '用于核对开发者、操作、设备支持和 2026 年 7 月更新信息的公开页面。',
+          },
+          {
+            href: 'https://poki.com/en/g/car-circle',
+            label: 'Car Circle 来源',
+            description: '用于核对开发者、发布日期、设备支持和更新时间的公开页面。',
+          },
+          {
+            href: 'https://poki.com/en/g/monkey-tag-io',
+            label: 'Monkey Tag IO 来源',
+            description: '用于核对开发者、操作、设备支持、票数和更新时间的公开页面。',
+          },
+          {
+            href: 'https://www.gamepix.com/new',
+            label: 'GamePix 新游戏',
+            description: '新即时浏览器游戏发现来源；每个候选仍需单独经过 Luma 审核。',
+          },
+          {
+            href: 'https://www.y8.com/games_for_your_website',
+            label: 'Y8 网站可嵌入游戏',
+            description: '发现候选和参考嵌入信息的来源，不代表所有游戏自动适合收录。',
+          },
+          {
+            href: 'https://itch.io/games/html5',
+            label: 'itch.io HTML5 游戏',
+            description: '发现网页可玩独立游戏的来源，每个标题都需要单独核查授权和来源。',
+          },
+        ],
+        ctaLabel: '浏览 Luma 当前精选游戏',
+        ctaDescription: '把本月观察清单作为发现层，再从主游戏库打开已验证的 Luma 游戏。',
+      },
+    },
+  },
+  {
     slug: 'google-snake-mods',
     primaryKeyword: 'google snake mods',
     keywords: [
