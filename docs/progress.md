@@ -1432,3 +1432,13 @@
 - 生产验证：`/en/games/drive-mad`、`/en/games/google-snake`、`/en/games/ovo`、`/en/games/tunnel-rush`、`/en/games/apple-knight-mini-dungeons`、`/games/drive-mad` 均 HTTP 200，输出新 title、guide heading、FAQPage JSON-LD、related guide links、正确 canonical，且无 `noindex`；sitemap 仍为 284 URLs，并包含 5 个目标游戏详情页。
 - 部署后监测：`pnpm ops:monitoring` 显示 site / robots / sitemap / Clarity tag ok；public health、search api 仍因既有 Supabase direct URL、Redis/Meilisearch 配置降级，不是本轮内容改动新增问题。
 - 下一步：继续第二批核心页加厚，优先 `big-tower-tiny-square`、`g-switch-3`、`fireboy-watergirl-6`、`monkey-mart`、`dadish`；另行处理 T-067 外部配置和 placeholder thumbnail。
+
+### T-118 Core game detail editorial upgrade batch 2
+
+- 选择原因：延续 T-117 的小批次加厚策略，第二批选择 `big-tower-tiny-square`、`g-switch-3`、`fireboy-watergirl-6`、`monkey-mart`、`dadish`。这 5 个均为 `core-indexed`，且已有 guide/collection 页面可承接内链，适合补齐玩法说明而不是继续扩充薄游戏数量。
+- 实际改动：继续扩展 `lib/games/editorial-content.ts`，为第二批 5 个动态游戏详情页新增中英文原创摘要、overview、how to play、controls、tips、FAQ 和 related guides；不改播放器、路由、iframe、广告位或索引策略。
+- 内链与体验：相关攻略指向 `big-tower-tiny-square-walkthrough`、`g-switch-3`、`fireboy-and-watergirl-walkthrough`、`monkey-mart-guide`、`games-like-ovo`、`best-browser-games-5-minute-break`、`games-to-play-when-bored`，全部已在 `lib/seo-landing-content.ts` 中确认存在。
+- 合规边界：未新增 iframe、截图、广告容器、下载入口或诱导点击文案；文案继续强调 browser play/no download，避免 ROM、APK、插件和安装器导向。
+- 验证结果：`pnpm exec tsx scripts/audit-game-quality.ts --write docs/game-quality-audit.md` 通过，目标页均不再命中 thin description，分数为 Big Tower Tiny Square 93、G-Switch 3 81、Fireboy & Watergirl 6 81、Monkey Mart 81、Dadish 81；`pnpm exec tsc --noEmit --incremental false` 通过；`pnpm lint` 通过；`pnpm build` 通过；`git diff --check` 通过。
+- 本地 production 验证：`pnpm exec next start -p 3016` 后抽查 `/en/games/big-tower-tiny-square`、`/en/games/g-switch-3`、`/en/games/fireboy-watergirl-6`、`/en/games/monkey-mart`、`/en/games/dadish`、`/games/big-tower-tiny-square`、`/games/monkey-mart` 均 HTTP 200，输出对应新 title、guide heading、FAQPage JSON-LD、相关 guide 链接，且无 `noindex`。
+- 下一步：部署后生产抽查同一批 URL 的 title、FAQPage、related guide links、robots；随后第三批可从 `adam-and-eve-4`、`apple-knight`、`dadish-2`、`blumgi-ball`、`monster-tracks` 中选择，同时处理高价值页 placeholder thumbnail。

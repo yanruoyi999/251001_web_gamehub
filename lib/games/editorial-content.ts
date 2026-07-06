@@ -590,6 +590,571 @@ const GAME_EDITORIAL_CONTENT: Record<string, GameEditorialEntry> = {
       ],
     },
   },
+  'big-tower-tiny-square': {
+    en: {
+      metaTitle: 'Big Tower Tiny Square Online - Controls, Double Jump and Tips',
+      metaDescription:
+        'Play Big Tower Tiny Square online with double-jump controls, tower climbing tips, spike and laser advice, FAQs, and related platformer guides.',
+      title: 'Big Tower Tiny Square quick guide',
+      summary:
+        'Big Tower Tiny Square is a precision platformer about patient climbing, double-jump timing, and learning each hazard pattern before committing. The tower looks simple, but every spike, laser, and moving platform asks for controlled jumps instead of rushing.',
+      overview: [
+        'The useful mindset is to treat every room as a rhythm test. Watch a laser cycle, test one jump arc, and use checkpoints as practice points rather than proof that you failed.',
+        'This detail page gives the compact version of the walkthrough: what the controls do, when to save the double jump, and how to stop losing runs to panic movement.',
+      ],
+      howToPlay: [
+        'Climb upward through the tower, avoid spikes, lasers, and moving hazards, and reach the next checkpoint.',
+        'Use the first jump to set direction and save the second jump until the gap or obstacle actually demands it.',
+        'Pause near safe ledges to read the next cycle before moving into a trap-heavy section.',
+      ],
+      controls: [
+        { label: 'Move', value: 'Use the arrow keys or WASD in most browser builds.' },
+        { label: 'Jump / double jump', value: 'Press jump once from the ground, then press again in mid-air when you need extra height or distance.' },
+        { label: 'Retry from checkpoint', value: 'After a mistake, restart from the latest checkpoint and adjust only one timing detail.' },
+      ],
+      tips: [
+        'Save the second jump until the top of the arc; using it too early makes long gaps feel impossible.',
+        'For lasers and fireballs, watch one full cycle before committing to a route.',
+        'Small hops matter. Some narrow ledges are easier with a short tap than a full-height jump.',
+        'If a room keeps beating you, slow down and solve the first obstacle cleanly before worrying about the exit.',
+      ],
+      faqs: [
+        {
+          question: 'How do you double jump in Big Tower Tiny Square?',
+          answer:
+            'Press jump again while in the air. The safest timing is often near the top of your first jump, not immediately after takeoff.',
+        },
+        {
+          question: 'Why is Big Tower Tiny Square so hard?',
+          answer:
+            'The controls are simple, but the tower tests timing and patience. Most hard rooms are pattern checks, not random traps.',
+        },
+        {
+          question: 'Is Big Tower Tiny Square better on keyboard or mobile?',
+          answer:
+            'Keyboard is more reliable for precise double jumps. Mobile may work for casual attempts, but difficult rooms are easier on desktop.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'big-tower-tiny-square-walkthrough',
+          title: 'Big Tower Tiny Square walkthrough',
+          description: 'A deeper guide to double jumps, spike rooms, lasers, and tower checkpoints.',
+        },
+        {
+          slug: 'games-like-ovo',
+          title: 'Games like OvO',
+          description: 'More precision platformers and quick-retry browser challenges.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Big Tower Tiny Square 在线玩 - 二段跳、爬塔操作与技巧',
+      metaDescription:
+        '在线玩 Big Tower Tiny Square，查看二段跳操作、爬塔技巧、尖刺与激光应对、FAQ 和相关平台游戏攻略。',
+      title: 'Big Tower Tiny Square 快速玩法指南',
+      summary:
+        'Big Tower Tiny Square 是一款精准平台游戏，核心在耐心爬塔、二段跳时机，以及行动前读懂每个陷阱规律。高塔看起来简单，但每处尖刺、激光和移动平台都要求玩家控制跳跃，而不是盲目冲刺。',
+      overview: [
+        '更有效的思路是把每个房间当成节奏测试。先看一轮激光，试一次跳跃弧线，把存档点当成练习点，而不是失败证明。',
+        '这个详情页提供精简版攻略：操作怎么用、什么时候保留二段跳，以及如何避免因为慌乱移动而连续失误。',
+      ],
+      howToPlay: [
+        '一路向上爬塔，避开尖刺、激光和移动机关，到达下一个存档点。',
+        '第一次跳跃用来确定方向，第二段跳留到缺口或障碍真正需要时再用。',
+        '在安全平台边缘先停一下，读清下一段机关节奏再行动。',
+      ],
+      controls: [
+        { label: '移动', value: '大多数浏览器版本使用方向键或 WASD。' },
+        { label: '跳跃 / 二段跳', value: '地面起跳后，在空中再次按跳跃键获得额外高度或距离。' },
+        { label: '从存档点重试', value: '失败后从最近存档点继续，每次只调整一个时机细节。' },
+      ],
+      tips: [
+        '把第二段跳留到第一跳最高点附近，太早使用会让长距离缺口变难。',
+        '遇到激光和火球，先看完整一轮循环再走。',
+        '小跳很重要。有些窄平台用轻点短跳比满高度跳更稳定。',
+        '如果某个房间反复失败，先慢下来解决第一个障碍，再考虑出口。',
+      ],
+      faqs: [
+        {
+          question: 'Big Tower Tiny Square 怎么二段跳？',
+          answer: '空中再按一次跳跃键即可。最稳的时机通常是在第一跳接近最高点时，而不是刚起跳就按。',
+        },
+        {
+          question: 'Big Tower Tiny Square 为什么这么难？',
+          answer: '操作很简单，但关卡考的是时机和耐心。多数困难房间是规律测试，不是随机陷阱。',
+        },
+        {
+          question: 'Big Tower Tiny Square 用键盘还是手机更好？',
+          answer: '精准二段跳更适合键盘。手机可以随手玩，但困难房间更建议用桌面端。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'big-tower-tiny-square-walkthrough',
+          title: 'Big Tower Tiny Square 攻略',
+          description: '更详细的二段跳、尖刺房、激光和存档点打法。',
+        },
+        {
+          slug: 'games-like-ovo',
+          title: '类似 OvO 的游戏',
+          description: '更多精准平台和快速重试浏览器挑战。',
+        },
+      ],
+    },
+  },
+  'g-switch-3': {
+    en: {
+      metaTitle: 'G-Switch 3 Online - Gravity Controls and Multiplayer Tips',
+      metaDescription:
+        'Play G-Switch 3 online with gravity-flip controls, multiplayer notes, survival tips, FAQ answers, and related reflex game guides.',
+      title: 'G-Switch 3 quick guide',
+      summary:
+        'G-Switch 3 is a gravity-flipping runner where one input changes everything. You survive by flipping at the last safe moment, reading both the floor and ceiling, and staying calm as the speed climbs.',
+      overview: [
+        'The game looks like a one-button runner, but good runs are about restraint. Early flips usually drop you into the next hazard, while late, deliberate flips keep more options open.',
+        'Use this page to review the core mechanic before playing solo or local multiplayer. The goal is not to press faster, but to stop panic-flipping when the tunnel gets crowded.',
+      ],
+      howToPlay: [
+        'Run automatically through the stage while hazards appear on the floor and ceiling.',
+        'Flip gravity to move between surfaces and pass through open gaps.',
+        'In multiplayer, each player uses one assigned key; the last runner alive wins.',
+      ],
+      controls: [
+        { label: 'Flip gravity', value: 'Click, tap, or press the assigned key to switch between floor and ceiling.' },
+        { label: 'Multiplayer keys', value: 'Each local player uses one key, depending on the in-game setup screen.' },
+        { label: 'Restart', value: 'Use the in-game restart after everyone crashes or a solo run ends.' },
+      ],
+      tips: [
+        'Flip late. If you switch too early, the next saw or gap often has more time to catch you.',
+        'Read both surfaces before every flip, not only the lane you are currently running on.',
+        'Quick double-flips can skip a hazard and return you to the same side.',
+        'In multiplayer, do not copy another player blindly; their lane timing may not match yours.',
+      ],
+      faqs: [
+        {
+          question: 'How do you play G-Switch 3?',
+          answer:
+            'Use one input to flip gravity between the floor and ceiling. The skill is choosing the last safe moment to flip through hazards.',
+        },
+        {
+          question: 'Does G-Switch 3 have multiplayer?',
+          answer:
+            'Yes. It supports local multiplayer with several players sharing one keyboard, each using a single key.',
+        },
+        {
+          question: 'Is G-Switch 3 safe to play without downloads?',
+          answer:
+            'Yes on Luma. Use the browser player and avoid pages that ask for installers, extensions, or unrelated permissions.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'g-switch-3',
+          title: 'G-Switch 3 guide',
+          description: 'A deeper guide to controls, multiplayer setup, and survival timing.',
+        },
+        {
+          slug: 'games-like-ovo',
+          title: 'Games like OvO',
+          description: 'Fast movement games with precision and retry-heavy loops.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'G-Switch 3 在线玩 - 重力翻转操作与多人技巧',
+      metaDescription:
+        '在线玩 G-Switch 3，查看重力翻转操作、多人模式说明、生存技巧、FAQ 和相关反应类游戏攻略。',
+      title: 'G-Switch 3 快速玩法指南',
+      summary:
+        'G-Switch 3 是一款重力翻转跑酷，一个输入就会改变全部路线。想活得更久，关键是等到最后安全时刻再翻转，同时读清地面和天花板，并在速度提升后保持冷静。',
+      overview: [
+        '它看起来像一键跑酷，但好成绩来自克制。太早翻转经常会掉进下一个危险，晚一点、稳一点的翻转才能保留更多选择。',
+        '这个页面适合单人或本地多人开始前快速复习机制。重点不是按得更快，而是在画面变密集时少做慌乱翻转。',
+      ],
+      howToPlay: [
+        '角色会自动前进，地面和天花板上会出现锯齿、缺口等障碍。',
+        '通过翻转重力在两侧表面之间切换，从开口处通过。',
+        '多人模式中，每个玩家使用一个指定按键，活到最后者胜。',
+      ],
+      controls: [
+        { label: '翻转重力', value: '点击、触控或按下分配按键，在地面和天花板之间切换。' },
+        { label: '多人按键', value: '本地每个玩家使用一个键，具体按键以游戏内设置为准。' },
+        { label: '重新开始', value: '全员失败或单人结束后，使用游戏内重开。' },
+      ],
+      tips: [
+        '晚一点翻。太早切换时，下一个锯齿或缺口有更多时间追上你。',
+        '每次翻转前读清两侧表面，不要只看当前正在跑的一边。',
+        '快速双翻可以跳过一个危险后回到原来的表面。',
+        '多人时不要盲目模仿别人，因为他的节奏不一定适合你的位置。',
+      ],
+      faqs: [
+        {
+          question: 'G-Switch 3 怎么玩？',
+          answer: '用一个输入在地面和天花板之间翻转重力。核心技巧是在最后安全一刻完成翻转。',
+        },
+        {
+          question: 'G-Switch 3 有多人模式吗？',
+          answer: '有。它支持本地多人共用一个键盘，每个玩家只用一个按键。',
+        },
+        {
+          question: 'G-Switch 3 可以不下载玩吗？',
+          answer: '可以。在 Luma 使用浏览器播放器即可，避开要求安装器、扩展或无关权限的页面。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'g-switch-3',
+          title: 'G-Switch 3 攻略',
+          description: '更详细的操作、多人设置和生存时机说明。',
+        },
+        {
+          slug: 'games-like-ovo',
+          title: '类似 OvO 的游戏',
+          description: '更多快节奏移动和高重试浏览器游戏。',
+        },
+      ],
+    },
+  },
+  'fireboy-watergirl-6': {
+    en: {
+      metaTitle: 'Fireboy and Watergirl 6 Online - Controls and Co-op Tips',
+      metaDescription:
+        'Play Fireboy and Watergirl 6 online with two-player controls, element rules, co-op puzzle tips, FAQ answers, and related browser game guides.',
+      title: 'Fireboy and Watergirl 6 quick guide',
+      summary:
+        'Fireboy and Watergirl 6 is a co-op puzzle platformer built around two characters with different hazards. The best clears come from planning who holds a switch, who moves first, and how both players reach their doors safely.',
+      overview: [
+        'The central rule is simple: Fireboy handles fire, Watergirl handles water, and green hazards are unsafe for both. Most failed levels come from forgetting that rule while rushing for a switch or diamond.',
+        'This page is for quick browser play with a partner or solo control. Review the controls, decide the order of each puzzle step, then use the related guide when a level needs a deeper walkthrough.',
+      ],
+      howToPlay: [
+        'Guide Fireboy and Watergirl through the level, collecting matching diamonds when safe.',
+        'Use switches, buttons, and platforms so one character can open a route for the other.',
+        'Finish only when both characters reach their matching exits.',
+      ],
+      controls: [
+        { label: 'Fireboy', value: 'Use A, W, and D for movement in most versions.' },
+        { label: 'Watergirl', value: 'Use the left, up, and right arrow keys.' },
+        { label: 'Solo play', value: 'Control one character at a time and switch attention as the puzzle requires.' },
+      ],
+      tips: [
+        'Before moving, identify which pool is safe for each character and which hazards are unsafe for both.',
+        'Let one character hold a button while the other crosses, then plan how to reunite them.',
+        'Do not collect a diamond if it strands the wrong character on the wrong side of a gate.',
+        'Solo players should move in short steps instead of sending one character too far ahead.',
+      ],
+      faqs: [
+        {
+          question: 'Can Fireboy and Watergirl 6 be played solo?',
+          answer:
+            'Yes. You can control both characters yourself, but it is slower than playing with a partner because many puzzles need back-and-forth switching.',
+        },
+        {
+          question: 'What hazards kill each character?',
+          answer:
+            'Fireboy is safe in fire and unsafe in water. Watergirl is safe in water and unsafe in fire. Green hazards are unsafe for both.',
+        },
+        {
+          question: 'Is Fireboy and Watergirl 6 a download game?',
+          answer:
+            'No. Use the browser player on Luma and avoid unofficial installers, APKs, or extension prompts.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'fireboy-and-watergirl-walkthrough',
+          title: 'Fireboy and Watergirl walkthrough',
+          description: 'A deeper co-op guide to controls, element rules, and puzzle order.',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: 'Best browser games for a 5-minute break',
+          description: 'Short browser games when you want a lighter session.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Fireboy and Watergirl 6 在线玩 - 双人操作与合作技巧',
+      metaDescription:
+        '在线玩 Fireboy and Watergirl 6，查看双人操作、元素规则、合作解谜技巧、FAQ 和相关浏览器游戏攻略。',
+      title: 'Fireboy and Watergirl 6 快速玩法指南',
+      summary:
+        'Fireboy and Watergirl 6 是双人合作解谜平台游戏，两个角色面对不同元素危险。更稳的通关方式是先规划谁踩开关、谁先移动，以及两名角色如何安全到达各自出口。',
+      overview: [
+        '核心规则很简单：Fireboy 适合火，Watergirl 适合水，绿色危险两个都不能碰。大多数失败来自赶着踩开关或拿钻石时忘了这条规则。',
+        '这个页面适合和朋友一起玩，也适合单人控制双角色。先确认操作和步骤顺序，再在卡关时进入相关攻略看更细的合作思路。',
+      ],
+      howToPlay: [
+        '控制 Fireboy 和 Watergirl 穿过关卡，在安全时收集对应颜色钻石。',
+        '使用开关、按钮和平台，让一个角色为另一个角色打开路线。',
+        '只有两个角色都到达对应出口，关卡才算完成。',
+      ],
+      controls: [
+        { label: 'Fireboy', value: '大多数版本使用 A、W、D 移动。' },
+        { label: 'Watergirl', value: '使用左、上、右方向键移动。' },
+        { label: '单人玩法', value: '一次关注一个角色，根据谜题需要来回切换。' },
+      ],
+      tips: [
+        '行动前先判断哪个水池适合哪个角色，以及哪些危险两个角色都不能碰。',
+        '一个角色踩住按钮，另一个角色通过，然后再规划两人如何会合。',
+        '如果拿钻石会把错误角色困在门后，就先不要拿。',
+        '单人操作时分短步骤推进，不要让一个角色跑得太远。',
+      ],
+      faqs: [
+        {
+          question: 'Fireboy and Watergirl 6 可以单人玩吗？',
+          answer: '可以。你能一个人控制两个角色，但会比双人更慢，因为很多谜题需要来回切换。',
+        },
+        {
+          question: 'Fireboy 和 Watergirl 分别怕什么？',
+          answer: 'Fireboy 可以碰火但怕水，Watergirl 可以碰水但怕火，绿色危险两个角色都不能碰。',
+        },
+        {
+          question: 'Fireboy and Watergirl 6 需要下载吗？',
+          answer: '不需要。在 Luma 使用浏览器播放器即可，避开不明安装器、APK 或扩展提示。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'fireboy-and-watergirl-walkthrough',
+          title: 'Fireboy and Watergirl 攻略',
+          description: '更详细的双人操作、元素规则和关卡步骤说明。',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: '适合 5 分钟休息的浏览器游戏',
+          description: '想玩轻一点时可切换的短局游戏清单。',
+        },
+      ],
+    },
+  },
+  'monkey-mart': {
+    en: {
+      metaTitle: 'Monkey Mart Online - Unlock Order, Recipes and Tips',
+      metaDescription:
+        'Play Monkey Mart online with unlock order advice, appliance recipe notes, earning tips, FAQ answers, and related browser game guides.',
+      title: 'Monkey Mart quick guide',
+      summary:
+        'Monkey Mart is an idle management game where stocking shelves is only the start. Growth gets faster when you unlock helpers, process basic crops into better goods, and keep the highest-value shelves filled before queues build up.',
+      overview: [
+        'The early game feels simple: harvest bananas, stock shelves, and collect money. The real decision is what to buy next, because workers and appliances change how quickly the mart can run without constant manual movement.',
+        'Use this page while playing the browser version to keep the priority clear: automate the repetitive jobs first, then expand into products that sell for more.',
+      ],
+      howToPlay: [
+        'Harvest crops and place products on shelves so customers can buy them.',
+        'Collect money and reinvest it into aisles, appliances, upgrades, and helpers.',
+        'Open new sections only when the current mart can stay stocked without constant rushing.',
+      ],
+      controls: [
+        { label: 'Move', value: 'Use keyboard movement keys or the active touch controls.' },
+        { label: 'Collect / stock', value: 'Walk into crops, shelves, stations, and cash areas to interact automatically.' },
+        { label: 'Upgrade', value: 'Step onto upgrade zones when you have enough money.' },
+      ],
+      tips: [
+        'Hire helpers early so your own movement is spent on decisions, not repetitive stocking.',
+        'Appliances matter because processed goods earn more than raw crops.',
+        'Upgrade movement and carrying capacity when walking time becomes the bottleneck.',
+        'Restock the most valuable shelves first when customers start queueing.',
+      ],
+      faqs: [
+        {
+          question: 'What should I unlock first in Monkey Mart?',
+          answer:
+            'Prioritize helpers and appliance paths that create higher-value goods. Pure expansion is weaker if you cannot keep shelves stocked.',
+        },
+        {
+          question: 'Does Monkey Mart have promo codes?',
+          answer:
+            'No. Progress comes from unlocking aisles, appliances, workers, and upgrades rather than entering codes.',
+        },
+        {
+          question: 'Can Monkey Mart be played without installing an app?',
+          answer:
+            'Yes. Use the browser player and avoid third-party APK or installer pages.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'monkey-mart-guide',
+          title: 'Monkey Mart guide',
+          description: 'A deeper guide to unlock order, recipes, helpers, and earning faster.',
+        },
+        {
+          slug: 'games-to-play-when-bored',
+          title: 'Games to play when bored',
+          description: 'More browser games for a relaxed short session.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Monkey Mart 在线玩 - 解锁顺序、配方与赚钱技巧',
+      metaDescription:
+        '在线玩 Monkey Mart，查看解锁顺序、器械配方、赚钱技巧、FAQ 和相关浏览器游戏攻略。',
+      title: 'Monkey Mart 快速玩法指南',
+      summary:
+        'Monkey Mart 是放置经营游戏，上货架只是开始。想让超市成长更快，要尽早解锁帮手，把基础作物加工成更高价商品，并在顾客排队前优先补满高价值货架。',
+      overview: [
+        '前期看起来很简单：收香蕉、补货架、收钱。真正重要的是下一笔钱买什么，因为员工和器械会决定超市能否脱离手动奔跑也稳定运转。',
+        '这个页面适合边玩浏览器版边参考，核心优先级很明确：先自动化重复工作，再扩展到卖价更高的商品。',
+      ],
+      howToPlay: [
+        '收获作物并把商品放上货架，让顾客购买。',
+        '收钱后投入货道、器械、升级和帮手。',
+        '只有当前超市能稳定补货时，再开启新的区域。',
+      ],
+      controls: [
+        { label: '移动', value: '使用键盘移动键，或当前版本提供的触控按钮。' },
+        { label: '收集 / 补货', value: '走到作物、货架、加工台和收银区附近即可自动互动。' },
+        { label: '升级', value: '钱足够时走到升级区域购买。' },
+      ],
+      tips: [
+        '尽早雇帮手，让你的移动用于决策，而不是重复补货。',
+        '器械很重要，因为加工品比原始作物更赚钱。',
+        '当走路时间变成瓶颈时，升级移动速度和携带容量。',
+        '顾客排队时先补最高价值货架。',
+      ],
+      faqs: [
+        {
+          question: 'Monkey Mart 先解锁什么最好？',
+          answer: '优先解锁帮手和能产出高价值商品的器械路线。如果货架补不上，单纯扩张效果会很弱。',
+        },
+        {
+          question: 'Monkey Mart 有兑换码吗？',
+          answer: '没有。进度来自解锁货道、器械、员工和升级，而不是输入兑换码。',
+        },
+        {
+          question: 'Monkey Mart 需要安装 App 吗？',
+          answer: '不需要。使用浏览器播放器即可，避开第三方 APK 或安装页面。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'monkey-mart-guide',
+          title: 'Monkey Mart 攻略',
+          description: '更详细的解锁顺序、配方、员工和快速赚钱说明。',
+        },
+        {
+          slug: 'games-to-play-when-bored',
+          title: '无聊时可玩的浏览器小游戏',
+          description: '更多适合轻松短局的浏览器游戏。',
+        },
+      ],
+    },
+  },
+  dadish: {
+    en: {
+      metaTitle: 'Dadish Online - Controls, Platforming Tips and Safe Browser Play',
+      metaDescription:
+        'Play Dadish online with platforming controls, jump timing tips, mobile notes, FAQ answers, and related browser platformer guides.',
+      title: 'Dadish quick guide',
+      summary:
+        'Dadish is a compact platform adventure where the safest route is usually the cleanest one. Good runs come from reading enemy movement, keeping jumps simple, and resisting the urge to rush through food-themed hazards.',
+      overview: [
+        'Dadish looks playful, but the level design still rewards careful platforming. Watch the first cycle of a moving enemy, check where the safe ledge is, and jump only when you know how to land.',
+        'This page is built for quick browser play. Use it to learn the control rhythm, then switch to a deeper platformer guide or related game when you want harder precision challenges.',
+      ],
+      howToPlay: [
+        'Move through each stage, avoid enemies and hazards, and reach the end of the level.',
+        'Use short jumps for small platforms and save full jumps for wider gaps.',
+        'Treat enemies as moving obstacles first; only pass when their cycle leaves a clean route.',
+      ],
+      controls: [
+        { label: 'Move', value: 'Use arrow keys, WASD, or the active touch controls.' },
+        { label: 'Jump', value: 'Press jump to cross gaps and avoid hazards; hold longer only when you need full height.' },
+        { label: 'Restart', value: 'Use the in-game restart after a bad route or missed jump.' },
+      ],
+      tips: [
+        'Do not jump as soon as a platform appears. Check the landing area first.',
+        'Small taps help on narrow platforms where full jumps overshoot.',
+        'If mobile touch controls feel cramped, use keyboard for longer sessions.',
+        'When stuck, slow down and learn the enemy cycle instead of rushing another attempt.',
+      ],
+      faqs: [
+        {
+          question: 'Is Dadish difficult?',
+          answer:
+            'Dadish is approachable, but later stages still require timing. Most mistakes come from rushing jumps or not reading enemy movement.',
+        },
+        {
+          question: 'Can I play Dadish on mobile?',
+          answer:
+            'Mobile can work, but platform jumps are usually cleaner on keyboard. Test one level before a longer session.',
+        },
+        {
+          question: 'Does Dadish need a download?',
+          answer:
+            'No. Play in the browser on Luma and avoid pages that ask for APKs, installers, or extensions.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'games-like-ovo',
+          title: 'Games like OvO',
+          description: 'More platformers when you want tougher movement and faster retries.',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: 'Best browser games for a 5-minute break',
+          description: 'Short games for a quick, low-setup session.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Dadish 在线玩 - 平台跳跃操作、技巧与安全浏览器玩法',
+      metaDescription:
+        '在线玩 Dadish，查看平台跳跃操作、跳跃时机、手机体验、FAQ 和相关浏览器平台游戏攻略。',
+      title: 'Dadish 快速玩法指南',
+      summary:
+        'Dadish 是紧凑的平台冒险游戏，最安全的路线通常也是最干净的路线。稳定通关来自读清敌人移动、保持跳跃简单，并克制自己不要急着冲过食物主题陷阱。',
+      overview: [
+        'Dadish 看起来轻松可爱，但关卡设计仍然奖励谨慎的平台操作。先观察移动敌人的第一轮节奏，确认安全落点，再决定什么时候跳。',
+        '这个页面面向快速浏览器游玩。先用它掌握操作节奏，如果想要更难的精准挑战，再跳到相关平台游戏或专题攻略。',
+      ],
+      howToPlay: [
+        '穿过每个关卡，避开敌人和陷阱，到达终点。',
+        '小平台用短跳，较宽缺口再使用完整跳跃。',
+        '先把敌人当成移动障碍，等路线清楚时再通过。',
+      ],
+      controls: [
+        { label: '移动', value: '使用方向键、WASD，或当前版本提供的触控按钮。' },
+        { label: '跳跃', value: '按跳跃键跨越缺口或躲避危险；只有需要满高度时才长按。' },
+        { label: '重新开始', value: '路线失误或跳跃失败后，使用游戏内重开。' },
+      ],
+      tips: [
+        '不要一看到平台就跳，先确认落点是否安全。',
+        '窄平台更适合轻点短跳，满高度跳容易越过头。',
+        '如果手机触控按钮拥挤，长时间游玩建议换键盘。',
+        '卡关时放慢节奏，先学敌人循环，而不是急着再试一次。',
+      ],
+      faqs: [
+        {
+          question: 'Dadish 难吗？',
+          answer: 'Dadish 上手不难，但后期仍然考时机。多数失误来自跳太急，或没有观察敌人移动。',
+        },
+        {
+          question: 'Dadish 手机能玩吗？',
+          answer: '可以尝试，但平台跳跃通常用键盘更干净。建议先试玩一关再决定是否长时间玩。',
+        },
+        {
+          question: 'Dadish 需要下载吗？',
+          answer: '不需要。在 Luma 浏览器里直接玩，避开 APK、安装器或扩展提示。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'games-like-ovo',
+          title: '类似 OvO 的游戏',
+          description: '想要更难移动和更快重试时可玩的平台游戏。',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: '适合 5 分钟休息的浏览器游戏',
+          description: '适合快速打开、低设置成本的短局游戏。',
+        },
+      ],
+    },
+  },
 };
 
 export function getGameEditorialContent(slug: string | null | undefined, locale: string): GameEditorialLocaleContent | null {
