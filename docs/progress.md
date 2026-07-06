@@ -1428,4 +1428,7 @@
 - 合规边界：本轮没有新增 iframe、截图、广告容器、下载入口或诱导点击文案；文案明确 browser play/no download，并避免把第三方游戏描述成 Luma 自有 IP 或官方授权。
 - 验证结果：`pnpm exec tsx scripts/audit-game-quality.ts --write docs/game-quality-audit.md` 通过，5 个目标页均不再命中 thin description，分数为 Apple Knight Mini Dungeons 87、Drive Mad 87、Google Snake 87、OvO 81、Tunnel Rush 87；`pnpm exec tsc --noEmit --incremental false` 通过；`pnpm lint` 通过；`pnpm build` 通过；`git diff --check` 通过。
 - 本地 production 验证：`pnpm exec next start -p 3015` 后抽查 `/en/games/drive-mad`、`/en/games/google-snake`、`/en/games/ovo`、`/en/games/tunnel-rush`、`/en/games/apple-knight-mini-dungeons`、`/games/drive-mad`、`/games/google-snake` 均 HTTP 200，输出对应新 title、guide heading、FAQPage JSON-LD、相关 guide 链接，且无 `noindex`。
-- 下一步：部署后生产抽查同一批 URL 的 title、FAQPage、related guide links、robots；随后继续第二批核心页加厚，优先 `big-tower-tiny-square`、`g-switch-3`、`fireboy-watergirl-6`、`monkey-mart`、`dadish`。
+- 提交部署：commit `6b5efb5 add editorial guides to core game pages` 已推送 `origin/main`；因 GitHub 自动部署未立即切主域，已手动执行 `vercel deploy --prod --yes`；Vercel production deployment `dpl_Deasaef1cRHdJHxgmfCCDPUcWAWp` Ready，并挂载 `https://www.lumagamehub.com`。
+- 生产验证：`/en/games/drive-mad`、`/en/games/google-snake`、`/en/games/ovo`、`/en/games/tunnel-rush`、`/en/games/apple-knight-mini-dungeons`、`/games/drive-mad` 均 HTTP 200，输出新 title、guide heading、FAQPage JSON-LD、related guide links、正确 canonical，且无 `noindex`；sitemap 仍为 284 URLs，并包含 5 个目标游戏详情页。
+- 部署后监测：`pnpm ops:monitoring` 显示 site / robots / sitemap / Clarity tag ok；public health、search api 仍因既有 Supabase direct URL、Redis/Meilisearch 配置降级，不是本轮内容改动新增问题。
+- 下一步：继续第二批核心页加厚，优先 `big-tower-tiny-square`、`g-switch-3`、`fireboy-watergirl-6`、`monkey-mart`、`dadish`；另行处理 T-067 外部配置和 placeholder thumbnail。
