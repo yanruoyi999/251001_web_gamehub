@@ -1,6 +1,6 @@
 # Luma Game Quality Audit
 
-Generated: 2026-07-06T11:50:43.280Z
+Generated: 2026-07-06T12:26:55.193Z
 
 This is a directional quality and indexing audit for Luma Game Hub. It is not a legal clearance report. Any game with source, IP, iframe, mobile, or content uncertainty still needs manual QA before being treated as AdSense-review-ready.
 
@@ -26,9 +26,9 @@ This is a directional quality and indexing audit for Luma Game Hub. It is not a 
 | 1 | adam-and-eve-4 | Adam and Eve 4 | core-indexed | 87 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | No immediate static-audit flags |
 | 2 | adam-and-eve-5-part-1 | Adam and Eve 5: Part 1 | core-indexed | 93 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | No immediate static-audit flags |
 | 3 | adam-and-eve-5-part-2 | Adam and Eve 5: Part 2 | core-indexed | 93 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | No immediate static-audit flags |
-| 4 | adam-and-eve-6 | Adam and Eve 6 | core-indexed | 80 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (16 en words / 41 zh chars) |
-| 5 | adam-and-eve-7 | Adam and Eve 7 | core-indexed | 80 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (16 en words / 41 zh chars) |
-| 6 | adam-and-eve-8 | Adam And Eve 8 | core-indexed | 80 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (16 en words / 41 zh chars) |
+| 4 | adam-and-eve-6 | Adam and Eve 6 | core-indexed | 87 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | No immediate static-audit flags |
+| 5 | adam-and-eve-7 | Adam and Eve 7 | core-indexed | 87 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | No immediate static-audit flags |
+| 6 | adam-and-eve-8 | Adam And Eve 8 | core-indexed | 87 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | No immediate static-audit flags |
 | 7 | adam-and-eve-aliens | Adam and Eve: Aliens | catalogue-only | 70 | szhong.4399.com | Catalogue-only; keep playable but noindex until content/source QA is complete | thin description (16 en words / 47 zh chars) |
 | 8 | adam-and-eve-astronaut | Adam and Eve: Astronaut | catalogue-only | 70 | szhong.4399.com | Catalogue-only; keep playable but noindex until content/source QA is complete | thin description (16 en words / 50 zh chars) |
 | 9 | adam-and-eve-go-2 | Adam and Eve Go 2 | core-indexed | 80 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (17 en words / 44 zh chars) |
@@ -45,14 +45,14 @@ This is a directional quality and indexing audit for Luma Game Hub. It is not a 
 | 20 | assemble-and-drive-road-monsters | Assemble and Drive: Road Monsters | catalogue-only | 67 | szhong.4399.com | Catalogue-only; keep playable but noindex until content/source QA is complete | thin description (17 en words / 60 zh chars) |
 | 21 | balance-duel | Balance Duel | core-indexed | 80 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (14 en words / 39 zh chars) |
 | 22 | beat-line | Beat Line | core-indexed | 80 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (14 en words / 36 zh chars) |
-| 23 | big-tower-tiny-square-2 | Big Tower Tiny Square 2 | core-indexed | 80 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (17 en words / 50 zh chars) |
+| 23 | big-tower-tiny-square-2 | Big Tower Tiny Square 2 | core-indexed | 87 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | No immediate static-audit flags |
 | 24 | big-tower-tiny-square | Big Tower Tiny Square | core-indexed | 93 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | No immediate static-audit flags |
 | 25 | blast-red | Blast Red | catalogue-only | 64 | szhong.4399.com | Catalogue-only; keep playable but noindex until content/source QA is complete | thin description (14 en words / 36 zh chars); placeholder thumbnail |
 | 26 | blockman-climb | Blockman Climb | core-indexed | 81 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | placeholder thumbnail |
 | 27 | blumgi-ball | Blumgi Ball | core-indexed | 81 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | placeholder thumbnail |
 | 28 | blumgi-bloom | Blumgi Bloom | core-indexed | 81 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | placeholder thumbnail |
 | 29 | blumgi-castle | Blumgi Castle | catalogue-only | 61 | szhong.4399.com | Catalogue-only; keep playable but noindex until content/source QA is complete | thin description (14 en words / 40 zh chars); placeholder thumbnail |
-| 30 | blumgi-rocket | Blumgi Rocket | core-indexed | 74 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (14 en words / 40 zh chars); placeholder thumbnail |
+| 30 | blumgi-rocket | Blumgi Rocket | core-indexed | 81 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | placeholder thumbnail |
 | 31 | monkey-mart | Monkey Mart | core-indexed | 81 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | placeholder thumbnail |
 | 32 | boxing-king-ring-champion-fighter-3d | Boxing King: Ring Champion Fighter 3D | catalogue-only | 68 | szhong.4399.com | Catalogue-only; keep playable but noindex until content/source QA is complete | placeholder thumbnail |
 | 33 | bright-lancer | Bright Lancer | catalogue-only | 61 | szhong.4399.com | Catalogue-only; keep playable but noindex until content/source QA is complete | thin description (14 en words / 40 zh chars); placeholder thumbnail |

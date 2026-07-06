@@ -2285,6 +2285,571 @@ const GAME_EDITORIAL_CONTENT: Record<string, GameEditorialEntry> = {
       ],
     },
   },
+  'adam-and-eve-6': {
+    en: {
+      metaTitle: 'Adam and Eve 6 Online - Point-and-Click Puzzle Tips and Safe Play',
+      metaDescription:
+        'Play Adam and Eve 6 online with scene-reading tips, point-and-click controls, FAQ answers, no-download safety notes, and related puzzle guides.',
+      title: 'Adam and Eve 6 quick guide',
+      summary:
+        'Adam and Eve 6 is a point-and-click puzzle adventure where each scene is solved by noticing the right cause-and-effect chain. The best approach is to identify what blocks Adam, test nearby objects carefully, and wait for every animation before deciding the next click.',
+      overview: [
+        'The puzzles are compact, but the order matters. A background object may prepare a path, a creature reaction may unlock a tool, and one small animation can completely change which item should be clicked next.',
+        'Use this page as a browser-play companion when a scene stalls. It focuses on practical observation, clean no-download play, and series links for players who want a broader walkthrough pattern.',
+      ],
+      howToPlay: [
+        'Inspect the full scene before clicking, including corners, background items, and the route ahead.',
+        'Click one likely object, wait for the change, then use the next item that becomes relevant.',
+        'Send Adam forward only after the visible blocker or hazard has been handled.',
+      ],
+      controls: [
+        { label: 'Interact', value: 'Use the mouse or tap to click objects, tools, animals, and scene details.' },
+        { label: 'Observe', value: 'Wait for the animation to finish before testing another object.' },
+        { label: 'Retry', value: 'Restart the scene if the click order becomes confusing.' },
+      ],
+      tips: [
+        'Start with the obstacle, then look for the object that could change that obstacle.',
+        'If an item does nothing, come back to it after another object has moved or opened.',
+        'Avoid rapid random clicks because the useful animation can be easy to miss.',
+        'On mobile, tap slowly and deliberately so small scene objects register correctly.',
+      ],
+      faqs: [
+        {
+          question: 'How do you solve Adam and Eve 6 puzzles?',
+          answer:
+            'Think in ordered chains. Identify the blocker, click one related object, watch the result, and then follow the new clue.',
+        },
+        {
+          question: 'Is Adam and Eve 6 good for short sessions?',
+          answer:
+            'Yes. Each scene is short and self-contained, so it works well for quick browser play.',
+        },
+        {
+          question: 'Does Adam and Eve 6 need a download?',
+          answer:
+            'No. Play it in the browser on Luma and avoid APK, installer, or extension prompts.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'adam-and-eve-walkthrough',
+          title: 'Adam and Eve walkthrough',
+          description: 'Series-wide puzzle advice for point-and-click scenes and object chains.',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: 'Best browser games for a 5-minute break',
+          description: 'More short browser games with simple controls and quick stopping points.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Adam and Eve 6 在线玩 - 点击解谜技巧与安全玩法',
+      metaDescription:
+        '在线玩 Adam and Eve 6，查看场景观察技巧、点击操作、FAQ、免下载安全说明和相关解谜攻略。',
+      title: 'Adam and Eve 6 快速玩法指南',
+      summary:
+        'Adam and Eve 6 是点击解谜冒险，每个场景都要靠正确的因果链推进。更稳的做法是先确认 Adam 被什么挡住，再仔细测试附近物体，并等每段动画结束后再决定下一次点击。',
+      overview: [
+        '谜题都很短，但顺序很重要。背景物体可能先铺路，动物反应可能解锁工具，一个小动画就可能改变下一步该点哪里。',
+        '这个页面适合作为浏览器版参考，帮助你在卡关时观察场景、保持免下载游玩，并进入系列攻略了解通用解谜模式。',
+      ],
+      howToPlay: [
+        '点击前先看完整场景，包括角落、背景物体和前进路线。',
+        '点击一个可能相关的对象，等变化结束，再使用下一个变得相关的物品。',
+        '只有挡路点或危险处理好后，再让 Adam 前进。',
+      ],
+      controls: [
+        { label: '互动', value: '用鼠标或触屏点击物体、工具、动物和场景细节。' },
+        { label: '观察', value: '等动画结束后再测试另一个对象。' },
+        { label: '重试', value: '点击顺序混乱时重开当前场景。' },
+      ],
+      tips: [
+        '从挡路物开始，再找能改变它的对象。',
+        '某个物品没反应时，等其他对象移动或打开后再回来试。',
+        '不要快速乱点，否则很容易错过有效动画。',
+        '手机端慢一点点按，小物体更容易准确触发。',
+      ],
+      faqs: [
+        {
+          question: 'Adam and Eve 6 怎么解谜？',
+          answer: '按顺序链思考：先找挡路点，点击一个相关对象，观察变化，再跟随新线索继续。',
+        },
+        {
+          question: 'Adam and Eve 6 适合短时间玩吗？',
+          answer: '适合。每个场景都很短、目标明确，适合浏览器短局游玩。',
+        },
+        {
+          question: 'Adam and Eve 6 需要下载吗？',
+          answer: '不需要。在 Luma 浏览器里直接玩即可，避开 APK、安装器或扩展提示。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'adam-and-eve-walkthrough',
+          title: 'Adam and Eve 系列攻略',
+          description: '覆盖系列点击场景和物体链条的通用解谜建议。',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: '适合 5 分钟休息的浏览器游戏',
+          description: '更多操作简单、容易停下来的短局浏览器游戏。',
+        },
+      ],
+    },
+  },
+  'adam-and-eve-7': {
+    en: {
+      metaTitle: 'Adam and Eve 7 Online - Puzzle Controls, Tips and Browser Guide',
+      metaDescription:
+        'Play Adam and Eve 7 online with point-and-click controls, scene order tips, FAQ answers, no-download safety notes, and related browser puzzle guides.',
+      title: 'Adam and Eve 7 quick guide',
+      summary:
+        'Adam and Eve 7 keeps the series focused on small scene puzzles, hidden interactions, and careful click order. The key is to read the whole screen first, then use one object at a time so the next clue becomes obvious.',
+      overview: [
+        'Later Adam and Eve entries often hide important interactions in quiet parts of the scene. A branch, cloud, animal, rope, or tool can be useful only after another object changes the layout.',
+        'This guide gives a compact way to play the browser version without turning the page into a spoiler list: observe, test once, wait, and follow the visible change.',
+      ],
+      howToPlay: [
+        'Scan the blocker, the exit path, and any object that could move or distract a creature.',
+        'Click one object, wait for the full animation, then look for the new path or item.',
+        'Continue the chain until Adam can move through the scene safely.',
+      ],
+      controls: [
+        { label: 'Click / tap', value: 'Use mouse clicks or touch taps to interact with scene objects.' },
+        { label: 'Wait', value: 'Let each reaction finish before clicking another detail.' },
+        { label: 'Restart', value: 'Use the scene restart if the order is unclear after several attempts.' },
+      ],
+      tips: [
+        'Do not assume large objects are the answer; small background details often matter.',
+        'If a click changes the scene slightly, re-check every object near that change.',
+        'Treat animals and moving parts as timing clues, not decorations.',
+        'On mobile, zooming is not always available, so tap obvious clusters slowly.',
+      ],
+      faqs: [
+        {
+          question: 'What should I do when Adam and Eve 7 gets stuck?',
+          answer:
+            'Stop clicking randomly and describe the blocker. Then test only objects that could change that blocker or the route around it.',
+        },
+        {
+          question: 'Is Adam and Eve 7 a puzzle game or adventure game?',
+          answer:
+            'It is both, but the moment-to-moment play is mostly point-and-click puzzle solving.',
+        },
+        {
+          question: 'Can I play Adam and Eve 7 without installing anything?',
+          answer:
+            'Yes. Use the browser player on Luma and avoid third-party download prompts.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'adam-and-eve-walkthrough',
+          title: 'Adam and Eve walkthrough',
+          description: 'A broader walkthrough-style guide for the series puzzle logic.',
+        },
+        {
+          slug: 'games-to-play-when-bored',
+          title: 'Games to play when bored',
+          description: 'More casual browser games for short sessions.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Adam and Eve 7 在线玩 - 点击解谜操作、技巧与浏览器指南',
+      metaDescription:
+        '在线玩 Adam and Eve 7，查看点击操作、场景顺序技巧、FAQ、免下载安全说明和相关浏览器解谜指南。',
+      title: 'Adam and Eve 7 快速玩法指南',
+      summary:
+        'Adam and Eve 7 延续系列的小场景谜题、隐藏互动和点击顺序。关键是先读完整个画面，再一次只使用一个对象，让下一条线索自然出现。',
+      overview: [
+        '系列后续作品常把关键互动藏在安静的画面角落。树枝、云、动物、绳子或工具，可能只有在另一个对象改变布局后才有用。',
+        '这个指南不会把页面写成纯剧透清单，而是帮助你掌握浏览器版解谜方法：观察、测试一次、等待动画、跟随可见变化。',
+      ],
+      howToPlay: [
+        '先扫一遍挡路点、出口路线，以及任何可能移动或吸引动物的对象。',
+        '点击一个对象，等完整动画结束，再找新路径或新物品。',
+        '沿着连锁反应继续，直到 Adam 可以安全离开当前场景。',
+      ],
+      controls: [
+        { label: '点击 / 点按', value: '用鼠标或触屏点击场景物体。' },
+        { label: '等待', value: '每个反应结束后再点击下一个细节。' },
+        { label: '重开', value: '多次尝试后顺序仍不清楚时重开当前场景。' },
+      ],
+      tips: [
+        '不要只看大物体，小背景细节经常才是答案。',
+        '如果一次点击让场景稍有变化，就重新检查变化附近的所有对象。',
+        '动物和移动机关通常是时机线索，不只是装饰。',
+        '手机端不一定方便缩放，所以明显物体群要慢慢点。',
+      ],
+      faqs: [
+        {
+          question: 'Adam and Eve 7 卡住时怎么办？',
+          answer: '先停止乱点，用一句话说清楚挡路原因，再只测试可能改变挡路点或绕路路径的对象。',
+        },
+        {
+          question: 'Adam and Eve 7 是解谜还是冒险游戏？',
+          answer: '两者都有，但实际操作主要是点击解谜。',
+        },
+        {
+          question: 'Adam and Eve 7 不安装可以玩吗？',
+          answer: '可以。在 Luma 浏览器里直接玩，避开第三方下载提示。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'adam-and-eve-walkthrough',
+          title: 'Adam and Eve 系列攻略',
+          description: '更完整的系列解谜逻辑和通关思路。',
+        },
+        {
+          slug: 'games-to-play-when-bored',
+          title: '无聊时可玩的浏览器小游戏',
+          description: '更多适合短时间打开的休闲浏览器游戏。',
+        },
+      ],
+    },
+  },
+  'adam-and-eve-8': {
+    en: {
+      metaTitle: 'Adam and Eve 8 Online - Scene Puzzle Tips and Safe Browser Play',
+      metaDescription:
+        'Play Adam and Eve 8 online with point-and-click scene tips, controls, FAQ answers, no-download safety notes, and related puzzle game guides.',
+      title: 'Adam and Eve 8 quick guide',
+      summary:
+        'Adam and Eve 8 is another short-form point-and-click adventure built around scene logic. Progress comes from noticing what has changed after each click, then using the new object or path instead of repeating the same action.',
+      overview: [
+        'The challenge is not fast reactions. It is careful sequencing: move one object, wait for the reaction, then decide whether the blocker, creature, platform, or path has changed enough for the next step.',
+        'Use this page when you want a practical browser guide rather than unsafe downloads or vague game listings. It gives enough structure to solve scenes without removing the fun of discovery.',
+      ],
+      howToPlay: [
+        'Look for the current blocker and any object connected to it by position or theme.',
+        'Click once, watch the animation, and re-check the scene for new clickable details.',
+        'Repeat until Adam reaches the exit or next scene.',
+      ],
+      controls: [
+        { label: 'Interact', value: 'Click or tap scene objects to trigger actions.' },
+        { label: 'Read the scene', value: 'Use the animation as the clue for the next interaction.' },
+        { label: 'Restart', value: 'Reset the scene if the order becomes hard to track.' },
+      ],
+      tips: [
+        'After every successful click, look for what moved, disappeared, opened, or changed direction.',
+        'Clickable objects can be small, so scan the scene edges before giving up.',
+        'If a creature blocks the path, find what changes its attention rather than clicking it repeatedly.',
+        'Keep play in the browser; the game does not need an installer or extension.',
+      ],
+      faqs: [
+        {
+          question: 'How do I find clickable objects in Adam and Eve 8?',
+          answer:
+            'Start near the obstacle and scan outward. Items near the path, creature, or tool chain are usually more important than decorative details.',
+        },
+        {
+          question: 'Is Adam and Eve 8 beginner friendly?',
+          answer:
+            'Yes. The controls are simple, and the scenes are short enough to retry without much friction.',
+        },
+        {
+          question: 'Is Adam and Eve 8 safe to play online?',
+          answer:
+            'Use the browser player and avoid any page that asks for APKs, installers, or unknown browser extensions.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'adam-and-eve-walkthrough',
+          title: 'Adam and Eve walkthrough',
+          description: 'General series guidance for object order and point-and-click puzzle chains.',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: 'Best browser games for a 5-minute break',
+          description: 'More short-session games with simple browser controls.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Adam and Eve 8 在线玩 - 场景解谜技巧与安全浏览器玩法',
+      metaDescription:
+        '在线玩 Adam and Eve 8，查看点击场景技巧、操作、FAQ、免下载安全说明和相关解谜游戏指南。',
+      title: 'Adam and Eve 8 快速玩法指南',
+      summary:
+        'Adam and Eve 8 继续采用短场景点击冒险玩法，核心是观察每次点击后发生了什么变化，再使用新出现的物体或路径，而不是重复同一个动作。',
+      overview: [
+        '难点不是反应速度，而是顺序判断：移动一个对象，等待反应，再看挡路物、动物、平台或路线是否已经改变到可以进行下一步。',
+        '这个页面提供实用浏览器玩法说明，避免不安全下载或空泛游戏列表；内容足够帮助你理解谜题，又不会完全剥夺探索乐趣。',
+      ],
+      howToPlay: [
+        '先找当前挡路点，以及位置或主题上与它相关的对象。',
+        '点击一次，观察动画，再重新检查场景中是否出现新的可点细节。',
+        '重复这个过程，直到 Adam 到达出口或下一场景。',
+      ],
+      controls: [
+        { label: '互动', value: '点击或点按场景物体触发动作。' },
+        { label: '读场景', value: '把动画变化当成下一次互动的线索。' },
+        { label: '重开', value: '顺序难以追踪时重置当前场景。' },
+      ],
+      tips: [
+        '每次有效点击后，先看清什么东西移动、消失、打开或改变方向。',
+        '可点对象可能很小，放弃前先扫一遍画面边缘。',
+        '如果动物挡路，找能转移它注意力的东西，不要反复点动物本身。',
+        '保持浏览器游玩即可，这类游戏不需要安装器或扩展。',
+      ],
+      faqs: [
+        {
+          question: 'Adam and Eve 8 怎么找可点击物体？',
+          answer: '从障碍物附近开始往外扫，靠近路线、动物或工具链的物品通常比纯装饰更重要。',
+        },
+        {
+          question: 'Adam and Eve 8 适合新手吗？',
+          answer: '适合。操作很简单，场景也短，失败后重试成本不高。',
+        },
+        {
+          question: 'Adam and Eve 8 在线玩安全吗？',
+          answer: '使用浏览器播放器即可，避开要求 APK、安装器或未知浏览器扩展的页面。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'adam-and-eve-walkthrough',
+          title: 'Adam and Eve 系列攻略',
+          description: '关于物体顺序和点击解谜链条的系列通用指南。',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: '适合 5 分钟休息的浏览器游戏',
+          description: '更多操作简单、适合短局的浏览器游戏。',
+        },
+      ],
+    },
+  },
+  'big-tower-tiny-square-2': {
+    en: {
+      metaTitle: 'Big Tower Tiny Square 2 Online - Controls, Jump Tips and Safe Play',
+      metaDescription:
+        'Play Big Tower Tiny Square 2 online with platform controls, jump timing tips, checkpoint advice, FAQ answers, and no-download browser guidance.',
+      title: 'Big Tower Tiny Square 2 quick guide',
+      summary:
+        'Big Tower Tiny Square 2 is a precision platformer built around small jumps, narrow hazards, and frequent retries. The safest way up the tower is to learn one obstacle at a time, reset quickly, and treat each checkpoint as a new practice segment.',
+      overview: [
+        'This sequel keeps the one-more-try rhythm of the first game. You will miss jumps, hit spikes, and restart often, but each attempt should teach one timing detail or route correction.',
+        'Use this page for practical browser play: controls, jump habits, mobile notes, and links to broader platformer guides without pushing downloads or misleading shortcuts.',
+      ],
+      howToPlay: [
+        'Move through tower rooms, avoid spikes and traps, and reach the next checkpoint.',
+        'Practice each hazard in small pieces instead of rushing the full room.',
+        'Use deaths as timing feedback: decide whether you jumped too early, too late, or too far.',
+      ],
+      controls: [
+        { label: 'Move', value: 'Use the active keyboard movement keys shown by the browser build.' },
+        { label: 'Jump', value: 'Tap jump for short hops and hold longer only when the gap requires it.' },
+        { label: 'Retry', value: 'Restart from the checkpoint and adjust one timing detail at a time.' },
+      ],
+      tips: [
+        'Stop at safe ledges before starting a new trap pattern.',
+        'Use short jumps when spikes are close; over-jumping is a common mistake.',
+        'Memorize the first hazard after each checkpoint so the next attempt starts cleanly.',
+        'Keyboard is usually more reliable than touch controls for tight platforming.',
+      ],
+      faqs: [
+        {
+          question: 'Is Big Tower Tiny Square 2 harder than the first game?',
+          answer:
+            'It follows the same precision-platforming style and can feel harder because rooms ask for tighter timing and cleaner retries.',
+        },
+        {
+          question: 'How do I get better at Big Tower Tiny Square 2?',
+          answer:
+            'Practice one hazard at a time, use checkpoints as training points, and change only one input detail after each failed attempt.',
+        },
+        {
+          question: 'Does Big Tower Tiny Square 2 need a download?',
+          answer:
+            'No. Play in the browser on Luma and avoid APK, installer, or extension pages.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'big-tower-tiny-square-walkthrough',
+          title: 'Big Tower Tiny Square walkthrough',
+          description: 'Core precision-platforming advice that also helps with the sequel.',
+        },
+        {
+          slug: 'games-like-ovo',
+          title: 'Games like OvO',
+          description: 'More high-retry platformers and movement-focused browser games.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Big Tower Tiny Square 2 在线玩 - 操作、跳跃技巧与安全玩法',
+      metaDescription:
+        '在线玩 Big Tower Tiny Square 2，查看平台操作、跳跃时机、检查点建议、FAQ 和免下载浏览器玩法说明。',
+      title: 'Big Tower Tiny Square 2 快速玩法指南',
+      summary:
+        'Big Tower Tiny Square 2 是精准平台跳跃游戏，围绕小跳、窄陷阱和频繁重试展开。最稳的爬塔方式是一次练一个障碍，快速重开，并把每个检查点当成新的练习段。',
+      overview: [
+        '续作延续第一作的“再来一次”节奏。你会错过跳跃、碰到尖刺、反复重开，但每次尝试都应该学到一个时机或路线修正。',
+        '这个页面提供实用浏览器玩法：操作、跳跃习惯、手机体验和相关平台游戏指南，不引导下载或误导捷径。',
+      ],
+      howToPlay: [
+        '穿过塔内房间，避开尖刺和机关，到达下一个检查点。',
+        '把每个陷阱拆成小段练习，不要急着一次冲完整个房间。',
+        '把失败当成时机反馈：判断是跳早了、跳晚了还是跳太远。',
+      ],
+      controls: [
+        { label: '移动', value: '使用当前浏览器版本显示的键盘移动键。' },
+        { label: '跳跃', value: '短距离轻按跳跃，只有大缺口才长按。' },
+        { label: '重试', value: '从检查点重新开始，每次只调整一个输入细节。' },
+      ],
+      tips: [
+        '进入新机关前先停在安全平台上观察。',
+        '尖刺很近时用短跳，跳过头是常见失误。',
+        '记住每个检查点后的第一个陷阱，让下一次开局更稳定。',
+        '键盘通常比触屏更适合精细平台跳跃。',
+      ],
+      faqs: [
+        {
+          question: 'Big Tower Tiny Square 2 比第一作更难吗？',
+          answer: '它延续同样的精准平台风格，因为房间更考验时机和重试质量，所以可能会感觉更难。',
+        },
+        {
+          question: 'Big Tower Tiny Square 2 怎么提升？',
+          answer: '一次练一个障碍，把检查点当成训练点；每次失败后只调整一个输入细节。',
+        },
+        {
+          question: 'Big Tower Tiny Square 2 需要下载吗？',
+          answer: '不需要。在 Luma 浏览器里直接玩，避开 APK、安装器或扩展页面。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'big-tower-tiny-square-walkthrough',
+          title: 'Big Tower Tiny Square 攻略',
+          description: '同样适用于续作的精准平台跳跃核心建议。',
+        },
+        {
+          slug: 'games-like-ovo',
+          title: '类似 OvO 的高重试小游戏',
+          description: '更多重视移动和跳跃手感的浏览器平台游戏。',
+        },
+      ],
+    },
+  },
+  'blumgi-rocket': {
+    en: {
+      metaTitle: 'Blumgi Rocket Online - Boost Controls, Landing Tips and Safe Play',
+      metaDescription:
+        'Play Blumgi Rocket online with boost controls, physics driving tips, landing advice, FAQ answers, and no-download browser safety notes.',
+      title: 'Blumgi Rocket quick guide',
+      summary:
+        'Blumgi Rocket is a physics driving game about using rocket boost without losing control. Strong runs come from short bursts, stable landings, and reading the next ramp before holding acceleration.',
+      overview: [
+        'The rocket boost makes the car feel powerful, but holding it too long often sends the vehicle into a flip. The safest rhythm is boost, release, land flat, then boost again only when the road gives you space.',
+        'This page is a compact browser guide for players who like Drive Mad-style balance challenges but want a faster, rocket-powered feel without installing anything.',
+      ],
+      howToPlay: [
+        'Drive through each stage, use boost to clear gaps or climb ramps, and reach the finish without flipping.',
+        'Release boost before landing so the vehicle can settle on its wheels.',
+        'Use small bursts when the track is narrow or the next platform is close.',
+      ],
+      controls: [
+        { label: 'Accelerate / boost', value: 'Hold the active key or touch control to drive and use rocket power.' },
+        { label: 'Release', value: 'Let go before steep landings or when the car starts rotating too far.' },
+        { label: 'Retry', value: 'Restart quickly after a flip and adjust boost timing on the next attempt.' },
+      ],
+      tips: [
+        'Boost in bursts; long holds are the main cause of flips.',
+        'Land flat before using the next boost, especially after steep ramps.',
+        'If you overshoot a platform, reduce boost duration instead of changing the whole route.',
+        'On mobile, short taps are easier to control than continuous pressure.',
+      ],
+      faqs: [
+        {
+          question: 'How do you stop flipping in Blumgi Rocket?',
+          answer:
+            'Use shorter boosts and release before the vehicle reaches the top of ramps or starts rotating too far in the air.',
+        },
+        {
+          question: 'Is Blumgi Rocket like Drive Mad?',
+          answer:
+            'Yes, both reward physics control and quick retries, but Blumgi Rocket adds stronger boost and faster jumps.',
+        },
+        {
+          question: 'Does Blumgi Rocket require a download?',
+          answer:
+            'No. Play in the browser on Luma and avoid APK, installer, or extension pages.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'drive-mad-walkthrough',
+          title: 'Drive Mad walkthrough',
+          description: 'More physics-driving advice for flips, jumps, and landing control.',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: 'Best browser games for a 5-minute break',
+          description: 'Short browser games with fast retries and readable goals.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Blumgi Rocket 在线玩 - 火箭加速操作、落地技巧与安全玩法',
+      metaDescription:
+        '在线玩 Blumgi Rocket，查看加速操作、物理驾驶技巧、落地建议、FAQ 和免下载浏览器安全说明。',
+      title: 'Blumgi Rocket 快速玩法指南',
+      summary:
+        'Blumgi Rocket 是物理驾驶游戏，核心是使用火箭加速但不失控。更好的跑法来自短促推进、平稳落地，以及在长按加速前先看清下一段坡道。',
+      overview: [
+        '火箭加速让车辆很有力量，但长按太久经常会直接翻车。更稳的节奏是短促加速、松开、四轮落地，再在路面允许时继续推进。',
+        '这个页面适合喜欢 Drive Mad 式平衡挑战、但想要更快火箭推进手感的玩家；全程浏览器游玩，不需要安装任何东西。',
+      ],
+      howToPlay: [
+        '驾驶车辆穿过关卡，用加速越过缺口或爬上坡道，并尽量不翻车到达终点。',
+        '落地前提前松开加速，让车辆回到四轮着地。',
+        '赛道狭窄或下个平台很近时，用短促推进。',
+      ],
+      controls: [
+        { label: '加速 / 推进', value: '按住当前键盘或触控按钮前进并使用火箭动力。' },
+        { label: '松开', value: '陡坡落地前或车辆旋转过度时松开输入。' },
+        { label: '重试', value: '翻车后快速重开，并在下一次调整推进时机。' },
+      ],
+      tips: [
+        '用短促推进，长按是最常见的翻车原因。',
+        '陡坡后先平稳落地，再进行下一次加速。',
+        '如果总是飞过平台，先减少推进时间，不要立刻换整条路线。',
+        '手机端短按更容易控制，长按很容易冲过头。',
+      ],
+      faqs: [
+        {
+          question: 'Blumgi Rocket 怎么避免翻车？',
+          answer: '减少长按推进，在坡顶前或空中旋转过度前松开，让车辆更平稳落地。',
+        },
+        {
+          question: 'Blumgi Rocket 像 Drive Mad 吗？',
+          answer: '相似，两者都考验物理控制和短局重试，但 Blumgi Rocket 的加速更强、跳跃更快。',
+        },
+        {
+          question: 'Blumgi Rocket 需要下载吗？',
+          answer: '不需要。在 Luma 浏览器里直接玩，避开 APK、安装器或扩展页面。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'drive-mad-walkthrough',
+          title: 'Drive Mad 过关攻略',
+          description: '更多翻车、跳跃和落地控制的物理驾驶建议。',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: '适合 5 分钟休息的浏览器游戏',
+          description: '更多重试迅速、目标清晰的短局浏览器游戏。',
+        },
+      ],
+    },
+  },
 };
 
 export function getGameEditorialContent(slug: string | null | undefined, locale: string): GameEditorialLocaleContent | null {
