@@ -1155,6 +1155,571 @@ const GAME_EDITORIAL_CONTENT: Record<string, GameEditorialEntry> = {
       ],
     },
   },
+  'adam-and-eve-4': {
+    en: {
+      metaTitle: 'Adam and Eve 4 Online - Puzzle Controls, Walkthrough Tips and Safe Play',
+      metaDescription:
+        'Play Adam and Eve 4 online with point-and-click controls, puzzle solving tips, FAQ answers, no-download safety notes, and related browser game guides.',
+      title: 'Adam and Eve 4 quick guide',
+      summary:
+        'Adam and Eve 4 is a light point-and-click puzzle adventure where progress comes from reading the scene before clicking. The best approach is to test objects in order, notice what changes, and avoid random clicking that makes the puzzle harder to understand.',
+      overview: [
+        'Each screen is a small cause-and-effect puzzle. A branch, animal, lever, or hidden object usually changes the path only after another object has been used first, so slow observation beats fast clicking.',
+        'Use this page while playing the browser version: start the scene, check what blocks Adam, then return to the tips when a chain reaction or hidden item is not obvious.',
+      ],
+      howToPlay: [
+        'Click objects in the scene to discover what can move, open, scare, lift, or reveal a path.',
+        'Watch the animation after every click, because one small change often unlocks the next object.',
+        'Move Adam forward only after the route is clear and the visible hazard has been handled.',
+      ],
+      controls: [
+        { label: 'Interact', value: 'Use the mouse or tap to click objects, levers, and scene details.' },
+        { label: 'Observe', value: 'Wait for each animation to finish before clicking the next object.' },
+        { label: 'Restart scene', value: 'Use the in-game restart if an action order no longer makes sense.' },
+      ],
+      tips: [
+        'Click the obstacle first, then look for the object that could change it.',
+        'If nothing responds, scan the corners and background instead of repeatedly clicking the same item.',
+        'Many puzzles are ordered chains: one object reveals the next, so remember the last visible change.',
+        'On mobile, tap slowly enough that you can see which object actually responded.',
+      ],
+      faqs: [
+        {
+          question: 'How do you solve Adam and Eve 4 puzzles faster?',
+          answer:
+            'Treat each scene as a chain. Identify the blocked path, test nearby objects once, then follow the animation to the next interactive item.',
+        },
+        {
+          question: 'Is Adam and Eve 4 good for short sessions?',
+          answer:
+            'Yes. The scenes are compact, controls are simple, and each puzzle has a natural stopping point.',
+        },
+        {
+          question: 'Does Adam and Eve 4 need a download?',
+          answer:
+            'No. Play in the browser on Luma and avoid pages that ask for installers, APK files, or browser extensions.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'adam-and-eve-walkthrough',
+          title: 'Adam and Eve walkthrough',
+          description: 'A broader guide to the point-and-click puzzle pattern across the series.',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: 'Best browser games for a 5-minute break',
+          description: 'More short browser games with simple goals and quick stopping points.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Adam and Eve 4 在线玩 - 点击解谜操作、技巧与安全玩法',
+      metaDescription:
+        '在线玩 Adam and Eve 4，查看点击解谜操作、通关思路、FAQ、免下载安全说明和相关浏览器游戏攻略。',
+      title: 'Adam and Eve 4 快速玩法指南',
+      summary:
+        'Adam and Eve 4 是轻量点击解谜冒险，进度来自先读懂场景再点击。更稳的做法是按顺序测试物体、观察每次动画变化，而不是随机乱点导致自己看不清谜题逻辑。',
+      overview: [
+        '每个画面都是一个小型因果谜题。树枝、机关、隐藏物件或挡路元素通常要在另一个物体触发后才会改变，所以慢慢观察比快速乱点更有效。',
+        '这个页面适合边玩浏览器版边参考：先看 Adam 被什么挡住，再在连锁反应或隐藏物品不明显时回来对照技巧。',
+      ],
+      howToPlay: [
+        '点击场景中的物体，找出哪些东西能移动、打开、抬起或露出道路。',
+        '每次点击后等动画播完，因为一个小变化经常会解锁下一个可点对象。',
+        '只有路线清楚、危险处理完后，再让 Adam 前进。',
+      ],
+      controls: [
+        { label: '互动', value: '用鼠标或触控点击物体、机关和场景细节。' },
+        { label: '观察', value: '每次动画结束后再点下一个对象。' },
+        { label: '重开场景', value: '如果操作顺序混乱，使用游戏内重开。' },
+      ],
+      tips: [
+        '先点击挡路物，再寻找可能改变它的对象。',
+        '如果没有反应，扫一遍角落和背景，不要反复点同一个物体。',
+        '很多谜题是顺序链条：一个对象露出下一个对象，所以记住上一次变化。',
+        '手机端慢一点点，确保看清真正响应的是哪个物体。',
+      ],
+      faqs: [
+        {
+          question: 'Adam and Eve 4 怎么更快解谜？',
+          answer: '把每个场景当成链条：先找挡路点，每个附近物体测试一次，再跟着动画变化找下一个互动对象。',
+        },
+        {
+          question: 'Adam and Eve 4 适合短时间玩吗？',
+          answer: '适合。场景短、操作简单，每个小谜题都有自然停止点。',
+        },
+        {
+          question: 'Adam and Eve 4 需要下载吗？',
+          answer: '不需要。在 Luma 浏览器里直接玩即可，避开安装器、APK 或浏览器扩展提示。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'adam-and-eve-walkthrough',
+          title: 'Adam and Eve 系列攻略',
+          description: '更完整的点击解谜思路和系列玩法说明。',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: '适合 5 分钟休息的浏览器游戏',
+          description: '更多目标简单、容易停下来的短局浏览器游戏。',
+        },
+      ],
+    },
+  },
+  'apple-knight': {
+    en: {
+      metaTitle: 'Apple Knight Online - Platform Controls, Combat Tips and Safe Play',
+      metaDescription:
+        'Play Apple Knight online with movement controls, combat timing tips, mobile notes, FAQ answers, and related action platformer guides.',
+      title: 'Apple Knight quick guide',
+      summary:
+        'Apple Knight is an action platformer where movement discipline matters as much as attacking. Strong runs come from checking enemy patrols, jumping before contact, and using attacks only when there is enough space to recover.',
+      overview: [
+        'The game is fast, but rushing into every enemy usually costs health. Read the room first, use jumps to create distance, and only swing when the enemy path is predictable.',
+        'This detail page gives a compact control and strategy reference for the browser version, with safer no-download framing and links to deeper platformer guides when you want more help.',
+      ],
+      howToPlay: [
+        'Move through platform stages, avoid hazards, collect items, and defeat enemies when the opening is safe.',
+        'Jump to create space before attacking instead of trading damage on the ground.',
+        'Use checkpoints and short retries to learn enemy placement without rushing the same mistake.',
+      ],
+      controls: [
+        { label: 'Move', value: 'Use keyboard movement keys or the active touch controls.' },
+        { label: 'Jump', value: 'Jump to cross gaps, dodge enemies, and set up safer attacks.' },
+        { label: 'Attack', value: 'Use the attack input only when you have room to step back or continue moving.' },
+      ],
+      tips: [
+        'Stop at the edge of a new room long enough to see the first enemy route.',
+        'Jump before attacking close enemies so you are not forced into a damage trade.',
+        'If touch controls feel cramped, use keyboard for longer runs and tighter combat timing.',
+        'Clear slowly when low on health; losing a few seconds is better than restarting.',
+      ],
+      faqs: [
+        {
+          question: 'Is Apple Knight hard?',
+          answer:
+            'It is approachable at first, but it punishes rushing. Careful jumps and patient attacks make the game much easier.',
+        },
+        {
+          question: 'Can Apple Knight be played on mobile?',
+          answer:
+            'Mobile can work, but keyboard controls are more reliable for platforming and combat timing.',
+        },
+        {
+          question: 'Does Apple Knight need an app install?',
+          answer:
+            'No. Use the browser player on Luma and avoid third-party APK or installer pages.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'apple-knight-mini-dungeons-guide',
+          title: 'Apple Knight Mini Dungeons guide',
+          description: 'A deeper action-platform guide for dungeon movement and combat habits.',
+        },
+        {
+          slug: 'games-like-ovo',
+          title: 'Games like OvO',
+          description: 'More platformers and quick-retry browser games.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Apple Knight 在线玩 - 平台动作操作、战斗技巧与安全玩法',
+      metaDescription:
+        '在线玩 Apple Knight，查看移动操作、战斗时机、手机体验、FAQ 和相关动作平台游戏攻略。',
+      title: 'Apple Knight 快速玩法指南',
+      summary:
+        'Apple Knight 是动作平台游戏，稳定移动和攻击同样重要。想跑得更远，要先看清敌人巡逻路线，接触前用跳跃拉开距离，并且只在有撤退空间时出手。',
+      overview: [
+        '游戏节奏很快，但每个敌人都硬冲通常会掉血。先进房间观察路线，用跳跃创造距离，再在敌人行动可预测时攻击。',
+        '这个详情页提供浏览器版的简明操作和策略参考，同时保留免下载安全边界，并链接到更深入的平台动作攻略。',
+      ],
+      howToPlay: [
+        '穿过平台关卡，避开陷阱，收集道具，并在安全窗口击败敌人。',
+        '靠近敌人前先跳跃拉开空间，不要站在地面硬换血。',
+        '利用存档点和短重试熟悉敌人位置，避免反复犯同一个错误。',
+      ],
+      controls: [
+        { label: '移动', value: '使用键盘移动键，或当前版本提供的触控按钮。' },
+        { label: '跳跃', value: '跨越缺口、躲避敌人，并为攻击创造安全空间。' },
+        { label: '攻击', value: '只有在有后撤或继续移动空间时再攻击。' },
+      ],
+      tips: [
+        '进入新房间前先停在边缘，看清第一个敌人的路线。',
+        '近距离敌人先跳再打，避免被迫换血。',
+        '如果手机虚拟按钮拥挤，长时间游玩建议用键盘。',
+        '低血量时慢慢清理，比多贪几秒后重开更划算。',
+      ],
+      faqs: [
+        {
+          question: 'Apple Knight 难吗？',
+          answer: '前期容易上手，但急着冲会被惩罚。谨慎跳跃和耐心攻击会让难度低很多。',
+        },
+        {
+          question: 'Apple Knight 手机能玩吗？',
+          answer: '可以尝试，但平台跳跃和战斗时机用键盘更可靠。',
+        },
+        {
+          question: 'Apple Knight 需要安装 App 吗？',
+          answer: '不需要。在 Luma 浏览器播放器中直接玩，避开第三方 APK 或安装页面。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'apple-knight-mini-dungeons-guide',
+          title: 'Apple Knight Mini Dungeons 攻略',
+          description: '更深入的地牢移动和战斗习惯说明。',
+        },
+        {
+          slug: 'games-like-ovo',
+          title: '类似 OvO 的游戏',
+          description: '更多平台跳跃和高重试浏览器游戏。',
+        },
+      ],
+    },
+  },
+  'dadish-2': {
+    en: {
+      metaTitle: 'Dadish 2 Online - Controls, Platform Tips and Browser Guide',
+      metaDescription:
+        'Play Dadish 2 online with platforming controls, timing tips, mobile notes, FAQ answers, and related browser game guides.',
+      title: 'Dadish 2 quick guide',
+      summary:
+        'Dadish 2 builds on the original with tighter platforming and more movement traps. The safest clears come from watching enemy cycles, using short jumps on small platforms, and slowing down whenever the level starts hiding hazards behind momentum.',
+      overview: [
+        'Compared with the first Dadish, the sequel asks for more patience. You still move and jump with simple controls, but the stages punish rushing into unknown corners.',
+        'Use this page as a compact reference while playing the browser version: check the controls, review the timing tips, and keep the session no-download and safe.',
+      ],
+      howToPlay: [
+        'Move through each stage, dodge enemies and traps, and reach the goal without losing your route.',
+        'Use smaller jumps when the platform is narrow, and save full jumps for wider gaps.',
+        'Study moving hazards for one cycle before attempting the section at speed.',
+      ],
+      controls: [
+        { label: 'Move', value: 'Use arrow keys, WASD, or active touch controls.' },
+        { label: 'Jump', value: 'Tap for short hops and hold only when full height is needed.' },
+        { label: 'Retry', value: 'Use the in-game restart after a missed route or unsafe jump.' },
+      ],
+      tips: [
+        'Do not let early easy stages teach you to rush; later screens punish blind momentum.',
+        'Use short hops on narrow platforms to avoid overshooting the landing.',
+        'If an enemy patrol blocks the exit, wait one full cycle and move after it turns.',
+        'Desktop keyboard is better for precision if mobile touch buttons feel crowded.',
+      ],
+      faqs: [
+        {
+          question: 'Is Dadish 2 harder than Dadish?',
+          answer:
+            'Yes, it generally asks for tighter timing and more patience, though the basic movement remains simple.',
+        },
+        {
+          question: 'What is the best Dadish 2 habit for new players?',
+          answer:
+            'Pause before new hazards and watch one cycle. Most mistakes come from jumping before you know the landing.',
+        },
+        {
+          question: 'Does Dadish 2 need a download?',
+          answer:
+            'No. Play it in the browser on Luma and avoid APK, installer, or extension prompts.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'games-like-ovo',
+          title: 'Games like OvO',
+          description: 'More platformers with tighter movement and quick retries.',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: 'Best browser games for a 5-minute break',
+          description: 'Short games for quick sessions when you want a lighter challenge.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Dadish 2 在线玩 - 平台跳跃操作、技巧与浏览器指南',
+      metaDescription:
+        '在线玩 Dadish 2，查看平台跳跃操作、时机技巧、手机体验、FAQ 和相关浏览器游戏攻略。',
+      title: 'Dadish 2 快速玩法指南',
+      summary:
+        'Dadish 2 在原作基础上加入更紧的跳跃和更多移动陷阱。想稳定过关，要观察敌人循环，在小平台使用短跳，并在关卡开始利用惯性隐藏危险时主动放慢速度。',
+      overview: [
+        '和第一作相比，续作更考耐心。移动和跳跃依然简单，但关卡会惩罚不看角落就直接冲的玩家。',
+        '这个页面适合边玩浏览器版边参考：确认操作，复习时机技巧，并保持免下载、安全游玩。',
+      ],
+      howToPlay: [
+        '穿过每个关卡，避开敌人和陷阱，到达终点。',
+        '窄平台用短跳，较宽缺口再使用完整跳跃。',
+        '移动机关先观察一轮，再按节奏通过。',
+      ],
+      controls: [
+        { label: '移动', value: '使用方向键、WASD，或当前版本提供的触控按钮。' },
+        { label: '跳跃', value: '轻点用于短跳，只有需要满高度时才长按。' },
+        { label: '重试', value: '路线失误或危险跳跃后，使用游戏内重开。' },
+      ],
+      tips: [
+        '不要因为前几关简单就养成猛冲习惯，后面会惩罚盲目惯性。',
+        '窄平台用短跳，避免越过落点。',
+        '敌人挡住出口时，先等完整一轮巡逻，再在转身后通过。',
+        '如果手机按钮拥挤，精准关更建议用桌面键盘。',
+      ],
+      faqs: [
+        {
+          question: 'Dadish 2 比 Dadish 更难吗？',
+          answer: '通常更难一些，需要更紧的时机和更多耐心，但基础移动仍然很简单。',
+        },
+        {
+          question: 'Dadish 2 新手最重要的习惯是什么？',
+          answer: '新危险前先停一下看一轮。多数失误来自还没确认落点就起跳。',
+        },
+        {
+          question: 'Dadish 2 需要下载吗？',
+          answer: '不需要。在 Luma 浏览器里直接玩，避开 APK、安装器或扩展提示。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'games-like-ovo',
+          title: '类似 OvO 的游戏',
+          description: '更多移动更紧、重试更快的平台游戏。',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: '适合 5 分钟休息的浏览器游戏',
+          description: '想轻一点时可玩的短局游戏。',
+        },
+      ],
+    },
+  },
+  'blumgi-ball': {
+    en: {
+      metaTitle: 'Blumgi Ball Online - Aim, Dunk Controls and Puzzle Tips',
+      metaDescription:
+        'Play Blumgi Ball online with aiming controls, dunk puzzle tips, bounce advice, FAQ answers, and related browser game guides.',
+      title: 'Blumgi Ball quick guide',
+      summary:
+        'Blumgi Ball is a basketball puzzle game where aiming matters more than speed. Each level is about reading the arc, using walls or platforms when needed, and adjusting power in small steps until the ball reaches the hoop.',
+      overview: [
+        'Do not treat every shot like a direct throw. Many stages expect a bank shot, a bounce, or a controlled lob that avoids obstacles before dropping into the basket.',
+        'This page gives practical aiming notes for the browser version, especially for players who want a short puzzle break without installing an app or chasing unofficial downloads.',
+      ],
+      howToPlay: [
+        'Aim the shot toward the hoop while accounting for walls, platforms, and obstacles.',
+        'Adjust power carefully; a small change often matters more than a new angle.',
+        'Use rebounds when the direct path is blocked.',
+      ],
+      controls: [
+        { label: 'Aim', value: 'Drag or move the pointer to set direction, depending on the browser build.' },
+        { label: 'Shoot', value: 'Release or click to launch the ball.' },
+        { label: 'Retry', value: 'Use the quick restart after an overpowered shot or missed angle.' },
+      ],
+      tips: [
+        'Start with medium power so you can tell whether the angle or strength is wrong.',
+        'When the hoop is behind an obstacle, look for a wall bounce instead of forcing a direct shot.',
+        'Tiny power changes are often enough; do not overcorrect after one miss.',
+        'On touchscreens, lift your finger slowly to avoid changing the final angle by accident.',
+      ],
+      faqs: [
+        {
+          question: 'How do you aim better in Blumgi Ball?',
+          answer:
+            'Use medium power first, watch whether the miss was high, low, short, or long, then change only one detail on the next shot.',
+        },
+        {
+          question: 'Is Blumgi Ball a basketball game or a puzzle game?',
+          answer:
+            'It is both. The theme is basketball, but each level is mostly an aiming and physics puzzle.',
+        },
+        {
+          question: 'Can Blumgi Ball be played without download?',
+          answer:
+            'Yes. Play in the browser on Luma and avoid APK, installer, or extension pages.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: 'Best browser games for a 5-minute break',
+          description: 'More quick browser games with simple controls.',
+        },
+        {
+          slug: 'games-to-play-when-bored',
+          title: 'Games to play when bored',
+          description: 'Casual browser games for short sessions.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Blumgi Ball 在线玩 - 瞄准、投篮操作与解谜技巧',
+      metaDescription:
+        '在线玩 Blumgi Ball，查看瞄准操作、投篮解谜技巧、反弹建议、FAQ 和相关浏览器游戏指南。',
+      title: 'Blumgi Ball 快速玩法指南',
+      summary:
+        'Blumgi Ball 是篮球主题的物理解谜游戏，关键不是出手速度，而是读准弧线、必要时利用墙面或平台反弹，并用很小的力度调整把球送进篮筐。',
+      overview: [
+        '不要把每一关都当成直接投篮。很多关卡需要擦板、反弹或控制抛物线，让球先绕开障碍再落入篮筐。',
+        '这个页面提供浏览器版的实用瞄准建议，适合想短时间玩一局物理解谜、又不想安装 App 或追不明下载的玩家。',
+      ],
+      howToPlay: [
+        '瞄准篮筐，同时考虑墙面、平台和障碍物。',
+        '细调力度；很多时候小幅变化比换一个大角度更有效。',
+        '直线路径被挡住时，尝试反弹路线。',
+      ],
+      controls: [
+        { label: '瞄准', value: '根据浏览器版本，拖动或移动指针设置方向。' },
+        { label: '投出', value: '松开或点击发射篮球。' },
+        { label: '重试', value: '力度过大或角度失误后，使用快速重开。' },
+      ],
+      tips: [
+        '先用中等力度试投，判断问题是角度还是力量。',
+        '篮筐被障碍挡住时，先找墙面反弹，不要硬投直线。',
+        '一次失误后只微调力度或角度，不要过度修正。',
+        '触屏时手指慢慢离开，避免最后一刻改变角度。',
+      ],
+      faqs: [
+        {
+          question: 'Blumgi Ball 怎么瞄得更准？',
+          answer: '先用中等力度观察球是高、低、短还是长，下一次只改一个细节。',
+        },
+        {
+          question: 'Blumgi Ball 是篮球游戏还是解谜游戏？',
+          answer: '两者都有。主题是篮球，但每一关主要是瞄准和物理路线谜题。',
+        },
+        {
+          question: 'Blumgi Ball 需要下载吗？',
+          answer: '不需要。在 Luma 浏览器里直接玩，避开 APK、安装器或扩展页面。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: '适合 5 分钟休息的浏览器游戏',
+          description: '更多操作简单、适合短局的浏览器游戏。',
+        },
+        {
+          slug: 'games-to-play-when-bored',
+          title: '无聊时可玩的浏览器小游戏',
+          description: '适合轻松短时间打开的休闲浏览器游戏。',
+        },
+      ],
+    },
+  },
+  'monster-tracks': {
+    en: {
+      metaTitle: 'Monster Tracks Online - Truck Controls, Balance Tips and Safe Play',
+      metaDescription:
+        'Play Monster Tracks online with truck controls, balance and landing tips, mobile notes, FAQ answers, and related browser driving guides.',
+      title: 'Monster Tracks quick guide',
+      summary:
+        'Monster Tracks is a side-view truck challenge where balance is the real difficulty. The vehicle can climb rough terrain, but careless throttle makes it tip, bounce, or land nose-first before the finish.',
+      overview: [
+        'The best runs are controlled, not fast. Read the slope, tap the throttle before bumps, and let the truck settle after jumps instead of holding acceleration through every obstacle.',
+        'Use this page as a browser-play reference for vehicle balance, landing recovery, and safe no-download play before switching to related physics driving guides.',
+      ],
+      howToPlay: [
+        'Drive across uneven tracks, climb obstacles, and reach the finish without flipping.',
+        'Use throttle carefully on slopes so the truck does not rotate too far.',
+        'After jumps, release input briefly to let the suspension settle before the next climb.',
+      ],
+      controls: [
+        { label: 'Accelerate', value: 'Hold the throttle key or touch control to move forward.' },
+        { label: 'Balance', value: 'Release or tap the input to manage tilt and landing angle.' },
+        { label: 'Restart', value: 'Use the in-game restart when the truck is stuck or flipped.' },
+      ],
+      tips: [
+        'Do not hold throttle on every hill; short taps keep the truck from rotating too far.',
+        'Land with the wheels as flat as possible before starting the next obstacle.',
+        'If the truck flips backward, enter the slope slower instead of adding more speed.',
+        'Mobile players should use shorter taps because touch throttle is easy to over-hold.',
+      ],
+      faqs: [
+        {
+          question: 'How do you stop flipping in Monster Tracks?',
+          answer:
+            'Use shorter throttle taps and release before the truck reaches the top of steep bumps or ramps.',
+        },
+        {
+          question: 'Is Monster Tracks like Drive Mad?',
+          answer:
+            'Yes, both are physics driving games, but Monster Tracks focuses more on truck balance and rough terrain.',
+        },
+        {
+          question: 'Does Monster Tracks need a download?',
+          answer:
+            'No. Play in the browser on Luma and avoid APKs, installers, or browser extensions.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'drive-mad-walkthrough',
+          title: 'Drive Mad walkthrough',
+          description: 'More physics driving fixes for flips, jumps, and landing control.',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: 'Best browser games for a 5-minute break',
+          description: 'Short browser games that are easy to start and stop.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Monster Tracks 在线玩 - 卡车操作、平衡技巧与安全玩法',
+      metaDescription:
+        '在线玩 Monster Tracks，查看卡车操作、平衡和落地技巧、手机体验、FAQ 和相关浏览器驾驶指南。',
+      title: 'Monster Tracks 快速玩法指南',
+      summary:
+        'Monster Tracks 是侧视角卡车挑战，真正难点是保持平衡。车辆能爬过崎岖地形，但油门过猛会让车身后仰、弹跳或车头先落地，导致终点前翻车。',
+      overview: [
+        '最稳的跑法不是最快，而是可控。先读坡度，遇到颠簸前短按油门，跳跃后等车身稳定再处理下一个障碍。',
+        '这个页面适合作为浏览器版参考，帮助你理解车辆平衡、落地恢复和免下载安全玩法，再进入相关物理驾驶攻略。',
+      ],
+      howToPlay: [
+        '驾驶卡车通过不平整赛道，爬过障碍，到达终点且不要翻车。',
+        '上坡时谨慎控制油门，避免车身旋转过度。',
+        '跳跃落地后短暂松开输入，让悬挂和车身稳定后再继续爬坡。',
+      ],
+      controls: [
+        { label: '加速', value: '按住油门键或触控按钮前进。' },
+        { label: '平衡', value: '通过松开或短按输入控制倾斜和落地角度。' },
+        { label: '重新开始', value: '卡住或翻车时使用游戏内重开。' },
+      ],
+      tips: [
+        '不要每个坡都长按油门，短按能防止车身旋转过度。',
+        '尽量让四轮平稳落地，再进入下一个障碍。',
+        '如果卡车总是后翻，上坡前减速，而不是继续加速。',
+        '手机端油门容易按过头，更适合短促点击。',
+      ],
+      faqs: [
+        {
+          question: 'Monster Tracks 怎么避免翻车？',
+          answer: '减少长按油门，在陡坡或跳台顶端前提前松开，让卡车更平稳落地。',
+        },
+        {
+          question: 'Monster Tracks 像 Drive Mad 吗？',
+          answer: '两者都是物理驾驶游戏，但 Monster Tracks 更强调卡车平衡和崎岖地形。',
+        },
+        {
+          question: 'Monster Tracks 需要下载吗？',
+          answer: '不需要。在 Luma 浏览器里直接玩，避开 APK、安装器或浏览器扩展。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'drive-mad-walkthrough',
+          title: 'Drive Mad 过关攻略',
+          description: '更多翻车、跳跃和落地控制的物理驾驶解法。',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: '适合 5 分钟休息的浏览器游戏',
+          description: '更多容易开始也容易停下来的短局浏览器游戏。',
+        },
+      ],
+    },
+  },
 };
 
 export function getGameEditorialContent(slug: string | null | undefined, locale: string): GameEditorialLocaleContent | null {

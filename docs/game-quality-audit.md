@@ -1,6 +1,6 @@
 # Luma Game Quality Audit
 
-Generated: 2026-07-06T11:15:38.798Z
+Generated: 2026-07-06T11:31:44.772Z
 
 This is a directional quality and indexing audit for Luma Game Hub. It is not a legal clearance report. Any game with source, IP, iframe, mobile, or content uncertainty still needs manual QA before being treated as AdSense-review-ready.
 
@@ -23,7 +23,7 @@ This is a directional quality and indexing audit for Luma Game Hub. It is not a 
 
 | # | Slug | Title | Tier | Score | Source host | Action | Notes |
 | ---: | --- | --- | --- | ---: | --- | --- | --- |
-| 1 | adam-and-eve-4 | Adam and Eve 4 | core-indexed | 80 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (16 en words / 41 zh chars) |
+| 1 | adam-and-eve-4 | Adam and Eve 4 | core-indexed | 87 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | No immediate static-audit flags |
 | 2 | adam-and-eve-5-part-1 | Adam and Eve 5: Part 1 | core-indexed | 80 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (18 en words / 49 zh chars) |
 | 3 | adam-and-eve-5-part-2 | Adam and Eve 5: Part 2 | core-indexed | 80 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (18 en words / 49 zh chars) |
 | 4 | adam-and-eve-6 | Adam and Eve 6 | core-indexed | 80 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (16 en words / 41 zh chars) |
@@ -41,7 +41,7 @@ This is a directional quality and indexing audit for Luma Game Hub. It is not a 
 | 16 | adam-and-eve-zombies | Adam and Eve: Zombies | review | 52 | szhong.4399.com | Noindex; remove from sitemap/recommendations; manual source and content review | thin description (16 en words / 48 zh chars); Zombie theme; review tone, iframe behavior, and age suitability before indexing. |
 | 17 | adam-and-eve-adam-the-ghost | Adam and Eve: Adam the Ghost | catalogue-only | 70 | szhong.4399.com | Catalogue-only; keep playable but noindex until content/source QA is complete | thin description (18 en words / 55 zh chars) |
 | 18 | apple-knight-mini-dungeons | Apple Knight: Mini Dungeons | core-indexed | 87 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | No immediate static-audit flags |
-| 19 | apple-knight | Apple Knight | core-indexed | 80 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (14 en words / 39 zh chars) |
+| 19 | apple-knight | Apple Knight | core-indexed | 87 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | No immediate static-audit flags |
 | 20 | assemble-and-drive-road-monsters | Assemble and Drive: Road Monsters | catalogue-only | 67 | szhong.4399.com | Catalogue-only; keep playable but noindex until content/source QA is complete | thin description (17 en words / 60 zh chars) |
 | 21 | balance-duel | Balance Duel | core-indexed | 80 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (14 en words / 39 zh chars) |
 | 22 | beat-line | Beat Line | core-indexed | 80 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (14 en words / 36 zh chars) |
@@ -49,7 +49,7 @@ This is a directional quality and indexing audit for Luma Game Hub. It is not a 
 | 24 | big-tower-tiny-square | Big Tower Tiny Square | core-indexed | 93 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | No immediate static-audit flags |
 | 25 | blast-red | Blast Red | catalogue-only | 64 | szhong.4399.com | Catalogue-only; keep playable but noindex until content/source QA is complete | thin description (14 en words / 36 zh chars); placeholder thumbnail |
 | 26 | blockman-climb | Blockman Climb | core-indexed | 74 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (14 en words / 41 zh chars); placeholder thumbnail |
-| 27 | blumgi-ball | Blumgi Ball | core-indexed | 74 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (14 en words / 38 zh chars); placeholder thumbnail |
+| 27 | blumgi-ball | Blumgi Ball | core-indexed | 81 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | placeholder thumbnail |
 | 28 | blumgi-bloom | Blumgi Bloom | core-indexed | 74 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (14 en words / 39 zh chars); placeholder thumbnail |
 | 29 | blumgi-castle | Blumgi Castle | catalogue-only | 61 | szhong.4399.com | Catalogue-only; keep playable but noindex until content/source QA is complete | thin description (14 en words / 40 zh chars); placeholder thumbnail |
 | 30 | blumgi-rocket | Blumgi Rocket | core-indexed | 74 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (14 en words / 40 zh chars); placeholder thumbnail |
@@ -72,7 +72,7 @@ This is a directional quality and indexing audit for Luma Game Hub. It is not a 
 | 47 | crazy-runner-in-city | Crazy Runner in City | catalogue-only | 61 | szhong.4399.com | Catalogue-only; keep playable but noindex until content/source QA is complete | thin description (16 en words / 47 zh chars); placeholder thumbnail |
 | 48 | cyber-cars-punk-racing | Cyber Cars Punk Racing | catalogue-only | 61 | szhong.4399.com | Catalogue-only; keep playable but noindex until content/source QA is complete | thin description (16 en words / 49 zh chars); placeholder thumbnail |
 | 49 | cyber-city-driver | Cyber City Driver | catalogue-only | 64 | szhong.4399.com | Catalogue-only; keep playable but noindex until content/source QA is complete | thin description (15 en words / 44 zh chars); placeholder thumbnail |
-| 50 | dadish-2 | Dadish 2 | core-indexed | 74 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (14 en words / 35 zh chars); placeholder thumbnail |
+| 50 | dadish-2 | Dadish 2 | core-indexed | 81 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | placeholder thumbnail |
 | 51 | dadish-3 | Dadish 3 | core-indexed | 74 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (14 en words / 35 zh chars); placeholder thumbnail |
 | 52 | dadish | Dadish | core-indexed | 81 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | placeholder thumbnail |
 | 53 | day-of-meat-castle | Day of Meat: Castle | catalogue-only | 61 | szhong.4399.com | Catalogue-only; keep playable but noindex until content/source QA is complete | thin description (16 en words / 46 zh chars); placeholder thumbnail |
@@ -138,7 +138,7 @@ This is a directional quality and indexing audit for Luma Game Hub. It is not a 
 | 113 | merge-grabber-race-to-2048 | Merge Grabber: Race to 2048 | catalogue-only | 61 | szhong.4399.com | Catalogue-only; keep playable but noindex until content/source QA is complete | thin description (17 en words / 54 zh chars); placeholder thumbnail |
 | 114 | metal-black-ops | Metal Black OPS | review | 43 | szhong.4399.com | Noindex; remove from sitemap/recommendations; manual source and content review | thin description (15 en words / 42 zh chars); placeholder thumbnail; Military shooter wording; review violence and source quality. |
 | 115 | monkey-mart-2 | Monkey Mart | core-indexed | 74 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (14 en words / 38 zh chars); placeholder thumbnail |
-| 116 | monster-tracks | Monster Tracks | core-indexed | 74 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (14 en words / 41 zh chars); placeholder thumbnail |
+| 116 | monster-tracks | Monster Tracks | core-indexed | 81 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | placeholder thumbnail |
 | 117 | monster-truck-extreme-racing | Monster Truck Extreme Racing | catalogue-only | 61 | szhong.4399.com | Catalogue-only; keep playable but noindex until content/source QA is complete | thin description (16 en words / 55 zh chars); placeholder thumbnail |
 | 118 | moon-city-stunt | Moon City Stunt | catalogue-only | 64 | szhong.4399.com | Catalogue-only; keep playable but noindex until content/source QA is complete | thin description (15 en words / 42 zh chars); placeholder thumbnail |
 | 119 | mx-offroad-mountain-bike | MX OffRoad Mountain Bike | catalogue-only | 61 | szhong.4399.com | Catalogue-only; keep playable but noindex until content/source QA is complete | thin description (16 en words / 51 zh chars); placeholder thumbnail |
