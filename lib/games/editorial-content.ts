@@ -1720,6 +1720,571 @@ const GAME_EDITORIAL_CONTENT: Record<string, GameEditorialEntry> = {
       ],
     },
   },
+  'adam-and-eve-5-part-1': {
+    en: {
+      metaTitle: 'Adam and Eve 5 Part 1 Online - Puzzle Controls, Tips and Safe Play',
+      metaDescription:
+        'Play Adam and Eve 5 Part 1 online with point-and-click controls, scene order tips, FAQ answers, no-download safety notes, and related puzzle guides.',
+      title: 'Adam and Eve 5 Part 1 quick guide',
+      summary:
+        'Adam and Eve 5: Part 1 is a point-and-click puzzle adventure where every scene is solved by changing the environment in the right order. The fastest progress comes from spotting the obstacle, testing nearby objects once, and watching each animation before choosing the next click.',
+      overview: [
+        'The puzzle logic is built around small chain reactions. A creature may move only after food appears, a path may open only after a lever is used, and a hidden object can matter more than the largest item on screen.',
+        'Use this page as a companion to the browser version when a scene stalls. It focuses on reading the order of objects, avoiding random clicking, and staying in safe no-download browser play.',
+      ],
+      howToPlay: [
+        'Click objects in the scene to discover what can move, open, scare, lift, or reveal a path.',
+        'Let every animation finish before clicking again, because the next usable object often appears after the first change.',
+        'Move Adam forward only after the visible hazard or blocker has been solved.',
+      ],
+      controls: [
+        { label: 'Interact', value: 'Use the mouse or tap the screen to click scene objects and characters.' },
+        { label: 'Observe', value: 'Pause after each click to see what changed before testing another object.' },
+        { label: 'Retry', value: 'Restart the scene if the object order feels unclear or an animation was missed.' },
+      ],
+      tips: [
+        'Start by clicking the item that blocks Adam, then look for the object that could change it.',
+        'Do not spam-click; it makes it harder to notice which object triggered the useful animation.',
+        'Scan the top corners and background details when the obvious foreground objects stop responding.',
+        'On mobile, use slower taps so the game can register one object at a time.',
+      ],
+      faqs: [
+        {
+          question: 'How do you solve Adam and Eve 5 Part 1 scenes?',
+          answer:
+            'Find what blocks the path, test nearby objects once, and follow the animation chain. Most scenes are solved by order, not by speed.',
+        },
+        {
+          question: 'Is Adam and Eve 5 Part 1 different from Part 2?',
+          answer:
+            'Part 1 starts the Adam and Eve 5 story and keeps the puzzles compact. Part 2 continues the same point-and-click pattern with new scenes.',
+        },
+        {
+          question: 'Does Adam and Eve 5 Part 1 need a download?',
+          answer:
+            'No. Play in the browser on Luma and avoid APK, installer, or extension pages.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'adam-and-eve-walkthrough',
+          title: 'Adam and Eve walkthrough',
+          description: 'A broader guide to the series puzzle logic and scene-by-scene habits.',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: 'Best browser games for a 5-minute break',
+          description: 'More short browser games with simple controls and natural stopping points.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Adam and Eve 5 Part 1 在线玩 - 点击解谜操作、技巧与安全玩法',
+      metaDescription:
+        '在线玩 Adam and Eve 5 Part 1，查看点击解谜操作、场景顺序技巧、FAQ、免下载安全说明和相关解谜指南。',
+      title: 'Adam and Eve 5 Part 1 快速玩法指南',
+      summary:
+        'Adam and Eve 5: Part 1 是点击解谜冒险，每个场景都要按正确顺序改变环境。更快的过法不是乱点，而是先找挡路物，再逐个测试附近对象，并在每次动画结束后判断下一步。',
+      overview: [
+        '谜题逻辑围绕小型连锁反应：动物可能要先被食物吸引，路线可能要先拉动机关才会打开，隐藏在背景里的小物件有时比显眼的大物体更关键。',
+        '这个页面适合作为浏览器版参考。当某个场景卡住时，先回来看互动顺序和观察方法，不需要下载 App、APK、插件或安装器。',
+      ],
+      howToPlay: [
+        '点击场景中的物体，找出哪些东西能移动、打开、吓走、抬起或露出道路。',
+        '每次点击后等动画播完，因为下一个可用对象经常会在变化后出现。',
+        '只有挡路点或危险处理完后，再让 Adam 继续前进。',
+      ],
+      controls: [
+        { label: '互动', value: '用鼠标或触屏点击场景物体和角色。' },
+        { label: '观察', value: '每次点击后停一下，看清楚发生了什么变化。' },
+        { label: '重试', value: '如果顺序乱了或漏看动画，重开当前场景。' },
+      ],
+      tips: [
+        '先点击挡住 Adam 的物体，再找能改变它的对象。',
+        '不要连续乱点，否则很难判断哪个物体触发了有效动画。',
+        '前景物体都没反应时，检查画面上方、角落和背景细节。',
+        '手机端慢一点点点按，避免一次误触多个对象。',
+      ],
+      faqs: [
+        {
+          question: 'Adam and Eve 5 Part 1 怎么解谜？',
+          answer: '先确认路线被什么挡住，再逐个测试附近物体，并根据动画变化继续找下一个互动点。多数场景考的是顺序，不是速度。',
+        },
+        {
+          question: 'Adam and Eve 5 Part 1 和 Part 2 有什么区别？',
+          answer: 'Part 1 是 Adam and Eve 5 的前半段，谜题更紧凑；Part 2 延续同样的点击解谜逻辑并加入新场景。',
+        },
+        {
+          question: 'Adam and Eve 5 Part 1 需要下载吗？',
+          answer: '不需要。在 Luma 浏览器里直接玩即可，避开 APK、安装器或扩展页面。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'adam-and-eve-walkthrough',
+          title: 'Adam and Eve 系列攻略',
+          description: '更完整的系列解谜逻辑和场景观察方法。',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: '适合 5 分钟休息的浏览器游戏',
+          description: '更多操作简单、容易停下来的短局浏览器游戏。',
+        },
+      ],
+    },
+  },
+  'adam-and-eve-5-part-2': {
+    en: {
+      metaTitle: 'Adam and Eve 5 Part 2 Online - Walkthrough Tips and Safe Browser Play',
+      metaDescription:
+        'Play Adam and Eve 5 Part 2 online with point-and-click controls, scene-reading tips, FAQ answers, safe play notes, and related puzzle guides.',
+      title: 'Adam and Eve 5 Part 2 quick guide',
+      summary:
+        'Adam and Eve 5: Part 2 continues the point-and-click puzzle format with new scenes and slightly trickier object order. Good runs come from treating each screen like a chain: solve the blocker, watch the reaction, then use the next object that appears or changes.',
+      overview: [
+        'Part 2 is still friendly and short-session focused, but it expects you to notice background details and delayed reactions. One click may not solve the puzzle directly; it may only prepare the next useful click.',
+        'This guide keeps the focus on practical browser play: read the scene, avoid unsafe download prompts elsewhere, and use related Adam and Eve guides when the puzzle pattern is not obvious.',
+      ],
+      howToPlay: [
+        'Inspect the whole scene before clicking, especially items near the obstacle or exit route.',
+        'Click one likely object, wait for the animation, then decide whether a new object has become usable.',
+        'Repeat the chain until Adam can safely move forward.',
+      ],
+      controls: [
+        { label: 'Interact', value: 'Click with the mouse or tap on mobile to use scene objects.' },
+        { label: 'Wait', value: 'Let movement, creature reactions, and object changes finish before the next click.' },
+        { label: 'Reset', value: 'Restart the scene when repeated clicks stop revealing new information.' },
+      ],
+      tips: [
+        'A useful object often changes after another click, so revisit items that did nothing earlier.',
+        'Look for cause-and-effect pairs: food and creature, lever and platform, tool and blocker.',
+        'If you are stuck, describe the blocker in one sentence; the answer is usually the item that changes that blocker.',
+        'Keep mobile taps deliberate so small interactive items are not missed.',
+      ],
+      faqs: [
+        {
+          question: 'What is the best strategy for Adam and Eve 5 Part 2?',
+          answer:
+            'Think in chains. Click one object, watch what changes, then use the new clue instead of repeatedly clicking the same place.',
+        },
+        {
+          question: 'Is Adam and Eve 5 Part 2 good for casual players?',
+          answer:
+            'Yes. The controls are simple and each scene is short, but the object order still rewards careful observation.',
+        },
+        {
+          question: 'Can I play Adam and Eve 5 Part 2 safely in a browser?',
+          answer:
+            'Yes. Use the browser player and avoid third-party pages that ask for downloads, APKs, or extensions.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'adam-and-eve-walkthrough',
+          title: 'Adam and Eve walkthrough',
+          description: 'Series-wide advice for point-and-click scenes and puzzle chains.',
+        },
+        {
+          slug: 'games-to-play-when-bored',
+          title: 'Games to play when bored',
+          description: 'More quick browser games for relaxed sessions.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Adam and Eve 5 Part 2 在线玩 - 通关技巧与安全浏览器玩法',
+      metaDescription:
+        '在线玩 Adam and Eve 5 Part 2，查看点击解谜操作、场景观察技巧、FAQ、安全玩法说明和相关解谜攻略。',
+      title: 'Adam and Eve 5 Part 2 快速玩法指南',
+      summary:
+        'Adam and Eve 5: Part 2 延续点击解谜玩法，但场景和物体顺序更需要观察。稳妥的思路是把每个画面当成链条：先解决挡路点，看清反应，再使用刚出现或刚改变的下一个对象。',
+      overview: [
+        'Part 2 仍然适合轻松短局，但它更要求玩家注意背景细节和延迟反应。一次点击不一定直接通关，可能只是为下一次有效点击做准备。',
+        '这个指南关注实际浏览器玩法：读懂场景、避开其他站点的不安全下载提示，并在不清楚谜题规律时进入相关 Adam and Eve 攻略。',
+      ],
+      howToPlay: [
+        '点击前先检查整个场景，尤其是障碍物和出口路线附近的物品。',
+        '点击一个可能有用的对象，等动画结束，再判断是否有新对象可用。',
+        '重复这个连锁过程，直到 Adam 可以安全前进。',
+      ],
+      controls: [
+        { label: '互动', value: '用鼠标点击或手机触屏点击场景物体。' },
+        { label: '等待', value: '等移动、动物反应和物体变化结束后再继续。' },
+        { label: '重置', value: '反复点击没有新信息时，重开当前场景。' },
+      ],
+      tips: [
+        '某些物体要在另一个对象触发后才有用，所以之前没反应的物品可以回头再试。',
+        '寻找因果配对：食物和动物、机关和平台、工具和障碍。',
+        '卡住时用一句话说清楚挡路原因，答案通常就是能改变它的物品。',
+        '手机端点按要准确，避免漏掉较小的互动对象。',
+      ],
+      faqs: [
+        {
+          question: 'Adam and Eve 5 Part 2 最好的解谜思路是什么？',
+          answer: '按链条思考：点一个对象，看它改变了什么，再根据新线索继续，不要一直反复点同一个地方。',
+        },
+        {
+          question: 'Adam and Eve 5 Part 2 适合休闲玩家吗？',
+          answer: '适合。操作简单、场景短，但物体顺序仍然需要认真观察。',
+        },
+        {
+          question: 'Adam and Eve 5 Part 2 可以安全在线玩吗？',
+          answer: '可以。使用浏览器播放器即可，避开要求下载、APK 或扩展的第三方页面。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'adam-and-eve-walkthrough',
+          title: 'Adam and Eve 系列攻略',
+          description: '覆盖系列点击场景和连锁解谜习惯的通用指南。',
+        },
+        {
+          slug: 'games-to-play-when-bored',
+          title: '无聊时可玩的浏览器小游戏',
+          description: '更多适合轻松短局打开的浏览器游戏。',
+        },
+      ],
+    },
+  },
+  'blumgi-bloom': {
+    en: {
+      metaTitle: 'Blumgi Bloom Online - Rope Puzzle Controls, Tips and Safe Play',
+      metaDescription:
+        'Play Blumgi Bloom online with rope-cutting controls, timing tips, flower puzzle advice, FAQ answers, and no-download browser safety notes.',
+      title: 'Blumgi Bloom quick guide',
+      summary:
+        'Blumgi Bloom is a gentle physics puzzle game about cutting ropes and using timing to free the flower. The solution usually depends on which rope you cut first, how gravity moves the object, and whether you wait for the swing before making the next move.',
+      overview: [
+        'The game looks simple, but many levels are order puzzles. Cutting every rope immediately can ruin the angle, while one patient cut can create the swing or drop needed to clear the flower.',
+        'Use this page to understand the browser controls, common timing mistakes, and safe no-download play before moving to more short-session puzzle collections.',
+      ],
+      howToPlay: [
+        'Inspect the ropes, flower, obstacles, and moving objects before cutting anything.',
+        'Cut the rope that creates a useful swing, drop, or clear path first.',
+        'Wait for motion to settle when the next cut depends on timing.',
+      ],
+      controls: [
+        { label: 'Cut', value: 'Click or tap a rope to cut it.' },
+        { label: 'Observe motion', value: 'Watch the swing, bounce, or drop before the next cut.' },
+        { label: 'Retry', value: 'Restart quickly when the first cut sends the object in the wrong direction.' },
+      ],
+      tips: [
+        'Do not cut all ropes at once; most levels are solved by order and timing.',
+        'If the object misses the flower, change only the first cut or the wait time on the next attempt.',
+        'Look for ropes that control direction rather than ropes that only release weight.',
+        'On mobile, tap ropes carefully because small rope segments can be easy to miss.',
+      ],
+      faqs: [
+        {
+          question: 'How do you solve Blumgi Bloom levels?',
+          answer:
+            'Study which rope controls direction, cut one rope at a time, and wait when the solution needs a swing or falling angle.',
+        },
+        {
+          question: 'Is Blumgi Bloom hard?',
+          answer:
+            'It is calm at first, but later puzzles need more precise order and timing. The controls stay simple.',
+        },
+        {
+          question: 'Does Blumgi Bloom require an app?',
+          answer:
+            'No. Play it in the browser on Luma and avoid installer, APK, or extension prompts.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: 'Best browser games for a 5-minute break',
+          description: 'More relaxed browser games with quick puzzle loops.',
+        },
+        {
+          slug: 'games-to-play-when-bored',
+          title: 'Games to play when bored',
+          description: 'Casual browser games for low-pressure short sessions.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Blumgi Bloom 在线玩 - 割绳解谜操作、技巧与安全玩法',
+      metaDescription:
+        '在线玩 Blumgi Bloom，查看割绳操作、时机技巧、花朵解谜建议、FAQ 和免下载浏览器安全说明。',
+      title: 'Blumgi Bloom 快速玩法指南',
+      summary:
+        'Blumgi Bloom 是轻松的物理解谜游戏，核心是割绳顺序和时机，让花朵顺利解放。多数关卡要判断先割哪根绳、物体会怎样受重力摆动，以及下一刀是否需要等待。',
+      overview: [
+        '游戏看起来简单，但很多关卡其实是顺序谜题。一次性割掉所有绳子可能会破坏角度，而耐心等一次摆动，反而能创造正确落点。',
+        '这个页面帮助你理解浏览器版操作、常见时机错误和免下载安全玩法，再进入更多短局解谜合集。',
+      ],
+      howToPlay: [
+        '割绳前先观察绳子、花朵、障碍和移动物体的位置。',
+        '先割能创造有用摆动、下落或通路的绳子。',
+        '当下一刀依赖时机时，等待物体摆动到合适角度再操作。',
+      ],
+      controls: [
+        { label: '割绳', value: '点击或触屏点按绳子。' },
+        { label: '观察运动', value: '看清摆动、弹跳或下落后再割下一根。' },
+        { label: '重试', value: '第一刀方向错了就快速重开。' },
+      ],
+      tips: [
+        '不要一开始就把所有绳子割掉，多数关卡考顺序和时机。',
+        '如果物体没碰到花朵，下一次只改第一刀或等待时间。',
+        '优先找能改变方向的绳子，而不是只负责释放重量的绳子。',
+        '手机端要点准绳子，小段绳索容易误触或漏点。',
+      ],
+      faqs: [
+        {
+          question: 'Blumgi Bloom 怎么过关？',
+          answer: '先判断哪根绳控制方向，一次只割一根；需要摆动或下落角度时，等到时机合适再割下一根。',
+        },
+        {
+          question: 'Blumgi Bloom 难吗？',
+          answer: '前期很轻松，后面会更考验顺序和时机，但操作始终简单。',
+        },
+        {
+          question: 'Blumgi Bloom 需要安装 App 吗？',
+          answer: '不需要。在 Luma 浏览器里直接玩，避开安装器、APK 或扩展提示。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: '适合 5 分钟休息的浏览器游戏',
+          description: '更多轻松、短局循环的浏览器解谜游戏。',
+        },
+        {
+          slug: 'games-to-play-when-bored',
+          title: '无聊时可玩的浏览器小游戏',
+          description: '适合低压力短时间打开的休闲浏览器游戏。',
+        },
+      ],
+    },
+  },
+  'blockman-climb': {
+    en: {
+      metaTitle: 'Blockman Climb Online - Platform Controls, Co-op Tips and Safe Play',
+      metaDescription:
+        'Play Blockman Climb online with climbing controls, two-character coordination tips, mobile notes, FAQ answers, and safe browser play guidance.',
+      title: 'Blockman Climb quick guide',
+      summary:
+        'Blockman Climb is a platform climbing challenge where coordination matters more than speed. Whether you play solo or with a friend, the safest progress comes from moving one block character at a time, using ledges carefully, and avoiding jumps that leave the partner trapped below.',
+      overview: [
+        'The main difficulty is shared positioning. If one character rushes ahead, the other may lose the angle or height needed to continue, so good runs use short climbs, stable ledges, and deliberate resets.',
+        'This page gives a compact browser-play guide for controls, teamwork, and common climbing mistakes without pushing downloads, plugins, or unrelated clients.',
+      ],
+      howToPlay: [
+        'Move the block characters upward through platforms and hazards.',
+        'Use one character to reach a stable position before moving the other.',
+        'Plan jumps so both characters can continue, not just the one currently moving.',
+      ],
+      controls: [
+        { label: 'Move / jump', value: 'Use the active keyboard or touch controls shown by the browser build.' },
+        { label: 'Switch / partner play', value: 'Coordinate the two characters according to the current control layout.' },
+        { label: 'Restart', value: 'Use restart when one character is stuck below an unrecoverable gap.' },
+      ],
+      tips: [
+        'Move in short steps and stop on safe ledges before making the next jump.',
+        'Do not abandon the second character; every route should leave a path for both.',
+        'If playing with another person, call out jump timing before moving through tight spaces.',
+        'On touchscreens, avoid rapid double inputs because they can send a character past a narrow ledge.',
+      ],
+      faqs: [
+        {
+          question: 'Can Blockman Climb be played solo?',
+          answer:
+            'Yes, but it is easier when you move slowly and treat the two characters as a shared puzzle instead of racing ahead.',
+        },
+        {
+          question: 'What makes Blockman Climb difficult?',
+          answer:
+            'The challenge is keeping both characters positioned safely. A jump that helps one character can trap the other.',
+        },
+        {
+          question: 'Does Blockman Climb need a download?',
+          answer:
+            'No. Play in the browser on Luma and avoid third-party installers, APK files, or extensions.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'games-like-ovo',
+          title: 'Games like OvO',
+          description: 'More platformers and quick-retry browser challenges.',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: 'Best browser games for a 5-minute break',
+          description: 'Short browser games with simple controls and fast retries.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Blockman Climb 在线玩 - 平台攀爬操作、配合技巧与安全玩法',
+      metaDescription:
+        '在线玩 Blockman Climb，查看攀爬操作、双角色配合技巧、手机体验、FAQ 和安全浏览器玩法说明。',
+      title: 'Blockman Climb 快速玩法指南',
+      summary:
+        'Blockman Climb 是平台攀爬挑战，配合比速度更重要。无论单人控制还是和朋友一起玩，更稳的方式都是一次移动一个方块角色，站稳平台，再确保另一个角色也能继续前进。',
+      overview: [
+        '主要难点在共享位置。如果一个角色冲太快，另一个可能失去继续攀爬的角度或高度，所以稳妥路线需要短距离跳跃、可靠落点和明确重试。',
+        '这个页面提供浏览器版操作、协作和常见攀爬错误说明，不引导下载、插件或客户端。',
+      ],
+      howToPlay: [
+        '控制方块角色向上穿过平台和障碍。',
+        '先让一个角色到达稳定位置，再移动另一个角色。',
+        '规划跳跃时要保证两个角色都能继续，而不是只让当前角色前进。',
+      ],
+      controls: [
+        { label: '移动 / 跳跃', value: '使用当前浏览器版本显示的键盘或触控操作。' },
+        { label: '切换 / 双人配合', value: '根据当前控制布局协调两个角色。' },
+        { label: '重新开始', value: '有角色卡在无法补救的位置时重开。' },
+      ],
+      tips: [
+        '短距离移动，先在安全平台停稳，再跳下一步。',
+        '不要把第二个角色丢在下面，每条路线都要给两人留通路。',
+        '双人玩时，进入窄平台前先沟通跳跃时机。',
+        '触屏端避免连续乱按，容易让角色越过狭窄平台。',
+      ],
+      faqs: [
+        {
+          question: 'Blockman Climb 可以单人玩吗？',
+          answer: '可以，但要慢一点，把两个角色当成同一个配合谜题，不要只顾一个角色往上冲。',
+        },
+        {
+          question: 'Blockman Climb 难点在哪里？',
+          answer: '难点是让两个角色都处在安全位置。一个角色能过的跳跃，可能会把另一个角色困住。',
+        },
+        {
+          question: 'Blockman Climb 需要下载吗？',
+          answer: '不需要。在 Luma 浏览器里直接玩，避开第三方安装器、APK 或扩展。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'games-like-ovo',
+          title: '类似 OvO 的平台小游戏',
+          description: '更多平台跳跃和高重试浏览器挑战。',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: '适合 5 分钟休息的浏览器游戏',
+          description: '更多操作简单、重试迅速的短局浏览器游戏。',
+        },
+      ],
+    },
+  },
+  'rolling-ball': {
+    en: {
+      metaTitle: 'Rolling Ball Online - Balance Controls, Route Tips and Safe Play',
+      metaDescription:
+        'Play Rolling Ball online with movement controls, balance and route-planning tips, mobile notes, FAQ answers, and safe no-download browser guidance.',
+      title: 'Rolling Ball quick guide',
+      summary:
+        'Rolling Ball is a balance-and-route browser challenge where small inputs matter. The goal is to keep the ball moving along narrow paths, ramps, and turns without overcorrecting, falling off, or losing the line before the next platform.',
+      overview: [
+        'The natural mistake is steering too sharply after every wobble. Better runs use early, gentle corrections and a clear route through ramps or turns before the ball reaches them.',
+        'This guide focuses on practical browser play: how to control speed, read the next section, and avoid unsafe download pages that reuse generic rolling-ball keywords.',
+      ],
+      howToPlay: [
+        'Guide the ball along the path while avoiding drops, gaps, and sharp turns.',
+        'Use small steering changes before the ball reaches the edge instead of reacting late.',
+        'Slow down before narrow bridges or curved platforms when the game allows it.',
+      ],
+      controls: [
+        { label: 'Steer', value: 'Use arrow keys, WASD, or touch controls depending on the browser build.' },
+        { label: 'Balance speed', value: 'Ease off movement before tight sections if the controls support it.' },
+        { label: 'Retry', value: 'Restart quickly after a fall and adjust the approach earlier next time.' },
+      ],
+      tips: [
+        'Look one platform ahead instead of staring only at the ball.',
+        'Use gentle corrections; sharp steering often creates the next mistake.',
+        'Enter ramps straight so the ball does not drift sideways on landing.',
+        'On mobile, use shorter swipes or taps because long inputs can oversteer.',
+      ],
+      faqs: [
+        {
+          question: 'How do you control Rolling Ball better?',
+          answer:
+            'Start turning earlier and use smaller corrections. Waiting until the ball reaches the edge usually causes oversteer.',
+        },
+        {
+          question: 'Is Rolling Ball a racing game?',
+          answer:
+            'It is closer to a balance and route-planning challenge than a pure race. Safe lines matter more than maximum speed.',
+        },
+        {
+          question: 'Can Rolling Ball be played without download?',
+          answer:
+            'Yes. Play in the browser on Luma and avoid APK, installer, or extension pages.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'drive-mad-walkthrough',
+          title: 'Drive Mad walkthrough',
+          description: 'Physics-control advice for players who like balance and short retries.',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: 'Best browser games for a 5-minute break',
+          description: 'More quick browser games with readable goals and fast restarts.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Rolling Ball 在线玩 - 平衡操作、路线技巧与安全玩法',
+      metaDescription:
+        '在线玩 Rolling Ball，查看移动操作、平衡和路线规划技巧、手机体验、FAQ 和免下载浏览器安全说明。',
+      title: 'Rolling Ball 快速玩法指南',
+      summary:
+        'Rolling Ball 是平衡和路线控制类浏览器挑战，关键在细小输入。目标是在窄路、坡道和转弯中保持球的路线，避免过度修正、掉落或在下一段平台前失去方向。',
+      overview: [
+        '常见错误是每次晃动后猛打方向。更稳的跑法是提前轻微修正，并在球到达坡道或弯道前先看清下一段路线。',
+        '这个指南关注实际浏览器玩法：如何控速、读路线，并避开利用 rolling ball 关键词诱导下载的不安全页面。',
+      ],
+      howToPlay: [
+        '控制滚球沿路线前进，避开掉落、缺口和急弯。',
+        '在球接近边缘前提前小幅修正，不要等到最后一刻再猛转。',
+        '如果游戏支持控速，窄桥和弯道前先慢下来。',
+      ],
+      controls: [
+        { label: '转向', value: '根据浏览器版本，使用方向键、WASD 或触控操作。' },
+        { label: '控制速度', value: '进入狭窄区域前减少输入，避免冲过头。' },
+        { label: '重试', value: '掉落后快速重开，并把修正点提前。' },
+      ],
+      tips: [
+        '视线看向下一个平台，不要只盯着球。',
+        '用轻微修正，急转往往会制造下一个失误。',
+        '上坡或跳台前尽量正向进入，落地时不容易横向偏移。',
+        '手机端用短滑或短按，长输入很容易转向过度。',
+      ],
+      faqs: [
+        {
+          question: 'Rolling Ball 怎么控制更稳？',
+          answer: '提前转向，并用更小的修正。等球到了边缘再操作，通常会转向过度。',
+        },
+        {
+          question: 'Rolling Ball 是赛车游戏吗？',
+          answer: '更接近平衡和路线规划挑战，不是纯竞速。安全路线比最高速度更重要。',
+        },
+        {
+          question: 'Rolling Ball 可以免下载玩吗？',
+          answer: '可以。在 Luma 浏览器里直接玩，避开 APK、安装器或扩展页面。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'drive-mad-walkthrough',
+          title: 'Drive Mad 过关攻略',
+          description: '适合喜欢物理控制、平衡和短局重试的玩家。',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: '适合 5 分钟休息的浏览器游戏',
+          description: '更多目标清晰、重开迅速的短局浏览器游戏。',
+        },
+      ],
+    },
+  },
 };
 
 export function getGameEditorialContent(slug: string | null | undefined, locale: string): GameEditorialLocaleContent | null {

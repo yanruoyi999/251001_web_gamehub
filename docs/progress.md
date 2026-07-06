@@ -1458,3 +1458,15 @@
 - 生产验证：`/en/games/adam-and-eve-4`、`/en/games/apple-knight`、`/en/games/dadish-2`、`/en/games/blumgi-ball`、`/en/games/monster-tracks`、`/games/adam-and-eve-4`、`/games/monster-tracks` 均 HTTP 200，输出新 title、guide heading、FAQPage JSON-LD、related guide links，且无 `noindex`；sitemap 仍为 284 URLs，并包含目标游戏详情页。
 - 部署后监测：`pnpm ops:monitoring` 显示 site / robots / sitemap / Clarity tag ok；public health、search api 仍因既有 Supabase direct URL、Redis/Meilisearch 配置降级，不是本轮内容改动新增问题。
 - 下一步：第四批可从 `adam-and-eve-5-part-1`、`adam-and-eve-5-part-2`、`blumgi-bloom`、`blockman-climb`、`rolling-ball` 中继续加厚；另行处理高价值页 placeholder thumbnail 和 T-067 外部配置。
+
+### T-120 Core game detail editorial upgrade batch 4
+
+- 选择原因：延续小批次核心页加厚策略，第四批选择 `adam-and-eve-5-part-1`、`adam-and-eve-5-part-2`、`blumgi-bloom`、`blockman-climb`、`rolling-ball`。这 5 个均为 `core-indexed`，此前主要问题是 thin description，其中 3 个还保留 placeholder thumbnail。
+- 实际改动：继续扩展 `lib/games/editorial-content.ts`，为第四批 5 个动态游戏详情页新增中英文原创摘要、overview、how to play、controls、tips、FAQ 和 related guides；不改播放器、iframe 来源、索引策略、广告位或下载路径。
+- 内链与体验：相关攻略指向 `adam-and-eve-walkthrough`、`best-browser-games-5-minute-break`、`games-to-play-when-bored`、`games-like-ovo`、`drive-mad-walkthrough`，全部已确认存在；页面继续采用“先玩、再读操作和卡点解法、再进入相关指南”的结构。
+- 合规边界：未新增 iframe、截图、广告容器、下载入口或诱导点击文案；文案继续强调 browser play/no download，避开 APK、安装器、插件、ROM 和破解导向。
+- 验证结果：`pnpm exec tsx scripts/audit-game-quality.ts --write docs/game-quality-audit.md` 通过，目标页均不再命中 thin description，分数为 Adam and Eve 5 Part 1 93、Adam and Eve 5 Part 2 93、Blumgi Bloom 81、Blockman Climb 81、Rolling Ball 81；`pnpm exec tsc --noEmit --incremental false` 通过；`pnpm lint` 通过；`pnpm build` 通过；`git diff --check` 通过。
+- 本地 production 验证：`pnpm exec next start -p 3018` 后抽查 `/en/games/adam-and-eve-5-part-1`、`/en/games/adam-and-eve-5-part-2`、`/en/games/blumgi-bloom`、`/en/games/blockman-climb`、`/en/games/rolling-ball`、`/games/adam-and-eve-5-part-1`、`/games/rolling-ball` 均 HTTP 200，输出对应新 title、guide heading、FAQPage JSON-LD、相关 guide 链接，且无 `noindex`。本地渲染仍出现已知 Redis/数据库超时回退日志，但页面内容完整。
+- 提交部署：待提交和生产部署。
+- 生产验证：待部署后补充。
+- 下一步：第五批可从 `adam-and-eve-6`、`adam-and-eve-7`、`adam-and-eve-8`、`big-tower-tiny-square-2`、`blumgi-rocket` 中继续加厚；另行处理高价值页 placeholder thumbnail 和 T-067 外部配置。
