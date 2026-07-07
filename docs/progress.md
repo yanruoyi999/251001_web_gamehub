@@ -1536,3 +1536,15 @@
 - 提交部署：commit `de5c26e add ninth batch game guides` 与 `45dbaf6 use editorial tips in game sidebar` 已推送 `origin/main`；为避免当前脏工作区进入部署包，最终从干净临时 worktree `/tmp/luma-gamehub-deploy-45dbaf6` 手动执行 `vercel deploy --prod --yes`；Vercel production deployment `dpl_3ngoVyFeBiHpY8Z3SYtuTM5UokPK` Ready，并挂载 `https://www.lumagamehub.com`。
 - 生产验证：上述 5 个英文目标页 + 3 个中文页均 HTTP 200，输出新 quick guide、How to play、Controls、related guide links，且无 `noindex`；生产 sitemap 包含 5 个目标 slug 的中英文详情页；Dadish 3 英文和中文页均未命中旧错位 tips。
 - 下一步：第十批可从仍为 `core-indexed` 且 thin description 的 `dirt-bike-extreme-parkour`、`duo-vikings-3`、`flip-bottle`、`g-switch`、`g-switch-2` 中继续加厚；发布前先核对公开来源、玩法/IP/AdSense 风险；另行处理 T-067 外部配置和高价值页 placeholder thumbnail。
+
+### T-127 Brainrot low-competition guide cluster
+
+- 选择原因：基于 2026-07-07 新词机会建议，Brainrot / meme browser games 处于新词扩散期，但直接嵌入第三方游戏存在来源、素材和授权不确定性。因此本轮采用 guide-first 策略，先发布可原创、可内链、可解释安全边界的集合页和单游攻略页。
+- 公开来源复核：`brainrot-games` 参考 Poki Brainrot 分类、Poki `Make Brainrots Online` 页面和 CrazyGames `Robby: Cross the Road for Brainrot` 页面；`robby-cross-the-road-for-brainrot-guide` 参考 CrazyGames Robby 页面和 Kiz10 Robby 页面，用于核对 2026 年 7 月发布、开发者、桌面/手机/平板浏览器支持和玩法主题。
+- 实际改动：在 `lib/seo-landing-content.ts` 新增 `brainrot-games` 和 `robby-cross-the-road-for-brainrot-guide` 两个中英文 guide/collection 页面；页面包含原创 overview、Quick answer、玩法分类、手机体验、安全来源说明、FAQ、外部参考链接和 Luma 站内相似游戏推荐。
+- 合规边界：未新增 iframe、截图、广告容器、下载入口或诱导点击文案；不使用未授权 Brainrot 角色素材；页面明确 Luma 是 independent guide and game discovery site，不隶属于原开发者或平台；避免 APK、mod menu、插件、绕过限制和盗版导向。
+- 验证结果：`pnpm exec tsc --noEmit --incremental false` 通过；`pnpm lint` 通过；`git diff --check` 通过；`pnpm build` 通过，静态页生成从 111 增至 115，`patch-static-locale-html` 处理 26/26 英文静态页。
+- 本地 production 验证：`pnpm exec next start -p 3025` 后抽查 `/en/guides/brainrot-games`、`/guides/brainrot-games`、`/en/guides/robby-cross-the-road-for-brainrot-guide`、`/guides/robby-cross-the-road-for-brainrot-guide` 均 HTTP 200，输出 Quick answer、FAQPage、Article JSON-LD、source links 和独立声明，且无 `noindex`；本地 sitemap 包含 4 个中英文 URL。
+- 提交部署：commit `e0050fc add brainrot guide cluster` 已推送 `origin/main`；为避免当前脏工作区进入部署包，已从干净临时 worktree `/tmp/luma-gamehub-deploy-e0050fc` 手动执行 `vercel deploy --prod --yes`；Vercel production deployment `dpl_5zuasF92V9kuVeWk4R4yR7uoscEf` Ready，并挂载 `https://www.lumagamehub.com`。
+- 生产验证：上述 4 个中英文 URL 均 HTTP 200，输出 Quick answer、FAQPage、Article JSON-LD、外部来源链接和独立声明，且无 `noindex`；生产 sitemap 包含新增中英文 guide URL。
+- 下一步：7-14 天后复查 GSC 中 `brainrot games online`、`make brainrots online`、`robby cross the road for brainrot`、`brainrot games mobile` 是否有曝光；若有信号，优先加深 `Make Brainrots Online` 独立攻略或 Brainrot clicker/merge 子集合，而不是直接嵌入未验证 iframe。
