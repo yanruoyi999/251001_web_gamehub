@@ -3950,6 +3950,548 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       },
     },
   },
+  {
+    slug: 'brainrot-games',
+    primaryKeyword: 'brainrot games online',
+    keywords: [
+      'brainrot games online',
+      'best brainrot games',
+      'brainrot games for mobile browser',
+      'brainrot clicker games',
+      'brainrot merge games',
+      'brainrot games no download',
+      'meme browser games',
+    ],
+    updatedAt: seoContentUpdatedAt,
+    relatedSlugs: [
+      'robby-cross-the-road-for-brainrot-guide',
+      'best-new-browser-games-july-2026',
+      'games-to-play-when-bored',
+      'free-games-no-ads',
+    ],
+    locales: {
+      en: {
+        metaTitle: 'Best Brainrot Games Online: Craft, Merge and Clicker Picks',
+        metaDescription:
+          'A safe guide to Brainrot games online: what to play, how the craft, merge, clicker and obby variants differ, mobile notes, source checks, FAQ and Luma alternatives.',
+        heading: 'Best Brainrot Games Online',
+        subheading:
+          'A practical discovery guide for craft, merge, clicker, obby and crossing-style Brainrot games without APKs, plugins or suspicious download mirrors.',
+        overview: [
+          'Brainrot games are meme-driven browser games built around absurd characters, collecting, merging, crafting, clicking, or short obstacle runs. They are fresh enough to create low-competition search demand, but the topic also attracts clone pages, unverified mirrors, and exaggerated “unblocked” claims.',
+          'Luma is treating Brainrot as a guide-first topic. This page does not embed third-party Brainrot games or reuse portal artwork. It helps players understand the main formats, find official public sources, avoid unsafe downloads, and choose similar browser games already available on Luma.',
+        ],
+        sections: [
+          {
+            title: 'Quick Answer: Start With Craft, Merge and Crossing Games',
+            body:
+              'The best Brainrot entry points are crafting games like Make Brainrots Online, collection/running games like Robby: Cross the Road for Brainrot, and merge or clicker variants that work in short sessions. Start on the original platform listing, then use a guide page for controls, mobile fit, and safer alternatives.',
+            bullets: [
+              'Craft: combine ingredients or blocks to unlock stranger characters.',
+              'Merge/clicker: chase upgrades, collections, and short idle loops.',
+              'Crossing/obby: dodge traffic, traps, or platform layouts while collecting.',
+            ],
+          },
+          {
+            title: 'Why This Topic Is Easier Than Mature Game Keywords',
+            body:
+              'Large portals already rank for “free games” and “car games,” but many Brainrot-specific searches are new and fragmented. Early results often have only a short play description, while players still need clear answers about controls, character collection, mobile browser play, and whether a mirror is safe.',
+            bullets: [
+              'Low-tail terms include specific names such as Make Brainrots Online and Robby: Cross the Road for Brainrot.',
+              'Players search for recipes, upgrades, characters, mobile controls, and similar games.',
+              'Guide pages can add value without pretending to be the official developer or host.',
+            ],
+          },
+          {
+            title: 'How To Choose A Safer Brainrot Game Page',
+            body:
+              'Prefer pages that identify the developer or platform, run in the browser, and do not ask for an APK, extension, installer, or login before play. Treat “mod menu,” “free download,” or “all characters unlocked” pages as unverified unless they clearly explain source rights and safety.',
+            bullets: [
+              'Do not install executables or browser extensions just to play a meme game.',
+              'Avoid pages that hide the real game source or copy a portal page without attribution.',
+              'Use no-download browser play and official public listings when available.',
+            ],
+          },
+          {
+            title: 'Best Page Types For SEO And GEO',
+            body:
+              'A Brainrot topic cluster works best as a collection page plus focused guides. The collection answers “which one should I play,” while single-game guides answer “how do I collect, upgrade, survive, or play on mobile.” That structure gives both search engines and generative answers specific passages to cite.',
+            bullets: [
+              'Collection page: compare craft, merge, clicker, obby, and crossing variants.',
+              'Single guide: explain controls, character collection, mobile notes, and similar games.',
+              'Safety note: disclose that Luma is independent and not affiliated with original platforms.',
+            ],
+          },
+          {
+            title: 'Luma Alternatives While Brainrot Embeds Are Unverified',
+            body:
+              'If you want a lower-risk Luma session today, choose short browser games with clear controls and existing detail pages. They will not duplicate the meme theme, but they match the same quick-play intent: fast starts, simple goals, retries, and no downloads.',
+            bullets: [
+              'For obstacle timing, try Tunnel Rush or OvO.',
+              'For upgrade or farming loops, try Monkey Mart or Cow Bay.',
+              'For quick physics and platform sessions, try Drive Mad, Dadish 3, or Big Tower Tiny Square.',
+            ],
+          },
+        ],
+        recommendations: [
+          {
+            slug: 'tunnel-rush',
+            pitch:
+              'A fast reflex browser game for players who like short obstacle runs and quick restarts.',
+          },
+          {
+            slug: 'ovo',
+            pitch:
+              'A precise movement game that fits the same “try again quickly” intent as many obby-style meme games.',
+          },
+          {
+            slug: 'monkey-mart',
+            pitch:
+              'A friendly upgrade loop for players who want progression without installing a client.',
+          },
+          {
+            slug: 'cow-bay',
+            pitch:
+              'A lighter farming and resource-management pick for short browser sessions.',
+          },
+          {
+            slug: 'dadish-3',
+            pitch:
+              'A compact platform game with collectible decisions, checkpoints, and clear keyboard controls.',
+          },
+          {
+            slug: 'drive-mad',
+            pitch:
+              'A physics driving option for players who want quick failures, recoveries, and funny vehicle moments.',
+          },
+        ],
+        faqs: [
+          {
+            question: 'Can I play Brainrot games online without downloading anything?',
+            answer:
+              'Yes, several Brainrot games have public browser listings. Use those first and avoid APK mirrors, installers, extension prompts, or “mod menu” downloads.',
+          },
+          {
+            question: 'Are Brainrot games safe for AdSense-style sites?',
+            answer:
+              'Some are fine as light meme, craft, merge, or clicker topics, but each page needs review. Avoid adult, hateful, extreme violence, misleading downloads, or unlicensed branded assets.',
+          },
+          {
+            question: 'Why does Luma link to sources instead of embedding these games?',
+            answer:
+              'Embedding should wait until source stability and permission are clear. A guide can still add original controls, mobile, FAQ, and alternative-game value without copying another portal.',
+          },
+          {
+            question: 'What Brainrot game should I try first?',
+            answer:
+              'Start with a crafting or collection game if you want characters, a merge or clicker game if you want upgrades, and a crossing or obby game if you want reflex movement.',
+          },
+          {
+            question: 'Is Luma affiliated with Brainrot game developers or portals?',
+            answer:
+              'No. Luma Game Hub is an independent guide and game discovery site. We are not affiliated with the original developers or platforms unless a page states otherwise.',
+          },
+        ],
+        externalLinks: [
+          {
+            href: 'https://poki.com/en/brainrot',
+            label: 'Poki Brainrot Games',
+            description:
+              'Public category page used to verify current Brainrot game examples and mobile-friendly listings.',
+          },
+          {
+            href: 'https://poki.com/en/g/make-brainrots-online',
+            label: 'Make Brainrots Online',
+            description:
+              'Public source page for the crafting-game angle, developer attribution, and play format.',
+          },
+          {
+            href: 'https://www.crazygames.com/game/robby-cross-the-road-for-brainrot',
+            label: 'Robby on CrazyGames',
+            description:
+              'Public source page used to verify July 2026 release context, platform support, and gameplay theme.',
+          },
+        ],
+        ctaLabel: 'Browse safe Luma browser games',
+        ctaDescription:
+          'Use this guide as a discovery layer, then play verified Luma games with no APKs or client downloads.',
+      },
+      zh: {
+        metaTitle: 'Brainrot Games Online 推荐：Craft、Merge、Clicker 玩法指南',
+        metaDescription:
+          'Brainrot 在线小游戏安全指南：craft、merge、clicker、obby、crossing 类型怎么选，手机能不能玩，来源如何核对，以及 Luma 站内替代游戏。',
+        heading: 'Brainrot Games Online 推荐指南',
+        subheading:
+          '面向 Brainrot craft、merge、clicker、obby 和过马路类新词的独立发现页，优先免下载、安全来源和站内替代玩法。',
+        overview: [
+          'Brainrot games 通常是围绕荒诞 meme 角色展开的浏览器小游戏，常见玩法包括合成、收集、升级、点击、跑酷和过马路。它们足够新，适合低竞争长尾词，但也容易吸引来源不清的镜像站、下载诱导和夸张的 unblocked 页面。',
+          'Luma 目前把 Brainrot 当作 guide-first 主题处理。本页不嵌入第三方 Brainrot 游戏，也不使用门户站素材，而是帮助玩家理解主要玩法类型、核对公开来源、避开可疑下载，并找到 Luma 站内已有的相似浏览器游戏。',
+        ],
+        sections: [
+          {
+            title: '快速答案：先看 Craft、Merge 和 Crossing 类',
+            body:
+              'Brainrot 最适合从 Make Brainrots Online 这类合成游戏、Robby: Cross the Road for Brainrot 这类收集过马路游戏，以及 merge/clicker 变体开始。先使用原始平台公开页面，再用攻略页查看操作、手机体验和安全替代选择。',
+            bullets: [
+              'Craft：组合材料或方块，解锁更奇怪的角色。',
+              'Merge / Clicker：围绕升级、收集和短局循环展开。',
+              'Crossing / Obby：在交通、陷阱或平台间移动并收集角色。',
+            ],
+          },
+          {
+            title: '为什么这个主题比成熟大词更好切入',
+            body:
+              '“free games”“car games” 这类词已经被大站长期占据，但 Brainrot 具体游戏名和玩法问题还很分散。早期结果常常只有一句介绍，而玩家实际需要的是 controls、角色收集、手机能否玩、镜像站是否安全等答案。',
+            bullets: [
+              '低竞争长尾包括 Make Brainrots Online、Robby: Cross the Road for Brainrot 等具体名称。',
+              '玩家会搜 recipes、upgrades、characters、mobile controls、similar games。',
+              '攻略页能提供原创价值，而不需要冒充官方或盗用门户内容。',
+            ],
+          },
+          {
+            title: '怎样判断 Brainrot 游戏页面更安全',
+            body:
+              '优先选择能说明开发者或平台来源、可直接在浏览器运行、不会要求 APK、扩展、安装器或登录的页面。遇到 “mod menu”“free download”“all characters unlocked” 一类页面，要先当作未验证来源处理。',
+            bullets: [
+              '不要为了玩 meme 小游戏安装可执行文件或浏览器扩展。',
+              '避免来源不明、隐藏真实平台、复制门户页但不标注出处的网站。',
+              '优先使用免下载浏览器版本和公开平台页面。',
+            ],
+          },
+          {
+            title: '适合 SEO 和 GEO 的页面结构',
+            body:
+              'Brainrot 主题集群最好由一个集合页加多个单游攻略组成。集合页回答“该玩哪类”，单游攻略回答“怎么收集、怎么升级、怎么活更久、手机能不能玩”。这种结构更容易被搜索和生成式答案引用。',
+            bullets: [
+              '集合页：比较 craft、merge、clicker、obby、crossing 类型。',
+              '单游攻略：解释操作、角色收集、手机体验和相似游戏。',
+              '安全说明：明确 Luma 是独立 guide/game discovery site，不隶属原平台。',
+            ],
+          },
+          {
+            title: '嵌入未验证前的 Luma 替代玩法',
+            body:
+              '如果今天只想在 Luma 玩一局，可以选择控制清晰、已上线详情页的短局游戏。它们不复制 Brainrot meme 主题，但满足类似的快速开始、简单目标、可反复尝试和免下载需求。',
+            bullets: [
+              '喜欢障碍反应：试试 Tunnel Rush 或 OvO。',
+              '喜欢升级经营：试试 Monkey Mart 或 Cow Bay。',
+              '喜欢物理和平台短局：试试 Drive Mad、Dadish 3 或 Big Tower Tiny Square。',
+            ],
+          },
+        ],
+        recommendations: [
+          { slug: 'tunnel-rush', pitch: '适合喜欢短局障碍、快速失败和重试的玩家。' },
+          { slug: 'ovo', pitch: '精准移动和 obby 类搜索意图接近，适合练操作。' },
+          { slug: 'monkey-mart', pitch: '轻松升级循环，适合不想安装客户端的玩家。' },
+          { slug: 'cow-bay', pitch: '更轻量的农场和资源管理浏览器游戏。' },
+          { slug: 'dadish-3', pitch: '带收集和检查点的紧凑平台游戏。' },
+          { slug: 'drive-mad', pitch: '物理驾驶、快速翻车和重试，适合短局娱乐。' },
+        ],
+        faqs: [
+          {
+            question: 'Brainrot games 可以免下载玩吗？',
+            answer:
+              '可以，部分 Brainrot 游戏有公开浏览器页面。优先使用这些来源，避开 APK 镜像、安装器、扩展提示和所谓 mod menu 下载。',
+          },
+          {
+            question: 'Brainrot 题材适合 AdSense 审核期网站吗？',
+            answer:
+              '轻量 meme、craft、merge、clicker 方向可以考虑，但每个页面都要单独复核。避免成人、仇恨、极端暴力、误导下载和未经授权的品牌素材。',
+          },
+          {
+            question: '为什么 Luma 暂时只做 guide，不直接嵌入？',
+            answer:
+              'iframe 嵌入需要确认来源稳定性和授权边界。guide 仍然可以提供操作、手机体验、FAQ 和相似游戏推荐，不需要复制门户内容。',
+          },
+          {
+            question: '第一款 Brainrot 游戏应该选哪种？',
+            answer:
+              '想收集角色选 craft/collection，想看升级选 merge/clicker，想练反应选 crossing/obby。',
+          },
+          {
+            question: 'Luma 和 Brainrot 游戏开发者有合作吗？',
+            answer:
+              '没有。Luma Game Hub 是独立游戏指南和发现站，除非页面另有说明，否则不隶属于原开发者或平台。',
+          },
+        ],
+        externalLinks: [
+          {
+            href: 'https://poki.com/en/brainrot',
+            label: 'Poki Brainrot Games',
+            description: '用于核对当前 Brainrot 游戏示例和移动端友好列表的公开分类页。',
+          },
+          {
+            href: 'https://poki.com/en/g/make-brainrots-online',
+            label: 'Make Brainrots Online',
+            description: '用于核对合成玩法、开发者归属和公开游玩形式的来源页。',
+          },
+          {
+            href: 'https://www.crazygames.com/game/robby-cross-the-road-for-brainrot',
+            label: 'CrazyGames Robby 页面',
+            description: '用于核对 2026 年 7 月发布、平台支持和玩法主题的公开页面。',
+          },
+        ],
+        ctaLabel: '浏览 Luma 已验证浏览器游戏',
+        ctaDescription: '把本页作为发现入口，再选择 Luma 已上线且无需下载的游戏。',
+      },
+    },
+  },
+  {
+    slug: 'robby-cross-the-road-for-brainrot-guide',
+    primaryKeyword: 'robby cross the road for brainrot',
+    keywords: [
+      'robby cross the road for brainrot',
+      'robby cross the road for brainrot guide',
+      'robby cross the road for brainrot mobile',
+      'robby cross the road for brainrot characters',
+      'games like robby cross the road for brainrot',
+      'cross the road brainrot game',
+    ],
+    updatedAt: seoContentUpdatedAt,
+    relatedSlugs: ['brainrot-games', 'best-new-browser-games-july-2026', 'games-like-ovo'],
+    locales: {
+      en: {
+        metaTitle: 'Robby: Cross the Road for Brainrot Guide, Tips and Mobile Notes',
+        metaDescription:
+          'Independent Robby: Cross the Road for Brainrot guide with how to play, traffic survival tips, Brainrot collection notes, mobile browser advice, safety FAQ and similar Luma games.',
+        heading: 'Robby: Cross the Road for Brainrot Guide',
+        subheading:
+          'How to survive traffic, collect Brainrots, understand the mobile fit, and choose safe browser alternatives without using download mirrors.',
+        overview: [
+          'Robby: Cross the Road for Brainrot mixes a road-crossing reflex loop with meme character collection. CrazyGames lists it as a July 2026 browser game from Eva Games with desktop, mobile, and tablet support, which makes the title a strong fresh long-tail opportunity.',
+          'Luma is not embedding the game on this page. The guide is independent and player-facing: use the official public source to play, then use the sections below for traffic-reading habits, collection priorities, mobile notes, and related browser games already available on Luma.',
+        ],
+        sections: [
+          {
+            title: 'Quick Answer: How To Play Robby',
+            body:
+              'Move one safe gap at a time, watch the traffic lanes before committing, collect Brainrots only when the return path is clear, and treat upgrades as a reward for consistent survival rather than reckless rushing.',
+            bullets: [
+              'Pause at lane edges and read car speed before moving.',
+              'Do not chase a collectible if it puts you between two fast lanes.',
+              'On mobile, use shorter swipes or taps so you do not overcorrect.',
+            ],
+          },
+          {
+            title: 'Controls And Mobile Browser Fit',
+            body:
+              'The official public listing supports desktop, phone, and tablet browsers. On desktop, expect keyboard-style movement or on-screen prompts. On mobile, the main challenge is visibility: keep your thumb away from the next lane and use deliberate inputs instead of dragging across the screen.',
+            bullets: [
+              'Landscape orientation gives more space to read traffic.',
+              'Close background tabs if the Unity browser build stutters.',
+              'Avoid APK mirrors; browser play is enough for testing the game.',
+            ],
+          },
+          {
+            title: 'Traffic Survival Tips',
+            body:
+              'The biggest mistake is moving because a lane looks empty for a split second. Better runs come from waiting for the pattern, stepping into a safe pocket, then stopping again. Think of each lane as a separate timing puzzle rather than one long sprint.',
+            bullets: [
+              'Use parked or slow moments as checkpoints.',
+              'Cross behind fast vehicles, not in front of them.',
+              'When two lanes overlap, wait until both lanes create the same safe window.',
+            ],
+          },
+          {
+            title: 'Collecting Brainrots Without Losing The Run',
+            body:
+              'Character collection is the hook, but survival keeps the run alive. If a Brainrot is near the edge of a dangerous lane, skip it until your route is stable. Longer runs usually earn more progress than risky single grabs.',
+            bullets: [
+              'Prioritize collectibles on your natural path.',
+              'Return to the safe side before chasing another item.',
+              'If upgrades exist in the current build, favor survival and movement consistency first.',
+            ],
+          },
+          {
+            title: 'Source And Policy Notes',
+            body:
+              'This is an independent Luma guide. We are not affiliated with Eva Games, CrazyGames, Kiz10, or any original platform. The Brainrot meme topic can attract low-quality mirrors, so the page avoids download prompts, copied artwork, unofficial mod links, and claims that Luma is the official host.',
+            bullets: [
+              'Use public platform listings for play access.',
+              'Do not trust “all characters unlocked” downloads.',
+              'If Luma later embeds a version, it should only happen after source stability and permission are checked.',
+            ],
+          },
+        ],
+        recommendations: [
+          {
+            slug: 'tunnel-rush',
+            pitch:
+              'A clean reflex game for players who like reading fast movement patterns.',
+          },
+          {
+            slug: 'ovo',
+            pitch:
+              'A movement-heavy browser game with precise jumps and quick retries.',
+          },
+          {
+            slug: 'dadish-3',
+            pitch:
+              'A compact platformer with collectible decisions and checkpoint practice.',
+          },
+          {
+            slug: 'drive-mad',
+            pitch:
+              'A physics challenge where timing and patience matter more than rushing.',
+          },
+        ],
+        faqs: [
+          {
+            question: 'Where can I play Robby: Cross the Road for Brainrot?',
+            answer:
+              'Use the official public platform listing first. Luma currently provides an independent guide and does not host or embed the game on this page.',
+          },
+          {
+            question: 'Can Robby: Cross the Road for Brainrot be played on mobile?',
+            answer:
+              'CrazyGames lists browser support for desktop, mobile, and tablet. For smoother play, use landscape orientation and avoid pages that ask for an APK install.',
+          },
+          {
+            question: 'How do I collect more Brainrots?',
+            answer:
+              'Collect along safe routes instead of chasing every item immediately. Surviving longer usually creates more collection chances than one risky dash.',
+          },
+          {
+            question: 'Is Luma affiliated with the Robby game developers?',
+            answer:
+              'No. Luma Game Hub is an independent guide and game discovery site. We are not affiliated with the original developers or platforms.',
+          },
+          {
+            question: 'What should I play if I cannot load Robby?',
+            answer:
+              'Try Luma games with similar short-session movement intent, such as Tunnel Rush, OvO, Dadish 3, or Drive Mad.',
+          },
+        ],
+        externalLinks: [
+          {
+            href: 'https://www.crazygames.com/game/robby-cross-the-road-for-brainrot',
+            label: 'Robby on CrazyGames',
+            description:
+              'Primary public source used to verify developer, release month, platform support, engine, and gameplay summary.',
+          },
+          {
+            href: 'https://kiz10.com/robby-cross-the-road-for-brainrot/',
+            label: 'Robby on Kiz10',
+            description:
+              'Secondary public listing used to cross-check browser platform context and HTML5 availability claims.',
+          },
+        ],
+        ctaLabel: 'Browse similar Luma games',
+        ctaDescription:
+          'Play verified Luma browser games while this guide tracks the Robby source and policy fit.',
+      },
+      zh: {
+        metaTitle: 'Robby: Cross the Road for Brainrot 攻略：玩法、收集和手机体验',
+        metaDescription:
+          'Robby: Cross the Road for Brainrot 独立攻略：怎么玩、如何躲车、怎样收集 Brainrots、手机浏览器体验、安全来源说明和 Luma 相似游戏。',
+        heading: 'Robby: Cross the Road for Brainrot 攻略',
+        subheading: '看懂交通节奏、稳定收集 Brainrots、确认手机体验，并避开下载镜像和不明来源页面。',
+        overview: [
+          'Robby: Cross the Road for Brainrot 把过马路反应玩法和 meme 角色收集结合在一起。CrazyGames 页面显示它是 Eva Games 的 2026 年 7 月浏览器游戏，支持桌面、手机和平板，因此适合做新词长尾攻略。',
+          'Luma 目前不在本页嵌入该游戏。本页是独立玩家指南：用公开来源页面游玩，再参考下面的交通判断、收集优先级、移动端注意事项和 Luma 站内相似游戏。',
+        ],
+        sections: [
+          {
+            title: '快速答案：Robby 怎么玩',
+            body:
+              '每次只前进到一个安全空档，移动前先观察车道速度，只有回路清楚时再收集 Brainrots。把升级和收集当作稳定生存后的奖励，不要为了一个角色冲进高速车流。',
+            bullets: [
+              '停在车道边缘，先读车速再移动。',
+              '如果收藏物会把你卡在两条快车道之间，先放弃。',
+              '手机上用短滑动或点按，避免一次移动过头。',
+            ],
+          },
+          {
+            title: '操作和手机浏览器体验',
+            body:
+              '公开页面标注支持桌面、手机和平板浏览器。桌面端通常按游戏提示使用键盘或方向操作；手机端最大问题是可视区域和误触，尽量用横屏，并让手指不要挡住下一条车道。',
+            bullets: [
+              '横屏更容易观察左右车流。',
+              'Unity 浏览器版本卡顿时，先关闭后台标签页。',
+              '不要下载 APK 镜像，浏览器版本足够用于体验。',
+            ],
+          },
+          {
+            title: '躲避交通的实用技巧',
+            body:
+              '最常见失败原因是看到一瞬间空档就冲。更稳的跑法是等规律、进入安全口袋、再停下来观察下一条车道。把每条车道都当作独立 timing puzzle，而不是一口气冲到底。',
+            bullets: [
+              '把慢车或空档当成临时检查点。',
+              '尽量从快车后方穿过，而不是抢在车头前。',
+              '两条车道节奏重叠时，要等两个安全窗口同时出现。',
+            ],
+          },
+          {
+            title: '怎样收集 Brainrots 更稳',
+            body:
+              '角色收集是吸引点，但生存才决定一局能走多远。如果 Brainrot 在危险车道边缘，先保持路线稳定。通常长时间存活比一次冒险抓取带来更多收集机会。',
+            bullets: [
+              '优先收集自然路线上的角色。',
+              '拿到一个后先回到安全边缘，再追下一个。',
+              '如果当前版本有升级，优先提升生存和移动稳定性。',
+            ],
+          },
+          {
+            title: '来源和政策说明',
+            body:
+              '本页是 Luma 独立攻略，不隶属于 Eva Games、CrazyGames、Kiz10 或任何原平台。Brainrot 题材容易出现低质量镜像，所以本页不提供下载、未授权素材、mod 链接，也不声称 Luma 是官方托管方。',
+            bullets: [
+              '游玩入口优先使用公开平台页面。',
+              '不要相信 “all characters unlocked” 下载包。',
+              '如果未来要在 Luma 嵌入，也必须先确认来源稳定和授权边界。',
+            ],
+          },
+        ],
+        recommendations: [
+          { slug: 'tunnel-rush', pitch: '适合喜欢快速读路线和反应挑战的玩家。' },
+          { slug: 'ovo', pitch: '精准移动、快速重试，和 obby 类意图接近。' },
+          { slug: 'dadish-3', pitch: '带收集判断和检查点练习的紧凑平台游戏。' },
+          { slug: 'drive-mad', pitch: '物理挑战里同样需要时机和耐心，不能硬冲。' },
+        ],
+        faqs: [
+          {
+            question: 'Robby: Cross the Road for Brainrot 在哪里玩？',
+            answer:
+              '优先使用公开平台来源页面。Luma 当前只提供独立攻略，不在本页托管或嵌入该游戏。',
+          },
+          {
+            question: 'Robby: Cross the Road for Brainrot 手机能玩吗？',
+            answer:
+              'CrazyGames 页面标注支持桌面、手机和平板浏览器。手机上建议横屏，并避开要求安装 APK 的页面。',
+          },
+          {
+            question: '怎样收集更多 Brainrots？',
+            answer:
+              '沿安全路线收集，不要每个都立刻追。活得更久通常比一次冒险冲刺带来更多收集机会。',
+          },
+          {
+            question: 'Luma 和 Robby 游戏开发者有合作吗？',
+            answer:
+              '没有。Luma Game Hub 是独立游戏指南和发现站，除非页面另有说明，否则不隶属于原开发者或平台。',
+          },
+          {
+            question: 'Robby 加载不了时可以玩什么？',
+            answer:
+              '可以试试 Luma 上类似短局移动意图的 Tunnel Rush、OvO、Dadish 3 或 Drive Mad。',
+          },
+        ],
+        externalLinks: [
+          {
+            href: 'https://www.crazygames.com/game/robby-cross-the-road-for-brainrot',
+            label: 'CrazyGames Robby 页面',
+            description: '主要公开来源，用于核对开发者、发布月份、平台支持、引擎和玩法摘要。',
+          },
+          {
+            href: 'https://kiz10.com/robby-cross-the-road-for-brainrot/',
+            label: 'Kiz10 Robby 页面',
+            description: '辅助公开来源，用于交叉核对浏览器平台和 HTML5 可玩信息。',
+          },
+        ],
+        ctaLabel: '浏览 Luma 相似游戏',
+        ctaDescription: '在继续观察 Robby 来源和政策适配时，可以先玩 Luma 已验证的浏览器游戏。',
+      },
+    },
+  },
 ];
 
 export function getSeoLandingPages(): SeoLandingPage[] {
