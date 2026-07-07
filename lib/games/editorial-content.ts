@@ -4545,6 +4545,577 @@ const GAME_EDITORIAL_CONTENT: Record<string, GameEditorialEntry> = {
       ],
     },
   },
+  'city-bike-stunt': {
+    en: {
+      metaTitle: 'City Bike Stunt Online - Bike Controls, Nitro and Landing Tips',
+      metaDescription:
+        'Play City Bike Stunt online with motorcycle stunt controls, nitro timing, landing advice, two-player notes, FAQ answers, and no-download guidance.',
+      title: 'City Bike Stunt quick guide',
+      summary:
+        'City Bike Stunt is a motorcycle stunt driving game built around ramps, speed, balance, and clean landings. The track looks like a race course, but the real challenge is deciding when to use nitro, how to angle the bike in the air, and when to slow down before a dangerous jump.',
+      overview: [
+        'Treat every ramp as a setup problem. Full speed can clear long gaps, but it also makes the bike harder to recover after landing. A safer run usually means entering ramps straight, saving nitro for open sections, and correcting the bike before the wheels touch down.',
+        'This page focuses on browser play: keyboard controls, nitro use, two-player setup, restart habits, and safe no-download access.',
+      ],
+      howToPlay: [
+        'Drive through city stunt tracks, reach checkpoints, and avoid falling from the course.',
+        'Use nitro on straight sections or long jumps, not when the bike is already tilted.',
+        'In two-player mode, give each rider enough space before ramps so both bikes can land cleanly.',
+      ],
+      controls: [
+        { label: 'Player 1 move', value: 'Use the arrow keys to drive and balance the bike.' },
+        { label: 'Nitro / camera', value: 'Use the in-game nitro and camera keys when the browser version shows them.' },
+        { label: 'Player 2', value: 'Use the second keyboard layout shown by the game, usually WASD-style movement.' },
+        { label: 'Restart', value: 'Restart when the bike has fallen off the track or landed upside down.' },
+      ],
+      tips: [
+        'Enter ramps straight; side-angle jumps are the most common cause of falling into the void.',
+        'Use nitro after the bike is stable, not during a bad landing.',
+        'If you keep overshooting a platform, brake before the ramp rather than trying to correct in the air.',
+        'For two-player sessions, wait one jump apart so one crash does not block the other rider.',
+      ],
+      faqs: [
+        {
+          question: 'How do you control City Bike Stunt?',
+          answer:
+            'Use the keyboard to accelerate, brake, steer, and balance the bike. Nitro helps on long straight ramps, but it should be used after the bike is lined up.',
+        },
+        {
+          question: 'Is City Bike Stunt mainly a racing game or a stunt game?',
+          answer:
+            'It mixes both. You need speed to finish tracks, but balance and landing control matter more than simply holding acceleration.',
+        },
+        {
+          question: 'Can City Bike Stunt be played without a download?',
+          answer:
+            'Yes. Use the browser version on Luma and avoid APKs, installers, or extension prompts.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'drive-mad-walkthrough',
+          title: 'Drive Mad walkthrough',
+          description: 'More physics driving tips for jumps, flips, and landing control.',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: 'Best browser games for a 5-minute break',
+          description: 'Short browser games with quick starts and clear goals.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'City Bike Stunt 在线玩 - 摩托操作、氮气与落地技巧',
+      metaDescription:
+        '在线玩 City Bike Stunt，查看摩托特技操作、氮气时机、落地建议、双人模式说明、FAQ 和免下载玩法。',
+      title: 'City Bike Stunt 快速玩法指南',
+      summary:
+        'City Bike Stunt 是围绕坡道、速度、平衡和稳定落地设计的摩托特技驾驶游戏。赛道看起来像竞速关卡，但真正难点是判断什么时候用氮气、空中怎样调整车身，以及危险跳台前是否应该先减速。',
+      overview: [
+        '把每个坡道都当作一次路线设置。全速能飞过长距离缺口，但也会让落地更难救。更稳的跑法通常是直线进入坡道，把氮气留给开阔路段，并在轮胎落地前先修正车身角度。',
+        '这个页面关注浏览器游玩中的键盘操作、氮气使用、双人设置、重试习惯和免下载安全边界。',
+      ],
+      howToPlay: [
+        '驾驶摩托穿过城市特技赛道，到达检查点，并避免掉出赛道。',
+        '氮气适合直线路段或长跳，不适合车身已经歪斜时强行使用。',
+        '双人模式中，两名玩家最好在坡道前拉开距离，避免互相挡住落点。',
+      ],
+      controls: [
+        { label: '玩家 1 移动', value: '使用方向键驾驶并平衡摩托。' },
+        { label: '氮气 / 镜头', value: '使用游戏内显示的氮气和镜头按键。' },
+        { label: '玩家 2', value: '使用游戏显示的第二套键盘布局，通常是 WASD 风格移动。' },
+        { label: '重开', value: '摩托掉出赛道或倒扣落地时直接重新开始。' },
+      ],
+      tips: [
+        '直线进入坡道；斜着起跳最容易掉进空隙。',
+        '氮气要在车身稳定后再用，不要拿来硬救坏落地。',
+        '如果总是飞过平台，先在坡道前刹车，而不是空中强修。',
+        '双人模式建议隔一个跳台出发，避免一方摔车挡住另一方路线。',
+      ],
+      faqs: [
+        {
+          question: 'City Bike Stunt 怎么操作？',
+          answer: '用键盘加速、刹车、转向并平衡摩托。氮气适合长直坡道，但要先把车身对准路线。',
+        },
+        {
+          question: 'City Bike Stunt 更像竞速还是特技？',
+          answer: '两者都有。你需要速度完成赛道，但平衡和落地控制比一直按加速更重要。',
+        },
+        {
+          question: 'City Bike Stunt 需要下载吗？',
+          answer: '不需要。在 Luma 浏览器里直接玩，避开 APK、安装器或扩展提示。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'drive-mad-walkthrough',
+          title: 'Drive Mad 过关攻略',
+          description: '更多关于跳跃、翻车和落地控制的物理驾驶技巧。',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: '适合 5 分钟休息的浏览器游戏',
+          description: '更多启动快、目标清楚的短局浏览器游戏。',
+        },
+      ],
+    },
+  },
+  'crazy-kick': {
+    en: {
+      metaTitle: 'Crazy Kick Online - Soccer Ball Controls, Dribbling Tips and FAQ',
+      metaDescription:
+        'Play Crazy Kick online with ball-control advice, defender-dodging tips, mouse and touch controls, FAQ answers, and safe browser-play notes.',
+      title: 'Crazy Kick quick guide',
+      summary:
+        'Crazy Kick flips the usual soccer game idea: instead of controlling a full team, you directly guide the ball. Each level asks you to dodge defenders, collect useful coins or stars when safe, and curve the ball into the goal without getting blocked.',
+      overview: [
+        'The easiest mistake is aiming straight at the net from the start. A better approach is to read the defender path, make one clean side movement, then attack the open lane. The ball can turn quickly, but sharp late turns often send it into a defender.',
+        'Use this page for practical browser play: mouse and touch control, dribbling lines, when to skip collectibles, and how to keep the session no-download.',
+      ],
+      howToPlay: [
+        'Move the ball around defenders and obstacles on the way to the goal.',
+        'Collect coins or stars only when the route remains safe.',
+        'Shoot through the open angle and complete the level by getting the ball into the net.',
+      ],
+      controls: [
+        { label: 'Move ball', value: 'Use the mouse, trackpad, or finger to steer the ball.' },
+        { label: 'Shoot', value: 'Guide the ball into the goal area; the browser version handles the final kick.' },
+        { label: 'Restart', value: 'Retry when a defender blocks your route or the ball leaves the useful lane.' },
+      ],
+      tips: [
+        'Look at the defender pattern before moving; the open lane is often on the side, not the middle.',
+        'Skip a coin if collecting it forces a tight turn in front of a defender.',
+        'On mobile, use slower swipes because oversteering is easier with touch input.',
+        'Approach the goal from an angle so the final defender has less time to block the shot.',
+      ],
+      faqs: [
+        {
+          question: 'What makes Crazy Kick different from regular soccer games?',
+          answer:
+            'You control the ball directly instead of controlling players, so the main skill is steering around defenders and finding the goal lane.',
+        },
+        {
+          question: 'How do I stop defenders from blocking every shot?',
+          answer:
+            'Wait for the defender movement, move around the side, and shoot from an angle instead of driving straight down the middle.',
+        },
+        {
+          question: 'Does Crazy Kick require an app install?',
+          answer:
+            'No. Play the browser version on Luma and avoid APK, installer, or extension prompts.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'games-to-play-when-bored',
+          title: 'Games to play when bored',
+          description: 'Casual browser games with simple rules and quick restarts.',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: 'Best browser games for a 5-minute break',
+          description: 'Short games that fit a quick session.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Crazy Kick 在线玩 - 足球控球、过人技巧与 FAQ',
+      metaDescription:
+        '在线玩 Crazy Kick，查看控球路线、躲防守技巧、鼠标和触控操作、FAQ，以及安全浏览器玩法说明。',
+      title: 'Crazy Kick 快速玩法指南',
+      summary:
+        'Crazy Kick 把传统足球游戏反过来：你不是控制整支球队，而是直接控制足球。每关都需要你绕开防守球员，在安全时收集金币或星星，并把球从空档送进球门。',
+      overview: [
+        '最常见的错误是开局就直冲球门。更稳的做法是先看防守路线，做一次干净的侧向移动，再从空档进攻。足球转向很快，但最后一刻的急转往往会把球送到防守者脚下。',
+        '这个页面关注实际浏览器玩法：鼠标和触控操作、盘带路线、什么时候放弃收集物，以及如何保持免下载安全游玩。',
+      ],
+      howToPlay: [
+        '控制足球绕过防守和障碍，向球门推进。',
+        '只有路线仍然安全时才收集金币或星星。',
+        '从开放角度射门，把球送入球网完成关卡。',
+      ],
+      controls: [
+        { label: '移动足球', value: '使用鼠标、触控板或手指拖动控制方向。' },
+        { label: '射门', value: '把球带入球门区域，浏览器版会完成最后射门动作。' },
+        { label: '重试', value: '防守挡住路线或球偏离有效路线时快速重开。' },
+      ],
+      tips: [
+        '移动前先看防守节奏，空档经常在侧面，不在中路。',
+        '如果拿金币会迫使你在防守面前急转，直接放弃更稳。',
+        '手机端滑动慢一点，触控很容易转向过度。',
+        '从斜角接近球门，最后一名防守者更难封堵。',
+      ],
+      faqs: [
+        {
+          question: 'Crazy Kick 和普通足球游戏有什么不同？',
+          answer: '你直接控制足球，而不是控制球员，所以核心技巧是绕开防守并找到射门线路。',
+        },
+        {
+          question: '怎样避免每次射门都被挡？',
+          answer: '先等防守移动，从侧面绕开，再斜线射门，不要一直沿中路直冲。',
+        },
+        {
+          question: 'Crazy Kick 需要安装 App 吗？',
+          answer: '不需要。在 Luma 使用浏览器版即可，避开 APK、安装器或扩展提示。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'games-to-play-when-bored',
+          title: '无聊时可玩的浏览器小游戏',
+          description: '规则简单、重开很快的休闲浏览器游戏。',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: '适合 5 分钟休息的浏览器游戏',
+          description: '适合短时间打开的一局制小游戏。',
+        },
+      ],
+    },
+  },
+  'dadish-3': {
+    en: {
+      metaTitle: 'Dadish 3 Online - Platform Controls, Stars and Boss Tips',
+      metaDescription:
+        'Play Dadish 3 online with retro platforming controls, jump timing tips, collectible advice, FAQ answers, and safe browser-play notes.',
+      title: 'Dadish 3 quick guide',
+      summary:
+        'Dadish 3 is a retro platform adventure where Dadish searches for his missing kids across compact, trap-filled levels. The game is playful, but clean movement matters: one late jump, slippery landing, or rushed collectible can send you back to the checkpoint.',
+      overview: [
+        'The safest way to play is to treat each screen like a short movement puzzle. Learn the enemy pattern, jump only after the platform is lined up, and decide whether a star is worth the extra risk before leaving the main route.',
+        'Use this page for practical browser play: keyboard controls, jump timing, collectible decisions, boss patience, and safe no-download access.',
+      ],
+      howToPlay: [
+        'Move through each platforming level while avoiding traps and food-themed enemies.',
+        'Jump across gaps, use moving platforms, and collect stars when the route is safe.',
+        'Reach the end of the level, then use checkpoints and retries to improve difficult sections.',
+      ],
+      controls: [
+        { label: 'Move', value: 'Use WASD or arrow keys, depending on the browser build.' },
+        { label: 'Jump', value: 'Use Space, W, or the up arrow when shown by the game.' },
+        { label: 'Mobile', value: 'Use touch controls carefully and keep your thumb away from the next hazard.' },
+      ],
+      tips: [
+        'Wait for moving platforms to come toward you instead of jumping at their far edge.',
+        'Collect stars after you understand the safe route; do not chase them on the first attempt.',
+        'Boss rooms reward patience. Watch one full pattern before attacking or crossing.',
+        'If a jump feels inconsistent, start from the same spot every retry so your timing is easier to compare.',
+      ],
+      faqs: [
+        {
+          question: 'Is Dadish 3 harder than the earlier Dadish games?',
+          answer:
+            'It has more varied movement and tougher setups, so careful timing and checkpoint practice matter more.',
+        },
+        {
+          question: 'Should I collect every star in Dadish 3?',
+          answer:
+            'Only after you know the level route. Stars are optional risk, and finishing the stage cleanly is the better first goal.',
+        },
+        {
+          question: 'Can I play Dadish 3 without downloading it?',
+          answer:
+            'Yes. Play the browser version on Luma and avoid installers, APKs, or extension prompts.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'games-like-ovo',
+          title: 'Games like OvO',
+          description: 'More precision platformers with fast retries and tight movement.',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: 'Best browser games for a 5-minute break',
+          description: 'Short browser games that work well in small sessions.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Dadish 3 在线玩 - 平台操作、星星收集与 Boss 技巧',
+      metaDescription:
+        '在线玩 Dadish 3，查看复古平台操作、跳跃时机、收集建议、FAQ 和安全浏览器玩法说明。',
+      title: 'Dadish 3 快速玩法指南',
+      summary:
+        'Dadish 3 是复古平台冒险游戏，Dadish 需要在紧凑又充满陷阱的关卡里寻找失踪的孩子。游戏风格轻松，但移动控制很关键：一次晚跳、一次滑落或一次贪收集品，都可能让你回到检查点。',
+      overview: [
+        '最稳的玩法是把每个画面当作短小移动谜题。先观察敌人节奏，平台对齐后再跳，并在离开主路线前判断星星是否值得冒险。',
+        '这个页面关注浏览器版实际玩法：键盘操作、跳跃时机、收集选择、Boss 房耐心和免下载安全边界。',
+      ],
+      howToPlay: [
+        '穿过每个平台关卡，避开陷阱和食物主题敌人。',
+        '跨越缺口、利用移动平台，并在路线安全时收集星星。',
+        '到达关卡终点；遇到难点时利用检查点和重试优化路线。',
+      ],
+      controls: [
+        { label: '移动', value: '根据浏览器版本，使用 WASD 或方向键。' },
+        { label: '跳跃', value: '使用 Space、W 或上方向键，具体以游戏显示为准。' },
+        { label: '手机端', value: '谨慎使用触控，并避免拇指挡住下一个危险点。' },
+      ],
+      tips: [
+        '等移动平台靠近你时再跳，不要在最远边缘硬跳。',
+        '先熟悉安全路线，再考虑收集星星；第一遍不要贪。',
+        'Boss 房需要耐心，先看完整一轮规律，再行动。',
+        '如果某个跳跃总不稳定，每次从同一位置起跳，方便比较时机。',
+      ],
+      faqs: [
+        {
+          question: 'Dadish 3 比前作更难吗？',
+          answer: '它的移动场景和关卡设置更丰富，因此更需要稳定时机和检查点练习。',
+        },
+        {
+          question: 'Dadish 3 要收集所有星星吗？',
+          answer: '建议熟悉路线后再收集。星星属于额外风险，第一次通关应先保证安全到终点。',
+        },
+        {
+          question: 'Dadish 3 需要下载吗？',
+          answer: '不需要。在 Luma 使用浏览器版即可，避开安装器、APK 或扩展提示。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'games-like-ovo',
+          title: '类似 OvO 的高重试小游戏',
+          description: '更多移动紧凑、重试迅速的精准平台游戏。',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: '适合 5 分钟休息的浏览器游戏',
+          description: '适合短时间打开的浏览器短局游戏。',
+        },
+      ],
+    },
+  },
+  'duo-vikings': {
+    en: {
+      metaTitle: 'Duo Vikings Online - Co-op Puzzle Controls and Level Tips',
+      metaDescription:
+        'Play Duo Vikings online with two-player puzzle controls, trigger and elevator tips, solo-switch advice, FAQ answers, and browser safety notes.',
+      title: 'Duo Vikings quick guide',
+      summary:
+        'Duo Vikings is a cooperative puzzle platformer where two characters work together through castle rooms full of switches, doors, elevators, breakable blocks, and coins. It is best with a friend, but solo players can still solve levels by controlling both roles carefully.',
+      overview: [
+        'The key is not speed. Each room usually asks one player to hold a trigger, open a path, or break an obstacle while the other moves ahead. If you rush both characters at once, you can miss coins, trap one character, or leave a door closed behind you.',
+        'Use this page for practical browser play: shared-keyboard controls, solo switching, puzzle order, and safe no-download access.',
+      ],
+      howToPlay: [
+        'Move both characters through each room and solve the puzzle that blocks the exit.',
+        'Use triggers, doors, elevators, and breakable objects in the correct order.',
+        'Collect coins when safe, then bring both characters to the exit.',
+      ],
+      controls: [
+        { label: 'Move', value: 'Use A/D or the left/right arrow keys, depending on the active character setup.' },
+        { label: 'Jump', value: 'Use W or the up arrow to jump.' },
+        { label: 'Hit / use', value: 'Use S or the down arrow for actions such as hitting, using, or breaking objects.' },
+        { label: 'Solo play', value: 'Move one character into position, then switch attention to the other role.' },
+      ],
+      tips: [
+        'Solve the room order before chasing every coin.',
+        'Leave one character on a trigger if a door or elevator needs to stay active.',
+        'Break suspicious blocks only after the other character is safely placed.',
+        'For local co-op, agree who handles triggers and who collects before the level starts.',
+      ],
+      faqs: [
+        {
+          question: 'Can Duo Vikings be played alone?',
+          answer:
+            'Yes. It is designed for co-op, but one player can solve levels by moving one character at a time and planning the trigger order.',
+        },
+        {
+          question: 'What should I do when a Duo Vikings level seems stuck?',
+          answer:
+            'Check whether a trigger needs to be held, an elevator needs one character as support, or a breakable block has not been used yet.',
+        },
+        {
+          question: 'Does Duo Vikings need a download?',
+          answer:
+            'No. Play in the browser on Luma and avoid installer, APK, or extension prompts.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'games-to-play-when-bored',
+          title: 'Games to play when bored',
+          description: 'Casual puzzle and co-op browser games for relaxed sessions.',
+        },
+        {
+          slug: 'free-games-no-ads',
+          title: 'Free games with fewer distractions',
+          description: 'No-download browser picks with a cleaner play flow.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Duo Vikings 在线玩 - 双人解谜操作与关卡技巧',
+      metaDescription:
+        '在线玩 Duo Vikings，查看双人解谜操作、机关和电梯技巧、单人切换建议、FAQ 和安全浏览器说明。',
+      title: 'Duo Vikings 快速玩法指南',
+      summary:
+        'Duo Vikings 是合作解谜平台游戏，两名角色需要穿过充满开关、门、电梯、可破坏方块和金币的城堡房间。双人游玩最自然，但单人也可以通过轮流控制两个角色来完成关卡。',
+      overview: [
+        '关键不在速度。每个房间通常需要一个角色踩住机关、打开路线或破坏障碍，另一个角色再前进。如果同时急着推进两个角色，很容易漏金币、卡住角色，或把门关在身后。',
+        '这个页面关注浏览器实际玩法：共享键盘操作、单人切换、解谜顺序和免下载安全边界。',
+      ],
+      howToPlay: [
+        '控制两名角色穿过每个房间，并解开挡住出口的谜题。',
+        '按正确顺序使用机关、门、电梯和可破坏物体。',
+        '安全时收集金币，然后让两名角色都到达出口。',
+      ],
+      controls: [
+        { label: '移动', value: '根据当前角色设置，使用 A/D 或左右方向键。' },
+        { label: '跳跃', value: '使用 W 或上方向键跳跃。' },
+        { label: '攻击 / 使用', value: '使用 S 或下方向键进行攻击、使用或破坏物体。' },
+        { label: '单人玩法', value: '先把一个角色放到位，再切换注意力处理另一个角色。' },
+      ],
+      tips: [
+        '先想清房间顺序，再去追每个金币。',
+        '如果门或电梯需要持续开启，让一名角色留在机关上。',
+        '破坏可疑方块前，先确保另一个角色站在安全位置。',
+        '本地双人游玩前先分工：谁负责机关，谁负责收集。',
+      ],
+      faqs: [
+        {
+          question: 'Duo Vikings 可以单人玩吗？',
+          answer: '可以。它更适合合作，但单人也能通过逐个移动角色、规划机关顺序来完成关卡。',
+        },
+        {
+          question: 'Duo Vikings 卡关时应该检查什么？',
+          answer: '先看是否有机关需要一直踩住、电梯是否需要一个角色配合，或还有可破坏方块没处理。',
+        },
+        {
+          question: 'Duo Vikings 需要下载吗？',
+          answer: '不需要。在 Luma 浏览器里直接玩，避开安装器、APK 或扩展提示。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'games-to-play-when-bored',
+          title: '无聊时可玩的浏览器小游戏',
+          description: '更多适合放松的解谜和合作浏览器游戏。',
+        },
+        {
+          slug: 'free-games-no-ads',
+          title: '干扰更少的免费游戏',
+          description: '免下载、游玩流程更清爽的浏览器游戏选择。',
+        },
+      ],
+    },
+  },
+  'duo-vikings-2': {
+    en: {
+      metaTitle: 'Duo Vikings 2 Online - Co-op Puzzle Tips and Controls',
+      metaDescription:
+        'Play Duo Vikings 2 online with co-op platform controls, character-role tips, coin and door strategy, FAQ answers, and no-download browser notes.',
+      title: 'Duo Vikings 2 quick guide',
+      summary:
+        'Duo Vikings 2 continues the cooperative puzzle-platform formula with more obstacle-filled rooms and character-role moments. The best solutions come from using each character for the right job: one may hold a switch or cross a gap while the other clears a path or reaches a coin.',
+      overview: [
+        'Think in roles before moving. If both characters run forward together, the level becomes confusing; if you place one character on the useful trigger first, the second character often gets a much cleaner route. Solo players should slow down and solve one interaction at a time.',
+        'Use this guide for browser play: shared controls, role order, coin collection, mobile notes, and safe no-download access.',
+      ],
+      howToPlay: [
+        'Guide both characters through each puzzle-platform room.',
+        'Use switches, doors, elevators, breakable walls, and character positions to open the route.',
+        'Collect coins when the puzzle is stable, then move both characters to the exit.',
+      ],
+      controls: [
+        { label: 'Move', value: 'Use A/D or left/right arrow keys, depending on the active layout.' },
+        { label: 'Jump', value: 'Use W or the up arrow.' },
+        { label: 'Action', value: 'Use S or the down arrow for hit/use actions when available.' },
+        { label: 'Touch', value: 'On mobile, use deliberate taps and avoid covering switches or gaps.' },
+      ],
+      tips: [
+        'Use one character as support before sending the other into a risky route.',
+        'Do not collect coins until doors and elevators are already under control.',
+        'If a wall or block looks breakable, test it before assuming the route is impossible.',
+        'In solo play, pause after every mechanism and ask which character is now free to move.',
+      ],
+      faqs: [
+        {
+          question: 'What is new in Duo Vikings 2?',
+          answer:
+            'It keeps the two-character puzzle-platform setup and adds more rooms where role order, switches, coins, and breakable paths matter.',
+        },
+        {
+          question: 'Is Duo Vikings 2 better with two players?',
+          answer:
+            'Two players make coordination more natural, but solo play works if you slow down and move one character at a time.',
+        },
+        {
+          question: 'Can I play Duo Vikings 2 in the browser?',
+          answer:
+            'Yes. Play on Luma without installing an APK, extension, or desktop client.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'games-to-play-when-bored',
+          title: 'Games to play when bored',
+          description: 'Easy-start browser games with puzzle and platform options.',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: 'Best browser games for a 5-minute break',
+          description: 'Short browser sessions with clear progress.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Duo Vikings 2 在线玩 - 合作解谜技巧与操作',
+      metaDescription:
+        '在线玩 Duo Vikings 2，查看合作平台操作、角色分工技巧、金币和门机关策略、FAQ 与免下载说明。',
+      title: 'Duo Vikings 2 快速玩法指南',
+      summary:
+        'Duo Vikings 2 延续合作解谜平台公式，加入更多充满障碍的房间和角色分工场景。最佳解法来自让每个角色做合适的事：一个角色踩机关或跨越缺口，另一个角色清路线或去拿金币。',
+      overview: [
+        '移动前先想角色分工。如果两个角色一起往前跑，关卡会变得混乱；如果先让一个角色站到关键机关上，另一个角色通常会获得更清晰的路线。单人玩家尤其应该放慢节奏，一次只解决一个互动。',
+        '这个指南关注浏览器玩法：共享操作、角色顺序、金币收集、手机体验和免下载安全边界。',
+      ],
+      howToPlay: [
+        '控制两名角色穿过每个解谜平台房间。',
+        '利用开关、门、电梯、可破坏墙和角色站位打开路线。',
+        '谜题稳定后再收集金币，最后让两名角色都到达出口。',
+      ],
+      controls: [
+        { label: '移动', value: '根据当前布局，使用 A/D 或左右方向键。' },
+        { label: '跳跃', value: '使用 W 或上方向键。' },
+        { label: '动作', value: '可用时使用 S 或下方向键进行攻击/使用。' },
+        { label: '触控', value: '手机端用明确点按，并避免挡住机关或缺口。' },
+      ],
+      tips: [
+        '先用一个角色做支撑，再让另一个角色走危险路线。',
+        '在门和电梯可控之前，不要急着收集金币。',
+        '如果墙或方块看起来能破坏，先测试它，不要直接判定路线无解。',
+        '单人游玩时，每触发一个机关就停一下，判断现在轮到哪个角色行动。',
+      ],
+      faqs: [
+        {
+          question: 'Duo Vikings 2 新增了什么？',
+          answer: '它保留双角色解谜平台结构，并加入更多需要角色顺序、机关、金币和可破坏路线配合的房间。',
+        },
+        {
+          question: 'Duo Vikings 2 双人玩更好吗？',
+          answer: '双人配合更自然，但单人也能玩，只要放慢节奏，一次移动一个角色。',
+        },
+        {
+          question: 'Duo Vikings 2 可以浏览器玩吗？',
+          answer: '可以。在 Luma 直接玩，不需要安装 APK、扩展或桌面客户端。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'games-to-play-when-bored',
+          title: '无聊时可玩的浏览器小游戏',
+          description: '包含解谜和平台选择的轻量浏览器游戏。',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: '适合 5 分钟休息的浏览器游戏',
+          description: '短时间也能推进一关的浏览器游戏。',
+        },
+      ],
+    },
+  },
 };
 
 export function getGameEditorialContent(slug: string | null | undefined, locale: string): GameEditorialLocaleContent | null {
