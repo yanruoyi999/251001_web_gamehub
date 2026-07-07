@@ -1556,5 +1556,6 @@
 - 内容边界：新增 Drive Mad 页面按失败类型写攻略，不编造未实测的具体关卡编号、宝藏或掉落；未新增 ROM、破解、APK、mod 下载、插件引导、广告位或诱导点击；继续使用已有 Drive Mad 浏览器 embed 和官方/来源参考链接。
 - SEO/GEO 目标：`best-free-iphone-games` 承接 `best free iphone games no download`、`free iphone browser games no app`、`safari games no download`；`drive-mad-level-tips` 承接 `drive mad level tips`、`drive mad why does my car flip`、`drive mad mobile controls`、`drive mad 关卡攻略`、`drive mad 翻车怎么办`。
 - 验证结果：`pnpm type-check` 通过；`pnpm lint` 通过；`pnpm build` 通过，静态页生成 117 个，`patch-static-locale-html` 处理 27/27 英文静态 HTML；构建产物抽样确认 `Best Free iPhone Games No Download`、`Drive Mad Level Tips`、FAQPage JSON-LD 和新增 slug 已生成。
-- 部署状态：本轮未部署，待用户确认或下一轮与后续性能/数据源修复一起提交部署；当前工作区仍有既有脏文件 `docs/google-adsense-end-to-end-sop.md`、`package.json` 和未跟踪知识库文件，本轮只新增/修改 `lib/seo-landing-content.ts` 与本进度记录。
-- 下一步：优先提交并部署本轮 SEO 内容；随后继续修 GSC/GA4/Clarity/Typeform API 凭据、DB/Meilisearch degraded、sitemap 动态 MISS；内容侧继续做 `ovo-level-tips` 或 `google-snake-mod-menu-safe-guide`，并观察 iPhone 页 CTR 是否改善。
+- 提交部署：commit `a90ed05 add drive mad level tips guide` 已推送 `origin/main`，GitHub/Vercel production 自动部署后主域 `https://www.lumagamehub.com` 已返回新增页面；误创建的临时 Vercel project `luma-gamehub-deploy-a90ed05` 已删除，未作为生产结果使用。
+- 生产验证：`https://www.lumagamehub.com/en/guides/drive-mad-level-tips` HTTP 200，输出 `Drive Mad Level Tips`、Quick answer、canonical `https://www.lumagamehub.com/en/guides/drive-mad-level-tips`，且无 `noindex`；`best-free-iphone-games` 构建产物已确认新 title 和 FAQPage JSON-LD。
+- 下一步：继续修 GSC/GA4/Clarity/Typeform API 凭据、DB/Meilisearch degraded、sitemap 动态 MISS；内容侧继续做 `ovo-level-tips` 或 `google-snake-mod-menu-safe-guide`，并观察 iPhone 页 CTR 是否改善。
