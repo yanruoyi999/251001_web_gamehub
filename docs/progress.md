@@ -1510,3 +1510,16 @@
 - 生产验证：上述 5 个英文目标页 + 2 个中文页均 HTTP 200，输出新 title、guide heading、FAQPage JSON-LD、related guide links，且无 `noindex`；`/en/games/balance-duel` HTTP 200 且 `noindex`；生产 sitemap 282 URLs，包含 5 个目标页且不包含 `balance-duel`；`/api/search?q=balance&limit=10` 与 `/api/games?search=balance&limit=10` 均不返回 `balance-duel`。
 - 部署后监测：`pnpm ops:monitoring` 显示 site / robots / sitemap / Clarity tag ok，sitemap 282 URLs；public health、search api 仍因既有 Supabase direct URL、Redis/Meilisearch 配置降级，不是本轮内容改动新增问题。
 - 下一步：第八批可从仍为 `core-indexed` 且 thin description 的 `cats-love-cake`、`cats-love-cake-2`、`cover-orange`、`cover-orange-journey`、`cow-bay` 中继续加厚；另行处理高价值页 placeholder thumbnail 和 T-067 外部配置。
+
+### T-125 Core game detail editorial upgrade batch 8
+
+- 选择原因：延续核心页小批次加厚策略，第八批选择 `cats-love-cake`、`cats-love-cake-2`、`cover-orange`、`cover-orange-journey`、`cow-bay`。这 5 个均为 `core-indexed`，此前主要问题是 thin description，并且公开来源显示玩法为弹跳平台、物理遮蔽解谜和轻量农场模拟，未发现成人、赌博、ROM/破解下载或明显高风险 IP 线索。
+- 公开来源复核：`Cats Love Cake` / `Cats Love Cake 2` 参考 Poki 的 DoubleDutch Games 页面；`Cover Orange` 参考 Poki、FDG Entertainment、Kongregate 等公开页面；`Cover Orange: Journey` 参考 Poki、FDG Entertainment、Google Play / Miniplay 的关卡与玩法说明；`Cow Bay` 参考 Poki、7Spot Games、Google Play 的 farming/idle simulation 说明。
+- 实际改动：继续扩展 `lib/games/editorial-content.ts`，为第八批 5 个动态游戏详情页新增中英文原创摘要、overview、how to play、controls、tips、FAQ 和 related guides；不改播放器、iframe 来源、索引策略、广告位或下载路径。
+- 内链与体验：相关攻略指向 `games-like-ovo`、`best-browser-games-5-minute-break`、`games-to-play-when-bored`、`free-games-no-ads`，全部已确认存在；页面继续采用“先玩、再读操作和卡点解法、再进入相关指南”的结构。
+- 合规边界：未新增 iframe、截图、广告容器、下载入口或诱导点击文案；文案继续强调 browser play/no download，避开 APK、安装器、插件、ROM 和破解导向。
+- 验证结果：`pnpm exec tsc --noEmit --incremental false` 通过；字段完整性校验 5 个目标 slug 均 ok；`pnpm exec tsx scripts/audit-game-quality.ts --write docs/game-quality-audit.md` 通过，目标页均不再命中 thin description，分数为 Cats Love Cake 87、Cats Love Cake 2 81、Cover Orange 81、Cover Orange: Journey 87、Cow Bay 87；`pnpm lint` 通过；`git diff --check` 通过；related guide slug 校验通过；`pnpm build` 通过。
+- 本地 production 验证：`pnpm exec next start -p 3023` 后抽查 `/en/games/cats-love-cake`、`/en/games/cats-love-cake-2`、`/en/games/cover-orange`、`/en/games/cover-orange-journey`、`/en/games/cow-bay`、`/games/cats-love-cake`、`/games/cover-orange-journey`、`/games/cow-bay` 均 HTTP 200，输出新 title、guide heading、FAQ、related guide links，且无 `noindex`；本地 sitemap 包含目标中英文 URL。
+- 提交部署：commit `1f819af add eighth batch game guides` 已推送 `origin/main`；为避免当前脏工作区进入部署包，已从干净临时 worktree `/tmp/luma-gamehub-deploy-1f819af` 手动执行 `vercel deploy --prod --yes`；Vercel production deployment `dpl_5gpT3KAKG5D7VqxKjMw6braeiVRx` Ready，并挂载 `https://www.lumagamehub.com`。
+- 生产验证：上述 5 个英文目标页 + 3 个中文页均 HTTP 200，输出新 title、guide heading、FAQ、related guide links，且无 `noindex`；生产 sitemap 282 URLs，并包含 5 个目标 slug 的中英文详情页。
+- 下一步：第九批可从仍为 `core-indexed` 且 thin description 的 `city-bike-stunt`、`crazy-kick`、`dadish-3`、`duo-vikings`、`duo-vikings-2` 中继续加厚；另行处理高价值页 placeholder thumbnail 和 T-067 外部配置。
