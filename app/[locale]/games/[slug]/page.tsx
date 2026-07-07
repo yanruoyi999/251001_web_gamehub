@@ -304,6 +304,10 @@ export default async function GamePage({ params }: GamePageProps) {
         .map((item) => item.trim())
         .filter(Boolean)
     : [];
+  const sidebarTipItems =
+    editorialContent && editorialContent.tips.length > 0
+      ? editorialContent.tips
+      : instructionItems;
 
   const stats = game.stats;
   const averageRating = Number(stats?.averageRating ?? 0);
@@ -958,9 +962,9 @@ export default async function GamePage({ params }: GamePageProps) {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                {instructionItems.length > 0 ? (
+                {sidebarTipItems.length > 0 ? (
                   <ul className="space-y-2 text-sm text-foreground/90">
-                    {instructionItems.map((item, index) => (
+                    {sidebarTipItems.map((item, index) => (
                       <li key={index} className="flex gap-2">
                         <span>✓</span>
                         <span>{item}</span>
