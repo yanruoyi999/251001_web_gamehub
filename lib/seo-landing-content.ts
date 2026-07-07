@@ -374,30 +374,42 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     primaryKeyword: 'best free iphone games',
     keywords: [
       'best free iphone games',
+      'best free iphone games no download',
+      'free iphone browser games no app',
+      'safari games no download',
       'iphone browser games',
       'mobile friendly puzzle games',
       'touch friendly free games',
     ],
     updatedAt: seoContentUpdatedAt,
-    relatedSlugs: ['best-browser-games-5-minute-break', 'games-to-play-when-bored', 'free-games-no-ads'],
+    relatedSlugs: ['best-browser-games-5-minute-break', 'games-to-play-when-bored', 'free-games-no-ads', 'drive-mad-level-tips'],
     locales: {
       en: {
-        metaTitle: 'Best Free iPhone Games to Play in Browser | No App',
+        metaTitle: 'Best Free iPhone Games No Download | Safari Browser Picks',
         metaDescription:
-          'Try free iPhone games in Safari or Chrome with no App Store download. Compare tap controls, portrait fit, short sessions, and safe browser-game picks.',
-        heading: 'Best Free iPhone Games to Play in Your Browser',
-        subheading: 'A practical shortlist for Safari and Chrome: quick games, tap-friendly controls, no app install, and clear warnings when a game may feel better on desktop.',
+          'Best free iPhone games you can try in Safari or Chrome with no App Store download: tap controls, portrait fit, short sessions, and safe browser picks.',
+        heading: 'Best Free iPhone Games With No Download',
+        subheading: 'A practical Safari and Chrome shortlist for players who want quick browser games, touch-friendly controls, and no App Store install.',
         overview: [
-          'If you search for the best free iPhone games, you usually want something that starts now, does not ask for an App Store download, and still feels playable on a small touchscreen. This guide focuses on browser games you can test in Safari or Chrome before installing anything.',
-          'The important detail: browser-playable does not automatically mean perfect on every iPhone. Canvas size, audio permissions, landscape rotation, touch controls, and saved progress all depend on the third-party game build. Use the checks below to pick a short-session game that fits your device instead of guessing from a title alone.',
+          'If you search for the best free iPhone games, you are usually not asking for a huge App Store list. You want something that opens now, works in Safari or Chrome, uses simple touch controls, and does not push you into a download before you know whether the game is worth your time.',
+          'This guide is built for that intent. It compares browser games by how they feel on a phone: tap accuracy, portrait or landscape fit, audio prompts, short-session value, and whether a game becomes awkward without a keyboard. Treat it as a no-download test list rather than a claim that every third-party game will behave perfectly on every iPhone model.',
         ],
         sections: [
           {
-            title: 'A 30-Second iPhone Compatibility Check',
+            title: 'Quick Answer: Best Free iPhone Games Without Downloads',
+            body: 'Start with tap-first puzzle games and short timing games before trying keyboard-heavy platformers. On iPhone, the best no-download browser game is usually the one with one clear action, visible controls, and rounds short enough to restart when Safari reloads the tab.',
+            bullets: [
+              'Best first pick: point-and-click or tap puzzle games such as Adam and Eve 4.',
+              'Good short-session picks: Catch the Candy and Beat Line if the canvas fits cleanly.',
+              'Use caution with platformers or driving games that need precise left/right keys.',
+            ],
+          },
+          {
+            title: 'A 30-Second Safari Compatibility Check',
             body: 'Before committing to a longer session, open the game in Safari, rotate once, tap the main controls, and play one short round. If the canvas is cropped, the play button is hidden, or the game expects physical arrow keys, switch candidates.',
             bullets: [
               'Confirm that the play button and controls fit without horizontal scrolling.',
-              'Try both portrait and landscape when the first view feels cramped.',
+              'Try portrait first, then rotate to landscape if the game area feels cramped.',
               'Tap the main action two or three times to check input delay.',
               'Keep the browser online unless the game explicitly supports offline play.',
               'Do not assume progress is saved; test a short round before refreshing.',
@@ -410,12 +422,12 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               'Simple taps: Adam and Eve 4 is the safest first test because point-and-click puzzles translate well to touch.',
               'Rope physics puzzles: Catch the Candy is useful when you want a quick responsiveness check.',
               'Rhythm and timing: Beat Line works for short attempts if audio and tap timing feel stable.',
-              'Complex controls: Apple Knight is included as a stress test; if virtual buttons feel cramped, move to desktop.',
+              'Driving or platform games: use them as stress tests; if virtual controls feel cramped, move to desktop.',
             ],
           },
           {
-            title: 'Why Browser Games Beat Native Installs',
-            body: 'Browser games let you try a game before installing an app. They avoid an App Store download, although they still use network data, browser storage, and third-party game resources.',
+            title: 'Why Browser Games Beat Native Installs for Testing',
+            body: 'Browser games let you test a play loop before installing anything. They avoid an App Store download, but they still use network data, browser storage, and third-party game resources. If you only want a five-minute break, that tradeoff is often better than searching the App Store, reading reviews, and deleting apps that were not a fit.',
           },
           {
             title: 'What to Avoid on iPhone',
@@ -448,14 +460,14 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ],
         faqs: [
           {
-            question: 'Do these iPhone games require downloads?',
+            question: 'What is the best free iPhone game with no download?',
             answer:
-              'No. They run in your browser, so you can launch them instantly without installing anything from the App Store.',
+              'Start with a tap-first browser game such as Adam and Eve 4 or Catch the Candy. They are easier to test in Safari because they do not depend on cramped keyboard-style controls.',
           },
           {
-            question: 'Which free iPhone browser game should I try first?',
+            question: 'Do these iPhone games require App Store downloads?',
             answer:
-              'Start with a tap-first game such as Adam and Eve 4, then test timing games like Beat Line or physics games like Balance Duel. Save keyboard-heavy platformers for desktop if the on-screen controls feel cramped.',
+              'No. The picks here are browser games, so you can launch them in Safari or Chrome without installing an App Store app. Avoid pages that turn a browser game into an APK, profile, or plugin download.',
           },
           {
             question: 'Do browser games work in both Safari and Chrome on iPhone?',
@@ -477,25 +489,34 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ctaDescription: 'Open the catalogue and test controls, orientation, and saving behavior on your own device.',
       },
       zh: {
-        metaTitle: 'Best Free iPhone Games | 浏览器里直接玩',
+        metaTitle: 'Best Free iPhone Games No Download | Safari 直接玩',
         metaDescription:
-          '在 Safari 或 Chrome 中试玩免费 iPhone 游戏,无需 App Store 下载。对比触控、竖屏适配、短局体验和安全浏览器游戏候选。',
-        heading: 'Best Free iPhone Games: 浏览器里直接玩的免费游戏',
-        subheading: '面向 Safari 和 Chrome 的实用候选:短局、触控友好、无需安装应用,并标出哪些游戏可能更适合桌面端。',
+          '精选无需下载的免费 iPhone 浏览器游戏,可在 Safari 或 Chrome 中试玩。对比触控、竖屏适配、短局体验和安全候选。',
+        heading: 'Best Free iPhone Games: 无需下载的 Safari 小游戏',
+        subheading: '面向 Safari 和 Chrome 的实用候选:短局、触控友好、无需安装 App,并标出哪些游戏可能更适合桌面端。',
         overview: [
-          '搜索 best free iPhone games 时,多数人想要的是马上能玩、不需要 App Store 下载、并且在小屏触控上不别扭的游戏。本页只选可以在 Safari 或 Chrome 中测试的浏览器游戏,让你先试玩,再决定是否需要安装别的应用。',
-          '但“浏览器可玩”不等于每台 iPhone 都完美适配。画布尺寸、声音权限、横竖屏、触控按钮和存档都由第三方游戏版本决定。用下面的检查顺序,比只看标题更容易找到真正适合自己设备的短局游戏。',
+          '搜索 best free iPhone games 时,很多人并不是想看一大串 App Store 榜单,而是想找一个现在就能打开、在 Safari 或 Chrome 里能玩、触控不别扭、并且不用先下载的小游戏。',
+          '本页按真实手机体验来筛选:点击是否准确、横竖屏是否合适、声音提示是否正常、单局是否够短、没有键盘时会不会很难操作。它是一份无需下载的试玩清单,不是承诺每个第三方游戏都能在每台 iPhone 上完美运行。',
         ],
         sections: [
           {
-            title: '30 秒兼容性检查',
+            title: '快速答案:无需下载的 iPhone 免费游戏怎么选',
+            body: '先试点击解谜和短局时机游戏,再考虑平台跳跃或驾驶类。对 iPhone 来说,最适合的 no download 浏览器游戏通常只有一个清楚动作、按钮可见、单局够短,即使 Safari 重新加载也不会损失太多。',
+            bullets: [
+              '首选:Adam and Eve 4 这类点击解谜,触屏适配通常更稳。',
+              '短局候选:Catch the Candy 和 Beat Line,前提是画面完整显示。',
+              '谨慎选择:需要精准方向键的平台或驾驶游戏,手机上可能更挤。',
+            ],
+          },
+          {
+            title: '30 秒 Safari 兼容性检查',
             body: '开始长时间游玩前,先在 Safari 中打开游戏、旋转一次屏幕、点击主要控件并开始一小局。如果画面裁切、开始按钮被挡住,或必须依赖实体方向键,就换另一个候选。',
             bullets: [
               '确认播放按钮和控制区无需横向滚动即可看全。',
-              '首屏拥挤时同时测试竖屏和横屏。',
+              '先试竖屏,首屏拥挤时再切横屏。',
               '连续点击主要操作两三次,检查是否有明显输入延迟。',
-              '除非游戏明确支持离线，否则保持网络连接。',
-              '不要默认会保存进度，先用短局测试刷新后的表现。',
+              '除非游戏明确支持离线,否则保持网络连接。',
+              '不要默认会保存进度,先用短局测试刷新后的表现。',
             ],
           },
           {
@@ -505,12 +526,12 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               '简单点击:Adam and Eve 4 是最稳的首个测试,点击解谜比较适合触屏。',
               '绳索物理:Catch the Candy 适合快速检查手机上的响应和布局。',
               '节奏时机:Beat Line 适合短局尝试,但要确认声音和点击时机稳定。',
-              '复杂控制:Apple Knight 更像压力测试;如果虚拟按钮拥挤,建议换到桌面端。',
+              '驾驶或平台动作:更像压力测试;如果虚拟按钮拥挤,建议换到桌面端。',
             ],
           },
           {
-            title: '为什么选择浏览器小游戏',
-            body: '浏览器游戏适合在安装 App 前先试玩。它们省去应用下载,但仍会使用网络流量、浏览器存储和第三方游戏资源。',
+            title: '为什么先用浏览器试玩',
+            body: '浏览器游戏适合在安装 App 前先验证玩法循环。它们省去应用下载,但仍会使用网络流量、浏览器存储和第三方游戏资源。如果只是五分钟休息,先打开浏览器试玩,通常比搜索 App Store、看评论、再删除不合适的 App 更省时间。',
           },
           {
             title: 'iPhone 上要避开什么',
@@ -543,13 +564,13 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ],
         faqs: [
           {
-            question: '这些 iPhone 游戏需要下载吗？',
-            answer: '不需要，直接在浏览器中打开即可玩，不占用任何安装空间。',
+            question: '无需下载的免费 iPhone 游戏首选哪一个?',
+            answer: '先试 Adam and Eve 4 或 Catch the Candy 这类点击/物理解谜。它们不依赖拥挤的键盘式按钮,更适合在 Safari 中快速判断手感。',
           },
           {
-            question: '第一款免费 iPhone 浏览器游戏该试哪一个?',
+            question: '这些 iPhone 游戏需要 App Store 下载吗？',
             answer:
-              '可以先试 Adam and Eve 4 这类点击游戏,再测试 Beat Line 这类节奏游戏或 Balance Duel 这类物理短局。若平台动作游戏的虚拟按钮太挤,就改用桌面端。',
+              '不需要。这里推荐的是浏览器游戏,可在 Safari 或 Chrome 中打开。请避开把网页游戏包装成 APK、描述文件或插件下载的页面。',
           },
           {
             question: 'Safari 和 Chrome 都能玩吗?',
@@ -734,7 +755,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       'drive mad no download',
     ],
     updatedAt: seoContentUpdatedAt,
-    relatedSlugs: ['ovo-walkthrough', 'games-like-ovo', 'games-to-play-when-bored'],
+    relatedSlugs: ['drive-mad-level-tips', 'ovo-walkthrough', 'games-like-ovo', 'games-to-play-when-bored'],
     embedGame: {
       iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp40/liuxinyu/20220928/1/index.html',
       title: 'Drive Mad',
@@ -1026,6 +1047,261 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ],
         ctaLabel: '立即开玩 Drive Mad',
         ctaDescription: '在浏览器里免费玩 Drive Mad,被某一关卡住时随时回来看攻略。',
+      },
+    },
+  },
+  {
+    slug: 'drive-mad-level-tips',
+    primaryKeyword: 'drive mad level tips',
+    keywords: [
+      'drive mad level tips',
+      'drive mad why does my car flip',
+      'drive mad hard levels',
+      'drive mad bridge jump',
+      'drive mad mobile controls',
+      'drive mad how to beat levels',
+      'drive mad 关卡攻略',
+      'drive mad 翻车怎么办',
+      'drive mad 手机操作',
+    ],
+    updatedAt: seoContentUpdatedAt,
+    relatedSlugs: ['drive-mad-walkthrough', 'ovo-walkthrough', 'games-like-ovo', 'best-free-iphone-games'],
+    embedGame: {
+      iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp40/liuxinyu/20220928/1/index.html',
+      title: 'Drive Mad',
+      playSlug: 'drive-mad',
+    },
+    locales: {
+      en: {
+        metaTitle: 'Drive Mad Level Tips: Flip Fixes, Jumps and Mobile Controls',
+        metaDescription:
+          'Drive Mad level tips for stuck players: why your car flips, how to clear jumps and bridges, how to control speed on mobile, and what to try before restarting.',
+        heading: 'Drive Mad Level Tips for Hard Stages',
+        subheading:
+          'Use this problem-based guide when a Drive Mad stage keeps flipping your car, dropping you from a bridge, or punishing tiny control mistakes.',
+        overview: [
+          'Players often search for a single Drive Mad level number, but the game is better solved by failure pattern. A jump stage, a bridge stage, a seesaw stage, and a monster-truck stage all ask for different throttle habits. This page focuses on the repeatable fixes you can apply when you are stuck, without pretending that every version of the game has identical level numbering.',
+          'Keep the game open above, test one fix at a time, and reset only after you know why the last attempt failed. That is faster than full-speed retrying, and it also works better on mobile where a long press can easily become too much throttle.',
+        ],
+        sections: [
+          {
+            title: 'Quick Answer: How to Beat Hard Drive Mad Levels',
+            body: 'When a Drive Mad level feels impossible, stop holding the throttle through the whole obstacle. Release before landing, tap across balance sections, wait for moving mechanisms, and use steady speed only when the stage clearly asks for momentum.',
+            bullets: [
+              'Car flips after a jump: release before the wheels touch down.',
+              'Bridge or rail drops: use short taps and let the car settle before the next input.',
+              'Mobile controls feel wild: tap lighter than you would press a keyboard key.',
+            ],
+          },
+          {
+            title: 'Why Your Car Keeps Flipping',
+            body: 'Most flips are caused by carrying throttle into the landing. Holding gas keeps the nose rising, so the car lands rear-heavy and rolls over. The fix is to stop accelerating before touchdown, let the front wheels drop, and wait until the vehicle is level before tapping again.',
+            bullets: [
+              'On ramps, build speed before the ramp, not after leaving it.',
+              'In the air, release early if the nose is too high.',
+              'After landing, tap once to stabilize before committing to full speed.',
+            ],
+          },
+          {
+            title: 'Bridge, Rail and Seesaw Stages',
+            body: 'Narrow surfaces punish overcorrection. If the stage uses a bridge, rail, plank, seesaw, or fragile platform, treat the throttle like a balance tool instead of a speed tool.',
+            bullets: [
+              'Use one short tap, wait for the car body to settle, then tap again.',
+              'On seesaws, reach the pivot slowly and let weight move the board.',
+              'If the bridge bends or moves, pause before the final push instead of charging through.',
+            ],
+          },
+          {
+            title: 'Jump and Gap Stages',
+            body: 'A jump usually fails for one of two reasons: not enough speed before the ramp, or too much throttle while airborne. The clean attempt is a two-part rhythm: accelerate early, then release as the car leaves the ramp so the landing angle stays flat.',
+            bullets: [
+              'Short gap: half speed is often safer than full speed.',
+              'Long gap: build speed on the approach, then stop correcting in mid-air.',
+              'Landing ramp: aim to match the slope rather than land nose-first.',
+            ],
+          },
+          {
+            title: 'Mobile Control Tips',
+            body: 'Drive Mad can be played on mobile, but the virtual pedal makes long presses easy. Treat every input as a tap unless the level obviously needs momentum. If the vehicle keeps popping into a wheelie, your thumb is staying down too long.',
+            bullets: [
+              'Use landscape if the game area or pedals feel cramped.',
+              'Tap in short pulses on balance levels.',
+              'Avoid playing with low battery mode or overloaded tabs if input feels delayed.',
+            ],
+          },
+          {
+            title: 'When to Use the Full Walkthrough',
+            body: 'This page is for fast fixes by problem type. Use the main Drive Mad walkthrough when you want the broader controls explanation, official source notes, monster-truck context, and related precision games.',
+          },
+        ],
+        recommendations: [
+          {
+            slug: 'drive-mad',
+            pitch: 'Open the full Drive Mad game page if you want the focused playable entry with game details and related browser picks.',
+          },
+          {
+            slug: 'ovo',
+            pitch: 'OvO is a strong next pick when you want the same retry loop but with platforming instead of car physics.',
+          },
+          {
+            slug: 'big-tower-tiny-square',
+            pitch: 'A precision platformer for players who like diagnosing why a jump fails and then shaving down the mistake.',
+          },
+        ],
+        faqs: [
+          {
+            question: 'Why does my car flip in Drive Mad?',
+            answer:
+              'You are usually holding the throttle too long. Release before landing, let the nose drop, and tap again only after the wheels settle.',
+          },
+          {
+            question: 'How do I beat bridge levels in Drive Mad?',
+            answer:
+              'Use short throttle taps and pause when the bridge or plank moves. Charging forward usually throws the car off balance before the far side.',
+          },
+          {
+            question: 'Are there exact Drive Mad level answers here?',
+            answer:
+              'No. This page avoids unverified level-number claims because Drive Mad versions and portals can differ. It gives problem-based fixes that apply across hard stages.',
+          },
+          {
+            question: 'Is Drive Mad easier on desktop or iPhone?',
+            answer:
+              'Desktop keyboard control is usually more precise. iPhone works, but you need shorter taps and should rotate to landscape if the canvas feels cramped.',
+          },
+          {
+            question: 'Should I download a Drive Mad mod to clear hard levels?',
+            answer:
+              'No. Use the browser version and avoid APK mirrors, mod downloads, and plugin prompts. The hard levels are designed around throttle timing, not downloads.',
+          },
+        ],
+        externalLinks: [
+          {
+            href: 'https://play.fancade.com/5F084A0BCE06B710',
+            label: 'Drive Mad on Fancade',
+            description: 'The public Fancade listing for Drive Mad by Martin Magni.',
+          },
+          {
+            href: 'https://www.drivemad.com/',
+            label: 'DriveMad.com',
+            description: 'Official Drive Mad web hub and source context.',
+          },
+        ],
+        ctaLabel: 'Browse more skill games',
+        ctaDescription: 'Try another precision game when you need a break from a hard Drive Mad stage.',
+      },
+      zh: {
+        metaTitle: 'Drive Mad 关卡攻略：翻车、跳跃和手机操作技巧',
+        metaDescription:
+          'Drive Mad 关卡攻略：总翻车怎么办、桥和窄轨怎么过、跳跃怎么稳、手机怎么轻点油门，以及卡关时先试哪些修正。',
+        heading: 'Drive Mad 关卡攻略：翻车、跳跃和手机操作技巧',
+        subheading:
+          '当某一关反复翻车、掉桥、跳不过或手机操作太猛时，用这份按问题分类的攻略快速定位原因。',
+        overview: [
+          '很多玩家会搜索 Drive Mad 某某关怎么过,但这款游戏更适合按失败类型拆解。跳跃关、桥梁关、跷跷板关、怪兽卡车关需要的油门节奏并不一样。本页不编造未实测的关卡编号,而是整理真正能反复应用的卡关修正。',
+          '建议把上方游戏打开,每次只测试一个修正。先弄清上一次为什么失败,再重开下一次,比一直全油门重试更快。手机端尤其如此,因为长按屏幕踏板很容易变成过度加速。',
+        ],
+        sections: [
+          {
+            title: '快速答案:Drive Mad 难关先试什么',
+            body: '如果一关看起来不可能,先停止全程按住油门。落地前松开,平衡路段轻点,等移动机关空档,只有明显需要惯性的关才保持稳定速度。',
+            bullets: [
+              '跳完就翻车:车轮落地前松开油门。',
+              '桥梁或窄轨总掉下去:短促轻点,让车身先稳定。',
+              '手机操作太猛:触屏点击要比键盘更短、更轻。',
+            ],
+          },
+          {
+            title: '为什么车总是翻',
+            body: '大多数翻车来自落地时还在踩油门。油门会让车头继续上扬,导致后轮重重着地然后整车翻过去。修正方法是:落地前停止加速,让车头压下来,车身水平后再轻点继续走。',
+            bullets: [
+              '上坡时在坡前攒速度,不要飞出去后还一直按。',
+              '空中车头太高时,更早松开。',
+              '落地后先轻点一次稳住,再考虑加速。',
+            ],
+          },
+          {
+            title: '桥、窄轨和跷跷板怎么过',
+            body: '窄路最怕过度修正。如果关卡里有桥、轨道、木板、跷跷板或易碎平台,就把油门当成平衡工具,而不是速度工具。',
+            bullets: [
+              '轻点一下,等车身稳定,再轻点下一下。',
+              '跷跷板上慢慢到支点,让车重自己压动木板。',
+              '桥面弯曲或移动时,最后冲刺前先停一下。',
+            ],
+          },
+          {
+            title: '跳跃和缺口关',
+            body: '跳跃失败通常只有两种原因:上坡前速度不够,或者空中还在过度加速。更稳的节奏是两步:起跳前提前加速,车离开坡面后松油门,让落地角度更平。',
+            bullets: [
+              '短缺口:半速往往比全速更稳。',
+              '长缺口:接近坡前攒够速度,空中不要乱修正。',
+              '有落地坡时:尽量贴合坡度,不要车头先栽。',
+            ],
+          },
+          {
+            title: '手机操作技巧',
+            body: 'Drive Mad 可以在手机上玩,但虚拟踏板很容易按太久。除非关卡明显需要惯性,否则每次输入都当成轻点。如果车子一动就翘头,说明你的手指停留太久。',
+            bullets: [
+              '画面或踏板拥挤时切横屏。',
+              '平衡关用短促点按。',
+              '如果输入明显延迟,关闭多余标签页或避免低电量模式。',
+            ],
+          },
+          {
+            title: '什么时候看完整攻略',
+            body: '本页解决的是“卡在某种关卡时先怎么修”。如果你想看完整操作逻辑、官方来源、怪兽卡车说明和相似精准游戏,请看主 Drive Mad 攻略页。',
+          },
+        ],
+        recommendations: [
+          {
+            slug: 'drive-mad',
+            pitch: '打开完整 Drive Mad 游戏页,查看可玩入口、基础信息和相关浏览器游戏。',
+          },
+          {
+            slug: 'ovo',
+            pitch: '如果你喜欢反复重试和精准控制,OvO 是从驾驶物理切换到跑酷平台的好选择。',
+          },
+          {
+            slug: 'big-tower-tiny-square',
+            pitch: '适合喜欢分析跳跃失败原因、不断压缩失误的精准平台玩家。',
+          },
+        ],
+        faqs: [
+          {
+            question: 'Drive Mad 为什么总翻车?',
+            answer: '通常是油门按太久。落地前先松开,让车头压下来,等轮子稳定后再轻点继续。',
+          },
+          {
+            question: 'Drive Mad 桥梁关怎么过?',
+            answer: '用短促点按,桥面或木板移动时先等一拍。一直冲通常会在到达另一端前失去平衡。',
+          },
+          {
+            question: '这里有每一关的固定答案吗?',
+            answer: '没有。本页避免写未经实测的关卡编号,因为不同入口的版本可能不同。这里提供跨关卡通用的失败类型解法。',
+          },
+          {
+            question: 'Drive Mad 电脑和手机哪个更容易?',
+            answer: '键盘通常更精准。手机也能玩,但需要更短的轻点,画面拥挤时建议横屏。',
+          },
+          {
+            question: '需要下载 Drive Mad mod 才能过难关吗?',
+            answer: '不需要。优先使用浏览器版本,避开 APK、破解包、插件提示和可疑镜像。难关核心是油门节奏,不是下载工具。',
+          },
+        ],
+        externalLinks: [
+          {
+            href: 'https://play.fancade.com/5F084A0BCE06B710',
+            label: 'Fancade 上的 Drive Mad',
+            description: 'Martin Magni 创作的 Drive Mad 公开页面。',
+          },
+          {
+            href: 'https://www.drivemad.com/',
+            label: 'DriveMad.com',
+            description: 'Drive Mad 官方网页入口和来源说明。',
+          },
+        ],
+        ctaLabel: '查看更多技巧类游戏',
+        ctaDescription: '某个 Drive Mad 难关卡太久时,可以先换一个精准游戏放松一下。',
       },
     },
   },

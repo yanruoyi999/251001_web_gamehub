@@ -1548,3 +1548,13 @@
 - 提交部署：commit `e0050fc add brainrot guide cluster` 已推送 `origin/main`；为避免当前脏工作区进入部署包，已从干净临时 worktree `/tmp/luma-gamehub-deploy-e0050fc` 手动执行 `vercel deploy --prod --yes`；Vercel production deployment `dpl_5zuasF92V9kuVeWk4R4yR7uoscEf` Ready，并挂载 `https://www.lumagamehub.com`。
 - 生产验证：上述 4 个中英文 URL 均 HTTP 200，输出 Quick answer、FAQPage、Article JSON-LD、外部来源链接和独立声明，且无 `noindex`；生产 sitemap 包含新增中英文 guide URL。
 - 下一步：7-14 天后复查 GSC 中 `brainrot games online`、`make brainrots online`、`robby cross the road for brainrot`、`brainrot games mobile` 是否有曝光；若有信号，优先加深 `Make Brainrots Online` 独立攻略或 Brainrot clicker/merge 子集合，而不是直接嵌入未验证 iframe。
+
+### T-128 GSC-driven long-tail SEO update: iPhone no-download and Drive Mad level tips
+
+- 选择原因：2026-07-07 Chrome 只读复核 GSC Last 28 days 显示 `/en/guides/best-free-iphone-games` 为 1 click / 403 impressions，CTR 明显偏低；`drive-mad` 相关查询继续有点击与曝光，适合从总攻略延展到“关卡类型/翻车/手机操作”长尾页。
+- 实际改动：在 `lib/seo-landing-content.ts` 中重写 `best-free-iphone-games` 的中英文 title、description、H1、Quick answer、FAQ 和首屏内容，强调 `no download`、Safari/Chrome、browser games、App Store 安全边界；新增 `drive-mad-level-tips` 中英文 guide，覆盖 hard levels、car flips、bridge/rail/seesaw、jump/gap、mobile controls 等问题型搜索意图，并与 `drive-mad-walkthrough` 双向内链。
+- 内容边界：新增 Drive Mad 页面按失败类型写攻略，不编造未实测的具体关卡编号、宝藏或掉落；未新增 ROM、破解、APK、mod 下载、插件引导、广告位或诱导点击；继续使用已有 Drive Mad 浏览器 embed 和官方/来源参考链接。
+- SEO/GEO 目标：`best-free-iphone-games` 承接 `best free iphone games no download`、`free iphone browser games no app`、`safari games no download`；`drive-mad-level-tips` 承接 `drive mad level tips`、`drive mad why does my car flip`、`drive mad mobile controls`、`drive mad 关卡攻略`、`drive mad 翻车怎么办`。
+- 验证结果：`pnpm type-check` 通过；`pnpm lint` 通过；`pnpm build` 通过，静态页生成 117 个，`patch-static-locale-html` 处理 27/27 英文静态 HTML；构建产物抽样确认 `Best Free iPhone Games No Download`、`Drive Mad Level Tips`、FAQPage JSON-LD 和新增 slug 已生成。
+- 部署状态：本轮未部署，待用户确认或下一轮与后续性能/数据源修复一起提交部署；当前工作区仍有既有脏文件 `docs/google-adsense-end-to-end-sop.md`、`package.json` 和未跟踪知识库文件，本轮只新增/修改 `lib/seo-landing-content.ts` 与本进度记录。
+- 下一步：优先提交并部署本轮 SEO 内容；随后继续修 GSC/GA4/Clarity/Typeform API 凭据、DB/Meilisearch degraded、sitemap 动态 MISS；内容侧继续做 `ovo-level-tips` 或 `google-snake-mod-menu-safe-guide`，并观察 iPhone 页 CTR 是否改善。
