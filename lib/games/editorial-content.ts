@@ -3980,6 +3980,571 @@ const GAME_EDITORIAL_CONTENT: Record<string, GameEditorialEntry> = {
       ],
     },
   },
+  'cats-love-cake': {
+    en: {
+      metaTitle: 'Cats Love Cake Online - Bounce Controls, Tips and Safe Play',
+      metaDescription:
+        'Play Cats Love Cake online with bounce platforming tips, arrow-key controls, obstacle advice, FAQ answers, and no-download browser guidance.',
+      title: 'Cats Love Cake quick guide',
+      summary:
+        'Cats Love Cake is a bouncy skill platformer where the goal is simple but the timing is not. You guide a round cat through compact levels, avoid spikes and traps, and reach the cake without letting momentum carry you into danger.',
+      overview: [
+        'The main skill is learning how much movement to commit before each bounce. If you hold a direction too long, the character can slide into a spike or overshoot the safe platform. If you tap too lightly, you may lose the rhythm needed for the next jump.',
+        'Use this page while playing the browser version: start a level, notice where the bounce goes wrong, then return to the tips when a spike corridor, moving platform, or final cake approach starts costing retries.',
+      ],
+      howToPlay: [
+        'Move left or right while the character keeps bouncing through the level.',
+        'Avoid spikes, traps, and edges while aiming for the cake at the end of the route.',
+        'Replay short sections to learn the safest arc instead of trying to rush through every obstacle.',
+      ],
+      controls: [
+        { label: 'Move left / right', value: 'Use the left and right arrow keys, or the touch controls shown by the game.' },
+        { label: 'Bounce timing', value: 'Adjust direction before each landing so the next bounce starts from a safe angle.' },
+        { label: 'Retry', value: 'Restart quickly when the route is already unrecoverable.' },
+      ],
+      tips: [
+        'Short taps are safer than holding a direction through an entire jump.',
+        'Watch the next landing spot, not only the cake, because most failures happen before the final approach.',
+        'If a spike gap feels inconsistent, slow down and enter it from a flatter bounce.',
+        'On mobile, keep your thumb low so it does not cover the next trap.',
+      ],
+      faqs: [
+        {
+          question: 'How do you play Cats Love Cake?',
+          answer:
+            'Guide the bouncing character left and right, avoid traps, and reach the cake. The challenge is controlling momentum between landings.',
+        },
+        {
+          question: 'Why do I keep hitting spikes in Cats Love Cake?',
+          answer:
+            'You are probably holding the direction too long. Use smaller taps and line up the next landing before the bounce leaves the ground.',
+        },
+        {
+          question: 'Does Cats Love Cake need a download?',
+          answer:
+            'No. Play in the browser on Luma and avoid installer, APK, or extension prompts.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'games-like-ovo',
+          title: 'Games like OvO',
+          description: 'More quick-retry platform games where timing and momentum matter.',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: 'Best browser games for a 5-minute break',
+          description: 'Short browser games that work well for one level or a few attempts.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Cats Love Cake 在线玩 - 弹跳操作、过关技巧与安全玩法',
+      metaDescription:
+        '在线玩 Cats Love Cake，查看弹跳平台操作、方向键控制、障碍技巧、FAQ 和免下载浏览器玩法说明。',
+      title: 'Cats Love Cake 快速玩法指南',
+      summary:
+        'Cats Love Cake 是一款弹跳技巧平台游戏，目标看起来很简单：控制圆滚滚的猫穿过短关卡，避开尖刺和陷阱，最后碰到蛋糕。真正的难点在于控制每一次落地后的动量，不让角色因为惯性冲进危险区域。',
+      overview: [
+        '核心技巧是判断每次弹跳前要按多久方向键。方向按太久，角色容易滑进尖刺或飞过安全平台；按得太轻，又可能失去下一跳需要的节奏。',
+        '这个页面适合边玩边查：先打开浏览器版试玩一关，观察哪一段弹跳路线最容易出错，再回来看尖刺通道、移动平台和终点蛋糕前的处理方式。',
+      ],
+      howToPlay: [
+        '角色会持续弹跳，你需要控制左右方向穿过关卡。',
+        '避开尖刺、陷阱和边缘，最终到达蛋糕所在位置。',
+        '短关卡适合反复练同一段路线，不要每次都从头盲冲。',
+      ],
+      controls: [
+        { label: '左右移动', value: '使用左右方向键，或游戏显示的触控按钮。' },
+        { label: '弹跳时机', value: '每次落地前先调好方向，让下一跳从安全角度起步。' },
+        { label: '重试', value: '路线已经救不回来时快速重开。' },
+      ],
+      tips: [
+        '短按比长按更稳，不要在整段跳跃中一直按住方向。',
+        '看下一次落点，而不是只盯着蛋糕，因为多数失败发生在终点之前。',
+        '尖刺缝隙不稳定时，降低速度，用更平的弹跳角度进入。',
+        '手机端拇指尽量放低，避免挡住前方陷阱。',
+      ],
+      faqs: [
+        {
+          question: 'Cats Love Cake 怎么玩？',
+          answer: '控制弹跳角色左右移动，避开陷阱并到达蛋糕。难点是管理每次落地之间的惯性。',
+        },
+        {
+          question: '为什么我总是撞到尖刺？',
+          answer: '通常是方向键按太久。改用更短的点按，并在起跳前先对准下一次落地位置。',
+        },
+        {
+          question: 'Cats Love Cake 需要下载吗？',
+          answer: '不需要。在 Luma 浏览器里直接玩，避开安装器、APK 或扩展提示。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'games-like-ovo',
+          title: '类似 OvO 的高重试小游戏',
+          description: '更多需要时机和动量控制的快速重试平台游戏。',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: '适合 5 分钟休息的浏览器游戏',
+          description: '适合一关或几次尝试的短局浏览器游戏。',
+        },
+      ],
+    },
+  },
+  'cats-love-cake-2': {
+    en: {
+      metaTitle: 'Cats Love Cake 2 Online - Platform Tips and Safe Browser Play',
+      metaDescription:
+        'Play Cats Love Cake 2 online with bouncy platform controls, spike-trap tips, character-unlock notes, FAQ answers, and no-download guidance.',
+      title: 'Cats Love Cake 2 quick guide',
+      summary:
+        'Cats Love Cake 2 keeps the bouncy platforming loop of the first game and adds more routes, traps, and unlockable characters. The goal is still to reach the cake, but the sequel asks for cleaner timing because later stages punish overcorrection.',
+      overview: [
+        'Think of each level as a momentum puzzle. You are not jumping on command; you are steering a character that already has bounce, so every left or right input changes the next landing. Good runs come from small corrections before the obstacle, not panic movement inside it.',
+        'Use this guide for practical browser play, especially when a spike pattern, narrow platform, or repeated retry hint suggests that your current route is too aggressive.',
+      ],
+      howToPlay: [
+        'Guide the bouncing character through each level toward the cake.',
+        'Steer around spikes, traps, and narrow platforms without losing control of the bounce arc.',
+        'Unlock extra playable characters by completing stages and improving your route consistency.',
+      ],
+      controls: [
+        { label: 'Move', value: 'Use left and right arrow keys, or the in-game touch controls on mobile.' },
+        { label: 'Line up landings', value: 'Change direction before landing so the next bounce is already aimed safely.' },
+        { label: 'Restart', value: 'Retry a level when the opening bounce sends you into a poor route.' },
+      ],
+      tips: [
+        'Do not chase every correction late; set up the next bounce early.',
+        'When a level shows a suggested route after repeated failures, treat it as a hint about rhythm, not just direction.',
+        'Slow entries into spike corridors are usually safer than high-speed saves.',
+        'Keyboard is easier for precision, but mobile works if you tap lightly and keep the path visible.',
+      ],
+      faqs: [
+        {
+          question: 'What is different in Cats Love Cake 2?',
+          answer:
+            'The sequel keeps the bounce-to-cake goal but adds more obstacle layouts and unlockable characters, so clean steering matters more.',
+        },
+        {
+          question: 'How do I stop overshooting platforms?',
+          answer:
+            'Release or change direction earlier. Most overshoots come from correcting after the character has already left the safe landing arc.',
+        },
+        {
+          question: 'Can I play Cats Love Cake 2 on mobile?',
+          answer:
+            'Yes. Use light taps and keep your finger away from the center of the screen so you can see upcoming traps.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'games-like-ovo',
+          title: 'Games like OvO',
+          description: 'Fast browser platformers built around movement precision and retries.',
+        },
+        {
+          slug: 'games-to-play-when-bored',
+          title: 'Games to play when bored',
+          description: 'Casual browser games with simple goals and quick starts.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Cats Love Cake 2 在线玩 - 平台技巧与安全浏览器玩法',
+      metaDescription:
+        '在线玩 Cats Love Cake 2，查看弹跳平台操作、尖刺陷阱技巧、角色解锁说明、FAQ 和免下载玩法。',
+      title: 'Cats Love Cake 2 快速玩法指南',
+      summary:
+        'Cats Love Cake 2 延续第一作的弹跳平台节奏，并加入更多路线、陷阱和可解锁角色。目标仍然是到达蛋糕，但续作对时机更严格，后期关卡会明显惩罚过度修正。',
+      overview: [
+        '把每关都当成动量谜题。角色不是按键才跳，而是本身持续弹跳；你每次左右输入都会改变下一次落点。好的路线来自进入障碍前的小幅修正，而不是已经进危险区后的慌乱移动。',
+        '当某个尖刺排列、窄平台或反复失败后的路线提示说明你当前走法太激进时，可以对照这个指南调整浏览器版玩法。',
+      ],
+      howToPlay: [
+        '控制弹跳角色穿过每个关卡，目标是到达蛋糕。',
+        '绕开尖刺、陷阱和窄平台，同时控制弹跳弧线。',
+        '通过完成关卡提高路线稳定性，并解锁更多可玩角色。',
+      ],
+      controls: [
+        { label: '移动', value: '使用左右方向键；手机端使用游戏内触控按钮。' },
+        { label: '对准落点', value: '落地前就调整方向，让下一次弹跳已经朝向安全路线。' },
+        { label: '重新开始', value: '开局弹跳已经把路线带歪时，直接重试更省时间。' },
+      ],
+      tips: [
+        '不要在最后一刻补救，每次弹跳前就为下一跳做准备。',
+        '反复失败后出现的建议路线，更像节奏提示，不只是方向提示。',
+        '尖刺通道慢速进入通常比高速硬救更安全。',
+        '键盘更适合精细控制；手机也能玩，但要轻点并保持路线可见。',
+      ],
+      faqs: [
+        {
+          question: 'Cats Love Cake 2 和第一作有什么不同？',
+          answer: '续作保留到达蛋糕的弹跳目标，但加入更多障碍布局和可解锁角色，更考验稳定转向。',
+        },
+        {
+          question: '怎么避免总是跳过平台？',
+          answer: '更早松开或换方向。大多数飞过平台的问题，都是角色离开安全弧线后才开始修正。',
+        },
+        {
+          question: 'Cats Love Cake 2 手机能玩吗？',
+          answer: '可以。用轻点控制，并让手指避开屏幕中心，方便看清前方陷阱。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'games-like-ovo',
+          title: '类似 OvO 的高重试小游戏',
+          description: '围绕移动精度和快速重试设计的浏览器平台游戏。',
+        },
+        {
+          slug: 'games-to-play-when-bored',
+          title: '无聊时可玩的浏览器小游戏',
+          description: '目标简单、启动很快的休闲浏览器游戏。',
+        },
+      ],
+    },
+  },
+  'cover-orange': {
+    en: {
+      metaTitle: 'Cover Orange Online - Shelter Puzzle Tips and Safe Play',
+      metaDescription:
+        'Play Cover Orange online with object-stacking strategy, mouse controls, acid-rain shelter tips, FAQ answers, and no-download browser notes.',
+      title: 'Cover Orange quick guide',
+      summary:
+        'Cover Orange is a physics puzzle about protecting the oranges before the cloud arrives. You place crates, wheels, barrels, and other objects so the fruit has a roof or safe pocket when the dangerous rain starts.',
+      overview: [
+        'The puzzle is not about dropping objects anywhere above the orange. You need to predict how each piece will roll, slide, or knock another piece into position. A stable shelter usually has side support, a roof, and enough clearance so the orange does not get pushed out.',
+        'Use this page for practical browser play: object order, mouse placement, common collapse mistakes, and safe no-download access.',
+      ],
+      howToPlay: [
+        'Drag or drop each available object into the level before the cloud arrives.',
+        'Build a shelter that blocks the rain from reaching every orange on screen.',
+        'Watch how objects settle; if the structure rolls away or leaves a gap, restart and change the drop order.',
+      ],
+      controls: [
+        { label: 'Place objects', value: 'Use the mouse or touch input to choose where each object falls.' },
+        { label: 'Observe physics', value: 'Wait for pieces to settle before assuming the shelter is safe.' },
+        { label: 'Restart', value: 'Retry when a roof gap, rolling object, or pushed orange makes the layout unsafe.' },
+      ],
+      tips: [
+        'Protect the sides first, then use the final objects as a roof.',
+        'Round pieces can roll away; use them as wedges only when the slope helps.',
+        'Leave a small air gap above the orange so falling pieces do not bump it into danger.',
+        'If rain leaks through a corner, change the object order rather than only moving the last piece.',
+      ],
+      faqs: [
+        {
+          question: 'How do you beat Cover Orange levels?',
+          answer:
+            'Build a stable shelter before the cloud passes. The key is object order: support the sides, close the roof, and prevent rolling pieces from opening gaps.',
+        },
+        {
+          question: 'Why does my shelter fail after looking safe?',
+          answer:
+            'A piece may still be settling, rolling, or nudging the orange. Wait for the structure to stabilize before trusting the layout.',
+        },
+        {
+          question: 'Does Cover Orange need a download?',
+          answer:
+            'No. Play the browser version on Luma and avoid installer, APK, or extension prompts.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: 'Best browser games for a 5-minute break',
+          description: 'More short puzzle and skill games for quick sessions.',
+        },
+        {
+          slug: 'games-to-play-when-bored',
+          title: 'Games to play when bored',
+          description: 'Easy-start browser games for relaxed play.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Cover Orange 在线玩 - 遮雨解谜技巧与安全玩法',
+      metaDescription:
+        '在线玩 Cover Orange，查看物体堆叠策略、鼠标操作、酸雨遮蔽技巧、FAQ 和免下载浏览器说明。',
+      title: 'Cover Orange 快速玩法指南',
+      summary:
+        'Cover Orange 是保护橙子的物理解谜游戏。你需要在乌云到来前放置木箱、轮子、桶等物体，给橙子搭出屋顶或安全空间，避免危险雨滴落到它们身上。',
+      overview: [
+        '这类谜题不是把物体随便丢到橙子上方就行。你需要预判每个物体会怎样滚动、滑动或撞动其他部件。稳定的遮蔽物通常需要侧面支撑、顶部屋檐，并给橙子留出不会被挤出去的空间。',
+        '这个页面关注实际浏览器玩法：放置顺序、鼠标落点、常见坍塌原因，以及免下载安全边界。',
+      ],
+      howToPlay: [
+        '在乌云到来前，把关卡提供的每个物体拖放到合适位置。',
+        '搭建遮蔽物，让雨滴无法碰到屏幕中的橙子。',
+        '观察物体最终稳定位置；如果结构滚走或露出缝隙，就重开调整顺序。',
+      ],
+      controls: [
+        { label: '放置物体', value: '用鼠标或触控选择每个物体落下的位置。' },
+        { label: '观察物理', value: '等部件完全稳定后，再判断遮蔽物是否安全。' },
+        { label: '重试', value: '屋顶漏缝、圆形物体滚走或橙子被挤出时重新开始。' },
+      ],
+      tips: [
+        '先封侧面，再用最后的物体补屋顶。',
+        '圆形部件容易滚走，只在坡度有利时把它当楔子使用。',
+        '橙子上方留一点空间，避免落下的部件把它撞到危险位置。',
+        '如果雨从角落漏下，不只移动最后一个物体，优先调整放置顺序。',
+      ],
+      faqs: [
+        {
+          question: 'Cover Orange 怎么过关？',
+          answer: '在乌云经过前搭出稳定遮蔽物。关键是顺序：先支撑两侧，再封顶，并阻止会滚动的物体打开缝隙。',
+        },
+        {
+          question: '为什么看起来安全的结构还是失败？',
+          answer: '可能有部件仍在滚动、下滑或推挤橙子。等结构完全稳定后，再判断布局是否可靠。',
+        },
+        {
+          question: 'Cover Orange 需要下载吗？',
+          answer: '不需要。在 Luma 浏览器里直接玩，避开安装器、APK 或扩展提示。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: '适合 5 分钟休息的浏览器游戏',
+          description: '更多适合短时间游玩的解谜和技巧游戏。',
+        },
+        {
+          slug: 'games-to-play-when-bored',
+          title: '无聊时可玩的浏览器小游戏',
+          description: '适合放松打开的轻量浏览器游戏。',
+        },
+      ],
+    },
+  },
+  'cover-orange-journey': {
+    en: {
+      metaTitle: 'Cover Orange Journey Online - Physics Puzzle Tips and Controls',
+      metaDescription:
+        'Play Cover Orange: Journey online with shelter-building tips, object order strategy, mouse controls, FAQ answers, and safe browser guidance.',
+      title: 'Cover Orange: Journey quick guide',
+      summary:
+        'Cover Orange: Journey expands the shelter-building puzzle with themed stages, new object interactions, and more varied setups. The goal remains clear: protect every orange before the cloud passes, but each scene asks you to read the background and object behavior more carefully.',
+      overview: [
+        'Journey levels often look playful, yet they can be stricter than the original because a single rolling piece or small roof gap can ruin a solution. Before dropping the first object, look for slopes, breakable supports, trampolines, glass, or other elements that may change how the shelter settles.',
+        'Use this guide as a practical checklist for browser play: read the stage, test the object order, then refine the layout until the oranges stay covered through the full cloud pass.',
+      ],
+      howToPlay: [
+        'Place each available object into the scene before the cloud arrives.',
+        'Use the level theme and physics elements to form a roof, wall, or pocket around every orange.',
+        'Survive the cloud pass; if any orange is exposed or knocked away, restart with a different object order.',
+      ],
+      controls: [
+        { label: 'Drag / drop', value: 'Use the mouse or touch input to place each object.' },
+        { label: 'Stage reading', value: 'Check slopes and special pieces before releasing the next object.' },
+        { label: 'Retry', value: 'Restart quickly when the structure settles into an open gap.' },
+      ],
+      tips: [
+        'Study the background pieces before placing anything; they often explain how the level wants to be solved.',
+        'Use heavy objects to pin rolling pieces before building the final roof.',
+        'When two oranges are separated, build one shared cover only if the side supports are stable.',
+        'Small roof gaps matter; if the cloud reaches the orange once, the shelter is not sealed enough.',
+      ],
+      faqs: [
+        {
+          question: 'Is Cover Orange: Journey different from Cover Orange?',
+          answer:
+            'Yes. It keeps the protect-the-orange goal but adds more themed stages and object interactions, so reading each scene matters more.',
+        },
+        {
+          question: 'What should I do when a Journey level feels impossible?',
+          answer:
+            'Change the object order first. Many levels fail because the right pieces are dropped in a shape that cannot settle safely.',
+        },
+        {
+          question: 'Can I play Cover Orange: Journey in the browser?',
+          answer:
+            'Yes. Use the browser player on Luma and avoid pages that require APKs, installers, or extensions.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: 'Best browser games for a 5-minute break',
+          description: 'Short browser puzzles and skill games for quick sessions.',
+        },
+        {
+          slug: 'free-games-no-ads',
+          title: 'Free games with fewer distractions',
+          description: 'No-download browser game picks with a cleaner play flow.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Cover Orange: Journey 在线玩 - 物理解谜技巧与操作',
+      metaDescription:
+        '在线玩 Cover Orange: Journey，查看遮蔽物搭建技巧、物体顺序策略、鼠标操作、FAQ 和安全浏览器说明。',
+      title: 'Cover Orange: Journey 快速玩法指南',
+      summary:
+        'Cover Orange: Journey 在遮蔽物解谜基础上加入主题关卡、新物体互动和更丰富的场景。目标仍然明确：乌云经过前保护每个橙子，但每个场景都需要更认真观察背景结构和物体行为。',
+      overview: [
+        'Journey 的关卡看起来轻松，但有时比原版更严格，因为一个滚走的部件或一条小屋顶缝隙就会破坏方案。放第一个物体前，先找坡道、可碎支撑、弹跳板、玻璃或其他会改变结构稳定性的元素。',
+        '这个指南可以当作浏览器游玩检查表：先读场景，再测试物体顺序，最后微调布局，直到橙子能完整撑过乌云经过。',
+      ],
+      howToPlay: [
+        '在乌云到来前，把所有可用物体放进场景。',
+        '利用关卡主题和物理元素，为每个橙子形成屋顶、侧墙或安全凹槽。',
+        '撑过乌云经过；如果任何橙子暴露或被撞开，就用不同顺序重试。',
+      ],
+      controls: [
+        { label: '拖放', value: '使用鼠标或触控放置每个物体。' },
+        { label: '观察场景', value: '释放下一个物体前，先看坡度和特殊部件。' },
+        { label: '重试', value: '结构稳定后露出缝隙时，快速重新开始。' },
+      ],
+      tips: [
+        '放置前先看背景部件，它们通常暗示关卡解法。',
+        '先用重物固定会滚动的部件，再搭最后的屋顶。',
+        '两个橙子分开时，只有侧面支撑足够稳定，才尝试共用一个遮蔽物。',
+        '小屋顶缝隙也会失败；只要乌云能碰到橙子，说明遮蔽还不够严。',
+      ],
+      faqs: [
+        {
+          question: 'Cover Orange: Journey 和 Cover Orange 有什么不同？',
+          answer: '它保留保护橙子的目标，但加入更多主题场景和物体互动，因此读场景比原版更重要。',
+        },
+        {
+          question: 'Journey 关卡卡住怎么办？',
+          answer: '先换物体顺序。很多关失败不是因为思路错，而是正确部件以不稳定的形状落下。',
+        },
+        {
+          question: 'Cover Orange: Journey 可以浏览器玩吗？',
+          answer: '可以。在 Luma 使用浏览器播放器即可，避开要求 APK、安装器或扩展的页面。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: '适合 5 分钟休息的浏览器游戏',
+          description: '适合快速打开的短局解谜和技巧游戏。',
+        },
+        {
+          slug: 'free-games-no-ads',
+          title: '干扰更少的免费游戏',
+          description: '更适合免下载、清爽游玩流程的浏览器游戏选择。',
+        },
+      ],
+    },
+  },
+  'cow-bay': {
+    en: {
+      metaTitle: 'Cow Bay Online - Farming Sim Tips, Energy and Crafting Guide',
+      metaDescription:
+        'Play Cow Bay online with farming sim tips, resource and energy advice, crafting controls, FAQ answers, and safe browser-play notes.',
+      title: 'Cow Bay quick guide',
+      summary:
+        'Cow Bay is a cozy idle farming simulation where you gather berries, collect wood, craft tools, and expand a small island settlement. The loop is relaxed, but progress is smoother when you manage energy, storage, and quest order instead of tapping every object at random.',
+      overview: [
+        'Start by treating each quest as a path to a new system. Early tasks teach gathering, then later upgrades introduce workbenches, cooked food, storage boxes, tools, and new islands. If you run out of energy or inventory space, the next useful action is usually cooking, unloading, or checking a crafting station.',
+        'This page focuses on practical browser play: what to tap first, how to avoid wasted energy, when to craft tools, and how to keep the farm-building loop moving without downloads or suspicious installers.',
+      ],
+      howToPlay: [
+        'Click or tap resources such as berries, logs, crops, buildings, and workstations.',
+        'Complete the quest prompts to earn coins, unlock new areas, and add more production options.',
+        'Use crafting stations, storage, and food to keep gathering efficient as the island grows.',
+      ],
+      controls: [
+        { label: 'Interact', value: 'Click or tap an object to harvest, gather, craft, cook, or use it.' },
+        { label: 'Choose next task', value: 'Follow the current quest prompt when you are unsure where to go.' },
+        { label: 'Manage resources', value: 'Open storage or crafting menus when inventory or energy slows progress.' },
+      ],
+      tips: [
+        'Do not spend energy on every object nearby; prioritize the item requested by the active quest.',
+        'Unlock new islands when available because key crafting ingredients may be outside the starting area.',
+        'Check workbench menus when you cannot find an item; it may need to be crafted from simpler materials.',
+        'Keep some food ready before long gathering runs so energy does not interrupt progress.',
+      ],
+      faqs: [
+        {
+          question: 'What is the main goal in Cow Bay?',
+          answer:
+            'Turn a small island into a working settlement by gathering resources, completing quests, crafting tools, and unlocking new areas.',
+        },
+        {
+          question: 'What should I do when I cannot find a quest item?',
+          answer:
+            'Check each workstation or storage area. Many required items are crafted from basic resources rather than collected directly.',
+        },
+        {
+          question: 'Can I play Cow Bay on mobile?',
+          answer:
+            'Yes. Cow Bay works well with tap controls, but slower deliberate taps help avoid wasting energy on the wrong object.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'games-to-play-when-bored',
+          title: 'Games to play when bored',
+          description: 'Relaxed browser games with simple goals and steady progress.',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: 'Best browser games for a 5-minute break',
+          description: 'Quick-start browser games for short sessions.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Cow Bay 在线玩 - 农场模拟、能量与合成技巧',
+      metaDescription:
+        '在线玩 Cow Bay，查看农场模拟技巧、资源和能量管理、合成操作、FAQ，以及安全浏览器玩法说明。',
+      title: 'Cow Bay 快速玩法指南',
+      summary:
+        'Cow Bay 是轻松的放置农场模拟游戏，你会采集浆果、收集木头、制作工具，并逐步扩展小岛定居点。节奏很休闲，但如果能管理好能量、背包和任务顺序，推进会比随意点击所有物体顺畅很多。',
+      overview: [
+        '把每个任务都看成解锁新系统的路线。前期任务教你采集，后续升级会加入工作台、食物、储物箱、工具和新岛屿。如果能量或背包卡住，下一步通常是烹饪、卸货或查看合成台。',
+        '这个页面关注实际浏览器玩法：先点什么、怎样避免浪费能量、什么时候制作工具，以及如何在免下载和无可疑安装器的前提下保持农场建设节奏。',
+      ],
+      howToPlay: [
+        '点击或点按浆果、木头、作物、建筑和工作台等对象。',
+        '按任务提示赚取金币、解锁新区域，并增加更多生产功能。',
+        '利用合成台、储物和食物，让小岛扩大后采集仍然高效。',
+      ],
+      controls: [
+        { label: '互动', value: '点击或点按物体进行采集、收集、合成、烹饪或使用。' },
+        { label: '选择下一步', value: '不知道去哪时，优先跟随当前任务提示。' },
+        { label: '管理资源', value: '背包或能量拖慢进度时，打开储物或合成菜单。' },
+      ],
+      tips: [
+        '不要把能量花在附近所有物体上，优先处理当前任务要求的资源。',
+        '能解锁新岛屿时尽早解锁，因为关键材料可能不在初始区域。',
+        '找不到任务物品时先查工作台菜单，它可能需要用基础材料合成。',
+        '长时间采集前准备一些食物，避免能量中途打断进度。',
+      ],
+      faqs: [
+        {
+          question: 'Cow Bay 的主要目标是什么？',
+          answer: '通过采集资源、完成任务、制作工具和解锁新区域，把小岛建设成可运转的定居点。',
+        },
+        {
+          question: '找不到任务物品怎么办？',
+          answer: '检查每个工作台或储物区域。很多任务物品不是直接捡到的，而是由基础资源合成出来的。',
+        },
+        {
+          question: 'Cow Bay 手机能玩吗？',
+          answer: '可以。Cow Bay 适合点按操作，但手机端建议慢一点、点准一点，避免把能量浪费在错误物体上。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'games-to-play-when-bored',
+          title: '无聊时可玩的浏览器小游戏',
+          description: '目标简单、推进稳定的轻松浏览器游戏。',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: '适合 5 分钟休息的浏览器游戏',
+          description: '适合短时间打开的快速浏览器游戏。',
+        },
+      ],
+    },
+  },
 };
 
 export function getGameEditorialContent(slug: string | null | undefined, locale: string): GameEditorialLocaleContent | null {

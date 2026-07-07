@@ -1,6 +1,6 @@
 # Luma Game Quality Audit
 
-Generated: 2026-07-07T04:03:45.286Z
+Generated: 2026-07-07T04:26:20.588Z
 
 This is a directional quality and indexing audit for Luma Game Hub. It is not a legal clearance report. Any game with source, IP, iframe, mobile, or content uncertainty still needs manual QA before being treated as AdSense-review-ready.
 
@@ -60,14 +60,14 @@ This is a directional quality and indexing audit for Luma Game Hub. It is not a 
 | 35 | castle-defender-saga | Castle Defender Saga | catalogue-only | 61 | szhong.4399.com | Catalogue-only; keep playable but noindex until content/source QA is complete | thin description (15 en words / 47 zh chars); placeholder thumbnail |
 | 36 | castle-pals | Castle Pals | core-indexed | 81 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | placeholder thumbnail |
 | 37 | catch-the-candy | Catch the Candy | core-indexed | 81 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | placeholder thumbnail |
-| 38 | cats-love-cake-2 | Cats Love Cake 2 | core-indexed | 74 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (16 en words / 43 zh chars); placeholder thumbnail |
-| 39 | cats-love-cake | Cats Love Cake | core-indexed | 74 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (15 en words / 41 zh chars); placeholder thumbnail |
+| 38 | cats-love-cake-2 | Cats Love Cake 2 | core-indexed | 81 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | placeholder thumbnail |
+| 39 | cats-love-cake | Cats Love Cake | core-indexed | 87 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | placeholder thumbnail |
 | 40 | city-bike-stunt | City Bike Stunt | core-indexed | 74 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (15 en words / 42 zh chars); placeholder thumbnail |
 | 41 | city-minibus-driver | City Minibus Driver | catalogue-only | 61 | szhong.4399.com | Catalogue-only; keep playable but noindex until content/source QA is complete | thin description (15 en words / 46 zh chars); placeholder thumbnail |
 | 42 | confront | Confront | catalogue-only | 61 | szhong.4399.com | Catalogue-only; keep playable but noindex until content/source QA is complete | thin description (13 en words / 35 zh chars); placeholder thumbnail |
-| 43 | cover-orange-journey | Cover Orange: Journey | core-indexed | 74 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (15 en words / 48 zh chars); placeholder thumbnail |
-| 44 | cover-orange | Cover Orange | core-indexed | 74 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (14 en words / 39 zh chars); placeholder thumbnail |
-| 45 | cow-bay | Cow Bay | core-indexed | 74 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (14 en words / 34 zh chars); placeholder thumbnail |
+| 43 | cover-orange-journey | Cover Orange: Journey | core-indexed | 87 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | placeholder thumbnail |
+| 44 | cover-orange | Cover Orange | core-indexed | 81 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | placeholder thumbnail |
+| 45 | cow-bay | Cow Bay | core-indexed | 87 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | placeholder thumbnail |
 | 46 | crazy-kick | Crazy Kick! | core-indexed | 74 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (14 en words / 38 zh chars); placeholder thumbnail |
 | 47 | crazy-runner-in-city | Crazy Runner in City | catalogue-only | 61 | szhong.4399.com | Catalogue-only; keep playable but noindex until content/source QA is complete | thin description (16 en words / 47 zh chars); placeholder thumbnail |
 | 48 | cyber-cars-punk-racing | Cyber Cars Punk Racing | catalogue-only | 61 | szhong.4399.com | Catalogue-only; keep playable but noindex until content/source QA is complete | thin description (16 en words / 49 zh chars); placeholder thumbnail |
