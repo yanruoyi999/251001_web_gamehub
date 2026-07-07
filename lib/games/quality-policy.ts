@@ -1,5 +1,6 @@
 export const MANUAL_REVIEW_GAME_REASONS = {
   'adam-and-eve-zombies': 'Zombie theme; review tone, iframe behavior, and age suitability before indexing.',
+  'balance-duel': 'Public store descriptions center on gun/recoil shooting duels; keep out of index during AdSense review prep.',
   'gun-battle-3': 'Gun combat query and title risk; keep out of index until source and presentation are reviewed.',
   'hero-tower-wars': 'War-themed title; review violence level and source clarity before surfacing.',
   'hunter-hitman': 'Hitman/assassin wording; review content suitability before indexing.',
@@ -39,7 +40,6 @@ export const CORE_INDEXABLE_GAME_SLUGS = [
   'adam-and-eve-snow',
   'apple-knight',
   'apple-knight-mini-dungeons',
-  'balance-duel',
   'beat-line',
   'big-tower-tiny-square',
   'big-tower-tiny-square-2',

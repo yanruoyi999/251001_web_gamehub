@@ -1,16 +1,16 @@
 # Luma Game Quality Audit
 
-Generated: 2026-07-06T23:43:58.743Z
+Generated: 2026-07-07T04:03:45.286Z
 
 This is a directional quality and indexing audit for Luma Game Hub. It is not a legal clearance report. Any game with source, IP, iframe, mobile, or content uncertainty still needs manual QA before being treated as AdSense-review-ready.
 
 ## Summary
 
 - Total fallback catalogue games: 200
-- Core indexed games: 94
+- Core indexed games: 93
 - Catalogue-only games: 88
-- Manual review games: 18
-- Noindex game pages under current policy: 106
+- Manual review games: 19
+- Noindex game pages under current policy: 107
 - Dominant source hosts: szhong.4399.com (197), www.friv2018.com (1), sda.4399.com (1), sxiao.4399.com (1)
 
 ## Policy Actions
@@ -36,15 +36,15 @@ This is a directional quality and indexing audit for Luma Game Hub. It is not a 
 | 11 | adam-and-eve-go-xmas | Adam and Eve Go: Xmas | core-indexed | 87 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | No immediate static-audit flags |
 | 12 | adam-and-eve-go | Adam and Eve Go | core-indexed | 93 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | No immediate static-audit flags |
 | 13 | adam-and-eve-night | Adam and Eve: Night | core-indexed | 93 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | No immediate static-audit flags |
-| 14 | adam-and-eve-sleepwalker | Adam and Eve: Sleepwalker | core-indexed | 80 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (16 en words / 52 zh chars) |
-| 15 | adam-and-eve-snow | Adam and Eve: Snow | core-indexed | 80 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (16 en words / 45 zh chars) |
+| 14 | adam-and-eve-sleepwalker | Adam and Eve: Sleepwalker | core-indexed | 93 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | No immediate static-audit flags |
+| 15 | adam-and-eve-snow | Adam and Eve: Snow | core-indexed | 93 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | No immediate static-audit flags |
 | 16 | adam-and-eve-zombies | Adam and Eve: Zombies | review | 52 | szhong.4399.com | Noindex; remove from sitemap/recommendations; manual source and content review | thin description (16 en words / 48 zh chars); Zombie theme; review tone, iframe behavior, and age suitability before indexing. |
 | 17 | adam-and-eve-adam-the-ghost | Adam and Eve: Adam the Ghost | catalogue-only | 70 | szhong.4399.com | Catalogue-only; keep playable but noindex until content/source QA is complete | thin description (18 en words / 55 zh chars) |
 | 18 | apple-knight-mini-dungeons | Apple Knight: Mini Dungeons | core-indexed | 87 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | No immediate static-audit flags |
 | 19 | apple-knight | Apple Knight | core-indexed | 87 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | No immediate static-audit flags |
 | 20 | assemble-and-drive-road-monsters | Assemble and Drive: Road Monsters | catalogue-only | 67 | szhong.4399.com | Catalogue-only; keep playable but noindex until content/source QA is complete | thin description (17 en words / 60 zh chars) |
-| 21 | balance-duel | Balance Duel | core-indexed | 80 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (14 en words / 39 zh chars) |
-| 22 | beat-line | Beat Line | core-indexed | 80 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (14 en words / 36 zh chars) |
+| 21 | balance-duel | Balance Duel | review | 49 | szhong.4399.com | Noindex; remove from sitemap/recommendations; manual source and content review | thin description (14 en words / 39 zh chars); Public store descriptions center on gun/recoil shooting duels; keep out of index during AdSense review prep. |
+| 22 | beat-line | Beat Line | core-indexed | 87 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | No immediate static-audit flags |
 | 23 | big-tower-tiny-square-2 | Big Tower Tiny Square 2 | core-indexed | 87 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | No immediate static-audit flags |
 | 24 | big-tower-tiny-square | Big Tower Tiny Square | core-indexed | 93 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | No immediate static-audit flags |
 | 25 | blast-red | Blast Red | catalogue-only | 64 | szhong.4399.com | Catalogue-only; keep playable but noindex until content/source QA is complete | thin description (14 en words / 36 zh chars); placeholder thumbnail |
@@ -58,8 +58,8 @@ This is a directional quality and indexing audit for Luma Game Hub. It is not a 
 | 33 | bright-lancer | Bright Lancer | catalogue-only | 61 | szhong.4399.com | Catalogue-only; keep playable but noindex until content/source QA is complete | thin description (14 en words / 40 zh chars); placeholder thumbnail |
 | 34 | castle-crashing-the-beard-hd | Castle Crashing the Beard HD | catalogue-only | 64 | szhong.4399.com | Catalogue-only; keep playable but noindex until content/source QA is complete | thin description (17 en words / 55 zh chars); placeholder thumbnail |
 | 35 | castle-defender-saga | Castle Defender Saga | catalogue-only | 61 | szhong.4399.com | Catalogue-only; keep playable but noindex until content/source QA is complete | thin description (15 en words / 47 zh chars); placeholder thumbnail |
-| 36 | castle-pals | Castle Pals | core-indexed | 74 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (14 en words / 38 zh chars); placeholder thumbnail |
-| 37 | catch-the-candy | Catch the Candy | core-indexed | 74 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (15 en words / 42 zh chars); placeholder thumbnail |
+| 36 | castle-pals | Castle Pals | core-indexed | 81 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | placeholder thumbnail |
+| 37 | catch-the-candy | Catch the Candy | core-indexed | 81 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | placeholder thumbnail |
 | 38 | cats-love-cake-2 | Cats Love Cake 2 | core-indexed | 74 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (16 en words / 43 zh chars); placeholder thumbnail |
 | 39 | cats-love-cake | Cats Love Cake | core-indexed | 74 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (15 en words / 41 zh chars); placeholder thumbnail |
 | 40 | city-bike-stunt | City Bike Stunt | core-indexed | 74 | szhong.4399.com | Keep indexed; prioritize content thickening if player/search data appears | thin description (15 en words / 42 zh chars); placeholder thumbnail |
@@ -227,6 +227,7 @@ This is a directional quality and indexing audit for Luma Game Hub. It is not a 
 ## Next Review Batch
 
 - adam-and-eve-zombies: Zombie theme; review tone, iframe behavior, and age suitability before indexing.
+- balance-duel: Public store descriptions center on gun/recoil shooting duels; keep out of index during AdSense review prep.
 - gun-battle-3: Gun combat query and title risk; keep out of index until source and presentation are reviewed.
 - hero-tower-wars: War-themed title; review violence level and source clarity before surfacing.
 - hunter-hitman: Hitman/assassin wording; review content suitability before indexing.

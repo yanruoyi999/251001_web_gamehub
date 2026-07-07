@@ -118,9 +118,9 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               'A point-and-click puzzle adventure with simple scene goals. Check the current embed before a longer session.',
           },
           {
-            slug: 'balance-duel',
+            slug: 'catch-the-candy',
             pitch:
-              'Short physics rounds make this a practical quick-break candidate on supported browsers.',
+              'A rope-and-grabber physics puzzle with short levels and clear goals.',
           },
           {
             slug: 'beat-line',
@@ -193,8 +193,8 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             pitch: '点击解谜冒险，每个场景目标明确；长时间游玩前请先确认当前嵌入页表现。',
           },
           {
-            slug: 'balance-duel',
-            pitch: '短局物理对战，适合在受支持的浏览器中快速体验。',
+            slug: 'catch-the-candy',
+            pitch: '用绳索和抓取解谜的短关卡物理游戏，目标清晰、节奏轻松。',
           },
           {
             slug: 'beat-line',
@@ -271,8 +271,8 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             pitch: 'A point-and-click puzzle candidate with simple controls to test.',
           },
           {
-            slug: 'balance-duel',
-            pitch: 'Short physics rounds that let you evaluate the current embed quickly.',
+            slug: 'catch-the-candy',
+            pitch: 'A gentle physics puzzle that makes touch and mouse responsiveness easy to check.',
           },
           {
             slug: 'beat-line',
@@ -338,8 +338,8 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             pitch: '点击解谜候选，场景目标清晰，适合先测试当前页面与操作。',
           },
           {
-            slug: 'balance-duel',
-            pitch: '短局物理玩法，方便先确认实时嵌入表现。',
+            slug: 'catch-the-candy',
+            pitch: '轻量物理解谜，方便先确认触控、鼠标和当前嵌入表现。',
           },
           {
             slug: 'beat-line',
@@ -408,7 +408,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             body: 'Choose the game by control style first. The best free iPhone game for a quick break is usually the one that matches your thumb input, not the one with the most complex mechanics.',
             bullets: [
               'Simple taps: Adam and Eve 4 is the safest first test because point-and-click puzzles translate well to touch.',
-              'Short physics rounds: Balance Duel is useful when you want a quick responsiveness check.',
+              'Rope physics puzzles: Catch the Candy is useful when you want a quick responsiveness check.',
               'Rhythm and timing: Beat Line works for short attempts if audio and tap timing feel stable.',
               'Complex controls: Apple Knight is included as a stress test; if virtual buttons feel cramped, move to desktop.',
             ],
@@ -434,8 +434,8 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             pitch: 'A point-and-click puzzle adventure and the strongest first candidate for simple tap-based play.',
           },
           {
-            slug: 'balance-duel',
-            pitch: 'Short physics rounds make it easy to test responsiveness without committing to a long session.',
+            slug: 'catch-the-candy',
+            pitch: 'Short physics puzzles make it easy to test responsiveness without committing to a long session.',
           },
           {
             slug: 'beat-line',
@@ -503,7 +503,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             body: '先按操作方式选,不要只看游戏名。对 iPhone 来说,最好的免费游戏通常是最匹配手指操作的那一款。',
             bullets: [
               '简单点击:Adam and Eve 4 是最稳的首个测试,点击解谜比较适合触屏。',
-              '短局物理:Balance Duel 适合快速检查手机上的响应和布局。',
+              '绳索物理:Catch the Candy 适合快速检查手机上的响应和布局。',
               '节奏时机:Beat Line 适合短局尝试,但要确认声音和点击时机稳定。',
               '复杂控制:Apple Knight 更像压力测试;如果虚拟按钮拥挤,建议换到桌面端。',
             ],
@@ -529,8 +529,8 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             pitch: '点击解谜冒险，是尝试简单触控操作的首选候选。',
           },
           {
-            slug: 'balance-duel',
-            pitch: '短局物理玩法，方便快速检查手机上的响应与画面适配。',
+            slug: 'catch-the-candy',
+            pitch: '短局物理解谜，方便快速检查手机上的响应与画面适配。',
           },
           {
             slug: 'beat-line',
@@ -3861,7 +3861,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           { slug: 'adam-and-eve-4', pitch: 'A calm point-and-click puzzle with a simple goal and short scenes.' },
           { slug: 'apple-knight', pitch: 'Action-platforming for a quick burst of movement and combat.' },
           { slug: 'big-tower-tiny-square', pitch: 'Precision jumps and fast retries for focused challenge.' },
-          { slug: 'balance-duel', pitch: 'A compact physics game built around short attempts.' },
+          { slug: 'catch-the-candy', pitch: 'A compact physics puzzle built around short attempts.' },
           { slug: 'beat-line', pitch: 'A timing-based rhythm game for a quick change of pace.' },
         ],
         faqs: [
@@ -3913,7 +3913,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           },
           {
             title: '按休息方式选择',
-            body: '想放慢节奏选 Adam and Eve 4；想集中注意力选 Apple Knight 或 Big Tower Tiny Square；想玩短局物理挑战选 Balance Duel；想换一种节奏选 Beat Line。',
+            body: '想放慢节奏选 Adam and Eve 4；想集中注意力选 Apple Knight 或 Big Tower Tiny Square；想玩短局物理解谜选 Catch the Candy；想换一种节奏选 Beat Line。',
           },
           {
             title: '让短休息真的保持简短',
@@ -3924,7 +3924,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           { slug: 'adam-and-eve-4', pitch: '目标简单、场景短小的轻松点击解谜。' },
           { slug: 'apple-knight', pitch: '用移动和战斗快速提神的动作平台游戏。' },
           { slug: 'big-tower-tiny-square', pitch: '精准跳跃、失败后快速重试的集中挑战。' },
-          { slug: 'balance-duel', pitch: '围绕短局展开的紧凑物理游戏。' },
+          { slug: 'catch-the-candy', pitch: '围绕短局展开的紧凑物理解谜。' },
           { slug: 'beat-line', pitch: '通过节奏和时机快速切换注意力。' },
         ],
         faqs: [

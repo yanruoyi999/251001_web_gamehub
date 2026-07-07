@@ -3415,6 +3415,571 @@ const GAME_EDITORIAL_CONTENT: Record<string, GameEditorialEntry> = {
       ],
     },
   },
+  'adam-and-eve-sleepwalker': {
+    en: {
+      metaTitle: 'Adam and Eve Sleepwalker Online - Puzzle Tips and Safe Browser Play',
+      metaDescription:
+        'Play Adam and Eve Sleepwalker online with point-and-click controls, sleepwalking puzzle tips, FAQ answers, and no-download browser guidance.',
+      title: 'Adam and Eve Sleepwalker quick guide',
+      summary:
+        'Adam and Eve Sleepwalker is a point-and-click puzzle adventure where Adam keeps moving through cold, dreamlike scenes while you prepare a safe path back home. The useful habit is to solve the environment before asking Adam to move.',
+      overview: [
+        'Because Adam is sleepwalking, the scene often asks you to protect him from obvious mistakes. Move animals, shift objects, open small paths, and wait for each reaction before clicking Adam forward.',
+        'Use this page when a scene feels stuck. It focuses on browser play, scene-reading, and no-download safety instead of walkthrough spoilers or installer links.',
+      ],
+      howToPlay: [
+        'Inspect the whole scene and identify what would stop Adam from walking safely.',
+        'Click or tap objects, animals, and tools one at a time to change the route.',
+        'Click Adam only after the obstacle chain is solved and the path looks safe.',
+      ],
+      controls: [
+        { label: 'Interact', value: 'Click with a mouse or tap on touchscreens to use scene objects.' },
+        { label: 'Advance Adam', value: 'Click Adam after the route has been prepared.' },
+        { label: 'Retry', value: 'Restart the scene if the order becomes hard to track.' },
+      ],
+      tips: [
+        'Do not start by clicking Adam repeatedly; first remove the obstacle in front of him.',
+        'Cold-scene props can blend into the background, so scan corners and snow-covered objects.',
+        'If an animal blocks the route, look for the item that moves, feeds, or distracts it.',
+        'Play in the browser and avoid pages that package the game as an APK or extension.',
+      ],
+      faqs: [
+        {
+          question: 'What is the goal in Adam and Eve Sleepwalker?',
+          answer:
+            'Prepare each scene so a sleepwalking Adam can move safely toward home or bed without getting blocked.',
+        },
+        {
+          question: 'How do I know when to click Adam?',
+          answer:
+            'Click Adam after nearby obstacles, animals, or route objects have already changed. If nothing happens, the scene still has an unsolved blocker.',
+        },
+        {
+          question: 'Does Adam and Eve Sleepwalker require a download?',
+          answer:
+            'No. Use the browser player on Luma and avoid APK, installer, or unknown extension prompts.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'adam-and-eve-walkthrough',
+          title: 'Adam and Eve walkthrough',
+          description: 'Series-wide point-and-click puzzle habits and stuck-scene advice.',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: 'Best browser games for a 5-minute break',
+          description: 'More short browser games with simple controls and natural stopping points.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Adam and Eve Sleepwalker 在线玩 - 解谜技巧与安全浏览器玩法',
+      metaDescription:
+        '在线玩 Adam and Eve Sleepwalker，查看点击解谜操作、梦游关卡技巧、FAQ 和免下载浏览器安全说明。',
+      title: 'Adam and Eve Sleepwalker 快速玩法指南',
+      summary:
+        'Adam and Eve Sleepwalker 是点击解谜冒险，Adam 会在寒冷、梦境般的场景里梦游前进，你要先把路准备安全，再让他继续走。核心习惯是先解决环境，再点击 Adam。',
+      overview: [
+        '因为 Adam 正在梦游，关卡经常要求你替他避免明显危险。移动动物、改变物体、打开小路径，并在每次反应结束后再决定下一步。',
+        '这个页面适合卡关时参考，重点是浏览器玩法、场景观察和免下载安全说明，不提供大段剧透或安装器链接。',
+      ],
+      howToPlay: [
+        '先检查整个场景，找出会阻止 Adam 安全前进的因素。',
+        '一次点击或点按一个物体、动物或工具，改变路线状态。',
+        '只有障碍链条处理完、路径看起来安全后，再点击 Adam 前进。',
+      ],
+      controls: [
+        { label: '互动', value: '用鼠标点击或触屏点按场景物体。' },
+        { label: '让 Adam 前进', value: '路线准备好后点击 Adam。' },
+        { label: '重试', value: '顺序难以追踪时重开当前场景。' },
+      ],
+      tips: [
+        '不要一开始反复点 Adam，先解决他前方的障碍。',
+        '寒冷场景里的道具容易和背景融合，注意角落和被雪盖住的物体。',
+        '如果动物挡路，找能移动、喂食或分散它注意力的物品。',
+        '保持浏览器游玩，避开把游戏包装成 APK 或扩展的页面。',
+      ],
+      faqs: [
+        {
+          question: 'Adam and Eve Sleepwalker 的目标是什么？',
+          answer: '准备好每个场景，让梦游的 Adam 能安全回家或回到床上，不被障碍卡住。',
+        },
+        {
+          question: '什么时候应该点击 Adam？',
+          answer: '附近障碍、动物或路线物体已经改变后再点 Adam。如果他没有前进，说明场景还有未解决的挡路点。',
+        },
+        {
+          question: 'Adam and Eve Sleepwalker 需要下载吗？',
+          answer: '不需要。使用 Luma 浏览器播放器即可，避开 APK、安装器或未知扩展提示。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'adam-and-eve-walkthrough',
+          title: 'Adam and Eve 系列攻略',
+          description: '覆盖系列点击解谜习惯和卡关处理方法。',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: '适合 5 分钟休息的浏览器游戏',
+          description: '更多操作简单、容易停下来的短局浏览器游戏。',
+        },
+      ],
+    },
+  },
+  'adam-and-eve-snow': {
+    en: {
+      metaTitle: 'Adam and Eve Snow Online - Christmas Puzzle Tips and Safe Play',
+      metaDescription:
+        'Play Adam and Eve Snow online with Christmas point-and-click tips, controls, FAQ answers, and no-download browser safety notes.',
+      title: 'Adam and Eve Snow quick guide',
+      summary:
+        'Adam and Eve Snow is a Christmas-themed point-and-click puzzle about helping Adam solve snowy scene chains and find a tree for Eve. It is still an Adam and Eve puzzle at heart: observe, click one object, watch the reaction, then continue the chain.',
+      overview: [
+        'Snowy scenes can hide small switches, tools, and creature reactions, so fast random clicking is less useful than careful scanning. The answer is usually near the object blocking Adam or the item needed for the tree route.',
+        'This guide keeps the page useful for real players: controls, scene logic, holiday-version tips, and browser safety without pushing downloads.',
+      ],
+      howToPlay: [
+        'Find the current blocker, then inspect nearby objects that could change it.',
+        'Click one object at a time and wait for the snowy scene to finish reacting.',
+        'Move Adam forward only when the route to the next scene is clear.',
+      ],
+      controls: [
+        { label: 'Interact', value: 'Click or tap objects, animals, tools, and Adam.' },
+        { label: 'Observe', value: 'Use each animation as the clue for the next click.' },
+        { label: 'Restart', value: 'Reset the scene if the click order becomes confusing.' },
+      ],
+      tips: [
+        'Seasonal props may be part of the puzzle, so treat gifts, trees, snow, and decorations as possible clues.',
+        'If a guard or creature blocks Adam, solve what changes its attention before clicking Adam.',
+        'Scan the top and corners of the scene; small clickable items can be easy to miss.',
+        'Use the browser player and avoid Christmas-edition APK or installer pages.',
+      ],
+      faqs: [
+        {
+          question: 'What is Adam trying to do in Adam and Eve Snow?',
+          answer:
+            'The Christmas setup is about helping Adam work through snowy puzzles and find a tree for Eve.',
+        },
+        {
+          question: 'Is Adam and Eve Snow different from the main games?',
+          answer:
+            'The theme is seasonal, but the controls and puzzle logic are familiar point-and-click Adam and Eve mechanics.',
+        },
+        {
+          question: 'Can I play Adam and Eve Snow without installing anything?',
+          answer:
+            'Yes. Play in the browser on Luma and avoid APK, installer, or extension prompts.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'adam-and-eve-walkthrough',
+          title: 'Adam and Eve walkthrough',
+          description: 'General solving methods for point-and-click Adam and Eve scenes.',
+        },
+        {
+          slug: 'games-to-play-when-bored',
+          title: 'Games to play when bored',
+          description: 'More relaxed browser games for short sessions.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Adam and Eve Snow 在线玩 - 圣诞解谜技巧与安全玩法',
+      metaDescription:
+        '在线玩 Adam and Eve Snow，查看圣诞点击解谜技巧、操作、FAQ 和免下载浏览器安全说明。',
+      title: 'Adam and Eve Snow 快速玩法指南',
+      summary:
+        'Adam and Eve Snow 是圣诞主题点击解谜，目标是帮助 Adam 解开雪地场景链条，并为 Eve 找到圣诞树。它本质上仍是 Adam and Eve 谜题：观察、点击一个对象、看反应，再继续下一步。',
+      overview: [
+        '雪地场景会让小开关、工具和动物反应不太明显，所以随机快速点击不如仔细扫描。答案通常就在挡住 Adam 的对象附近，或与圣诞树路线有关的物品附近。',
+        '这个指南关注真实玩家需要的操作、场景逻辑、节日版本技巧和浏览器安全说明，不引导下载。',
+      ],
+      howToPlay: [
+        '先找当前挡路点，再检查附近可能改变它的对象。',
+        '一次点击一个物体，等雪地场景完整反应后再继续。',
+        '只有下一段路线清楚后，再让 Adam 前进。',
+      ],
+      controls: [
+        { label: '互动', value: '点击或点按物体、动物、工具和 Adam。' },
+        { label: '观察', value: '把每个动画变化当成下一次点击的线索。' },
+        { label: '重开', value: '点击顺序混乱时重置当前场景。' },
+      ],
+      tips: [
+        '节日道具可能参与解谜，礼物、树、雪和装饰都要当成线索看。',
+        '如果守卫或动物挡住 Adam，先解决能转移它注意力的对象。',
+        '扫一遍画面上方和角落，小可点击物很容易漏掉。',
+        '使用浏览器播放器即可，避开圣诞版 APK 或安装器页面。',
+      ],
+      faqs: [
+        {
+          question: 'Adam and Eve Snow 里 Adam 要做什么？',
+          answer: '圣诞剧情是帮助 Adam 解开雪地谜题，并为 Eve 找到圣诞树。',
+        },
+        {
+          question: 'Adam and Eve Snow 和主线作品不同吗？',
+          answer: '主题是节日版，但操作和解谜逻辑仍然是熟悉的点击场景链条。',
+        },
+        {
+          question: 'Adam and Eve Snow 不安装可以玩吗？',
+          answer: '可以。在 Luma 浏览器里直接玩，避开 APK、安装器或扩展提示。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'adam-and-eve-walkthrough',
+          title: 'Adam and Eve 系列攻略',
+          description: '适用于 Adam and Eve 点击场景的通用解谜方法。',
+        },
+        {
+          slug: 'games-to-play-when-bored',
+          title: '无聊时可玩的浏览器小游戏',
+          description: '更多适合短时间放松的浏览器游戏。',
+        },
+      ],
+    },
+  },
+  'beat-line': {
+    en: {
+      metaTitle: 'Beat Line Online - Rhythm Tap Controls, Turn Tips and Safe Play',
+      metaDescription:
+        'Play Beat Line online with rhythm tap controls, sharp-turn tips, mobile timing advice, FAQ answers, and no-download browser guidance.',
+      title: 'Beat Line quick guide',
+      summary:
+        'Beat Line is a rhythm-timing arcade game where a moving line must turn at the right moment, stay on the path, and survive increasingly tight corners. The skill is not speed alone; it is matching taps to visual corners and the music pulse.',
+      overview: [
+        'Most mistakes happen when you tap as soon as you see a turn rather than when the line reaches it. Watch the path ahead, listen to the beat if audio is available, and keep your finger ready for quick single taps.',
+        'This page helps with practical browser play: input timing, mobile feel, audio checks, and safe no-download play.',
+      ],
+      howToPlay: [
+        'Let the line move forward and tap or click when it reaches a corner.',
+        'Keep the line inside the path and avoid edges or obstacles.',
+        'Use the beat and the next visible turn to prepare your timing.',
+      ],
+      controls: [
+        { label: 'Turn', value: 'Tap the screen or click the mouse to change direction.' },
+        { label: 'Timing', value: 'Tap when the line reaches the corner, not when the corner first appears.' },
+        { label: 'Retry', value: 'Restart quickly and focus on the first turn that caused the mistake.' },
+      ],
+      tips: [
+        'Turn on audio if possible; the rhythm can help you anticipate corner spacing.',
+        'Use light single taps instead of double tapping, which often sends the line into the edge.',
+        'On mobile, keep your tapping finger away from the path so you can still see upcoming turns.',
+        'If the page asks for an app install, use the browser version instead.',
+      ],
+      faqs: [
+        {
+          question: 'How do I get better at Beat Line?',
+          answer:
+            'Watch one turn ahead and tap exactly as the line reaches the corner. Audio can help, but visual timing still matters.',
+        },
+        {
+          question: 'Is Beat Line better with sound on?',
+          answer:
+            'Sound helps because the game is rhythm-based, but you can still play by watching the line and path.',
+        },
+        {
+          question: 'Does Beat Line need a download?',
+          answer:
+            'No. Play in the browser on Luma and avoid installer, APK, or extension prompts.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: 'Best browser games for a 5-minute break',
+          description: 'More short browser games built for quick attempts.',
+        },
+        {
+          slug: 'games-to-play-when-bored',
+          title: 'Games to play when bored',
+          description: 'Casual browser games when you want a fast change of pace.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Beat Line 在线玩 - 节奏点击操作、转弯技巧与安全玩法',
+      metaDescription:
+        '在线玩 Beat Line，查看节奏点击操作、急转弯技巧、手机时机建议、FAQ 和免下载浏览器说明。',
+      title: 'Beat Line 快速玩法指南',
+      summary:
+        'Beat Line 是节奏时机街机游戏，移动的线条需要在正确时刻转弯，保持在道路内，并通过越来越紧的弯道。难点不只是速度，而是把点击时机对准视觉拐角和音乐节拍。',
+      overview: [
+        '多数失误来自看到弯道就立刻点，而不是等线条真正到达弯道。提前看路线，如果有声音就听节拍，并让手指准备好做单次轻点。',
+        '这个页面帮助你处理实际浏览器游玩中的输入时机、手机手感、声音检查和免下载安全边界。',
+      ],
+      howToPlay: [
+        '让线条向前移动，并在到达拐角时点击或点按。',
+        '保持线条在道路内，避开边缘和障碍。',
+        '结合节拍和下一个可见弯道，提前准备点击时机。',
+      ],
+      controls: [
+        { label: '转弯', value: '点按屏幕或点击鼠标改变方向。' },
+        { label: '时机', value: '线条到达拐角时再点，不是看到拐角就点。' },
+        { label: '重试', value: '快速重开，并重点练导致失败的第一个弯。' },
+      ],
+      tips: [
+        '能开声音就开，节奏能帮助你预判弯道间距。',
+        '用单次轻点，不要双击；双击经常会把线条送到边缘。',
+        '手机端手指不要挡住前方路线，否则看不到下一个弯。',
+        '如果页面要求安装 App，优先使用浏览器版本。',
+      ],
+      faqs: [
+        {
+          question: 'Beat Line 怎么提升？',
+          answer: '提前看一个弯，并在线条正好到达拐角时点击。声音有帮助，但视觉时机仍然重要。',
+        },
+        {
+          question: 'Beat Line 开声音更好吗？',
+          answer: '更好，因为游戏围绕节奏设计；但关声音也能靠观察路线游玩。',
+        },
+        {
+          question: 'Beat Line 需要下载吗？',
+          answer: '不需要。在 Luma 浏览器里直接玩，避开安装器、APK 或扩展提示。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: '适合 5 分钟休息的浏览器游戏',
+          description: '更多适合快速尝试的短局浏览器游戏。',
+        },
+        {
+          slug: 'games-to-play-when-bored',
+          title: '无聊时可玩的浏览器小游戏',
+          description: '想快速换节奏时可打开的休闲浏览器游戏。',
+        },
+      ],
+    },
+  },
+  'castle-pals': {
+    en: {
+      metaTitle: 'Castle Pals Online - Character Tips, Controls and Safe Play',
+      metaDescription:
+        'Play Castle Pals online with character-control tips, platforming advice, FAQ answers, and no-download browser safety notes.',
+      title: 'Castle Pals quick guide',
+      summary:
+        'Castle Pals is a compact retro platform adventure built around two different character styles. One pal handles direct platform action, while the other can float or fly through tricky spaces, so the best approach changes from level to level.',
+      overview: [
+        'The game is easier when you read which character the level expects before rushing forward. Some rooms reward careful jumps and attacks, while others ask you to use floating movement to avoid traps and reach safer platforms.',
+        'This guide keeps the focus on browser play, character differences, mobile notes, and safe no-download access.',
+      ],
+      howToPlay: [
+        'Move through each castle level while avoiding traps and simple enemies.',
+        'Use the active character ability to cross gaps, climb routes, or clear the path.',
+        'Reach the exit cleanly and replay levels when you want better timing.',
+      ],
+      controls: [
+        { label: 'Move', value: 'Use the active keyboard or touch movement controls shown by the game.' },
+        { label: 'Jump / ability', value: 'Use the action control for jumps, attacks, floating, or character-specific movement.' },
+        { label: 'Retry', value: 'Restart a level when a trap pattern or ability timing goes wrong.' },
+      ],
+      tips: [
+        'Identify whether the level favors direct jumping or floating movement before pushing ahead.',
+        'Stop before trap clusters and watch one cycle instead of jumping blind.',
+        'If a section feels too tight, use shorter inputs and reposition before the next jump.',
+        'Keyboard usually gives cleaner control than touch for platforming.',
+      ],
+      faqs: [
+        {
+          question: 'What makes Castle Pals different from simple platformers?',
+          answer:
+            'The character styles change how you approach levels, so movement choice matters as much as jump timing.',
+        },
+        {
+          question: 'Is Castle Pals good on mobile?',
+          answer:
+            'It can work, but tight platforming is easier with a keyboard. On touch, use shorter inputs and avoid covering the path.',
+        },
+        {
+          question: 'Does Castle Pals require a download?',
+          answer:
+            'No. Play in the browser on Luma and avoid APK, installer, or extension prompts.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'games-like-ovo',
+          title: 'Games like OvO',
+          description: 'More platformers and quick-retry movement challenges.',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: 'Best browser games for a 5-minute break',
+          description: 'Short browser games with clear goals and fast retries.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Castle Pals 在线玩 - 角色技巧、操作与安全玩法',
+      metaDescription:
+        '在线玩 Castle Pals，查看角色操作技巧、平台跳跃建议、FAQ 和免下载浏览器安全说明。',
+      title: 'Castle Pals 快速玩法指南',
+      summary:
+        'Castle Pals 是复古风格平台冒险，围绕两种不同角色风格展开。一个角色更适合直接平台动作，另一个可以漂浮或飞过棘手空间，所以每关的最佳路线都不完全一样。',
+      overview: [
+        '进入关卡前先判断它更需要哪种角色思路。某些房间考跳跃和攻击时机，另一些则要求用漂浮移动避开陷阱、到达安全平台。',
+        '这个指南关注浏览器游玩、角色差异、手机体验和免下载安全边界。',
+      ],
+      howToPlay: [
+        '穿过城堡关卡，避开陷阱和简单敌人。',
+        '使用当前角色能力跨越缺口、通过路线或清理障碍。',
+        '到达出口通关；想要更好时机时可以重玩关卡。',
+      ],
+      controls: [
+        { label: '移动', value: '使用游戏显示的键盘或触控移动按钮。' },
+        { label: '跳跃 / 能力', value: '使用动作键进行跳跃、攻击、漂浮或角色专属移动。' },
+        { label: '重试', value: '陷阱节奏或能力时机出错时重开关卡。' },
+      ],
+      tips: [
+        '先判断关卡更适合直接跳跃还是漂浮移动，再往前推进。',
+        '遇到陷阱群先停下观察一个循环，不要盲跳。',
+        '狭窄区域用短输入，下一跳前先重新站稳。',
+        '平台跳跃通常键盘比触屏更稳。',
+      ],
+      faqs: [
+        {
+          question: 'Castle Pals 和普通平台游戏有什么不同？',
+          answer: '不同角色会改变过关方式，所以移动选择和跳跃时机同样重要。',
+        },
+        {
+          question: 'Castle Pals 手机体验好吗？',
+          answer: '可以玩，但精细平台跳跃更适合键盘。触屏时用短输入，并避免手指挡住路线。',
+        },
+        {
+          question: 'Castle Pals 需要下载吗？',
+          answer: '不需要。在 Luma 浏览器里直接玩，避开 APK、安装器或扩展提示。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'games-like-ovo',
+          title: '类似 OvO 的高重试小游戏',
+          description: '更多平台跳跃和快速重试的移动挑战。',
+        },
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: '适合 5 分钟休息的浏览器游戏',
+          description: '更多目标清晰、重试迅速的短局浏览器游戏。',
+        },
+      ],
+    },
+  },
+  'catch-the-candy': {
+    en: {
+      metaTitle: 'Catch the Candy Online - Rope Puzzle Controls and Safe Play',
+      metaDescription:
+        'Play Catch the Candy online with grabber controls, rope physics tips, FAQ answers, mobile notes, and no-download browser safety guidance.',
+      title: 'Catch the Candy quick guide',
+      summary:
+        'Catch the Candy is a friendly physics puzzle about using a stretchy grabber to pull a small character toward candy. Good attempts come from choosing anchor points carefully, using momentum, and reaching the candy with fewer wasted pulls.',
+      overview: [
+        'Every level is a small rope-physics problem. You are not simply clicking the candy; you are deciding where to latch, when to release, and how to swing around obstacles without losing control.',
+        'Use this page for practical browser play: mouse and touch controls, common timing mistakes, and safe no-download access.',
+      ],
+      howToPlay: [
+        'Aim the grabber at nearby surfaces, objects, or the candy path.',
+        'Hold or tap to pull the character, then use momentum to move closer to the candy.',
+        'Adjust the anchor point when the first pull sends you in the wrong direction.',
+      ],
+      controls: [
+        { label: 'Grab / pull', value: 'Use the mouse or touch input to extend the grabber toward an anchor point.' },
+        { label: 'Release', value: 'Let go when the swing or pull has moved you into a better position.' },
+        { label: 'Retry', value: 'Restart when the first anchor choice wastes too much movement.' },
+      ],
+      tips: [
+        'Anchor to stable surfaces before trying to reach the candy directly.',
+        'Use short pulls to correct position instead of one long uncontrolled swing.',
+        'If you miss the candy, change the anchor point first, then the timing.',
+        'On mobile, keep taps deliberate because small anchor points are easy to miss.',
+      ],
+      faqs: [
+        {
+          question: 'How do you control Catch the Candy?',
+          answer:
+            'Use the grabber to latch onto surfaces or objects, pull the character into position, and reach the candy.',
+        },
+        {
+          question: 'Is Catch the Candy a puzzle or arcade game?',
+          answer:
+            'It is mainly a physics puzzle, but the rope timing gives it a light arcade feel.',
+        },
+        {
+          question: 'Does Catch the Candy need a download?',
+          answer:
+            'No. Play in the browser on Luma and avoid installer, APK, or extension prompts.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: 'Best browser games for a 5-minute break',
+          description: 'More short browser games with quick levels.',
+        },
+        {
+          slug: 'games-to-play-when-bored',
+          title: 'Games to play when bored',
+          description: 'Casual games for relaxed browser sessions.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'Catch the Candy 在线玩 - 绳索解谜操作与安全玩法',
+      metaDescription:
+        '在线玩 Catch the Candy，查看抓取操作、绳索物理技巧、FAQ、手机体验和免下载浏览器安全说明。',
+      title: 'Catch the Candy 快速玩法指南',
+      summary:
+        'Catch the Candy 是友好的物理解谜游戏，需要用可伸缩抓手把小角色拉向糖果。好的尝试来自选择合适锚点、利用动量，并用更少无效拉拽接近目标。',
+      overview: [
+        '每一关都是小型绳索物理问题。你不是简单点击糖果，而是在判断抓哪里、什么时候松开，以及怎样绕过障碍而不失控。',
+        '这个页面提供实际浏览器玩法：鼠标和触控操作、常见时机错误，以及免下载安全说明。',
+      ],
+      howToPlay: [
+        '把抓手瞄准附近表面、物体或通向糖果的路径。',
+        '按住或点按进行拉拽，利用动量让角色靠近糖果。',
+        '如果第一次拉拽方向错误，先换锚点，再调整时机。',
+      ],
+      controls: [
+        { label: '抓取 / 拉拽', value: '用鼠标或触控把抓手伸向锚点。' },
+        { label: '松开', value: '摆动或拉拽已经把角色带到更好位置时松开。' },
+        { label: '重试', value: '第一锚点选择浪费太多移动时重开。' },
+      ],
+      tips: [
+        '先抓稳定表面，再尝试直接靠近糖果。',
+        '用短拉拽修正位置，不要一次长拉导致失控摆动。',
+        '没碰到糖果时，先换锚点，再改时机。',
+        '手机端点按要准确，小锚点容易漏点。',
+      ],
+      faqs: [
+        {
+          question: 'Catch the Candy 怎么操作？',
+          answer: '用抓手抓住表面或物体，把角色拉到合适位置，最终碰到糖果。',
+        },
+        {
+          question: 'Catch the Candy 是解谜还是街机？',
+          answer: '主要是物理解谜，但绳索时机让它有一点轻街机手感。',
+        },
+        {
+          question: 'Catch the Candy 需要下载吗？',
+          answer: '不需要。在 Luma 浏览器里直接玩，避开安装器、APK 或扩展提示。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'best-browser-games-5-minute-break',
+          title: '适合 5 分钟休息的浏览器游戏',
+          description: '更多关卡短、启动快的浏览器游戏。',
+        },
+        {
+          slug: 'games-to-play-when-bored',
+          title: '无聊时可玩的浏览器小游戏',
+          description: '适合轻松浏览器短局的休闲游戏。',
+        },
+      ],
+    },
+  },
 };
 
 export function getGameEditorialContent(slug: string | null | undefined, locale: string): GameEditorialLocaleContent | null {
