@@ -1523,3 +1523,16 @@
 - 提交部署：commit `1f819af add eighth batch game guides` 已推送 `origin/main`；为避免当前脏工作区进入部署包，已从干净临时 worktree `/tmp/luma-gamehub-deploy-1f819af` 手动执行 `vercel deploy --prod --yes`；Vercel production deployment `dpl_5gpT3KAKG5D7VqxKjMw6braeiVRx` Ready，并挂载 `https://www.lumagamehub.com`。
 - 生产验证：上述 5 个英文目标页 + 3 个中文页均 HTTP 200，输出新 title、guide heading、FAQ、related guide links，且无 `noindex`；生产 sitemap 282 URLs，并包含 5 个目标 slug 的中英文详情页。
 - 下一步：第九批可从仍为 `core-indexed` 且 thin description 的 `city-bike-stunt`、`crazy-kick`、`dadish-3`、`duo-vikings`、`duo-vikings-2` 中继续加厚；另行处理高价值页 placeholder thumbnail 和 T-067 外部配置。
+
+### T-126 Core game detail editorial upgrade batch 9 and sidebar tip cleanup
+
+- 选择原因：延续核心页小批次加厚策略，第九批选择 `city-bike-stunt`、`crazy-kick`、`dadish-3`、`duo-vikings`、`duo-vikings-2`。这 5 个均为 `core-indexed`，此前主要问题是 thin description，且能覆盖摩托特技、足球控球、复古平台、双人协作解谜等不同搜索意图。
+- 公开来源复核：`City Bike Stunt` 参考 Miniplay / TwoPlayerGames 的摩托坡道、双人、氮气和控制说明；`Crazy Kick` 参考 Google Play / App Store / Miniplay 的控球绕人射门说明；`Dadish 3` 参考 Poki / Google Play / Steam 的复古平台和救孩子玩法说明；`Duo Vikings` / `Duo Vikings 2` 参考 Poki、PlayMiniGames、VitalityGames 等公开页面的合作解谜、机关、硬币和出口说明。
+- 实际改动：继续扩展 `lib/games/editorial-content.ts`，为第九批 5 个动态游戏详情页新增中英文原创摘要、overview、how to play、controls、tips、FAQ 和 related guides；同时修正 `app/[locale]/games/[slug]/page.tsx` 的右侧 Game Tips 优先级，使已有 editorial 内容的页面右栏也使用原创 tips，避免旧 `instructions` 出现玩法不匹配提示。
+- 内链与体验：相关攻略指向 `drive-mad-walkthrough`、`games-to-play-when-bored`、`best-browser-games-5-minute-break`、`games-like-ovo`、`free-games-no-ads`，全部为站内已存在页面；页面仍保持先 playable iframe facade，再是原创玩法指南、FAQ 和相关指南。
+- 合规边界：未新增 iframe、截图、广告容器、下载入口或诱导点击文案；文案继续强调 browser play/no download，避开 APK、安装器、插件、ROM 和破解导向；未触碰 AdSense 后台或广告正式提交。
+- 验证结果：`pnpm exec tsc --noEmit --incremental false` 通过；字段完整性校验 5 个目标 slug 均 ok；`pnpm exec tsx scripts/audit-game-quality.ts --write docs/game-quality-audit.md` 通过，目标页均不再命中 thin description，分数为 City Bike Stunt 87、Crazy Kick 81、Dadish 3 87、Duo Vikings 81、Duo Vikings 2 81；related guide slug 校验通过；`pnpm lint` 通过；`git diff --check` 通过；`pnpm build` 通过。
+- 本地 production 验证：`pnpm exec next start -p 3024` 后抽查 `/en/games/city-bike-stunt`、`/en/games/crazy-kick`、`/en/games/dadish-3`、`/en/games/duo-vikings`、`/en/games/duo-vikings-2`、`/games/city-bike-stunt`、`/games/dadish-3`、`/games/duo-vikings-2` 均 HTTP 200，输出新 quick guide、How to play、Controls、related guide links，且无 `noindex`；本地 sitemap 包含目标中英文 URL；Dadish 3 右栏不再出现旧的 board / pencil marks 类错误提示。
+- 提交部署：commit `de5c26e add ninth batch game guides` 与 `45dbaf6 use editorial tips in game sidebar` 已推送 `origin/main`；为避免当前脏工作区进入部署包，最终从干净临时 worktree `/tmp/luma-gamehub-deploy-45dbaf6` 手动执行 `vercel deploy --prod --yes`；Vercel production deployment `dpl_3ngoVyFeBiHpY8Z3SYtuTM5UokPK` Ready，并挂载 `https://www.lumagamehub.com`。
+- 生产验证：上述 5 个英文目标页 + 3 个中文页均 HTTP 200，输出新 quick guide、How to play、Controls、related guide links，且无 `noindex`；生产 sitemap 包含 5 个目标 slug 的中英文详情页；Dadish 3 英文和中文页均未命中旧错位 tips。
+- 下一步：第十批可从仍为 `core-indexed` 且 thin description 的 `dirt-bike-extreme-parkour`、`duo-vikings-3`、`flip-bottle`、`g-switch`、`g-switch-2` 中继续加厚；发布前先核对公开来源、玩法/IP/AdSense 风险；另行处理 T-067 外部配置和高价值页 placeholder thumbnail。
