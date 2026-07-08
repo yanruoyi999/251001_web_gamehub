@@ -185,6 +185,8 @@ export default function GuidePage({ params }: GuidePageProps) {
   const firstSection = content.sections[0];
   const quickAnswerBody = firstSection?.body ?? content.overview[0];
   const quickAnswerBullets = firstSection?.bullets?.slice(0, 3) ?? [];
+  const isDriveMadGuide = page.slug === 'drive-mad-walkthrough';
+  const driveMadAlternativesHref = getLocalizedPath(locale, '/guides/games-like-drive-mad');
 
   return (
     <article className="mx-auto w-full max-w-5xl px-6 py-12">
@@ -235,9 +237,15 @@ export default function GuidePage({ params }: GuidePageProps) {
               {locale === 'zh' ? '先试玩游戏' : 'Play first'}
             </a>
           ) : null}
-          <a href="#recommendations" className="rounded-full border border-border bg-background px-4 py-2 text-foreground transition hover:bg-secondary">
-            {locale === 'zh' ? '看相似游戏' : 'See similar games'}
-          </a>
+          {isDriveMadGuide ? (
+            <Link href={driveMadAlternativesHref} className="rounded-full border border-border bg-background px-4 py-2 text-foreground transition hover:bg-secondary">
+              {locale === 'zh' ? '看类似 Drive Mad 的游戏' : 'See games like Drive Mad'}
+            </Link>
+          ) : (
+            <a href="#recommendations" className="rounded-full border border-border bg-background px-4 py-2 text-foreground transition hover:bg-secondary">
+              {locale === 'zh' ? '看相似游戏' : 'See similar games'}
+            </a>
+          )}
         </div>
       </section>
 
@@ -275,6 +283,22 @@ export default function GuidePage({ params }: GuidePageProps) {
           <p key={index}>{paragraph}</p>
         ))}
       </section>
+
+      {isDriveMadGuide ? (
+        <section className="mx-auto mt-8 max-w-3xl rounded-2xl border border-primary/20 bg-primary/5 p-5 text-sm text-foreground/90">
+          <h2 className="text-xl font-semibold text-foreground">
+            {locale === 'zh' ? '还想玩类似 Drive Mad 的游戏?' : 'Want more games like Drive Mad?'}
+          </h2>
+          <p className="mt-2 text-muted-foreground">
+            {locale === 'zh'
+              ? '如果你喜欢翻车、跳跃、平衡、车辆组装和短局重试，可以继续看我们整理的物理驾驶小游戏清单。'
+              : 'If you like flips, jumps, balance, vehicle experiments, and short retry loops, continue with our physics-driving collection.'}
+          </p>
+          <Link href={driveMadAlternativesHref} className="mt-3 inline-flex items-center font-medium text-primary transition hover:text-primary/80">
+            {locale === 'zh' ? '打开类似 Drive Mad 的游戏清单' : 'Open the games-like-Drive-Mad list'} →
+          </Link>
+        </section>
+      ) : null}
 
       <section id="tips" className="mt-12 space-y-10 scroll-mt-24">
         {content.sections.map((section) => (
