@@ -68,6 +68,33 @@ export default function GuidesPage({ params }: GuidesPageProps) {
       : 'From lower-interruption picks to mobile browser candidates, these guides organize games by real play scenarios. Check the device notes, choose a theme, and start playing.';
   const extraGuides = [
     {
+      href: getLocalizedPath(locale, '/guides/brainrot-games'),
+      title: locale === 'zh' ? 'Brainrot Games Online 攻略合集' : 'Brainrot Games Online',
+      summary:
+        locale === 'zh'
+          ? '围绕最新 Brainrot 浏览器小游戏整理合成、偷取、收集、Obby、移动端体验和安全说明。'
+          : 'A fresh Brainrot browser-game hub covering craft, steal, collect, obby, mobile experience, and safety notes.',
+    },
+    {
+      href: getLocalizedPath(locale, '/guides/steal-beanstalk-for-brainrots-guide'),
+      title:
+        locale === 'zh'
+          ? 'Steal Beanstalk for Brainrots 攻略'
+          : 'Steal Beanstalk for Brainrots Guide',
+      summary:
+        locale === 'zh'
+          ? '拆解 Beanstalk 升级、偷取循环、稀有目标、移动端检查和 Luma 可安全扩展边界。'
+          : 'A guide to beanstalk upgrades, stealing loops, rare targets, mobile checks, and safer Luma expansion boundaries.',
+    },
+    {
+      href: getLocalizedPath(locale, '/guides/float-for-brainrots-guide'),
+      title: locale === 'zh' ? 'Float for Brainrots 攻略' : 'Float for Brainrots Guide',
+      summary:
+        locale === 'zh'
+          ? '围绕稀有 Brainrots、船只升级、鲨鱼倒计时、返回基地节奏和手机体验做原创攻略。'
+          : 'Original guide coverage for rare Brainrots, boat upgrades, shark pressure, return timing, and mobile play.',
+    },
+    {
       href: getLocalizedPath(locale, '/guides/quick-play-guide'),
       title: locale === 'zh' ? '快速游玩指南' : 'Quick Play Guide',
       summary:
