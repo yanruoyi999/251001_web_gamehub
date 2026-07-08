@@ -107,6 +107,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.75,
     },
     {
+      path: '/guides/brainrot-games',
+      file: ['app', '[locale]', 'guides', 'brainrot-games', 'page.tsx'],
+      changeFrequency: 'weekly',
+      priority: 0.82,
+    },
+    {
+      path: '/guides/steal-beanstalk-for-brainrots-guide',
+      file: ['app', '[locale]', 'guides', 'steal-beanstalk-for-brainrots-guide', 'page.tsx'],
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      path: '/guides/float-for-brainrots-guide',
+      file: ['app', '[locale]', 'guides', 'float-for-brainrots-guide', 'page.tsx'],
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
       path: '/guides/quick-play-guide',
       file: ['app', '[locale]', 'guides', 'quick-play-guide', 'page.tsx'],
       changeFrequency: 'monthly',
