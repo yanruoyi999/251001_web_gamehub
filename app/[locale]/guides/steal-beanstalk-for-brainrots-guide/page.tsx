@@ -10,6 +10,130 @@ import {
 const PATH = '/guides/steal-beanstalk-for-brainrots-guide';
 const UPDATED_AT = '2026-07-08T00:00:00.000Z';
 
+type GuideSection = {
+  title: string;
+  body: string;
+  bullets?: string[];
+};
+
+type InternalLink = {
+  href: string;
+  label: string;
+  description: string;
+};
+
+const sections: Record<Locale, GuideSection[]> = {
+  en: [
+    {
+      title: 'Understand the core loop first',
+      body:
+        'This style of Brainrot game is not just about clicking. The useful loop is: grow resources, unlock higher-value targets, steal or defend, return to base, and upgrade. New players should stabilize income and routes before chasing rare targets.',
+      bullets: [
+        'Learn safe zones and return paths first.',
+        'Spend early resources on stable production.',
+        'Do not break your rhythm for one risky rare target.',
+      ],
+    },
+    {
+      title: 'Beanstalk upgrade priority',
+      body:
+        'Early upgrades should improve income or unlock new areas. Later upgrades can focus on stealing efficiency. That structure also answers long-tail searches around upgrades, new worlds, and rare Brainrots.',
+      bullets: [
+        'Phase 1: production and basic capacity.',
+        'Phase 2: route efficiency and risk control.',
+        'Phase 3: rare targets, index completion, and high-value stealing.',
+      ],
+    },
+    {
+      title: 'How to reduce failed steals',
+      body:
+        'Most failed steals come from taking a route that is too long or changing targets before you know the escape window. Treat every steal as a short round instead of improvising deep in the map.',
+      bullets: [
+        'Start with targets near a return path.',
+        'Check the escape time before chasing a high-value target.',
+        'On mobile, test turning and tap delay before longer runs.',
+      ],
+    },
+    {
+      title: 'Safe Luma page boundary',
+      body:
+        'This page is an independent guide and discovery page. It does not copy platform assets, does not claim official status, and does not offer suspicious downloads. An embedded player should only be added after the source and permission are clear.',
+    },
+  ],
+  zh: [
+    {
+      title: '先理解核心循环',
+      body:
+        '这类 Brainrot 游戏的核心不是单纯点击，而是“成长资源 → 解锁更高价值目标 → 偷取或防守 → 回到基地升级”的循环。新手先不要追稀有目标，先把基础产出和移动路线稳定下来。',
+      bullets: ['先观察安全区和返回路线。', '把早期资源用于提高稳定产出。', '不要为了一个稀有目标连续冒险导致节奏断掉。'],
+    },
+    {
+      title: 'Beanstalk 升级优先级',
+      body:
+        '前期优先升级能直接增加产出或解锁新区域的项目，后期再考虑提高偷取效率。这样页面内容可以自然承接 upgrades、new worlds、rare brainrots 等长尾搜索。',
+      bullets: ['第一阶段：产出和基础容量。', '第二阶段：路线效率和风险控制。', '第三阶段：稀有目标、图鉴补全和高收益偷取。'],
+    },
+    {
+      title: '如何降低偷取失败率',
+      body:
+        '偷取玩法最容易失败在两点：进攻路径太长，撤退前没有确认安全窗口。把每次偷取看成短回合，不要在地图深处临时改变目标。',
+      bullets: ['先选离返回点近的目标。', '看到高价值目标也要评估撤退时间。', '移动端先测试转向和点击延迟。'],
+    },
+    {
+      title: '适合 Luma 的页面边界',
+      body:
+        '本页只做独立攻略和发现说明，不复制平台素材，不声称官方身份，也不提供可疑下载。后续只有在确认授权来源时，才适合考虑嵌入游戏播放器。',
+    },
+  ],
+};
+
+const relatedLinks: Record<Locale, InternalLink[]> = {
+  en: [
+    {
+      href: '/guides/brainrot-games',
+      label: 'Brainrot Games Online',
+      description: 'Return to the hub for craft, steal, merge, obby, and mobile Brainrot searches.',
+    },
+    {
+      href: '/guides/float-for-brainrots-guide',
+      label: 'Float for Brainrots guide',
+      description: 'Compare this stealing loop with boat upgrades, rarity routes, and shark pressure.',
+    },
+    {
+      href: '/guides/no-download-games',
+      label: 'No Download Games',
+      description: 'Move download-sensitive users toward safe browser-game discovery pages.',
+    },
+    {
+      href: '/guides/best-free-iphone-games',
+      label: 'Best Free iPhone Games',
+      description: 'Give mobile players a broader no-download Safari and Chrome game path.',
+    },
+  ],
+  zh: [
+    {
+      href: '/guides/brainrot-games',
+      label: 'Brainrot Games Online 合集',
+      description: '回到主题 Hub，继续浏览合成、偷取、收集、Obby 和移动端 Brainrot 机会。',
+    },
+    {
+      href: '/guides/float-for-brainrots-guide',
+      label: 'Float for Brainrots 攻略',
+      description: '把偷取循环和船只升级、稀有路线、鲨鱼压力做横向对比。',
+    },
+    {
+      href: '/guides/no-download-games',
+      label: '无需下载小游戏',
+      description: '把有下载顾虑的玩家导向更安全的浏览器小游戏说明页。',
+    },
+    {
+      href: '/guides/best-free-iphone-games',
+      label: 'iPhone 免费小游戏',
+      description: '给手机用户补充 Safari 和 Chrome 里可试玩的无需下载入口。',
+    },
+  ],
+};
+
 function resolveLocale(value: string): Locale {
   return locales.includes(value as Locale) ? (value as Locale) : 'zh';
 }
@@ -62,58 +186,8 @@ export default function StealBeanstalkForBrainrotsGuide({ params }: { params: { 
   const locale = resolveLocale(params.locale);
   const isZh = locale === 'zh';
   const pageUrl = buildAbsoluteUrl(getLocalizedPath(locale, PATH));
-  const sections = isZh
-    ? [
-        {
-          title: '先理解核心循环',
-          body:
-            '这类 Brainrot 游戏的核心不是单纯点击，而是“成长资源 → 解锁更高价值目标 → 偷取或防守 → 回到基地升级”的循环。新手先不要追稀有目标，先把基础产出和移动路线稳定下来。',
-          bullets: ['先观察安全区和返回路线。', '把早期资源用于提高稳定产出。', '不要为了一个稀有目标连续冒险导致节奏断掉。'],
-        },
-        {
-          title: 'Beanstalk 升级优先级',
-          body:
-            '前期优先升级能直接增加产出或解锁新区域的项目，后期再考虑提高偷取效率。这样页面内容可以自然承接 upgrades、new worlds、rare brainrots 等长尾搜索。',
-          bullets: ['第一阶段：产出和基础容量。', '第二阶段：路线效率和风险控制。', '第三阶段：稀有目标、图鉴补全和高收益偷取。'],
-        },
-        {
-          title: '如何降低偷取失败率',
-          body:
-            '偷取玩法最容易失败在两点：进攻路径太长，撤退前没有确认安全窗口。把每次偷取看成短回合，不要在地图深处临时改变目标。',
-          bullets: ['先选离返回点近的目标。', '看到高价值目标也要评估撤退时间。', '移动端先测试转向和点击延迟。'],
-        },
-        {
-          title: '适合 Luma 的页面边界',
-          body:
-            '本页只做独立攻略和发现说明，不复制平台素材，不声称官方身份，也不提供可疑下载。后续只有在确认授权来源时，才适合考虑嵌入游戏播放器。',
-        },
-      ]
-    : [
-        {
-          title: 'Understand the core loop first',
-          body:
-            'This style of Brainrot game is not just about clicking. The useful loop is: grow resources, unlock higher-value targets, steal or defend, return to base, and upgrade. New players should stabilize income and routes before chasing rare targets.',
-          bullets: ['Learn safe zones and return paths first.', 'Spend early resources on stable production.', 'Do not break your rhythm for one risky rare target.'],
-        },
-        {
-          title: 'Beanstalk upgrade priority',
-          body:
-            'Early upgrades should improve income or unlock new areas. Later upgrades can focus on stealing efficiency. That structure also answers long-tail searches around upgrades, new worlds, and rare Brainrots.',
-          bullets: ['Phase 1: production and basic capacity.', 'Phase 2: route efficiency and risk control.', 'Phase 3: rare targets, index completion, and high-value stealing.'],
-        },
-        {
-          title: 'How to reduce failed steals',
-          body:
-            'Most failed steals come from taking a route that is too long or changing targets before you know the escape window. Treat every steal as a short round instead of improvising deep in the map.',
-          bullets: ['Start with targets near a return path.', 'Check the escape time before chasing a high-value target.', 'On mobile, test turning and tap delay before longer runs.'],
-        },
-        {
-          title: 'Safe Luma page boundary',
-          body:
-            'This page is an independent guide and discovery page. It does not copy platform assets, does not claim official status, and does not offer suspicious downloads. An embedded player should only be added after the source and permission are clear.',
-        },
-      ];
-
+  const pageSections = sections[locale];
+  const links = relatedLinks[locale];
   const faqItems = isZh
     ? [
         {
@@ -209,10 +283,21 @@ export default function StealBeanstalkForBrainrotsGuide({ params }: { params: { 
             ? '前期不要盲目追稀有 Brainrots。先把 Beanstalk 产出、路线和返回节奏稳定，再用短回合偷取方式补图鉴。'
             : 'Do not chase rare Brainrots too early. Stabilize beanstalk production, routes, and return timing first, then use short stealing rounds to fill the index.'}
         </p>
+        <div className="mt-5 flex flex-wrap gap-3 text-sm font-medium">
+          {links.slice(0, 2).map((item) => (
+            <Link
+              key={item.href}
+              href={getLocalizedPath(locale, item.href)}
+              className="rounded-full border border-primary/30 bg-background px-4 py-2 text-primary hover:bg-primary/10"
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
       </section>
 
       <section className="mt-12 space-y-8">
-        {sections.map((section) => (
+        {pageSections.map((section) => (
           <div key={section.title} className="rounded-2xl border border-border bg-card p-6 shadow-sm">
             <h2 className="text-2xl font-semibold text-foreground">{section.title}</h2>
             <p className="mt-3 text-base leading-7 text-foreground/90">{section.body}</p>
@@ -227,19 +312,27 @@ export default function StealBeanstalkForBrainrotsGuide({ params }: { params: { 
         ))}
       </section>
 
-      <section className="mt-12 grid gap-5 md:grid-cols-2">
-        <Link href={getLocalizedPath(locale, '/guides/float-for-brainrots-guide')} className="rounded-2xl border border-border bg-card p-5 transition hover:border-primary/50">
-          <h2 className="text-xl font-semibold text-foreground">Float for Brainrots</h2>
-          <p className="mt-2 text-sm leading-6 text-muted-foreground">
-            {isZh ? '继续查看船只升级、稀有度和鲨鱼生存技巧。' : 'Continue with boat upgrades, rarity notes, and shark survival tips.'}
-          </p>
-        </Link>
-        <Link href={getLocalizedPath(locale, '/guides/brainrot-games')} className="rounded-2xl border border-border bg-card p-5 transition hover:border-primary/50">
-          <h2 className="text-xl font-semibold text-foreground">Brainrot Games Online</h2>
-          <p className="mt-2 text-sm leading-6 text-muted-foreground">
-            {isZh ? '返回 Brainrot 浏览器游戏合集，查看更多同类机会。' : 'Return to the Brainrot browser games hub for more related opportunities.'}
-          </p>
-        </Link>
+      <section className="mt-12 rounded-2xl border border-border bg-card p-6">
+        <h2 className="text-2xl font-semibold text-foreground">
+          {isZh ? '继续浏览相关页面' : 'Continue with related pages'}
+        </h2>
+        <p className="mt-2 text-sm text-muted-foreground">
+          {isZh
+            ? '这页保留多个正文内链，既能把玩家带回 Brainrot 主题集群，也能分流到手机和无需下载场景。'
+            : 'This page keeps multiple contextual internal links so players can move through the Brainrot cluster, mobile intent, and no-download paths.'}
+        </p>
+        <div className="mt-5 grid gap-4 md:grid-cols-2">
+          {links.map((item) => (
+            <Link
+              key={item.href}
+              href={getLocalizedPath(locale, item.href)}
+              className="rounded-xl border border-border bg-secondary p-4 transition hover:border-primary/50"
+            >
+              <span className="font-semibold text-primary">{item.label} →</span>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">{item.description}</p>
+            </Link>
+          ))}
+        </div>
       </section>
 
       <section className="mt-12 rounded-2xl border border-border bg-secondary p-6">
