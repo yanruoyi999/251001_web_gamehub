@@ -102,6 +102,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.75,
     },
     {
+      path: '/guides/games-like-drive-mad',
+      file: ['app', '[locale]', 'guides', 'games-like-drive-mad', 'page.tsx'],
+      changeFrequency: 'weekly',
+      priority: 0.82,
+    },
+    {
       path: '/guides/quick-play-guide',
       file: ['app', '[locale]', 'guides', 'quick-play-guide', 'page.tsx'],
       changeFrequency: 'monthly',
