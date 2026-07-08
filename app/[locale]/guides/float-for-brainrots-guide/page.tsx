@@ -10,6 +10,130 @@ import {
 const PATH = '/guides/float-for-brainrots-guide';
 const UPDATED_AT = '2026-07-08T00:00:00.000Z';
 
+type GuideSection = {
+  title: string;
+  body: string;
+  bullets?: string[];
+};
+
+type InternalLink = {
+  href: string;
+  label: string;
+  description: string;
+};
+
+const sections: Record<Locale, GuideSection[]> = {
+  en: [
+    {
+      title: 'Treat each trip as a short round',
+      body:
+        'Float for Brainrots has useful search intent around rare collection, boat upgrades, and shark pressure. The most common beginner mistake is sailing too far before turning back. A safer approach is to give each trip one clear goal.',
+      bullets: [
+        'Decide whether the trip is for collecting, upgrade materials, or rare targets.',
+        'Return earlier when shark pressure rises.',
+        'Do not chase distant rare targets with an under-upgraded boat.',
+      ],
+    },
+    {
+      title: 'Boat upgrade priority',
+      body:
+        'Boat upgrades should help you finish each trip safely. Speed, capacity, and stability can all affect return risk. This page can keep expanding around boat upgrades, best boat, and shark timer long-tail searches.',
+      bullets: [
+        'Speed expands your safe exploration radius.',
+        'Capacity improves the value of each trip.',
+        'Stability gives more room for mistakes.',
+      ],
+    },
+    {
+      title: 'How to think about rare Brainrots',
+      body:
+        'The rarer the target, the more important it is to know the spawn area and escape path first. A useful guide should not only list rare Brainrots; it should explain when each rarity tier is worth chasing.',
+      bullets: [
+        'Use common targets to learn the map.',
+        'Chase mid-rarity targets after basic upgrades.',
+        'Save high-rarity route optimization for later progression.',
+      ],
+    },
+    {
+      title: 'Mobile experience check',
+      body:
+        'Sailing games can be affected by screen ratio, virtual controls, and tap delay. A Luma guide should ask players to test a short mobile round instead of assuming desktop behavior transfers perfectly to phones.',
+    },
+  ],
+  zh: [
+    {
+      title: '把航行看成短回合，而不是无限探索',
+      body:
+        'Float for Brainrots 的搜索价值在于稀有收集、船只升级和鲨鱼压力。新手最容易犯的错是离基地太远才开始回头。更稳的打法是每次出航只完成一个目标。',
+      bullets: ['先确定这次是收集、升级材料，还是寻找稀有目标。', '发现鲨鱼压力变高时尽早回基地。', '不要在低等级船只阶段追太远的稀有目标。'],
+    },
+    {
+      title: '船只升级优先级',
+      body:
+        '船只升级应服务于“更安全地完成一轮航行”。速度、容量和稳定性都可能影响回程风险。攻略页可以围绕 boat upgrades、best boat、shark timer 等长尾词持续补充实测。',
+      bullets: ['速度影响探索半径。', '容量影响单次出航收益。', '稳定性影响失误后的容错。'],
+    },
+    {
+      title: '稀有 Brainrots 的收集思路',
+      body:
+        '稀有度越高，越应该先确认刷新区域和撤退路径。不要只写“all rare Brainrots list”，更有价值的是说明每类稀有目标适合什么阶段去找。',
+      bullets: ['低稀有度用于熟悉地图。', '中稀有度适合在升级后集中补齐。', '高稀有度目标适合作为后期路线优化内容。'],
+    },
+    {
+      title: '移动端体验检查',
+      body:
+        '这类航行游戏很容易被屏幕比例、虚拟按键和点击延迟影响。Luma 页面应明确提醒玩家先做短局测试，避免把桌面体验直接当成手机体验。',
+    },
+  ],
+};
+
+const relatedLinks: Record<Locale, InternalLink[]> = {
+  en: [
+    {
+      href: '/guides/brainrot-games',
+      label: 'Brainrot Games Online',
+      description: 'Return to the Brainrot hub for craft, steal, collect, obby, and mobile discovery paths.',
+    },
+    {
+      href: '/guides/steal-beanstalk-for-brainrots-guide',
+      label: 'Steal Beanstalk guide',
+      description: 'Compare boat progression with stealing loops, beanstalk upgrades, and rare targets.',
+    },
+    {
+      href: '/guides/quick-play-guide',
+      label: 'Quick Play Guide',
+      description: 'Help short-session players choose browser games that start fast and pause easily.',
+    },
+    {
+      href: '/guides/best-free-iphone-games',
+      label: 'Best Free iPhone Games',
+      description: 'Route mobile players to broader no-download Safari and Chrome browser-game picks.',
+    },
+  ],
+  zh: [
+    {
+      href: '/guides/brainrot-games',
+      label: 'Brainrot Games Online 合集',
+      description: '回到 Brainrot 主题 Hub，继续浏览合成、偷取、收集、Obby 和手机玩法。',
+    },
+    {
+      href: '/guides/steal-beanstalk-for-brainrots-guide',
+      label: 'Steal Beanstalk 攻略',
+      description: '把船只成长和偷取循环、Beanstalk 升级、稀有目标做横向对比。',
+    },
+    {
+      href: '/guides/quick-play-guide',
+      label: '快速游玩指南',
+      description: '给短局玩家提供启动快、规则清楚、容易暂停的站内入口。',
+    },
+    {
+      href: '/guides/best-free-iphone-games',
+      label: 'iPhone 免费小游戏',
+      description: '把手机用户导向 Safari 和 Chrome 里可试玩的无需下载小游戏。',
+    },
+  ],
+};
+
 function resolveLocale(value: string): Locale {
   return locales.includes(value as Locale) ? (value as Locale) : 'zh';
 }
@@ -62,58 +186,8 @@ export default function FloatForBrainrotsGuide({ params }: { params: { locale: s
   const locale = resolveLocale(params.locale);
   const isZh = locale === 'zh';
   const pageUrl = buildAbsoluteUrl(getLocalizedPath(locale, PATH));
-  const sections = isZh
-    ? [
-        {
-          title: '把航行看成短回合，而不是无限探索',
-          body:
-            'Float for Brainrots 的搜索价值在于稀有收集、船只升级和鲨鱼压力。新手最容易犯的错是离基地太远才开始回头。更稳的打法是每次出航只完成一个目标。',
-          bullets: ['先确定这次是收集、升级材料，还是寻找稀有目标。', '发现鲨鱼压力变高时尽早回基地。', '不要在低等级船只阶段追太远的稀有目标。'],
-        },
-        {
-          title: '船只升级优先级',
-          body:
-            '船只升级应服务于“更安全地完成一轮航行”。速度、容量和稳定性都可能影响回程风险。攻略页可以围绕 boat upgrades、best boat、shark timer 等长尾词持续补充实测。',
-          bullets: ['速度影响探索半径。', '容量影响单次出航收益。', '稳定性影响失误后的容错。'],
-        },
-        {
-          title: '稀有 Brainrots 的收集思路',
-          body:
-            '稀有度越高，越应该先确认刷新区域和撤退路径。不要只写“all rare Brainrots list”，更有价值的是说明每类稀有目标适合什么阶段去找。',
-          bullets: ['低稀有度用于熟悉地图。', '中稀有度适合在升级后集中补齐。', '高稀有度目标适合作为后期路线优化内容。'],
-        },
-        {
-          title: '移动端体验检查',
-          body:
-            '这类航行游戏很容易被屏幕比例、虚拟按键和点击延迟影响。Luma 页面应明确提醒玩家先做短局测试，避免把桌面体验直接当成手机体验。',
-        },
-      ]
-    : [
-        {
-          title: 'Treat each trip as a short round',
-          body:
-            'Float for Brainrots has useful search intent around rare collection, boat upgrades, and shark pressure. The most common beginner mistake is sailing too far before turning back. A safer approach is to give each trip one clear goal.',
-          bullets: ['Decide whether the trip is for collecting, upgrade materials, or rare targets.', 'Return earlier when shark pressure rises.', 'Do not chase distant rare targets with an under-upgraded boat.'],
-        },
-        {
-          title: 'Boat upgrade priority',
-          body:
-            'Boat upgrades should help you finish each trip safely. Speed, capacity, and stability can all affect return risk. This page can keep expanding around boat upgrades, best boat, and shark timer long-tail searches.',
-          bullets: ['Speed expands your safe exploration radius.', 'Capacity improves the value of each trip.', 'Stability gives more room for mistakes.'],
-        },
-        {
-          title: 'How to think about rare Brainrots',
-          body:
-            'The rarer the target, the more important it is to know the spawn area and escape path first. A useful guide should not only list rare Brainrots; it should explain when each rarity tier is worth chasing.',
-          bullets: ['Use common targets to learn the map.', 'Chase mid-rarity targets after basic upgrades.', 'Save high-rarity route optimization for later progression.'],
-        },
-        {
-          title: 'Mobile experience check',
-          body:
-            'Sailing games can be affected by screen ratio, virtual controls, and tap delay. A Luma guide should ask players to test a short mobile round instead of assuming desktop behavior transfers perfectly to phones.',
-        },
-      ];
-
+  const pageSections = sections[locale];
+  const links = relatedLinks[locale];
   const faqItems = isZh
     ? [
         {
@@ -185,9 +259,7 @@ export default function FloatForBrainrotsGuide({ params }: { params: { locale: s
       </Link>
 
       <header className="mt-8 text-center">
-        <p className="text-sm font-semibold uppercase tracking-wide text-primary">
-          float for brainrots guide
-        </p>
+        <p className="text-sm font-semibold uppercase tracking-wide text-primary">float for brainrots guide</p>
         <h1 className="mt-3 text-4xl font-bold text-foreground">
           {isZh
             ? 'Float for Brainrots 攻略：稀有收集、船只升级与鲨鱼生存'
@@ -209,10 +281,21 @@ export default function FloatForBrainrotsGuide({ params }: { params: { locale: s
             ? '最稳的打法是短距离出航、及时回基地、逐步升级船只。稀有 Brainrots 不要一开始就硬追，先让船的速度和容量跟上。'
             : 'The safest approach is short trips, timely returns, and steady boat upgrades. Do not hard-chase rare Brainrots early; upgrade speed and capacity first.'}
         </p>
+        <div className="mt-5 flex flex-wrap gap-3 text-sm font-medium">
+          {links.slice(0, 2).map((item) => (
+            <Link
+              key={item.href}
+              href={getLocalizedPath(locale, item.href)}
+              className="rounded-full border border-primary/30 bg-background px-4 py-2 text-primary hover:bg-primary/10"
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
       </section>
 
       <section className="mt-12 space-y-8">
-        {sections.map((section) => (
+        {pageSections.map((section) => (
           <div key={section.title} className="rounded-2xl border border-border bg-card p-6 shadow-sm">
             <h2 className="text-2xl font-semibold text-foreground">{section.title}</h2>
             <p className="mt-3 text-base leading-7 text-foreground/90">{section.body}</p>
@@ -227,19 +310,27 @@ export default function FloatForBrainrotsGuide({ params }: { params: { locale: s
         ))}
       </section>
 
-      <section className="mt-12 grid gap-5 md:grid-cols-2">
-        <Link href={getLocalizedPath(locale, '/guides/steal-beanstalk-for-brainrots-guide')} className="rounded-2xl border border-border bg-card p-5 transition hover:border-primary/50">
-          <h2 className="text-xl font-semibold text-foreground">Steal Beanstalk for Brainrots</h2>
-          <p className="mt-2 text-sm leading-6 text-muted-foreground">
-            {isZh ? '查看 Beanstalk 升级、偷取循环和稀有目标思路。' : 'Read about beanstalk upgrades, stealing loops, and rare target strategy.'}
-          </p>
-        </Link>
-        <Link href={getLocalizedPath(locale, '/guides/brainrot-games')} className="rounded-2xl border border-border bg-card p-5 transition hover:border-primary/50">
-          <h2 className="text-xl font-semibold text-foreground">Brainrot Games Online</h2>
-          <p className="mt-2 text-sm leading-6 text-muted-foreground">
-            {isZh ? '返回 Brainrot 浏览器游戏合集，继续扩展同类新词。' : 'Return to the Brainrot browser games hub and continue exploring related fresh keywords.'}
-          </p>
-        </Link>
+      <section className="mt-12 rounded-2xl border border-border bg-card p-6">
+        <h2 className="text-2xl font-semibold text-foreground">
+          {isZh ? '继续浏览相关页面' : 'Continue with related pages'}
+        </h2>
+        <p className="mt-2 text-sm text-muted-foreground">
+          {isZh
+            ? '这页保留多个正文内链，让玩家能在 Brainrot 主题、偷取玩法、短局场景和手机游戏之间继续浏览。'
+            : 'This page keeps multiple contextual internal links so players can continue through Brainrot, stealing, quick-play, and mobile-game paths.'}
+        </p>
+        <div className="mt-5 grid gap-4 md:grid-cols-2">
+          {links.map((item) => (
+            <Link
+              key={item.href}
+              href={getLocalizedPath(locale, item.href)}
+              className="rounded-xl border border-border bg-secondary p-4 transition hover:border-primary/50"
+            >
+              <span className="font-semibold text-primary">{item.label} →</span>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">{item.description}</p>
+            </Link>
+          ))}
+        </div>
       </section>
 
       <section className="mt-12 rounded-2xl border border-border bg-secondary p-6">
