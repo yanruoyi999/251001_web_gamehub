@@ -10,71 +10,132 @@ import {
 const PATH = '/guides/brainrot-games';
 const UPDATED_AT = '2026-07-08T00:00:00.000Z';
 
-const enGames = [
-  {
-    name: 'Steal Beanstalk for Brainrots',
-    type: 'Steal / upgrade',
-    intent: 'Best for players searching for rare Brainrots, beanstalk upgrades, and how stealing works.',
-    href: '/guides/steal-beanstalk-for-brainrots-guide',
-  },
-  {
-    name: 'Float for Brainrots',
-    type: 'Collect / survival',
-    intent: 'Best for rare collection, boat upgrade, shark timer, and two-player mode searches.',
-    href: '/guides/float-for-brainrots-guide',
-  },
-  {
-    name: 'Robby: Cross the Road for Brainrot',
-    type: 'Crossing / reflex',
-    intent: 'Best for mobile controls, traffic survival tips, and Crossy Road-like intent.',
-    href: null,
-  },
-  {
-    name: 'Make Brainrots Online',
-    type: 'Craft / merge',
-    intent: 'Best for recipes, combinations, eggs, and upgrade-order questions.',
-    href: null,
-  },
-  {
-    name: 'Lucky Blocks for Brainrots',
-    type: 'Index / discovery',
-    intent: 'Best for hidden Brainrot lists, index completion, and keyboard shortcut questions.',
-    href: null,
-  },
-];
+type InternalLink = {
+  href: string;
+  label: string;
+  description: string;
+};
 
-const zhGames = [
-  {
-    name: 'Steal Beanstalk for Brainrots',
-    type: '偷取 / 升级',
-    intent: '适合承接稀有 Brainrots、Beanstalk 升级、如何偷取与防守等搜索。',
-    href: '/guides/steal-beanstalk-for-brainrots-guide',
-  },
-  {
-    name: 'Float for Brainrots',
-    type: '收集 / 生存',
-    intent: '适合承接稀有收集、船只升级、鲨鱼倒计时和双人模式搜索。',
-    href: '/guides/float-for-brainrots-guide',
-  },
-  {
-    name: 'Robby: Cross the Road for Brainrot',
-    type: '过马路 / 反应',
-    intent: '适合承接移动端操作、交通躲避技巧和 Crossy Road-like 搜索。',
-    href: null,
-  },
-  {
-    name: 'Make Brainrots Online',
-    type: '合成 / Merge',
-    intent: '适合承接 recipes、组合、蛋、材料解锁和升级顺序问题。',
-    href: null,
-  },
-  {
-    name: 'Lucky Blocks for Brainrots',
-    type: '图鉴 / 探索',
-    intent: '适合承接隐藏 Brainrot、Index 补全和快捷键说明搜索。',
-    href: null,
-  },
-];
+type CandidateGame = {
+  name: string;
+  type: string;
+  intent: string;
+  href: string | null;
+};
+
+const candidates: Record<Locale, CandidateGame[]> = {
+  en: [
+    {
+      name: 'Steal Beanstalk for Brainrots',
+      type: 'Steal / upgrade',
+      intent: 'Best for players searching for rare Brainrots, beanstalk upgrades, and how stealing works.',
+      href: '/guides/steal-beanstalk-for-brainrots-guide',
+    },
+    {
+      name: 'Float for Brainrots',
+      type: 'Collect / survival',
+      intent: 'Best for rare collection, boat upgrade, shark timer, and two-player mode searches.',
+      href: '/guides/float-for-brainrots-guide',
+    },
+    {
+      name: 'Robby: Cross the Road for Brainrot',
+      type: 'Crossing / reflex',
+      intent: 'Best for mobile controls, traffic survival tips, and Crossy Road-like intent.',
+      href: null,
+    },
+    {
+      name: 'Make Brainrots Online',
+      type: 'Craft / merge',
+      intent: 'Best for recipes, combinations, eggs, and upgrade-order questions.',
+      href: null,
+    },
+    {
+      name: 'Lucky Blocks for Brainrots',
+      type: 'Index / discovery',
+      intent: 'Best for hidden Brainrot lists, index completion, and keyboard shortcut questions.',
+      href: null,
+    },
+  ],
+  zh: [
+    {
+      name: 'Steal Beanstalk for Brainrots',
+      type: '偷取 / 升级',
+      intent: '适合承接稀有 Brainrots、Beanstalk 升级、如何偷取与防守等搜索。',
+      href: '/guides/steal-beanstalk-for-brainrots-guide',
+    },
+    {
+      name: 'Float for Brainrots',
+      type: '收集 / 生存',
+      intent: '适合承接稀有收集、船只升级、鲨鱼倒计时和双人模式搜索。',
+      href: '/guides/float-for-brainrots-guide',
+    },
+    {
+      name: 'Robby: Cross the Road for Brainrot',
+      type: '过马路 / 反应',
+      intent: '适合承接移动端操作、交通躲避技巧和 Crossy Road-like 搜索。',
+      href: null,
+    },
+    {
+      name: 'Make Brainrots Online',
+      type: '合成 / Merge',
+      intent: '适合承接 recipes、组合、蛋、材料解锁和升级顺序问题。',
+      href: null,
+    },
+    {
+      name: 'Lucky Blocks for Brainrots',
+      type: '图鉴 / 探索',
+      intent: '适合承接隐藏 Brainrot、Index 补全和快捷键说明搜索。',
+      href: null,
+    },
+  ],
+};
+
+const relatedLinks: Record<Locale, InternalLink[]> = {
+  en: [
+    {
+      href: '/guides/steal-beanstalk-for-brainrots-guide',
+      label: 'Steal Beanstalk guide',
+      description: 'Grow, steal, upgrade, and unlock rare Brainrots with a safer guide-first page.',
+    },
+    {
+      href: '/guides/float-for-brainrots-guide',
+      label: 'Float for Brainrots guide',
+      description: 'Compare boat upgrades, rarity tiers, shark pressure, and mobile controls.',
+    },
+    {
+      href: '/guides/no-download-games',
+      label: 'No Download Games',
+      description: 'Keep users on safe browser-play paths instead of download or APK intent.',
+    },
+    {
+      href: '/guides/quick-play-guide',
+      label: 'Quick Play Guide',
+      description: 'Send short-session players to broader mobile-friendly browser game guidance.',
+    },
+  ],
+  zh: [
+    {
+      href: '/guides/steal-beanstalk-for-brainrots-guide',
+      label: 'Steal Beanstalk 攻略',
+      description: '承接升级、偷取、稀有 Brainrots 和安全游玩搜索。',
+    },
+    {
+      href: '/guides/float-for-brainrots-guide',
+      label: 'Float for Brainrots 攻略',
+      description: '继续扩展船只升级、稀有度、鲨鱼压力和手机操作。',
+    },
+    {
+      href: '/guides/no-download-games',
+      label: '无需下载小游戏',
+      description: '把下载、APK、插件类风险搜索导向更安全的浏览器玩法。',
+    },
+    {
+      href: '/guides/quick-play-guide',
+      label: '快速游玩指南',
+      description: '给短局、通勤、等待场景的玩家提供更宽的站内入口。',
+    },
+  ],
+};
 
 function resolveLocale(value: string): Locale {
   return locales.includes(value as Locale) ? (value as Locale) : 'zh';
@@ -127,8 +188,9 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
 export default function BrainrotGamesPage({ params }: { params: { locale: string } }) {
   const locale = resolveLocale(params.locale);
   const isZh = locale === 'zh';
-  const games = isZh ? zhGames : enGames;
+  const games = candidates[locale];
   const pageUrl = buildAbsoluteUrl(getLocalizedPath(locale, PATH));
+  const links = relatedLinks[locale];
   const faqItems = isZh
     ? [
         {
@@ -206,9 +268,7 @@ export default function BrainrotGamesPage({ params }: { params: { locale: string
       </Link>
 
       <header className="mt-8 text-center">
-        <p className="text-sm font-semibold uppercase tracking-wide text-primary">
-          brainrot games online
-        </p>
+        <p className="text-sm font-semibold uppercase tracking-wide text-primary">brainrot games online</p>
         <h1 className="mt-3 text-4xl font-bold text-foreground">
           {isZh ? 'Brainrot Games Online 攻略合集' : 'Best Brainrot Games Online'}
         </h1>
@@ -229,12 +289,15 @@ export default function BrainrotGamesPage({ params }: { params: { locale: string
             : 'Start with “specific game name + guide / mobile / rare / upgrades / recipes” instead of chasing only the broad keyword. The hub captures broad discovery; individual guides answer concrete gameplay questions.'}
         </p>
         <div className="mt-5 flex flex-wrap gap-3 text-sm font-medium">
-          <Link href={getLocalizedPath(locale, '/guides/steal-beanstalk-for-brainrots-guide')} className="rounded-full bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90">
-            Steal Beanstalk guide
-          </Link>
-          <Link href={getLocalizedPath(locale, '/guides/float-for-brainrots-guide')} className="rounded-full border border-primary/30 px-4 py-2 text-primary hover:bg-primary/10">
-            Float for Brainrots guide
-          </Link>
+          {links.slice(0, 2).map((item) => (
+            <Link
+              key={item.href}
+              href={getLocalizedPath(locale, item.href)}
+              className="rounded-full border border-primary/30 bg-background px-4 py-2 text-primary hover:bg-primary/10"
+            >
+              {item.label}
+            </Link>
+          ))}
         </div>
       </section>
 
@@ -286,6 +349,29 @@ export default function BrainrotGamesPage({ params }: { params: { locale: string
               ? 'Brainrot Hub 链到单款攻略，单款攻略再回链合集页和 mobile / no download / quick play 页面。'
               : 'The Brainrot hub links to individual guides; individual guides link back to the hub and to mobile, no-download, and quick-play pages.'}
           </p>
+        </div>
+      </section>
+
+      <section className="mt-12 rounded-2xl border border-border bg-card p-6">
+        <h2 className="text-2xl font-semibold text-foreground">
+          {isZh ? '继续浏览相关页面' : 'Continue with related pages'}
+        </h2>
+        <p className="mt-2 text-sm text-muted-foreground">
+          {isZh
+            ? '每个 Brainrot 主题页至少保留两个正文内链，帮助用户继续浏览，也让搜索引擎理解主题集群。'
+            : 'Each Brainrot topic page keeps at least two contextual internal links so users and search engines can follow the cluster.'}
+        </p>
+        <div className="mt-5 grid gap-4 md:grid-cols-2">
+          {links.map((item) => (
+            <Link
+              key={item.href}
+              href={getLocalizedPath(locale, item.href)}
+              className="rounded-xl border border-border bg-secondary p-4 transition hover:border-primary/50"
+            >
+              <span className="font-semibold text-primary">{item.label} →</span>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">{item.description}</p>
+            </Link>
+          ))}
         </div>
       </section>
 
