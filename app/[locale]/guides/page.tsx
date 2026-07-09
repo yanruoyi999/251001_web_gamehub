@@ -68,6 +68,14 @@ export default function GuidesPage({ params }: GuidesPageProps) {
       : 'From lower-interruption picks to mobile browser candidates, these guides organize games by real play scenarios. Check the device notes, choose a theme, and start playing.';
   const extraGuides = [
     {
+      href: getLocalizedPath(locale, '/guides/games-like-drive-mad'),
+      title: locale === 'zh' ? '类似 Drive Mad 的物理驾驶小游戏' : 'Games Like Drive Mad',
+      summary:
+        locale === 'zh'
+          ? '承接 Drive Mad 搜索信号，按物理驾驶、翻车、跳跃、平衡和短局重试整理相似浏览器游戏。'
+          : 'A focused long-tail guide for Drive Mad fans who want physics driving, flips, jumps, balance, and quick retries.',
+    },
+    {
       href: getLocalizedPath(locale, '/guides/quick-play-guide'),
       title: locale === 'zh' ? '快速游玩指南' : 'Quick Play Guide',
       summary:
