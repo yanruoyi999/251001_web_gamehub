@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { RatingService } from '@/services';
 import { MAX_RATING_COMMENT_LENGTH } from '@/services/rating.service';
+import { isValidId, isValidRating, validatePagination } from '@/lib/utils/validation';
 
 function getClientIp(request: NextRequest) {
   if (request.ip && request.ip.trim().length > 0) {
@@ -14,19 +15,31 @@ function getClientIp(request: NextRequest) {
   );
 }
 
+function parseInteger(value: string | null): number | undefined {
+  if (!value) return undefined;
+  const parsed = Number(value);
+  return Number.isInteger(parsed) ? parsed : undefined;
+}
+
 export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const gameId = Number(searchParams.get('gameId'));
+
+  if (!isValidId(gameId)) {
+    return NextResponse.json({ error: 'A valid gameId is required' }, { status: 400 });
+  }
+
+  const { page, limit } = validatePagination(
+    parseInteger(searchParams.get('page')),
+    parseInteger(searchParams.get('limit')),
+  );
+
   try {
-    const { searchParams } = new URL(request.url);
-    const gameIdParam = searchParams.get('gameId');
-
-    if (!gameIdParam) {
-      return NextResponse.json({ error: 'gameId is required' }, { status: 400 });
-    }
-
-    const result = await RatingService.listGameRatings(Number(gameIdParam), {
-      page: searchParams.get('page') ? Number(searchParams.get('page')) : undefined,
-      limit: searchParams.get('limit') ? Number(searchParams.get('limit')) : undefined,
-      includePending: searchParams.get('includePending') === 'true',
+    const result = await RatingService.listGameRatings(gameId, {
+      page,
+      limit,
+      // Pending and rejected comments are available only through authenticated admin routes.
+      includePending: false,
     });
 
     return NextResponse.json(result);
@@ -37,19 +50,31 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  let body: unknown;
   try {
-    const body = await request.json();
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON payload' }, { status: 400 });
+  }
 
-    if (!body?.gameId || !body?.rating) {
-      return NextResponse.json({ error: 'gameId and rating are required' }, { status: 400 });
-    }
+  const payload = body as { gameId?: unknown; rating?: unknown; comment?: unknown };
+  const gameId = Number(payload?.gameId);
+  const rating = Number(payload?.rating);
 
+  if (!isValidId(gameId) || !isValidRating(rating)) {
+    return NextResponse.json(
+      { error: 'A valid gameId and a rating between 1 and 5 are required' },
+      { status: 400 },
+    );
+  }
+
+  try {
     const result = await RatingService.submitRating({
-      gameId: Number(body.gameId),
-      rating: Number(body.rating),
+      gameId,
+      rating,
       comment:
-        typeof body.comment === 'string'
-          ? body.comment.trim().slice(0, MAX_RATING_COMMENT_LENGTH)
+        typeof payload.comment === 'string'
+          ? payload.comment.trim().slice(0, MAX_RATING_COMMENT_LENGTH)
           : undefined,
       userIp: getClientIp(request),
       userAgent: request.headers.get('user-agent') ?? undefined,
@@ -58,11 +83,8 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(result, { status: 201 });
   } catch (error) {
-    console.error('Failed to submit rating:', error);
-    return NextResponse.json(
-      { error: 'Failed to submit rating' },
-      { status: 400 }
-    );
+    console.warn('Rating submission rejected:', error);
+    return NextResponse.json({ error: 'Unable to submit rating' }, { status: 400 });
   }
 }
 
