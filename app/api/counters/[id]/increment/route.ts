@@ -45,9 +45,9 @@ function consumeMemoryRateLimit(key: string, now = Date.now()): 'allowed' | 'lim
   memoryRateLimits.set(key, next);
 
   if (memoryRateLimits.size > MAX_MEMORY_RATE_LIMIT_KEYS) {
-    for (const [candidateKey, entry] of memoryRateLimits) {
+    memoryRateLimits.forEach((entry, candidateKey) => {
       if (entry.resetAt <= now) memoryRateLimits.delete(candidateKey);
-    }
+    });
 
     while (memoryRateLimits.size > MAX_MEMORY_RATE_LIMIT_KEYS) {
       const oldestKey = memoryRateLimits.keys().next().value as string | undefined;
