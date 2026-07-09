@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 import { NextRequest } from 'next/server';
 import { redirect } from 'next/navigation';
-import { createHmac, timingSafeEqual, randomBytes } from 'crypto';
+import { createHash, createHmac, timingSafeEqual, randomBytes } from 'crypto';
 
 export const ADMIN_SESSION_COOKIE = 'gamehub-admin-session';
 const ADMIN_SESSION_MAX_AGE = 60 * 60 * 8; // 8 hours
@@ -36,9 +36,14 @@ function getAdminSessionSecret() {
   return `dev-admin-session:${process.env.ADMIN_PASSWORD}`;
 }
 
+function hashSecret(value: string) {
+  return createHash('sha256').update(value).digest();
+}
+
 export function validateAdminPassword(password: string) {
   assertAdminPasswordConfigured();
-  return password === process.env.ADMIN_PASSWORD;
+  const configuredPassword = process.env.ADMIN_PASSWORD ?? '';
+  return timingSafeEqual(hashSecret(password), hashSecret(configuredPassword));
 }
 
 function signPayload(payload: string) {
