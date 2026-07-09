@@ -8,7 +8,7 @@ import {
 } from '@/lib/seo';
 
 const PATH = '/guides/brainrot-games';
-const UPDATED_AT = '2026-07-08T00:00:00.000Z';
+const UPDATED_AT = '2026-07-09T00:00:00.000Z';
 
 type InternalLink = {
   href: string;
@@ -25,6 +25,12 @@ type CandidateGame = {
 
 const candidates: Record<Locale, CandidateGame[]> = {
   en: [
+    {
+      name: 'Lucky Blocks for Brainrots',
+      type: 'Index / rebirth',
+      intent: 'Best for players searching for all Brainrots, index completion, rebirth timing, and mobile controls.',
+      href: '/guides/lucky-blocks-for-brainrots-guide',
+    },
     {
       name: 'Steal Beanstalk for Brainrots',
       type: 'Steal / upgrade',
@@ -49,14 +55,14 @@ const candidates: Record<Locale, CandidateGame[]> = {
       intent: 'Best for recipes, combinations, eggs, and upgrade-order questions.',
       href: null,
     },
-    {
-      name: 'Lucky Blocks for Brainrots',
-      type: 'Index / discovery',
-      intent: 'Best for hidden Brainrot lists, index completion, and keyboard shortcut questions.',
-      href: null,
-    },
   ],
   zh: [
+    {
+      name: 'Lucky Blocks for Brainrots',
+      type: '图鉴 / 重生',
+      intent: '适合承接 all Brainrots、Index 图鉴、Rebirth 重生、手机操作等搜索。',
+      href: '/guides/lucky-blocks-for-brainrots-guide',
+    },
     {
       name: 'Steal Beanstalk for Brainrots',
       type: '偷取 / 升级',
@@ -81,17 +87,16 @@ const candidates: Record<Locale, CandidateGame[]> = {
       intent: '适合承接 recipes、组合、蛋、材料解锁和升级顺序问题。',
       href: null,
     },
-    {
-      name: 'Lucky Blocks for Brainrots',
-      type: '图鉴 / 探索',
-      intent: '适合承接隐藏 Brainrot、Index 补全和快捷键说明搜索。',
-      href: null,
-    },
   ],
 };
 
 const relatedLinks: Record<Locale, InternalLink[]> = {
   en: [
+    {
+      href: '/guides/lucky-blocks-for-brainrots-guide',
+      label: 'Lucky Blocks guide',
+      description: 'Break Lucky Blocks, fill the index, time rebirths, and test mobile controls.',
+    },
     {
       href: '/guides/steal-beanstalk-for-brainrots-guide',
       label: 'Steal Beanstalk guide',
@@ -114,6 +119,11 @@ const relatedLinks: Record<Locale, InternalLink[]> = {
     },
   ],
   zh: [
+    {
+      href: '/guides/lucky-blocks-for-brainrots-guide',
+      label: 'Lucky Blocks 攻略',
+      description: '承接 Lucky Blocks、全 Brainrots、Index 图鉴、Rebirth 和手机操作搜索。',
+    },
     {
       href: '/guides/steal-beanstalk-for-brainrots-guide',
       label: 'Steal Beanstalk 攻略',
@@ -148,8 +158,8 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
     ? 'Brainrot Games Online 攻略合集 | Luma Game Hub'
     : 'Best Brainrot Games Online: Craft, Steal, Merge and Obby Picks';
   const description = isZh
-    ? '整理最新 Brainrot 浏览器小游戏机会：合成、偷取、收集、Obby 和移动端体验，附安全说明、长尾关键词与相似游戏入口。'
-    : 'A curated Brainrot games hub for craft, steal, merge, obby, and mobile browser intent, with safety notes, long-tail guide ideas, and similar-game paths.';
+    ? '整理最新 Brainrot 浏览器小游戏机会：Lucky Blocks、合成、偷取、收集、Obby 和移动端体验，附安全说明、长尾关键词与相似游戏入口。'
+    : 'A curated Brainrot games hub for Lucky Blocks, craft, steal, merge, obby, and mobile browser intent, with safety notes, long-tail guide ideas, and similar-game paths.';
 
   return {
     title,
@@ -157,6 +167,7 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
     keywords: [
       'brainrot games online',
       'best brainrot games',
+      'lucky blocks for brainrots guide',
       'brainrot browser games',
       'brainrot games mobile',
       'games like make brainrots online',
@@ -196,7 +207,7 @@ export default function BrainrotGamesPage({ params }: { params: { locale: string
         {
           question: 'Brainrot games 是什么类型的游戏？',
           answer:
-            '它通常指围绕网络 meme、收集、合成、偷取或 Obby 玩法扩展出来的轻量浏览器游戏。Luma 更关注玩法、移动端体验和安全入口，而不是复制平台文案。',
+            '它通常指围绕网络 meme、收集、合成、偷取、Lucky Blocks 或 Obby 玩法扩展出来的轻量浏览器游戏。Luma 更关注玩法、移动端体验和安全入口，而不是复制平台文案。',
         },
         {
           question: '这些游戏能直接嵌入 Luma 吗？',
@@ -213,7 +224,7 @@ export default function BrainrotGamesPage({ params }: { params: { locale: string
         {
           question: 'What are Brainrot games?',
           answer:
-            'They are lightweight browser games built around meme culture, collecting, crafting, stealing, obby movement, or clicker loops. Luma focuses on gameplay notes, mobile experience, and safe discovery rather than copied platform blurbs.',
+            'They are lightweight browser games built around meme culture, collecting, crafting, stealing, Lucky Blocks, obby movement, or clicker loops. Luma focuses on gameplay notes, mobile experience, and safe discovery rather than copied platform blurbs.',
         },
         {
           question: 'Can Luma embed every Brainrot game?',
@@ -274,8 +285,8 @@ export default function BrainrotGamesPage({ params }: { params: { locale: string
         </h1>
         <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-muted-foreground">
           {isZh
-            ? 'Brainrot 相关小游戏正在从单一 meme 变成一组浏览器游戏搜索需求：合成、偷取、收集、Obby、点击升级和移动端试玩。本页先做安全、原创、可内链的主题入口。'
-            : 'Brainrot searches are turning into a cluster of browser-game intents: crafting, stealing, collecting, obby movement, clicker upgrades, and mobile play. This page keeps the cluster useful, safe, and expandable.'}
+            ? 'Brainrot 相关小游戏正在从单一 meme 变成一组浏览器游戏搜索需求：Lucky Blocks、合成、偷取、收集、Obby、点击升级和移动端试玩。本页先做安全、原创、可内链的主题入口。'
+            : 'Brainrot searches are turning into a cluster of browser-game intents: Lucky Blocks, crafting, stealing, collecting, obby movement, clicker upgrades, and mobile play. This page keeps the cluster useful, safe, and expandable.'}
         </p>
       </header>
 
@@ -285,11 +296,11 @@ export default function BrainrotGamesPage({ params }: { params: { locale: string
         </h2>
         <p className="mt-3 text-base leading-7 text-foreground/90">
           {isZh
-            ? '优先从“具体游戏名 + guide / mobile / rare / upgrades / recipes”切入，而不是直接抢成熟大词。合集页负责承接泛搜索，单页负责回答具体玩法问题。'
-            : 'Start with “specific game name + guide / mobile / rare / upgrades / recipes” instead of chasing only the broad keyword. The hub captures broad discovery; individual guides answer concrete gameplay questions.'}
+            ? '优先从“具体游戏名 + guide / mobile / index / rebirth / rare / upgrades / recipes”切入，而不是直接抢成熟大词。合集页负责承接泛搜索，单页负责回答具体玩法问题。'
+            : 'Start with “specific game name + guide / mobile / index / rebirth / rare / upgrades / recipes” instead of chasing only the broad keyword. The hub captures broad discovery; individual guides answer concrete gameplay questions.'}
         </p>
         <div className="mt-5 flex flex-wrap gap-3 text-sm font-medium">
-          {links.slice(0, 2).map((item) => (
+          {links.slice(0, 3).map((item) => (
             <Link
               key={item.href}
               href={getLocalizedPath(locale, item.href)}
@@ -330,8 +341,8 @@ export default function BrainrotGamesPage({ params }: { params: { locale: string
           <h2 className="text-xl font-semibold text-foreground">{isZh ? 'SEO 切入点' : 'SEO entry point'}</h2>
           <p className="mt-3 text-sm leading-6 text-muted-foreground">
             {isZh
-              ? '围绕 guide、walkthrough、mobile、rare brainrots、upgrades、recipes 和 similar games 写原创实测。'
-              : 'Use guide, walkthrough, mobile, rare Brainrots, upgrades, recipes, and similar games as the long-tail angles.'}
+              ? '围绕 guide、walkthrough、mobile、all brainrots、index、rebirth、rare brainrots、upgrades、recipes 和 similar games 写原创实测。'
+              : 'Use guide, walkthrough, mobile, all Brainrots, index, rebirth, rare Brainrots, upgrades, recipes, and similar games as the long-tail angles.'}
           </p>
         </div>
         <div className="rounded-2xl border border-border bg-card p-5">
