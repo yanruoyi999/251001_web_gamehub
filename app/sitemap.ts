@@ -107,6 +107,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.75,
     },
     {
+      path: '/guides/blumgi-rocket-tips',
+      file: ['app', '[locale]', 'guides', 'blumgi-rocket-tips', 'page.tsx'],
+      changeFrequency: 'weekly',
+      priority: 0.81,
+    },
+    {
       path: '/guides/quick-play-guide',
       file: ['app', '[locale]', 'guides', 'quick-play-guide', 'page.tsx'],
       changeFrequency: 'monthly',
