@@ -118,5 +118,10 @@ export function destroyAdminSession() {
 }
 
 export function isAdminRequestAuthenticated(request: NextRequest) {
-  return verifyAdminSessionToken(request.cookies.get(ADMIN_SESSION_COOKIE)?.value);
+  const cookieStore = request.cookies;
+  if (!cookieStore || typeof cookieStore.get !== 'function') {
+    return false;
+  }
+
+  return verifyAdminSessionToken(cookieStore.get(ADMIN_SESSION_COOKIE)?.value);
 }
