@@ -8,7 +8,7 @@ import {
 } from '@/lib/seo';
 
 const PATH = '/guides/float-for-brainrots-guide';
-const UPDATED_AT = '2026-07-08T00:00:00.000Z';
+const UPDATED_AT = '2026-07-09T00:00:00.000Z';
 
 type GuideSection = {
   title: string;
@@ -92,7 +92,12 @@ const relatedLinks: Record<Locale, InternalLink[]> = {
     {
       href: '/guides/brainrot-games',
       label: 'Brainrot Games Online',
-      description: 'Return to the Brainrot hub for craft, steal, collect, obby, and mobile discovery paths.',
+      description: 'Return to the Brainrot hub for craft, steal, collect, obby, Lucky Blocks, and mobile discovery paths.',
+    },
+    {
+      href: '/guides/lucky-blocks-for-brainrots-guide',
+      label: 'Lucky Blocks guide',
+      description: 'Compare ocean collection with Lucky Block farming, index completion, and rebirth timing.',
     },
     {
       href: '/guides/steal-beanstalk-for-brainrots-guide',
@@ -114,7 +119,12 @@ const relatedLinks: Record<Locale, InternalLink[]> = {
     {
       href: '/guides/brainrot-games',
       label: 'Brainrot Games Online 合集',
-      description: '回到 Brainrot 主题 Hub，继续浏览合成、偷取、收集、Obby 和手机玩法。',
+      description: '回到 Brainrot 主题 Hub，继续浏览合成、偷取、收集、Obby、Lucky Blocks 和手机玩法。',
+    },
+    {
+      href: '/guides/lucky-blocks-for-brainrots-guide',
+      label: 'Lucky Blocks 攻略',
+      description: '把航行收集和 Lucky Block 刷取、Index 图鉴、Rebirth 重生做横向对比。',
     },
     {
       href: '/guides/steal-beanstalk-for-brainrots-guide',
@@ -282,7 +292,7 @@ export default function FloatForBrainrotsGuide({ params }: { params: { locale: s
             : 'The safest approach is short trips, timely returns, and steady boat upgrades. Do not hard-chase rare Brainrots early; upgrade speed and capacity first.'}
         </p>
         <div className="mt-5 flex flex-wrap gap-3 text-sm font-medium">
-          {links.slice(0, 2).map((item) => (
+          {links.slice(0, 3).map((item) => (
             <Link
               key={item.href}
               href={getLocalizedPath(locale, item.href)}
@@ -316,8 +326,8 @@ export default function FloatForBrainrotsGuide({ params }: { params: { locale: s
         </h2>
         <p className="mt-2 text-sm text-muted-foreground">
           {isZh
-            ? '这页保留多个正文内链，让玩家能在 Brainrot 主题、偷取玩法、短局场景和手机游戏之间继续浏览。'
-            : 'This page keeps multiple contextual internal links so players can continue through Brainrot, stealing, quick-play, and mobile-game paths.'}
+            ? '这页保留多个正文内链，让玩家能在 Brainrot 主题、Lucky Block、偷取玩法、短局场景和手机游戏之间继续浏览。'
+            : 'This page keeps multiple contextual internal links so players can continue through Brainrot, Lucky Blocks, stealing, quick-play, and mobile-game paths.'}
         </p>
         <div className="mt-5 grid gap-4 md:grid-cols-2">
           {links.map((item) => (
