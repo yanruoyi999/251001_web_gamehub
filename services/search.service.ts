@@ -48,10 +48,13 @@ export class SearchService {
     const { page, limit, offset } = validatePagination(options.page, options.limit);
     const cacheKey = SearchCacheKeys.results(query, { page, limit });
 
-    const cached = await getJson<{ games: any[]; total: number; page: number; limit: number; source: string }>(
-      redis,
-      cacheKey
-    );
+    const cached = await getJson<{
+      games: unknown[];
+      total: number;
+      page: number;
+      limit: number;
+      source: string;
+    }>(redis, cacheKey);
 
     if (cached) {
       return cached;
@@ -111,23 +114,28 @@ export class SearchService {
     }
 
     const databaseConnection = getDatabaseConnectionMetadata();
-    if (
+    const databaseUnavailable = !databaseConnection.configured;
+    const unsafeDirectConnection =
       process.env.SEARCH_ALLOW_SUPABASE_DIRECT_IN_SERVERLESS !== 'true' &&
-      shouldSkipSupabaseDirectInServerless(databaseConnection)
-    ) {
-      console.warn('Skipping database search because Supabase direct URL is configured in serverless runtime');
+      shouldSkipSupabaseDirectInServerless(databaseConnection);
+
+    if (databaseUnavailable || unsafeDirectConnection) {
+      const reason = databaseUnavailable
+        ? 'database is not configured'
+        : 'Supabase direct URL is not safe in the serverless runtime';
+      console.warn(`Skipping database search because ${reason}`);
       const fallback = searchFallbackGames({ query, page, limit });
       await setJson(redis, cacheKey, fallback, CacheTTL.SEARCH_RESULTS);
       return fallback;
     }
 
     try {
-      const fallback = await withSearchTimeout(
+      const result = await withSearchTimeout(
         this.searchWithDatabase(query, { page, limit, offset }),
         'Database search',
       );
-      await setJson(redis, cacheKey, fallback, CacheTTL.SEARCH_RESULTS);
-      return fallback;
+      await setJson(redis, cacheKey, result, CacheTTL.SEARCH_RESULTS);
+      return result;
     } catch (error) {
       console.warn('Database search failed, using local fallback:', error);
       const fallback = searchFallbackGames({ query, page, limit });
@@ -138,7 +146,7 @@ export class SearchService {
 
   private static async searchWithDatabase(
     query: string,
-    options: { page: number; limit: number; offset: number }
+    options: { page: number; limit: number; offset: number },
   ) {
     const pattern = `%${query}%`;
 
@@ -146,7 +154,7 @@ export class SearchService {
       ilike(games.title, pattern),
       ilike(games.titleEn, pattern),
       ilike(games.description, pattern),
-      ilike(games.descriptionEn, pattern)
+      ilike(games.descriptionEn, pattern),
     );
 
     const results = await db
