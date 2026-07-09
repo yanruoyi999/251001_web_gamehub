@@ -87,23 +87,14 @@ export async function GET(request: NextRequest) {
     parseIntegerParam(searchParams.get('page')),
     parseIntegerParam(searchParams.get('limit')),
   );
-
-  const favoriteContext = FavoriteService.getContextFromHeaders(request.headers, request.ip ?? undefined);
-  let favoriteIds: number[] = [];
-
-  try {
-    favoriteIds = await withGameListTimeout(
-      FavoriteService.listFavoriteIds(favoriteContext),
-      'Favorite list lookup',
-    );
-  } catch (error) {
-    console.warn('Favorites are unavailable for game list; continuing without favorite state:', error);
-  }
+  const isAdmin = isAdminRequestAuthenticated(request);
+  const requestedStatus = parseStatus(searchParams.get('status'));
 
   const listOptions: ListGamesOptions = {
     page,
     limit,
-    status: parseStatus(searchParams.get('status')),
+    // Unauthenticated callers must never enumerate pending or archived content.
+    status: isAdmin ? requestedStatus : 'active',
     categoryId: parseIntegerParam(searchParams.get('categoryId')),
     tagId: parseIntegerParam(searchParams.get('tagId')),
     search: sanitizeSearchQuery(searchParams.get('search') ?? '') || undefined,
@@ -113,7 +104,7 @@ export async function GET(request: NextRequest) {
     isNew: parseBoolean(searchParams.get('isNew')),
     isHot: parseBoolean(searchParams.get('isHot')),
     onlyFavorites: searchParams.get('favoritesOnly') === 'true',
-    favoriteGameIds: favoriteIds,
+    favoriteGameIds: [],
   };
 
   if (shouldUsePublicCatalogueFallback()) {
@@ -122,6 +113,16 @@ export async function GET(request: NextRequest) {
       ...listFallbackGames(listOptions),
       degraded: true,
     });
+  }
+
+  const favoriteContext = FavoriteService.getContextFromHeaders(request.headers, request.ip ?? undefined);
+  try {
+    listOptions.favoriteGameIds = await withGameListTimeout(
+      FavoriteService.listFavoriteIds(favoriteContext),
+      'Favorite list lookup',
+    );
+  } catch (error) {
+    console.warn('Favorites are unavailable for game list; continuing without favorite state:', error);
   }
 
   try {
