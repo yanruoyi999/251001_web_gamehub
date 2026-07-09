@@ -7,7 +7,7 @@ import {
 } from '@/lib/db/connection-policy';
 import { listFallbackGames } from '@/lib/games/fallback-list';
 import { sanitizeSearchQuery, validatePagination } from '@/lib/utils/validation';
-import type { ListGamesOptions } from '@/services/game.service';
+import type { CreateGameInput, ListGamesOptions } from '@/services/game.service';
 
 const DEFAULT_GAME_LIST_BACKEND_TIMEOUT_MS = 2500;
 
@@ -70,6 +70,17 @@ function parseBoolean(value: string | null) {
   return undefined;
 }
 
+function positiveIntegerArray(value: unknown): number[] | undefined {
+  if (!Array.isArray(value)) return undefined;
+  return Array.from(
+    new Set(
+      value
+        .map((item) => Number(item))
+        .filter((item) => Number.isInteger(item) && item > 0),
+    ),
+  );
+}
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const { page, limit } = validatePagination(
@@ -118,7 +129,6 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(result);
   } catch (error) {
     console.warn('Game database list failed, using local fallback:', error);
-    // Keep the public catalogue available for crawlers, reviewers, and users when database env vars are absent.
     return NextResponse.json({
       ...listFallbackGames(listOptions),
       degraded: true,
@@ -131,40 +141,52 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
+  let body: unknown;
   try {
-    const payload = await request.json();
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON payload' }, { status: 400 });
+  }
 
-    if (!payload?.title || !payload?.iframeUrl) {
-      return NextResponse.json({ error: 'title and iframeUrl are required' }, { status: 400 });
-    }
+  const payload = body as Record<string, unknown>;
+  const title = typeof payload.title === 'string' ? payload.title.trim() : '';
+  const iframeUrl = typeof payload.iframeUrl === 'string' ? payload.iframeUrl.trim() : '';
 
-    const game = await GameService.createGame({
-      title: payload.title,
-      titleEn: payload.titleEn,
-      description: payload.description,
-      descriptionEn: payload.descriptionEn,
-      instructions: payload.instructions,
-      instructionsEn: payload.instructionsEn,
-      thumbnailUrl: payload.thumbnailUrl,
-      iframeUrl: payload.iframeUrl,
-      slug: payload.slug,
-      isNew: payload.isNew,
-      isHot: payload.isHot,
-      status: payload.status,
-      developerName: payload.developerName,
-      developerUrl: payload.developerUrl,
-      sourceUrl: payload.sourceUrl,
-      categoryIds: payload.categoryIds,
-      tagIds: payload.tagIds,
-    });
+  if (!title || !iframeUrl) {
+    return NextResponse.json({ error: 'title and iframeUrl are required' }, { status: 400 });
+  }
 
+  const createInput: CreateGameInput = {
+    title,
+    iframeUrl,
+    titleEn: typeof payload.titleEn === 'string' ? payload.titleEn.trim() : undefined,
+    description: typeof payload.description === 'string' ? payload.description : undefined,
+    descriptionEn: typeof payload.descriptionEn === 'string' ? payload.descriptionEn : undefined,
+    instructions: typeof payload.instructions === 'string' ? payload.instructions : undefined,
+    instructionsEn: typeof payload.instructionsEn === 'string' ? payload.instructionsEn : undefined,
+    thumbnailUrl: typeof payload.thumbnailUrl === 'string' ? payload.thumbnailUrl.trim() : undefined,
+    slug: typeof payload.slug === 'string' ? payload.slug.trim() : undefined,
+    isNew: typeof payload.isNew === 'boolean' ? payload.isNew : undefined,
+    isHot: typeof payload.isHot === 'boolean' ? payload.isHot : undefined,
+    status:
+      payload.status === 'active' || payload.status === 'inactive' || payload.status === 'pending'
+        ? payload.status
+        : undefined,
+    developerName:
+      typeof payload.developerName === 'string' ? payload.developerName.trim() || null : undefined,
+    developerUrl:
+      typeof payload.developerUrl === 'string' ? payload.developerUrl.trim() || null : undefined,
+    sourceUrl: typeof payload.sourceUrl === 'string' ? payload.sourceUrl.trim() || null : undefined,
+    categoryIds: positiveIntegerArray(payload.categoryIds),
+    tagIds: positiveIntegerArray(payload.tagIds),
+  };
+
+  try {
+    const game = await GameService.createGame(createInput);
     return NextResponse.json(game, { status: 201 });
   } catch (error) {
     console.error('Failed to create game:', error);
-    return NextResponse.json(
-      { error: (error as Error).message ?? 'Failed to create game' },
-      { status: 400 },
-    );
+    return NextResponse.json({ error: 'Failed to create game' }, { status: 400 });
   }
 }
 
