@@ -3,7 +3,7 @@ import { ratings, games } from '@/db/schema';
 import { eq, and, desc, sql, or } from 'drizzle-orm';
 import { hashIp, generateAnonymousToken } from '@/lib/utils/hash';
 import { RatingCacheKeys, CacheTTL } from '@/lib/utils/cache-keys';
-import { getJson, setJson } from '@/lib/utils/redis-helper';
+import { delKey, getJson, setJson } from '@/lib/utils/redis-helper';
 import { redis } from '@/lib/redis';
 import { GameStatsService } from './stats.service';
 import { isValidId, isValidRating, validatePagination } from '@/lib/utils/validation';
@@ -37,7 +37,7 @@ export class RatingService {
     const ipHash = hashIp(input.userIp);
     const anonymousToken = generateAnonymousToken(
       input.userAgent ?? '',
-      input.acceptLanguage ?? ''
+      input.acceptLanguage ?? '',
     );
 
     await this.checkRateLimit(ipHash);
@@ -59,14 +59,14 @@ export class RatingService {
       .returning();
 
     await this.recordRatingAttempt(ipHash, input.gameId);
-    await GameStatsService.updateRatingStats(input.gameId);
 
+    // Pending ratings do not affect public aggregates until an admin approves them.
     return created;
   }
 
   static async listGameRatings(
     gameId: number,
-    options: { page?: number; limit?: number; includePending?: boolean } = {}
+    options: { page?: number; limit?: number; includePending?: boolean } = {},
   ) {
     if (!isValidId(gameId)) throw new Error('Invalid game ID');
 
@@ -108,7 +108,10 @@ export class RatingService {
   static async getRatingDistribution(gameId: number) {
     if (!isValidId(gameId)) throw new Error('Invalid game ID');
 
-    const cached = await getJson<Record<string, number>>(redis, RatingCacheKeys.distribution(gameId));
+    const cached = await getJson<Record<string, number>>(
+      redis,
+      RatingCacheKeys.distribution(gameId),
+    );
     if (cached) return cached;
 
     const rows = await db
@@ -117,7 +120,10 @@ export class RatingService {
       .where(and(eq(ratings.gameId, gameId), eq(ratings.status, 'approved')))
       .groupBy(ratings.rating);
 
-    const distribution = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 } as Record<1 | 2 | 3 | 4 | 5, number>;
+    const distribution = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 } as Record<
+      1 | 2 | 3 | 4 | 5,
+      number
+    >;
     rows.forEach((row) => {
       const key = row.rating as 1 | 2 | 3 | 4 | 5;
       distribution[key] = Number(row.count);
@@ -143,7 +149,14 @@ export class RatingService {
       throw new Error('Rating not found');
     }
 
-    await GameStatsService.updateRatingStats(updated.gameId);
+    try {
+      await GameStatsService.updateRatingStats(updated.gameId);
+    } catch (error) {
+      // Moderation has already succeeded; stale aggregates can be repaired on the next update.
+      console.warn('Rating status updated but aggregate refresh failed:', error);
+    }
+
+    await delKey(redis, RatingCacheKeys.distribution(updated.gameId));
     return updated;
   }
 
@@ -184,9 +197,20 @@ export class RatingService {
     }
 
     const key = RatingCacheKeys.rateLimit(ipHash);
-    const current = await redis.incr(key);
+    let current: number;
+    try {
+      current = await redis.incr(key);
+    } catch (error) {
+      console.warn('Rating rate limit cache unavailable; continuing with database checks:', error);
+      return;
+    }
+
     if (current === 1) {
-      await redis.expire(key, CacheTTL.RATE_LIMIT);
+      try {
+        await redis.expire(key, CacheTTL.RATE_LIMIT);
+      } catch (error) {
+        console.warn('Failed to set rating rate limit expiry:', error);
+      }
     }
 
     if (current > 10) {
@@ -197,9 +221,16 @@ export class RatingService {
   private static async ensureNotRatedRecently(gameId: number, ipHash: string, token: string) {
     if (redis && typeof redis.exists === 'function') {
       const key = RatingCacheKeys.userRating(gameId, ipHash);
-      const exists = await redis.exists(key);
-      if (exists) {
-        throw new Error('You have already rated this game recently.');
+      try {
+        const exists = await redis.exists(key);
+        if (exists) {
+          throw new Error('You have already rated this game recently.');
+        }
+      } catch (error) {
+        if (error instanceof Error && error.message === 'You have already rated this game recently.') {
+          throw error;
+        }
+        console.warn('Recent rating cache check failed; continuing with database check:', error);
       }
     }
 
@@ -211,8 +242,8 @@ export class RatingService {
         and(
           eq(ratings.gameId, gameId),
           or(eq(ratings.userIpHash, ipHash), eq(ratings.anonymousToken, token)),
-          sql`${ratings.createdAt} > ${oneDayAgo}`
-        )
+          sql`${ratings.createdAt} > ${oneDayAgo}`,
+        ),
       )
       .limit(1);
 
