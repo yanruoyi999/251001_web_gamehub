@@ -72,8 +72,19 @@ export default function GuidesPage({ params }: GuidesPageProps) {
       title: locale === 'zh' ? 'Brainrot Games Online 攻略合集' : 'Brainrot Games Online',
       summary:
         locale === 'zh'
-          ? '围绕最新 Brainrot 浏览器小游戏整理合成、偷取、收集、Obby、移动端体验和安全说明。'
-          : 'A fresh Brainrot browser-game hub covering craft, steal, collect, obby, mobile experience, and safety notes.',
+          ? '围绕最新 Brainrot 浏览器小游戏整理 Lucky Blocks、合成、偷取、收集、Obby、移动端体验和安全说明。'
+          : 'A fresh Brainrot browser-game hub covering Lucky Blocks, craft, steal, collect, obby, mobile experience, and safety notes.',
+    },
+    {
+      href: getLocalizedPath(locale, '/guides/lucky-blocks-for-brainrots-guide'),
+      title:
+        locale === 'zh'
+          ? 'Lucky Blocks for Brainrots 攻略'
+          : 'Lucky Blocks for Brainrots Guide',
+      summary:
+        locale === 'zh'
+          ? '承接 all Brainrots、Index 图鉴、Rebirth 重生、Lucky Blocks 打法和移动端体验等新词搜索。'
+          : 'A fresh guide for all Brainrots, index completion, rebirth timing, Lucky Blocks farming, and mobile checks.',
     },
     {
       href: getLocalizedPath(locale, '/guides/steal-beanstalk-for-brainrots-guide'),
