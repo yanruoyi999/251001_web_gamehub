@@ -33,9 +33,22 @@ jobs:
         run: pnpm type-check
 
       - name: Unit tests
-        run: pnpm test -- --run
+        id: unit-tests
+        shell: bash
+        run: |
+          set -o pipefail
+          pnpm test -- --run 2>&1 | tee test-output.txt
         env:
           NODE_ENV: test
+
+      - name: Upload unit test diagnostics
+        if: steps.unit-tests.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-diagnostics
+          if-no-files-found: error
+          retention-days: 3
+          path: test-output.txt
 
       - name: Production build
         run: pnpm build
