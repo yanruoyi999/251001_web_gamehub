@@ -1,0 +1,43 @@
+name: Source Audit Snapshot
+
+on:
+  pull_request:
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create source inventory
+        run: |
+          find app components lib services db i18n scripts types -type f \
+            \( -name '*.ts' -o -name '*.tsx' -o -name '*.js' -o -name '*.mjs' -o -name '*.json' -o -name '*.sql' \) \
+            2>/dev/null | sort > source-files.txt
+          grep -RInE 'TODO|FIXME|HACK|XXX|http://|console\.error|dangerouslySetInnerHTML|as any|@ts-ignore' \
+            app components lib services db i18n scripts types \
+            --include='*.ts' --include='*.tsx' --include='*.js' --include='*.mjs' \
+            2>/dev/null > source-signals.txt || true
+
+      - name: Upload audit snapshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-audit-snapshot
+          if-no-files-found: error
+          retention-days: 1
+          path: |
+            source-files.txt
+            source-signals.txt
+            app
+            components
+            lib
+            services
+            db
+            i18n
+            scripts
+            types
+            package.json
+            tsconfig.json
+            next.config.js
+            middleware.ts
