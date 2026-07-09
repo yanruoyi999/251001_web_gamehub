@@ -1,5 +1,5 @@
 import { db } from '@/lib/db';
-import { playCounters, gameStats } from '@/db/schema';
+import { playCounters } from '@/db/schema';
 import { eq, sql, and } from 'drizzle-orm';
 import { redis } from '@/lib/redis';
 import { CounterCacheKeys, CacheTTL } from '@/lib/utils/cache-keys';
@@ -18,9 +18,16 @@ export class CounterService {
       const totalKey = CounterCacheKeys.total(gameId);
       const todayKeyCache = CounterCacheKeys.today(gameId);
 
-      await redis.incrby(totalKey, delta);
-      await redis.incrby(todayKeyCache, delta);
-      await redis.expire(todayKeyCache, CacheTTL.PLAY_COUNT);
+      try {
+        await Promise.all([
+          redis.incrby(totalKey, delta),
+          redis.incrby(todayKeyCache, delta),
+        ]);
+        await redis.expire(todayKeyCache, CacheTTL.PLAY_COUNT);
+      } catch (error) {
+        // Redis is an optional cache. Database persistence must still proceed.
+        console.warn('Play count cache update failed; continuing with database persistence:', error);
+      }
     }
 
     await GameStatsService.incrementPlayCount(gameId, delta);
@@ -32,16 +39,22 @@ export class CounterService {
     if (redis) {
       const totalKey = CounterCacheKeys.total(gameId);
       const todayKeyCache = CounterCacheKeys.today(gameId);
-      const [total, today] = await Promise.all([
-        redis.get<number>(totalKey),
-        redis.get<number>(todayKeyCache),
-      ]);
 
-      if (total !== null || today !== null) {
-        return {
-          total: Number(total ?? 0),
-          today: Number(today ?? 0),
-        };
+      try {
+        const [total, today] = await Promise.all([
+          redis.get<number>(totalKey),
+          redis.get<number>(todayKeyCache),
+        ]);
+
+        if (total !== null || today !== null) {
+          return {
+            total: Number(total ?? 0),
+            today: Number(today ?? 0),
+          };
+        }
+      } catch (error) {
+        // Fall through to the database if the cache is unavailable.
+        console.warn('Play count cache read failed; falling back to database:', error);
       }
     }
 
