@@ -68,6 +68,14 @@ export default function GuidesPage({ params }: GuidesPageProps) {
       : 'From lower-interruption picks to mobile browser candidates, these guides organize games by real play scenarios. Check the device notes, choose a theme, and start playing.';
   const extraGuides = [
     {
+      href: getLocalizedPath(locale, '/guides/blumgi-rocket-tips'),
+      title: locale === 'zh' ? 'Blumgi Rocket 推进与落地攻略' : 'Blumgi Rocket Boost & Landing Guide',
+      summary:
+        locale === 'zh'
+          ? '围绕 Blumgi Rocket 的推进节奏、坡道判断、落地角度和难关重试，整理可直接执行的物理驾驶技巧。'
+          : 'A practical long-tail guide for Blumgi Rocket boost timing, ramp reading, landing control, and hard retry stages.',
+    },
+    {
       href: getLocalizedPath(locale, '/guides/quick-play-guide'),
       title: locale === 'zh' ? '快速游玩指南' : 'Quick Play Guide',
       summary:
