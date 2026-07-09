@@ -113,6 +113,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.82,
     },
     {
+      path: '/guides/lucky-blocks-for-brainrots-guide',
+      file: ['app', '[locale]', 'guides', 'lucky-blocks-for-brainrots-guide', 'page.tsx'],
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
       path: '/guides/steal-beanstalk-for-brainrots-guide',
       file: ['app', '[locale]', 'guides', 'steal-beanstalk-for-brainrots-guide', 'page.tsx'],
       changeFrequency: 'weekly',
