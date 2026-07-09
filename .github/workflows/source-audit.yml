@@ -38,6 +38,7 @@ jobs:
             scripts
             types
             package.json
+            pnpm-lock.yaml
             tsconfig.json
             next.config.js
             middleware.ts
