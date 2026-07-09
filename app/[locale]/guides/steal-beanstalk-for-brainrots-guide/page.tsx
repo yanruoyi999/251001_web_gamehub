@@ -8,7 +8,7 @@ import {
 } from '@/lib/seo';
 
 const PATH = '/guides/steal-beanstalk-for-brainrots-guide';
-const UPDATED_AT = '2026-07-08T00:00:00.000Z';
+const UPDATED_AT = '2026-07-09T00:00:00.000Z';
 
 type GuideSection = {
   title: string;
@@ -92,7 +92,12 @@ const relatedLinks: Record<Locale, InternalLink[]> = {
     {
       href: '/guides/brainrot-games',
       label: 'Brainrot Games Online',
-      description: 'Return to the hub for craft, steal, merge, obby, and mobile Brainrot searches.',
+      description: 'Return to the hub for craft, steal, merge, obby, Lucky Blocks, and mobile Brainrot searches.',
+    },
+    {
+      href: '/guides/lucky-blocks-for-brainrots-guide',
+      label: 'Lucky Blocks guide',
+      description: 'Compare stealing loops with Lucky Block farming, index completion, and rebirth timing.',
     },
     {
       href: '/guides/float-for-brainrots-guide',
@@ -114,7 +119,12 @@ const relatedLinks: Record<Locale, InternalLink[]> = {
     {
       href: '/guides/brainrot-games',
       label: 'Brainrot Games Online 合集',
-      description: '回到主题 Hub，继续浏览合成、偷取、收集、Obby 和移动端 Brainrot 机会。',
+      description: '回到主题 Hub，继续浏览合成、偷取、收集、Obby、Lucky Blocks 和移动端 Brainrot 机会。',
+    },
+    {
+      href: '/guides/lucky-blocks-for-brainrots-guide',
+      label: 'Lucky Blocks 攻略',
+      description: '把偷取循环和 Lucky Block 刷取、Index 图鉴、Rebirth 重生做横向对比。',
     },
     {
       href: '/guides/float-for-brainrots-guide',
@@ -284,7 +294,7 @@ export default function StealBeanstalkForBrainrotsGuide({ params }: { params: { 
             : 'Do not chase rare Brainrots too early. Stabilize beanstalk production, routes, and return timing first, then use short stealing rounds to fill the index.'}
         </p>
         <div className="mt-5 flex flex-wrap gap-3 text-sm font-medium">
-          {links.slice(0, 2).map((item) => (
+          {links.slice(0, 3).map((item) => (
             <Link
               key={item.href}
               href={getLocalizedPath(locale, item.href)}
@@ -318,8 +328,8 @@ export default function StealBeanstalkForBrainrotsGuide({ params }: { params: { 
         </h2>
         <p className="mt-2 text-sm text-muted-foreground">
           {isZh
-            ? '这页保留多个正文内链，既能把玩家带回 Brainrot 主题集群，也能分流到手机和无需下载场景。'
-            : 'This page keeps multiple contextual internal links so players can move through the Brainrot cluster, mobile intent, and no-download paths.'}
+            ? '这页保留多个正文内链，既能把玩家带回 Brainrot 主题集群，也能分流到 Lucky Block、手机和无需下载场景。'
+            : 'This page keeps multiple contextual internal links so players can move through the Brainrot cluster, Lucky Blocks, mobile intent, and no-download paths.'}
         </p>
         <div className="mt-5 grid gap-4 md:grid-cols-2">
           {links.map((item) => (
