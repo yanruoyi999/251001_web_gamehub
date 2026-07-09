@@ -56,6 +56,12 @@ export default async function HomePage({
   const popularLinks =
     locale === 'zh'
       ? [
+          { href: getLocalizedPath(locale, '/guides/brainrot-games'), label: 'Brainrot Games 攻略合集' },
+          {
+            href: getLocalizedPath(locale, '/guides/steal-beanstalk-for-brainrots-guide'),
+            label: 'Steal Beanstalk 攻略',
+          },
+          { href: getLocalizedPath(locale, '/guides/float-for-brainrots-guide'), label: 'Float for Brainrots 攻略' },
           { href: getLocalizedPath(locale, '/guides/google-snake-mods'), label: 'Google Snake Mods' },
           { href: getLocalizedPath(locale, '/games/solitaire'), label: '免费在线 Solitaire' },
           { href: getLocalizedPath(locale, '/guides/apple-knight-mini-dungeons-guide'), label: 'Apple Knight 攻略' },
@@ -63,6 +69,12 @@ export default async function HomePage({
           { href: getLocalizedPath(locale, '/guides/fireboy-and-watergirl-walkthrough'), label: '森林冰火人攻略' },
         ]
       : [
+          { href: getLocalizedPath(locale, '/guides/brainrot-games'), label: 'Brainrot Games Guide Hub' },
+          {
+            href: getLocalizedPath(locale, '/guides/steal-beanstalk-for-brainrots-guide'),
+            label: 'Steal Beanstalk Guide',
+          },
+          { href: getLocalizedPath(locale, '/guides/float-for-brainrots-guide'), label: 'Float for Brainrots Guide' },
           { href: getLocalizedPath(locale, '/guides/google-snake-mods'), label: 'Google Snake Mods' },
           { href: getLocalizedPath(locale, '/games/solitaire'), label: 'Free Online Solitaire' },
           { href: getLocalizedPath(locale, '/guides/apple-knight-mini-dungeons-guide'), label: 'Apple Knight Guide' },
