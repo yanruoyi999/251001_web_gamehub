@@ -62,9 +62,12 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
           <li>{isZh ? '页面应在点击游玩前给出足够背景。' : 'The page should give enough context before play starts.'}</li>
         </ul>
       </section>
-      <footer className="mt-10">
+      <footer className="mt-10 flex flex-wrap gap-3">
         <Link href={getLocalizedPath(locale, '/games')} className="rounded-lg bg-primary px-6 py-3 font-semibold text-primary-foreground hover:bg-primary/90">
           {isZh ? '浏览全部游戏' : 'Browse all games'}
+        </Link>
+        <Link href={getLocalizedPath(locale, '/guides/browser-games-for-low-end-pc')} className="rounded-lg border px-6 py-3 font-medium text-primary hover:bg-primary/10">
+          {isZh ? '低配置电脑怎么选游戏' : 'Games for low-end PCs'}
         </Link>
       </footer>
     </article>
