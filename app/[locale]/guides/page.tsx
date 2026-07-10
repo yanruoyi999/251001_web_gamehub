@@ -70,6 +70,14 @@ export default async function GuidesPage({ params }: GuidesPageProps) {
       : 'From lower-interruption picks to mobile browser candidates, these guides organize games by real play scenarios. Check the device notes, choose a theme, and start playing.';
   const extraGuides = [
     {
+      href: getLocalizedPath(locale, '/guides/keyboard-only-browser-games'),
+      title: locale === 'zh' ? '只用键盘玩的浏览器小游戏' : 'Keyboard-Only Browser Games',
+      summary:
+        locale === 'zh'
+          ? '按方向键、WASD、单键和多人同键盘选择无需鼠标、免下载的浏览器游戏，并解决按键无响应问题。'
+          : 'Choose no-mouse browser games by arrow keys, WASD, one-button play, or shared-keyboard multiplayer and fix common focus problems.',
+    },
+    {
       href: getLocalizedPath(locale, '/guides/quick-play-guide'),
       title: locale === 'zh' ? '快速游玩指南' : 'Quick Play Guide',
       summary:
@@ -141,10 +149,13 @@ export default async function GuidesPage({ params }: GuidesPageProps) {
         })}
       </div>
 
-      <footer className="mt-12 text-center text-sm text-muted-foreground">
-        {locale === 'zh'
-          ? '提示：收藏本页，随时查看新发布的浏览器游戏主题合集。'
-          : 'Tip: Bookmark this page to see newly published browser-game collections.'}
+      <footer className="mt-12 flex flex-wrap justify-center gap-4 text-sm">
+        <Link href={getLocalizedPath(locale, '/games')} className="text-primary hover:underline">
+          {locale === 'zh' ? '浏览全部游戏' : 'Browse all games'}
+        </Link>
+        <Link href={getLocalizedPath(locale, '/search')} className="text-primary hover:underline">
+          {locale === 'zh' ? '搜索游戏' : 'Search games'}
+        </Link>
       </footer>
     </div>
   );
