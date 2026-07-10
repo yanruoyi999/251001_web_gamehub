@@ -6,13 +6,14 @@ import { AdminGameEditForm } from '@/components/admin/game-edit-form';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 interface AdminGameDetailPageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export default async function AdminGameDetailPage({ params }: AdminGameDetailPageProps) {
-  requireAdminAuth();
+  await requireAdminAuth();
+  const { id } = await params;
 
-  const gameId = Number(params.id);
+  const gameId = Number(id);
   if (!Number.isInteger(gameId) || gameId <= 0) {
     notFound();
   }
@@ -58,7 +59,7 @@ export default async function AdminGameDetailPage({ params }: AdminGameDetailPag
           <p className="text-sm text-slate-400">Update metadata, status, categories and tags.</p>
         </div>
         <a
-          href={`/admin/games`}
+          href="/admin/games"
           className="text-xs font-medium uppercase tracking-wide text-slate-400 hover:text-slate-200"
         >
           ← Back to list
