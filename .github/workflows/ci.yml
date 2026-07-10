@@ -50,5 +50,8 @@ jobs:
           retention-days: 3
           path: test-output.txt
 
+      - name: Audit production dependencies
+        run: pnpm audit:prod
+
       - name: Production build
         run: pnpm build
