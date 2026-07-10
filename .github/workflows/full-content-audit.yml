@@ -1,9 +1,9 @@
 name: Full Content Audit Snapshot
 
 on:
-  push:
+  pull_request:
     branches:
-      - fix/dependency-security-upgrades-20260710
+      - fix/full-code-audit-20260710
 
 jobs:
   snapshot:
@@ -11,8 +11,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          ref: fix/dependency-security-upgrades-20260710
 
       - name: Build page and link inventory
         shell: bash
