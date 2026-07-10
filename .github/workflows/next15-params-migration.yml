@@ -1,0 +1,34 @@
+name: Next 15 Params Migration
+
+on:
+  push:
+    branches:
+      - fix/dependency-security-upgrades-20260710
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout migration branch
+        uses: actions/checkout@v4
+        with:
+          ref: fix/dependency-security-upgrades-20260710
+
+      - name: Migrate async route and page params
+        run: python scripts/migrate-next15-params.py
+
+      - name: Commit migration
+        shell: bash
+        run: |
+          if git diff --quiet -- app; then
+            echo "No migration changes required."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app
+          git commit -m "fix(next15): await dynamic page and route params"
+          git push origin HEAD:fix/dependency-security-upgrades-20260710
