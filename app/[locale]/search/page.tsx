@@ -9,8 +9,8 @@ import { SearchService } from '@/services';
 export const dynamic = 'force-dynamic';
 
 interface SearchPageProps {
-  params: { locale: string };
-  searchParams: { q?: string; page?: string };
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{ q?: string; page?: string }>;
 }
 
 async function safeSearchGames(query: string, page: number) {
@@ -31,11 +31,11 @@ async function safeSearchGames(query: string, page: number) {
 }
 
 export default async function SearchPage({ params, searchParams }: SearchPageProps) {
-  const locale = params.locale;
+  const [{ locale }, resolvedSearchParams] = await Promise.all([params, searchParams]);
   const t = await getTranslations('Search');
 
-  const query = typeof searchParams.q === 'string' ? searchParams.q : '';
-  const pageParam = searchParams.page ? Number(searchParams.page) : undefined;
+  const query = typeof resolvedSearchParams.q === 'string' ? resolvedSearchParams.q : '';
+  const pageParam = resolvedSearchParams.page ? Number(resolvedSearchParams.page) : undefined;
 
   const trimmedQuery = query.trim();
   const page = pageParam && Number.isInteger(pageParam) && pageParam > 0 ? pageParam : 1;

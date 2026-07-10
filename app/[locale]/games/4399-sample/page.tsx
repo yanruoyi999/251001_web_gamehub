@@ -7,13 +7,13 @@ import { getLocalizedPath } from '@/i18n/config';
 import { loadImported4399Games } from '@/lib/games/imported-4399';
 
 interface PageProps {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }
 
 export const dynamic = 'force-dynamic';
 
 export default async function Imported4399SamplePage({ params }: PageProps) {
-  const { locale } = params;
+  const { locale } = await params;
   const t = await getTranslations('Imported4399');
   const games = await loadImported4399Games(6);
 

@@ -4,11 +4,12 @@ import Link from 'next/link';
 import { getLocalizedPath, locales } from '@/i18n/config';
 
 interface ContactPageProps {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }
 
 export async function generateMetadata({ params }: ContactPageProps): Promise<Metadata> {
-  const locale = params.locale === 'zh' ? 'zh' : 'en';
+  const { locale: localeParam } = await params;
+  const locale = localeParam === 'zh' ? 'zh' : 'en';
   const isZh = locale === 'zh';
   return {
     title: isZh ? '联系我们 - Luma Game Hub' : 'Contact Us - Luma Game Hub',
@@ -30,8 +31,9 @@ export async function generateMetadata({ params }: ContactPageProps): Promise<Me
   };
 }
 
-export default function ContactPage({ params }: ContactPageProps) {
-  const isZh = params.locale === 'zh';
+export default async function ContactPage({ params }: ContactPageProps) {
+  const { locale } = await params;
+  const isZh = locale === 'zh';
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-12">
@@ -376,17 +378,17 @@ export default function ContactPage({ params }: ContactPageProps) {
           </h2>
           <div className="mt-4 space-y-2">
             <p>
-              <Link href={`/${params.locale}/about`} className="text-indigo-600 hover:text-indigo-500">
+              <Link href={`/${locale}/about`} className="text-indigo-600 hover:text-indigo-500">
                 {isZh ? '→ 关于我们' : '→ About Us'}
               </Link>
             </p>
             <p>
-              <Link href={`/${params.locale}/privacy`} className="text-indigo-600 hover:text-indigo-500">
+              <Link href={`/${locale}/privacy`} className="text-indigo-600 hover:text-indigo-500">
                 {isZh ? '→ 隐私政策' : '→ Privacy Policy'}
               </Link>
             </p>
             <p>
-              <Link href={`/${params.locale}/games`} className="text-indigo-600 hover:text-indigo-500">
+              <Link href={`/${locale}/games`} className="text-indigo-600 hover:text-indigo-500">
                 {isZh ? '→ 浏览游戏' : '→ Browse Games'}
               </Link>
             </p>

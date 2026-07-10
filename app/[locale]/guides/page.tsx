@@ -12,8 +12,9 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
-export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
-  const locale = (params.locale as Locale) ?? 'zh';
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale: localeParam } = await params;
+  const locale = (localeParam as Locale) ?? 'zh';
   const heading = locale === 'zh' ? '游戏主题攻略与精选合集' : 'Game Guides & Curated Collections';
   const description =
     locale === 'zh'
@@ -55,11 +56,12 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
 }
 
 interface GuidesPageProps {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }
 
-export default function GuidesPage({ params }: GuidesPageProps) {
-  const locale = (params.locale as Locale) ?? 'zh';
+export default async function GuidesPage({ params }: GuidesPageProps) {
+  const { locale: localeParam } = await params;
+  const locale = (localeParam as Locale) ?? 'zh';
   const pages = getSeoLandingPages();
   const heading = locale === 'zh' ? '专题合集' : 'Curated Guides';
   const intro =

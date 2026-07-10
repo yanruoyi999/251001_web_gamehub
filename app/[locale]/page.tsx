@@ -35,10 +35,11 @@ export function generateStaticParams() {
 export default async function HomePage({
   params,
 }: {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
-  const locale = locales.includes(params.locale as Locale)
-    ? (params.locale as Locale)
+  const { locale: localeParam } = await params;
+  const locale = locales.includes(localeParam as Locale)
+    ? (localeParam as Locale)
     : 'zh';
   const t = await getTranslations({ locale, namespace: 'home' });
 

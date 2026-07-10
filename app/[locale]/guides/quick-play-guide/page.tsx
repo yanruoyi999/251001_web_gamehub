@@ -4,8 +4,9 @@ import { getLocalizedPath, locales, type Locale } from '@/i18n/config';
 
 const PATH = '/guides/quick-play-guide';
 
-export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
-  const locale = (params.locale as Locale) ?? 'zh';
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale: localeParam } = await params;
+  const locale = (localeParam as Locale) ?? 'zh';
   const isZh = locale === 'zh';
   const title = isZh ? '快速游玩指南 | Luma Game Hub' : 'Quick Play Guide | Luma Game Hub';
   const description = isZh
@@ -35,8 +36,9 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
   };
 }
 
-export default function Page({ params }: { params: { locale: string } }) {
-  const locale = (params.locale as Locale) ?? 'zh';
+export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale: localeParam } = await params;
+  const locale = (localeParam as Locale) ?? 'zh';
   const isZh = locale === 'zh';
   return (
     <article className="mx-auto max-w-3xl px-6 py-12">

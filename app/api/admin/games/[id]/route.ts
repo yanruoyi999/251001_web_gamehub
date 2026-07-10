@@ -4,12 +4,13 @@ import { GameService } from '@/services';
 import { isAdminRequestAuthenticated } from '@/lib/auth/admin';
 import { isValidHttpsUrl } from '@/lib/utils/validation';
 
-export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   if (!isAdminRequestAuthenticated(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const gameId = Number(params.id);
+  const { id } = await params;
+  const gameId = Number(id);
   if (!Number.isInteger(gameId) || gameId <= 0) {
     return NextResponse.json({ error: 'Invalid game id' }, { status: 400 });
   }

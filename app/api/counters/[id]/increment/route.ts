@@ -83,9 +83,10 @@ function canPersistPlayCount() {
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
-  const gameId = parseId(params.id);
+  const { id } = await params;
+  const gameId = parseId(id);
   if (!gameId) {
     return NextResponse.json({ error: 'Invalid game ID' }, { status: 400 });
   }

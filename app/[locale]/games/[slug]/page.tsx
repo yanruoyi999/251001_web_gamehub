@@ -88,7 +88,7 @@ function buildGameDetailFromMock(mock: MockGame): GameDetail {
 }
 
 interface GamePageProps {
-  params: { locale: string; slug: string };
+  params: Promise<{ locale: string; slug: string }>;
 }
 
 export const revalidate = 3600;
@@ -152,7 +152,7 @@ async function resolveGameDetailBySlug(
 }
 
 export async function generateMetadata({ params }: GamePageProps): Promise<Metadata> {
-  const { locale, slug } = params;
+  const { locale, slug } = await params;
   const resolved = await resolveGameDetailBySlug(slug, true);
 
   if (!resolved) {
@@ -238,7 +238,7 @@ export async function generateMetadata({ params }: GamePageProps): Promise<Metad
 }
 
 export default async function GamePage({ params }: GamePageProps) {
-  const { locale, slug } = params;
+  const { locale, slug } = await params;
 
   const resolved = await resolveGameDetailBySlug(slug, true);
   if (!resolved) {

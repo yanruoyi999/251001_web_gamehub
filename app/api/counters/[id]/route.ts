@@ -23,9 +23,10 @@ function canReadPersistedCounts() {
 
 export async function GET(
   _request: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
-  const gameId = parseId(params.id);
+  const { id } = await params;
+  const gameId = parseId(id);
   if (!gameId) {
     return NextResponse.json({ error: 'Invalid game ID' }, { status: 400 });
   }

@@ -3,11 +3,12 @@ import { Metadata } from 'next';
 import { getLocalizedPath, locales } from '@/i18n/config';
 
 interface PrivacyPageProps {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }
 
 export async function generateMetadata({ params }: PrivacyPageProps): Promise<Metadata> {
-  const locale = params.locale === 'zh' ? 'zh' : 'en';
+  const { locale: localeParam } = await params;
+  const locale = localeParam === 'zh' ? 'zh' : 'en';
   const isZh = locale === 'zh';
   return {
     title: isZh ? '隐私政策 - Luma Game Hub' : 'Privacy Policy - Luma Game Hub',
@@ -29,8 +30,9 @@ export async function generateMetadata({ params }: PrivacyPageProps): Promise<Me
   };
 }
 
-export default function PrivacyPage({ params }: PrivacyPageProps) {
-  const isZh = params.locale === 'zh';
+export default async function PrivacyPage({ params }: PrivacyPageProps) {
+  const { locale } = await params;
+  const isZh = locale === 'zh';
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-12">

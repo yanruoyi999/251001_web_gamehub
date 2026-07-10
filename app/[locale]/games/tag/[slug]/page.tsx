@@ -13,7 +13,7 @@ import {
 import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES, buildAbsoluteUrl } from '@/lib/seo';
 
 interface TagPageProps {
-  params: { locale: string; slug: string };
+  params: Promise<{ locale: string; slug: string }>;
 }
 
 export function generateStaticParams() {
@@ -26,9 +26,10 @@ export function generateStaticParams() {
   );
 }
 
-export function generateMetadata({ params }: TagPageProps): Metadata {
-  const locale = (params.locale as Locale) ?? 'zh';
-  const entry = getTagEntry(params.slug);
+export async function generateMetadata({ params }: TagPageProps): Promise<Metadata> {
+  const { locale: localeParam, slug } = await params;
+  const locale = (localeParam as Locale) ?? 'zh';
+  const entry = getTagEntry(slug);
 
   if (!entry) {
     return {};
@@ -77,9 +78,10 @@ export function generateMetadata({ params }: TagPageProps): Metadata {
   };
 }
 
-export default function TagPage({ params }: TagPageProps) {
-  const locale = (params.locale as Locale) ?? 'zh';
-  const entry = getTagEntry(params.slug);
+export default async function TagPage({ params }: TagPageProps) {
+  const { locale: localeParam, slug } = await params;
+  const locale = (localeParam as Locale) ?? 'zh';
+  const entry = getTagEntry(slug);
 
   if (!entry) {
     notFound();

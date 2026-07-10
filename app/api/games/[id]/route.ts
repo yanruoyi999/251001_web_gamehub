@@ -52,9 +52,10 @@ function getFallbackDetail(gameId: number) {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
-  const gameId = parseId(params.id);
+  const { id } = await params;
+  const gameId = parseId(id);
   if (!gameId) {
     return NextResponse.json({ error: 'Invalid game ID' }, { status: 400 });
   }
@@ -86,13 +87,14 @@ export async function GET(
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   if (!isAdminRequestAuthenticated(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const gameId = parseId(params.id);
+  const { id } = await params;
+  const gameId = parseId(id);
   if (!gameId) {
     return NextResponse.json({ error: 'Invalid game ID' }, { status: 400 });
   }
@@ -115,13 +117,14 @@ export async function PATCH(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   if (!isAdminRequestAuthenticated(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const gameId = parseId(params.id);
+  const { id } = await params;
+  const gameId = parseId(id);
   if (!gameId) {
     return NextResponse.json({ error: 'Invalid game ID' }, { status: 400 });
   }
