@@ -24,7 +24,8 @@
     "test": "vitest",
     "test:watch": "vitest --watch",
     "test:e2e": "playwright test",
-    "ops:status": "tsx scripts/ops-status.ts"
+    "ops:status": "tsx scripts/ops-status.ts",
+    "check:internal-links": "tsx scripts/check-internal-links.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.9.0",
