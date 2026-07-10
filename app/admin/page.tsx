@@ -33,7 +33,7 @@ async function getDashboardStats() {
 }
 
 export default async function AdminDashboardPage() {
-  requireAdminAuth();
+  await requireAdminAuth();
 
   const stats = await getDashboardStats();
 
