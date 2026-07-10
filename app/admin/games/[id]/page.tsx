@@ -54,17 +54,19 @@ export default async function AdminGameDetailPage({ params }: AdminGameDetailPag
 
   return (
     <div className="space-y-8">
-      <header className="flex items-center justify-between">
+      <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-white">Edit game</h1>
           <p className="text-sm text-slate-400">Update metadata, status, categories and tags.</p>
         </div>
-        <Link
-          href="/admin/games"
-          className="text-xs font-medium uppercase tracking-wide text-slate-400 hover:text-slate-200"
-        >
-          ← Back to list
-        </Link>
+        <nav className="flex items-center gap-4 text-xs font-medium uppercase tracking-wide">
+          <Link href="/admin" className="text-slate-400 hover:text-slate-200">
+            Dashboard
+          </Link>
+          <Link href="/admin/games" className="text-slate-400 hover:text-slate-200">
+            ← Back to list
+          </Link>
+        </nav>
       </header>
 
       <Card className="border-slate-800 bg-slate-900/60 text-slate-100">
