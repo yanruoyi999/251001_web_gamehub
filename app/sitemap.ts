@@ -107,6 +107,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.75,
     },
     {
+      path: '/guides/keyboard-only-browser-games',
+      file: ['app', '[locale]', 'guides', 'keyboard-only-browser-games', 'page.tsx'],
+      changeFrequency: 'weekly',
+      priority: 0.82,
+    },
+    {
       path: '/guides/quick-play-guide',
       file: ['app', '[locale]', 'guides', 'quick-play-guide', 'page.tsx'],
       changeFrequency: 'monthly',
@@ -155,7 +161,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: staticPath.changeFrequency,
         priority: staticPath.priority,
       });
-
     }
 
     for (const guide of guides) {
