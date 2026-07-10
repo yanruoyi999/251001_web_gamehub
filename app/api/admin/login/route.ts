@@ -5,6 +5,7 @@ import {
   validateAdminPassword,
   assertAdminPasswordConfigured,
 } from '@/lib/auth/admin';
+import { getClientIp } from '@/lib/http/client-ip';
 import { hashIp } from '@/lib/utils/hash';
 
 const MAX_FAILED_ATTEMPTS = 5;
@@ -19,9 +20,7 @@ type LoginAttempt = {
 const failedLoginAttempts = new Map<string, LoginAttempt>();
 
 function getClientKey(request: Request) {
-  const forwardedIp = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim();
-  const realIp = request.headers.get('x-real-ip')?.trim();
-  return hashIp(forwardedIp || realIp || '0.0.0.0');
+  return hashIp(getClientIp(request));
 }
 
 function getActiveAttempt(key: string, now = Date.now()) {
@@ -89,7 +88,7 @@ export async function POST(request: Request) {
     }
 
     failedLoginAttempts.delete(clientKey);
-    createAdminSession();
+    await createAdminSession();
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
     console.error('Admin login failed:', error);
