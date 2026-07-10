@@ -5,9 +5,9 @@ import { RatingService } from '@/services';
 import { AdminRatingsTable } from '@/components/admin/rating-table';
 
 interface AdminRatingsPageProps {
-  searchParams: {
+  searchParams: Promise<{
     page?: string;
-  };
+  }>;
 }
 
 export const dynamic = 'force-dynamic';
@@ -19,9 +19,10 @@ function resolvePage(value?: string) {
 }
 
 export default async function AdminRatingsPage({ searchParams }: AdminRatingsPageProps) {
-  requireAdminAuth();
+  await requireAdminAuth();
+  const resolvedSearchParams = await searchParams;
 
-  const page = resolvePage(searchParams.page);
+  const page = resolvePage(resolvedSearchParams.page);
 
   const result = await RatingService.getPendingRatings({ page, limit: 20 });
   const totalPages = Math.max(1, Math.ceil(result.total / result.limit));
