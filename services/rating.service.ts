@@ -4,7 +4,7 @@ import { eq, and, desc, sql, or } from 'drizzle-orm';
 import { hashIp, generateAnonymousToken } from '@/lib/utils/hash';
 import { RatingCacheKeys, CacheTTL } from '@/lib/utils/cache-keys';
 import { delKey, getJson, setJson } from '@/lib/utils/redis-helper';
-import { redis } from '@/lib/redis';
+import { getRedisClient } from '@/lib/redis';
 import { GameStatsService } from './stats.service';
 import { isValidId, isValidRating, validatePagination } from '@/lib/utils/validation';
 
@@ -107,6 +107,7 @@ export class RatingService {
 
   static async getRatingDistribution(gameId: number) {
     if (!isValidId(gameId)) throw new Error('Invalid game ID');
+    const redis = getRedisClient();
 
     const cached = await getJson<Record<string, number>>(
       redis,
@@ -136,6 +137,7 @@ export class RatingService {
 
   static async approveRating(ratingId: number, approve: boolean) {
     if (!isValidId(ratingId)) throw new Error('Invalid rating ID');
+    const redis = getRedisClient();
 
     const status = approve ? 'approved' : 'rejected';
 
@@ -192,6 +194,7 @@ export class RatingService {
   }
 
   private static async checkRateLimit(ipHash: string) {
+    const redis = getRedisClient();
     if (!redis || typeof redis.incr !== 'function' || typeof redis.expire !== 'function') {
       return;
     }
@@ -219,6 +222,7 @@ export class RatingService {
   }
 
   private static async ensureNotRatedRecently(gameId: number, ipHash: string, token: string) {
+    const redis = getRedisClient();
     if (redis && typeof redis.exists === 'function') {
       const key = RatingCacheKeys.userRating(gameId, ipHash);
       try {
@@ -253,6 +257,7 @@ export class RatingService {
   }
 
   private static async recordRatingAttempt(ipHash: string, gameId: number) {
+    const redis = getRedisClient();
     if (!redis || typeof redis.set !== 'function') return;
 
     const userKey = RatingCacheKeys.userRating(gameId, ipHash);

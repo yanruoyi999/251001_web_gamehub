@@ -4,6 +4,7 @@ import { getTranslations } from 'next-intl/server';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { getLocalizedPath, locales } from '@/i18n/config';
+import { serializeJsonLd } from '@/lib/utils/json-ld';
 const SOLITAIRE_SCREENSHOT = '/game-screenshots/solitaire.png';
 
 interface SolitairePageProps {
@@ -136,7 +137,7 @@ export default async function SolitairePage({ params }: SolitairePageProps) {
     <div className="mx-auto w-full max-w-5xl px-6 py-12">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqJsonLd) }}
       />
       <header className="mb-8 flex items-center justify-between gap-4">
         <div>

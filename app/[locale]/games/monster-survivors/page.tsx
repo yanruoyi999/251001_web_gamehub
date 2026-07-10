@@ -5,6 +5,7 @@ import { getTranslations } from 'next-intl/server';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { getLocalizedPath, locales } from '@/i18n/config';
 import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES } from '@/lib/seo';
+import { serializeJsonLd } from '@/lib/utils/json-ld';
 
 interface MonsterSurvivorsPageProps {
   params: Promise<{ locale: string }>;
@@ -124,7 +125,7 @@ export default async function MonsterSurvivorsPage({ params }: MonsterSurvivorsP
     <div className="mx-auto w-full max-w-5xl px-6 py-12">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqJsonLd) }}
       />
       <header className="mb-8 flex items-center justify-between gap-4">
         <div>

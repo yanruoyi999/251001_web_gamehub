@@ -3,7 +3,7 @@ import { tags } from '@/db/schema';
 import { asc } from 'drizzle-orm';
 import { TaxonomyCacheKeys, CacheTTL } from '@/lib/utils/cache-keys';
 import { getJson, setJson } from '@/lib/utils/redis-helper';
-import { redis } from '@/lib/redis';
+import { getRedisClient } from '@/lib/redis';
 import { isNextProductionBuild } from '@/lib/utils/build-phase';
 
 export class TagService {
@@ -13,7 +13,7 @@ export class TagService {
     }
 
     const cacheKey = TaxonomyCacheKeys.tags();
-    const cached = await getJson<TagListItem[]>(redis, cacheKey);
+    const cached = await getJson<TagListItem[]>(getRedisClient(), cacheKey);
     if (cached) return cached;
 
     const rows = await db
@@ -26,7 +26,7 @@ export class TagService {
       .from(tags)
       .orderBy(asc(tags.name));
 
-    await setJson(redis, cacheKey, rows, CacheTTL.TAXONOMY);
+    await setJson(getRedisClient(), cacheKey, rows, CacheTTL.TAXONOMY);
     return rows;
   }
 }

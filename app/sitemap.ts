@@ -7,6 +7,10 @@ import { mockGames } from '@/lib/mock-games';
 import { getCategoryEntries, getTagEntries } from '@/lib/game-taxonomy';
 import { shouldIncludeGameInSitemap } from '@/lib/games/quality-policy';
 import { buildAbsoluteUrl } from '@/lib/seo';
+import {
+  getDatabaseConnectionMetadata,
+  shouldSkipSupabaseDirectInServerless,
+} from '@/lib/db/connection-policy';
 
 export const dynamic = 'force-dynamic';
 
@@ -28,7 +32,36 @@ interface SitemapGameEntry {
   lastModified?: Date | null;
 }
 
+function getFallbackSitemapGames(fallbackLastModified: Date): SitemapGameEntry[] {
+  return mockGames
+    .filter((game) => shouldIncludeGameInSitemap(game.slug))
+    .map((game) => ({
+      slug: game.slug,
+      isNew: game.isNew,
+      lastModified: fallbackLastModified,
+    }));
+}
+
+function withSitemapTimeout<T>(promise: Promise<T>): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const timeout = new Promise<never>((_, reject) => {
+    timer = setTimeout(
+      () => reject(new Error('Sitemap games database load timed out')),
+      SITEMAP_DB_TIMEOUT_MS,
+    );
+  });
+
+  return Promise.race([promise, timeout]).finally(() => {
+    if (timer) clearTimeout(timer);
+  });
+}
+
 async function getSitemapGames(fallbackLastModified: Date): Promise<SitemapGameEntry[]> {
+  const connection = getDatabaseConnectionMetadata();
+  if (!connection.configured || shouldSkipSupabaseDirectInServerless(connection)) {
+    return getFallbackSitemapGames(fallbackLastModified);
+  }
+
   try {
     const [{ db }, { games }, { eq }] = await Promise.all([
       import('@/lib/db'),
@@ -45,12 +78,7 @@ async function getSitemapGames(fallbackLastModified: Date): Promise<SitemapGameE
       .from(games)
       .where(eq(games.status, 'active'));
 
-    const rows = await Promise.race([
-      queryPromise,
-      new Promise<never>((_, reject) =>
-        setTimeout(() => reject(new Error('Sitemap games database load timed out')), SITEMAP_DB_TIMEOUT_MS),
-      ),
-    ]);
+    const rows = await withSitemapTimeout(queryPromise);
 
     if (rows.length > 0) {
       return rows
@@ -65,13 +93,7 @@ async function getSitemapGames(fallbackLastModified: Date): Promise<SitemapGameE
     console.warn('Failed to load database games for sitemap, falling back to mock games:', error);
   }
 
-  return mockGames
-    .filter((game) => shouldIncludeGameInSitemap(game.slug))
-    .map((game) => ({
-      slug: game.slug,
-      isNew: game.isNew,
-      lastModified: fallbackLastModified,
-    }));
+  return getFallbackSitemapGames(fallbackLastModified);
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

@@ -24,6 +24,7 @@ import {
   buildAbsoluteUrl,
   getSiteBaseUrl,
 } from '@/lib/seo';
+import { serializeJsonLd } from '@/lib/utils/json-ld';
 
 export const dynamic = 'force-static';
 export const revalidate = 86400;
@@ -195,7 +196,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
         <script
           key={index}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(schema) }}
         />
       ))}
       <nav className="mb-6 text-sm text-muted-foreground">

@@ -12,9 +12,15 @@ import { eq, and, sql, inArray, ilike } from 'drizzle-orm';
 import { ensureUniqueSlug, generateSlug, isValidSlug } from '@/lib/utils/slug';
 import { GameCacheKeys, CacheTTL } from '@/lib/utils/cache-keys';
 import { getJson, setJson, delKey } from '@/lib/utils/redis-helper';
-import { redis } from '@/lib/redis';
+import { getRedisClient } from '@/lib/redis';
 import { isValidId, validatePagination, isValidUrl, isValidHttpsUrl } from '@/lib/utils/validation';
 import { isNextProductionBuild } from '@/lib/utils/build-phase';
+import {
+  normalizeGameUpdateInput,
+  type UpdateGameInput,
+} from '@/lib/games/game-update';
+
+export type { UpdateGameInput } from '@/lib/games/game-update';
 
 export type GameRecord = typeof games.$inferSelect;
 export type GameStatsRecord = typeof gameStats.$inferSelect;
@@ -79,26 +85,7 @@ export interface CreateGameInput {
   thumbnailUrl?: string;
   iframeUrl: string;
   slug?: string;
-  isNew?: boolean;
-  isHot?: boolean;
-  status?: 'active' | 'inactive' | 'pending';
-  developerName?: string | null;
-  developerUrl?: string | null;
-  sourceUrl?: string | null;
-  categoryIds?: number[];
-  tagIds?: number[];
-}
-
-export interface UpdateGameInput {
-  title?: string;
-  titleEn?: string;
-  description?: string;
-  descriptionEn?: string;
-  instructions?: string;
-  instructionsEn?: string;
-  thumbnailUrl?: string;
-  iframeUrl?: string;
-  slug?: string;
+  featured?: boolean;
   isNew?: boolean;
   isHot?: boolean;
   status?: 'active' | 'inactive' | 'pending';
@@ -117,7 +104,7 @@ export class GameService {
     if (!isValidId(gameId)) throw new Error('Invalid game ID');
 
     if (useCache) {
-      const cached = await getJson<GameDetail>(redis, GameCacheKeys.byId(gameId));
+      const cached = await getJson<GameDetail>(getRedisClient(), GameCacheKeys.byId(gameId));
       if (cached) return cached;
     }
 
@@ -148,8 +135,8 @@ export class GameService {
     };
 
     if (useCache) {
-      await setJson(redis, GameCacheKeys.byId(gameId), detail, CacheTTL.GAME_DETAILS);
-      await setJson(redis, GameCacheKeys.bySlug(record.slug), detail, CacheTTL.GAME_DETAILS);
+      await setJson(getRedisClient(), GameCacheKeys.byId(gameId), detail, CacheTTL.GAME_DETAILS);
+      await setJson(getRedisClient(), GameCacheKeys.bySlug(record.slug), detail, CacheTTL.GAME_DETAILS);
     }
 
     return detail;
@@ -162,7 +149,7 @@ export class GameService {
     if (!isValidSlug(slug)) throw new Error('Invalid slug format');
 
     if (useCache) {
-      const cached = await getJson<GameDetail>(redis, GameCacheKeys.bySlug(slug));
+      const cached = await getJson<GameDetail>(getRedisClient(), GameCacheKeys.bySlug(slug));
       if (cached) return cached;
     }
 
@@ -189,8 +176,8 @@ export class GameService {
     };
 
     if (useCache) {
-      await setJson(redis, GameCacheKeys.bySlug(slug), detail, CacheTTL.GAME_DETAILS);
-      await setJson(redis, GameCacheKeys.byId(record.id), detail, CacheTTL.GAME_DETAILS);
+      await setJson(getRedisClient(), GameCacheKeys.bySlug(slug), detail, CacheTTL.GAME_DETAILS);
+      await setJson(getRedisClient(), GameCacheKeys.byId(record.id), detail, CacheTTL.GAME_DETAILS);
     }
 
     return detail;
@@ -244,7 +231,7 @@ export class GameService {
       onlyFavorites: options.onlyFavorites ?? false,
       favoriteIds,
     }));
-    const cached = await getJson<ListGamesResult>(redis, listCacheKey);
+    const cached = await getJson<ListGamesResult>(getRedisClient(), listCacheKey);
     if (cached) return cached;
 
     if (options.onlyFavorites) {
@@ -341,7 +328,7 @@ export class GameService {
       totalPages: Math.ceil(Number(count || 0) / limit),
     };
 
-    await setJson(redis, listCacheKey, result, CacheTTL.GAME_LIST);
+    await setJson(getRedisClient(), listCacheKey, result, CacheTTL.GAME_LIST);
     return result;
   }
 
@@ -349,6 +336,11 @@ export class GameService {
    * 创建游戏
    */
   static async createGame(input: CreateGameInput): Promise<GameRecord> {
+    const title = input.title?.trim();
+    if (!title) {
+      throw new Error('Game title is required');
+    }
+
     const iframeUrl = input.iframeUrl?.trim();
     if (!iframeUrl || !isValidUrl(iframeUrl)) {
       throw new Error('Invalid iframe URL');
@@ -366,7 +358,10 @@ export class GameService {
       throw new Error('Source URL must be a valid HTTPS link');
     }
 
-    const slugSource = input.slug ?? generateSlug(input.title);
+    const slugSource = (input.slug ?? generateSlug(input.titleEn?.trim() || title)).trim().toLowerCase();
+    if (!isValidSlug(slugSource)) {
+      throw new Error('Invalid slug format');
+    }
 
     const existingSlugs = await db
       .select({ slug: games.slug })
@@ -378,8 +373,8 @@ export class GameService {
     const [created] = await db
       .insert(games)
       .values({
-        title: input.title,
-        titleEn: input.titleEn ?? input.title,
+        title,
+        titleEn: input.titleEn?.trim() || title,
         description: input.description,
         descriptionEn: input.descriptionEn,
         instructions: input.instructions,
@@ -387,6 +382,7 @@ export class GameService {
         thumbnailUrl: input.thumbnailUrl,
         iframeUrl,
         slug: uniqueSlug,
+        featured: input.featured ?? false,
         isNew: input.isNew ?? true,
         isHot: input.isHot ?? false,
         status: input.status ?? 'active',
@@ -406,8 +402,8 @@ export class GameService {
       await this.setTags(created.id, input.tagIds);
     }
 
-    await delKey(redis, GameCacheKeys.byId(created.id));
-    await delKey(redis, GameCacheKeys.bySlug(created.slug));
+    await delKey(getRedisClient(), GameCacheKeys.byId(created.id));
+    await delKey(getRedisClient(), GameCacheKeys.bySlug(created.slug));
 
     return created;
   }
@@ -415,65 +411,38 @@ export class GameService {
   /**
    * 更新游戏
    */
-  static async updateGame(gameId: number, updates: UpdateGameInput): Promise<GameRecord> {
+  static async updateGame(
+    gameId: number,
+    updates: UpdateGameInput | Record<string, unknown>,
+  ): Promise<GameRecord> {
     if (!isValidId(gameId)) throw new Error('Invalid game ID');
 
-    if (updates.slug && !isValidSlug(updates.slug)) {
-      throw new Error('Invalid slug format');
+    const { scalarUpdates, categoryIds, tagIds } = normalizeGameUpdateInput(updates);
+    const [current] = await db
+      .select({ id: games.id, slug: games.slug })
+      .from(games)
+      .where(eq(games.id, gameId))
+      .limit(1);
+
+    if (!current) {
+      throw new Error('Game not found');
     }
 
-    if (updates.slug) {
+    if (scalarUpdates.slug && scalarUpdates.slug !== current.slug) {
       const existingSlugs = await db
         .select({ slug: games.slug })
         .from(games)
         .where(sql`${games.id} != ${gameId}`)
         .then((rows) => rows.map((row) => row.slug));
-      if (existingSlugs.includes(updates.slug)) {
+      if (existingSlugs.includes(scalarUpdates.slug)) {
         throw new Error('Slug already exists');
-      }
-    }
-
-    if (updates.iframeUrl && !isValidUrl(updates.iframeUrl)) {
-      throw new Error('Invalid iframe URL');
-    }
-
-    if (Object.prototype.hasOwnProperty.call(updates, 'developerName')) {
-      if (typeof updates.developerName === 'string') {
-        const trimmed = updates.developerName.trim();
-        updates.developerName = trimmed ? trimmed : null;
-      } else {
-        updates.developerName = null;
-      }
-    }
-
-    if (Object.prototype.hasOwnProperty.call(updates, 'developerUrl')) {
-      const raw = typeof updates.developerUrl === 'string' ? updates.developerUrl.trim() : '';
-      if (raw) {
-        if (!isValidHttpsUrl(raw)) {
-          throw new Error('Developer URL must be a valid HTTPS link');
-        }
-        updates.developerUrl = raw;
-      } else {
-        updates.developerUrl = null;
-      }
-    }
-
-    if (Object.prototype.hasOwnProperty.call(updates, 'sourceUrl')) {
-      const raw = typeof updates.sourceUrl === 'string' ? updates.sourceUrl.trim() : '';
-      if (raw) {
-        if (!isValidHttpsUrl(raw)) {
-          throw new Error('Source URL must be a valid HTTPS link');
-        }
-        updates.sourceUrl = raw;
-      } else {
-        updates.sourceUrl = null;
       }
     }
 
     const [updated] = await db
       .update(games)
       .set({
-        ...updates,
+        ...scalarUpdates,
         updatedAt: new Date(),
       })
       .where(eq(games.id, gameId))
@@ -483,16 +452,17 @@ export class GameService {
       throw new Error('Game not found');
     }
 
-    if (updates.categoryIds) {
-      await this.setCategories(gameId, updates.categoryIds);
+    if (categoryIds !== undefined) {
+      await this.setCategories(gameId, categoryIds);
     }
 
-    if (updates.tagIds) {
-      await this.setTags(gameId, updates.tagIds);
+    if (tagIds !== undefined) {
+      await this.setTags(gameId, tagIds);
     }
 
-    await delKey(redis, GameCacheKeys.byId(gameId));
-    await delKey(redis, GameCacheKeys.bySlug(updated.slug));
+    await delKey(getRedisClient(), GameCacheKeys.byId(gameId));
+    await delKey(getRedisClient(), GameCacheKeys.bySlug(current.slug));
+    await delKey(getRedisClient(), GameCacheKeys.bySlug(updated.slug));
 
     return updated;
   }
@@ -503,12 +473,18 @@ export class GameService {
   static async archiveGame(gameId: number): Promise<void> {
     if (!isValidId(gameId)) throw new Error('Invalid game ID');
 
-    await db
+    const [archived] = await db
       .update(games)
       .set({ status: 'inactive', updatedAt: new Date() })
-      .where(eq(games.id, gameId));
+      .where(eq(games.id, gameId))
+      .returning({ id: games.id, slug: games.slug });
 
-    await delKey(redis, GameCacheKeys.byId(gameId));
+    if (!archived) {
+      throw new Error('Game not found');
+    }
+
+    await delKey(getRedisClient(), GameCacheKeys.byId(gameId));
+    await delKey(getRedisClient(), GameCacheKeys.bySlug(archived.slug));
   }
 
   /**
@@ -525,7 +501,7 @@ export class GameService {
         .values(categoryIds.map((categoryId) => ({ gameId, categoryId })));
     }
 
-    await delKey(redis, GameCacheKeys.byId(gameId));
+    await delKey(getRedisClient(), GameCacheKeys.byId(gameId));
   }
 
   /**
@@ -540,7 +516,7 @@ export class GameService {
       await db.insert(gameTags).values(tagIds.map((tagId) => ({ gameId, tagId })));
     }
 
-    await delKey(redis, GameCacheKeys.byId(gameId));
+    await delKey(getRedisClient(), GameCacheKeys.byId(gameId));
   }
 }
 

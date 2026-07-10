@@ -8,6 +8,7 @@ import {
   DEFAULT_OPEN_GRAPH_IMAGES,
   DEFAULT_TWITTER_IMAGES,
 } from '@/lib/seo';
+import { serializeJsonLd } from '@/lib/utils/json-ld';
 
 export const dynamic = 'force-static';
 export const revalidate = 86400;
@@ -244,7 +245,7 @@ export default async function KeyboardOnlyBrowserGamesPage({ params }: PageProps
         <script
           key={index}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(schema) }}
         />
       ))}
 

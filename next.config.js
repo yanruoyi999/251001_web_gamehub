@@ -9,6 +9,9 @@ const securityHeaders = [
     key: 'Content-Security-Policy',
     value: [
       "default-src 'self'",
+      "base-uri 'self'",
+      "object-src 'none'",
+      "form-action 'self'",
       "img-src 'self' data: https://res.cloudinary.com https://www.google-analytics.com https://www.googletagmanager.com https://*.clarity.ms https://c.bing.com",
       `script-src 'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ''} https://www.googletagmanager.com https://www.clarity.ms https://scripts.clarity.ms`,
       "style-src 'self' 'unsafe-inline'",

@@ -1,9 +1,19 @@
 import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 
 const findFirstMock = vi.fn();
+const selectLimitMock = vi.fn();
+const selectWhereMock = vi.fn(() => ({ limit: selectLimitMock }));
+const selectFromMock = vi.fn(() => ({ where: selectWhereMock }));
+const selectMock = vi.fn(() => ({ from: selectFromMock }));
+const updateReturningMock = vi.fn();
+const updateWhereMock = vi.fn(() => ({ returning: updateReturningMock }));
+const updateSetMock = vi.fn(() => ({ where: updateWhereMock }));
+const updateMock = vi.fn(() => ({ set: updateSetMock }));
 
 vi.mock('@/lib/db', () => ({
   db: {
+    select: selectMock,
+    update: updateMock,
     query: {
       games: {
         findFirst: findFirstMock,
@@ -14,15 +24,16 @@ vi.mock('@/lib/db', () => ({
 
 const getJsonMock = vi.fn();
 const setJsonMock = vi.fn();
+const delKeyMock = vi.fn();
 
 vi.mock('@/lib/utils/redis-helper', () => ({
   getJson: getJsonMock,
   setJson: setJsonMock,
-  delKey: vi.fn(),
+  delKey: delKeyMock,
 }));
 
 vi.mock('@/lib/redis', () => ({
-  redis: {},
+  getRedisClient: () => ({}),
 }));
 
 let GameService: typeof import('@/services/game.service').GameService;
@@ -41,6 +52,15 @@ describe('GameService.getGameById', () => {
     findFirstMock.mockReset();
     getJsonMock.mockReset();
     setJsonMock.mockReset();
+    delKeyMock.mockReset();
+    selectLimitMock.mockReset();
+    selectWhereMock.mockClear();
+    selectFromMock.mockClear();
+    selectMock.mockClear();
+    updateReturningMock.mockReset();
+    updateWhereMock.mockClear();
+    updateSetMock.mockClear();
+    updateMock.mockClear();
     setJsonMock.mockResolvedValue(undefined);
   });
 
@@ -84,5 +104,40 @@ describe('GameService.getGameById', () => {
     expect(setJsonMock).toHaveBeenCalledTimes(2);
     expect(setJsonMock).toHaveBeenCalledWith(expect.any(Object), GameCacheKeys.byId(2), result, expect.any(Number));
     expect(setJsonMock).toHaveBeenCalledWith(expect.any(Object), GameCacheKeys.bySlug('demo-game'), result, expect.any(Number));
+  });
+});
+
+describe('GameService.updateGame', () => {
+  beforeEach(() => {
+    selectLimitMock.mockReset();
+    selectWhereMock.mockClear();
+    selectFromMock.mockClear();
+    selectMock.mockClear();
+    updateReturningMock.mockReset();
+    updateWhereMock.mockClear();
+    updateSetMock.mockClear();
+    updateMock.mockClear();
+    delKeyMock.mockReset();
+    delKeyMock.mockResolvedValue(undefined);
+  });
+
+  it('updates only scalar columns and invalidates the detail and slug caches', async () => {
+    selectLimitMock.mockResolvedValueOnce([{ id: 2, slug: 'old-slug' }]);
+    updateReturningMock.mockResolvedValueOnce([
+      { id: 2, slug: 'old-slug', title: 'Updated title' },
+    ]);
+
+    const result = await GameService.updateGame(2, { title: '  Updated title  ' });
+
+    expect(updateSetMock).toHaveBeenCalledWith({
+      title: 'Updated title',
+      updatedAt: expect.any(Date),
+    });
+    expect(delKeyMock).toHaveBeenCalledWith(expect.any(Object), GameCacheKeys.byId(2));
+    expect(delKeyMock).toHaveBeenCalledWith(
+      expect.any(Object),
+      GameCacheKeys.bySlug('old-slug'),
+    );
+    expect(result.title).toBe('Updated title');
   });
 });

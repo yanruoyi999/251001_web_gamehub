@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { CounterService } from '@/services';
 import { getClientIp } from '@/lib/http/client-ip';
-import { redis } from '@/lib/redis';
+import { getRedisClient } from '@/lib/redis';
 import { hashIp } from '@/lib/utils/hash';
 import {
   getDatabaseConnectionMetadata,
@@ -54,6 +54,7 @@ async function getPlayIncrementLimitStatus(
 ): Promise<'allowed' | 'limited'> {
   const ipHash = hashIp(getClientIp(request));
   const key = `gamehub:counter:limit:${gameId}:${ipHash}`;
+  const redis = getRedisClient();
 
   if (!redis || typeof redis.incr !== 'function' || typeof redis.expire !== 'function') {
     return consumeMemoryRateLimit(key);

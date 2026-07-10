@@ -30,8 +30,10 @@ export const StatsCacheKeys = {
 };
 
 export const CounterCacheKeys = {
-  total: (gameId: number) => `${NAMESPACE}:counter:${gameId}:total`,
-  today: (gameId: number) => `${NAMESPACE}:counter:${gameId}:today`,
+  // v2 keys are hydrated from durable database values rather than incremented
+  // from an unknown cache baseline.
+  total: (gameId: number) => `${NAMESPACE}:counter:v2:${gameId}:total`,
+  today: (gameId: number) => `${NAMESPACE}:counter:v2:${gameId}:today`,
 };
 
 export const RatingCacheKeys = {

@@ -10,6 +10,7 @@ import AnalyticsListener from '@/components/layout/AnalyticsListener';
 import LocaleDocumentSync from '@/components/layout/LocaleDocumentSync';
 import { GA_TRACKING_ID } from '@/lib/gtag';
 import { getSiteBaseUrl } from '@/lib/seo';
+import { serializeJsonLd } from '@/lib/utils/json-ld';
 
 const siteBaseUrl = getSiteBaseUrl();
 const siteJsonLd = {
@@ -118,7 +119,7 @@ export default async function RootLayout({
         />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(siteJsonLd) }}
         />
         <script
           dangerouslySetInnerHTML={{

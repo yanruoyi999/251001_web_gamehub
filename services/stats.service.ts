@@ -15,13 +15,16 @@ export class GameStatsService {
 
     await this.ensureStatsRow(gameId);
 
-    await db
+    const [updated] = await db
       .update(gameStats)
       .set({
         playCount: sql`${gameStats.playCount} + ${count}`,
         lastPlayedAt: new Date(),
       })
-      .where(eq(gameStats.gameId, gameId));
+      .where(eq(gameStats.gameId, gameId))
+      .returning({ playCount: gameStats.playCount });
+
+    return Number(updated?.playCount ?? 0);
   }
 
   static async updateRatingStats(gameId: number): Promise<GameStatsRecord | null> {

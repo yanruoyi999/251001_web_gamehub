@@ -11,6 +11,7 @@ import {
   pickLocalizedLabel,
 } from '@/lib/game-taxonomy';
 import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES, buildAbsoluteUrl } from '@/lib/seo';
+import { serializeJsonLd } from '@/lib/utils/json-ld';
 
 interface CategoryPageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -125,7 +126,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     <div className="mx-auto w-full max-w-6xl px-6 py-12">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
       />
 
       <nav className="mb-6 text-sm text-gray-500">

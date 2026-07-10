@@ -2,6 +2,7 @@ import Link from "next/link";
 import Script from "next/script";
 import { getTranslations, getMessages } from 'next-intl/server';
 import { getLocalizedPath, locales, type Locale } from '@/i18n/config';
+import { serializeJsonLd } from '@/lib/utils/json-ld';
 
 type FaqItem = { question: string; answer: string };
 
@@ -251,7 +252,7 @@ export default async function HomePage({
     <Script
       id="faq-schema"
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqJsonLd) }}
       strategy="afterInteractive"
     />
     </>
