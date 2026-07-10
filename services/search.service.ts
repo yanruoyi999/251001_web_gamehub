@@ -11,6 +11,7 @@ import { sanitizeSearchQuery, validatePagination } from '@/lib/utils/validation'
 import { ilike, or, eq, desc, sql, and } from 'drizzle-orm';
 import { getJson, setJson } from '@/lib/utils/redis-helper';
 import { searchFallbackGames } from '@/lib/games/fallback-search';
+import { isLocalCatalogueMode } from '@/lib/games/catalog-mode';
 
 export interface SearchOptions {
   query: string;
@@ -90,7 +91,8 @@ export class SearchService {
       return cached;
     }
 
-    const meilisearch = getMeilisearchClient();
+    const localCatalogueMode = isLocalCatalogueMode();
+    const meilisearch = localCatalogueMode ? null : getMeilisearchClient();
 
     if (meilisearch) {
       try {
@@ -145,6 +147,12 @@ export class SearchService {
       } catch (error) {
         console.warn('Meilisearch lookup failed, falling back to database:', error);
       }
+    }
+
+    if (localCatalogueMode) {
+      const fallback = searchFallbackGames({ query, page, limit });
+      await setJson(redis, cacheKey, fallback, CacheTTL.SEARCH_RESULTS);
+      return fallback;
     }
 
     const databaseConnection = getDatabaseConnectionMetadata();

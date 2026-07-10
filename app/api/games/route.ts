@@ -9,6 +9,7 @@ import { listFallbackGames } from '@/lib/games/fallback-list';
 import { getClientIp } from '@/lib/http/client-ip';
 import { sanitizeSearchQuery, validatePagination } from '@/lib/utils/validation';
 import type { CreateGameInput, ListGamesOptions } from '@/services/game.service';
+import { isLocalCatalogueMode } from '@/lib/games/catalog-mode';
 
 const DEFAULT_GAME_LIST_BACKEND_TIMEOUT_MS = 2500;
 
@@ -109,7 +110,9 @@ export async function GET(request: NextRequest) {
   };
 
   if (shouldUsePublicCatalogueFallback()) {
-    console.warn('Game database list skipped, using local fallback because database config is not production-safe');
+    if (!isLocalCatalogueMode()) {
+      console.warn('Game database list skipped, using local fallback because database config is not production-safe');
+    }
     return NextResponse.json({
       ...listFallbackGames(listOptions),
       degraded: true,

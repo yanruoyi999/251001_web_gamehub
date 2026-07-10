@@ -5,8 +5,9 @@ import {
   getDatabaseConnectionMetadata,
   shouldSkipSupabaseDirectInServerless,
 } from '@/lib/db/connection-policy';
-import { getRedisClient } from '@/lib/redis';
+import { getRedisClient, isLocalCacheMode } from '@/lib/redis';
 import { getMeilisearchClient } from '@/lib/meilisearch';
+import { isLocalCatalogueMode } from '@/lib/games/catalog-mode';
 
 export type HealthStatus = 'ok' | 'degraded' | 'error';
 export type HealthMode = 'public' | 'internal';
@@ -71,6 +72,14 @@ export function withTimeout<T>(
 }
 
 export async function checkDatabase(mode: HealthMode, timeoutMs = DEFAULT_CHECK_TIMEOUT_MS) {
+  if (isLocalCatalogueMode()) {
+    return {
+      name: 'database',
+      status: 'ok',
+      message: 'Local catalogue mode enabled; persistent database is intentionally disabled',
+    } satisfies HealthCheckResult;
+  }
+
   const connection = getDatabaseConnectionMetadata();
 
   if (!connection.configured) {
@@ -109,6 +118,14 @@ export async function checkDatabase(mode: HealthMode, timeoutMs = DEFAULT_CHECK_
 }
 
 export async function checkRedis(mode: HealthMode, timeoutMs = DEFAULT_CHECK_TIMEOUT_MS) {
+  if (isLocalCacheMode()) {
+    return {
+      name: 'redis',
+      status: 'ok',
+      message: 'Local cache mode enabled; remote Redis is intentionally disabled',
+    } satisfies HealthCheckResult;
+  }
+
   const redis = getRedisClient();
   if (!redis) {
     return {
@@ -131,6 +148,14 @@ export async function checkRedis(mode: HealthMode, timeoutMs = DEFAULT_CHECK_TIM
 }
 
 export async function checkMeilisearch(mode: HealthMode, timeoutMs = DEFAULT_CHECK_TIMEOUT_MS) {
+  if (isLocalCatalogueMode()) {
+    return {
+      name: 'meilisearch',
+      status: 'ok',
+      message: 'Local catalogue mode enabled; local search is active',
+    } satisfies HealthCheckResult;
+  }
+
   const meilisearch = getMeilisearchClient();
 
   if (!meilisearch) {

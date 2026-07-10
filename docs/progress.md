@@ -1592,3 +1592,12 @@
 - 生产部署：Vercel production deployment `dpl_HmdTuVqMnuWtseVKLCRiFmxZoE29` 为 Ready，别名包含 `https://lumagamehub.com` 与 `https://www.lumagamehub.com`；主域生产 HTML 的 gtag script 只加载一次 `G-XF3GV91D1V`，旧 `G-M5N3TXN56Z` 不再出现。
 - 生产验收：Snake 指南已输出 Google Snake Mods 2 / Snake Mod Loader / mod menu 内容，G-Switch 2 原创指南已上线；两个旧 `ad-free-games` URL 均 308 到 `free-games-no-ads`；Duo Vikings 的 `Play now -> Play fullscreen` 可进入 CSS viewport fallback，body scroll 锁定，退出后完整恢复；sitemap 为 290 URLs。
 - GA4 实收：已登录 GA4 Realtime 显示近 5 分钟和近 30 分钟各 1 active user，并收到 `session_start`、`first_visit`、`game_play_start`、`game_fullscreen_toggle`，确认新数据流和生产事件链路均已工作。内部验证访问仅用于配置验收，不作为增长数据解读。
+
+### T-132 Retire dead production backends and formalize local catalogue mode
+
+- 根因复核：Supabase dashboard 确认 Luma 使用的 `starter` 项目在 2024-06-24 暂停，超过 90 天后已无法从 dashboard 恢复，只能下载备份并迁移到新项目；现有 direct URL 与两个 `us-east-2` Supavisor 候选端点均无法建立只读连接。现有 Upstash `PING` 也失败，Meilisearch 仍为 `localhost:7700` 占位配置。
+- 决策：当前 200 个 checked-in fallback games、editorial 内容、分类标签和 290 URL sitemap 已是生产事实来源，不为无实际需求的管理后台、评分和计数功能继续维护三个失效远程后端。生产切换为显式 `GAME_CATALOG_MODE=local` 与 `CACHE_MODE=local`，保留未来迁移新数据库时恢复 remote 模式的接口。
+- 代码改动：新增 `lib/games/catalog-mode.ts`；健康检查在显式 local 模式下把本地目录、本地搜索和无远程缓存标记为正常且附带说明；Meilisearch、Redis、搜索和游戏列表在 local 模式下直接走本地路径，不初始化失效客户端或重复输出降级告警；监控将 fallback search 在 local 模式下视为预期来源；`.env.example` 补充两项模式配置。
+- Vercel 配置：Production、Preview、Development 均新增 `GAME_CATALOG_MODE=local` 和 `CACHE_MODE=local`；删除已确认失效的 `DATABASE_URL`、`MEILISEARCH_HOST`、`MEILISEARCH_API_KEY`、`UPSTASH_REDIS_URL`、`UPSTASH_REDIS_TOKEN`。原生产值仅在部署验收期间保留于权限受限的临时回滚文件，不写入仓库或日志。
+- 验证：无 DB/Meilisearch/Redis 环境下 `pnpm type-check`、45 tests、lint（0 errors，96 个既有 console warnings）、`pnpm build`、`git diff --check` 均通过；本地 production `/en`、`/en/games`、Google Snake 游戏/攻略、详情 API、列表 API、search API 与 290 URL sitemap 均正常，`/api/health` 返回 `status=ok`。
+- 待部署：代码提交和 Vercel production 部署完成后，需再次核对主域 health、search、sitemap、GA4/Clarity 标签与核心游戏页，并确认没有 DB/Redis/Meilisearch 连接错误。

@@ -1,6 +1,7 @@
 import './load-env';
 
 import { getDatabaseConnectionMetadata } from '@/lib/db/connection-policy';
+import { isLocalCatalogueMode } from '@/lib/games/catalog-mode';
 import { getSiteBaseUrl } from '@/lib/seo';
 
 type CheckStatus = 'ok' | 'degraded' | 'skipped' | 'error';
@@ -92,7 +93,7 @@ async function checkPublicHealth(siteUrl: string): Promise<CheckResult> {
   }
 }
 
-async function checkSearchEndpoint(siteUrl: string): Promise<CheckResult> {
+async function checkSearchEndpoint(siteUrl: string, localCatalogueMode: boolean): Promise<CheckResult> {
   try {
     const { response, text } = await fetchText(`${siteUrl}/api/search?q=snake&limit=3`);
     const payload = JSON.parse(text) as {
@@ -112,10 +113,14 @@ async function checkSearchEndpoint(siteUrl: string): Promise<CheckResult> {
       };
     }
 
+    const expectedSource = localCatalogueMode
+      ? source === 'fallback'
+      : source !== 'fallback' && !payload.degraded;
+
     return {
       name: 'search api',
-      status: total > 0 && source !== 'fallback' && !payload.degraded ? 'ok' : 'degraded',
-      detail: `HTTP ${response.status}, source=${source}, total=${total}`,
+      status: total > 0 && expectedSource ? 'ok' : 'degraded',
+      detail: `HTTP ${response.status}, source=${source}, total=${total}${localCatalogueMode ? ', mode=local' : ''}`,
     };
   } catch (error) {
     return {
@@ -245,6 +250,14 @@ async function checkClarity(): Promise<CheckResult> {
 }
 
 function checkDatabaseConfig(siteUrl: string): CheckResult {
+  if (isLocalCatalogueMode()) {
+    return {
+      name: 'database config',
+      status: 'ok',
+      detail: 'local catalogue mode; persistent database intentionally disabled',
+    };
+  }
+
   const targetEnv = isProductionTarget(siteUrl)
     ? {
         ...process.env,
@@ -277,6 +290,14 @@ function checkDatabaseConfig(siteUrl: string): CheckResult {
 }
 
 function checkMeilisearchConfig(siteUrl: string): CheckResult {
+  if (isLocalCatalogueMode()) {
+    return {
+      name: 'meilisearch config',
+      status: 'ok',
+      detail: 'local catalogue mode; local search active',
+    };
+  }
+
   const host = process.env.MEILISEARCH_HOST;
   if (!host) {
     return {
@@ -309,6 +330,7 @@ async function main() {
     process.env.MONITORING_SITE_URL ||
     process.env.GSC_SITE_URL ||
     (process.env.NODE_ENV === 'production' ? getSiteBaseUrl() : 'https://www.lumagamehub.com');
+  const localCatalogueMode = isLocalCatalogueMode();
   const checks = await Promise.all([
     Promise.resolve(checkDatabaseConfig(siteUrl)),
     Promise.resolve(checkMeilisearchConfig(siteUrl)),
@@ -316,7 +338,7 @@ async function main() {
     checkUrl('robots', `${siteUrl}/robots.txt`),
     checkSitemap(siteUrl),
     checkPublicHealth(siteUrl),
-    checkSearchEndpoint(siteUrl),
+    checkSearchEndpoint(siteUrl, localCatalogueMode),
     checkGsc(siteUrl),
     checkClarity(),
   ]);

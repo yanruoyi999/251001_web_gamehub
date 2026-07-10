@@ -8,6 +8,7 @@
  */
 
 import { MeiliSearch, type Index } from 'meilisearch';
+import { isLocalCatalogueMode } from '@/lib/games/catalog-mode';
 
 // 索引名称常量
 export const INDEXES = {
@@ -37,6 +38,10 @@ export interface GameSearchDocument {
 let meilisearchClient: MeiliSearch | null = null;
 
 export function getMeilisearchClient(): MeiliSearch | null {
+  if (isLocalCatalogueMode()) {
+    return null;
+  }
+
   const host = process.env.MEILISEARCH_HOST;
 
   // 如果未配置，返回 null（降级到数据库搜索）

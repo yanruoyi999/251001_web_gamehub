@@ -41,6 +41,10 @@ const REDIS_FAILURE_LOG_INTERVAL_MS = 60 * 1000;
 const REDIS_MIN_DISABLE_MS = 60 * 1000;
 const REDIS_MAX_DISABLE_MS = 5 * 60 * 1000;
 
+export function isLocalCacheMode(env: NodeJS.ProcessEnv = process.env) {
+  return env.CACHE_MODE?.trim().toLowerCase() === 'local';
+}
+
 export function isRedisTemporarilyDisabled(now = Date.now()) {
   return redisDisabledUntil > now;
 }
@@ -69,6 +73,10 @@ export function recordRedisFailure(operation: string, error: unknown) {
 }
 
 export function getRedisClient(): Redis | null {
+  if (isLocalCacheMode()) {
+    return null;
+  }
+
   // 如果未配置，返回 null（降级到直接数据库操作）
   if (!process.env.UPSTASH_REDIS_URL || !process.env.UPSTASH_REDIS_TOKEN) {
     if (!hasWarnedAboutMissingRedis && process.env.NODE_ENV !== 'test') {
