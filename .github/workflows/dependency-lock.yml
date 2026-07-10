@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - fix/dependency-security-upgrades-20260710
-  pull_request:
-    branches:
-      - fix/full-code-audit-20260710
+
+permissions:
+  contents: write
 
 jobs:
   lockfile:
@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: fix/dependency-security-upgrades-20260710
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -26,14 +28,15 @@ jobs:
       - name: Resolve upgraded dependencies
         run: pnpm install --no-frozen-lockfile
 
-      - name: Audit production dependencies
-        run: pnpm audit --prod --audit-level=high || true
-
-      - name: Upload lockfile and audit
-        uses: actions/upload-artifact@v4
-        with:
-          name: dependency-upgrade-snapshot
-          retention-days: 1
-          path: |
-            pnpm-lock.yaml
-            package.json
+      - name: Commit lockfile when changed
+        shell: bash
+        run: |
+          if git diff --quiet -- pnpm-lock.yaml; then
+            echo "Lockfile is already current."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add pnpm-lock.yaml
+          git commit -m "chore(deps): refresh pnpm lockfile"
+          git push origin HEAD:fix/dependency-security-upgrades-20260710
