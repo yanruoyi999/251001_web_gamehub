@@ -32,6 +32,9 @@ jobs:
       - name: Type check
         run: pnpm type-check
 
+      - name: Internal link audit
+        run: pnpm check:internal-links
+
       - name: Unit tests
         id: unit_tests
         shell: bash
