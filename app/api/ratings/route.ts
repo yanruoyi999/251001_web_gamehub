@@ -1,19 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { RatingService } from '@/services';
 import { MAX_RATING_COMMENT_LENGTH } from '@/services/rating.service';
+import { getClientIp } from '@/lib/http/client-ip';
 import { isValidId, isValidRating, validatePagination } from '@/lib/utils/validation';
-
-function getClientIp(request: NextRequest) {
-  if (request.ip && request.ip.trim().length > 0) {
-    return request.ip.trim();
-  }
-
-  return (
-    request.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
-    request.headers.get('x-real-ip')?.trim() ||
-    '0.0.0.0'
-  );
-}
 
 function parseInteger(value: string | null): number | undefined {
   if (!value) return undefined;
