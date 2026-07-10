@@ -26,11 +26,14 @@ export default async function AdminLoginPage() {
           <p className="text-sm text-slate-400">Enter the administrator password to continue.</p>
         </div>
         <AdminLoginForm />
-        <p className="mt-6 text-center text-sm text-slate-400">
+        <nav className="mt-6 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm">
           <Link href="/" className="font-medium text-indigo-300 hover:text-indigo-200">
             Back to Luma Game Hub
           </Link>
-        </p>
+          <Link href="/en/guides" className="font-medium text-indigo-300 hover:text-indigo-200">
+            Browse public guides
+          </Link>
+        </nav>
       </div>
     </div>
   );
