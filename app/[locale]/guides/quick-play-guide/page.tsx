@@ -69,6 +69,9 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
         <Link href={getLocalizedPath(locale, '/guides/browser-games-for-low-end-pc')} className="rounded-lg border px-6 py-3 font-medium text-primary hover:bg-primary/10">
           {isZh ? '低配置电脑怎么选游戏' : 'Games for low-end PCs'}
         </Link>
+        <Link href={getLocalizedPath(locale, '/guides/keyboard-only-browser-games')} className="rounded-lg border px-6 py-3 font-medium text-primary hover:bg-primary/10">
+          {isZh ? '只用键盘玩的小游戏' : 'Keyboard-only browser games'}
+        </Link>
       </footer>
     </article>
   );
