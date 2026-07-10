@@ -6,6 +6,7 @@ import {
   shouldSkipSupabaseDirectInServerless,
 } from '@/lib/db/connection-policy';
 import { listFallbackGames } from '@/lib/games/fallback-list';
+import { getClientIp } from '@/lib/http/client-ip';
 import { sanitizeSearchQuery, validatePagination } from '@/lib/utils/validation';
 import type { CreateGameInput, ListGamesOptions } from '@/services/game.service';
 
@@ -115,7 +116,7 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  const favoriteContext = FavoriteService.getContextFromHeaders(request.headers, request.ip ?? undefined);
+  const favoriteContext = FavoriteService.getContextFromHeaders(request.headers, getClientIp(request));
   try {
     listOptions.favoriteGameIds = await withGameListTimeout(
       FavoriteService.listFavoriteIds(favoriteContext),
