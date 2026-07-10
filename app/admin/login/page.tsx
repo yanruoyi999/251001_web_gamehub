@@ -1,7 +1,9 @@
 import { Metadata } from 'next';
+import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
 import { AdminLoginForm } from '@/components/admin/login-form';
-import { assertAdminPasswordConfigured } from '@/lib/auth/admin';
+import { assertAdminPasswordConfigured, isAdminAuthenticated } from '@/lib/auth/admin';
 
 export const dynamic = 'force-dynamic';
 
@@ -9,8 +11,12 @@ export const metadata: Metadata = {
   title: 'Luma Game Hub Admin Login',
 };
 
-export default function AdminLoginPage() {
+export default async function AdminLoginPage() {
   assertAdminPasswordConfigured();
+
+  if (await isAdminAuthenticated()) {
+    redirect('/admin');
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-slate-950 px-4 py-12">
@@ -20,6 +26,11 @@ export default function AdminLoginPage() {
           <p className="text-sm text-slate-400">Enter the administrator password to continue.</p>
         </div>
         <AdminLoginForm />
+        <p className="mt-6 text-center text-sm text-slate-400">
+          <Link href="/" className="font-medium text-indigo-300 hover:text-indigo-200">
+            Back to Luma Game Hub
+          </Link>
+        </p>
       </div>
     </div>
   );
