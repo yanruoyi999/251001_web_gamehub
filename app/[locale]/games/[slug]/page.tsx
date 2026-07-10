@@ -5,7 +5,6 @@ import { notFound } from 'next/navigation';
 import { cache } from 'react';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { FavoriteToggleButton } from '@/components/game/favorite-toggle';
 import { GamePlayerFacade } from '@/components/game/game-player-facade';
 import { GameService, RatingService } from '@/services';
@@ -17,6 +16,7 @@ import { getGameQualityTier, getManualReviewReason, shouldNoIndexGame, shouldPro
 import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES, buildAbsoluteUrl } from '@/lib/seo';
 import { getLocalizedPath, locales } from '@/i18n/config';
 import { serializeJsonLd } from '@/lib/utils/json-ld';
+import { getCatalogueUiCapabilities } from '@/lib/games/catalog-mode';
 import {
   getDatabaseConnectionMetadata,
   shouldSkipSupabaseDirectInServerless,
@@ -260,12 +260,13 @@ export default async function GamePage({ params }: GamePageProps) {
     notFound();
   }
   const { game, isMockGame } = resolved;
+  const catalogueUi = getCatalogueUiCapabilities();
 
   let ratingDistribution: RatingDistribution;
   let ratingsResult: RatingsResult;
   let isFavorite = false;
 
-  if (isMockGame) {
+  if (isMockGame || !catalogueUi.showReviews) {
     ratingDistribution = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 } as RatingDistribution;
     ratingsResult = { ratings: [], total: 0, page: 1, limit: 3, totalPages: 0 } as RatingsResult;
   } else {
@@ -406,7 +407,7 @@ export default async function GamePage({ params }: GamePageProps) {
     videoGameSchema.keywords = tagLabels.join(', ');
   }
 
-  if (playCount) {
+  if (catalogueUi.showCommunityMetrics && playCount) {
     videoGameSchema.interactionStatistic = {
       '@type': 'InteractionCounter',
       interactionType: { '@type': 'PlayAction' },
@@ -414,7 +415,7 @@ export default async function GamePage({ params }: GamePageProps) {
     };
   }
 
-  if (averageRating > 0 && ratingCount > 0) {
+  if (catalogueUi.showCommunityMetrics && averageRating > 0 && ratingCount > 0) {
     videoGameSchema.aggregateRating = {
       '@type': 'AggregateRating',
       ratingValue: averageRating.toFixed(1),
@@ -503,7 +504,7 @@ export default async function GamePage({ params }: GamePageProps) {
     ...(game.isHot ? [locale === 'zh' ? '热门' : 'Hot'] : []),
   ];
 
-  if (isMockGame) {
+  if (isMockGame && catalogueUi.showCommunityMetrics) {
     statusChips.push(locale === 'zh' ? '演示数据' : 'Demo Data');
   }
 
@@ -553,7 +554,8 @@ export default async function GamePage({ params }: GamePageProps) {
 
             {/* Quick Stats */}
             <div className="flex flex-wrap gap-6 text-sm">
-              <div className="flex items-center gap-2">
+              {catalogueUi.showCommunityMetrics ? (
+                <div className="flex items-center gap-2">
                 <span className="text-2xl">⭐</span>
                 <div>
                   <div className="font-semibold text-foreground">
@@ -562,21 +564,26 @@ export default async function GamePage({ params }: GamePageProps) {
                   <div className="text-xs text-yellow-500">{starDisplay}</div>
                   <div className="text-muted-foreground">{formatNumber(ratingCount)} {locale === 'zh' ? '条评分' : 'ratings'}</div>
                 </div>
-              </div>
-              <div className="flex items-center gap-2">
+                </div>
+              ) : null}
+              {catalogueUi.showCommunityMetrics ? (
+                <div className="flex items-center gap-2">
                 <span className="text-2xl">🎮</span>
                 <div>
                   <div className="font-semibold text-foreground">{formatNumber(playCount)}</div>
                   <div className="text-muted-foreground">{locale === 'zh' ? '次游玩' : 'plays'}</div>
                 </div>
-              </div>
-              <div className="flex items-center gap-2">
+                </div>
+              ) : null}
+              {catalogueUi.showPublishedDates ? (
+                <div className="flex items-center gap-2">
                 <span className="text-2xl">📅</span>
                 <div>
                   <div className="font-semibold text-foreground">{publishedLabel}</div>
                   <div className="text-muted-foreground">{locale === 'zh' ? '发布时间' : 'Published'}</div>
                 </div>
-              </div>
+                </div>
+              ) : null}
             </div>
           </div>
 
@@ -588,17 +595,13 @@ export default async function GamePage({ params }: GamePageProps) {
                 initialFavorite={isFavorite}
                 labels={favoriteLabels}
                 fallbackKey={favoriteFallbackKey}
+                storageMode={catalogueUi.favoriteStorage}
               />
             ) : (
-              <Button variant="outline" size="lg" disabled>
-                <span className="mr-2">❤️</span>
+              <span className="text-sm text-muted-foreground">
                 {locale === 'zh' ? '收藏不可用' : 'Favorites unavailable'}
-              </Button>
+              </span>
             )}
-            <Button variant="outline" size="lg">
-              <span className="mr-2">📤</span>
-              {locale === 'zh' ? '分享' : 'Share'}
-            </Button>
           </div>
         </div>
 
@@ -748,16 +751,10 @@ export default async function GamePage({ params }: GamePageProps) {
               </Card>
             ) : null}
 
-            {/* Reviews Section */}
-            <Card className="mb-8">
+            {catalogueUi.showReviews ? (
+              <Card className="mb-8">
               <CardHeader>
-                <CardTitle className="flex items-center justify-between">
-                  <span>{locale === 'zh' ? '玩家评价' : 'Player Reviews'}</span>
-                  <Button size="sm" variant="outline">
-                    <span className="mr-1">✍️</span>
-                    {locale === 'zh' ? '写评论' : 'Write Review'}
-                  </Button>
-                </CardTitle>
+                <CardTitle>{locale === 'zh' ? '玩家评价' : 'Player Reviews'}</CardTitle>
                 <CardDescription>
                   {formatNumber(ratingCount)} {locale === 'zh' ? '条评价' : 'reviews'}
                 </CardDescription>
@@ -826,7 +823,8 @@ export default async function GamePage({ params }: GamePageProps) {
                   )}
                 </div>
               </CardContent>
-            </Card>
+              </Card>
+            ) : null}
           </div>
 
           {/* Sidebar */}
@@ -898,12 +896,14 @@ export default async function GamePage({ params }: GamePageProps) {
                     ))}
                   </div>
                 </div>
-                <div>
-                  <div className="mb-1 font-medium text-foreground">
-                    {locale === 'zh' ? '发布时间' : 'Published'}
+                {catalogueUi.showPublishedDates ? (
+                  <div>
+                    <div className="mb-1 font-medium text-foreground">
+                      {locale === 'zh' ? '发布时间' : 'Published'}
+                    </div>
+                    <div className="text-muted-foreground">{publishedLabel}</div>
                   </div>
-                  <div className="text-muted-foreground">{publishedLabel}</div>
-                </div>
+                ) : null}
                 {game.developerName && (
                   <div className="rounded-lg border border-primary/20 bg-secondary p-3">
                     <div className="mb-1 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-primary">

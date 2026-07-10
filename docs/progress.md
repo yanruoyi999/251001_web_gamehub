@@ -1601,3 +1601,12 @@
 - Vercel 配置：Production、Preview、Development 均新增 `GAME_CATALOG_MODE=local` 和 `CACHE_MODE=local`；删除已确认失效的 `DATABASE_URL`、`MEILISEARCH_HOST`、`MEILISEARCH_API_KEY`、`UPSTASH_REDIS_URL`、`UPSTASH_REDIS_TOKEN`。原生产值仅在部署验收期间保留于权限受限的临时回滚文件，不写入仓库或日志。
 - 验证：无 DB/Meilisearch/Redis 环境下 `pnpm type-check`、46 tests、lint（0 errors，96 个既有 console warnings）、`pnpm build`、`git diff --check` 均通过；本地 production `/en`、`/en/games`、Google Snake 游戏/攻略、详情 API、列表 API、search API 与 290 URL sitemap 均正常，`/api/health` 返回 `status=ok`；显式 local 模式的列表 API 返回 `degraded=false`。
 - 首次生产验收：commit `5f9dc4f` 对应 Vercel production deployment `dpl_FFLmoetpA3F5iwE4RLhRfYw7ZeDq` Ready 并挂载主域；`/api/health` 从 degraded 变为 ok，search/list API、Google Snake、GA4 ID 与 290 URL sitemap 均正常。列表 API 的 local-mode `degraded` 语义修正随本条后续提交一并发布。
+
+### T-133 Remove non-persistent engagement UI in local catalogue mode
+
+- 检查结果：生产已明确使用 `GAME_CATALOG_MODE=local`，但游戏列表仍显示合成的发布时间、评分和游玩量排序，详情页仍显示 `0 ratings`、`0 plays`、`Demo Data`、空评论区，以及没有处理逻辑的 Share / Write Review；收藏虽有 `localStorage` 回退，但首次点击仍会请求不可用的 `/api/favorites`。
+- 实际改动：新增目录 UI 能力策略；local 模式隐藏评分、游玩量、评论、合成发布时间和对应排序控件，移除无行为的 Share / Write Review，不再把正式本地目录标记为 Demo Data；数据库模式保持原有社区指标和评论展示能力。
+- 收藏体验：保留用户可用的收藏按钮，并在 local 模式直接读写 `gamehub:favorites`，不再发起无意义的远端收藏请求；Category、Tag、游戏播放、原创 How to play / Controls / FAQ 与相关内链均保留。
+- 测试与构建：新增 2 个目录能力策略测试；`pnpm type-check`、`pnpm test -- --run`（48 tests）、`pnpm lint`（0 errors，96 个既有 console warnings）、`pnpm build`、`git diff --check` 均通过。
+- 本地 production 验证：`/en/games/duo-vikings` 与 `/en/games` 均 HTTP 200；详情和列表未出现评分、游玩量、评论、Demo Data、Published、Share 或合成指标排序；Category / Tag 过滤器保留，列表有 24 个游戏链接；收藏点击后写入 `localStorage`，`/api/favorites` 请求数为 0。
+- 下一步：部署后在主域重复相同 DOM 与收藏交互验收；随后审计 local 模式下仍对公众暴露但依赖远程数据库的管理后台与写 API，优先关闭无实际用途的公开入口，减少维护面和误操作风险。

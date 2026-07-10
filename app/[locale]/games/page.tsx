@@ -9,6 +9,7 @@ import { FavoriteToggleButton } from '@/components/game/favorite-toggle';
 import { CategoryService, GameService, TagService } from '@/services';
 import { getLocalizedPath, locales, type Locale } from '@/i18n/config';
 import { listFallbackGames } from '@/lib/games/fallback-list';
+import { getCatalogueUiCapabilities } from '@/lib/games/catalog-mode';
 import { mockGames } from '@/lib/mock-games';
 import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES } from '@/lib/seo';
 import {
@@ -184,6 +185,7 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
     ? (localeParam as Locale)
     : 'zh';
   const t = await getTranslations({ locale, namespace: 'Games' });
+  const catalogueUi = getCatalogueUiCapabilities();
 
   const parseId = (value?: string) => {
     if (!value) return undefined;
@@ -201,7 +203,9 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
   const favoritesOnly = false;
 
   const sortByParam = typeof resolvedSearchParams.sortBy === 'string' ? resolvedSearchParams.sortBy : undefined;
-  const sortBy = SORT_OPTIONS.find((option) => option === sortByParam);
+  const sortBy = catalogueUi.showCommunityMetrics
+    ? SORT_OPTIONS.find((option) => option === sortByParam)
+    : undefined;
 
   const sortOrder: 'asc' | 'desc' = resolvedSearchParams.sortOrder === 'asc'
     ? 'asc'
@@ -283,8 +287,10 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
   if (showNew) baseParams.set('isNew', '1');
   if (showHot) baseParams.set('isHot', '1');
   if (showFeatured) baseParams.set('featured', '1');
-  if (sortBy) baseParams.set('sortBy', sortBy);
-  if (sortOrder) baseParams.set('sortOrder', sortOrder);
+  if (sortBy) {
+    baseParams.set('sortBy', sortBy);
+    baseParams.set('sortOrder', sortOrder);
+  }
 
   const buildQuery = (overrides: Record<string, string | null | undefined>) => {
     const params = new URLSearchParams(baseParams.toString());
@@ -390,35 +396,37 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
               </label>
             </div>
 
-            <div>
-              <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
-                <span>{t('filters.sortLabel')}</span>
-                <div className="flex gap-2">
-                  <select
-                    name="sortBy"
-                    defaultValue={sortBy ?? 'publishedAt'}
-                    className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring"
-                  >
-                    {SORT_OPTIONS.map((option) => {
-                      const optionKey = `filters.sort.${option}` as const;
-                      return (
-                        <option key={option} value={option}>
-                          {t(optionKey)}
-                        </option>
-                      );
-                    })}
-                  </select>
-                  <select
-                    name="sortOrder"
-                    defaultValue={sortOrder}
-                    className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring"
-                  >
-                    <option value="desc">{t('filters.sortOrderDesc')}</option>
-                    <option value="asc">{t('filters.sortOrderAsc')}</option>
-                  </select>
-                </div>
-              </label>
-            </div>
+            {catalogueUi.showCommunityMetrics ? (
+              <div>
+                <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
+                  <span>{t('filters.sortLabel')}</span>
+                  <div className="flex gap-2">
+                    <select
+                      name="sortBy"
+                      defaultValue={sortBy ?? 'publishedAt'}
+                      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring"
+                    >
+                      {SORT_OPTIONS.map((option) => {
+                        const optionKey = `filters.sort.${option}` as const;
+                        return (
+                          <option key={option} value={option}>
+                            {t(optionKey)}
+                          </option>
+                        );
+                      })}
+                    </select>
+                    <select
+                      name="sortOrder"
+                      defaultValue={sortOrder}
+                      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring"
+                    >
+                      <option value="desc">{t('filters.sortOrderDesc')}</option>
+                      <option value="asc">{t('filters.sortOrderAsc')}</option>
+                    </select>
+                  </div>
+                </label>
+              </div>
+            ) : null}
 
             <div className="flex flex-wrap gap-4 md:col-span-2 lg:col-span-3">
               <label className="inline-flex items-center gap-2 text-sm text-foreground">
@@ -477,9 +485,11 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
           {games.map((game) => {
             const displayTitle = locale === 'en' ? game.titleEn ?? game.title : game.title;
             const statusLabel = t(`status.${game.status ?? 'active'}`);
-            const publishedLabel = t('published', {
-              value: new Date(game.publishedAt).toLocaleDateString(locale),
-            });
+            const publishedLabel = catalogueUi.showPublishedDates
+              ? t('published', {
+                  value: new Date(game.publishedAt).toLocaleDateString(locale),
+                })
+              : null;
             const thumbnailUrl = game.thumbnailUrl;
 
             return (
@@ -545,17 +555,24 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
                         initialFavorite={Boolean(game.isFavorite)}
                         labels={favoriteLabels}
                         fallbackKey={game.slug ? `slug:${game.slug.toLowerCase()}` : `id:${game.id}`}
+                        storageMode={catalogueUi.favoriteStorage}
                       />
                     </div>
                   </div>
-                  <CardDescription className="text-sm text-muted-foreground">
-                    {publishedLabel}
-                  </CardDescription>
+                  {publishedLabel ? (
+                    <CardDescription className="text-sm text-muted-foreground">
+                      {publishedLabel}
+                    </CardDescription>
+                  ) : null}
                 </CardHeader>
                 <CardContent className="space-y-2 text-sm text-muted-foreground">
                   <p>{statusLabel}</p>
-                  <p>{t('playCount', { value: Number(game.playCount ?? 0).toLocaleString(locale) })}</p>
-                  <p>{t('rating', { value: Number(game.averageRating ?? 0).toFixed(2) })}</p>
+                  {catalogueUi.showCommunityMetrics ? (
+                    <>
+                      <p>{t('playCount', { value: Number(game.playCount ?? 0).toLocaleString(locale) })}</p>
+                      <p>{t('rating', { value: Number(game.averageRating ?? 0).toFixed(2) })}</p>
+                    </>
+                  ) : null}
                 </CardContent>
               </Card>
             );

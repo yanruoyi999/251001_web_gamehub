@@ -13,6 +13,7 @@ interface FavoriteToggleButtonProps {
     unfavorite: string;
   };
   fallbackKey?: string;
+  storageMode?: 'local' | 'remote-with-local-fallback';
 }
 
 const LOCAL_STORAGE_KEY = 'gamehub:favorites';
@@ -68,6 +69,7 @@ export function FavoriteToggleButton({
   initialFavorite,
   labels,
   fallbackKey,
+  storageMode = 'remote-with-local-fallback',
 }: FavoriteToggleButtonProps) {
   const [isFavorite, setIsFavorite] = useState(initialFavorite);
   const [isPending, startTransition] = useTransition();
@@ -90,6 +92,13 @@ export function FavoriteToggleButton({
 
   const handleToggle = () => {
     startTransition(async () => {
+      if (storageMode === 'local' && fallbackKey) {
+        const nextState = !isFavorite;
+        setIsFavorite(nextState);
+        updateLocalFavorite(fallbackKey, nextState);
+        return;
+      }
+
       if (!apiUnavailable) {
         try {
           const response = await fetch('/api/favorites', {
