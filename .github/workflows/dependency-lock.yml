@@ -1,0 +1,36 @@
+name: Dependency Lock Snapshot
+
+on:
+  push:
+    branches:
+      - fix/dependency-security-upgrades-20260710
+
+jobs:
+  lockfile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install pnpm
+        run: npm install -g pnpm@10.28.0
+
+      - name: Resolve upgraded dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Audit production dependencies
+        run: pnpm audit --prod --audit-level=high || true
+
+      - name: Upload lockfile and audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-upgrade-snapshot
+          retention-days: 1
+          path: |
+            pnpm-lock.yaml
+            package.json
