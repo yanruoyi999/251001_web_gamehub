@@ -5,6 +5,10 @@ import { getSeoLandingPages } from '@/lib/seo-landing-content';
 import { mockGames } from '@/lib/mock-games';
 import { shouldPromoteGameInCollections } from '@/lib/games/quality-policy';
 
+const MIN_INTERNAL_LINKS_PER_PAGE = 2;
+const MIN_INTERNAL_LINKS_PER_GUIDE = 2;
+const NON_RENDERED_REDIRECT_PAGES = new Set(['app/page.tsx']);
+
 function walkPages(directory: string): string[] {
   return readdirSync(directory).flatMap((entry) => {
     const fullPath = path.join(directory, entry);
@@ -13,10 +17,23 @@ function walkPages(directory: string): string[] {
   });
 }
 
+function countPageInternalNavigation(source: string): number {
+  const linkComponents = source.match(/<Link\b/g)?.length ?? 0;
+  const internalAnchors =
+    source.match(/<a\b[^>]*href=(?:["'`]\/|\{getLocalizedPath\(|\{["'`]\/)/g)?.length ?? 0;
+  const internalRedirects =
+    source.match(/(?:redirect|permanentRedirect)\(\s*(?:[`'"]\/|getLocalizedPath\()/g)?.length ?? 0;
+  const internalRouterPushes =
+    source.match(/router\.(?:push|replace)\(\s*(?:[`'"]\/|getLocalizedPath\()/g)?.length ?? 0;
+
+  return linkComponents + internalAnchors + internalRedirects + internalRouterPushes;
+}
+
 const errors: string[] = [];
 const guides = getSeoLandingPages();
 const guideSlugs = new Set(guides.map((guide) => guide.slug));
 const gameSlugs = new Set(mockGames.map((game) => game.slug));
+const pageFiles = walkPages(path.join(process.cwd(), 'app'));
 
 for (const guide of guides) {
   const internalLinkCount =
@@ -24,8 +41,10 @@ for (const guide of guides) {
     Object.values(guide.locales).reduce((total, locale) => total + locale.recommendations.length, 0) +
     (guide.embedGame?.playSlug ? 1 : 0);
 
-  if (internalLinkCount === 0) {
-    errors.push(`Guide ${guide.slug} has no internal links.`);
+  if (internalLinkCount < MIN_INTERNAL_LINKS_PER_GUIDE) {
+    errors.push(
+      `Guide ${guide.slug} has ${internalLinkCount} internal link(s); at least ${MIN_INTERNAL_LINKS_PER_GUIDE} are required.`,
+    );
   }
 
   for (const relatedSlug of guide.relatedSlugs) {
@@ -57,16 +76,19 @@ for (const guide of guides) {
   }
 }
 
-for (const pageFile of walkPages(path.join(process.cwd(), 'app'))) {
+for (const pageFile of pageFiles) {
   const source = readFileSync(pageFile, 'utf8');
   const relativePath = path.relative(process.cwd(), pageFile);
-  const hasInternalNavigation =
-    /<Link\b/.test(source) ||
-    /redirect\(\s*[`'"]\//.test(source) ||
-    /router\.push\(\s*[`'"]\//.test(source);
 
-  if (!hasInternalNavigation) {
-    errors.push(`${relativePath} has no explicit internal link or internal redirect.`);
+  if (NON_RENDERED_REDIRECT_PAGES.has(relativePath)) {
+    continue;
+  }
+
+  const internalNavigationCount = countPageInternalNavigation(source);
+  if (internalNavigationCount < MIN_INTERNAL_LINKS_PER_PAGE) {
+    errors.push(
+      `${relativePath} has ${internalNavigationCount} explicit internal link(s); at least ${MIN_INTERNAL_LINKS_PER_PAGE} are required.`,
+    );
   }
 }
 
@@ -77,5 +99,5 @@ if (errors.length > 0) {
 }
 
 console.log(
-  `Internal link audit passed: ${guides.length} guides, ${gameSlugs.size} game slugs, and ${walkPages(path.join(process.cwd(), 'app')).length} page files checked.`,
+  `Internal link audit passed: ${guides.length} guides require at least ${MIN_INTERNAL_LINKS_PER_GUIDE} links, ${gameSlugs.size} game slugs validated, and ${pageFiles.length - NON_RENDERED_REDIRECT_PAGES.size} rendered page files require at least ${MIN_INTERNAL_LINKS_PER_PAGE} links.`,
 );
