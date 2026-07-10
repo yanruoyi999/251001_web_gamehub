@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import Link from 'next/link';
 
-import { requireAdminAuth } from '@/lib/auth/admin';
+import { isAdminAuthenticated } from '@/lib/auth/admin';
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -14,7 +14,11 @@ const navItems = [
 ];
 
 export default async function AdminLayout({ children }: AdminLayoutProps) {
-  await requireAdminAuth();
+  const authenticated = await isAdminAuthenticated();
+
+  if (!authenticated) {
+    return <>{children}</>;
+  }
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
