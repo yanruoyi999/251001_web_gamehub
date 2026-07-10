@@ -69,6 +69,9 @@ export default async function NoDownloadGamesPage({ params }: { params: Promise<
         <Link href={getLocalizedPath(locale, '/guides/quick-play-guide')} className="rounded-lg border px-6 py-3 font-medium text-primary hover:bg-primary/10">
           {isZh ? '查看快速游玩指南' : 'Read quick play guide'}
         </Link>
+        <Link href={getLocalizedPath(locale, '/guides/browser-games-for-low-end-pc')} className="rounded-lg border px-6 py-3 font-medium text-primary hover:bg-primary/10">
+          {isZh ? '低配置电脑游戏指南' : 'Low-end PC browser games'}
+        </Link>
       </footer>
     </article>
   );
