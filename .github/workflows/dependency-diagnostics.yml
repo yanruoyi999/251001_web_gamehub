@@ -59,3 +59,18 @@ jobs:
             dependency-typecheck-exit.txt
             dependency-build.txt
             dependency-build-exit.txt
+            app
+            components
+            lib
+            services
+            db
+            i18n
+            scripts
+            types
+            public/data/4399-sample.json
+            package.json
+            pnpm-lock.yaml
+            tsconfig.json
+            next-env.d.ts
+            next.config.js
+            middleware.ts
