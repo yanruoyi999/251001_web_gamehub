@@ -110,12 +110,13 @@ export async function GET(request: NextRequest) {
   };
 
   if (shouldUsePublicCatalogueFallback()) {
-    if (!isLocalCatalogueMode()) {
+    const localCatalogueMode = isLocalCatalogueMode();
+    if (!localCatalogueMode) {
       console.warn('Game database list skipped, using local fallback because database config is not production-safe');
     }
     return NextResponse.json({
       ...listFallbackGames(listOptions),
-      degraded: true,
+      degraded: !localCatalogueMode,
     });
   }
 

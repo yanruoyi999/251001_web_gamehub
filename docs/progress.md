@@ -1599,5 +1599,5 @@
 - 决策：当前 200 个 checked-in fallback games、editorial 内容、分类标签和 290 URL sitemap 已是生产事实来源，不为无实际需求的管理后台、评分和计数功能继续维护三个失效远程后端。生产切换为显式 `GAME_CATALOG_MODE=local` 与 `CACHE_MODE=local`，保留未来迁移新数据库时恢复 remote 模式的接口。
 - 代码改动：新增 `lib/games/catalog-mode.ts`；健康检查在显式 local 模式下把本地目录、本地搜索和无远程缓存标记为正常且附带说明；Meilisearch、Redis、搜索和游戏列表在 local 模式下直接走本地路径，不初始化失效客户端或重复输出降级告警；监控将 fallback search 在 local 模式下视为预期来源；`.env.example` 补充两项模式配置。
 - Vercel 配置：Production、Preview、Development 均新增 `GAME_CATALOG_MODE=local` 和 `CACHE_MODE=local`；删除已确认失效的 `DATABASE_URL`、`MEILISEARCH_HOST`、`MEILISEARCH_API_KEY`、`UPSTASH_REDIS_URL`、`UPSTASH_REDIS_TOKEN`。原生产值仅在部署验收期间保留于权限受限的临时回滚文件，不写入仓库或日志。
-- 验证：无 DB/Meilisearch/Redis 环境下 `pnpm type-check`、45 tests、lint（0 errors，96 个既有 console warnings）、`pnpm build`、`git diff --check` 均通过；本地 production `/en`、`/en/games`、Google Snake 游戏/攻略、详情 API、列表 API、search API 与 290 URL sitemap 均正常，`/api/health` 返回 `status=ok`。
-- 待部署：代码提交和 Vercel production 部署完成后，需再次核对主域 health、search、sitemap、GA4/Clarity 标签与核心游戏页，并确认没有 DB/Redis/Meilisearch 连接错误。
+- 验证：无 DB/Meilisearch/Redis 环境下 `pnpm type-check`、46 tests、lint（0 errors，96 个既有 console warnings）、`pnpm build`、`git diff --check` 均通过；本地 production `/en`、`/en/games`、Google Snake 游戏/攻略、详情 API、列表 API、search API 与 290 URL sitemap 均正常，`/api/health` 返回 `status=ok`；显式 local 模式的列表 API 返回 `degraded=false`。
+- 首次生产验收：commit `5f9dc4f` 对应 Vercel production deployment `dpl_FFLmoetpA3F5iwE4RLhRfYw7ZeDq` Ready 并挂载主域；`/api/health` 从 degraded 变为 ok，search/list API、Google Snake、GA4 ID 与 290 URL sitemap 均正常。列表 API 的 local-mode `degraded` 语义修正随本条后续提交一并发布。

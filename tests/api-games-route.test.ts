@@ -24,6 +24,7 @@ vi.mock('@/lib/db/connection-policy', () => ({
 
 describe('/api/games route fallback', () => {
   beforeEach(() => {
+    delete process.env.GAME_CATALOG_MODE;
     vi.resetModules();
     getContextFromHeadersMock.mockReset();
     listFavoriteIdsMock.mockReset();
@@ -59,6 +60,20 @@ describe('/api/games route fallback', () => {
 
     expect(response.status).toBe(200);
     expect(payload.degraded).toBe(true);
+    expect(payload.source).toBe('fallback');
+    expect(listGamesMock).not.toHaveBeenCalled();
+  });
+
+  it('reports the checked-in catalogue as healthy in explicit local mode', async () => {
+    process.env.GAME_CATALOG_MODE = 'local';
+    getDatabaseConnectionMetadataMock.mockReturnValue({ configured: false });
+
+    const { GET } = await import('@/app/api/games/route');
+    const response = await GET(new Request('http://test.local/api/games?search=snake&limit=5') as any);
+    const payload = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(payload.degraded).toBe(false);
     expect(payload.source).toBe('fallback');
     expect(listGamesMock).not.toHaveBeenCalled();
   });
