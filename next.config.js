@@ -63,6 +63,16 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: '/guides/ad-free-games',
+        destination: '/guides/free-games-no-ads',
+        permanent: true,
+      },
+      {
+        source: '/en/guides/ad-free-games',
+        destination: '/en/guides/free-games-no-ads',
+        permanent: true,
+      },
+      {
         source: '/:path*',
         has: [
           {

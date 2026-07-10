@@ -1559,3 +1559,33 @@
 - 提交部署：commit `a90ed05 add drive mad level tips guide` 已推送 `origin/main`，GitHub/Vercel production 自动部署后主域 `https://www.lumagamehub.com` 已返回新增页面；误创建的临时 Vercel project `luma-gamehub-deploy-a90ed05` 已删除，未作为生产结果使用。
 - 生产验证：`https://www.lumagamehub.com/en/guides/drive-mad-level-tips` HTTP 200，输出 `Drive Mad Level Tips`、Quick answer、canonical `https://www.lumagamehub.com/en/guides/drive-mad-level-tips`，且无 `noindex`；`best-free-iphone-games` 构建产物已确认新 title 和 FAQPage JSON-LD。
 - 下一步：继续修 GSC/GA4/Clarity/Typeform API 凭据、DB/Meilisearch degraded、sitemap 动态 MISS；内容侧继续做 `ovo-level-tips` 或 `google-snake-mod-menu-safe-guide`，并观察 iPhone 页 CTR 是否改善。
+
+### T-129 Monitoring-led Snake SEO/GEO update and duplicate guide consolidation
+
+- 监测实数：2026-07-10 通过已登录 Chrome 读取 GSC、Clarity、GA4 和 Typeform。GSC Last 28 days 为 41 clicks / 2.22K impressions / CTR 1.8% / avg position 18.2；`/en/guides/google-snake-mods` 为 14 clicks / 920 impressions，`/en/guides/best-free-iphone-games` 为 2 / 423。Last 7 days 为 13 / 560 / 2.3% / 13.7，查询明确出现 `google snake mods`、`google snake mods 2`、`snake mod menu`、`google snake mod loader` 和 `g switch 2`。
+- 行为数据：Clarity Last 30 days 为 82 sessions，排除 54 bot sessions，1.41 pages/session，41.09% average scroll，13 个 `game_play_start`，Google 来源 36；性能 87/100，LCP 2.3s、INP 120ms、CLS 0。Typeform 新反馈为“点击没有反应”，与 Clarity 8.54% invalid clicks 相互印证，但当前无法定位到具体页面或控件，未猜测修改。
+- GA4 状态：已切换到 `yanruoyi999@gmail.com > gamepapa` 和 Measurement ID `G-M5N3TXN56Z`，后台仍显示未收到数据 / 0 active users。生产 HTML 可确认只加载一次该 ID 的 gtag script，CSP 也允许 Google Analytics 连接；本轮不在原因未确定时改写 page_view，避免重复上报。
+- 长尾 SEO/GEO：直接加深现有 `google-snake-mods`，不新建竞争页。标题、description、H1、Quick answer、section 和 FAQ 新覆盖 `Google Snake Mods 2`、`mod menu`、`Snake Mod Loader`、手机和安全来源意图；新增 DarkSnakeGang 网页版、Mod Loader GitHub 和 More Menu GitHub 三个主来源，输出到 Article JSON-LD citation。
+- 游戏页加厚：根据 GSC 的 `g switch 2` 新曝光，为已有 `/games/g-switch-2` 中英文页补充原创 summary、overview、how to play、controls、tips、FAQ 和 related guides；依据 Serius Games 官方页核对 3 个关卡、每关 10 个检查点、7 个秘密球与浏览器本地多人信息；不新增 URL 或 iframe。
+- 内容减法：删除与 `free-games-no-ads` 重复意图的薄页 `ad-free-games`，把其关键词与实用设备/干扰风险内容合并到主页；`/guides/ad-free-games` 和 `/en/guides/ad-free-games` 永久 308 到主页，旧页自动退出 sitemap。静态生成从 117 降为 115，正好减少两个多语言重复页。
+- 验证结果：`pnpm type-check`、`pnpm lint`、`pnpm test -- --run` （32 tests）、`pnpm build`、`git diff --check` 全部通过。本地 production 抽查 Snake、低干扰合并页、G-Switch 2 中英文均 HTTP 200、canonical/FAQ 正常且无 noindex；旧页两个 URL 均 308；sitemap 286 URLs，不含旧 `ad-free-games`，包含主页和 G-Switch 2。
+- 未部署：本次请求未要求 commit/deploy，改动仍保留在本地工作树。现有 `package.json`、AdSense SOP 和未跟踪知识库文件为先前用户改动，本轮未覆盖。
+- 下一步：P0 定位 GA4 数据流为何不收数，并用 Clarity 录像定位“点击没有反应”的具体控件；P1 观察 Snake title/FAQ 更新后 7-14 天 CTR，再决定是否加深而不是新建子页；P1 继续合并 `games-to-play-when-bored` 等低字数泛意图页，但需先确认 GSC 完整页面导出为零或无有效排名；P1 修复 Supabase pooler 与 Meilisearch 生产配置。
+
+### T-130 GA4 stream failure diagnosis and fullscreen dead-click repair
+
+- GA4 根因：通过已登录 Chrome 进入 `yanruoyi999@gmail.com > gamepapa > Luma Game Hub` Web stream，确认域名为 `https://www.lumagamehub.com`、Stream ID `15191555864`、Measurement ID `G-M5N3TXN56Z`、Enhanced Measurement 已开启，但后台明确标记 past 48 hours no data / data collection inactive。
+- 端点复核：生产 HTML 中只有一个 `G-M5N3TXN56Z` gtag script，但 Chrome 运行时无 `window.dataLayer`、无 `window.gtag`、无 GTM/collect 资源。直接 GET `https://www.googletagmanager.com/gtag/js?id=G-M5N3TXN56Z` 稳定返回 HTTP 404；同机对照 Samurai `G-J8GNEQ0RW3`、VidSlim `G-8EC8WN0PY1` 和通用测试 ID 均返回 HTTP 200。因此不改写现有 page_view 代码，正确修复是在 GA4 创建新 Luma Web stream，替换 Vercel `NEXT_PUBLIC_GA_ID` 并重新部署。
+- Clarity 定位：Last 30 days 的 7 个 dead-click sessions 中，Snake 攻略有 3 个。首个 Snake 会话的见解显示 00:02 成功点击 `Play now`，00:09 出现一次 dead click；`Duo Vikings` 会话持续 06:27，用户在 00:25、00:49、01:06、01:17 四次点击游戏全屏按钮均无效，01:22 点击 `Visit Official Site` 离开。这与 Typeform “点击没有反应”问题高度一致。
+- 实际改动：更新 `components/game/game-player-facade.tsx`，在游戏 iframe 外层增加 Luma 自有全屏图标控件；优先调用标准 Fullscreen API，兼容 WebKit API，浏览器拒绝时自动切换到覆盖当前浏览器视口的 CSS fullscreen fallback；全屏期间锁定 body 滚动，退出后恢复，并记录 native/fallback 模式事件。
+- 可访问性与 React 复核：控件使用语义化 `Button`、Lucide `Maximize2/Minimize2`、动态 `aria-label`、`aria-pressed` 和 title；Hooks 无条件调用，fullscreen 事件和 body overflow 均有 cleanup。
+- 验证：`pnpm type-check`、`pnpm lint`、`pnpm test -- --run` （32 tests）、`pnpm build`、`git diff --check` 全部通过。本地 production `/en/games/duo-vikings` 实际点击 `Play now -> Play fullscreen`，浏览器拒绝原生 API 后成功进入 viewport fallback：播放器为 fixed full viewport、body overflow hidden、按钮切为 `Exit fullscreen`；退出后 fixed 和 overflow 均恢复。
+- 待外部确认：新建 GA4 Web stream 会改变 Google Analytics 后台状态，本轮未执行最终创建。本地代码改动也未 commit/deploy。
+
+### T-131 GA4 replacement stream and production configuration
+
+- 新数据流：经用户确认，在现有 `yanruoyi999@gmail.com > gamepapa` GA4 property 中创建 `Luma Game Hub Production` Web stream，网站 URL 为 `https://www.lumagamehub.com`，Stream ID `15233589031`，Measurement ID `G-XF3GV91D1V`，Enhanced Measurement 保持开启；旧 stream 保留，未删除或改写历史配置。
+- 端点验证：新 ID 的 `https://www.googletagmanager.com/gtag/js?id=G-XF3GV91D1V` 返回 HTTP 200，修复旧 ID `G-M5N3TXN56Z` 对应脚本端点返回 404、导致生产运行时没有 `dataLayer`/`gtag` 的根因。
+- Vercel 配置：已在绑定项目 `251001-web-gamehub-rdg6` 的 Production、Preview、Development 三个环境中，将 `NEXT_PUBLIC_GA_ID` 更新为新 Measurement ID；未新增第二套脚本或重复 page_view 逻辑。
+- 发布范围：本次将与 T-129/T-130 对应的 Snake 长尾内容、G-Switch 2 原创指南、重复 `ad-free-games` 合并重定向和 Luma 自有全屏控件一并提交部署；保留 `package.json`、AdSense SOP 和未跟踪知识库文件的既有用户改动，不纳入本次提交。
+- 待验证：完成 GitHub/Vercel production 部署后，抽查生产 HTML 仅包含新 GA ID、旧 ID 不再出现，确认 Tag 请求和 collect 请求可发出，并在 GA4 Realtime 中观察内部验证访问；部署与生产验证结果在本任务完成后补记。

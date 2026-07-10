@@ -703,6 +703,128 @@ const GAME_EDITORIAL_CONTENT: Record<string, GameEditorialEntry> = {
       ],
     },
   },
+  'g-switch-2': {
+    en: {
+      metaTitle: 'G-Switch 2 Online - Controls, Secret Orbs and Multiplayer',
+      metaDescription:
+        'Play G-Switch 2 online with gravity-flip controls, 3-level route tips, 7 secret orb guidance, local multiplayer notes, and safe browser FAQs.',
+      title: 'G-Switch 2 quick guide',
+      summary:
+        'G-Switch 2 is a one-input gravity runner with three levels, ten checkpoints per level, seven secret orbs, and a shared-keyboard multiplayer mode. The input is simple; the challenge is reading both surfaces and delaying each flip until the last safe moment.',
+      overview: [
+        'Your runner moves automatically, so every decision is about timing. Before each flip, scan the floor and ceiling together: a safe landing surface can still lead directly into the next wall or gap.',
+        'The official Serius Games page lists three levels with ten checkpoints each and seven secret orbs. Treat checkpoints as practice markers. First learn a stable route, then replay for missed orbs instead of risking every collectible on the first clear.',
+      ],
+      howToPlay: [
+        'Run automatically and flip gravity to move between the floor and ceiling.',
+        'Reach checkpoints to preserve progress through each of the three levels.',
+        'Collect the seven secret orbs on later attempts after you know the safe route.',
+        'For local multiplayer, assign one key per player and survive longer than the other runners.',
+      ],
+      controls: [
+        { label: 'Flip gravity', value: 'Click, tap, or press the assigned key once to switch surfaces.' },
+        { label: 'Multiplayer', value: 'Each local player uses the key shown on the game setup screen.' },
+        { label: 'Restart', value: 'Use the in-game restart after a crash or completed multiplayer round.' },
+      ],
+      tips: [
+        'Flip late enough to see the next landing surface, but before your runner reaches the obstacle edge.',
+        'Do not chase a secret orb until you can already reach the next checkpoint consistently.',
+        'A quick double-flip can return you to the same surface, but only use it when both transitions are visible.',
+        'In multiplayer, watch your own lane timing instead of copying another player who may be slightly ahead.',
+      ],
+      faqs: [
+        {
+          question: 'How many levels are in G-Switch 2?',
+          answer: 'The official Serius Games browser page lists three levels with ten checkpoints in each level.',
+        },
+        {
+          question: 'Where are the 7 secret orbs in G-Switch 2?',
+          answer:
+            'They are hidden along the level routes. Learn the checkpoint path first, then replay and inspect alternate floor and ceiling lines instead of risking every orb during the first clear.',
+        },
+        {
+          question: 'Does G-Switch 2 have multiplayer?',
+          answer:
+            'Yes. The official browser page supports shared-keyboard local multiplayer with up to eight people, subject to the current game build and keyboard input limits.',
+        },
+        {
+          question: 'Can I play G-Switch 2 without downloading it?',
+          answer: 'Yes. Use the browser player and avoid unrelated installers, APK files, or extension prompts.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'g-switch-3',
+          title: 'G-Switch 3 guide',
+          description: 'Compare the sequel\'s gravity timing, multiplayer setup, and survival patterns.',
+        },
+        {
+          slug: 'games-like-ovo',
+          title: 'Games like OvO',
+          description: 'More precision browser games built around quick retries and route learning.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'G-Switch 2 在线玩 - 操作、7 个秘密球与多人技巧',
+      metaDescription:
+        '在线玩 G-Switch 2，查看重力翻转操作、3 个关卡路线、7 个秘密球、本地多人和安全浏览器 FAQ。',
+      title: 'G-Switch 2 快速玩法指南',
+      summary:
+        'G-Switch 2 是一款单输入重力跑酷游戏，包含 3 个关卡、每关 10 个检查点、7 个秘密球，以及共享键盘的本地多人模式。操作只有翻转，真正难点是同时读清地面和天花板，并等到最后安全时机再按。',
+      overview: [
+        '角色会自动前进，所以每次决策都是时机问题。翻转前同时看地面和天花板：即使落点安全，前方也可能紧接着墙或缺口。',
+        'Serius Games 官方页面列出 3 个关卡、每关 10 个检查点和 7 个秘密球。先把检查点当作练习标记，稳定通过后再回头收集，不要第一次就为每个球冒险。',
+      ],
+      howToPlay: [
+        '角色自动前进，用重力翻转在地面和天花板之间切换。',
+        '到达检查点，逐步推进 3 个关卡。',
+        '先学会稳定路线，之后重玩并收集 7 个秘密球。',
+        '本地多人时，每位玩家使用一个指定按键，比谁活得更久。',
+      ],
+      controls: [
+        { label: '翻转重力', value: '点击、触控或按一次指定键，切换运动表面。' },
+        { label: '多人操作', value: '每位本地玩家使用游戏设置页显示的按键。' },
+        { label: '重新开始', value: '失败或多人回合结束后，用游戏内按钮重开。' },
+      ],
+      tips: [
+        '翻转要晚一点，先看清下一个落点，但不要等到角色已经碰到障碍边缘。',
+        '还不能稳定到达下一检查点时，先不要追秘密球。',
+        '快速双翻可以回到原表面，但只在两次转移都看得清时使用。',
+        '多人时看自己的路线时机，不要盲目复制位置稍微领先的玩家。',
+      ],
+      faqs: [
+        {
+          question: 'G-Switch 2 有多少关？',
+          answer: 'Serius Games 官方浏览器页面列出 3 个关卡，每关包含 10 个检查点。',
+        },
+        {
+          question: 'G-Switch 2 的 7 个秘密球在哪里？',
+          answer: '它们藏在关卡路线中。先熟悉检查点路线，之后重玩并观察地面与天花板的备选路线，不要首次通关就为每个球冒险。',
+        },
+        {
+          question: 'G-Switch 2 有多人模式吗？',
+          answer: '有。官方浏览器页支持最多 8 人共享键盘的本地多人模式，实际以当前游戏版本和键盘同时输入能力为准。',
+        },
+        {
+          question: 'G-Switch 2 可以不下载吗？',
+          answer: '可以。直接使用浏览器玩家，避开无关安装器、APK 或扩展提示。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'g-switch-3',
+          title: 'G-Switch 3 攻略',
+          description: '对比续作的重力时机、多人设置和生存路线。',
+        },
+        {
+          slug: 'games-like-ovo',
+          title: '类似 OvO 的游戏',
+          description: '更多强调快速重试和路线学习的精准浏览器游戏。',
+        },
+      ],
+    },
+  },
   'g-switch-3': {
     en: {
       metaTitle: 'G-Switch 3 Online - Gravity Controls and Multiplayer Tips',

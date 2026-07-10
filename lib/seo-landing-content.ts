@@ -70,18 +70,25 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     primaryKeyword: 'free games no ads',
     keywords: [
       'free games no ads',
+      'ad free games',
       'ad-free browser games',
+      'ad-free casual games',
       'free games without popups',
+      'clean browser games',
       'no ads puzzle games',
     ],
     updatedAt: seoContentUpdatedAt,
-    relatedSlugs: ['ad-free-games', 'games-to-play-when-bored', 'browser-games-for-low-end-pc'],
+    relatedSlugs: [
+      'games-to-play-when-bored',
+      'best-free-iphone-games',
+      'browser-games-for-low-end-pc',
+    ],
     locales: {
       en: {
-        metaTitle: 'Free Games With Fewer Interruptions | Browser Picks',
+        metaTitle: 'Free Games With No Ads? Lower-Interruption Browser Picks',
         metaDescription:
           'Looking for free games with no ads? Start with browser games reviewed for lower-interruption play, with clear notes about third-party content that can change.',
-        heading: 'Free Games With Fewer Interruptions',
+        heading: 'Free Games With No Ads: Reviewed Browser Picks',
         subheading: 'A transparent starting point for players searching for free games with no ads.',
         overview: [
           'Luma Game Hub does not add interstitial ads over gameplay. The games themselves come from third-party publishers, so their interfaces, monetisation, and device support can change after publication.',
@@ -102,12 +109,12 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             body: 'Embedded games are maintained by their publishers. A quiet game can introduce banners, consent screens, or different controls later, so high-traffic and reported listings receive priority rechecks.',
           },
           {
-            title: 'Playlists for Different Moods',
-            body: 'Whether you want a quick brain teaser, a zen arcade loop, or a strategic challenge, there is an ad-free option ready to launch immediately.',
+            title: 'Choose by Device and Interruption Risk',
+            body: 'Start with the friction you actually want to avoid: an App Store install, an account wall, full-screen interruptions, or controls that do not fit your device. A game can be free and still fail one of those checks, so the live player remains the source of truth.',
             bullets: [
-              'Fast-focus puzzles that sharpen your brain between meetings.',
-              'Classic retro loops ideal for short mobile sessions.',
-              'Featured strategy picks when you want a deeper run without distractions.',
+              'On mobile, prefer tap-first games with visible controls and short rounds.',
+              'On desktop, keyboard games are fine when the control list is clear before launch.',
+              'Leave immediately if a third-party frame asks for an installer, extension, or unrelated permission.',
             ],
           },
         ],
@@ -154,10 +161,10 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ctaDescription: 'Explore the catalogue and report broken controls or new interruptions.',
       },
       zh: {
-        metaTitle: '低干扰免费游戏 | 浏览器游戏实测清单',
+        metaTitle: '免费无广告游戏？低干扰浏览器游戏清单',
         metaDescription:
           '正在找免费无广告游戏？这里提供经过阶段性检查的低干扰浏览器游戏，并说明第三方内容与广告行为可能变化。',
-        heading: '低干扰免费游戏推荐',
+        heading: '免费无广告游戏：经过复核的低干扰选择',
         subheading: '为搜索“free games no ads”的玩家提供透明、可复查的起点。',
         overview: [
           'Luma Game Hub 不会在游戏上方主动叠加插屏广告，但游戏本体来自第三方发布者，其界面、商业化方式和设备支持可能在发布后变化。',
@@ -178,12 +185,12 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             body: '嵌入游戏由原发布者维护，后续可能加入横幅、同意弹窗或更换操作方式。高流量页面和用户报告的问题会优先复查。',
           },
           {
-            title: '不同心情的精选清单',
-            body: '想要快速放松、动脑，或是进行策略挑战？这里都有对应的无广告选择，即开即玩无干扰。',
+            title: '按设备和干扰风险来选',
+            body: '先明确你真正想避开的是 App Store 安装、账号墙、全屏打断，还是不适合当前设备的操作。游戏可以免费，但仍可能在其中一项上不合格，因此实时玩家画面才是最终依据。',
             bullets: [
-              '会议间隙的轻量益智游戏，迅速进入状态。',
-              '复古街机节奏，适合移动端短时游玩。',
-              '策略深度作品，让你专注通关而不被广告打断。',
+              '手机端优先选操作可见、单局较短的点触游戏。',
+              '桌面端可以选键盘游戏，但应在启动前看到清晰按键说明。',
+              '第三方框架若要求安装器、扩展或无关权限，直接退出。',
             ],
           },
         ],
@@ -221,151 +228,6 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ],
         ctaLabel: '查看更多已整理游戏',
         ctaDescription: '进入完整游戏库；若发现失效、跳转或新干扰，可通过反馈入口报告。',
-      },
-    },
-  },
-  {
-    slug: 'ad-free-games',
-    primaryKeyword: 'ad free games',
-    keywords: [
-      'ad free games',
-      'ad-free casual games',
-      'clean browser games',
-      'ad-free strategy games',
-    ],
-    updatedAt: seoContentUpdatedAt,
-    relatedSlugs: ['free-games-no-ads', 'best-free-iphone-games', 'browser-games-for-low-end-pc'],
-    locales: {
-      en: {
-        metaTitle: 'Ad-Free Games Search Guide | Lower-Interruption Picks',
-        metaDescription:
-          'Use this ad-free games search guide to find lower-interruption browser candidates and understand how third-party content can change.',
-        heading: 'Ad-Free Games: A Transparent Search Guide',
-        subheading: 'Reviewed candidates and device notes, without permanent promises about third-party publishers.',
-        overview: [
-          'Players use “ad-free games” to describe different needs: fewer interruptions, no install prompt, no account wall, or simply a clear play area.',
-          'Luma controls its own interface but not the embedded publisher’s future changes. Recommendations are reviewed snapshots that should be rechecked when behavior changes.',
-        ],
-        sections: [
-          {
-            title: 'Choose the Right Genre for Your Mood',
-            body: 'Choose whether your priority is avoiding downloads, account creation, full-screen interruptions, or difficult mobile controls. One title may not meet every requirement.',
-          },
-          {
-            title: 'Optimised for Touch and Keyboard',
-            body: 'Some games work with taps while others need arrow keys or a mouse. The live game remains the source of truth for current device support.',
-            bullets: [
-              'Touch-first games for commuters and quick breaks.',
-              'Mouse-friendly precision titles for desktop sessions.',
-              'Controller-compatible picks for living room play.',
-            ],
-          },
-          {
-            title: 'How We Keep Recommendations Fresh',
-            body: 'High-traffic pages and reported problems receive priority rechecks. The updated date marks the latest review, not a continuous guarantee.',
-          },
-        ],
-        recommendations: [
-          {
-            slug: 'adam-and-eve-4',
-            pitch: 'A point-and-click puzzle candidate with simple controls to test.',
-          },
-          {
-            slug: 'catch-the-candy',
-            pitch: 'A gentle physics puzzle that makes touch and mouse responsiveness easy to check.',
-          },
-          {
-            slug: 'beat-line',
-            pitch: 'A timing game; confirm current audio, overlays, and input behavior.',
-          },
-          {
-            slug: 'apple-knight',
-            pitch: 'A keyboard-oriented action option for a longer browser session.',
-          },
-        ],
-        faqs: [
-          {
-            question: 'Are all games on this page guaranteed ad-free?',
-            answer:
-              'No. They are candidates reviewed for a lower-interruption experience at publication time. Third-party publishers can change them later.',
-          },
-          {
-            question: 'How can I report a new ad or redirect?',
-            answer:
-              'Use the feedback link and include the game name, device, and what appeared so the listing can be rechecked.',
-          },
-          {
-            question: 'Do these games work on mobile?',
-            answer:
-              'Some do. Touch support varies, so test the live controls instead of assuming every browser game is mobile-friendly.',
-          },
-        ],
-        ctaLabel: 'Open the full game catalogue',
-        ctaDescription: 'Compare genres and controls, then report publisher behavior that no longer matches the guide.',
-      },
-      zh: {
-        metaTitle: 'Ad Free Games 搜索指南 | 低干扰候选清单',
-        metaDescription:
-          '用这份 ad free games 指南寻找低干扰浏览器游戏，了解检查边界，并在第三方内容变化时及时反馈。',
-        heading: 'Ad Free Games 透明搜索指南',
-        subheading: '提供阶段性复核与设备提示，不对第三方发布者做永久保证。',
-        overview: [
-          '用户搜索“ad free games”时，可能想避开下载、注册、全屏打断或糟糕的移动端操作，这些需求并不等同。',
-          'Luma 可以控制自己的界面，但不能控制嵌入游戏发布者未来的调整。推荐代表更新时的检查结果。',
-        ],
-        sections: [
-          {
-            title: '按心情切换不同类型',
-            body: '先明确想避开的是安装、账号墙、全屏打断，还是不友好的手机操作。一个游戏可能只满足其中一部分。',
-          },
-          {
-            title: '同时优化触控与键鼠操作',
-            body: '部分游戏适合点击，另一些需要方向键或鼠标。实时游戏画面仍是设备支持的最终依据。',
-            bullets: [
-              '通勤时用触控快速开局。',
-              '桌面上享受高精度的鼠标操控。',
-              '客厅里用手柄进行长时间的沉浸对战。',
-            ],
-          },
-          {
-            title: '推荐列表如何保持新鲜',
-            body: '高流量页面和用户报告的问题会优先复查。页面更新时间表示最近一次复核，不代表持续监控。',
-          },
-        ],
-        recommendations: [
-          {
-            slug: 'adam-and-eve-4',
-            pitch: '点击解谜候选，场景目标清晰，适合先测试当前页面与操作。',
-          },
-          {
-            slug: 'catch-the-candy',
-            pitch: '轻量物理解谜，方便先确认触控、鼠标和当前嵌入表现。',
-          },
-          {
-            slug: 'beat-line',
-            pitch: '节奏游戏，请确认声音、遮挡和输入表现。',
-          },
-          {
-            slug: 'apple-knight',
-            pitch: '偏键盘操作的平台动作候选，适合较长浏览器游戏。',
-          },
-        ],
-        faqs: [
-          {
-            question: '本页所有游戏都保证无广告吗？',
-            answer: '不保证。它们是在发布时被检查为相对低干扰的候选，第三方发布者后续仍可能改变游戏。',
-          },
-          {
-            question: '如何报告新出现的广告或跳转？',
-            answer: '使用站内反馈入口，说明游戏名称、设备和出现的内容，方便我们复现并更新页面。',
-          },
-          {
-            question: '这些游戏支持手机吗？',
-            answer: '部分支持。触控表现差异很大，请在手机上先测试实时操作。',
-          },
-        ],
-        ctaLabel: '打开完整游戏库',
-        ctaDescription: '比较类型与操作方式，并反馈已经不符合指南描述的第三方行为。',
       },
     },
   },
@@ -2310,10 +2172,14 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     primaryKeyword: 'google snake mods',
     keywords: [
       'google snake mods',
+      'google snake mods 2',
       'google snake mod',
+      'google snake mod 2',
       'google snake menu mod',
       'how to get google snake mods',
       'google snake mod menu',
+      'google snake mod loader',
+      'snake mod loader',
       'snake mods',
       'snake game menu',
       'google snake game menu',
@@ -2328,24 +2194,34 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     },
     locales: {
       en: {
-        metaTitle: 'Google Snake Mods: Best Menu, Mobile & Setup Options',
+        metaTitle: 'Google Snake Mods: Mod Menu, Loader & Mobile Guide',
         metaDescription:
-          'Compare current Google Snake mod options: the modded web version, userscript loader, menu mods, mobile limits, and a safe no-download fallback.',
-        heading: 'Google Snake Mods: Best Menu Mods and Setup Options',
-        subheading: 'A current player guide for snake mods: what still works, when to use the modded web version, when a userscript is worth it, and how to play without installing anything.',
+          'Looking for Google Snake Mods 2, a mod menu, or the Snake Mod Loader? Compare the maintained web version, userscript route, mobile limits, and safe fallback.',
+        heading: 'Google Snake Mods: Mod Menu, Loader and Mobile Options',
+        subheading: 'A current guide for Google Snake Mods 2, mod menu, and loader searches: what those terms mean, which route still works, and when to choose no-download standard Snake.',
         overview: [
           'Google Snake mods are community-made changes for the classic Snake game. The useful ones add a menu, extra apple modes, mouse controls, level editing, custom boards, visibility changes, and practice settings that the normal game does not expose.',
           'The old bookmark-import method is no longer the clean first recommendation. The DarkSnakeGang projects now point players toward the modded web version or a userscript loader, so this page is written as a decision guide rather than a download page. Luma does not host the mods here; we explain the options and provide a standard browser Snake fallback if you simply want to play.',
         ],
         sections: [
           {
-            title: 'Quick Answer: Which Snake Mod Option Should You Use?',
-            body: 'Most players should start with the dedicated Google Snake Mods web version because it keeps the mods in one place and also works better on mobile. Use a userscript loader only if you specifically want mods inside the Google Search Snake game and you are comfortable managing browser extensions.',
+            title: 'Quick Answer: Mod Menu or Snake Mod Loader?',
+            body: 'Use the maintained Google Snake Mods web version when you want the simplest mod menu with no separate setup. Use the DarkSnakeGang userscript loader only when you specifically want mods inside Google Search Snake and understand browser-extension permissions. “Google Snake Mods 2” is commonly used as a search phrase, not the name of an official sequel.',
             bullets: [
               'Want the simplest current route: use the modded web version from the DarkSnakeGang project.',
               'Want mods inside the Google Search game: use the Google Snake Mod Loader userscript.',
               'On mobile: prefer the modded web version, because desktop extensions and userscripts are often unavailable.',
               'At school, work, or on a locked browser: play standard Snake on Luma instead of bypassing device policies.',
+            ],
+          },
+          {
+            title: 'Google Snake Mods 2, Mod Menu and Loader: What Each Search Means',
+            body: 'These searches often lead to the same two maintained choices, but the intent is different. Separating them helps you avoid outdated bookmark files and unsafe mirror downloads.',
+            bullets: [
+              'Google Snake Mods 2: usually means the current community mod site or an updated mod collection, not a separate official Google game.',
+              'Google Snake mod menu: the in-game panel used to choose options such as More Menu, Mouse Mode, Level Editor, and visibility changes.',
+              'Google Snake Mod Loader: the userscript project that attaches the menu to supported Google Snake pages.',
+              'Snake mod loader download: use only the project links maintained by DarkSnakeGang; do not install EXE, DMG, APK, or repackaged bundles.',
             ],
           },
           {
@@ -2432,6 +2308,11 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               'For most players, the easiest current route is the dedicated Google Snake Mods web version from the DarkSnakeGang community. Use a userscript loader only if you specifically want mods inside the Google Search Snake game.',
           },
           {
+            question: 'What is Google Snake Mods 2?',
+            answer:
+              'It is usually a search phrase for the current Google Snake mod collection or an updated mod menu. DarkSnakeGang presents a maintained web version and a userscript loader; it does not describe a separate official Google Snake sequel.',
+          },
+          {
             question: 'What are the best snake mods to try first?',
             answer:
               'Start with board size, speed settings, multiple apples, Mouse Mode, and Level Editor. These change how the game plays, while skins and colors are better saved for later.',
@@ -2462,28 +2343,55 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               'The known community mod options are free to use. You should not pay for a Snake mod installer or sign up on unrelated download sites.',
           },
         ],
+        externalLinks: [
+          {
+            href: 'https://googlesnakemods.com/',
+            label: 'DarkSnakeGang Google Snake Mods web version',
+            description: 'Maintainer-run no-download web version with the mod panel built in.',
+          },
+          {
+            href: 'https://github.com/DarkSnakeGang/GoogleSnakeModLoader',
+            label: 'Google Snake Mod Loader on GitHub',
+            description: 'Primary project documentation for the userscript loader, supported pages, and current setup route.',
+          },
+          {
+            href: 'https://github.com/DarkSnakeGang/GoogleSnakeCustomMenuStuff',
+            label: 'Google Snake More Menu project',
+            description: 'Primary source for the menu mod and the notice that the old bookmark method no longer works.',
+          },
+        ],
         ctaLabel: 'Browse more browser games',
         ctaDescription: 'Open the game catalogue for quick browser games that do not require downloads.',
       },
       zh: {
-        metaTitle: 'Google Snake Mods:菜单模组、手机与安装选择',
+        metaTitle: 'Google Snake Mods：Mod Menu、Loader 与手机指南',
         metaDescription:
-          '对比当前 Google Snake mods 选择:官方模组网页、userscript loader、菜单模组、手机限制与免下载玩法备选。',
-        heading: 'Google Snake Mods:菜单模组与安装选择指南',
-        subheading: '面向真实玩家的 snake mods 指南:哪些方式还可用、什么时候用模组网页、什么时候用用户脚本,以及不想安装时怎么直接玩。',
+          '搜索 Google Snake Mods 2、mod menu 或 Snake Mod Loader？对比维护中的网页版、userscript、手机限制和安全备选。',
+        heading: 'Google Snake Mods：Mod Menu、Loader 和手机选择',
+        subheading: '面向 Google Snake Mods 2、mod menu 和 loader 搜索的当前指南：这些词各指什么、哪条路线还在维护，以及何时直接玩标准 Snake。',
         overview: [
           'Google Snake mods 是玩家社区为经典贪吃蛇做的浏览器改动。真正有用的模组不只是换皮肤,而是加入菜单、额外苹果模式、鼠标控制、关卡编辑、自定义棋盘、可见性变化和练习设置。',
           '旧的书签导入法已经不适合作为当前首选。DarkSnakeGang 项目现在更推荐模组网页或 userscript loader,所以本页按“怎么选择”来写,而不是诱导你下载文件。Luma 不托管这些模组,这里只解释选项,并提供一个不安装任何东西也能玩的标准 Snake 备选。',
         ],
         sections: [
           {
-            title: '快速结论:现在该用哪种 Snake Mod?',
-            body: '大多数玩家先用 DarkSnakeGang 的 Google Snake Mods 网页版,因为模组集中在一个页面里,手机端也更容易使用。只有你明确想在 Google 搜索里的 Snake 游戏中加载模组,并且能管理浏览器扩展,才考虑 userscript loader。',
+            title: '快速结论：用 Mod Menu 还是 Snake Mod Loader？',
+            body: '想最简单打开模组菜单，就用维护中的 Google Snake Mods 网页版。只有明确想在 Google Search Snake 里加载模组，并理解扩展权限时，才用 DarkSnakeGang userscript loader。“Google Snake Mods 2”通常是搜索词，不是官方续作名称。',
             bullets: [
               '想要最简单的当前路径:用 DarkSnakeGang 项目的模组网页。',
               '想在 Google Search 的 Snake 游戏里加模组:用 Google Snake Mod Loader 用户脚本。',
               '手机端:优先用模组网页,因为桌面扩展和用户脚本在手机浏览器里通常不好用。',
               '学校、公司或受管设备:不要绕过设备策略,可以直接玩 Luma 的标准 Snake 版本。',
+            ],
+          },
+          {
+            title: 'Google Snake Mods 2、Mod Menu 和 Loader 分别是什么',
+            body: '这些搜索往往最终指向同两种维护中的方案，但搜索意图不同。先分清它们，才不会误用失效书签文件或不安全镜像下载。',
+            bullets: [
+              'Google Snake Mods 2：通常指当前社区模组站或更新后的模组合集，不是 Google 官方独立续作。',
+              'Google Snake mod menu：在游戏内选择 More Menu、Mouse Mode、Level Editor 和可见性设置的面板。',
+              'Google Snake Mod Loader：把菜单加载到支持的 Google Snake 页面中的 userscript 项目。',
+              '搜索 Snake mod loader download 时，只用 DarkSnakeGang 维护的项目链接，不下载 EXE、DMG、APK 或重打包文件。',
             ],
           },
           {
@@ -2570,6 +2478,11 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               '大多数玩家可以先用 DarkSnakeGang 社区的 Google Snake Mods 网页版。只有你明确想在 Google 搜索里的 Snake 游戏中加载模组,才需要 userscript loader。',
           },
           {
+            question: 'Google Snake Mods 2 是什么？',
+            answer:
+              '它通常是玩家对当前 Google Snake 模组合集或更新菜单的搜索词。DarkSnakeGang 提供维护中的网页版和 userscript loader，并没有把它描述为 Google 官方续作。',
+          },
+          {
             question: '最值得先试的 Snake Mods 是哪些?',
             answer:
               '先试棋盘大小、速度设置、多苹果、Mouse Mode 和 Level Editor。这些会直接改变玩法;皮肤、颜色和背景可以放在后面再调。',
@@ -2598,6 +2511,23 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             question: 'Google Snake 模组免费吗?',
             answer:
               '已知社区模组选项是免费使用的。不要为 Snake mod 安装器付费,也不要在无关下载站注册。',
+          },
+        ],
+        externalLinks: [
+          {
+            href: 'https://googlesnakemods.com/',
+            label: 'DarkSnakeGang Google Snake Mods 网页版',
+            description: '由维护者运行、内置模组面板的免下载网页版。',
+          },
+          {
+            href: 'https://github.com/DarkSnakeGang/GoogleSnakeModLoader',
+            label: 'GitHub 上的 Google Snake Mod Loader',
+            description: '核对 userscript loader、支持页面和当前设置路线的主要项目文档。',
+          },
+          {
+            href: 'https://github.com/DarkSnakeGang/GoogleSnakeCustomMenuStuff',
+            label: 'Google Snake More Menu 项目',
+            description: '菜单模组和旧书签方案已失效说明的主要来源。',
           },
         ],
         ctaLabel: '浏览更多网页游戏',
