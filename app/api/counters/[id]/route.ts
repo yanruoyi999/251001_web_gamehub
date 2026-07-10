@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { CounterService } from '@/services';
+import {
+  getDatabaseConnectionMetadata,
+  shouldSkipSupabaseDirectInServerless,
+} from '@/lib/db/connection-policy';
 
 function parseId(value: string): number | null {
   const id = Number(value);
@@ -7,13 +11,28 @@ function parseId(value: string): number | null {
   return id;
 }
 
+function canReadPersistedCounts() {
+  const databaseConnection = getDatabaseConnectionMetadata();
+  if (!databaseConnection.configured) return false;
+
+  return !(
+    process.env.COUNTER_ALLOW_SUPABASE_DIRECT_IN_SERVERLESS !== 'true' &&
+    shouldSkipSupabaseDirectInServerless(databaseConnection)
+  );
+}
+
 export async function GET(
   _request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> },
 ) {
-  const gameId = parseId(params.id);
+  const { id } = await params;
+  const gameId = parseId(id);
   if (!gameId) {
     return NextResponse.json({ error: 'Invalid game ID' }, { status: 400 });
+  }
+
+  if (!canReadPersistedCounts()) {
+    return NextResponse.json({ total: 0, today: 0, degraded: true });
   }
 
   try {
@@ -21,7 +40,10 @@ export async function GET(
     return NextResponse.json(counts);
   } catch (error) {
     console.error('Failed to fetch play counts:', error);
-    return NextResponse.json({ error: 'Failed to fetch play counts' }, { status: 500 });
+    return NextResponse.json(
+      { total: 0, today: 0, degraded: true },
+      { status: 200 },
+    );
   }
 }
 

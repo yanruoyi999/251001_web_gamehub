@@ -32,6 +32,7 @@ export const REDIS_KEYS = {
 
 // Redis 客户端初始化
 let redisClient: Redis | null = null;
+let hasWarnedAboutMissingRedis = false;
 let redisDisabledUntil = 0;
 let redisFailureCount = 0;
 let lastRedisFailureLogAt = 0;
@@ -70,7 +71,10 @@ export function recordRedisFailure(operation: string, error: unknown) {
 export function getRedisClient(): Redis | null {
   // 如果未配置，返回 null（降级到直接数据库操作）
   if (!process.env.UPSTASH_REDIS_URL || !process.env.UPSTASH_REDIS_TOKEN) {
-    console.warn('Redis not configured, caching features will be degraded');
+    if (!hasWarnedAboutMissingRedis && process.env.NODE_ENV !== 'test') {
+      hasWarnedAboutMissingRedis = true;
+      console.warn('Redis not configured, caching features will be degraded');
+    }
     return null;
   }
 
@@ -88,9 +92,6 @@ export function getRedisClient(): Redis | null {
 
   return redisClient;
 }
-
-// 提供一个共享的 Redis 实例，方便业务层按照原有方式导入使用
-export const redis = getRedisClient();
 
 // 验证 Redis 连接
 export async function verifyRedisConnection(): Promise<boolean> {

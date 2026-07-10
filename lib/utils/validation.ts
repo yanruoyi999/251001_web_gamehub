@@ -8,6 +8,10 @@ function normalizeInteger(value: number | undefined): number | undefined {
   return Number.isFinite(value) && Number.isInteger(value) ? value : undefined;
 }
 
+function isLoopbackHostname(hostname: string) {
+  return hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '::1';
+}
+
 export function isValidId(id: unknown): id is number {
   return typeof id === 'number' && Number.isInteger(id) && id > 0;
 }
@@ -34,11 +38,17 @@ export function sanitizeSearchQuery(query: string): string {
   return query.trim();
 }
 
+/**
+ * Validate URLs that will be loaded by a browser or iframe.
+ * Production content must use HTTPS; localhost HTTP remains available for development.
+ */
 export function isValidUrl(url: string): boolean {
   try {
-    new URL(url);
-    return true;
-  } catch (error) {
+    const parsed = new URL(url);
+    return parsed.protocol === 'https:' || (
+      parsed.protocol === 'http:' && isLoopbackHostname(parsed.hostname)
+    );
+  } catch {
     return false;
   }
 }
@@ -47,7 +57,7 @@ export function isValidHttpsUrl(url: string): boolean {
   try {
     const parsed = new URL(url);
     return parsed.protocol === 'https:';
-  } catch (error) {
+  } catch {
     return false;
   }
 }

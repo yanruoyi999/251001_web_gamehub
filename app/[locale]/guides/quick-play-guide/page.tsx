@@ -4,8 +4,9 @@ import { getLocalizedPath, locales, type Locale } from '@/i18n/config';
 
 const PATH = '/guides/quick-play-guide';
 
-export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
-  const locale = (params.locale as Locale) ?? 'zh';
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale: localeParam } = await params;
+  const locale = (localeParam as Locale) ?? 'zh';
   const isZh = locale === 'zh';
   const title = isZh ? '快速游玩指南 | Luma Game Hub' : 'Quick Play Guide | Luma Game Hub';
   const description = isZh
@@ -35,8 +36,9 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
   };
 }
 
-export default function Page({ params }: { params: { locale: string } }) {
-  const locale = (params.locale as Locale) ?? 'zh';
+export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale: localeParam } = await params;
+  const locale = (localeParam as Locale) ?? 'zh';
   const isZh = locale === 'zh';
   return (
     <article className="mx-auto max-w-3xl px-6 py-12">
@@ -60,9 +62,15 @@ export default function Page({ params }: { params: { locale: string } }) {
           <li>{isZh ? '页面应在点击游玩前给出足够背景。' : 'The page should give enough context before play starts.'}</li>
         </ul>
       </section>
-      <footer className="mt-10">
+      <footer className="mt-10 flex flex-wrap gap-3">
         <Link href={getLocalizedPath(locale, '/games')} className="rounded-lg bg-primary px-6 py-3 font-semibold text-primary-foreground hover:bg-primary/90">
           {isZh ? '浏览全部游戏' : 'Browse all games'}
+        </Link>
+        <Link href={getLocalizedPath(locale, '/guides/browser-games-for-low-end-pc')} className="rounded-lg border px-6 py-3 font-medium text-primary hover:bg-primary/10">
+          {isZh ? '低配置电脑怎么选游戏' : 'Games for low-end PCs'}
+        </Link>
+        <Link href={getLocalizedPath(locale, '/guides/keyboard-only-browser-games')} className="rounded-lg border px-6 py-3 font-medium text-primary hover:bg-primary/10">
+          {isZh ? '只用键盘玩的小游戏' : 'Keyboard-only browser games'}
         </Link>
       </footer>
     </article>

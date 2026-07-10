@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { RatingService } from '@/services';
+import { isAdminRequestAuthenticated } from '@/lib/auth/admin';
 
 function parseId(value: string): number | null {
   const id = Number(value);
@@ -9,15 +10,20 @@ function parseId(value: string): number | null {
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> },
 ) {
-  const ratingId = parseId(params.id);
+  if (!isAdminRequestAuthenticated(request)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  const { id } = await params;
+  const ratingId = parseId(id);
   if (!ratingId) {
     return NextResponse.json({ error: 'Invalid rating ID' }, { status: 400 });
   }
 
   try {
-    const body = await request.json();
+    const body = await request.json().catch(() => ({}));
     if (typeof body?.approve !== 'boolean') {
       return NextResponse.json({ error: 'approve boolean is required' }, { status: 400 });
     }
@@ -26,10 +32,7 @@ export async function PATCH(
     return NextResponse.json(updated);
   } catch (error) {
     console.error('Failed to update rating status:', error);
-    return NextResponse.json(
-      { error: (error as Error).message ?? 'Failed to update rating status' },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: 'Failed to update rating status' }, { status: 500 });
   }
 }
 

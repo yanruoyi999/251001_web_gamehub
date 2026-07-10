@@ -24,6 +24,7 @@ import {
   buildAbsoluteUrl,
   getSiteBaseUrl,
 } from '@/lib/seo';
+import { serializeJsonLd } from '@/lib/utils/json-ld';
 
 export const dynamic = 'force-static';
 export const revalidate = 86400;
@@ -38,18 +39,19 @@ export function generateStaticParams() {
   );
 }
 
-export function generateMetadata({
+export async function generateMetadata({
   params,
 }: {
-  params: { locale: string; slug: string };
-}): Metadata {
-  const page = getSeoLandingPage(params.slug);
+  params: Promise<{ locale: string; slug: string }>;
+}): Promise<Metadata> {
+  const { locale: localeParam, slug } = await params;
+  const page = getSeoLandingPage(slug);
 
   if (!page) {
     return {};
   }
 
-  const locale = (params.locale as Locale) ?? 'zh';
+  const locale = (localeParam as Locale) ?? 'zh';
   const content = page.locales[locale] ?? page.locales.zh;
   const basePath = getLocalizedPath(locale, `/guides/${page.slug}`);
 
@@ -85,7 +87,7 @@ export function generateMetadata({
 }
 
 interface GuidePageProps {
-  params: { locale: string; slug: string };
+  params: Promise<{ locale: string; slug: string }>;
 }
 
 const gameIndex = new Map(mockGames.map((game) => [game.slug, game]));
@@ -100,9 +102,10 @@ function getRelatedPages(current: SeoLandingPage, locale: Locale) {
     }));
 }
 
-export default function GuidePage({ params }: GuidePageProps) {
-  const locale = (params.locale as Locale) ?? 'zh';
-  const page = getSeoLandingPage(params.slug);
+export default async function GuidePage({ params }: GuidePageProps) {
+  const { locale: localeParam, slug } = await params;
+  const locale = (localeParam as Locale) ?? 'zh';
+  const page = getSeoLandingPage(slug);
 
   if (!page) {
     notFound();
@@ -193,7 +196,7 @@ export default function GuidePage({ params }: GuidePageProps) {
         <script
           key={index}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(schema) }}
         />
       ))}
       <nav className="mb-6 text-sm text-muted-foreground">

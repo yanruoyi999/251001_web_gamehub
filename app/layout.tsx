@@ -10,6 +10,7 @@ import AnalyticsListener from '@/components/layout/AnalyticsListener';
 import LocaleDocumentSync from '@/components/layout/LocaleDocumentSync';
 import { GA_TRACKING_ID } from '@/lib/gtag';
 import { getSiteBaseUrl } from '@/lib/seo';
+import { serializeJsonLd } from '@/lib/utils/json-ld';
 
 const siteBaseUrl = getSiteBaseUrl();
 const siteJsonLd = {
@@ -89,12 +90,13 @@ export const viewport: Viewport = {
   themeColor: '#0d1117',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const requestLocale = headers().get('x-next-intl-locale');
+  const requestHeaders = await headers();
+  const requestLocale = requestHeaders.get('x-next-intl-locale');
   const documentLocale = isLocale(requestLocale) ? requestLocale : defaultLocale;
 
   return (
@@ -117,7 +119,7 @@ export default function RootLayout({
         />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(siteJsonLd) }}
         />
         <script
           dangerouslySetInnerHTML={{

@@ -5,7 +5,7 @@ import {
 } from '@/lib/db/connection-policy';
 import { games, gameStats } from '@/db/schema';
 import { getMeilisearchClient } from '@/lib/meilisearch';
-import { redis } from '@/lib/redis';
+import { getRedisClient } from '@/lib/redis';
 import { SearchCacheKeys, CacheTTL } from '@/lib/utils/cache-keys';
 import { sanitizeSearchQuery, validatePagination } from '@/lib/utils/validation';
 import { ilike, or, eq, desc, sql, and } from 'drizzle-orm';
@@ -16,6 +16,28 @@ export interface SearchOptions {
   query: string;
   page?: number;
   limit?: number;
+}
+
+export interface SearchGameItem {
+  id: number;
+  title: string;
+  titleEn: string | null;
+  slug: string;
+  status: string | null;
+  thumbnailUrl: string | null;
+  isNew: boolean | null;
+  isHot: boolean | null;
+  playCount: number | null;
+  averageRating: string | number | null;
+  publishedAt: Date | string | null;
+}
+
+export interface SearchResult {
+  games: SearchGameItem[];
+  total: number;
+  page: number;
+  limit: number;
+  source: 'empty' | 'meilisearch' | 'database' | 'fallback';
 }
 
 const DEFAULT_SEARCH_BACKEND_TIMEOUT_MS = 2500;
@@ -38,21 +60,32 @@ function withSearchTimeout<T>(promise: Promise<T>, label: string): Promise<T> {
   });
 }
 
+function toOptionalString(value: unknown): string | null {
+  return typeof value === 'string' && value.trim() ? value : null;
+}
+
+function toOptionalBoolean(value: unknown): boolean | null {
+  return typeof value === 'boolean' ? value : null;
+}
+
+function toOptionalNumber(value: unknown): number | null {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
 export class SearchService {
-  static async searchGames(options: SearchOptions) {
+  static async searchGames(options: SearchOptions): Promise<SearchResult> {
+    const redis = getRedisClient();
     const query = sanitizeSearchQuery(options.query);
     if (!query) {
-      return { games: [], total: 0, page: 1, limit: options.limit ?? 20, source: 'empty' };
+      const { limit } = validatePagination(1, options.limit);
+      return { games: [], total: 0, page: 1, limit, source: 'empty' };
     }
 
     const { page, limit, offset } = validatePagination(options.page, options.limit);
     const cacheKey = SearchCacheKeys.results(query, { page, limit });
 
-    const cached = await getJson<{ games: any[]; total: number; page: number; limit: number; source: string }>(
-      redis,
-      cacheKey
-    );
-
+    const cached = await getJson<SearchResult>(redis, cacheKey);
     if (cached) {
       return cached;
     }
@@ -72,35 +105,39 @@ export class SearchService {
         );
 
         const normalizedHits = result.hits
-          .map((hit) => {
-            const rawId = hit.id ?? hit.gameId ?? hit.objectID;
-            const id = Number(rawId);
-            if (!Number.isInteger(id)) {
+          .map((hit): SearchGameItem | null => {
+            const id = Number(hit.id ?? hit.gameId ?? hit.objectID);
+            const title = toOptionalString(hit.title);
+            const slug = toOptionalString(hit.slug);
+            if (!Number.isInteger(id) || !title || !slug) {
               return null;
             }
 
             return {
               id,
-              title: hit.title,
-              titleEn: hit.titleEn ?? hit.title_en,
-              slug: hit.slug,
-              status: hit.status,
-              thumbnailUrl: hit.thumbnailUrl,
-              isNew: hit.isNew,
-              isHot: hit.isHot,
-              playCount: hit.playCount,
-              averageRating: hit.averageRating,
-              publishedAt: hit.publishedAt,
+              title,
+              titleEn: toOptionalString(hit.titleEn ?? hit.title_en),
+              slug,
+              status: toOptionalString(hit.status) ?? 'active',
+              thumbnailUrl: toOptionalString(hit.thumbnailUrl),
+              isNew: toOptionalBoolean(hit.isNew),
+              isHot: toOptionalBoolean(hit.isHot),
+              playCount: toOptionalNumber(hit.playCount),
+              averageRating:
+                typeof hit.averageRating === 'string'
+                  ? hit.averageRating
+                  : toOptionalNumber(hit.averageRating),
+              publishedAt: toOptionalString(hit.publishedAt),
             };
           })
-          .filter((item): item is NonNullable<typeof item> => Boolean(item));
+          .filter((item): item is SearchGameItem => Boolean(item));
 
-        const payload = {
+        const payload: SearchResult = {
           games: normalizedHits,
           total: result.estimatedTotalHits ?? 0,
           page,
           limit,
-          source: 'meilisearch' as const,
+          source: 'meilisearch',
         };
 
         await setJson(redis, cacheKey, payload, CacheTTL.SEARCH_RESULTS);
@@ -111,23 +148,28 @@ export class SearchService {
     }
 
     const databaseConnection = getDatabaseConnectionMetadata();
-    if (
+    const databaseUnavailable = !databaseConnection.configured;
+    const unsafeDirectConnection =
       process.env.SEARCH_ALLOW_SUPABASE_DIRECT_IN_SERVERLESS !== 'true' &&
-      shouldSkipSupabaseDirectInServerless(databaseConnection)
-    ) {
-      console.warn('Skipping database search because Supabase direct URL is configured in serverless runtime');
+      shouldSkipSupabaseDirectInServerless(databaseConnection);
+
+    if (databaseUnavailable || unsafeDirectConnection) {
+      const reason = databaseUnavailable
+        ? 'database is not configured'
+        : 'Supabase direct URL is not safe in the serverless runtime';
+      console.warn(`Skipping database search because ${reason}`);
       const fallback = searchFallbackGames({ query, page, limit });
       await setJson(redis, cacheKey, fallback, CacheTTL.SEARCH_RESULTS);
       return fallback;
     }
 
     try {
-      const fallback = await withSearchTimeout(
+      const result = await withSearchTimeout(
         this.searchWithDatabase(query, { page, limit, offset }),
         'Database search',
       );
-      await setJson(redis, cacheKey, fallback, CacheTTL.SEARCH_RESULTS);
-      return fallback;
+      await setJson(redis, cacheKey, result, CacheTTL.SEARCH_RESULTS);
+      return result;
     } catch (error) {
       console.warn('Database search failed, using local fallback:', error);
       const fallback = searchFallbackGames({ query, page, limit });
@@ -138,15 +180,15 @@ export class SearchService {
 
   private static async searchWithDatabase(
     query: string,
-    options: { page: number; limit: number; offset: number }
-  ) {
+    options: { page: number; limit: number; offset: number },
+  ): Promise<SearchResult> {
     const pattern = `%${query}%`;
 
     const whereClause = or(
       ilike(games.title, pattern),
       ilike(games.titleEn, pattern),
       ilike(games.description, pattern),
-      ilike(games.descriptionEn, pattern)
+      ilike(games.descriptionEn, pattern),
     );
 
     const results = await db
@@ -161,6 +203,7 @@ export class SearchService {
         isHot: games.isHot,
         playCount: gameStats.playCount,
         averageRating: gameStats.averageRating,
+        publishedAt: games.publishedAt,
       })
       .from(games)
       .leftJoin(gameStats, eq(games.id, gameStats.gameId))
@@ -179,7 +222,7 @@ export class SearchService {
       total: Number(count || 0),
       page: options.page,
       limit: options.limit,
-      source: 'database' as const,
+      source: 'database',
     };
   }
 }

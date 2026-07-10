@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { requireAdminAuth } from '@/lib/auth/admin';
@@ -6,13 +7,14 @@ import { AdminGameEditForm } from '@/components/admin/game-edit-form';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 interface AdminGameDetailPageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export default async function AdminGameDetailPage({ params }: AdminGameDetailPageProps) {
-  requireAdminAuth();
+  await requireAdminAuth();
+  const { id } = await params;
 
-  const gameId = Number(params.id);
+  const gameId = Number(id);
   if (!Number.isInteger(gameId) || gameId <= 0) {
     notFound();
   }
@@ -52,17 +54,19 @@ export default async function AdminGameDetailPage({ params }: AdminGameDetailPag
 
   return (
     <div className="space-y-8">
-      <header className="flex items-center justify-between">
+      <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-white">Edit game</h1>
           <p className="text-sm text-slate-400">Update metadata, status, categories and tags.</p>
         </div>
-        <a
-          href={`/admin/games`}
-          className="text-xs font-medium uppercase tracking-wide text-slate-400 hover:text-slate-200"
-        >
-          ← Back to list
-        </a>
+        <nav className="flex items-center gap-4 text-xs font-medium uppercase tracking-wide">
+          <Link href="/admin" className="text-slate-400 hover:text-slate-200">
+            Dashboard
+          </Link>
+          <Link href="/admin/games" className="text-slate-400 hover:text-slate-200">
+            ← Back to list
+          </Link>
+        </nav>
       </header>
 
       <Card className="border-slate-800 bg-slate-900/60 text-slate-100">

@@ -1,19 +1,20 @@
 import { cookies } from 'next/headers';
 import { NextRequest } from 'next/server';
 import { redirect } from 'next/navigation';
-import { createHmac, timingSafeEqual, randomBytes } from 'crypto';
+import { createHash, createHmac, timingSafeEqual, randomBytes } from 'crypto';
 
 export const ADMIN_SESSION_COOKIE = 'gamehub-admin-session';
 const ADMIN_SESSION_MAX_AGE = 60 * 60 * 8; // 8 hours
 const ADMIN_SESSION_VERSION = 1;
 
-export function isAdminAuthenticated() {
-  const token = cookies().get(ADMIN_SESSION_COOKIE)?.value;
+export async function isAdminAuthenticated() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get(ADMIN_SESSION_COOKIE)?.value;
   return verifyAdminSessionToken(token);
 }
 
-export function requireAdminAuth() {
-  if (!isAdminAuthenticated()) {
+export async function requireAdminAuth() {
+  if (!(await isAdminAuthenticated())) {
     redirect('/admin/login');
   }
 }
@@ -36,9 +37,14 @@ function getAdminSessionSecret() {
   return `dev-admin-session:${process.env.ADMIN_PASSWORD}`;
 }
 
+function hashSecret(value: string) {
+  return createHash('sha256').update(value).digest();
+}
+
 export function validateAdminPassword(password: string) {
   assertAdminPasswordConfigured();
-  return password === process.env.ADMIN_PASSWORD;
+  const configuredPassword = process.env.ADMIN_PASSWORD ?? '';
+  return timingSafeEqual(hashSecret(password), hashSecret(configuredPassword));
 }
 
 function signPayload(payload: string) {
@@ -92,8 +98,9 @@ export function verifyAdminSessionToken(token?: string | null) {
   }
 }
 
-export function createAdminSession() {
-  cookies().set(ADMIN_SESSION_COOKIE, createAdminSessionToken(), {
+export async function createAdminSession() {
+  const cookieStore = await cookies();
+  cookieStore.set(ADMIN_SESSION_COOKIE, createAdminSessionToken(), {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
@@ -102,8 +109,9 @@ export function createAdminSession() {
   });
 }
 
-export function destroyAdminSession() {
-  cookies().set(ADMIN_SESSION_COOKIE, '', {
+export async function destroyAdminSession() {
+  const cookieStore = await cookies();
+  cookieStore.set(ADMIN_SESSION_COOKIE, '', {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
@@ -113,5 +121,10 @@ export function destroyAdminSession() {
 }
 
 export function isAdminRequestAuthenticated(request: NextRequest) {
-  return verifyAdminSessionToken(request.cookies.get(ADMIN_SESSION_COOKIE)?.value);
+  const cookieStore = request.cookies;
+  if (!cookieStore || typeof cookieStore.get !== 'function') {
+    return false;
+  }
+
+  return verifyAdminSessionToken(cookieStore.get(ADMIN_SESSION_COOKIE)?.value);
 }

@@ -4,11 +4,12 @@ import Link from 'next/link';
 import { getLocalizedPath, locales } from '@/i18n/config';
 
 interface AboutPageProps {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }
 
 export async function generateMetadata({ params }: AboutPageProps): Promise<Metadata> {
-  const locale = params.locale === 'zh' ? 'zh' : 'en';
+  const { locale: localeParam } = await params;
+  const locale = localeParam === 'zh' ? 'zh' : 'en';
   const isZh = locale === 'zh';
   return {
     title: isZh ? '关于我们 - Luma Game Hub' : 'About Us - Luma Game Hub',
@@ -30,12 +31,13 @@ export async function generateMetadata({ params }: AboutPageProps): Promise<Meta
   };
 }
 
-export default function AboutPage({ params }: AboutPageProps) {
-  const isZh = params.locale === 'zh';
+export default async function AboutPage({ params }: AboutPageProps) {
+  const { locale } = await params;
+  const isZh = locale === 'zh';
   const techStackItems = [
     {
       href: 'https://nextjs.org/',
-      name: 'Next.js 14',
+      name: 'Next.js 15',
       descriptionZh: '（React 全栈框架）',
       descriptionEn: ' (React Framework)',
     },
@@ -397,7 +399,7 @@ export default function AboutPage({ params }: AboutPageProps) {
             </p>
             <p className="text-gray-700">
               📝 {isZh ? '更多信息' : 'More info'}:{' '}
-              <Link href={`/${params.locale}/contact`} className="text-indigo-600 hover:text-indigo-500">
+              <Link href={`/${locale}/contact`} className="text-indigo-600 hover:text-indigo-500">
                 {isZh ? '联系页面' : 'Contact Page'}
               </Link>
             </p>

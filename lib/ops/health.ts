@@ -5,7 +5,7 @@ import {
   getDatabaseConnectionMetadata,
   shouldSkipSupabaseDirectInServerless,
 } from '@/lib/db/connection-policy';
-import { redis } from '@/lib/redis';
+import { getRedisClient } from '@/lib/redis';
 import { getMeilisearchClient } from '@/lib/meilisearch';
 
 export type HealthStatus = 'ok' | 'degraded' | 'error';
@@ -72,6 +72,18 @@ export function withTimeout<T>(
 
 export async function checkDatabase(mode: HealthMode, timeoutMs = DEFAULT_CHECK_TIMEOUT_MS) {
   const connection = getDatabaseConnectionMetadata();
+
+  if (!connection.configured) {
+    return {
+      name: 'database',
+      status: mode === 'public' ? 'degraded' : 'error',
+      message:
+        mode === 'public'
+          ? publicMessage('database', 'degraded')
+          : connection.warning ?? 'Database is not configured',
+    } satisfies HealthCheckResult;
+  }
+
   if (
     mode === 'public' &&
     process.env.HEALTH_ALLOW_SUPABASE_DIRECT_IN_SERVERLESS !== 'true' &&
@@ -97,6 +109,7 @@ export async function checkDatabase(mode: HealthMode, timeoutMs = DEFAULT_CHECK_
 }
 
 export async function checkRedis(mode: HealthMode, timeoutMs = DEFAULT_CHECK_TIMEOUT_MS) {
+  const redis = getRedisClient();
   if (!redis) {
     return {
       name: 'redis',

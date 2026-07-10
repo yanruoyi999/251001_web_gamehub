@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { sql, eq } from 'drizzle-orm';
 
 import { db } from '@/lib/db';
@@ -33,7 +34,7 @@ async function getDashboardStats() {
 }
 
 export default async function AdminDashboardPage() {
-  requireAdminAuth();
+  await requireAdminAuth();
 
   const stats = await getDashboardStats();
 
@@ -42,48 +43,71 @@ export default async function AdminDashboardPage() {
       title: 'Total games',
       value: stats.totalGames.toLocaleString(),
       description: `${stats.activeGames.toLocaleString()} active titles`,
+      href: '/admin/games',
     },
     {
       title: 'Pending ratings',
       value: stats.pendingRatings.toLocaleString(),
       description: 'Awaiting moderation',
+      href: '/admin/ratings',
     },
     {
       title: 'Categories',
       value: stats.totalCategories.toLocaleString(),
       description: 'Available filters',
+      href: '/admin/games',
     },
     {
       title: 'Tags',
       value: stats.totalTags.toLocaleString(),
       description: 'Content labels',
+      href: '/admin/games',
     },
   ];
 
   return (
     <div className="space-y-8">
-      <header>
-        <h1 className="text-2xl font-semibold text-white">Dashboard</h1>
-        <p className="mt-1 text-sm text-slate-400">
-          Quick overview of platform content and moderation queues.
-        </p>
+      <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h1 className="text-2xl font-semibold text-white">Dashboard</h1>
+          <p className="mt-1 text-sm text-slate-400">
+            Quick overview of platform content and moderation queues.
+          </p>
+        </div>
+        <nav className="flex flex-wrap gap-3 text-sm">
+          <Link
+            href="/admin/games"
+            className="rounded-md border border-slate-700 px-3 py-2 font-medium text-slate-200 transition hover:bg-slate-800"
+          >
+            Manage games
+          </Link>
+          <Link
+            href="/admin/ratings"
+            className="rounded-md border border-slate-700 px-3 py-2 font-medium text-slate-200 transition hover:bg-slate-800"
+          >
+            Review ratings
+          </Link>
+        </nav>
       </header>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         {cards.map((card) => (
-          <Card key={card.title} className="border-slate-800 bg-slate-900/60 text-slate-100">
-            <CardHeader>
-              <CardTitle className="text-sm font-medium text-slate-300">
-                {card.title}
-              </CardTitle>
-              <CardDescription className="text-xs text-slate-500">
-                {card.description}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-2xl font-semibold">{card.value}</p>
-            </CardContent>
-          </Card>
+          <Link key={card.title} href={card.href} className="group">
+            <Card className="h-full border-slate-800 bg-slate-900/60 text-slate-100 transition group-hover:border-indigo-500/60 group-hover:bg-slate-900">
+              <CardHeader>
+                <CardTitle className="text-sm font-medium text-slate-300">
+                  {card.title}
+                </CardTitle>
+                <CardDescription className="text-xs text-slate-500">
+                  {card.description}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-2xl font-semibold">{card.value}</p>
+                <p className="mt-2 text-xs font-medium text-indigo-300">Open section →</p>
+              </CardContent>
+            </Card>
+          </Link>
         ))}
       </div>
     </div>

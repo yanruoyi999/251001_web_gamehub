@@ -4,12 +4,13 @@ import { GameService } from '@/services';
 import { isAdminRequestAuthenticated } from '@/lib/auth/admin';
 import { isValidHttpsUrl } from '@/lib/utils/validation';
 
-export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   if (!isAdminRequestAuthenticated(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const gameId = Number(params.id);
+  const { id } = await params;
+  const gameId = Number(id);
   if (!Number.isInteger(gameId) || gameId <= 0) {
     return NextResponse.json({ error: 'Invalid game id' }, { status: 400 });
   }
@@ -26,11 +27,11 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
       updates.slug = body.slug.trim();
     }
 
-    if (typeof body.description === 'string') {
+    if (typeof body.description === 'string' || body.description === null) {
       updates.description = body.description;
     }
 
-    if (typeof body.thumbnailUrl === 'string') {
+    if (typeof body.thumbnailUrl === 'string' || body.thumbnailUrl === null) {
       updates.thumbnailUrl = body.thumbnailUrl || null;
     }
 
@@ -71,12 +72,14 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
       updates.tagIds = tagIds;
     }
 
-    if (typeof body.developerName === 'string') {
-      updates.developerName = body.developerName.trim() || null;
+    if (typeof body.developerName === 'string' || body.developerName === null) {
+      updates.developerName = typeof body.developerName === 'string'
+        ? body.developerName.trim() || null
+        : null;
     }
 
-    if (typeof body.developerUrl === 'string') {
-      const url = body.developerUrl.trim();
+    if (typeof body.developerUrl === 'string' || body.developerUrl === null) {
+      const url = typeof body.developerUrl === 'string' ? body.developerUrl.trim() : '';
       if (url) {
         if (!isValidHttpsUrl(url)) {
           return NextResponse.json({ error: 'Developer URL must be a valid HTTPS link' }, { status: 400 });
@@ -87,8 +90,8 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
       }
     }
 
-    if (typeof body.sourceUrl === 'string') {
-      const url = body.sourceUrl.trim();
+    if (typeof body.sourceUrl === 'string' || body.sourceUrl === null) {
+      const url = typeof body.sourceUrl === 'string' ? body.sourceUrl.trim() : '';
       if (url) {
         if (!isValidHttpsUrl(url)) {
           return NextResponse.json({ error: 'Source URL must be a valid HTTPS link' }, { status: 400 });

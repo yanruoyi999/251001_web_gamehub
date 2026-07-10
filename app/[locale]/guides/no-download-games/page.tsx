@@ -4,8 +4,9 @@ import { getLocalizedPath, locales, type Locale } from '@/i18n/config';
 
 const PATH = '/guides/no-download-games';
 
-export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
-  const locale = (params.locale as Locale) ?? 'zh';
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale: localeParam } = await params;
+  const locale = (localeParam as Locale) ?? 'zh';
   const isZh = locale === 'zh';
   const title = isZh ? '无需下载的在线小游戏 | Luma Game Hub' : 'No Download Games | Luma Game Hub';
   const description = isZh
@@ -26,8 +27,9 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
   };
 }
 
-export default function NoDownloadGamesPage({ params }: { params: { locale: string } }) {
-  const locale = (params.locale as Locale) ?? 'zh';
+export default async function NoDownloadGamesPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale: localeParam } = await params;
+  const locale = (localeParam as Locale) ?? 'zh';
   const isZh = locale === 'zh';
   const checklist = isZh
     ? ['直接在浏览器打开，不要求安装 App。', '不要求创建账号才能试玩。', '页面在点击游玩前说明设备与控制方式。', '遇到跳转、遮挡或失效时应该重新复查。']
@@ -66,6 +68,12 @@ export default function NoDownloadGamesPage({ params }: { params: { locale: stri
         </Link>
         <Link href={getLocalizedPath(locale, '/guides/quick-play-guide')} className="rounded-lg border px-6 py-3 font-medium text-primary hover:bg-primary/10">
           {isZh ? '查看快速游玩指南' : 'Read quick play guide'}
+        </Link>
+        <Link href={getLocalizedPath(locale, '/guides/browser-games-for-low-end-pc')} className="rounded-lg border px-6 py-3 font-medium text-primary hover:bg-primary/10">
+          {isZh ? '低配置电脑游戏指南' : 'Low-end PC browser games'}
+        </Link>
+        <Link href={getLocalizedPath(locale, '/guides/keyboard-only-browser-games')} className="rounded-lg border px-6 py-3 font-medium text-primary hover:bg-primary/10">
+          {isZh ? '只用键盘玩的小游戏' : 'Keyboard-only browser games'}
         </Link>
       </footer>
     </article>

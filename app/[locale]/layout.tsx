@@ -11,7 +11,7 @@ import { TypeformFeedbackButton } from '@/components/feedback/TypeformFeedbackBu
 
 interface LocaleLayoutProps {
   children: ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }
 
 export function generateStaticParams() {
@@ -19,8 +19,9 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({
-  params: { locale },
+  params,
 }: LocaleLayoutProps): Promise<Metadata> {
+  const { locale } = await params;
   const typedLocale = locale as Locale;
 
   if (!locales.includes(typedLocale)) {
@@ -56,8 +57,9 @@ export async function generateMetadata({
 
 export default async function LocaleLayout({
   children,
-  params: { locale },
+  params,
 }: LocaleLayoutProps) {
+  const { locale } = await params;
   const typedLocale = locale as Locale;
 
   if (!locales.includes(typedLocale)) {

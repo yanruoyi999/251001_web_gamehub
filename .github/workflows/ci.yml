@@ -19,10 +19,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: pnpm
 
       - name: Install pnpm
-        run: npm install -g pnpm
+        run: npm install -g pnpm@10.28.0
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -33,7 +32,42 @@ jobs:
       - name: Type check
         run: pnpm type-check
 
+      - name: Internal link audit
+        id: internal_links
+        shell: bash
+        run: |
+          set -o pipefail
+          pnpm check:internal-links 2>&1 | tee internal-link-output.txt
+
+      - name: Upload internal link diagnostics
+        if: failure() && steps.internal_links.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: internal-link-diagnostics
+          if-no-files-found: error
+          retention-days: 3
+          path: internal-link-output.txt
+
       - name: Unit tests
-        run: pnpm test
+        id: unit_tests
+        shell: bash
+        run: |
+          set -o pipefail
+          pnpm test -- --run 2>&1 | tee test-output.txt
         env:
           NODE_ENV: test
+
+      - name: Upload unit test diagnostics
+        if: failure() && steps.unit_tests.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-diagnostics
+          if-no-files-found: error
+          retention-days: 3
+          path: test-output.txt
+
+      - name: Audit production dependencies
+        run: pnpm audit:prod
+
+      - name: Production build
+        run: pnpm build

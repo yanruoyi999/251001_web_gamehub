@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { cache } from 'react';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -15,6 +16,11 @@ import { getGameEditorialContent } from '@/lib/games/editorial-content';
 import { getGameQualityTier, getManualReviewReason, shouldNoIndexGame, shouldPromoteGameInCollections } from '@/lib/games/quality-policy';
 import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES, buildAbsoluteUrl } from '@/lib/seo';
 import { getLocalizedPath, locales } from '@/i18n/config';
+import { serializeJsonLd } from '@/lib/utils/json-ld';
+import {
+  getDatabaseConnectionMetadata,
+  shouldSkipSupabaseDirectInServerless,
+} from '@/lib/db/connection-policy';
 
 type RatingDistribution = Awaited<ReturnType<typeof RatingService.getRatingDistribution>>;
 type RatingsResult = Awaited<ReturnType<typeof RatingService.listGameRatings>>;
@@ -88,7 +94,7 @@ function buildGameDetailFromMock(mock: MockGame): GameDetail {
 }
 
 interface GamePageProps {
-  params: { locale: string; slug: string };
+  params: Promise<{ locale: string; slug: string }>;
 }
 
 export const revalidate = 3600;
@@ -123,19 +129,28 @@ function resolveGameDescription(game: GameDetail, locale: string) {
     : pickLocalizedText(game.description, game.descriptionEn);
 }
 
-async function resolveGameDetailBySlug(
+const resolveGameDetailBySlug = cache(async function resolveGameDetailBySlug(
   slug: string,
   useCache = true,
 ): Promise<{ game: GameDetail; isMockGame: boolean } | null> {
   let dbGame: GameDetail | null = null;
-  try {
-    dbGame = await withTimeout(
-      GameService.getGameBySlug(slug, useCache),
-      GAME_DETAIL_LOAD_TIMEOUT_MS,
-      'Game detail database load',
+  const connection = getDatabaseConnectionMetadata();
+  const canUseDatabase =
+    connection.configured && !(
+      process.env.GAME_DETAIL_ALLOW_SUPABASE_DIRECT_IN_SERVERLESS !== 'true' &&
+      shouldSkipSupabaseDirectInServerless(connection)
     );
-  } catch (error) {
-    console.warn('Failed to fetch game from database, falling back to mock data:', error);
+
+  if (canUseDatabase) {
+    try {
+      dbGame = await withTimeout(
+        GameService.getGameBySlug(slug, useCache),
+        GAME_DETAIL_LOAD_TIMEOUT_MS,
+        'Game detail database load',
+      );
+    } catch (error) {
+      console.warn('Failed to fetch game from database, falling back to mock data:', error);
+    }
   }
 
   if (dbGame) {
@@ -149,10 +164,10 @@ async function resolveGameDetailBySlug(
 
   const game = buildGameDetailFromMock(mockGame);
   return game.status === 'active' ? { game, isMockGame: true } : null;
-}
+});
 
 export async function generateMetadata({ params }: GamePageProps): Promise<Metadata> {
-  const { locale, slug } = params;
+  const { locale, slug } = await params;
   const resolved = await resolveGameDetailBySlug(slug, true);
 
   if (!resolved) {
@@ -238,7 +253,7 @@ export async function generateMetadata({ params }: GamePageProps): Promise<Metad
 }
 
 export default async function GamePage({ params }: GamePageProps) {
-  const { locale, slug } = params;
+  const { locale, slug } = await params;
 
   const resolved = await resolveGameDetailBySlug(slug, true);
   if (!resolved) {
@@ -502,7 +517,7 @@ export default async function GamePage({ params }: GamePageProps) {
           <script
             key={index}
             type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+            dangerouslySetInnerHTML={{ __html: serializeJsonLd(schema) }}
           />
         ))}
         {/* Breadcrumb */}
