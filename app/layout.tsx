@@ -89,12 +89,13 @@ export const viewport: Viewport = {
   themeColor: '#0d1117',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const requestLocale = headers().get('x-next-intl-locale');
+  const requestHeaders = await headers();
+  const requestLocale = requestHeaders.get('x-next-intl-locale');
   const documentLocale = isLocale(requestLocale) ? requestLocale : defaultLocale;
 
   return (
