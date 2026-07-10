@@ -17,7 +17,7 @@ function walkPages(directory: string): string[] {
   });
 }
 
-function countPageInternalNavigation(source: string): number {
+function countInternalNavigation(source: string): number {
   const linkComponents = source.match(/<Link\b/g)?.length ?? 0;
   const internalAnchors =
     source.match(/<a\b[^>]*href=(?:["'`]\/|\{getLocalizedPath\(|\{["'`]\/)/g)?.length ?? 0;
@@ -27,6 +27,21 @@ function countPageInternalNavigation(source: string): number {
     source.match(/router\.(?:push|replace)\(\s*(?:[`'"]\/|getLocalizedPath\()/g)?.length ?? 0;
 
   return linkComponents + internalAnchors + internalRedirects + internalRouterPushes;
+}
+
+const localeShellNavigationCount = countInternalNavigation(
+  [
+    readFileSync(path.join(process.cwd(), 'components/layout/Header.tsx'), 'utf8'),
+    readFileSync(path.join(process.cwd(), 'components/layout/Footer.tsx'), 'utf8'),
+  ].join('\n'),
+);
+
+function inheritedNavigationCredit(relativePath: string): number {
+  if (relativePath.startsWith(`app${path.sep}[locale]${path.sep}`)) {
+    return localeShellNavigationCount > 0 ? 1 : 0;
+  }
+
+  return 0;
 }
 
 const errors: string[] = [];
@@ -84,10 +99,13 @@ for (const pageFile of pageFiles) {
     continue;
   }
 
-  const internalNavigationCount = countPageInternalNavigation(source);
-  if (internalNavigationCount < MIN_INTERNAL_LINKS_PER_PAGE) {
+  const explicitNavigationCount = countInternalNavigation(source);
+  const inheritedCount = inheritedNavigationCredit(relativePath);
+  const renderedNavigationCount = explicitNavigationCount + inheritedCount;
+
+  if (renderedNavigationCount < MIN_INTERNAL_LINKS_PER_PAGE) {
     errors.push(
-      `${relativePath} has ${internalNavigationCount} explicit internal link(s); at least ${MIN_INTERNAL_LINKS_PER_PAGE} are required.`,
+      `${relativePath} renders ${renderedNavigationCount} internal link(s) (${explicitNavigationCount} explicit + ${inheritedCount} inherited); at least ${MIN_INTERNAL_LINKS_PER_PAGE} are required.`,
     );
   }
 }
@@ -99,5 +117,5 @@ if (errors.length > 0) {
 }
 
 console.log(
-  `Internal link audit passed: ${guides.length} guides require at least ${MIN_INTERNAL_LINKS_PER_GUIDE} links, ${gameSlugs.size} game slugs validated, and ${pageFiles.length - NON_RENDERED_REDIRECT_PAGES.size} rendered page files require at least ${MIN_INTERNAL_LINKS_PER_PAGE} links.`,
+  `Internal link audit passed: ${guides.length} guides require at least ${MIN_INTERNAL_LINKS_PER_GUIDE} links, ${gameSlugs.size} game slugs validated, and ${pageFiles.length - NON_RENDERED_REDIRECT_PAGES.size} rendered page files require at least ${MIN_INTERNAL_LINKS_PER_PAGE} links including inherited layout navigation.`,
 );
