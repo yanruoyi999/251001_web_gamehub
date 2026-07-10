@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { requireAdminAuth } from '@/lib/auth/admin';
@@ -58,12 +59,12 @@ export default async function AdminGameDetailPage({ params }: AdminGameDetailPag
           <h1 className="text-2xl font-semibold text-white">Edit game</h1>
           <p className="text-sm text-slate-400">Update metadata, status, categories and tags.</p>
         </div>
-        <a
+        <Link
           href="/admin/games"
           className="text-xs font-medium uppercase tracking-wide text-slate-400 hover:text-slate-200"
         >
           ← Back to list
-        </a>
+        </Link>
       </header>
 
       <Card className="border-slate-800 bg-slate-900/60 text-slate-100">
