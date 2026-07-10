@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import Link from 'next/link';
 
 import { getLocalizedPath, locales } from '@/i18n/config';
 
@@ -231,6 +232,28 @@ export default async function PrivacyPage({ params }: PrivacyPageProps) {
             {isZh ? '邮箱' : 'Email'}: <a href="mailto:privacy@lumagamehub.com" className="text-indigo-600 hover:text-indigo-500">privacy@lumagamehub.com</a>
           </p>
         </section>
+        <section className="mt-10 rounded-2xl border border-border bg-card p-6">
+          <h2 className="text-2xl font-semibold text-foreground">
+            {isZh ? '继续浏览 Luma' : 'Continue exploring Luma'}
+          </h2>
+          <p className="mt-3 text-muted-foreground">
+            {isZh
+              ? '了解隐私处理方式后，可以继续查看我们的内容审核标准、浏览器游戏目录和联系渠道。'
+              : 'After reviewing our privacy practices, continue to our editorial standards, browser-game catalogue, or contact page.'}
+          </p>
+          <div className="mt-5 flex flex-wrap gap-3">
+            <Link href={getLocalizedPath(locale, '/about')} className="rounded-lg border px-4 py-2 text-sm font-medium text-primary hover:bg-primary/10">
+              {isZh ? '关于 Luma' : 'About Luma'}
+            </Link>
+            <Link href={getLocalizedPath(locale, '/games')} className="rounded-lg border px-4 py-2 text-sm font-medium text-primary hover:bg-primary/10">
+              {isZh ? '浏览游戏' : 'Browse games'}
+            </Link>
+            <Link href={getLocalizedPath(locale, '/contact')} className="rounded-lg border px-4 py-2 text-sm font-medium text-primary hover:bg-primary/10">
+              {isZh ? '联系我们' : 'Contact us'}
+            </Link>
+          </div>
+        </section>
+
       </div>
     </div>
   );
