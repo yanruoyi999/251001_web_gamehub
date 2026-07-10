@@ -67,11 +67,27 @@ export default async function AdminDashboardPage() {
 
   return (
     <div className="space-y-8">
-      <header>
-        <h1 className="text-2xl font-semibold text-white">Dashboard</h1>
-        <p className="mt-1 text-sm text-slate-400">
-          Quick overview of platform content and moderation queues.
-        </p>
+      <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h1 className="text-2xl font-semibold text-white">Dashboard</h1>
+          <p className="mt-1 text-sm text-slate-400">
+            Quick overview of platform content and moderation queues.
+          </p>
+        </div>
+        <nav className="flex flex-wrap gap-3 text-sm">
+          <Link
+            href="/admin/games"
+            className="rounded-md border border-slate-700 px-3 py-2 font-medium text-slate-200 transition hover:bg-slate-800"
+          >
+            Manage games
+          </Link>
+          <Link
+            href="/admin/ratings"
+            className="rounded-md border border-slate-700 px-3 py-2 font-medium text-slate-200 transition hover:bg-slate-800"
+          >
+            Review ratings
+          </Link>
+        </nav>
       </header>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
