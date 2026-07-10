@@ -13,8 +13,8 @@ const navItems = [
   { href: '/admin/ratings', label: 'Ratings' },
 ];
 
-export default function AdminLayout({ children }: AdminLayoutProps) {
-  requireAdminAuth();
+export default async function AdminLayout({ children }: AdminLayoutProps) {
+  await requireAdminAuth();
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
