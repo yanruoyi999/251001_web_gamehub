@@ -2,6 +2,7 @@ import Link from "next/link";
 import Script from "next/script";
 import { getTranslations, getMessages } from 'next-intl/server';
 import { getLocalizedPath, locales, type Locale } from '@/i18n/config';
+import { serializeJsonLd } from '@/lib/utils/json-ld';
 
 type FaqItem = { question: string; answer: string };
 
@@ -35,10 +36,11 @@ export function generateStaticParams() {
 export default async function HomePage({
   params,
 }: {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
-  const locale = locales.includes(params.locale as Locale)
-    ? (params.locale as Locale)
+  const { locale: localeParam } = await params;
+  const locale = locales.includes(localeParam as Locale)
+    ? (localeParam as Locale)
     : 'zh';
   const t = await getTranslations({ locale, namespace: 'home' });
 
@@ -250,7 +252,7 @@ export default async function HomePage({
     <Script
       id="faq-schema"
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqJsonLd) }}
       strategy="afterInteractive"
     />
     </>

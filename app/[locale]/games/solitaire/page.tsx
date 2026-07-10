@@ -4,16 +4,18 @@ import { getTranslations } from 'next-intl/server';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { getLocalizedPath, locales } from '@/i18n/config';
+import { serializeJsonLd } from '@/lib/utils/json-ld';
 const SOLITAIRE_SCREENSHOT = '/game-screenshots/solitaire.png';
 
 interface SolitairePageProps {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }
 
 export const revalidate = 86400;
 
-export function generateMetadata({ params }: SolitairePageProps): Metadata {
-  const locale = params.locale === 'zh' ? 'zh' : 'en';
+export async function generateMetadata({ params }: SolitairePageProps): Promise<Metadata> {
+  const { locale: localeParam } = await params;
+  const locale = localeParam === 'zh' ? 'zh' : 'en';
   const title =
     locale === 'zh'
       ? 'Solitaire - 免费在线经典纸牌游戏与玩法指南'
@@ -64,7 +66,7 @@ export function generateMetadata({ params }: SolitairePageProps): Metadata {
 }
 
 export default async function SolitairePage({ params }: SolitairePageProps) {
-  const { locale } = params;
+  const { locale } = await params;
   const t = await getTranslations('Solitaire');
 
   const tips = [
@@ -135,7 +137,7 @@ export default async function SolitairePage({ params }: SolitairePageProps) {
     <div className="mx-auto w-full max-w-5xl px-6 py-12">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqJsonLd) }}
       />
       <header className="mb-8 flex items-center justify-between gap-4">
         <div>

@@ -5,7 +5,7 @@ import {
   getDatabaseConnectionMetadata,
   shouldSkipSupabaseDirectInServerless,
 } from '@/lib/db/connection-policy';
-import { redis } from '@/lib/redis';
+import { getRedisClient } from '@/lib/redis';
 import { getMeilisearchClient } from '@/lib/meilisearch';
 
 export type HealthStatus = 'ok' | 'degraded' | 'error';
@@ -109,6 +109,7 @@ export async function checkDatabase(mode: HealthMode, timeoutMs = DEFAULT_CHECK_
 }
 
 export async function checkRedis(mode: HealthMode, timeoutMs = DEFAULT_CHECK_TIMEOUT_MS) {
+  const redis = getRedisClient();
   if (!redis) {
     return {
       name: 'redis',

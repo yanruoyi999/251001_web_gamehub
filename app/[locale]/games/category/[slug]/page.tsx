@@ -11,9 +11,10 @@ import {
   pickLocalizedLabel,
 } from '@/lib/game-taxonomy';
 import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES, buildAbsoluteUrl } from '@/lib/seo';
+import { serializeJsonLd } from '@/lib/utils/json-ld';
 
 interface CategoryPageProps {
-  params: { locale: string; slug: string };
+  params: Promise<{ locale: string; slug: string }>;
 }
 
 export function generateStaticParams() {
@@ -26,9 +27,10 @@ export function generateStaticParams() {
   );
 }
 
-export function generateMetadata({ params }: CategoryPageProps): Metadata {
-  const locale = (params.locale as Locale) ?? 'zh';
-  const entry = getCategoryEntry(params.slug);
+export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
+  const { locale: localeParam, slug } = await params;
+  const locale = (localeParam as Locale) ?? 'zh';
+  const entry = getCategoryEntry(slug);
 
   if (!entry) {
     return {};
@@ -77,9 +79,10 @@ export function generateMetadata({ params }: CategoryPageProps): Metadata {
   };
 }
 
-export default function CategoryPage({ params }: CategoryPageProps) {
-  const locale = (params.locale as Locale) ?? 'zh';
-  const entry = getCategoryEntry(params.slug);
+export default async function CategoryPage({ params }: CategoryPageProps) {
+  const { locale: localeParam, slug } = await params;
+  const locale = (localeParam as Locale) ?? 'zh';
+  const entry = getCategoryEntry(slug);
 
   if (!entry) {
     notFound();
@@ -123,7 +126,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
     <div className="mx-auto w-full max-w-6xl px-6 py-12">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
       />
 
       <nav className="mb-6 text-sm text-gray-500">

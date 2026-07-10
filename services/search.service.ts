@@ -5,7 +5,7 @@ import {
 } from '@/lib/db/connection-policy';
 import { games, gameStats } from '@/db/schema';
 import { getMeilisearchClient } from '@/lib/meilisearch';
-import { redis } from '@/lib/redis';
+import { getRedisClient } from '@/lib/redis';
 import { SearchCacheKeys, CacheTTL } from '@/lib/utils/cache-keys';
 import { sanitizeSearchQuery, validatePagination } from '@/lib/utils/validation';
 import { ilike, or, eq, desc, sql, and } from 'drizzle-orm';
@@ -75,6 +75,7 @@ function toOptionalNumber(value: unknown): number | null {
 
 export class SearchService {
   static async searchGames(options: SearchOptions): Promise<SearchResult> {
+    const redis = getRedisClient();
     const query = sanitizeSearchQuery(options.query);
     if (!query) {
       const { limit } = validatePagination(1, options.limit);

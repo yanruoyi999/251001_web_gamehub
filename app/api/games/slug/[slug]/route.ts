@@ -47,9 +47,10 @@ function getFallbackDetail(slug: string) {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { slug: string } },
+  { params }: { params: Promise<{ slug: string }> },
 ) {
-  const slug = params.slug.trim().toLowerCase();
+  const { slug: slugParam } = await params;
+  const slug = slugParam.trim().toLowerCase();
   if (!isValidSlug(slug)) {
     return NextResponse.json({ error: 'Invalid game slug' }, { status: 400 });
   }

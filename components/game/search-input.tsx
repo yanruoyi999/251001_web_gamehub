@@ -18,6 +18,23 @@ interface SuggestionItem {
   slug?: string | null;
 }
 
+interface SearchApiItem {
+  id?: unknown;
+  gameId?: unknown;
+  objectID?: unknown;
+  title?: unknown;
+  name?: unknown;
+  titleEn?: unknown;
+  title_en?: unknown;
+  name_en?: unknown;
+  slug?: unknown;
+  slugified?: unknown;
+}
+
+function toOptionalString(value: unknown): string | null {
+  return typeof value === 'string' && value.trim() ? value : null;
+}
+
 export function SearchInput({ locale }: SearchInputProps) {
   const router = useRouter();
   const t = useTranslations('nav');
@@ -27,7 +44,7 @@ export function SearchInput({ locale }: SearchInputProps) {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const abortRef = useRef<AbortController | null>(null);
-  const blurTimeout = useRef<NodeJS.Timeout>();
+  const blurTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const trimmedQuery = query.trim();
 
@@ -36,9 +53,7 @@ export function SearchInput({ locale }: SearchInputProps) {
       setSuggestions([]);
       setLoading(false);
       setOpen(false);
-      if (abortRef.current) {
-        abortRef.current.abort();
-      }
+      abortRef.current?.abort();
       return;
     }
 
@@ -59,22 +74,23 @@ export function SearchInput({ locale }: SearchInputProps) {
           throw new Error(`Search request failed with status ${response.status}`);
         }
 
-        const data = await response.json();
+        const data = await response.json() as { games?: unknown };
+        const rawGames = Array.isArray(data.games) ? data.games : [];
+        const matches = rawGames
+          .map((rawItem): SuggestionItem | null => {
+            const item = rawItem as SearchApiItem;
+            const id = Number(item.id ?? item.gameId ?? item.objectID);
+            const title = toOptionalString(item.title ?? item.name);
+            if (!Number.isInteger(id) || !title) return null;
 
-        const matches: SuggestionItem[] = Array.isArray(data.games)
-          ? data.games
-              .map((item: any) => {
-                const id = Number(item.id ?? item.gameId ?? item.objectID);
-                if (!Number.isInteger(id)) return null;
-                return {
-                  id,
-                  title: item.title ?? item.name ?? '',
-                  titleEn: item.titleEn ?? item.title_en ?? item.name_en ?? null,
-                  slug: item.slug ?? item.slugified ?? null,
-                } as SuggestionItem;
-              })
-              .filter(Boolean) as SuggestionItem[]
-          : [];
+            return {
+              id,
+              title,
+              titleEn: toOptionalString(item.titleEn ?? item.title_en ?? item.name_en),
+              slug: toOptionalString(item.slug ?? item.slugified),
+            };
+          })
+          .filter((item): item is SuggestionItem => item !== null);
 
         setSuggestions(matches);
       } catch (error) {
@@ -130,7 +146,7 @@ export function SearchInput({ locale }: SearchInputProps) {
       });
       router.push(getLocalizedPath(locale, `/games/${target}`));
     },
-    [locale, router, trimmedQuery]
+    [locale, router, trimmedQuery],
   );
 
   const suggestionList = useMemo(() => {
@@ -186,6 +202,7 @@ export function SearchInput({ locale }: SearchInputProps) {
           onKeyDown={() => {
             if (blurTimeout.current) {
               clearTimeout(blurTimeout.current);
+              blurTimeout.current = null;
             }
           }}
           placeholder={t('searchPlaceholder')}
@@ -196,7 +213,7 @@ export function SearchInput({ locale }: SearchInputProps) {
         <ul
           className={clsx(
             'absolute left-0 right-0 top-full z-30 mt-2 rounded-md border border-gray-200 bg-white shadow-lg',
-            'max-h-72 overflow-y-auto'
+            'max-h-72 overflow-y-auto',
           )}
         >
           {suggestionList}

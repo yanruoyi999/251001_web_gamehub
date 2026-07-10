@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { CounterService } from '@/services';
-import { redis } from '@/lib/redis';
+import { getClientIp } from '@/lib/http/client-ip';
+import { getRedisClient } from '@/lib/redis';
 import { hashIp } from '@/lib/utils/hash';
 import {
   getDatabaseConnectionMetadata,
@@ -22,18 +23,6 @@ function parseId(value: string): number | null {
   const id = Number(value);
   if (!Number.isInteger(id) || id <= 0) return null;
   return id;
-}
-
-function getClientIp(request: NextRequest) {
-  if (request.ip && request.ip.trim().length > 0) {
-    return request.ip.trim();
-  }
-
-  return (
-    request.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
-    request.headers.get('x-real-ip')?.trim() ||
-    '0.0.0.0'
-  );
 }
 
 function consumeMemoryRateLimit(key: string, now = Date.now()): 'allowed' | 'limited' {
@@ -65,6 +54,7 @@ async function getPlayIncrementLimitStatus(
 ): Promise<'allowed' | 'limited'> {
   const ipHash = hashIp(getClientIp(request));
   const key = `gamehub:counter:limit:${gameId}:${ipHash}`;
+  const redis = getRedisClient();
 
   if (!redis || typeof redis.incr !== 'function' || typeof redis.expire !== 'function') {
     return consumeMemoryRateLimit(key);
@@ -94,9 +84,10 @@ function canPersistPlayCount() {
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
-  const gameId = parseId(params.id);
+  const { id } = await params;
+  const gameId = parseId(id);
   if (!gameId) {
     return NextResponse.json({ error: 'Invalid game ID' }, { status: 400 });
   }

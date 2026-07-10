@@ -5,6 +5,7 @@ import {
   getDatabaseConnectionMetadata,
   shouldSkipSupabaseDirectInServerless,
 } from '@/lib/db/connection-policy';
+import { getClientIp } from '@/lib/http/client-ip';
 
 function parseGameId(value: unknown): number | null {
   const parsed = typeof value === 'number' ? value : typeof value === 'string' ? Number(value) : NaN;
@@ -36,7 +37,7 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const context = FavoriteService.getContextFromHeaders(request.headers, request.ip ?? undefined);
+    const context = FavoriteService.getContextFromHeaders(request.headers, getClientIp(request));
 
     if (gameIdParam) {
       const gameId = parseGameId(gameIdParam)!;
@@ -88,7 +89,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const context = FavoriteService.getContextFromHeaders(request.headers, request.ip ?? undefined);
+    const context = FavoriteService.getContextFromHeaders(request.headers, getClientIp(request));
     let isFavorite: boolean;
 
     switch (action) {

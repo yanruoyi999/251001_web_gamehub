@@ -5,12 +5,14 @@ import { GameService } from '@/services';
 import { AdminGamesTable } from '@/components/admin/game-table';
 import { defaultLocale } from '@/i18n/config';
 
+interface AdminGamesSearchParams {
+  q?: string;
+  status?: string;
+  page?: string;
+}
+
 interface AdminGamesPageProps {
-  searchParams: {
-    q?: string;
-    status?: string;
-    page?: string;
-  };
+  searchParams: Promise<AdminGamesSearchParams>;
 }
 
 export const dynamic = 'force-dynamic';
@@ -31,11 +33,12 @@ function resolvePage(value?: string) {
 }
 
 export default async function AdminGamesPage({ searchParams }: AdminGamesPageProps) {
-  requireAdminAuth();
+  await requireAdminAuth();
+  const resolvedSearchParams = await searchParams;
 
-  const query = typeof searchParams.q === 'string' ? searchParams.q : '';
-  const status = resolveStatus(searchParams.status);
-  const page = resolvePage(searchParams.page);
+  const query = typeof resolvedSearchParams.q === 'string' ? resolvedSearchParams.q : '';
+  const status = resolveStatus(resolvedSearchParams.status);
+  const page = resolvePage(resolvedSearchParams.page);
 
   const result = await GameService.listGames({
     search: query.trim() ? query : undefined,

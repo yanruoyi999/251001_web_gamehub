@@ -5,15 +5,17 @@ import { getTranslations } from 'next-intl/server';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { getLocalizedPath, locales } from '@/i18n/config';
 import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES } from '@/lib/seo';
+import { serializeJsonLd } from '@/lib/utils/json-ld';
 
 interface MonsterSurvivorsPageProps {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }
 
 export const dynamic = 'force-dynamic';
 
-export function generateMetadata({ params }: MonsterSurvivorsPageProps): Metadata {
-  const locale = params.locale === 'zh' ? 'zh' : 'en';
+export async function generateMetadata({ params }: MonsterSurvivorsPageProps): Promise<Metadata> {
+  const { locale: localeParam } = await params;
+  const locale = localeParam === 'zh' ? 'zh' : 'en';
   const title =
     locale === 'zh'
       ? 'Monster Survivors - 免费在线生存动作游戏与玩法指南'
@@ -57,7 +59,7 @@ export function generateMetadata({ params }: MonsterSurvivorsPageProps): Metadat
 }
 
 export default async function MonsterSurvivorsPage({ params }: MonsterSurvivorsPageProps) {
-  const { locale } = params;
+  const { locale } = await params;
   const t = await getTranslations('MonsterSurvivors');
 
   const tips = [
@@ -123,7 +125,7 @@ export default async function MonsterSurvivorsPage({ params }: MonsterSurvivorsP
     <div className="mx-auto w-full max-w-5xl px-6 py-12">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqJsonLd) }}
       />
       <header className="mb-8 flex items-center justify-between gap-4">
         <div>

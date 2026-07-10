@@ -27,7 +27,7 @@ vi.mock('@/lib/utils/redis-helper', () => ({
 }));
 
 vi.mock('@/lib/redis', () => ({
-  redis: {},
+  getRedisClient: () => ({}),
 }));
 
 vi.mock('@/services/stats.service', () => ({

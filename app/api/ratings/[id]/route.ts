@@ -10,13 +10,14 @@ function parseId(value: string): number | null {
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   if (!isAdminRequestAuthenticated(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const ratingId = parseId(params.id);
+  const { id } = await params;
+  const ratingId = parseId(id);
   if (!ratingId) {
     return NextResponse.json({ error: 'Invalid rating ID' }, { status: 400 });
   }

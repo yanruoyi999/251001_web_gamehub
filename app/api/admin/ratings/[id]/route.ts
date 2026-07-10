@@ -3,12 +3,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import { RatingService } from '@/services';
 import { isAdminRequestAuthenticated } from '@/lib/auth/admin';
 
-export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   if (!isAdminRequestAuthenticated(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const ratingId = Number(params.id);
+  const { id } = await params;
+  const ratingId = Number(id);
   if (!Number.isInteger(ratingId) || ratingId <= 0) {
     return NextResponse.json({ error: 'Invalid rating id' }, { status: 400 });
   }

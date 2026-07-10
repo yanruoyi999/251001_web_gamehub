@@ -11,6 +11,10 @@ import { getLocalizedPath, locales, type Locale } from '@/i18n/config';
 import { listFallbackGames } from '@/lib/games/fallback-list';
 import { mockGames } from '@/lib/mock-games';
 import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES } from '@/lib/seo';
+import {
+  getDatabaseConnectionMetadata,
+  shouldSkipSupabaseDirectInServerless,
+} from '@/lib/db/connection-policy';
 
 export const dynamic = 'force-dynamic';
 
@@ -113,8 +117,8 @@ function buildFallbackGameList(options: {
 }
 
 interface GamesPageProps {
-  params: { locale: string };
-  searchParams: {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{
     page?: string;
     categoryId?: string;
     tagId?: string;
@@ -124,15 +128,16 @@ interface GamesPageProps {
     featured?: string;
     sortBy?: string;
     sortOrder?: string;
-  };
+  }>;
 }
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
-export function generateMetadata({ params }: GamesPageProps): Metadata {
-  const locale = params.locale === 'zh' ? 'zh' : 'en';
+export async function generateMetadata({ params }: GamesPageProps): Promise<Metadata> {
+  const { locale: localeParam } = await params;
+  const locale = localeParam === 'zh' ? 'zh' : 'en';
   const isZh = locale === 'zh';
   const canonical = getLocalizedPath(locale, '/games');
 
@@ -174,8 +179,9 @@ export function generateMetadata({ params }: GamesPageProps): Metadata {
 }
 
 export default async function GamesPage({ params, searchParams }: GamesPageProps) {
-  const locale = locales.includes(params.locale as Locale)
-    ? (params.locale as Locale)
+  const [{ locale: localeParam }, resolvedSearchParams] = await Promise.all([params, searchParams]);
+  const locale = locales.includes(localeParam as Locale)
+    ? (localeParam as Locale)
     : 'zh';
   const t = await getTranslations({ locale, namespace: 'Games' });
 
@@ -185,21 +191,21 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
     return Number.isInteger(parsed) && parsed > 0 ? parsed : undefined;
   };
 
-  const page = searchParams.page ? Number(searchParams.page) : undefined;
-  const categoryId = parseId(searchParams.categoryId);
-  const tagId = parseId(searchParams.tagId);
-  const search = typeof searchParams.search === 'string' ? searchParams.search : '';
-  const showNew = searchParams.isNew === '1';
-  const showHot = searchParams.isHot === '1';
-  const showFeatured = searchParams.featured === '1';
+  const page = resolvedSearchParams.page ? Number(resolvedSearchParams.page) : undefined;
+  const categoryId = parseId(resolvedSearchParams.categoryId);
+  const tagId = parseId(resolvedSearchParams.tagId);
+  const search = typeof resolvedSearchParams.search === 'string' ? resolvedSearchParams.search : '';
+  const showNew = resolvedSearchParams.isNew === '1';
+  const showHot = resolvedSearchParams.isHot === '1';
+  const showFeatured = resolvedSearchParams.featured === '1';
   const favoritesOnly = false;
 
-  const sortByParam = typeof searchParams.sortBy === 'string' ? searchParams.sortBy : undefined;
+  const sortByParam = typeof resolvedSearchParams.sortBy === 'string' ? resolvedSearchParams.sortBy : undefined;
   const sortBy = SORT_OPTIONS.find((option) => option === sortByParam);
 
-  const sortOrder = searchParams.sortOrder === 'asc'
+  const sortOrder: 'asc' | 'desc' = resolvedSearchParams.sortOrder === 'asc'
     ? 'asc'
-    : searchParams.sortOrder === 'desc'
+    : resolvedSearchParams.sortOrder === 'desc'
       ? 'desc'
       : sortBy === 'title'
         ? 'asc'
@@ -211,45 +217,61 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
   let tagOptions: TagOption[];
   let list: GameList;
 
-  try {
-    [categoryOptions, tagOptions, list] = await withTimeout(Promise.all([
-      CategoryService.listAll(),
-      TagService.listAll(),
-      GameService.listGames({
-        page,
-        status: 'active',
-        categoryId,
-        tagId,
-        limit: 12,
-        search: search.trim() ? search : undefined,
-        isNew: showNew ? true : undefined,
-        isHot: showHot ? true : undefined,
-        featured: showFeatured ? true : undefined,
-        onlyFavorites: favoritesOnly,
-        favoriteGameIds: favoriteIds,
-        sortBy,
-        sortOrder,
-      }),
-    ]), DB_LOAD_TIMEOUT_MS, 'Games list database load');
-  } catch (error) {
-    console.warn('Failed to load games from database, using local fallback:', error);
-    const fallback = buildFallbackGameList({
-      page,
-      categoryId,
-      tagId,
-      limit: 12,
-      search: search.trim() ? search : undefined,
-      showNew,
-      showHot,
-      showFeatured,
-      favoritesOnly,
-      favoriteIds,
-      sortBy,
-      sortOrder,
-    });
+  const fallbackOptions = {
+    page,
+    categoryId,
+    tagId,
+    limit: 12,
+    search: search.trim() ? search : undefined,
+    showNew,
+    showHot,
+    showFeatured,
+    favoritesOnly,
+    favoriteIds,
+    sortBy,
+    sortOrder,
+  };
+  const loadFallback = () => buildFallbackGameList(fallbackOptions);
+  const connection = getDatabaseConnectionMetadata();
+  const canUseDatabase =
+    connection.configured && !(
+      process.env.GAME_LIST_ALLOW_SUPABASE_DIRECT_IN_SERVERLESS !== 'true' &&
+      shouldSkipSupabaseDirectInServerless(connection)
+    );
+
+  if (!canUseDatabase) {
+    const fallback = loadFallback();
     categoryOptions = fallback.categoryOptions;
     tagOptions = fallback.tagOptions;
     list = fallback.list;
+  } else {
+    try {
+      [categoryOptions, tagOptions, list] = await withTimeout(Promise.all([
+        CategoryService.listAll(),
+        TagService.listAll(),
+        GameService.listGames({
+          page,
+          status: 'active',
+          categoryId,
+          tagId,
+          limit: 12,
+          search: search.trim() ? search : undefined,
+          isNew: showNew ? true : undefined,
+          isHot: showHot ? true : undefined,
+          featured: showFeatured ? true : undefined,
+          onlyFavorites: favoritesOnly,
+          favoriteGameIds: favoriteIds,
+          sortBy,
+          sortOrder,
+        }),
+      ]), DB_LOAD_TIMEOUT_MS, 'Games list database load');
+    } catch (error) {
+      console.warn('Failed to load games from database, using local fallback:', error);
+      const fallback = loadFallback();
+      categoryOptions = fallback.categoryOptions;
+      tagOptions = fallback.tagOptions;
+      list = fallback.list;
+    }
   }
 
   const { games, total, totalPages, page: currentPage } = list;

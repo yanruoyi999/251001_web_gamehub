@@ -75,7 +75,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       'no ads puzzle games',
     ],
     updatedAt: seoContentUpdatedAt,
-    relatedSlugs: ['ad-free-games', 'games-to-play-when-bored'],
+    relatedSlugs: ['ad-free-games', 'games-to-play-when-bored', 'browser-games-for-low-end-pc'],
     locales: {
       en: {
         metaTitle: 'Free Games With Fewer Interruptions | Browser Picks',
@@ -234,7 +234,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       'ad-free strategy games',
     ],
     updatedAt: seoContentUpdatedAt,
-    relatedSlugs: ['free-games-no-ads', 'best-free-iphone-games'],
+    relatedSlugs: ['free-games-no-ads', 'best-free-iphone-games', 'browser-games-for-low-end-pc'],
     locales: {
       en: {
         metaTitle: 'Ad-Free Games Search Guide | Lower-Interruption Picks',
@@ -601,7 +601,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       'short session games',
     ],
     updatedAt: seoContentUpdatedAt,
-    relatedSlugs: ['free-games-no-ads', 'best-free-iphone-games'],
+    relatedSlugs: ['free-games-no-ads', 'best-free-iphone-games', 'browser-games-for-low-end-pc'],
     locales: {
       en: {
         metaTitle: 'Games to Play When Bored | Quick Browser Boosters',
@@ -634,20 +634,20 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ],
         recommendations: [
           {
-            slug: 'hextris',
-            pitch: 'Stack colours with split-second timing. Perfect for a two-minute adrenaline boost.',
+            slug: 'slimetris',
+            pitch: 'Slimetris turns block placement into a compact puzzle that loads quickly and is easy to replay.',
           },
           {
-            slug: '15-puzzle',
-            pitch: 'Slide tiles until the picture aligns. Each round is a mini brain workout.',
+            slug: 'string-theory-remastered',
+            pitch: 'A compact timing puzzle that rewards calm observation instead of frantic clicking.',
           },
           {
-            slug: 'xquest',
-            pitch: 'Guide a tiny starship through neon mazes. Quick runs keep boredom far away.',
+            slug: 'google-snake',
+            pitch: 'A familiar score-chasing loop with instant restarts and no long tutorial.',
           },
           {
-            slug: 'crossword-puzzle',
-            pitch: 'Solve bite-sized crossword clues whenever you want a calmer challenge.',
+            slug: 'hexoboy',
+            pitch: 'A small puzzle-platform challenge when you want movement and problem solving in one short session.',
           },
         ],
         faqs: [
@@ -664,7 +664,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           {
             question: 'Which game is best for a five-minute break?',
             answer:
-              'Try Hextris or 15 Puzzle for quick victories. If you have a bit longer, Super Sudoku offers a satisfying mental reset.',
+              'Try Google Snake or Merge Grabber for a fast reset. If you want a calmer challenge, String Theory Remastered rewards slower observation.',
           },
         ],
         ctaLabel: 'View more boredom busters',
@@ -701,20 +701,20 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ],
         recommendations: [
           {
-            slug: 'hextris',
-            pitch: '高速堆叠的霓虹方块，两分钟就能完成一局，快速刷新状态。',
+            slug: 'slimetris',
+            pitch: 'Slimetris 把方块摆放压缩成紧凑谜题，加载快、单局短，适合迅速切换状态。',
           },
           {
-            slug: '15-puzzle',
-            pitch: '经典 15 块滑块拼图，闯关短小却极具成就感。',
+            slug: 'string-theory-remastered',
+            pitch: '需要观察时机的紧凑谜题，适合从慌乱切换到冷静思考。',
           },
           {
-            slug: 'xquest',
-            pitch: '驾驶小型飞船穿梭迷宫，手感灵敏，极易上瘾。',
+            slug: 'google-snake',
+            pitch: '规则熟悉、重开迅速，不需要长教程就能开始刷分。',
           },
           {
-            slug: 'crossword-puzzle',
-            pitch: '随开随停的小型填字游戏，适合在安静时刻慢慢填完。',
+            slug: 'hexoboy',
+            pitch: '把移动和解谜放进短关卡，适合想动手又想动脑的空档。',
           },
         ],
         faqs: [
@@ -728,7 +728,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           },
           {
             question: '只有五分钟应该玩哪款？',
-            answer: '推荐 Hextris 或 15 Puzzle，节奏紧凑且胜负明确；更长一点的空档可以尝试 Super Sudoku 重置思绪。',
+            answer: '推荐 Google Snake 或 Merge Grabber，重开快、反馈直接；想安静一点可以玩 String Theory Remastered。',
           },
         ],
         ctaLabel: '探索更多解闷小游戏',
@@ -1620,14 +1620,14 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               'Drive Mad is another car-themed challenge, but the skill shifts from roundabout timing to physics balance.',
           },
           {
-            slug: '15-puzzle',
+            slug: 'string-theory-remastered',
             pitch:
-              '15 Puzzle is a slower logic option when you want planning instead of reaction timing.',
+              'String Theory Remastered is a slower timing puzzle when you want planning instead of traffic pressure.',
           },
           {
-            slug: 'hextris',
+            slug: 'slimetris',
             pitch:
-              'Hextris has the same short-session retry loop with faster pattern recognition.',
+              'Slimetris keeps the short-session retry loop but shifts the challenge to clean block placement.',
           },
         ],
         faqs: [
@@ -1725,12 +1725,12 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             pitch: 'Drive Mad 同样是车辆主题，但考验从圆环时机切换到物理平衡。',
           },
           {
-            slug: '15-puzzle',
-            pitch: '15 Puzzle 更慢、更偏逻辑，适合想从反应切换到规划时游玩。',
+            slug: 'string-theory-remastered',
+            pitch: 'String Theory Remastered 节奏更慢，适合从交通反应切换到观察和规划。',
           },
           {
-            slug: 'hextris',
-            pitch: 'Hextris 也有短局重试循环，但更考验快速图形识别。',
+            slug: 'slimetris',
+            pitch: 'Slimetris 同样适合短局重试，但把挑战换成清晰的方块摆放。',
           },
         ],
         faqs: [
@@ -2668,12 +2668,12 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               'Start with the first String Theory Remastered if you want the gentler introduction before the sequel.',
           },
           {
-            slug: '2048',
+            slug: 'slimetris',
             pitch:
-              'A slower logic puzzle when you want planning instead of physics timing.',
+              'A compact block puzzle when you want planning instead of physics timing.',
           },
           {
-            slug: 'hextris',
+            slug: 'hexoboy',
             pitch:
               'A fast pattern game if you like compact puzzles with instant retries.',
           },
@@ -2748,14 +2748,14 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               '想更平缓入门,先玩第一部 String Theory Remastered。',
           },
           {
-            slug: '2048',
+            slug: 'slimetris',
             pitch:
-              '想要更慢的逻辑规划,2048 比物理时机更适合。',
+              '想要更明确的逻辑规划,Slimetris 比物理时机更适合。',
           },
           {
-            slug: 'hextris',
+            slug: 'hexoboy',
             pitch:
-              '想要即时重试和图形规律,Hextris 是更快节奏的选择。',
+              '想要即时重试和图形规律,Hexoboy 是更快节奏的选择。',
           },
         ],
         faqs: [
@@ -3489,7 +3489,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         recommendations: [
           { slug: 'drive-mad', pitch: 'Want a quick action break from managing the shop? Drive Mad is a snappy physics-driving challenge.' },
           { slug: 'ovo', pitch: 'OvO is a fast parkour platformer for when you want reflexes instead of idle management.' },
-          { slug: '2048', pitch: 'For another calm, number-go-up loop, 2048 has the same addictive “just one more” pull.' },
+          { slug: 'slimetris', pitch: 'For another satisfying upgrade loop, Slimetris offers compact block puzzles with the same “just one more” pull.' },
         ],
         faqs: [
           { question: 'How do you unlock everything in Monkey Mart?', answer: 'Keep stocking shelves and serving customers to earn money, then reinvest it into appliances, aisles, and staff. Once everything in your current mart is unlocked, you can move to a new mart.' },
@@ -3538,7 +3538,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         recommendations: [
           { slug: 'drive-mad', pitch: '想从经营里抽空玩点动作?Drive Mad 是干脆利落的物理驾驶挑战。' },
           { slug: 'ovo', pitch: 'OvO 是快节奏跑酷平台游戏,想要反应而非放置经营时选它。' },
-          { slug: '2048', pitch: '想要另一个平静的“数字上涨”循环,2048 有同样上瘾的“再来一局”。' },
+          { slug: 'slimetris', pitch: '想要另一种轻量成长循环,Slimetris 用紧凑方块谜题带来同样上瘾的“再来一局”。' },
         ],
         faqs: [
           { question: 'Monkey Mart 怎么解锁全部?', answer: '持续上货架、招待顾客赚钱,再把钱投回器械、货道和员工。当前超市全部解锁后,就能开新超市。' },
@@ -3773,7 +3773,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     embedGame: {
       iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp41/cwb/20221213/01/index.htm',
       title: 'Fireboy & Watergirl 6',
-      playSlug: 'fireboy-and-watergirl-6',
+      playSlug: 'fireboy-watergirl-6',
     },
     locales: {
       en: {
@@ -4099,7 +4099,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       'free games for a quick break',
     ],
     updatedAt: seoContentUpdatedAt,
-    relatedSlugs: ['games-to-play-when-bored', 'games-like-ovo'],
+    relatedSlugs: ['games-to-play-when-bored', 'games-like-ovo', 'browser-games-for-low-end-pc'],
     locales: {
       en: {
         metaTitle: '5 Browser Games for a Quick 5-Minute Break',
@@ -4509,6 +4509,255 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ],
         ctaLabel: '浏览 Luma 已验证浏览器游戏',
         ctaDescription: '把本页作为发现入口，再选择 Luma 已上线且无需下载的游戏。',
+      },
+    },
+  },
+  {
+    slug: 'browser-games-for-low-end-pc',
+    primaryKeyword: 'browser games for low end pc',
+    keywords: [
+      'browser games for low end pc',
+      'games for old laptop no download',
+      'lightweight browser games',
+      'browser games for slow computer',
+      'low spec pc games online',
+      'chromebook browser games low lag',
+      '低配置电脑浏览器游戏',
+      '老电脑免下载小游戏',
+    ],
+    updatedAt: seoContentUpdatedAt,
+    relatedSlugs: [
+      'best-browser-games-5-minute-break',
+      'games-to-play-when-bored',
+      'free-games-no-ads',
+      'google-snake-mods',
+    ],
+    locales: {
+      en: {
+        metaTitle: 'Browser Games for Low-End PCs: Lightweight No-Download Picks',
+        metaDescription:
+          'Find lightweight browser games for old laptops and low-spec PCs, plus a 60-second lag test, safe performance fixes, and no-download recommendations.',
+        heading: 'Browser Games for Low-End PCs: Lightweight No-Download Picks',
+        subheading:
+          'A practical guide for old laptops, office PCs, Chromebooks, and slow computers: test performance quickly, avoid fake boosters, and choose games that stay responsive.',
+        overview: [
+          'The best browser game for a low-end PC is not always the game with the simplest screenshot. What matters is how quickly it becomes responsive, whether inputs register consistently, and whether the tab stays stable after several minutes. A lightweight 2D game can run badly if the page is overloaded, while a cleanly delivered HTML5 game can feel smooth on modest hardware.',
+          'Use this guide as a testing method and a curated starting point, not a promise that every device will behave the same. Browser version, extensions, battery settings, memory pressure, and the third-party game build can all change performance. Start with one short round, then keep only the games that remain responsive on your own machine.',
+        ],
+        sections: [
+          {
+            title: 'Quick Answer: Start With Simple Inputs and Short Rounds',
+            body:
+              'On an older laptop, begin with games that use a small number of controls, restart quickly, and do not need a large 3D world. Google Snake, OvO, Drive Mad, and String Theory Remastered cover four useful styles: score chasing, precision platforming, physics driving, and timing puzzles.',
+            bullets: [
+              'Choose a game that becomes interactive within a reasonable first load.',
+              'Prefer short rounds so a slow tab never traps a long session.',
+              'Test keyboard response before judging graphics alone.',
+            ],
+          },
+          {
+            title: 'The 60-Second Low-End PC Test',
+            body:
+              'Open only one game tab and spend the first minute checking responsiveness instead of chasing a score. A game is a good fit when the first input works, the frame rate stays consistent, and restarting does not create a long freeze.',
+            bullets: [
+              'First 10 seconds: confirm the play area appears without repeated redirects or plugin prompts.',
+              'Next 20 seconds: press each control and watch for delayed or missed inputs.',
+              'Final 30 seconds: restart once and check whether the second load is smoother or noticeably worse.',
+            ],
+          },
+          {
+            title: 'Safe Ways to Reduce Browser Game Lag',
+            body:
+              'Most useful fixes are ordinary browser housekeeping. You do not need a game booster, registry cleaner, APK, extension pack, or “FPS unlocker.” Those downloads add risk and often consume more resources than the game.',
+            bullets: [
+              'Close video, meeting, and social tabs before starting a game.',
+              'Disable unnecessary extensions for the test session, especially page modifiers and recording tools.',
+              'Keep the laptop plugged in if battery-saving mode reduces CPU speed.',
+              'Refresh the game tab after changing settings instead of opening multiple copies.',
+            ],
+          },
+          {
+            title: 'Pick the Right Game Type for Your Hardware',
+            body:
+              'Simple 2D score games and compact puzzle pages are usually the safest first test. Precision platformers can also work well because their worlds are small, but they expose input delay quickly. Physics games may be smooth on one browser and inconsistent on another, so use a short level as the benchmark.',
+            bullets: [
+              'Score loop: Google Snake for familiar controls and instant restarts.',
+              'Precision movement: OvO when you want to test keyboard latency.',
+              'Physics timing: Drive Mad for short, repeatable levels.',
+              'Calm puzzle: String Theory Remastered when you prefer deliberate clicks.',
+            ],
+          },
+          {
+            title: 'When the Problem Is the Page, Not the PC',
+            body:
+              'A fast computer can still struggle with a broken embed, overloaded portal, blocked third-party cookie, or stale game build. If every other site works but one game does not, do not assume your laptop is the problem. Try the game in a clean tab, compare another Luma title, and report the page if controls or loading have changed.',
+          },
+          {
+            title: 'No-Download Safety Rule',
+            body:
+              'Stay in the browser for the first test. Avoid pages that ask you to install a client, browser extension, “performance patch,” or unofficial mod before play. A low-end PC has less spare memory and security margin, so adding unknown software is the opposite of optimization.',
+          },
+        ],
+        recommendations: [
+          {
+            slug: 'google-snake',
+            pitch: 'A familiar score loop with simple controls, quick restarts, and an easy way to test keyboard response.',
+          },
+          {
+            slug: 'ovo',
+            pitch: 'A compact precision platformer that quickly reveals whether your browser has input delay.',
+          },
+          {
+            slug: 'drive-mad',
+            pitch: 'Short physics-driving levels make it easy to compare smoothness without committing to a long session.',
+          },
+          {
+            slug: 'string-theory-remastered',
+            pitch: 'A slower timing puzzle for machines that handle deliberate clicks better than fast action.',
+          },
+        ],
+        faqs: [
+          {
+            question: 'What browser games run well on a low-end PC?',
+            answer:
+              'Start with short 2D games that use simple controls, such as Google Snake, OvO, Drive Mad, or String Theory Remastered. Test one round because performance still varies by browser and device.',
+          },
+          {
+            question: 'Do I need to download a game booster?',
+            answer:
+              'No. Close heavy tabs, reduce unnecessary extensions, and test while plugged in before installing anything. Avoid unofficial boosters, FPS unlockers, mods, and plugin prompts.',
+          },
+          {
+            question: 'Why does a simple browser game still lag?',
+            answer:
+              'The cause can be an overloaded page, a broken third-party embed, extensions, battery-saving mode, memory pressure, or input delay rather than the game graphics alone.',
+          },
+          {
+            question: 'Are these games suitable for Chromebooks?',
+            answer:
+              'Many browser games can run on Chromebooks, but school policies, browser versions, and device memory differ. Use the 60-second test and avoid bypass tools or downloads.',
+          },
+          {
+            question: 'Which game should I test first on an old laptop?',
+            answer:
+              'Google Snake is the simplest first check. Then try OvO for keyboard latency, Drive Mad for physics performance, and String Theory Remastered for a calmer puzzle.',
+          },
+        ],
+        ctaLabel: 'Browse lightweight browser games',
+        ctaDescription: 'Open one game at a time, test a short round, and keep the titles that stay responsive on your device.',
+      },
+      zh: {
+        metaTitle: '低配置电脑浏览器游戏：老电脑免下载轻量游戏指南',
+        metaDescription:
+          '低配置电脑和老笔记本适合玩哪些浏览器游戏？提供 60 秒卡顿测试、安全提速方法、免下载游戏推荐和常见问题。',
+        heading: '低配置电脑浏览器游戏：老电脑免下载轻量游戏指南',
+        subheading:
+          '适合旧笔记本、办公电脑、Chromebook 和运行较慢设备：快速判断游戏是否流畅，避开假加速器，并选择响应稳定的短局游戏。',
+        overview: [
+          '低配置电脑适合的浏览器游戏，不一定只是画面最简单的游戏。真正重要的是多久可以操作、按键是否稳定响应，以及玩几分钟后标签页会不会越来越卡。一个 2D 游戏如果页面塞了太多内容，也可能比干净加载的 HTML5 游戏更慢。',
+          '本页提供的是测试方法和精选起点，不承诺所有设备表现完全相同。浏览器版本、扩展程序、省电模式、内存占用和第三方游戏版本都会影响结果。先试玩一小局，只保留在你自己设备上持续流畅的游戏。',
+        ],
+        sections: [
+          {
+            title: '快速答案：先选操作简单、单局短的游戏',
+            body:
+              '旧电脑优先测试按键少、重开快、不需要加载大型 3D 世界的游戏。Google Snake、OvO、Drive Mad 和 String Theory Remastered 分别代表刷分、精准平台、物理驾驶和时机谜题四种类型。',
+            bullets: [
+              '首次加载后应在合理时间内可以操作。',
+              '优先短局，避免卡顿时困在长流程里。',
+              '先测试按键响应，不要只看画面复杂度。',
+            ],
+          },
+          {
+            title: '60 秒低配置测试法',
+            body:
+              '只打开一个游戏标签页，第一分钟先检查响应，不急着刷高分。首次输入有效、帧率大致稳定、重新开始不会长时间卡死，才算适合当前设备。',
+            bullets: [
+              '前 10 秒：确认游戏区域正常出现，没有反复跳转或插件提示。',
+              '接下来 20 秒：逐个测试操作，观察是否延迟或漏按。',
+              '最后 30 秒：重开一次，看第二局更顺还是明显变慢。',
+            ],
+          },
+          {
+            title: '安全减少浏览器游戏卡顿',
+            body:
+              '真正有用的做法通常只是浏览器整理，不需要游戏加速器、注册表清理器、APK、扩展包或所谓 FPS 解锁器。这些下载可能更占资源，也带来安全风险。',
+            bullets: [
+              '开始前关闭视频、会议和社交网站标签页。',
+              '测试时暂停不必要的扩展，尤其是页面改造和录屏工具。',
+              '省电模式限制性能时，插电后再测试。',
+              '改完设置刷新当前页，不要同时打开多个游戏副本。',
+            ],
+          },
+          {
+            title: '按硬件情况选择游戏类型',
+            body:
+              '简单 2D 刷分和紧凑谜题通常最适合第一轮测试。精准平台游戏世界较小，也可能很流畅，但会迅速暴露按键延迟。物理游戏在不同浏览器上的表现差异更大，可以用一小关做基准。',
+            bullets: [
+              '刷分循环：Google Snake，规则熟悉、重开迅速。',
+              '精准移动：OvO，用来测试键盘延迟。',
+              '物理时机：Drive Mad，关卡短、方便反复比较。',
+              '安静解谜：String Theory Remastered，适合更慢的点击节奏。',
+            ],
+          },
+          {
+            title: '有时问题在页面，不在电脑',
+            body:
+              '即使电脑不慢，失效嵌入、内容过重的平台、被拦截的第三方资源或旧游戏版本也会导致卡顿。如果只有某一个游戏打不开，不要立刻认定是电脑问题。先用干净标签页测试，再对比另一款 Luma 游戏，并在操作或加载变化时提交反馈。',
+          },
+          {
+            title: '免下载安全规则',
+            body:
+              '第一次体验始终留在浏览器里。遇到要求安装客户端、扩展程序、性能补丁或非官方 mod 的页面直接离开。低配置电脑本来就缺少空余内存和安全余量，继续安装未知软件并不是优化。',
+          },
+        ],
+        recommendations: [
+          {
+            slug: 'google-snake',
+            pitch: '规则熟悉、操作简单、重开迅速，适合先检查键盘响应。',
+          },
+          {
+            slug: 'ovo',
+            pitch: '紧凑的精准平台游戏，可以很快判断浏览器是否存在输入延迟。',
+          },
+          {
+            slug: 'drive-mad',
+            pitch: '物理驾驶关卡短，方便在不投入长时间的情况下比较流畅度。',
+          },
+          {
+            slug: 'string-theory-remastered',
+            pitch: '节奏较慢的时机谜题，适合点击稳定但不擅长高速动作的旧设备。',
+          },
+        ],
+        faqs: [
+          {
+            question: '低配置电脑适合玩什么浏览器游戏？',
+            answer:
+              '先从操作简单、单局短的 2D 游戏开始，例如 Google Snake、OvO、Drive Mad 或 String Theory Remastered。不同浏览器和设备表现不同，仍需试玩一局。',
+          },
+          {
+            question: '需要下载游戏加速器吗？',
+            answer:
+              '不需要。先关闭高占用标签页、暂停不必要扩展并插电测试。不要下载非官方加速器、FPS 解锁器、mod 或插件。',
+          },
+          {
+            question: '为什么画面简单的网页游戏也会卡？',
+            answer:
+              '原因可能是页面过重、第三方嵌入失效、扩展程序、省电模式、内存压力或输入延迟，不一定是游戏画面本身。',
+          },
+          {
+            question: 'Chromebook 可以玩这些游戏吗？',
+            answer:
+              '很多浏览器游戏可以在 Chromebook 运行，但学校策略、浏览器版本和内存不同。建议使用 60 秒测试，不使用绕过工具或下载包。',
+          },
+          {
+            question: '老笔记本应该先测试哪款？',
+            answer:
+              '先用 Google Snake 做最简单检查，再用 OvO 测键盘延迟、Drive Mad 测物理表现、String Theory Remastered 测较慢的解谜体验。',
+          },
+        ],
+        ctaLabel: '浏览轻量浏览器游戏',
+        ctaDescription: '每次只打开一款，试玩短局，留下在你设备上持续响应稳定的游戏。',
       },
     },
   },
