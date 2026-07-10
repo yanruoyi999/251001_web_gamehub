@@ -39,6 +39,14 @@ jobs:
           echo $? > dependency-typecheck-exit.txt
           set -e
 
+      - name: Capture production build output
+        shell: bash
+        run: |
+          set +e
+          pnpm build > dependency-build.txt 2>&1
+          echo $? > dependency-build-exit.txt
+          set -e
+
       - name: Upload diagnostics
         uses: actions/upload-artifact@v4
         with:
@@ -49,3 +57,5 @@ jobs:
             dependency-lint-exit.txt
             dependency-typecheck.txt
             dependency-typecheck-exit.txt
+            dependency-build.txt
+            dependency-build-exit.txt
