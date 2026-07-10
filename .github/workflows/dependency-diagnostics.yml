@@ -23,6 +23,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Capture lint output
+        shell: bash
+        run: |
+          set +e
+          pnpm lint > dependency-lint.txt 2>&1
+          echo $? > dependency-lint-exit.txt
+          set -e
+
       - name: Capture type-check output
         shell: bash
         run: |
@@ -37,5 +45,7 @@ jobs:
           name: dependency-migration-diagnostics
           retention-days: 1
           path: |
+            dependency-lint.txt
+            dependency-lint-exit.txt
             dependency-typecheck.txt
             dependency-typecheck-exit.txt
