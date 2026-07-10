@@ -1610,3 +1610,11 @@
 - 测试与构建：新增 2 个目录能力策略测试；`pnpm type-check`、`pnpm test -- --run`（48 tests）、`pnpm lint`（0 errors，96 个既有 console warnings）、`pnpm build`、`git diff --check` 均通过。
 - 本地 production 验证：`/en/games/duo-vikings` 与 `/en/games` 均 HTTP 200；详情和列表未出现评分、游玩量、评论、Demo Data、Published、Share 或合成指标排序；Category / Tag 过滤器保留，列表有 24 个游戏链接；收藏点击后写入 `localStorage`，`/api/favorites` 请求数为 0。
 - 下一步：部署后在主域重复相同 DOM 与收藏交互验收；随后审计 local 模式下仍对公众暴露但依赖远程数据库的管理后台与写 API，优先关闭无实际用途的公开入口，减少维护面和误操作风险。
+
+### T-134 Restore GA4 collection endpoint access in CSP
+
+- 现场证据：T-133 首次生产浏览器验收时，gtag 向 `https://www.google.com/g/collect` 发送 `user_engagement`，被现有 `connect-src` 拒绝；页面功能正常，但该事件未成功发送并产生两条控制台错误。
+- 官方复核：Google Tag Platform 2026-06-23 更新的 CSP 指南要求 GA4 允许 `*.google-analytics.com`、`*.analytics.google.com`、`*.googletagmanager.com` 和 `*.google.com` 等采集端点；本轮只加入 GA4 当前需要的官方域名，不加入尚未使用的 Ads / DoubleClick 域名。
+- 实际改动：更新 `next.config.js` 的 GA4 script / img / connect CSP 域名为官方通配范围，并新增安全响应头回归测试，防止后续再次阻断 Google collection endpoint；未修改 GA ID、事件名、consent 或 page_view 逻辑。
+- 验证：新增测试先因缺少 `https://*.google.com` 按预期失败，修复后通过；全量 `pnpm test -- --run` 为 49/49，`pnpm type-check`、`pnpm lint`（0 errors，96 个既有 console warnings）、`pnpm build` 与 `git diff --check` 均通过。
+- 下一步：部署后用真实主域确认 CSP 响应头包含新增域名，并以浏览器重新加载游戏详情页，要求不再出现 `google.com/g/collect` CSP 错误；GA4 实际报表仍按正常处理延迟观察，不把验收访问当成增长数据。
