@@ -23,28 +23,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Capture lint output
+      - name: Capture production dependency audit
         shell: bash
         run: |
           set +e
-          pnpm lint > dependency-lint.txt 2>&1
-          echo $? > dependency-lint-exit.txt
-          set -e
-
-      - name: Capture type-check output
-        shell: bash
-        run: |
-          set +e
-          pnpm type-check > dependency-typecheck.txt 2>&1
-          echo $? > dependency-typecheck-exit.txt
-          set -e
-
-      - name: Capture production build output
-        shell: bash
-        run: |
-          set +e
-          pnpm build > dependency-build.txt 2>&1
-          echo $? > dependency-build-exit.txt
+          pnpm audit --prod --audit-level=high > dependency-audit.txt 2>&1
+          echo $? > dependency-audit-exit.txt
           set -e
 
       - name: Upload diagnostics
@@ -53,24 +37,5 @@ jobs:
           name: dependency-migration-diagnostics
           retention-days: 1
           path: |
-            dependency-lint.txt
-            dependency-lint-exit.txt
-            dependency-typecheck.txt
-            dependency-typecheck-exit.txt
-            dependency-build.txt
-            dependency-build-exit.txt
-            app
-            components
-            lib
-            services
-            db
-            i18n
-            scripts
-            types
-            public/data/4399-sample.json
-            package.json
-            pnpm-lock.yaml
-            tsconfig.json
-            next-env.d.ts
-            next.config.js
-            middleware.ts
+            dependency-audit.txt
+            dependency-audit-exit.txt
