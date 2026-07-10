@@ -1,0 +1,76 @@
+name: Apply About Internal Links
+
+on:
+  push:
+    branches:
+      - fix/dependency-security-upgrades-20260710
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: fix/dependency-security-upgrades-20260710
+
+      - name: Add contextual About links
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('app/[locale]/about/page.tsx')
+          source = path.read_text()
+          marker = '''        <section className="mt-8">
+          <h2 className="text-2xl font-semibold text-gray-900">
+            {isZh ? '联系我们' : 'Contact Us'}
+          </h2>'''
+          addition = '''        <section className="mt-8 rounded-lg border border-gray-200 bg-gray-50 p-6">
+          <h2 className="text-2xl font-semibold text-gray-900">
+            {isZh ? '继续探索 Luma' : 'Continue Exploring Luma'}
+          </h2>
+          <p className="mt-3 text-gray-700">
+            {isZh
+              ? '从品牌说明继续进入实际内容，查看已复核的游戏页面和原创攻略。'
+              : 'Move from our editorial principles into the actual catalogue and original guides.'}
+          </p>
+          <div className="mt-4 flex flex-wrap gap-3">
+            <Link
+              href={getLocalizedPath(locale, '/games')}
+              className="rounded-lg bg-indigo-600 px-4 py-2 font-medium text-white hover:bg-indigo-500"
+            >
+              {isZh ? '浏览全部游戏' : 'Browse all games'}
+            </Link>
+            <Link
+              href={getLocalizedPath(locale, '/guides')}
+              className="rounded-lg border border-indigo-200 px-4 py-2 font-medium text-indigo-700 hover:bg-indigo-50"
+            >
+              {isZh ? '阅读原创攻略' : 'Read original guides'}
+            </Link>
+          </div>
+        </section>
+
+''' + marker
+
+          if 'Continue Exploring Luma' not in source:
+              if marker not in source:
+                  raise SystemExit('Expected About page marker was not found')
+              path.write_text(source.replace(marker, addition, 1))
+          PY
+
+      - name: Commit About links
+        shell: bash
+        run: |
+          if git diff --quiet -- 'app/[locale]/about/page.tsx'; then
+            echo "About page links already applied."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add 'app/[locale]/about/page.tsx'
+          git commit -m "seo(about): add games and guides internal links"
+          git push origin HEAD:fix/dependency-security-upgrades-20260710
