@@ -7,13 +7,14 @@ export const ADMIN_SESSION_COOKIE = 'gamehub-admin-session';
 const ADMIN_SESSION_MAX_AGE = 60 * 60 * 8; // 8 hours
 const ADMIN_SESSION_VERSION = 1;
 
-export function isAdminAuthenticated() {
-  const token = cookies().get(ADMIN_SESSION_COOKIE)?.value;
+export async function isAdminAuthenticated() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get(ADMIN_SESSION_COOKIE)?.value;
   return verifyAdminSessionToken(token);
 }
 
-export function requireAdminAuth() {
-  if (!isAdminAuthenticated()) {
+export async function requireAdminAuth() {
+  if (!(await isAdminAuthenticated())) {
     redirect('/admin/login');
   }
 }
@@ -97,8 +98,9 @@ export function verifyAdminSessionToken(token?: string | null) {
   }
 }
 
-export function createAdminSession() {
-  cookies().set(ADMIN_SESSION_COOKIE, createAdminSessionToken(), {
+export async function createAdminSession() {
+  const cookieStore = await cookies();
+  cookieStore.set(ADMIN_SESSION_COOKIE, createAdminSessionToken(), {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
@@ -107,8 +109,9 @@ export function createAdminSession() {
   });
 }
 
-export function destroyAdminSession() {
-  cookies().set(ADMIN_SESSION_COOKIE, '', {
+export async function destroyAdminSession() {
+  const cookieStore = await cookies();
+  cookieStore.set(ADMIN_SESSION_COOKIE, '', {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
