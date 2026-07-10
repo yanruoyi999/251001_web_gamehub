@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { CounterService } from '@/services';
+import { getClientIp } from '@/lib/http/client-ip';
 import { redis } from '@/lib/redis';
 import { hashIp } from '@/lib/utils/hash';
 import {
@@ -22,18 +23,6 @@ function parseId(value: string): number | null {
   const id = Number(value);
   if (!Number.isInteger(id) || id <= 0) return null;
   return id;
-}
-
-function getClientIp(request: NextRequest) {
-  if (request.ip && request.ip.trim().length > 0) {
-    return request.ip.trim();
-  }
-
-  return (
-    request.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
-    request.headers.get('x-real-ip')?.trim() ||
-    '0.0.0.0'
-  );
 }
 
 function consumeMemoryRateLimit(key: string, now = Date.now()): 'allowed' | 'limited' {
