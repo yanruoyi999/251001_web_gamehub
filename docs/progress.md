@@ -1586,6 +1586,9 @@
 
 - 新数据流：经用户确认，在现有 `yanruoyi999@gmail.com > gamepapa` GA4 property 中创建 `Luma Game Hub Production` Web stream，网站 URL 为 `https://www.lumagamehub.com`，Stream ID `15233589031`，Measurement ID `G-XF3GV91D1V`，Enhanced Measurement 保持开启；旧 stream 保留，未删除或改写历史配置。
 - 端点验证：新 ID 的 `https://www.googletagmanager.com/gtag/js?id=G-XF3GV91D1V` 返回 HTTP 200，修复旧 ID `G-M5N3TXN56Z` 对应脚本端点返回 404、导致生产运行时没有 `dataLayer`/`gtag` 的根因。
-- Vercel 配置：已在绑定项目 `251001-web-gamehub-rdg6` 的 Production、Preview、Development 三个环境中，将 `NEXT_PUBLIC_GA_ID` 更新为新 Measurement ID；未新增第二套脚本或重复 page_view 逻辑。
+- Vercel 配置：已在绑定项目 `251001-web-gamehub-rdg6` 的 Production、Preview、Development 三个环境中，将 `NEXT_PUBLIC_GA_ID` 更新为新 Measurement ID；生产抽查发现 CLI 首次写入保留了 stdin 末尾换行后，立即改用无换行输入重写三个环境并重新部署；未新增第二套脚本或重复 page_view 逻辑。
 - 发布范围：本次将与 T-129/T-130 对应的 Snake 长尾内容、G-Switch 2 原创指南、重复 `ad-free-games` 合并重定向和 Luma 自有全屏控件一并提交部署；保留 `package.json`、AdSense SOP 和未跟踪知识库文件的既有用户改动，不纳入本次提交。
-- 待验证：完成 GitHub/Vercel production 部署后，抽查生产 HTML 仅包含新 GA ID、旧 ID 不再出现，确认 Tag 请求和 collect 请求可发出，并在 GA4 Realtime 中观察内部验证访问；部署与生产验证结果在本任务完成后补记。
+- 远端整合与验证：GitHub `main` 在工作期间新增 production hardening commit `3bf950c`，本轮改动在临时 worktree 中重放并解决 `ad-free-games` 合并冲突，最终代码 commit 为 `10737e2`。合并后 `pnpm type-check`、`pnpm test -- --run`（42 tests）、`pnpm build`、`git diff --check` 均通过；`pnpm lint` 为 0 errors，保留远端已有的 96 个脚本 `console` warnings。
+- 生产部署：Vercel production deployment `dpl_HmdTuVqMnuWtseVKLCRiFmxZoE29` 为 Ready，别名包含 `https://lumagamehub.com` 与 `https://www.lumagamehub.com`；主域生产 HTML 的 gtag script 只加载一次 `G-XF3GV91D1V`，旧 `G-M5N3TXN56Z` 不再出现。
+- 生产验收：Snake 指南已输出 Google Snake Mods 2 / Snake Mod Loader / mod menu 内容，G-Switch 2 原创指南已上线；两个旧 `ad-free-games` URL 均 308 到 `free-games-no-ads`；Duo Vikings 的 `Play now -> Play fullscreen` 可进入 CSS viewport fallback，body scroll 锁定，退出后完整恢复；sitemap 为 290 URLs。
+- GA4 实收：已登录 GA4 Realtime 显示近 5 分钟和近 30 分钟各 1 active user，并收到 `session_start`、`first_visit`、`game_play_start`、`game_fullscreen_toggle`，确认新数据流和生产事件链路均已工作。内部验证访问仅用于配置验收，不作为增长数据解读。
