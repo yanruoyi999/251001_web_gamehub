@@ -1,7 +1,9 @@
 import { ReactNode } from 'react';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
 import { isAdminAuthenticated } from '@/lib/auth/admin';
+import { isLocalCatalogueMode } from '@/lib/games/catalog-mode';
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -14,6 +16,10 @@ const navItems = [
 ];
 
 export default async function AdminLayout({ children }: AdminLayoutProps) {
+  if (isLocalCatalogueMode()) {
+    notFound();
+  }
+
   const authenticated = await isAdminAuthenticated();
 
   if (!authenticated) {

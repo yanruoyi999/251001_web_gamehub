@@ -4,6 +4,7 @@ import {
   getDatabaseConnectionMetadata,
   shouldSkipSupabaseDirectInServerless,
 } from '@/lib/db/connection-policy';
+import { isLocalCatalogueMode } from '@/lib/games/catalog-mode';
 
 function parseId(value: string): number | null {
   const id = Number(value);
@@ -25,6 +26,10 @@ export async function GET(
   _request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
+  if (isLocalCatalogueMode()) {
+    return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  }
+
   const { id } = await params;
   const gameId = parseId(id);
   if (!gameId) {

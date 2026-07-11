@@ -7,6 +7,7 @@ import {
   getDatabaseConnectionMetadata,
   shouldSkipSupabaseDirectInServerless,
 } from '@/lib/db/connection-policy';
+import { isLocalCatalogueMode } from '@/lib/games/catalog-mode';
 
 const RATE_LIMIT = 30;
 const RATE_LIMIT_WINDOW_MS = 60_000;
@@ -86,6 +87,10 @@ export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
+  if (isLocalCatalogueMode()) {
+    return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  }
+
   const { id } = await params;
   const gameId = parseId(id);
   if (!gameId) {

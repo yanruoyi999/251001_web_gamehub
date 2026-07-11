@@ -3,6 +3,22 @@ import { describe, expect, it } from 'vitest';
 import * as catalogMode from '@/lib/games/catalog-mode';
 
 describe('catalogue UI capabilities', () => {
+  it('disables server persistence in local catalogue mode', () => {
+    expect(
+      catalogMode.isCataloguePersistenceEnabled({
+        ...process.env,
+        GAME_CATALOG_MODE: 'local',
+      }),
+    ).toBe(false);
+
+    expect(
+      catalogMode.isCataloguePersistenceEnabled({
+        ...process.env,
+        GAME_CATALOG_MODE: 'database',
+      }),
+    ).toBe(true);
+  });
+
   it('uses local favorites and hides persistent engagement in local catalogue mode', () => {
     expect(catalogMode).toHaveProperty('getCatalogueUiCapabilities');
 

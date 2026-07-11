@@ -3134,9 +3134,17 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
   {
     slug: 'ovo-walkthrough',
     primaryKeyword: 'ovo game',
-    keywords: ['ovo game', 'ovo unblocked', 'ovo all levels', 'how to beat ovo', 'ovo speedrun'],
+    keywords: [
+      'ovo game',
+      'ovo walkthrough',
+      'ovo all levels',
+      'how many levels are in ovo',
+      'how to beat level 46 ovo',
+      'how to beat ovo',
+      'ovo speedrun',
+    ],
     updatedAt: seoContentUpdatedAt,
-    relatedSlugs: ['drive-mad-walkthrough'],
+    relatedSlugs: ['games-like-ovo', 'drive-mad-walkthrough', 'big-tower-tiny-square-walkthrough'],
     embedGame: {
       iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp41/liuxinyu/20230129/1/index.html',
       title: 'OvO',
@@ -3144,42 +3152,45 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     },
     locales: {
       en: {
-        metaTitle: 'OvO Game: All Levels Tips, Controls & How to Beat Every Stage',
+        metaTitle: 'OvO Walkthrough: Level 46, Level Count & Movement Tips',
         metaDescription:
-          'A full OvO walkthrough — master the controls, learn the wall-jump and dive tricks, and clear all 60+ levels. Play OvO unblocked and free in your browser, no download required.',
-        heading: 'OvO Walkthrough: Controls, Tricks & Every Level',
-        subheading: 'Learn the dive-jump, wall-jump, and momentum tricks that clear all 60+ stages — plus speedrun tips.',
+          'Stuck in OvO? Get a version-aware level count, a concise Level 46 portal route, controls, dive-jump and wall-jump fixes, plus speedrun tips.',
+        heading: 'OvO Walkthrough: Level 46, Controls & Level Count',
+        subheading: 'Use the right movement chain, check which build you are playing, and follow the common Level 46 portal route.',
         overview: [
-          'OvO is a minimalist parkour platformer where a tiny stickman runs, jumps, slides, and wall-jumps through 60+ increasingly brutal levels. The controls are simple, but the game is built entirely around momentum — almost every hard level is a timing puzzle, not a reflex test.',
-          'This guide breaks down the moves that matter and the techniques that clear the stages players quit on. Play OvO free below, then use these tips to push past your wall.',
+          'OvO is a minimalist parkour platformer where a small runner jumps, slides, dives, and wall-jumps toward each flag. The official Dedra Games mobile listing says there are more than 50 levels, while browser editions and later community builds can show a different total or order. Check the version and obstacle layout before following a numbered solution.',
+          'This guide starts with the movement chain that solves most failed jumps, then gives a concise route for the commonly indexed Level 46 layout. Use the embedded player to compare the obstacles on your screen; if they do not match, use the mechanic-based fixes instead of forcing the wrong numbered route.',
         ],
         sections: [
           {
-            title: 'Controls & the Core Moves',
-            body: 'Use the arrow keys or WASD. Up jumps, down slides — and chaining those two is the whole game.',
+            title: 'Quick Fix: Preserve Momentum Before Changing the Route',
+            body: 'Most OvO failures come from entering an obstacle too slowly or spending the dive too early. Rebuild the run-up first, then change only one input at a time.',
             bullets: [
-              'Dive-jump: while running, press down to dive, then jump the instant you land for a big speed boost and longer leap.',
+              'Slide-jump: slide while running, then jump to carry speed across a longer gap.',
+              'Dive-bounce: press down in the air, then jump as you land to convert the dive into extra height.',
               'Wall jump: hold toward a wall and jump to kick off it; alternate walls to climb vertical shafts.',
-              'Slide under: tap down to duck through low gaps without losing speed.',
-              'Keep momentum: OvO never wants you to stop — the faster levels are easier at full speed than crawling.',
             ],
           },
           {
-            title: 'How to Beat the Hard Levels',
-            body: 'Most walls players hit are momentum or timing problems, not reflex ones. Slow down and read the pattern.',
+            title: 'How to Beat OvO Level 46 in the Common Browser Layout',
+            body: 'If your Level 46 starts with spikes, a spring, and portals, slide-jump over the first spikes and hit the spring. Enter the next portal, move carefully through the spike section, and use the walls as cover from the rockets.',
             bullets: [
-              'If a jump feels impossible, you almost always need a dive-jump for the extra distance, not a standing jump.',
-              'On moving-platform and swinging-blade levels, wait a full cycle and move on the rhythm.',
-              'Lost a hard section? Your speed entering it matters more than your timing inside it — fix the run-up.',
+              'At the first wall of three portals, take the bottom green portal.',
+              'At the next three-portal wall, take the middle red portal.',
+              'In the final room, use the blue portal and the right-side wall to arrive just above the flag.',
             ],
+          },
+          {
+            title: 'How Many Levels Are in OvO?',
+            body: 'There is no single reliable total across every copy in circulation. Dedra Games describes the official mobile release as having more than 50 levels. Browser hosts and community-enhanced versions may add, remove, or renumber sections, so the level selector and obstacle layout in your current build are the authoritative check.',
           },
           {
             title: 'Speedrunning & Hard Mode',
             body: 'OvO tracks your deaths and time, and there is a hard mode plus advanced replay options for runners. If you want faster times, the priority is never braking — link dive-jumps so you carry speed between obstacles instead of resetting it at every platform.',
           },
           {
-            title: 'Play OvO Unblocked & Free',
-            body: 'OvO is a lightweight HTML5 game that runs directly in your browser on desktop and mobile, with no download or account. Because it loads on restricted school and work networks, it is one of the most searched “unblocked” titles — just press play above.',
+            title: 'Browser and Mobile Notes',
+            body: 'OvO is available in browsers and as a Dedra Games mobile release. Touch controls and performance vary by device and host. Use a normal browser tab, avoid unofficial installers or extensions, and switch to keyboard controls when precise wall jumps feel inconsistent on touch.',
           },
         ],
         recommendations: [
@@ -3197,52 +3208,65 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           },
         ],
         faqs: [
-          { question: 'How many levels does OvO have?', answer: 'OvO has 60+ levels grouped into themed sections, each introducing a new mechanic and ramping up difficulty.' },
+          { question: 'How many levels does OvO have?', answer: 'Dedra Games says the official mobile release has more than 50 levels. Browser and community versions can use a different total or order, so check the level selector in the build you are playing.' },
+          { question: 'How do you beat Level 46 in OvO?', answer: 'For the common portal layout: slide-jump to the spring, use walls as rocket cover, choose the bottom green portal at the first three-portal wall, the middle red portal at the second, then use the blue portal and right wall to reach the flag. If your obstacles differ, your version has a different level order.' },
           { question: 'How do you jump higher in OvO?', answer: 'Use a dive-jump: press down to dive while running, then jump the moment you land. This carries your speed and gives you far more height and distance than a standing jump.' },
-          { question: 'Is OvO free and unblocked?', answer: 'Yes. OvO is a free HTML5 browser game with no downloads, and it runs on most school and work networks so you can play it unblocked here.' },
-          { question: 'Can I play OvO on mobile?', answer: 'Yes, OvO works in mobile browsers with on-screen touch controls.' },
+          { question: 'Why does an OvO walkthrough not match my level?', answer: 'Different browser hosts and game versions can renumber or add levels. Match the obstacles and section name, not only the number, before following a route.' },
+          { question: 'Can I play OvO on mobile?', answer: 'Yes. Dedra Games publishes a mobile version, and some browser builds provide touch controls. Precise movement may still feel easier with a keyboard.' },
+        ],
+        externalLinks: [
+          {
+            href: 'https://play.google.com/store/apps/details?id=com.dedra.ovo',
+            label: 'OvO by Dedra Games on Google Play',
+            description: 'Developer listing used to verify the official level-count wording, movement focus, speedrun design, skins, and achievements.',
+          },
+          {
+            href: 'https://www.coolmathgames.com/0-ovo',
+            label: 'OvO on Coolmath Games',
+            description: 'Publisher page used to cross-check current browser and mobile controls, including slide-jumps, dives, transparent platforms, and wall jumps.',
+          },
         ],
         ctaLabel: 'Play OvO now',
         ctaDescription: 'Jump into OvO free in your browser and put these tricks to work.',
       },
       zh: {
-        metaTitle: 'OvO 游戏:全关攻略、操作与每关通关技巧',
+        metaTitle: 'OvO 攻略:Level 46 过法、关卡数量与操作技巧',
         metaDescription:
-          '完整 OvO 攻略——吃透操作,学会蹬墙跳和俯冲技巧,通关全部 60+ 关。免下载,在浏览器免费玩 OvO,可在学校网络畅玩。',
-        heading: 'OvO 攻略:操作、技巧与每一关',
-        subheading: '学会俯冲跳、蹬墙跳和惯性技巧,通关全部 60+ 关——附速通技巧。',
+          'OvO 卡关解答:核对版本与关卡数量,查看常见 Level 46 传送门路线,并掌握滑跳、俯冲反弹、蹬墙跳和速通技巧。',
+        heading: 'OvO 攻略:Level 46、操作与关卡数量',
+        subheading: '先确认版本,再用正确动作链和常见 Level 46 传送门路线解决卡点。',
         overview: [
-          'OvO 是一款极简跑酷平台游戏,小火柴人在 60+ 越来越虐的关卡里奔跑、跳跃、滑行、蹬墙。操作很简单,但整个游戏都建立在“惯性”上——几乎每道难关都是时机谜题,而不是反应测试。',
-          '这份攻略拆解关键动作,以及能破掉玩家弃坑关卡的技巧。先在下方免费玩 OvO,卡住时再看技巧。',
+          'OvO 是一款极简跑酷平台游戏,角色需要跳跃、滑行、俯冲和蹬墙抵达旗帜。Dedra Games 官方移动版说明写的是“超过 50 关”,但不同浏览器版本和社区扩展版可能增删或重排关卡。因此看数字攻略前,先核对自己画面里的障碍布局。',
+          '本攻略先给出能解决大多数失败跳跃的动作链,再说明常见浏览器版 Level 46 的传送门路线。如果你的画面不一致,应按障碍类型找解法,不要硬套错误版本的关卡编号。',
         ],
         sections: [
           {
-            title: '操作与核心动作',
-            body: '用方向键或 WASD。上跳、下滑——把这两个连起来就是整个游戏。',
+            title: '快速解法:先恢复惯性,再改路线',
+            body: '多数卡点不是按键不够快,而是进障碍前速度不足或过早用掉俯冲。先重做助跑,每次失败只调整一个输入。',
             bullets: [
-              '俯冲跳:奔跑时按下俯冲,落地瞬间立刻跳,获得巨大加速和更远的跳跃。',
+              '滑跳:奔跑中滑行后立刻跳,把速度带过更长的缺口。',
+              '俯冲反弹:空中按下俯冲,落地瞬间跳,把俯冲转换成额外高度。',
               '蹬墙跳:贴墙按住方向并跳,蹬墙起跳;左右交替可爬上垂直竖井。',
-              '下滑钻过:点下蹲身,不掉速地钻过低矮缝隙。',
-              '保持惯性:OvO 永远不想让你停——高速关卡满速通过反而比慢慢挪更容易。',
             ],
           },
           {
-            title: '难关怎么过',
-            body: '玩家撞墙的关大多是惯性或时机问题,不是反应问题。慢下来,读懂规律。',
+            title: '常见浏览器版 OvO Level 46 怎么过',
+            body: '如果 Level 46 开场是尖刺、弹簧和传送门,先滑跳越过第一组尖刺并踩到弹簧。穿过传送门后慢慢处理下一段尖刺,把墙当作躲火箭的掩体。',
             bullets: [
-              '某个跳跃感觉不可能时,几乎都是需要俯冲跳来加距离,而不是站立跳。',
-              '移动平台和摆动锯片关,等一个完整周期,踩着节奏移动。',
-              '某段总失败?进入时的速度比段内的时机更重要——先修正助跑。',
+              '第一面三个传送门的墙,走底部绿色门。',
+              '第二面三个传送门的墙,走中间红色门。',
+              '最后房间走蓝色门,借右侧墙到达旗帜上方。',
             ],
+          },
+          {
+            title: 'OvO 到底有多少关?',
+            body: '不同版本没有唯一可靠的总数。Dedra Games 对官方移动版的表述是“超过 50 关”;浏览器站点或社区增强版可能增加、删减或重排章节。应以当前版本的选关界面和障碍布局为准。',
           },
           {
             title: '速通与困难模式',
             body: 'OvO 会记录你的死亡数和时间,还有困难模式和回放选项供速通玩家用。想刷更快的时间,首要原则是绝不刹车——把俯冲跳连起来,在障碍之间带着速度跑,而不是每个平台都重置。',
           },
-          {
-            title: '免费、在学校网络畅玩 OvO',
-            body: 'OvO 是轻量 HTML5 游戏,电脑手机浏览器直接运行,免下载、免账号。因为能在受限的学校和公司网络里加载,它是搜索量最大的“unblocked(无屏蔽)”游戏之一——直接点上方开玩。',
-          },
+          { title: '浏览器与手机注意事项', body: 'OvO 有浏览器版本和 Dedra Games 移动版。触屏操作与性能会因设备和承载站点而异;需要精准蹬墙时键盘通常更稳定。不要安装来路不明的安装包、扩展或所谓解锁工具。' },
         ],
         recommendations: [
           { slug: 'big-tower-tiny-square', pitch: '喜欢 OvO 的精准?Big Tower Tiny Square 是又虐又公平的垂直平台游戏,挠的是同一个痒处。' },
@@ -3250,10 +3274,23 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           { slug: 'tunnel-rush', pitch: '想在 OvO 之间纯拼反应?Tunnel Rush 让你冲进旋转的障碍隧道。' },
         ],
         faqs: [
-          { question: 'OvO 有多少关?', answer: 'OvO 有 60+ 关,分成多个主题章节,每章引入一个新机制并逐步加难。' },
+          { question: 'OvO 有多少关?', answer: 'Dedra Games 表示官方移动版有超过 50 关。浏览器版和社区版可能使用不同总数或顺序,请以当前版本选关界面为准。' },
+          { question: 'OvO Level 46 怎么过?', answer: '常见传送门布局的路线是:滑跳到弹簧,用墙躲火箭,第一面三门墙走底部绿色门,第二面走中间红色门,最后走蓝色门并借右墙到旗帜。如果障碍不同,说明你的版本关卡顺序不同。' },
           { question: 'OvO 怎么跳得更高?', answer: '用俯冲跳:奔跑时按下俯冲,落地瞬间立刻跳。这样能带着速度,获得比站立跳高得多、远得多的跳跃。' },
-          { question: 'OvO 免费吗?能在学校网络玩吗?', answer: '免费。OvO 是免下载的 HTML5 浏览器游戏,能在大多数学校和公司网络运行,可在本页畅玩。' },
-          { question: 'OvO 能在手机上玩吗?', answer: '可以,OvO 在手机浏览器里用触屏控制即可游玩。' },
+          { question: '为什么 OvO 攻略和我的关卡对不上?', answer: '不同承载站点和游戏版本可能重排或新增关卡。先匹配障碍和章节名,不要只按数字套路线。' },
+          { question: 'OvO 能在手机上玩吗?', answer: '可以。Dedra Games 发布了移动版,部分浏览器版本也有触屏操作;精准动作在键盘上通常更容易。' },
+        ],
+        externalLinks: [
+          {
+            href: 'https://play.google.com/store/apps/details?id=com.dedra.ovo',
+            label: 'Google Play 上的 Dedra Games OvO',
+            description: '用于核对官方关卡数量表述、移动机制、速通设计、皮肤和成就。',
+          },
+          {
+            href: 'https://www.coolmathgames.com/0-ovo',
+            label: 'Coolmath Games 的 OvO 页面',
+            description: '用于交叉核对当前浏览器和手机操作,包括滑跳、俯冲、透明平台与蹬墙。',
+          },
         ],
         ctaLabel: '立即开玩 OvO',
         ctaDescription: '在浏览器里免费玩 OvO,把这些技巧用起来。',
@@ -3484,9 +3521,15 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
   {
     slug: 'big-tower-tiny-square-walkthrough',
     primaryKeyword: 'big tower tiny square',
-    keywords: ['big tower tiny square', 'big tower tiny square walkthrough', 'big tower tiny square unblocked', 'how to beat big tower tiny square'],
+    keywords: [
+      'big tower tiny square',
+      'big tower tiny square walkthrough',
+      'how to beat big tower tiny square',
+      'how to save pineapple in big tower tiny square',
+      'big tower tiny square 2 walkthrough',
+    ],
     updatedAt: seoContentUpdatedAt,
-    relatedSlugs: ['ovo-walkthrough'],
+    relatedSlugs: ['ovo-walkthrough', 'games-like-ovo', 'games-to-play-when-bored'],
     embedGame: {
       iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp40/liuxinyu/20221028/1/index.html',
       title: 'Big Tower Tiny Square',
@@ -3494,19 +3537,19 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     },
     locales: {
       en: {
-        metaTitle: 'Big Tower Tiny Square Walkthrough: Tips, Controls & How to Beat It',
+        metaTitle: 'Big Tower Tiny Square Walkthrough: Save the Pineapple',
         metaDescription:
-          'A Big Tower Tiny Square walkthrough — controls, double-jump timing, and how to clear the hardest spike and laser sections. Play it free and unblocked in your browser.',
-        heading: 'Big Tower Tiny Square Walkthrough',
-        subheading: 'Climb the tower, rescue your pineapple, and survive every spike, laser, and fireball.',
+          'Climb the tower and save the Pineapple with practical double-jump, laser, moving-platform and checkpoint tips, plus guidance for Big Tower Tiny Square 2.',
+        heading: 'Big Tower Tiny Square Walkthrough: Save the Pineapple',
+        subheading: 'Fix the jump that keeps failing, climb to the summit, and use the same pattern-reading method in the sequel.',
         overview: [
           'Big Tower Tiny Square is a precision platformer where a tiny square climbs a deadly tower to rescue its pineapple from Big Square. It is famous for being hard but fair — every death teaches you the pattern, and generous checkpoints keep you moving.',
           'This guide covers the controls and the techniques that clear the sections players rage-quit on. Play it free below and climb.',
         ],
         sections: [
           {
-            title: 'Controls & the Double Jump',
-            body: 'Move with the arrow keys or WASD, and jump with X, the up arrow, or space. Your double jump is everything — you get a second jump in mid-air, and timing it correctly is the core skill.',
+            title: 'Quick Answer: Save the Second Jump',
+            body: 'To save the Pineapple, keep climbing toward the summit and treat each checkpoint as a separate timing puzzle. The most common mistake is spending the second jump immediately; hold it until the first jump reaches its apex or until the obstacle actually threatens you.',
             bullets: [
               'Save your second jump: do not waste the double jump early — hold it until you clear the obstacle.',
               'Tap vs hold: a short tap gives a small hop, holding gives full height. Many gaps need a precise small jump.',
@@ -3514,7 +3557,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             ],
           },
           {
-            title: 'Beating the Hard Sections',
+            title: 'How to Beat the Hard Spike, Laser and Platform Sections',
             body: 'The spike, laser, and moving-platform rooms are about rhythm and patience, not speed.',
             bullets: [
               'Lasers and fireballs fire on a fixed cycle — wait, watch one full loop, then move on the gap.',
@@ -3523,12 +3566,12 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             ],
           },
           {
-            title: 'Big Tower Tiny Square 2 & Spin-offs',
-            body: 'If you finish the original, there is a sequel (Big Tower Tiny Square 2) and related Tiny Square games with new towers and mechanics. The same patient, pattern-reading approach carries over.',
+            title: 'Big Tower Tiny Square 2 Walkthrough Basics',
+            body: 'The sequel changes tower layouts and hazard combinations, so an original-game room map will not match. The transferable method is to stop at each safe tile, watch one complete hazard cycle, test the first jump without spending the second, and then use the extra jump only to correct height or distance.',
           },
           {
-            title: 'Play Unblocked & Free',
-            body: 'Big Tower Tiny Square is a lightweight HTML5 game that runs in any browser with no download, including on restricted school and work networks. Press play above to start climbing.',
+            title: 'Safe Browser Play',
+            body: 'The developer EvilObjective publishes an official Big Tower Tiny Square page on itch.io. The Luma player is a browser embed; it does not require a plugin or executable. Leave any mirror that asks for an extension, installer, or unrelated permission.',
           },
         ],
         recommendations: [
@@ -3537,28 +3580,36 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           { slug: 'tunnel-rush', pitch: 'Tunnel Rush is a pure reflex palate cleanser between tower attempts.' },
         ],
         faqs: [
+          { question: 'How do you save the Pineapple in Big Tower Tiny Square?', answer: 'Keep climbing to the summit; the Pineapple is the objective, not a hidden collectible. Break the route into checkpoint-sized rooms, watch each hazard cycle, and save the second jump for the last correction instead of using it immediately.' },
           { question: 'How do you double jump in Big Tower Tiny Square?', answer: 'Press jump again while in mid-air. The trick is timing — save the second jump for the apex of your first jump to clear the longest gaps.' },
           { question: 'Is Big Tower Tiny Square hard?', answer: 'It is challenging but fair, with frequent checkpoints so deaths cost only a few seconds. Most hard sections are timing puzzles you learn by repetition.' },
-          { question: 'Is there a Big Tower Tiny Square 2?', answer: 'Yes, there is a sequel with new towers and mechanics, plus related Tiny Square games. The same techniques apply.' },
-          { question: 'Is it free and unblocked?', answer: 'Yes. It is a free HTML5 browser game with no download and runs on most restricted networks, so you can play it unblocked here.' },
+          { question: 'Is there a Big Tower Tiny Square 2 walkthrough?', answer: 'The sequel uses different rooms, but the same checkpoint method works: observe a full cycle, test the first jump, and reserve the second jump for a height or distance correction.' },
+          { question: 'Do I need to download Big Tower Tiny Square?', answer: 'No download is needed for the browser player on this page. The developer also maintains an official itch.io page; avoid unofficial installers and browser extensions.' },
+        ],
+        externalLinks: [
+          {
+            href: 'https://evilobjective.itch.io/bigtowertinysquarefree',
+            label: 'Big Tower Tiny Square by EvilObjective',
+            description: 'Official developer page used to verify the creator, rescue-the-Pineapple objective, release status, and platformer tags.',
+          },
         ],
         ctaLabel: 'Play Big Tower Tiny Square now',
         ctaDescription: 'Start the climb free in your browser.',
       },
       zh: {
-        metaTitle: 'Big Tower Tiny Square 攻略:操作、技巧与通关方法',
+        metaTitle: 'Big Tower Tiny Square 攻略:怎么救菠萝与通关技巧',
         metaDescription:
-          'Big Tower Tiny Square 攻略——操作、二段跳时机,以及如何过最难的尖刺和激光段。免费、无屏蔽在浏览器畅玩。',
-        heading: 'Big Tower Tiny Square 攻略',
-        subheading: '爬塔、救回你的菠萝,扛过每一处尖刺、激光和火球。',
+          'Big Tower Tiny Square 通关攻略:用二段跳、激光周期、移动平台和存档点技巧爬上塔顶救回菠萝,并附续作通用打法。',
+        heading: 'Big Tower Tiny Square 攻略:怎么救回菠萝',
+        subheading: '修正最常见的二段跳错误,逐个存档点爬到塔顶,并把读规律方法用于续作。',
         overview: [
           'Big Tower Tiny Square 是一款精准平台游戏,小方块爬上致命高塔,从大方块手里救回菠萝。它以“又难又公平”著称——每次死亡都在教你规律,而密集的存档点让你不断前进。',
           '这份攻略讲操作,以及能破掉玩家暴怒退出段落的技巧。先在下方免费玩,开爬。',
         ],
         sections: [
           {
-            title: '操作与二段跳',
-            body: '用方向键或 WASD 移动,X、上方向键或空格跳。二段跳就是一切——空中能再跳一次,把时机掐准是核心技能。',
+            title: '快速答案:留住第二跳',
+            body: '想救回菠萝,就要持续向塔顶推进,把每个存档点后的房间当成独立时机题。最常见错误是刚起跳就用掉第二跳;应等第一跳到最高点,或障碍真正逼近时再修正。',
             bullets: [
               '留住第二跳:别太早浪费二段跳——憋到越过障碍再用。',
               '点跳 vs 长按:轻点小跳,长按全高。很多缝隙需要精准的小跳。',
@@ -3566,7 +3617,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             ],
           },
           {
-            title: '难段怎么过',
+            title: '尖刺、激光和移动平台难段怎么过',
             body: '尖刺、激光、移动平台房靠节奏和耐心,不是速度。',
             bullets: [
               '激光和火球按固定周期发射——等一等,看完一个完整循环,踩空档过。',
@@ -3574,8 +3625,8 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               '某个跳觉得太远时,几乎都是要在最高点二段跳,而不是起跳时就跳。',
             ],
           },
-          { title: 'Big Tower Tiny Square 2 与衍生作', body: '通关原版后,有续作(Big Tower Tiny Square 2)和相关的 Tiny Square 系列,带新塔和新机制。同样的耐心读规律打法通用。' },
-          { title: '免费、无屏蔽畅玩', body: 'Big Tower Tiny Square 是轻量 HTML5 游戏,任何浏览器免下载运行,包括受限的学校和公司网络。点上方开始爬塔。' },
+          { title: 'Big Tower Tiny Square 2 攻略基础', body: '续作的房间和障碍组合不同,原版房间路线不能直接套用。通用方法是停在安全格看完一个完整周期,第一次只测试基础跳,确认高度或距离不足后才在下一次用第二跳修正。' },
+          { title: '安全浏览器游玩', body: '开发者 EvilObjective 在 itch.io 维护官方页面。Luma 使用浏览器嵌入,不要求插件或可执行安装包;遇到要求扩展、安装器或无关权限的镜像应直接离开。' },
         ],
         recommendations: [
           { slug: 'ovo', pitch: 'OvO 是另一款必玩精准平台游戏——更快、更靠惯性。' },
@@ -3583,10 +3634,18 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           { slug: 'tunnel-rush', pitch: 'Tunnel Rush 是爬塔之间纯反应的清口小游戏。' },
         ],
         faqs: [
+          { question: 'Big Tower Tiny Square 怎么救菠萝?', answer: '持续爬到塔顶即可推进救菠萝目标,菠萝不是藏在支路里的收集品。把路线拆成一个个存档点房间,先看障碍周期,并把第二跳留到最后修正。' },
           { question: 'Big Tower Tiny Square 怎么二段跳?', answer: '空中再按一次跳。诀窍在时机——把第二跳留到第一跳的最高点,用来越过最长的缝隙。' },
           { question: 'Big Tower Tiny Square 难吗?', answer: '有挑战但公平,存档点密集,死亡只损失几秒。大多数难段是靠反复练习掌握的时机谜题。' },
-          { question: '有 Big Tower Tiny Square 2 吗?', answer: '有,续作带新塔和新机制,还有相关的 Tiny Square 系列。同样的技巧通用。' },
-          { question: '免费、无屏蔽吗?', answer: '是。它是免下载的 HTML5 浏览器游戏,能在大多数受限网络运行,可在本页畅玩。' },
+          { question: 'Big Tower Tiny Square 2 怎么过?', answer: '续作房间不同,但可沿用存档点打法:看完一个障碍周期,先测试基础跳,再把第二跳用于修正高度或距离。' },
+          { question: 'Big Tower Tiny Square 需要下载吗?', answer: '本页浏览器播放器无需下载。开发者也有 itch.io 官方页面;不要安装非官方安装器或浏览器扩展。' },
+        ],
+        externalLinks: [
+          {
+            href: 'https://evilobjective.itch.io/bigtowertinysquarefree',
+            label: 'EvilObjective 的 Big Tower Tiny Square 官方页',
+            description: '用于核对开发者、救菠萝目标、发布状态和平台游戏标签。',
+          },
         ],
         ctaLabel: '立即开玩 Big Tower Tiny Square',
         ctaDescription: '在浏览器里免费开爬。',

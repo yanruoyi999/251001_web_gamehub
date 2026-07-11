@@ -6,6 +6,11 @@ import {
   shouldSkipSupabaseDirectInServerless,
 } from '@/lib/db/connection-policy';
 import { getClientIp } from '@/lib/http/client-ip';
+import { isLocalCatalogueMode } from '@/lib/games/catalog-mode';
+
+function localCatalogueResponse() {
+  return NextResponse.json({ error: 'Not found' }, { status: 404 });
+}
 
 function parseGameId(value: unknown): number | null {
   const parsed = typeof value === 'number' ? value : typeof value === 'string' ? Number(value) : NaN;
@@ -23,6 +28,8 @@ function canPersistFavorites() {
 }
 
 export async function GET(request: NextRequest) {
+  if (isLocalCatalogueMode()) return localCatalogueResponse();
+
   const { searchParams } = new URL(request.url);
   const gameIdParam = searchParams.get('gameId');
 
@@ -56,6 +63,8 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  if (isLocalCatalogueMode()) return localCatalogueResponse();
+
   let body: unknown;
   try {
     body = await request.json();

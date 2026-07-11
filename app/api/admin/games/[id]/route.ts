@@ -3,8 +3,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import { GameService } from '@/services';
 import { isAdminRequestAuthenticated } from '@/lib/auth/admin';
 import { isValidHttpsUrl } from '@/lib/utils/validation';
+import { isLocalCatalogueMode } from '@/lib/games/catalog-mode';
 
 export async function PATCH(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  if (isLocalCatalogueMode()) {
+    return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  }
+
   if (!isAdminRequestAuthenticated(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }

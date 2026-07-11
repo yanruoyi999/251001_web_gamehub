@@ -7,6 +7,7 @@ import {
 } from '@/lib/auth/admin';
 import { getClientIp } from '@/lib/http/client-ip';
 import { hashIp } from '@/lib/utils/hash';
+import { isLocalCatalogueMode } from '@/lib/games/catalog-mode';
 
 const MAX_FAILED_ATTEMPTS = 5;
 const LOGIN_WINDOW_MS = 15 * 60 * 1000;
@@ -54,6 +55,10 @@ function recordFailedAttempt(key: string, now = Date.now()) {
 }
 
 export async function POST(request: Request) {
+  if (isLocalCatalogueMode()) {
+    return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  }
+
   const clientKey = getClientKey(request);
   const activeAttempt = getActiveAttempt(clientKey);
 

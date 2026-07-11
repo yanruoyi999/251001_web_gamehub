@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { RatingService } from '@/services';
 import { isAdminRequestAuthenticated } from '@/lib/auth/admin';
+import { isLocalCatalogueMode } from '@/lib/games/catalog-mode';
 
 function parseId(value: string): number | null {
   const id = Number(value);
@@ -12,6 +13,10 @@ export async function PATCH(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
+  if (isLocalCatalogueMode()) {
+    return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  }
+
   if (!isAdminRequestAuthenticated(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }

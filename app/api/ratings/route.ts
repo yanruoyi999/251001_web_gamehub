@@ -3,6 +3,11 @@ import { RatingService } from '@/services';
 import { MAX_RATING_COMMENT_LENGTH } from '@/services/rating.service';
 import { getClientIp } from '@/lib/http/client-ip';
 import { isValidId, isValidRating, validatePagination } from '@/lib/utils/validation';
+import { isLocalCatalogueMode } from '@/lib/games/catalog-mode';
+
+function localCatalogueResponse() {
+  return NextResponse.json({ error: 'Not found' }, { status: 404 });
+}
 
 function parseInteger(value: string | null): number | undefined {
   if (!value) return undefined;
@@ -11,6 +16,8 @@ function parseInteger(value: string | null): number | undefined {
 }
 
 export async function GET(request: NextRequest) {
+  if (isLocalCatalogueMode()) return localCatalogueResponse();
+
   const { searchParams } = new URL(request.url);
   const gameId = Number(searchParams.get('gameId'));
 
@@ -39,6 +46,8 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  if (isLocalCatalogueMode()) return localCatalogueResponse();
+
   let body: unknown;
   try {
     body = await request.json();
