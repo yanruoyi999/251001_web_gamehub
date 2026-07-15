@@ -1,8 +1,10 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { getLocalizedPath } from '@/i18n/config';
+import { getLocalizedPath, locales } from '@/i18n/config';
+import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES } from '@/lib/seo';
 import { searchFallbackGames } from '@/lib/games/fallback-search';
 import { SearchService } from '@/services';
 
@@ -11,6 +13,53 @@ export const dynamic = 'force-dynamic';
 interface SearchPageProps {
   params: Promise<{ locale: string }>;
   searchParams: Promise<{ q?: string; page?: string }>;
+}
+
+export async function generateMetadata({ params }: Pick<SearchPageProps, 'params'>): Promise<Metadata> {
+  const { locale: localeParam } = await params;
+  const locale = localeParam === 'zh' ? 'zh' : 'en';
+  const isZh = locale === 'zh';
+  const canonical = getLocalizedPath(locale, '/search');
+
+  return {
+    title: isZh ? '站内搜索' : 'Search Luma Game Hub',
+    description: isZh
+      ? '搜索 Luma Game Hub 的浏览器游戏和实用攻略。搜索结果页不作为独立索引页面。'
+      : 'Search Luma Game Hub for browser games and practical guides. Search result pages are not standalone index targets.',
+    alternates: {
+      canonical,
+      languages: {
+        ...Object.fromEntries(
+          locales.map((loc) => [
+            loc === 'zh' ? 'zh-CN' : 'en-US',
+            getLocalizedPath(loc, '/search'),
+          ]),
+        ),
+        'x-default': '/en/search',
+      },
+    },
+    robots: {
+      index: false,
+      follow: true,
+    },
+    openGraph: {
+      title: isZh ? '站内搜索' : 'Search Luma Game Hub',
+      description: isZh
+        ? '搜索 Luma Game Hub 的浏览器游戏和实用攻略。'
+        : 'Search Luma Game Hub for browser games and practical guides.',
+      url: canonical,
+      type: 'website',
+      images: DEFAULT_OPEN_GRAPH_IMAGES,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: isZh ? '站内搜索' : 'Search Luma Game Hub',
+      description: isZh
+        ? '搜索 Luma Game Hub 的浏览器游戏和实用攻略。'
+        : 'Search Luma Game Hub for browser games and practical guides.',
+      images: DEFAULT_TWITTER_IMAGES,
+    },
+  };
 }
 
 async function safeSearchGames(query: string, page: number) {
@@ -108,8 +157,6 @@ export default async function SearchPage({ params, searchParams }: SearchPagePro
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-2 text-sm text-gray-600">
-                    <p>{t('playCount', { value: formatNumber(game.playCount ?? 0) })}</p>
-                    <p>{t('rating', { value: Number(game.averageRating ?? 0).toFixed(2) })}</p>
                     <Link
                       href={gameHref}
                       className="inline-flex text-sm font-medium text-indigo-600 hover:text-indigo-500"

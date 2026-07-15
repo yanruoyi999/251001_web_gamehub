@@ -1,5 +1,5 @@
 import { mockGames } from '@/lib/mock-games';
-import { isGameUnderManualReview, shouldPromoteGameInCollections } from '@/lib/games/quality-policy';
+import { shouldPromoteGameInCollections } from '@/lib/games/quality-policy';
 import { sanitizeSearchQuery, validatePagination } from '@/lib/utils/validation';
 
 export type FallbackGameSortBy = 'publishedAt' | 'playCount' | 'averageRating' | 'title';
@@ -19,18 +19,6 @@ export interface FallbackGameListOptions {
   isHot?: boolean;
   onlyFavorites?: boolean;
   favoriteGameIds?: number[];
-}
-
-function mockPublishedAt(gameId: number) {
-  return new Date(Date.UTC(2026, 0, 1) - gameId * 24 * 60 * 60 * 1000);
-}
-
-function mockPlayCount(gameId: number, isHot: boolean) {
-  return 1000 + gameId * 37 + (isHot ? 5000 : 0);
-}
-
-function mockAverageRating(gameId: number) {
-  return (4.05 + (gameId % 8) * 0.08).toFixed(2);
 }
 
 function normalizeText(value: string | null | undefined) {
@@ -57,7 +45,7 @@ export function listFallbackGames(options: FallbackGameListOptions = {}) {
   const favoriteSet = new Set(favoriteIds);
   const normalizedQuery = sanitizeSearchQuery(options.search ?? '').toLowerCase();
   const searchTokens = normalizedQuery.split(' ').filter(Boolean);
-  const sortBy = options.sortBy ?? 'publishedAt';
+  const sortBy = options.sortBy === 'title' ? 'title' : 'catalogue';
   const sortOrder = options.sortOrder ?? (sortBy === 'title' ? 'asc' : 'desc');
   const direction = sortOrder === 'asc' ? 1 : -1;
 
@@ -72,13 +60,10 @@ export function listFallbackGames(options: FallbackGameListOptions = {}) {
   const rows = mockGames
     .filter((game) => {
       const promoted = shouldPromoteGameInCollections(game.slug);
-      if (isGameUnderManualReview(game.slug)) return false;
+      if (!promoted) return false;
       if (typeof options.featured === 'boolean' && promoted && game.featured !== options.featured) return false;
-      if (typeof options.featured === 'boolean' && !promoted && options.featured) return false;
       if (typeof options.isNew === 'boolean' && promoted && game.isNew !== options.isNew) return false;
-      if (typeof options.isNew === 'boolean' && !promoted && options.isNew) return false;
       if (typeof options.isHot === 'boolean' && promoted && game.isHot !== options.isHot) return false;
-      if (typeof options.isHot === 'boolean' && !promoted && options.isHot) return false;
       if (options.onlyFavorites && !favoriteSet.has(game.id)) return false;
       if (options.categoryId && !game.categories.some((category) => category.id === options.categoryId)) return false;
       if (options.tagId && !game.tags.some((tag) => tag.id === options.tagId)) return false;
@@ -90,27 +75,26 @@ export function listFallbackGames(options: FallbackGameListOptions = {}) {
 
       return true;
     })
-    .map((game) => ({
-      id: game.id,
-      title: game.title,
-      titleEn: game.titleEn,
-      slug: game.slug,
-      status: 'active',
-      thumbnailUrl: game.thumbnailUrl,
-      featured: shouldPromoteGameInCollections(game.slug) && game.featured,
-      isNew: shouldPromoteGameInCollections(game.slug) && game.isNew,
-      isHot: shouldPromoteGameInCollections(game.slug) && game.isHot,
-      publishedAt: mockPublishedAt(game.id),
-      playCount: mockPlayCount(game.id, shouldPromoteGameInCollections(game.slug) && game.isHot),
-      averageRating: mockAverageRating(game.id),
-      isFavorite: favoriteSet.has(game.id),
-    }));
+    .map((game, index) => {
+      const promoted = shouldPromoteGameInCollections(game.slug);
+      return {
+        id: game.id,
+        title: game.title,
+        titleEn: game.titleEn,
+        slug: game.slug,
+        status: 'active',
+        thumbnailUrl: game.thumbnailUrl,
+        featured: promoted && game.featured,
+        isNew: promoted && game.isNew,
+        isHot: promoted && game.isHot,
+        isFavorite: favoriteSet.has(game.id),
+        catalogueRank: index,
+      };
+    });
 
   rows.sort((a, b) => {
     if (sortBy === 'title') return a.title.localeCompare(b.title) * direction;
-    if (sortBy === 'playCount') return (Number(a.playCount) - Number(b.playCount)) * direction;
-    if (sortBy === 'averageRating') return (Number(a.averageRating) - Number(b.averageRating)) * direction;
-    return (a.publishedAt.getTime() - b.publishedAt.getTime()) * direction;
+    return (a.catalogueRank - b.catalogueRank) * direction;
   });
 
   const total = rows.length;
@@ -119,7 +103,7 @@ export function listFallbackGames(options: FallbackGameListOptions = {}) {
   const offset = (currentPage - 1) * limit;
 
   return {
-    games: rows.slice(offset, offset + limit),
+    games: rows.slice(offset, offset + limit).map(({ catalogueRank, ...game }) => game),
     total,
     page: currentPage,
     limit,

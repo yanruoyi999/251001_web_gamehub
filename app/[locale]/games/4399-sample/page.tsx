@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
+import { notFound } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -13,6 +14,10 @@ interface PageProps {
 export const dynamic = 'force-dynamic';
 
 export default async function Imported4399SamplePage({ params }: PageProps) {
+  if (process.env.NODE_ENV === 'production') {
+    notFound();
+  }
+
   const { locale } = await params;
   const t = await getTranslations('Imported4399');
   const games = await loadImported4399Games(6);

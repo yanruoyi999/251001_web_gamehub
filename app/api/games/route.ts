@@ -72,6 +72,10 @@ function parseBoolean(value: string | null) {
   return undefined;
 }
 
+function localCatalogueResponse() {
+  return NextResponse.json({ error: 'Not found' }, { status: 404 });
+}
+
 function positiveIntegerArray(value: unknown): number[] | undefined {
   if (!Array.isArray(value)) return undefined;
   return Array.from(
@@ -143,6 +147,8 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  if (isLocalCatalogueMode()) return localCatalogueResponse();
+
   if (!isAdminRequestAuthenticated(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }

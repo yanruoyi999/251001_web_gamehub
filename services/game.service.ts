@@ -61,9 +61,9 @@ export type GameListItem = {
   featured: boolean | null;
   isNew: boolean | null;
   isHot: boolean | null;
-  publishedAt: Date;
-  playCount: number | null;
-  averageRating: string | null;
+  publishedAt?: Date;
+  playCount?: number | null;
+  averageRating?: string | null;
   isFavorite: boolean;
 };
 

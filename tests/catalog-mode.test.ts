@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
+import { getDatabaseConnectionMetadata } from '@/lib/db/connection-policy';
 import * as catalogMode from '@/lib/games/catalog-mode';
 
 describe('catalogue UI capabilities', () => {
@@ -57,5 +58,29 @@ describe('catalogue UI capabilities', () => {
       showPublishedDates: true,
       favoriteStorage: 'remote-with-local-fallback',
     });
+  });
+
+  it('never reads the remote catalogue database in local mode', () => {
+    expect(catalogMode).toHaveProperty('shouldUseCatalogueDatabase');
+
+    const shouldUseCatalogueDatabase = (catalogMode as {
+      shouldUseCatalogueDatabase: (
+        connection: ReturnType<typeof getDatabaseConnectionMetadata>,
+        env: NodeJS.ProcessEnv,
+      ) => boolean;
+    }).shouldUseCatalogueDatabase;
+    const connection = getDatabaseConnectionMetadata(
+      'postgresql://user:password@example.com:5432/gamehub',
+      { ...process.env, VERCEL: '1' },
+    );
+
+    expect(
+      shouldUseCatalogueDatabase(connection, {
+        ...process.env,
+        GAME_CATALOG_MODE: 'local',
+        GAME_DETAIL_ALLOW_SUPABASE_DIRECT_IN_SERVERLESS: 'true',
+        GAME_LIST_ALLOW_SUPABASE_DIRECT_IN_SERVERLESS: 'true',
+      }),
+    ).toBe(false);
   });
 });

@@ -6,7 +6,6 @@ export const dynamic = 'force-static';
 const priorityPages = [
   '/',
   '/games',
-  '/search',
   '/guides',
   '/guides/free-games-no-ads',
   '/guides/games-to-play-when-bored',
@@ -36,7 +35,7 @@ export function GET() {
     ]),
     '',
     'Content notes:',
-    '- Game pages include playable iframe entries, descriptions, ratings, categories, tags, and related navigation.',
+    '- Game pages include playable iframe entries where source review allows it, original descriptions, categories, tags, and related navigation.',
     '- Guide pages target specific game and search-intent questions with practical tips, FAQs, and internal links.',
     '- The site supports zh and en localized paths with canonical and hreflang metadata.',
   ];

@@ -1,5 +1,5 @@
 import { mockGames } from '@/lib/mock-games';
-import { isGameUnderManualReview, shouldPromoteGameInCollections } from '@/lib/games/quality-policy';
+import { shouldPromoteGameInCollections } from '@/lib/games/quality-policy';
 import { sanitizeSearchQuery, validatePagination } from '@/lib/utils/validation';
 
 export interface FallbackSearchOptions {
@@ -9,18 +9,6 @@ export interface FallbackSearchOptions {
 }
 
 type MockGame = (typeof mockGames)[number];
-
-function mockPublishedAt(gameId: number) {
-  return new Date(Date.UTC(2026, 0, 1) - gameId * 24 * 60 * 60 * 1000).toISOString();
-}
-
-function mockPlayCount(gameId: number, isHot: boolean) {
-  return 1000 + gameId * 37 + (isHot ? 5000 : 0);
-}
-
-function mockAverageRating(gameId: number) {
-  return Number((4.05 + (gameId % 8) * 0.08).toFixed(2));
-}
 
 function normalizeText(value: string | null | undefined) {
   return (value ?? '').toLowerCase();
@@ -83,14 +71,14 @@ export function searchFallbackGames({ query, page = 1, limit = 20 }: FallbackSea
   }
 
   const rows = mockGames
-    .filter((game) => !isGameUnderManualReview(game.slug))
+    .filter((game) => shouldPromoteGameInCollections(game.slug))
     .map((game) => ({ game, score: scoreGame(game, normalizedQuery, tokens) }))
     .filter(({ score }) => score > 0)
     .sort((a, b) =>
       b.score - a.score ||
       Number(b.game.isHot) - Number(a.game.isHot) ||
       Number(b.game.featured) - Number(a.game.featured) ||
-      mockPlayCount(b.game.id, b.game.isHot) - mockPlayCount(a.game.id, a.game.isHot),
+      a.game.title.localeCompare(b.game.title),
     )
     .map(({ game }) => ({
       id: game.id,
@@ -101,9 +89,6 @@ export function searchFallbackGames({ query, page = 1, limit = 20 }: FallbackSea
       thumbnailUrl: game.thumbnailUrl,
       isNew: shouldPromoteGameInCollections(game.slug) && game.isNew,
       isHot: shouldPromoteGameInCollections(game.slug) && game.isHot,
-      playCount: mockPlayCount(game.id, shouldPromoteGameInCollections(game.slug) && game.isHot),
-      averageRating: mockAverageRating(game.id),
-      publishedAt: mockPublishedAt(game.id),
     }));
 
   const total = rows.length;

@@ -321,6 +321,13 @@ NEXT_PUBLIC_ADSENSE_CLIENT=ca-pub-xxxxxxxxxxxxxxxx
 NEXT_PUBLIC_GOOGLE_ADSENSE_ACCOUNT=ca-pub-xxxxxxxxxxxxxxxx
 ```
 
+#### 当前接入准备状态（2026-07-04）
+
+- 当前代码和生产 HTML 尚未检测到 `adsbygoogle` script、`google-adsense-account` meta 或真实 `ca-pub-...` publisher ID。
+- 在用户提供真实 AdSense publisher ID 前，禁止写入占位 ID、伪造 `ads.txt` seller line 或上线任何广告容器。
+- 用户需要提供的最小信息：AdSense 后台显示的 publisher ID，格式应为 `ca-pub-xxxxxxxxxxxxxxxx`。
+- 拿到真实 ID 后，先写入 Vercel Production/Preview/Development 环境变量，再在 root layout 中按 production 环境条件输出一次 meta/script，并用生产 HTML 抽查确认没有重复加载。
+
 在 root layout 或 locale layout 的 `<head>` 内输出：
 
 ```html

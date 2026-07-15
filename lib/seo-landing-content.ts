@@ -496,11 +496,11 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ],
         recommendations: [
           {
-            slug: 'slimetris',
-            pitch: 'Slimetris turns block placement into a compact puzzle that loads quickly and is easy to replay.',
+            slug: 'drive-mad',
+            pitch: 'Drive Mad turns quick retries into compact physics-driving puzzles when you want more motion.',
           },
           {
-            slug: 'string-theory-remastered',
+            slug: 'string-theory-2-remastered',
             pitch: 'A compact timing puzzle that rewards calm observation instead of frantic clicking.',
           },
           {
@@ -508,8 +508,8 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             pitch: 'A familiar score-chasing loop with instant restarts and no long tutorial.',
           },
           {
-            slug: 'hexoboy',
-            pitch: 'A small puzzle-platform challenge when you want movement and problem solving in one short session.',
+            slug: 'big-tower-tiny-square',
+            pitch: 'A small precision-platform challenge when you want movement and problem solving in one short session.',
           },
         ],
         faqs: [
@@ -526,7 +526,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           {
             question: 'Which game is best for a five-minute break?',
             answer:
-              'Try Google Snake or Merge Grabber for a fast reset. If you want a calmer challenge, String Theory Remastered rewards slower observation.',
+              'Try Google Snake or Drive Mad for a fast reset. If you want a calmer challenge, String Theory 2 Remastered rewards slower observation.',
           },
         ],
         ctaLabel: 'View more boredom busters',
@@ -563,11 +563,11 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ],
         recommendations: [
           {
-            slug: 'slimetris',
-            pitch: 'Slimetris 把方块摆放压缩成紧凑谜题，加载快、单局短，适合迅速切换状态。',
+            slug: 'drive-mad',
+            pitch: 'Drive Mad 把快速重试变成紧凑的物理驾驶谜题，适合想要更多运动感时打开。',
           },
           {
-            slug: 'string-theory-remastered',
+            slug: 'string-theory-2-remastered',
             pitch: '需要观察时机的紧凑谜题，适合从慌乱切换到冷静思考。',
           },
           {
@@ -575,8 +575,8 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             pitch: '规则熟悉、重开迅速，不需要长教程就能开始刷分。',
           },
           {
-            slug: 'hexoboy',
-            pitch: '把移动和解谜放进短关卡，适合想动手又想动脑的空档。',
+            slug: 'big-tower-tiny-square',
+            pitch: '把精准移动和路线判断放进短关卡，适合想动手又想动脑的空档。',
           },
         ],
         faqs: [
@@ -1482,14 +1482,14 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               'Drive Mad is another car-themed challenge, but the skill shifts from roundabout timing to physics balance.',
           },
           {
-            slug: 'string-theory-remastered',
+            slug: 'string-theory-2-remastered',
             pitch:
-              'String Theory Remastered is a slower timing puzzle when you want planning instead of traffic pressure.',
+              'String Theory 2 Remastered is a slower timing puzzle when you want planning instead of traffic pressure.',
           },
           {
-            slug: 'slimetris',
+            slug: 'google-snake',
             pitch:
-              'Slimetris keeps the short-session retry loop but shifts the challenge to clean block placement.',
+              'Google Snake keeps the short-session retry loop but shifts the challenge to clean route planning.',
           },
         ],
         faqs: [
@@ -1587,12 +1587,12 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             pitch: 'Drive Mad 同样是车辆主题，但考验从圆环时机切换到物理平衡。',
           },
           {
-            slug: 'string-theory-remastered',
-            pitch: 'String Theory Remastered 节奏更慢，适合从交通反应切换到观察和规划。',
+            slug: 'string-theory-2-remastered',
+            pitch: 'String Theory 2 Remastered 节奏更慢，适合从交通反应切换到观察和规划。',
           },
           {
-            slug: 'slimetris',
-            pitch: 'Slimetris 同样适合短局重试，但把挑战换成清晰的方块摆放。',
+            slug: 'google-snake',
+            pitch: 'Google Snake 同样适合短局重试，但把挑战换成清晰的路线规划。',
           },
         ],
         faqs: [
@@ -2593,19 +2593,19 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ],
         recommendations: [
           {
-            slug: 'string-theory-remastered',
+            slug: 'drive-mad',
             pitch:
-              'Start with the first String Theory Remastered if you want the gentler introduction before the sequel.',
+              'Try Drive Mad when you want another short physics challenge with a clear retry loop.',
           },
           {
-            slug: 'slimetris',
+            slug: 'google-snake',
             pitch:
-              'A compact block puzzle when you want planning instead of physics timing.',
+              'A compact score puzzle when you want planning and route control instead of physics timing.',
           },
           {
-            slug: 'hexoboy',
+            slug: 'big-tower-tiny-square',
             pitch:
-              'A fast pattern game if you like compact puzzles with instant retries.',
+              'A precision platformer if you like compact challenges with instant retries.',
           },
         ],
         faqs: [
@@ -2673,19 +2673,19 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ],
         recommendations: [
           {
-            slug: 'string-theory-remastered',
+            slug: 'drive-mad',
             pitch:
-              '想更平缓入门,先玩第一部 String Theory Remastered。',
+              '想换成另一种短局物理挑战,可以玩 Drive Mad。',
           },
           {
-            slug: 'slimetris',
+            slug: 'google-snake',
             pitch:
-              '想要更明确的逻辑规划,Slimetris 比物理时机更适合。',
+              '想要更明确的路线规划,Google Snake 比物理时机更适合。',
           },
           {
-            slug: 'hexoboy',
+            slug: 'big-tower-tiny-square',
             pitch:
-              '想要即时重试和图形规律,Hexoboy 是更快节奏的选择。',
+              '想要即时重试和精准平台挑战,Big Tower Tiny Square 是更快节奏的选择。',
           },
         ],
         faqs: [
@@ -3456,7 +3456,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         recommendations: [
           { slug: 'drive-mad', pitch: 'Want a quick action break from managing the shop? Drive Mad is a snappy physics-driving challenge.' },
           { slug: 'ovo', pitch: 'OvO is a fast parkour platformer for when you want reflexes instead of idle management.' },
-          { slug: 'slimetris', pitch: 'For another satisfying upgrade loop, Slimetris offers compact block puzzles with the same “just one more” pull.' },
+          { slug: 'google-snake', pitch: 'For another satisfying short loop, Google Snake offers quick score chasing with the same “just one more” pull.' },
         ],
         faqs: [
           { question: 'How do you unlock everything in Monkey Mart?', answer: 'Keep stocking shelves and serving customers to earn money, then reinvest it into appliances, aisles, and staff. Once everything in your current mart is unlocked, you can move to a new mart.' },
@@ -3505,7 +3505,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         recommendations: [
           { slug: 'drive-mad', pitch: '想从经营里抽空玩点动作?Drive Mad 是干脆利落的物理驾驶挑战。' },
           { slug: 'ovo', pitch: 'OvO 是快节奏跑酷平台游戏,想要反应而非放置经营时选它。' },
-          { slug: 'slimetris', pitch: '想要另一种轻量成长循环,Slimetris 用紧凑方块谜题带来同样上瘾的“再来一局”。' },
+          { slug: 'google-snake', pitch: '想要另一种轻量短局循环,Google Snake 用刷分路线带来同样上瘾的“再来一局”。' },
         ],
         faqs: [
           { question: 'Monkey Mart 怎么解锁全部?', answer: '持续上货架、招待顾客赚钱,再把钱投回器械、货道和员工。当前超市全部解锁后,就能开新超市。' },
@@ -3529,7 +3529,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       'big tower tiny square 2 walkthrough',
     ],
     updatedAt: seoContentUpdatedAt,
-    relatedSlugs: ['ovo-walkthrough', 'games-like-ovo', 'games-to-play-when-bored'],
+    relatedSlugs: ['big-tower-tiny-square-2-walkthrough', 'ovo-walkthrough', 'games-like-ovo', 'games-to-play-when-bored'],
     embedGame: {
       iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp40/liuxinyu/20221028/1/index.html',
       title: 'Big Tower Tiny Square',
@@ -3649,6 +3649,191 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ],
         ctaLabel: '立即开玩 Big Tower Tiny Square',
         ctaDescription: '在浏览器里免费开爬。',
+      },
+    },
+  },
+  {
+    slug: 'big-tower-tiny-square-2-walkthrough',
+    primaryKeyword: 'big tower tiny square 2 walkthrough',
+    keywords: [
+      'big tower tiny square 2 walkthrough',
+      'big tower tiny square 2',
+      'big tower tiny square 2 unblocked',
+      'how to beat big tower tiny square 2',
+      'big tower tiny square 2 double jump',
+      'big tower tiny square 2 safe browser game',
+    ],
+    updatedAt: seoContentUpdatedAt,
+    relatedSlugs: ['big-tower-tiny-square-walkthrough', 'ovo-walkthrough', 'browser-games-for-low-end-pc'],
+    embedGame: {
+      iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp40/liuxinyu/20221028/2/index.html',
+      title: 'Big Tower Tiny Square 2',
+      playSlug: 'big-tower-tiny-square-2',
+    },
+    locales: {
+      en: {
+        metaTitle: 'Big Tower Tiny Square 2 Walkthrough: Jumps, Checkpoints and Safe Play',
+        metaDescription:
+          'A practical Big Tower Tiny Square 2 walkthrough for double jumps, moving hazards, checkpoint practice, mobile limits, safe browser play and related precision games.',
+        heading: 'Big Tower Tiny Square 2 Walkthrough: Checkpoint-by-Checkpoint Tips',
+        subheading:
+          'Use a safer retry method for hard jumps, moving hazards, and late-tower rooms without downloading an installer.',
+        overview: [
+          'Big Tower Tiny Square 2 keeps the same fair-but-punishing platforming loop as the first game, but it asks you to read tighter rooms and restart faster. The goal is not to memorize one perfect route immediately; it is to turn each checkpoint into a small practice problem.',
+          'This guide is written for players searching “Big Tower Tiny Square 2 walkthrough”, “how to beat Big Tower Tiny Square 2”, or “Big Tower Tiny Square 2 unblocked”. It focuses on practical movement habits, browser safety, and the internal links you need when you want the original game or other precision platformers.',
+        ],
+        sections: [
+          {
+            title: 'Quick Answer: Treat Every Checkpoint as a Mini Level',
+            body:
+              'The fastest way to beat Big Tower Tiny Square 2 is to stop rushing after each respawn. Stand still on the safe tile, watch one full hazard cycle, make one clean first jump, then save your second jump only for height or distance correction.',
+            bullets: [
+              'Do not spend the double jump at takeoff unless the gap clearly requires immediate height.',
+              'Use the first death in a room to learn timing, not to force a lucky clear.',
+              'If a platform moves, jump with its direction and land before trying the next hazard.',
+            ],
+          },
+          {
+            title: 'Controls and Double-Jump Timing',
+            body:
+              'Use the keyboard whenever possible. Arrow keys or WASD handle movement, and jump timing matters more than holding a direction. A short tap creates a low hop for tight spikes; holding jump gives more height but can push you into ceiling hazards.',
+            bullets: [
+              'Low spikes: use a short tap and keep the second jump unused.',
+              'Long gaps: jump, wait until the square begins to fall, then trigger the second jump.',
+              'Vertical shafts: jump close to the wall, then correct with the second jump near the apex.',
+            ],
+          },
+          {
+            title: 'Moving Platforms, Lasers and Late-Tower Rooms',
+            body:
+              'Most late rooms are rhythm puzzles. Watch the obstacle cycle before moving, then commit to one clear action. When you die, adjust one variable at a time: start later, start earlier, jump lower, or delay the second jump.',
+            bullets: [
+              'For moving platforms, wait until the platform is already traveling toward your landing point.',
+              'For lasers, move after seeing a full off-on-off cycle instead of guessing the first opening.',
+              'For stacked hazards, clear the first obstacle safely before thinking about the second.',
+            ],
+          },
+          {
+            title: 'Mobile and School-Network Notes',
+            body:
+              'Some players search for Big Tower Tiny Square 2 unblocked because they want a no-download browser version. Luma pages do not ask for an executable, APK, extension, or login. Mobile play can work for short practice, but precision jumps are easier on a keyboard.',
+            bullets: [
+              'If the embedded frame asks for an unrelated install, leave the mirror and use another source.',
+              'If touch controls feel delayed, practice on desktop before attempting late rooms.',
+              'If a school or work network blocks the frame, use the guide text and return from a personal network later.',
+            ],
+          },
+          {
+            title: 'When to Use the First Game Walkthrough',
+            body:
+              'The original Big Tower Tiny Square walkthrough is still useful because it explains the pineapple objective, checkpoint mindset, and double-jump discipline. Use it for fundamentals, then return here for sequel-specific retry habits and harder room pacing.',
+          },
+        ],
+        recommendations: [
+          { slug: 'big-tower-tiny-square', pitch: 'Play the first Big Tower Tiny Square when you want the pineapple objective and a cleaner intro to the tower rhythm.' },
+          { slug: 'ovo', pitch: 'OvO is faster and more momentum-heavy, but it rewards the same careful jump correction.' },
+          { slug: 'g-switch-3', pitch: 'G-Switch 3 turns precision platforming into one-button gravity flips and quick restarts.' },
+          { slug: 'tunnel-rush', pitch: 'Tunnel Rush is a reflex-heavy break when repeated platformer rooms start to feel stale.' },
+        ],
+        faqs: [
+          { question: 'How do you beat Big Tower Tiny Square 2?', answer: 'Break the tower into checkpoint rooms. Watch the hazard cycle, test the first jump, and save the double jump for the final correction. Most rooms become easier when you change only one timing detail after each death.' },
+          { question: 'Is Big Tower Tiny Square 2 harder than the first game?', answer: 'It can feel harder because rooms are tighter and retries come faster. The same checkpoint method works, but you need cleaner low jumps and more patience with moving hazards.' },
+          { question: 'Can I play Big Tower Tiny Square 2 unblocked in a browser?', answer: 'You can use Luma as a no-download browser guide and player where the embedded source loads. Network policies can still block third-party frames, so avoid any mirror that asks for installers or extensions.' },
+          { question: 'What controls work best for Big Tower Tiny Square 2?', answer: 'Keyboard controls work best. Touch play is possible for basic rooms, but later double-jump corrections are easier with arrow keys or WASD.' },
+          { question: 'What should I play after Big Tower Tiny Square 2?', answer: 'Try the original Big Tower Tiny Square for the pineapple rescue route, OvO for faster parkour, G-Switch 3 for gravity flips, or Tunnel Rush for a reflex challenge.' },
+        ],
+        externalLinks: [
+          {
+            href: 'https://evilobjective.itch.io/bigtowertinysquarefree',
+            label: 'EvilObjective official Big Tower Tiny Square page',
+            description:
+              'Developer source used for creator context, safe-play notes, and the original Big Tower Tiny Square reference.',
+          },
+        ],
+        ctaLabel: 'Browse more precision games',
+        ctaDescription: 'Continue with platformers, keyboard games, and short browser challenges.',
+      },
+      zh: {
+        metaTitle: 'Big Tower Tiny Square 2 攻略:二段跳、存档点与安全浏览器玩法',
+        metaDescription:
+          'Big Tower Tiny Square 2 攻略:讲二段跳、移动障碍、存档点练习、手机体验、安全浏览器玩法和相关精准平台游戏。',
+        heading: 'Big Tower Tiny Square 2 攻略:按存档点拆解难段',
+        subheading:
+          '用更稳的重试方法处理难跳、移动障碍和后段房间,不下载安装器也能练习。',
+        overview: [
+          'Big Tower Tiny Square 2 延续了第一作“又难又公平”的精准平台循环,但房间更紧、重开更频繁。目标不是一开始就背出完美路线,而是把每个存档点后的小房间当成单独练习题。',
+          '这篇攻略面向搜索“Big Tower Tiny Square 2 walkthrough”“Big Tower Tiny Square 2 怎么过”“Big Tower Tiny Square 2 unblocked”的玩家,重点讲实用移动习惯、安全浏览器玩法,以及站内可继续阅读的原作和精准平台游戏。',
+        ],
+        sections: [
+          {
+            title: '快速答案:把每个存档点当成小关卡',
+            body:
+              'Big Tower Tiny Square 2 最快的通关方式不是复活后立刻冲。先站在安全格,看完整个障碍周期,做一次干净的第一跳,再把第二跳留给高度或距离修正。',
+            bullets: [
+              '除非缺口明确需要起跳即补高度,否则不要一开始就用掉二段跳。',
+              '第一次死亡用来读时机,不要指望硬凑幸运过关。',
+              '移动平台出现时,顺着平台移动方向跳,落稳后再处理下一处障碍。',
+            ],
+          },
+          {
+            title: '操作和二段跳时机',
+            body:
+              '能用键盘就优先用键盘。方向键或 WASD 控制移动,跳跃时机比一直按方向更重要。轻点是低跳,适合窄尖刺;长按高度更高,但容易撞到顶部障碍。',
+            bullets: [
+              '低尖刺:轻点小跳,先别用二段跳。',
+              '长缺口:先跳,等方块开始下落时再补第二跳。',
+              '竖直通道:贴近墙边起跳,到最高点附近再二段修正。',
+            ],
+          },
+          {
+            title: '移动平台、激光和后段房间',
+            body:
+              '多数后段房间其实是节奏题。先看障碍周期,再只做一个明确动作。死亡后一次只改一个变量:早一点、晚一点、跳低一点,或延后二段跳。',
+            bullets: [
+              '移动平台:等平台已经朝你的落点移动时再起跳。',
+              '激光:看完一次“关闭-开启-关闭”循环后再动,别抢第一个空档。',
+              '叠加障碍:先稳定过第一处,不要边跳边想第二处。',
+            ],
+          },
+          {
+            title: '手机与受限网络说明',
+            body:
+              '很多人搜索 Big Tower Tiny Square 2 unblocked,是想要免下载浏览器版本。Luma 页面不要求可执行文件、APK、扩展或登录。手机可以短练,但后段精准跳更适合键盘。',
+            bullets: [
+              '嵌入页若要求无关安装,直接离开镜像,不要继续授权。',
+              '触屏延迟明显时,先在桌面键盘上练后段房间。',
+              '学校或公司网络可能屏蔽第三方 frame,可先看攻略,回到个人网络再玩。',
+            ],
+          },
+          {
+            title: '什么时候回看第一作攻略',
+            body:
+              '原版 Big Tower Tiny Square 攻略仍然有用,因为它解释了救菠萝目标、存档点思路和二段跳纪律。先用它补基础,再回到本页处理续作更紧的房间节奏。',
+          },
+        ],
+        recommendations: [
+          { slug: 'big-tower-tiny-square', pitch: '想看救菠萝目标和更清晰的爬塔节奏,先玩第一作 Big Tower Tiny Square。' },
+          { slug: 'ovo', pitch: 'OvO 更快、更吃惯性,但同样奖励精确修正跳跃。' },
+          { slug: 'g-switch-3', pitch: 'G-Switch 3 把精准平台变成单键重力翻转和快速重开。' },
+          { slug: 'tunnel-rush', pitch: '重复爬塔累了时,Tunnel Rush 是更纯粹的反应挑战。' },
+        ],
+        faqs: [
+          { question: 'Big Tower Tiny Square 2 怎么过?', answer: '把高塔拆成一个个存档点房间。先看障碍周期,测试第一跳,把二段跳留到最后修正。多数房间只要每次死亡后调整一个时机变量,就会逐渐稳定。' },
+          { question: 'Big Tower Tiny Square 2 比第一作难吗?', answer: '会更紧一些,因为房间更窄、重试节奏更快。同样的存档点方法仍然有效,只是需要更干净的小跳和更耐心地等待移动障碍。' },
+          { question: 'Big Tower Tiny Square 2 能在浏览器无屏蔽玩吗?', answer: 'Luma 提供免下载的浏览器攻略和播放器,前提是第三方嵌入源能加载。网络策略仍可能屏蔽 frame;不要使用要求安装器或扩展的镜像。' },
+          { question: 'Big Tower Tiny Square 2 用什么操作最好?', answer: '键盘最好。触屏可以处理基础房间,但后段二段跳修正用方向键或 WASD 更稳定。' },
+          { question: 'Big Tower Tiny Square 2 之后玩什么?', answer: '想看救菠萝路线玩第一作 Big Tower Tiny Square;想要更快跑酷玩 OvO;想练重力翻转玩 G-Switch 3;想换成反应挑战玩 Tunnel Rush。' },
+        ],
+        externalLinks: [
+          {
+            href: 'https://evilobjective.itch.io/bigtowertinysquarefree',
+            label: 'EvilObjective 官方 Big Tower Tiny Square 页面',
+            description:
+              '用于核对开发者背景、安全玩法说明和原版 Big Tower Tiny Square 参考。',
+          },
+        ],
+        ctaLabel: '继续浏览精准游戏',
+        ctaDescription: '查看平台跳跃、键盘操作和短局浏览器挑战。',
       },
     },
   },
@@ -3997,17 +4182,17 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     primaryKeyword: 'games like ovo',
     keywords: ['games like ovo', 'games similar to ovo', 'best platformer games online', 'games like drive mad'],
     updatedAt: seoContentUpdatedAt,
-    relatedSlugs: ['ovo-walkthrough', 'drive-mad-walkthrough'],
+    relatedSlugs: ['ovo-walkthrough', 'big-tower-tiny-square-walkthrough', 'drive-mad-walkthrough'],
     locales: {
       en: {
-        metaTitle: 'Games Like OvO: 5 Skill Platformers to Play Next (Free & Unblocked)',
+        metaTitle: 'Games Like OvO: 5 Skill Platformers to Play Next',
         metaDescription:
-          'If you love OvO, these 5 precision skill games scratch the same itch — Big Tower Tiny Square, G-Switch 3, Tunnel Rush, Drive Mad and more. All free and unblocked in your browser.',
+          'If you love OvO, these 5 precision skill games scratch the same itch: Big Tower Tiny Square, G-Switch 3, Tunnel Rush, Drive Mad and more. Compare browser-safe picks on Luma.',
         heading: 'Games Like OvO: What to Play Next',
         subheading: 'Loved OvO’s tight, one-more-try challenge? Here are five free skill games that hit the same nerve.',
         overview: [
-          'OvO works because of momentum, precision, and instant retries. The games below share that DNA — fast, fair, and built around mastering a single mechanic. Each is free, runs in your browser with no download, and works unblocked on restricted networks.',
-          'Pick whichever matches your mood: vertical precision, gravity flipping, pure reflex, or physics driving. Every link below opens a playable game with its own tips guide.',
+          'OvO works because of momentum, precision, and instant retries. The games below share that DNA: fast, fair, and built around mastering a single mechanic. Each pick runs in the browser with no installer, and each has enough depth for a real practice loop rather than a one-click novelty.',
+          'Pick whichever matches your mood: vertical precision, gravity flipping, pure reflex, or physics driving. Every recommendation links to a playable Luma page or a deeper guide, so you can compare controls, mobile fit, and difficulty before committing to a longer session.',
         ],
         sections: [
           {
@@ -4025,6 +4210,24 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             title: 'Why These Fit OvO Fans',
             body: 'They all reward practice over luck: short levels or runs, instant restarts, and a skill ceiling that keeps pulling you back for one more attempt. None need a tutorial — you learn by dying and trying again, exactly like OvO.',
           },
+          {
+            title: 'Choose by the Skill You Want to Practice',
+            body: 'If you want the closest movement match, start with Big Tower Tiny Square because it focuses on jump height, checkpoints, and clean retries. Choose G-Switch 3 when you want a single-button gravity idea that gets hard quickly. Pick Tunnel Rush when you want reaction speed without platforming, and use Drive Mad when you want the same retry rhythm but with vehicle physics instead of wall jumps.',
+            bullets: [
+              'Closest to OvO movement: Big Tower Tiny Square.',
+              'Best one-button pressure: G-Switch 3.',
+              'Best short reflex session: Tunnel Rush.',
+              'Best physics puzzle alternative: Drive Mad.',
+            ],
+          },
+          {
+            title: 'Keyboard, Mobile and School-Network Notes',
+            body: 'OvO-style games usually feel best on keyboard because a missed input ruins the run. Mobile can still work for simpler reflex games, but wall jumps, dive-jumps, and tiny checkpoint rooms are easier with physical keys. If a school or workplace network blocks a third-party frame, do not install extensions or APK mirrors; use an allowed network or a different Luma guide instead.',
+          },
+          {
+            title: 'Safe Browser-Game Checklist',
+            body: 'A good OvO alternative should open in a normal browser tab, explain its controls, avoid forced downloads, and give you a quick way to leave for a related game. Luma keeps the recommendation list focused on no-download browser play and adds internal links so you can move between similar skill games without searching through risky mirrors.',
+          },
         ],
         recommendations: [
           { slug: 'big-tower-tiny-square', pitch: 'The closest to OvO — precise vertical platforming with a double jump and frequent checkpoints.' },
@@ -4033,21 +4236,34 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ],
         faqs: [
           { question: 'What game is most like OvO?', answer: 'Big Tower Tiny Square is the closest — a precision platformer built around exact jumps and timing, with the same fair-but-hard, retry-friendly design.' },
-          { question: 'Are these games free and unblocked?', answer: 'Yes. Every game here is a free HTML5 browser game with no download, and they run on most school and work networks so you can play them unblocked.' },
+          { question: 'Are these games free and unblocked?', answer: 'They are free browser games with no installer on Luma, but a school or workplace network can still block third-party game frames. Do not use download mirrors, APKs, or browser extensions to bypass a network rule.' },
           { question: 'Is there a sequel to OvO?', answer: 'Yes — OvO Dimensions is the follow-up, with new mechanics in the same minimalist parkour style.' },
+          { question: 'Which OvO alternative works best on mobile?', answer: 'Tunnel Rush and Drive Mad are usually easier to test on mobile than tight wall-jump platformers. For Big Tower Tiny Square or OvO-style movement, keyboard controls remain more reliable.' },
+        ],
+        externalLinks: [
+          {
+            href: 'https://play.google.com/store/apps/details?id=com.dedra.ovo',
+            label: 'OvO by Dedra Games on Google Play',
+            description: 'Used to cross-check the official OvO movement focus, level-count wording, and mobile availability.',
+          },
+          {
+            href: 'https://www.coolmathgames.com/0-ovo',
+            label: 'OvO on Coolmath Games',
+            description: 'Used to compare browser controls and common platforming mechanics before recommending alternatives.',
+          },
         ],
         ctaLabel: 'Browse all games',
         ctaDescription: 'Explore the full catalogue and find your next skill-game obsession.',
       },
       zh: {
-        metaTitle: '像 OvO 的游戏:5 款值得接着玩的技巧平台游戏(免费无屏蔽)',
+        metaTitle: '像 OvO 的游戏:5 款值得接着玩的技巧平台游戏',
         metaDescription:
-          '喜欢 OvO 的话,这 5 款精准技巧游戏挠的是同一个痒处——Big Tower Tiny Square、G-Switch 3、Tunnel Rush、Drive Mad 等。全部免费、无屏蔽在浏览器畅玩。',
+          '喜欢 OvO 的话,这 5 款精准技巧游戏挠的是同一个痒处:Big Tower Tiny Square、G-Switch 3、Tunnel Rush、Drive Mad 等。Luma 帮你比较更安全的浏览器选择。',
         heading: '像 OvO 的游戏:接下来玩什么',
         subheading: '爱 OvO 那种又紧又“再来一次”的挑战?这五款免费技巧游戏戳的是同一根神经。',
         overview: [
-          'OvO 之所以好玩,靠的是惯性、精准和即时重试。下面这些游戏共享这套 DNA——快、公平、围绕掌握一个机制。每款都免费,浏览器免下载运行,在受限网络也能无屏蔽玩。',
-          '按心情挑:垂直精准、重力翻转、纯反应,还是物理驾驶。下面每个链接都打开一款可玩游戏,并配有自己的技巧攻略。',
+          'OvO 之所以好玩,靠的是惯性、精准和即时重试。下面这些游戏共享这套 DNA:快、公平、围绕掌握一个机制。每款推荐都能在浏览器里打开,不需要安装器,而且有足够的练习空间,不是点一下就结束的薄玩法。',
+          '按心情挑:垂直精准、重力翻转、纯反应,还是物理驾驶。每个推荐都会连到 Luma 的可玩页面或更深入攻略,方便你先比较操作、手机体验和难度,再决定要不要玩久一点。',
         ],
         sections: [
           {
@@ -4062,6 +4278,24 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             ],
           },
           { title: '为什么适合 OvO 玩家', body: '它们都奖励练习而非运气:短关卡或短局、即时重开,以及让你不断回来“再试一次”的技术上限。都不需要教程——靠死了再试来学,和 OvO 一模一样。' },
+          {
+            title: '按想练的能力来选',
+            body: '想找最接近 OvO 的移动手感,先玩 Big Tower Tiny Square,它强调跳跃高度、存档点和干净重试。想要单键高压选择 G-Switch 3。只想练反应速度选 Tunnel Rush。想保留“再来一次”的节奏但换成车辆物理,就玩 Drive Mad。',
+            bullets: [
+              '最接近 OvO 操作:Big Tower Tiny Square。',
+              '最好的单键压力:G-Switch 3。',
+              '最适合短局反应:Tunnel Rush。',
+              '最适合物理谜题替代:Drive Mad。',
+            ],
+          },
+          {
+            title: '键盘、手机和网络限制说明',
+            body: 'OvO 类游戏通常更适合键盘,因为一次漏按就会毁掉路线。手机可以尝试较简单的反应游戏,但蹬墙跳、俯冲跳和很窄的存档点房间,用实体按键更稳。如果学校或公司网络屏蔽第三方游戏嵌入,不要安装扩展、APK 或镜像来绕过限制;请使用允许的网络,或换看 Luma 的其他指南。',
+          },
+          {
+            title: '安全浏览器游戏检查清单',
+            body: '好的 OvO 替代游戏应该能在普通浏览器标签页打开,说明清楚操作,不强迫下载,并能让你继续跳到相关游戏。Luma 的推荐列表聚焦免下载浏览器玩法,并补充站内链接,避免玩家为了找相似游戏去搜索风险不明的镜像站。',
+          },
         ],
         recommendations: [
           { slug: 'big-tower-tiny-square', pitch: '最接近 OvO——带二段跳、存档点密集的精准垂直平台。' },
@@ -4070,8 +4304,21 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ],
         faqs: [
           { question: '和 OvO 最像的游戏是哪个?', answer: 'Big Tower Tiny Square 最像——围绕精确跳跃和时机的精准平台游戏,同样又公平又难、适合反复重试。' },
-          { question: '这些游戏免费、无屏蔽吗?', answer: '是。这里每款都是免下载的 HTML5 浏览器游戏,能在大多数学校和公司网络运行,可无屏蔽畅玩。' },
+          { question: '这些游戏免费、无屏蔽吗?', answer: '它们都是 Luma 上的免费浏览器游戏,不需要安装器。但学校或公司网络仍可能屏蔽第三方游戏框架;不要使用下载镜像、APK 或浏览器扩展绕过网络规则。' },
           { question: 'OvO 有续作吗?', answer: '有——OvO Dimensions 是续作,在同样的极简跑酷风格里加了新机制。' },
+          { question: '哪款 OvO 替代游戏更适合手机?', answer: 'Tunnel Rush 和 Drive Mad 通常比细腻蹬墙跳平台游戏更容易在手机上测试。Big Tower Tiny Square 或 OvO 类移动仍更推荐键盘。' },
+        ],
+        externalLinks: [
+          {
+            href: 'https://play.google.com/store/apps/details?id=com.dedra.ovo',
+            label: 'Google Play 上的 Dedra Games OvO',
+            description: '用于核对 OvO 的官方移动端、关卡数量表述和移动操作定位。',
+          },
+          {
+            href: 'https://www.coolmathgames.com/0-ovo',
+            label: 'Coolmath Games 上的 OvO',
+            description: '用于对照浏览器操作和常见跑酷机制,再筛选相似游戏。',
+          },
         ],
         ctaLabel: '浏览全部游戏',
         ctaDescription: '进入完整目录,找到你下一个技巧游戏的心头好。',
@@ -4601,7 +4848,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             pitch: 'Short physics-driving levels make it easy to compare smoothness without committing to a long session.',
           },
           {
-            slug: 'string-theory-remastered',
+            slug: 'string-theory-2-remastered',
             pitch: 'A slower timing puzzle for machines that handle deliberate clicks better than fast action.',
           },
         ],
@@ -4609,7 +4856,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           {
             question: 'What browser games run well on a low-end PC?',
             answer:
-              'Start with short 2D games that use simple controls, such as Google Snake, OvO, Drive Mad, or String Theory Remastered. Test one round because performance still varies by browser and device.',
+              'Start with short 2D games that use simple controls, such as Google Snake, OvO, Drive Mad, or String Theory 2 Remastered. Test one round because performance still varies by browser and device.',
           },
           {
             question: 'Do I need to download a game booster?',
@@ -4629,7 +4876,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           {
             question: 'Which game should I test first on an old laptop?',
             answer:
-              'Google Snake is the simplest first check. Then try OvO for keyboard latency, Drive Mad for physics performance, and String Theory Remastered for a calmer puzzle.',
+              'Google Snake is the simplest first check. Then try OvO for keyboard latency, Drive Mad for physics performance, and String Theory 2 Remastered for a calmer puzzle.',
           },
         ],
         ctaLabel: 'Browse lightweight browser games',
@@ -4650,7 +4897,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           {
             title: '快速答案：先选操作简单、单局短的游戏',
             body:
-              '旧电脑优先测试按键少、重开快、不需要加载大型 3D 世界的游戏。Google Snake、OvO、Drive Mad 和 String Theory Remastered 分别代表刷分、精准平台、物理驾驶和时机谜题四种类型。',
+              '旧电脑优先测试按键少、重开快、不需要加载大型 3D 世界的游戏。Google Snake、OvO、Drive Mad 和 String Theory 2 Remastered 分别代表刷分、精准平台、物理驾驶和时机谜题四种类型。',
             bullets: [
               '首次加载后应在合理时间内可以操作。',
               '优先短局，避免卡顿时困在长流程里。',
@@ -4686,7 +4933,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               '刷分循环：Google Snake，规则熟悉、重开迅速。',
               '精准移动：OvO，用来测试键盘延迟。',
               '物理时机：Drive Mad，关卡短、方便反复比较。',
-              '安静解谜：String Theory Remastered，适合更慢的点击节奏。',
+              '安静解谜：String Theory 2 Remastered，适合更慢的点击节奏。',
             ],
           },
           {
@@ -4714,7 +4961,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             pitch: '物理驾驶关卡短，方便在不投入长时间的情况下比较流畅度。',
           },
           {
-            slug: 'string-theory-remastered',
+            slug: 'string-theory-2-remastered',
             pitch: '节奏较慢的时机谜题，适合点击稳定但不擅长高速动作的旧设备。',
           },
         ],
@@ -4722,7 +4969,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           {
             question: '低配置电脑适合玩什么浏览器游戏？',
             answer:
-              '先从操作简单、单局短的 2D 游戏开始，例如 Google Snake、OvO、Drive Mad 或 String Theory Remastered。不同浏览器和设备表现不同，仍需试玩一局。',
+              '先从操作简单、单局短的 2D 游戏开始，例如 Google Snake、OvO、Drive Mad 或 String Theory 2 Remastered。不同浏览器和设备表现不同，仍需试玩一局。',
           },
           {
             question: '需要下载游戏加速器吗？',
@@ -4758,6 +5005,8 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       'robby cross the road for brainrot guide',
       'robby cross the road for brainrot mobile',
       'robby cross the road for brainrot characters',
+      'robby cross the road for brainrot base upgrades',
+      'robby cross the road for brainrot E F controls',
       'games like robby cross the road for brainrot',
       'cross the road brainrot game',
     ],
@@ -4789,8 +5038,10 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           {
             title: 'Controls And Mobile Browser Fit',
             body:
-              'The official public listing supports desktop, phone, and tablet browsers. On desktop, expect keyboard-style movement or on-screen prompts. On mobile, the main challenge is visibility: keep your thumb away from the next lane and use deliberate inputs instead of dragging across the screen.',
+              'The official public listing supports desktop, phone, and tablet browsers. On desktop, WASD moves, Space jumps, right mouse rotates the camera, E puts down or takes a Brainrot, F drops it, and Shift locks the cursor. On mobile, the main challenge is visibility: keep your thumb away from the next lane and use deliberate inputs instead of dragging across the screen.',
             bullets: [
+              'Use E only when you are safely out of traffic, because the pickup/place action can cost a timing window.',
+              'Use F to drop a carried Brainrot when staying alive matters more than finishing the delivery.',
               'Landscape orientation gives more space to read traffic.',
               'Close background tabs if the Unity browser build stutters.',
               'Avoid APK mirrors; browser play is enough for testing the game.',
@@ -4814,6 +5065,16 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               'Prioritize collectibles on your natural path.',
               'Return to the safe side before chasing another item.',
               'If upgrades exist in the current build, favor survival and movement consistency first.',
+            ],
+          },
+          {
+            title: 'Base Slots And Upgrade Priority',
+            body:
+              'The public listing describes base upgrades that unlock more slots and Brainrot upgrades that increase power and rewards. Treat slot upgrades as route-capacity upgrades: they matter when you can regularly bring characters home. Treat Brainrot upgrades as reward upgrades: they matter after your delivery loop is already stable.',
+            bullets: [
+              'Early runs: practice safe returns before spending mental focus on maximum collection.',
+              'Middle runs: unlock more slots when you keep arriving home with extra characters waiting.',
+              'Later runs: upgrade stronger Brainrots once you know which traffic zones you can cross reliably.',
             ],
           },
           {
@@ -4918,8 +5179,10 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           {
             title: '操作和手机浏览器体验',
             body:
-              '公开页面标注支持桌面、手机和平板浏览器。桌面端通常按游戏提示使用键盘或方向操作；手机端最大问题是可视区域和误触，尽量用横屏，并让手指不要挡住下一条车道。',
+              '公开页面标注支持桌面、手机和平板浏览器。桌面端 WASD 移动、Space 跳跃、鼠标右键旋转镜头、E 放置或拿起 Brainrot、F 丢下、Shift 锁定鼠标。手机端最大问题是可视区域和误触，尽量用横屏，并让手指不要挡住下一条车道。',
             bullets: [
+              '只有离开车流后再按 E，否则一次拿放动作可能错过安全窗口。',
+              '当保命比送回基地更重要时，用 F 放弃当前携带目标。',
               '横屏更容易观察左右车流。',
               'Unity 浏览器版本卡顿时，先关闭后台标签页。',
               '不要下载 APK 镜像，浏览器版本足够用于体验。',
@@ -4943,6 +5206,16 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               '优先收集自然路线上的角色。',
               '拿到一个后先回到安全边缘，再追下一个。',
               '如果当前版本有升级，优先提升生存和移动稳定性。',
+            ],
+          },
+          {
+            title: '基地槽位和升级优先级',
+            body:
+              '公开页面说明基地升级可以解锁更多槽位，Brainrot 升级可以提升 power 和 rewards。槽位升级更像路线容量升级：当你能稳定把角色带回基地时才最有价值。Brainrot 升级更像收益升级：适合在往返路线已经稳定后再投入。',
+            bullets: [
+              '前期先练安全返回，不要只盯着最大收集数量。',
+              '中期如果经常带着多余角色回家，再优先解锁槽位。',
+              '后期确认哪些交通区域最稳定后，再强化高价值 Brainrot。',
             ],
           },
           {
@@ -5003,6 +5276,541 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ],
         ctaLabel: '浏览 Luma 相似游戏',
         ctaDescription: '在继续观察 Robby 来源和政策适配时，可以先玩 Luma 已验证的浏览器游戏。',
+      },
+    },
+  },
+  {
+    slug: 'obby-parkour-with-ragdoll-guide',
+    primaryKeyword: 'obby parkour with ragdoll guide',
+    keywords: [
+      'obby parkour with ragdoll guide',
+      'obby parkour with ragdoll lava map',
+      'obby parkour with ragdoll extreme map',
+      'obby parkour with ragdoll ice world',
+      'obby parkour with ragdoll mobile controls',
+      'obby parkour with ragdoll push players',
+      'obby ragdoll boxing guide',
+    ],
+    updatedAt: seoContentUpdatedAt,
+    relatedSlugs: [
+      'best-new-browser-games-july-2026',
+      'games-like-ovo',
+      'browser-games-for-low-end-pc',
+      'best-browser-games-5-minute-break',
+    ],
+    locales: {
+      en: {
+        metaTitle: 'Obby: Parkour with Ragdoll Guide - Lava, Extreme and Ice Tips',
+        metaDescription:
+          'Independent Obby: Parkour with Ragdoll guide covering Lava, Extreme and Ice World routes, pushing, punching, crystals, coins, mobile controls and safe source notes.',
+        heading: 'Obby: Parkour with Ragdoll Guide',
+        subheading:
+          'A map-by-map guide for Lava, Extreme and Ice World, plus PvP pushing, mobile controls, resource notes and safe browser-play boundaries.',
+        overview: [
+          'Obby: Parkour with Ragdoll is a July 2026 CrazyGames parkour racing game from DepGet. The public listing describes three maps, player pushing, ragdoll knockouts, crystals, coins, and desktop/mobile browser support.',
+          'This Luma page is guide-first. It does not embed the game or reuse platform artwork. Use the public source page to play, then use this guide to plan safer jumps, understand each map, avoid PvP traps, and decide whether the game fits your phone or keyboard setup.',
+        ],
+        sections: [
+          {
+            title: 'Quick Answer: How To Start',
+            body:
+              'Start on Lava to learn jump spacing, move to Extreme only after you can wait out rotating and disappearing obstacles, and treat Ice World as a control test where shorter inputs matter more than speed. In PvP, stay away from crowded ledges unless you are deliberately trying to push another player.',
+            bullets: [
+              'Lava teaches basic timing and recovery after missed jumps.',
+              'Extreme punishes rushing through rotating, moving, and vanishing platforms.',
+              'Ice World rewards small corrections instead of long held movement.',
+            ],
+          },
+          {
+            title: 'Lava Map Route Tips',
+            body:
+              'Lava is the beginner map, but it still punishes panic jumps. Stop before each gap, line up the camera, and jump from a stable edge. If another player is nearby, let them go first rather than sharing the same narrow platform.',
+            bullets: [
+              'Use the first platforms to measure your jump distance before sprinting.',
+              'Do not turn midair unless the next platform is wide.',
+              'If you land near the edge, crouch or pause before the next jump instead of chaining inputs.',
+            ],
+          },
+          {
+            title: 'Extreme Map Obstacles',
+            body:
+              'Extreme combines rotating obstacles, disappearing platforms, and moving blocks. The safest route is not the fastest route: wait for a full obstacle cycle, choose a visual cue, then move during the same cue every attempt.',
+            bullets: [
+              'Rotating obstacles: cross just after the hazard passes, not while it is approaching.',
+              'Disappearing platforms: step on only when you already know the exit jump.',
+              'Moving blocks: ride to the center before jumping so ragdoll physics does not throw you sideways.',
+            ],
+          },
+          {
+            title: 'Ice World Control Notes',
+            body:
+              'Ice World changes the problem from raw jump timing to momentum control. Use shorter taps, leave more space before a turn, and avoid fighting the slide with opposite inputs unless you are already safely on a wide platform.',
+            bullets: [
+              'Aim for the center of each platform because sliding expands every mistake.',
+              'Jump later than usual when the approach is slippery.',
+              'On mobile, reduce thumb movement so the joystick does not oversteer.',
+            ],
+          },
+          {
+            title: 'Pushing, Punching and PvP Risk',
+            body:
+              'The game includes pushing and punching with ragdoll physics, but fighting near a ledge can hurt your own run as much as your opponent. Use PvP when you have room to recover; avoid it on single-tile paths, disappearing platforms, and final jumps.',
+            bullets: [
+              'Left-click punches on PC; mobile uses right-side action buttons.',
+              'Push from behind or from the side, then step back before the ragdoll collision spreads.',
+              'If you only want to finish a map, take the less crowded route and ignore fights.',
+            ],
+          },
+          {
+            title: 'Source And Safety Notes',
+            body:
+              'CrazyGames lists the game as browser-playable on desktop, mobile, and tablet, with Android app support. Luma is independent and does not claim Roblox affiliation or official hosting rights. Avoid pages that turn the title into APK downloads, mod menus, or copied portal iframes.',
+            bullets: [
+              'Use public platform listings for play access.',
+              'Do not download “free crystals” tools, extensions, or modified clients.',
+              'If Luma later embeds this game, iframe stability and source permission should be checked first.',
+            ],
+          },
+        ],
+        recommendations: [
+          {
+            slug: 'ovo',
+            pitch: 'A precise platformer for players who want tighter movement and fast retries.',
+          },
+          {
+            slug: 'big-tower-tiny-square',
+            pitch: 'A checkpoint-based tower climb that rewards patience over rushing.',
+          },
+          {
+            slug: 'tunnel-rush',
+            pitch: 'A reflex pick for players who like reading obstacles at speed.',
+          },
+          {
+            slug: 'dadish-3',
+            pitch: 'A compact platform game with safer single-player checkpoint practice.',
+          },
+        ],
+        faqs: [
+          {
+            question: 'What is the easiest map in Obby: Parkour with Ragdoll?',
+            answer:
+              'Start with Lava. It still has danger, but the jumps are easier to read than Extreme and Ice World.',
+          },
+          {
+            question: 'How do I beat the Extreme map?',
+            answer:
+              'Wait for each obstacle cycle, pick one repeatable cue, and move only when the rotating, moving, or disappearing platform gives you a clean exit.',
+          },
+          {
+            question: 'Can I play Obby: Parkour with Ragdoll on mobile?',
+            answer:
+              'CrazyGames lists mobile and tablet browser support. Use shorter joystick movements and avoid crowded ledges where touch controls make recovery harder.',
+          },
+          {
+            question: 'Is this an official Roblox game?',
+            answer:
+              'No. Treat this as a browser obby-style game guide. Luma does not claim Roblox affiliation or official hosting rights.',
+          },
+          {
+            question: 'Should I fight other players or focus on finishing?',
+            answer:
+              'Fight only when you have room to recover. If your goal is to finish a route, avoid ledge fights and take cleaner jumps.',
+          },
+        ],
+        externalLinks: [
+          {
+            href: 'https://www.crazygames.com/game/obby-parkour-with-ragdoll',
+            label: 'Obby: Parkour with Ragdoll on CrazyGames',
+            description:
+              'Primary public source used to verify release month, developer, maps, controls, platform support and feature list.',
+          },
+        ],
+        ctaLabel: 'Browse skill platform games',
+        ctaDescription:
+          'Use this source-aware guide, then play verified Luma platform and reflex games with no downloads.',
+      },
+      zh: {
+        metaTitle: 'Obby: Parkour with Ragdoll 攻略：Lava、Extreme、Ice World 技巧',
+        metaDescription:
+          'Obby: Parkour with Ragdoll 独立攻略：Lava、Extreme、Ice World 路线、推人和拳击、Crystals、Coins、手机操作与安全来源说明。',
+        heading: 'Obby: Parkour with Ragdoll 攻略',
+        subheading:
+          '按地图拆解 Lava、Extreme 和 Ice World 的跑法，并说明 PvP 推人、手机操作、资源和安全边界。',
+        overview: [
+          'Obby: Parkour with Ragdoll 是 CrazyGames 上 2026 年 7 月的跑酷竞速游戏，公开页面显示开发者为 DepGet，包含三张地图、推人、ragdoll 击倒、Crystals、Coins，以及桌面和手机浏览器支持。',
+          'Luma 本页采用 guide-first 策略，不嵌入游戏，也不复用平台素材。玩家可以去公开来源页面游玩，再用本攻略理解每张地图、避开 PvP 陷阱，并判断它是否适合当前手机或键盘环境。',
+        ],
+        sections: [
+          {
+            title: '快速答案：先从哪张图开始',
+            body:
+              '先用 Lava 练跳跃距离和停顿，再挑战 Extreme 的旋转、移动和消失平台。Ice World 更像操作控制测试，短输入比速度更重要。PvP 时不要站在拥挤边缘，除非你本来就想推人。',
+            bullets: [
+              'Lava 适合学习基础 timing 和失误恢复。',
+              'Extreme 会惩罚硬冲旋转、移动和消失障碍。',
+              'Ice World 需要小幅修正，不能长按乱冲。',
+            ],
+          },
+          {
+            title: 'Lava 地图路线技巧',
+            body:
+              'Lava 是入门图，但仍然会惩罚慌乱跳跃。每个缺口前先停一下，对齐镜头，从稳定边缘起跳。如果附近有其他玩家，最好让对方先过，不要挤在同一个窄平台上。',
+            bullets: [
+              '前几个平台先测跳跃距离，不要一开始就冲刺。',
+              '除非落点很宽，否则不要在空中大幅转向。',
+              '落在边缘时先停或蹲一下，再跳下一步。',
+            ],
+          },
+          {
+            title: 'Extreme 地图障碍处理',
+            body:
+              'Extreme 把旋转障碍、消失平台和移动方块组合在一起。最稳的方法不是最快，而是先观察完整循环，选一个视觉提示，每次都在同一个提示出现时行动。',
+            bullets: [
+              '旋转障碍：等危险物刚过去再进，不要迎着它冲。',
+              '消失平台：只有已经想好出口跳跃时再踩。',
+              '移动方块：先站到中间再跳，减少 ragdoll 侧翻。',
+            ],
+          },
+          {
+            title: 'Ice World 防滑技巧',
+            body:
+              'Ice World 的核心从跳跃 timing 变成动量控制。使用短按，转弯前留更多距离，只有站在宽平台上时才用反方向输入修正滑行。',
+            bullets: [
+              '尽量落在平台中心，因为滑动会放大每个失误。',
+              '滑面起跳要比普通地面更晚一点。',
+              '手机端减少摇杆幅度，避免过度转向。',
+            ],
+          },
+          {
+            title: '推人、拳击和 PvP 风险',
+            body:
+              '游戏支持推人和拳击，ragdoll 物理会制造很多混乱。但在边缘开打可能同时毁掉自己的路线。只有有恢复空间时才打，单格路径、消失平台和终点跳跃前尽量别打。',
+            bullets: [
+              'PC 端左键拳击，手机端使用右侧动作按钮。',
+              '从背后或侧面推人后立刻退开，避免碰撞波及自己。',
+              '只想通关时，选择人少路线，不要参与混战。',
+            ],
+          },
+          {
+            title: '来源和安全说明',
+            body:
+              'CrazyGames 页面标注该游戏支持桌面、手机和平板浏览器，并有 Android App。Luma 是独立攻略站，不声称 Roblox 官方关系或托管授权。不要使用 APK 下载、mod menu、免费水晶工具或复制 iframe 的镜像站。',
+            bullets: [
+              '游玩入口优先使用公开平台页面。',
+              '不要下载 “free crystals” 工具、扩展或修改客户端。',
+              '若未来要在 Luma 嵌入，必须先检查 iframe 稳定性和授权边界。',
+            ],
+          },
+        ],
+        recommendations: [
+          { slug: 'ovo', pitch: '更精准的平台动作，适合练习移动和快速重试。' },
+          { slug: 'big-tower-tiny-square', pitch: '带检查点的塔楼攀爬，更强调耐心和节奏。' },
+          { slug: 'tunnel-rush', pitch: '适合喜欢高速读障碍的反应型玩家。' },
+          { slug: 'dadish-3', pitch: '更安全的单人平台练习，关卡紧凑。' },
+        ],
+        faqs: [
+          {
+            question: 'Obby: Parkour with Ragdoll 哪张地图最简单？',
+            answer: '先从 Lava 开始。它仍然有危险，但比 Extreme 和 Ice World 更容易读路线。',
+          },
+          {
+            question: 'Extreme 地图怎么过？',
+            answer:
+              '先等完整障碍循环，选择固定视觉提示，只在旋转、移动或消失平台给出清晰出口时行动。',
+          },
+          {
+            question: 'Obby: Parkour with Ragdoll 手机能玩吗？',
+            answer:
+              'CrazyGames 页面标注支持手机和平板浏览器。手机端用短摇杆动作，并避开拥挤边缘。',
+          },
+          {
+            question: '这是 Roblox 官方游戏吗？',
+            answer:
+              '不是。本页只把它作为 browser obby-style 游戏攻略处理，Luma 不声称 Roblox 官方关系或托管授权。',
+          },
+          {
+            question: '应该推人还是先通关？',
+            answer:
+              '只有有恢复空间时才打。目标是通关时，避开边缘混战，走更干净的路线。',
+          },
+        ],
+        externalLinks: [
+          {
+            href: 'https://www.crazygames.com/game/obby-parkour-with-ragdoll',
+            label: 'CrazyGames Obby 页面',
+            description: '主要公开来源，用于核对发布月份、开发者、地图、操作、平台支持和功能列表。',
+          },
+        ],
+        ctaLabel: '浏览技巧平台游戏',
+        ctaDescription: '先用来源明确的攻略理解玩法，再选择 Luma 已验证的免下载平台和反应游戏。',
+      },
+    },
+  },
+  {
+    slug: 'rail-cart-buddies-guide',
+    primaryKeyword: 'rail cart buddies guide',
+    keywords: [
+      'rail cart buddies guide',
+      'rail cart buddies track editor',
+      'rail cart buddies mobile controls',
+      'rail cart buddies fastest times',
+      'rail cart buddies community tracks',
+      'rail cart buddies how to stay on rails',
+      'rail cart buddies checkpoint reset',
+    ],
+    updatedAt: seoContentUpdatedAt,
+    relatedSlugs: [
+      'best-new-browser-games-july-2026',
+      'drive-mad-walkthrough',
+      'games-like-ovo',
+      'best-browser-games-5-minute-break',
+    ],
+    locales: {
+      en: {
+        metaTitle: 'Rail Cart Buddies Guide: Track Editor, Fast Times and Controls',
+        metaDescription:
+          'Rail Cart Buddies guide for staying on rails, braking before curves, using checkpoints, switching views, learning the track editor, mobile controls and source-safe community track notes.',
+        heading: 'Rail Cart Buddies Guide',
+        subheading:
+          'A source-aware guide to momentum, checkpoints, camera views, mobile controls, the built-in track editor, and community-track evaluation.',
+        overview: [
+          'Rail Cart Buddies is a July 2026 CrazyGames HTML5 rail-riding skill game with ghost racers, per-track leaderboards, community tracks, and an in-game track editor. The official page explains the feature set, but players still need practical help with speed, cornering, camera view, reset habits, and first-track design.',
+          'Luma is not embedding the game on this page. This guide focuses on original player advice and safe source boundaries: use the public platform page to play, do not download mod files, and treat “custom track” as the built-in editor rather than an unofficial file-sharing promise.',
+        ],
+        sections: [
+          {
+            title: 'Quick Answer: How To Stay On The Rails',
+            body:
+              'Build speed on straight sections, slow before sharp curves, use checkpoints as practice markers, and switch camera views when a track needs better depth judgement. Fast times come after consistency, not before it.',
+            bullets: [
+              'Accelerate only when the next rail segment is straight or gently banked.',
+              'Brake before a curve rather than during the hardest turn.',
+              'Use reset and respawn to repeat one bad section instead of restarting blindly.',
+            ],
+          },
+          {
+            title: 'Desktop And Mobile Controls',
+            body:
+              'The public listing shows WASD or arrow keys for driving and steering, Space to jump on foot, E to hop off the cart or use a nearby pylon, F to switch first-person and third-person view, G to reset to the last checkpoint, V to respawn at the hub, and mouse controls for looking and zooming. Mobile uses an on-screen joystick plus HUD buttons for speed, braking, jumping and leaving the cart.',
+            bullets: [
+              'Desktop: use camera zoom to preview steep drops before committing.',
+              'Mobile: keep one thumb reserved for braking so curves do not become all-or-nothing.',
+              'If a track feels unreadable, switch view before blaming the physics.',
+            ],
+          },
+          {
+            title: 'Speed, Curves And Banking',
+            body:
+              'The official description is clear: too much speed through a turn can throw you off the track. Treat every curve as a momentum test. Enter slower than feels exciting, ride the bank, then accelerate after the cart straightens.',
+            bullets: [
+              'Short straight into sharp curve: brake early and hold a smooth line.',
+              'Long straight into loop: build speed only if the entry is centered.',
+              'Banked turn: stay calm, avoid oversteering, and let the rail angle do part of the work.',
+            ],
+          },
+          {
+            title: 'Checkpoints, Reset And Respawn',
+            body:
+              'Checkpoints are practice tools. If you fail the same curve three times, stop trying to finish the whole track and repeat that section deliberately. Use reset when you want another attempt from the last checkpoint; use respawn when the hub route or track choice matters more.',
+            bullets: [
+              'After a derail, ask whether the cause was speed, steering, camera, or track reading.',
+              'Use G-style reset habits for section practice.',
+              'Use hub respawn when you need to change tracks or recover from a confusing state.',
+            ],
+          },
+          {
+            title: 'Track Editor First Build',
+            body:
+              'The built-in editor is the long-tail hook, but the first goal should be a finishable course. Start with a straight, one gentle turn, one drop, and one checkpoint. Add loops or steep banks only after another player could reasonably complete the route.',
+            bullets: [
+              'Build a simple spine first: start, checkpoint, finish.',
+              'Test every curve at beginner speed and faster leaderboard speed.',
+              'Use pylons and visible landmarks so players understand where to go next.',
+            ],
+          },
+          {
+            title: 'Community Tracks And Source Boundaries',
+            body:
+              'Community tracks are valuable discovery content, but Luma should not host track files or imply unofficial mod support. Recommend tracks by qualities players can verify: readable start, fair checkpoints, clear camera moments, and difficulty that comes from timing instead of confusion.',
+            bullets: [
+              'Good community tracks are replayable, readable, and fair after one or two attempts.',
+              'Avoid calling custom tracks “mods” unless the platform itself uses that language.',
+              'Do not mirror player map files or ask users to install track packs.',
+            ],
+          },
+        ],
+        recommendations: [
+          {
+            slug: 'drive-mad',
+            pitch: 'A physics driving guide target for players who like learning speed and landing control.',
+          },
+          {
+            slug: 'monster-tracks',
+            pitch: 'A vehicle challenge with short runs and momentum decisions.',
+          },
+          {
+            slug: 'city-bike-stunt',
+            pitch: 'A stunt-driving option for players who want ramps and timing practice.',
+          },
+          {
+            slug: 'ovo',
+            pitch: 'A skill game with fast retries and precision movement.',
+          },
+        ],
+        faqs: [
+          {
+            question: 'How do I stop flying off the track in Rail Cart Buddies?',
+            answer:
+              'Slow before sharp curves, center the cart before loops, and avoid oversteering on banked rails. Most derails come from entering a turn too fast.',
+          },
+          {
+            question: 'Does Rail Cart Buddies have a track editor?',
+            answer:
+              'Yes. CrazyGames describes a built-in track editor for creating rails with loops, drops, banks and community sharing.',
+          },
+          {
+            question: 'What is the difference between reset and respawn?',
+            answer:
+              'Use reset to retry from your last checkpoint. Use respawn when you need to return to the hub or recover from a broader route problem.',
+          },
+          {
+            question: 'Can I play Rail Cart Buddies on mobile?',
+            answer:
+              'CrazyGames lists desktop, mobile, and tablet browser support. Mobile uses an on-screen joystick and HUD buttons for speed, braking, jumping, and leaving the cart.',
+          },
+          {
+            question: 'Does Luma provide custom map downloads?',
+            answer:
+              'No. This page explains the built-in editor and community-track evaluation. It does not host player map files, mods, or track packs.',
+          },
+        ],
+        externalLinks: [
+          {
+            href: 'https://www.crazygames.com/game/rail-cart-buddies',
+            label: 'Rail Cart Buddies on CrazyGames',
+            description:
+              'Primary public source used to verify release month, HTML5 engine, platform support, controls, track editor and community features.',
+          },
+        ],
+        ctaLabel: 'Browse physics and skill games',
+        ctaDescription:
+          'Use this guide to learn the rail logic, then compare it with verified Luma driving and platform games.',
+      },
+      zh: {
+        metaTitle: 'Rail Cart Buddies 攻略：Track Editor、最快时间和手机操作',
+        metaDescription:
+          'Rail Cart Buddies 独立攻略：如何不脱轨、弯道前减速、Checkpoint 和 Reset、视角切换、Track Editor 入门、手机操作和社区赛道边界。',
+        heading: 'Rail Cart Buddies 攻略',
+        subheading:
+          '围绕动量、检查点、视角、手机操作、内置 Track Editor 和社区赛道评价的来源安全攻略。',
+        overview: [
+          'Rail Cart Buddies 是 CrazyGames 上 2026 年 7 月的 HTML5 轨道竞速技巧游戏，公开页面显示它包含幽灵赛车、单赛道排行榜、社区赛道和内置 Track Editor。官方页解释了功能，但玩家仍需要速度、弯道、视角、重置和第一条赛道设计的实用建议。',
+          'Luma 当前不在本页嵌入该游戏。本攻略只提供原创玩家建议和安全边界：用公开平台页面游玩，不下载 mod 文件，把 custom track 理解为游戏内置编辑器，而不是未经授权的文件分享。',
+        ],
+        sections: [
+          {
+            title: '快速答案：怎样不脱轨',
+            body:
+              '直道加速，急弯前减速，把 checkpoint 当作练习点，遇到视野差的赛道就切换视角。最快时间来自稳定完成，而不是一开始就全程满速。',
+            bullets: [
+              '只有下一段是直线或缓弯时才持续加速。',
+              '在弯前减速，不要等到最急的地方才刹。',
+              '用 reset 和 respawn 反复练坏点，不要盲目整条重开。',
+            ],
+          },
+          {
+            title: '桌面和手机操作',
+            body:
+              '公开页面列出 WASD 或方向键驾驶和转向，Space 在步行时跳跃，E 下车或使用附近 pylon，F 切换第一人称和第三人称，G 回到上一个 checkpoint，V 回到 hub，鼠标用于观察和缩放。手机端使用屏幕摇杆和 HUD 按钮控制加速、减速、跳跃和下车。',
+            bullets: [
+              '桌面端：用镜头缩放预判陡坡和落差。',
+              '手机端：保留一根手指负责减速，避免弯道变成全油门或全刹车。',
+              '看不懂赛道时先换视角，不要马上怪物理系统。',
+            ],
+          },
+          {
+            title: '速度、弯道和 Banking',
+            body:
+              '官方说明已经点出核心：高速过弯会被甩出轨道。把每个弯道当成动量测试。进弯前比直觉更慢一点，顺着倾斜轨道走，车身回正后再加速。',
+            bullets: [
+              '短直道接急弯：提前减速，保持平滑路线。',
+              '长直道接 loop：只有入口居中时才持续加速。',
+              'Banked turn：不要过度转向，让轨道倾角帮你完成一部分转弯。',
+            ],
+          },
+          {
+            title: 'Checkpoint、Reset 和 Respawn',
+            body:
+              'Checkpoint 是练习工具。如果同一个弯道连续失败三次，不要继续硬跑整条赛道，而是单独重复那一段。想从上个检查点再试用 reset；需要回 hub 或重新选路线时再用 respawn。',
+            bullets: [
+              '脱轨后先判断原因是速度、转向、视角还是读图。',
+              '用 G 类 reset 习惯进行分段练习。',
+              '路线混乱或需要换赛道时，用 hub respawn 重新整理。',
+            ],
+          },
+          {
+            title: 'Track Editor 第一条赛道',
+            body:
+              '内置编辑器是长期长尾价值，但第一目标应该是能通关。先做一段直线、一个缓弯、一个小落差和一个 checkpoint。等别人能合理跑完后，再加 loop 或陡 bank。',
+            bullets: [
+              '先搭简单主线：start、checkpoint、finish。',
+              '每个弯道都用新手速度和排行榜速度各测试一次。',
+              '用 pylon 和可见地标告诉玩家下一步去哪。',
+            ],
+          },
+          {
+            title: '社区赛道和来源边界',
+            body:
+              '社区赛道适合做发现内容，但 Luma 不应托管地图文件，也不应暗示未经授权的 mod 支持。推荐赛道时只评价玩家能直接验证的质量：开局可读、公平 checkpoint、镜头清晰、难度来自 timing 而不是混乱。',
+            bullets: [
+              '好社区赛道应可重玩、可读，并且一两次尝试后能理解规则。',
+              '除非平台自己使用 mod 说法，否则不要把自定义赛道叫 mod。',
+              '不要镜像玩家地图文件，也不要要求用户安装 track pack。',
+            ],
+          },
+        ],
+        recommendations: [
+          { slug: 'drive-mad', pitch: '同样需要速度和落地控制的物理驾驶攻略对象。' },
+          { slug: 'monster-tracks', pitch: '短局车辆挑战，强调动量和路线判断。' },
+          { slug: 'city-bike-stunt', pitch: '喜欢坡道和时机练习的玩家可以继续尝试。' },
+          { slug: 'ovo', pitch: '快速重试和精准移动的技巧游戏。' },
+        ],
+        faqs: [
+          {
+            question: 'Rail Cart Buddies 为什么总是脱轨？',
+            answer:
+              '大多是进弯太快。急弯前减速，进入 loop 前保持居中，banked rail 上不要过度转向。',
+          },
+          {
+            question: 'Rail Cart Buddies 有 Track Editor 吗？',
+            answer:
+              '有。CrazyGames 页面说明游戏内有 Track Editor，可以制作 loop、drop、bank 等轨道并分享给社区。',
+          },
+          {
+            question: 'Reset 和 Respawn 有什么区别？',
+            answer:
+              'Reset 用来从上一个 checkpoint 重试；Respawn 更适合回到 hub 或从整体路线混乱中恢复。',
+          },
+          {
+            question: 'Rail Cart Buddies 手机能玩吗？',
+            answer:
+              'CrazyGames 标注支持桌面、手机和平板浏览器。手机端使用屏幕摇杆和 HUD 按钮控制加速、减速、跳跃和下车。',
+          },
+          {
+            question: 'Luma 提供自定义地图下载吗？',
+            answer:
+              '不提供。本页只解释内置编辑器和社区赛道评价，不托管玩家地图文件、mod 或 track pack。',
+          },
+        ],
+        externalLinks: [
+          {
+            href: 'https://www.crazygames.com/game/rail-cart-buddies',
+            label: 'CrazyGames Rail Cart Buddies 页面',
+            description: '主要公开来源，用于核对发布月份、HTML5 引擎、平台支持、操作、Track Editor 和社区功能。',
+          },
+        ],
+        ctaLabel: '浏览物理和技巧游戏',
+        ctaDescription: '先理解轨道逻辑，再和 Luma 已验证的驾驶、平台游戏对比。',
       },
     },
   },

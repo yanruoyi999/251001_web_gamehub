@@ -140,6 +140,122 @@ const GAME_EDITORIAL_CONTENT: Record<string, GameEditorialEntry> = {
       ],
     },
   },
+  'string-theory-2-remastered': {
+    en: {
+      metaTitle: 'String Theory 2 Remastered Online - Physics Puzzle Tips',
+      metaDescription:
+        'Play String Theory 2 Remastered online with practical physics-puzzle tips, timing advice, controls, FAQ, and safe no-download browser notes.',
+      title: 'String Theory 2 Remastered quick guide',
+      summary:
+        'String Theory 2 Remastered is a short-session physics puzzle game where each level is solved by reading motion, timing interactions, and making one careful adjustment at a time. The challenge is not fast clicking; it is noticing why the object misses the target and changing the next attempt with intent.',
+      overview: [
+        'Use the browser player as a small experiment bench. Trigger one object, watch the full bounce or swing, then decide whether the next attempt needs more height, less speed, a later click, or a cleaner route.',
+        'This page keeps the focus on safe no-download play and practical puzzle habits. If the embedded source does not load on a restricted network, avoid mirrors that ask for installers, APK files, extensions, or performance patches.',
+      ],
+      howToPlay: [
+        'Start each level by identifying the goal, the movable object, and the interactive parts that can change its path.',
+        'Make one timing change per attempt. If you change several clicks at once, you will not know which part fixed or broke the route.',
+        'Let the physics finish before restarting, because late bounces and delayed swings often reveal the intended solution.',
+      ],
+      controls: [
+        { label: 'Interact', value: 'Click or tap the objects, anchors, or mechanisms that the level makes available.' },
+        { label: 'Timing', value: 'Wait, then trigger the next object when the moving piece is at the right height or angle.' },
+        { label: 'Retry', value: 'Restart only after you understand whether the last attempt was early, late, too weak, or too messy.' },
+      ],
+      tips: [
+        'If the object falls short, look for a cleaner path before adding more speed.',
+        'If the object overshoots, delay the first interaction or reduce extra collisions.',
+        'Use the first failed attempt as a measurement run, not as proof that the level is random.',
+        'Keyboard is not the main skill here; careful mouse or touch timing matters more.',
+      ],
+      faqs: [
+        {
+          question: 'What kind of game is String Theory 2 Remastered?',
+          answer:
+            'It is a browser physics puzzle game about timing, momentum, and object paths. You solve levels by observing movement and adjusting the next trigger.',
+        },
+        {
+          question: 'Does String Theory 2 Remastered require a download?',
+          answer:
+            'No. Luma presents it as a browser-play page and does not offer installers, APK files, ROMs, or cracked downloads.',
+        },
+        {
+          question: 'What should I do when a level feels stuck?',
+          answer:
+            'Watch where the previous attempt failed, then change only one variable: start earlier, wait longer, reduce a collision, or trigger a mechanism at a different height.',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'string-theory-2-remastered-guide',
+          title: 'String Theory 2 Remastered guide',
+          description: 'A deeper walkthrough-style guide for puzzle timing, stuck levels, and short-session play.',
+        },
+        {
+          slug: 'browser-games-for-low-end-pc',
+          title: 'Browser games for low-end PCs',
+          description: 'How to test lightweight browser games safely on older laptops and Chromebooks.',
+        },
+      ],
+    },
+    zh: {
+      metaTitle: 'String Theory 2 Remastered 在线玩 - 物理解谜技巧',
+      metaDescription:
+        '在线玩 String Theory 2 Remastered,查看物理解谜技巧、时机建议、操作说明、FAQ 和免下载浏览器安全说明。',
+      title: 'String Theory 2 Remastered 快速指南',
+      summary:
+        'String Theory 2 Remastered 是一款短局物理解谜游戏。每一关都要观察运动、把握触发时机,并一次只做一个小调整。难点不是点得快,而是看懂物体为什么没到目标,再有意识地改变下一次尝试。',
+      overview: [
+        '可以把浏览器播放器当成一个小实验台。先触发一个物件,看完整个反弹或摆动,再判断下一次需要更高、更慢、更晚点击,还是更干净的路线。',
+        '本页重点是安全的免下载玩法和实用解谜习惯。如果第三方嵌入在受限网络中无法加载,不要使用要求安装器、APK、扩展或性能补丁的镜像页。',
+      ],
+      howToPlay: [
+        '每关先确认目标、移动物体,以及哪些互动机关会改变路径。',
+        '每次尝试只改一个时机。如果同时改多个点击,就很难知道到底是哪一步起了作用。',
+        '不要太早重开,等物理反应结束;很多后段反弹和延迟摆动会暴露正确思路。',
+      ],
+      controls: [
+        { label: '互动', value: '点击或轻触关卡中可用的物体、锚点或机关。' },
+        { label: '时机', value: '等待移动物体到达合适高度或角度时,再触发下一处机关。' },
+        { label: '重试', value: '先判断上一次是太早、太晚、力量不够还是路线太乱,再重新开始。' },
+      ],
+      tips: [
+        '如果物体够不到目标,先找更干净的路径,不要只想着加速。',
+        '如果物体飞过头,延后第一步或减少多余碰撞。',
+        '第一次失败当作测量,不要立刻认定关卡随机。',
+        '键盘不是核心;更重要的是鼠标或触屏点击的时机。',
+      ],
+      faqs: [
+        {
+          question: 'String Theory 2 Remastered 是什么类型?',
+          answer:
+            '它是浏览器物理解谜游戏,核心是时机、动量和物体路径。玩家通过观察运动并调整下一次触发来解关。',
+        },
+        {
+          question: 'String Theory 2 Remastered 需要下载吗?',
+          answer:
+            '不需要。Luma 将它作为浏览器可玩页面呈现,不提供安装包、APK、ROM 或破解下载。',
+        },
+        {
+          question: '关卡卡住时怎么办?',
+          answer:
+            '先看上一次失败在哪里,然后只改一个变量:早点开始、晚点触发、减少碰撞,或在不同高度启动机关。',
+        },
+      ],
+      relatedGuides: [
+        {
+          slug: 'string-theory-2-remastered-guide',
+          title: 'String Theory 2 Remastered 攻略',
+          description: '更深入讲解谜时机、卡关拆解和短局玩法的攻略页。',
+        },
+        {
+          slug: 'browser-games-for-low-end-pc',
+          title: '低配置电脑浏览器游戏',
+          description: '了解旧笔记本和 Chromebook 如何安全测试轻量网页游戏。',
+        },
+      ],
+    },
+  },
   'google-snake': {
     en: {
       metaTitle: 'Google Snake Online - Controls, Tips and Mod Guide Links',

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import { cache } from 'react';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -10,13 +10,20 @@ import { GamePlayerFacade } from '@/components/game/game-player-facade';
 import { GameService, RatingService } from '@/services';
 import { getMockGameBySlug, mockGames } from '@/lib/mock-games';
 import type { GameDetail } from '@/services/game.service';
-import type { MockGame } from '@/lib/mock-games';
+import type { EmbedPermissionStatus, GameSourceType, MockGame } from '@/lib/mock-games';
 import { getGameEditorialContent } from '@/lib/games/editorial-content';
-import { getGameQualityTier, getManualReviewReason, shouldNoIndexGame, shouldPromoteGameInCollections } from '@/lib/games/quality-policy';
+import {
+  canRenderGameIframe,
+  getGameRedirectTarget,
+  getGameQualityTier,
+  getManualReviewReason,
+  shouldNoIndexGame,
+  shouldPromoteGameInCollections,
+} from '@/lib/games/quality-policy';
 import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES, buildAbsoluteUrl } from '@/lib/seo';
 import { getLocalizedPath, locales } from '@/i18n/config';
 import { serializeJsonLd } from '@/lib/utils/json-ld';
-import { getCatalogueUiCapabilities } from '@/lib/games/catalog-mode';
+import { getCatalogueUiCapabilities, shouldUseCatalogueDatabase } from '@/lib/games/catalog-mode';
 import {
   getDatabaseConnectionMetadata,
   shouldSkipSupabaseDirectInServerless,
@@ -24,6 +31,15 @@ import {
 
 type RatingDistribution = Awaited<ReturnType<typeof RatingService.getRatingDistribution>>;
 type RatingsResult = Awaited<ReturnType<typeof RatingService.listGameRatings>>;
+
+type GameSourceDisclosure = {
+  sourceType?: GameSourceType | null;
+  sourceHost?: string | null;
+  sourcePageUrl?: string | null;
+  embedHost?: string | null;
+  developerVerified?: boolean | null;
+  embedPermissionStatus?: EmbedPermissionStatus | null;
+};
 
 const GAME_DETAIL_LOAD_TIMEOUT_MS = 1500;
 const RATING_LOAD_TIMEOUT_MS = 1500;
@@ -65,6 +81,12 @@ function buildGameDetailFromMock(mock: MockGame): GameDetail {
     developerName: mock.developerName,
     developerUrl: mock.developerUrl,
     sourceUrl: mock.sourceUrl,
+    sourceType: mock.sourceType,
+    sourceHost: mock.sourceHost,
+    sourcePageUrl: mock.sourcePageUrl,
+    embedHost: mock.embedHost,
+    developerVerified: mock.developerVerified,
+    embedPermissionStatus: mock.embedPermissionStatus,
     publishedAt: now,
     createdAt: now,
     updatedAt: now,
@@ -90,7 +112,7 @@ function buildGameDetailFromMock(mock: MockGame): GameDetail {
       order: shot.order,
       createdAt: now,
     })),
-  } satisfies GameDetail;
+  } as GameDetail & GameSourceDisclosure;
 }
 
 interface GamePageProps {
@@ -136,7 +158,7 @@ const resolveGameDetailBySlug = cache(async function resolveGameDetailBySlug(
   let dbGame: GameDetail | null = null;
   const connection = getDatabaseConnectionMetadata();
   const canUseDatabase =
-    connection.configured && !(
+    shouldUseCatalogueDatabase(connection) && !(
       process.env.GAME_DETAIL_ALLOW_SUPABASE_DIRECT_IN_SERVERLESS !== 'true' &&
       shouldSkipSupabaseDirectInServerless(connection)
     );
@@ -254,6 +276,11 @@ export async function generateMetadata({ params }: GamePageProps): Promise<Metad
 
 export default async function GamePage({ params }: GamePageProps) {
   const { locale, slug } = await params;
+  const redirectTarget = getGameRedirectTarget(slug);
+
+  if (redirectTarget) {
+    permanentRedirect(getLocalizedPath(locale, `/games/${redirectTarget}`));
+  }
 
   const resolved = await resolveGameDetailBySlug(slug, true);
   if (!resolved) {
@@ -510,6 +537,17 @@ export default async function GamePage({ params }: GamePageProps) {
 
   const qualityTier = getGameQualityTier(game.slug);
   const reviewReason = getManualReviewReason(game.slug);
+  const sourceDisclosure = game as GameDetail & GameSourceDisclosure;
+  const sourceType = sourceDisclosure.sourceType ?? 'unknown';
+  const developerVerified = sourceDisclosure.developerVerified === true;
+  const sourceHost = sourceDisclosure.sourceHost ?? sourceDisclosure.embedHost ?? null;
+  const sourceLabel =
+    sourceType === 'developer'
+      ? locale === 'zh' ? '开发者来源' : 'Developer Source'
+      : sourceType === 'distribution'
+        ? locale === 'zh' ? '公开分发来源' : 'Public Distribution Source'
+        : locale === 'zh' ? '来源信息' : 'Source Information';
+  const canRenderIframe = canRenderGameIframe(game.slug);
 
   return (
     <div className="w-full bg-background">
@@ -612,8 +650,8 @@ export default async function GamePage({ params }: GamePageProps) {
             </p>
             <p className="mt-1">
               {locale === 'zh'
-                ? '这个游戏仍可打开，但 Luma 正在复查来源、题材和 iframe 表现，复查完成前不会放入精选推荐。'
-                : 'This game remains playable, but Luma is rechecking source clarity, theme fit, and iframe behavior before featuring it.'}
+                ? 'Luma 正在复查来源、题材和 iframe 表现，复查完成前不会在本站嵌入播放器或放入精选推荐。'
+                : 'Luma is rechecking source clarity, theme fit, and iframe behavior, so the playable iframe is not embedded here until review is complete.'}
             </p>
             {reviewReason ? (
               <p className="mt-2 text-xs text-amber-800">{reviewReason}</p>
@@ -627,28 +665,43 @@ export default async function GamePage({ params }: GamePageProps) {
             {/* Game Player */}
             <Card className="mb-8 overflow-hidden border-2 border-primary/30">
               <CardContent className="p-0">
-                <div className="relative overflow-hidden bg-black">
-                  <div className="aspect-video">
-                    <GamePlayerFacade
-                      iframeUrl={game.iframeUrl}
-                      title={title}
-                      thumbnailUrl={game.thumbnailUrl}
-                      locale={locale}
-                      gameSlug={game.slug}
-                      source="game_detail"
-                    />
-                  </div>
-                </div>
-                <div className="bg-muted p-4">
-                  <div className="flex items-center justify-center">
-                    <p className="text-sm text-muted-foreground">
-                      <span className="mr-2">💡</span>
+                {canRenderIframe ? (
+                  <>
+                    <div className="relative overflow-hidden bg-black">
+                      <div className="aspect-video">
+                        <GamePlayerFacade
+                          iframeUrl={game.iframeUrl}
+                          title={title}
+                          thumbnailUrl={game.thumbnailUrl}
+                          locale={locale}
+                          gameSlug={game.slug}
+                          source="game_detail"
+                        />
+                      </div>
+                    </div>
+                    <div className="bg-muted p-4">
+                      <div className="flex items-center justify-center">
+                        <p className="text-sm text-muted-foreground">
+                          <span className="mr-2">💡</span>
+                          {locale === 'zh'
+                            ? '点击游戏内全屏按钮获得最佳体验'
+                            : 'Click fullscreen button for best experience'}
+                        </p>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <div className="space-y-3 bg-amber-50 p-6 text-sm text-amber-900">
+                    <p className="font-semibold">
+                      {locale === 'zh' ? '播放器暂不展示' : 'Playable iframe withheld'}
+                    </p>
+                    <p>
                       {locale === 'zh'
-                        ? '点击游戏内全屏按钮获得最佳体验'
-                        : 'Click fullscreen button for best experience'}
+                        ? '这个条目仍在来源和内容复查中。为降低误导和版权风险，Luma 暂不在页面中加载第三方 iframe。'
+                        : 'This entry is still under source and content review. To reduce misleading-source and rights risk, Luma is not loading the third-party iframe on this page.'}
                     </p>
                   </div>
-                </div>
+                )}
               </CardContent>
             </Card>
 
@@ -908,7 +961,9 @@ export default async function GamePage({ params }: GamePageProps) {
                   <div className="rounded-lg border border-primary/20 bg-secondary p-3">
                     <div className="mb-1 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-primary">
                       <span>👨‍💻</span>
-                      {locale === 'zh' ? '官方开发者' : 'Official Developer'}
+                      {developerVerified
+                        ? locale === 'zh' ? '官方开发者' : 'Official Developer'
+                        : locale === 'zh' ? '来源方' : 'Listed Source'}
                     </div>
                     {game.developerUrl ? (
                       <a
@@ -916,7 +971,9 @@ export default async function GamePage({ params }: GamePageProps) {
                         target="_blank"
                         rel="noopener"
                         className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:text-primary/80"
-                        title={locale === 'zh' ? '访问开发者官网' : 'Visit developer website'}
+                        title={developerVerified
+                          ? locale === 'zh' ? '访问开发者官网' : 'Visit developer website'
+                          : locale === 'zh' ? '访问来源页面' : 'Visit source page'}
                       >
                         <span>{game.developerName}</span>
                         <span className="text-xs">↗</span>
@@ -925,7 +982,11 @@ export default async function GamePage({ params }: GamePageProps) {
                       <div className="text-sm font-medium text-foreground">{game.developerName}</div>
                     )}
                     <p className="mt-1 text-xs text-muted-foreground">
-                      {locale === 'zh' ? '已验证的游戏开发商' : 'Verified game developer'}
+                      {developerVerified
+                        ? locale === 'zh' ? '已验证的游戏开发商' : 'Verified game developer'
+                        : locale === 'zh'
+                          ? '这是公开来源或分发页面信息，不代表 Luma 已验证其为原始开发者。'
+                          : 'This is public source or distribution-page information, not a verified original developer claim.'}
                     </p>
                   </div>
                 )}
@@ -933,22 +994,26 @@ export default async function GamePage({ params }: GamePageProps) {
                   <div className="rounded-lg border border-green-100 bg-green-50/50 p-3">
                     <div className="mb-1 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-green-700">
                       <span>🔗</span>
-                      {locale === 'zh' ? '官方来源' : 'Official Source'}
+                      {sourceLabel}
                     </div>
                     <a
                       href={game.sourceUrl}
                       target="_blank"
                       rel="noopener"
                       className="inline-flex items-center gap-2 rounded-md bg-green-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-green-700"
-                      title={locale === 'zh' ? '在官方网站体验完整版' : 'Play full version on official site'}
+                      title={locale === 'zh' ? '打开公开来源页面' : 'Open public source page'}
                     >
-                      <span>{locale === 'zh' ? '访问官方网站' : 'Visit Official Site'}</span>
+                      <span>{locale === 'zh' ? '打开来源页面' : 'Open Source Page'}</span>
                       <span>↗</span>
                     </a>
                     <p className="mt-2 text-xs text-muted-foreground">
-                      {locale === 'zh'
-                        ? '此链接将跳转到游戏官方网站'
-                        : 'This link redirects to the official game site'}
+                      {sourceHost
+                        ? locale === 'zh'
+                          ? `来源主机：${sourceHost}。此链接不代表官方授权声明。`
+                          : `Source host: ${sourceHost}. This link is not an official authorization claim.`
+                        : locale === 'zh'
+                          ? '此链接指向公开来源页面，不代表官方授权声明。'
+                          : 'This link points to a public source page, not an official authorization claim.'}
                     </p>
                   </div>
                 )}

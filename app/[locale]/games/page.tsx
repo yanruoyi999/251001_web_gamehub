@@ -9,7 +9,7 @@ import { FavoriteToggleButton } from '@/components/game/favorite-toggle';
 import { CategoryService, GameService, TagService } from '@/services';
 import { getLocalizedPath, locales, type Locale } from '@/i18n/config';
 import { listFallbackGames } from '@/lib/games/fallback-list';
-import { getCatalogueUiCapabilities } from '@/lib/games/catalog-mode';
+import { getCatalogueUiCapabilities, shouldUseCatalogueDatabase } from '@/lib/games/catalog-mode';
 import { mockGames } from '@/lib/mock-games';
 import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES } from '@/lib/seo';
 import {
@@ -238,7 +238,7 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
   const loadFallback = () => buildFallbackGameList(fallbackOptions);
   const connection = getDatabaseConnectionMetadata();
   const canUseDatabase =
-    connection.configured && !(
+    shouldUseCatalogueDatabase(connection) && !(
       process.env.GAME_LIST_ALLOW_SUPABASE_DIRECT_IN_SERVERLESS !== 'true' &&
       shouldSkipSupabaseDirectInServerless(connection)
     );
@@ -485,7 +485,7 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
           {games.map((game) => {
             const displayTitle = locale === 'en' ? game.titleEn ?? game.title : game.title;
             const statusLabel = t(`status.${game.status ?? 'active'}`);
-            const publishedLabel = catalogueUi.showPublishedDates
+            const publishedLabel = catalogueUi.showPublishedDates && game.publishedAt
               ? t('published', {
                   value: new Date(game.publishedAt).toLocaleDateString(locale),
                 })

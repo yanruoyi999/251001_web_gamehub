@@ -1,9 +1,18 @@
+import type { DatabaseConnectionMetadata } from '@/lib/db/connection-policy';
+
 export function isLocalCatalogueMode(env: NodeJS.ProcessEnv = process.env) {
   return env.GAME_CATALOG_MODE?.trim().toLowerCase() === 'local';
 }
 
 export function isCataloguePersistenceEnabled(env: NodeJS.ProcessEnv = process.env) {
   return !isLocalCatalogueMode(env);
+}
+
+export function shouldUseCatalogueDatabase(
+  connection: DatabaseConnectionMetadata,
+  env: NodeJS.ProcessEnv = process.env,
+) {
+  return isCataloguePersistenceEnabled(env) && connection.configured;
 }
 
 export function getCatalogueUiCapabilities(env: NodeJS.ProcessEnv = process.env) {

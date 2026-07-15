@@ -1,5 +1,6 @@
 export const MANUAL_REVIEW_GAME_REASONS = {
   'adam-and-eve-zombies': 'Zombie theme; review tone, iframe behavior, and age suitability before indexing.',
+  'adam-and-eve-8': 'Duplicate iframe mapping with Adam and Eve 7; keep out of index until the correct playable source is verified.',
   'balance-duel': 'Public store descriptions center on gun/recoil shooting duels; keep out of index during AdSense review prep.',
   'gun-battle-3': 'Gun combat query and title risk; keep out of index until source and presentation are reviewed.',
   'hero-tower-wars': 'War-themed title; review violence level and source clarity before surfacing.',
@@ -24,13 +25,32 @@ export type ManualReviewGameSlug = keyof typeof MANUAL_REVIEW_GAME_REASONS;
 
 const MANUAL_REVIEW_GAME_SLUGS = new Set<string>(Object.keys(MANUAL_REVIEW_GAME_REASONS));
 
+export const REMOVED_GAME_REDIRECT_TARGETS = {
+  'rublox-space-farm': 'cow-bay',
+  'super-omar-climb': 'apple-knight',
+  'temple-run-2': 'tunnel-rush',
+  'temple-run-2-holi-festival': 'tunnel-rush',
+} as const;
+
+export type RemovedGameSlug = keyof typeof REMOVED_GAME_REDIRECT_TARGETS;
+
+export const RETIRED_CATALOGUE_REDIRECT_TARGETS = {
+  'duo-survival': 'duo-vikings',
+  'duo-survival-2': 'duo-vikings-2',
+  'duo-survival-3': 'duo-vikings-2',
+  'fly-car-stunt': 'drive-mad',
+  'fly-car-stunt-2': 'drive-mad',
+  'fly-car-stunt-5': 'drive-mad',
+} as const;
+
+export type RetiredCatalogueGameSlug = keyof typeof RETIRED_CATALOGUE_REDIRECT_TARGETS;
+
 export const CORE_INDEXABLE_GAME_SLUGS = [
   'adam-and-eve-4',
   'adam-and-eve-5-part-1',
   'adam-and-eve-5-part-2',
   'adam-and-eve-6',
   'adam-and-eve-7',
-  'adam-and-eve-8',
   'adam-and-eve-go',
   'adam-and-eve-go-2',
   'adam-and-eve-go-3',
@@ -59,65 +79,19 @@ export const CORE_INDEXABLE_GAME_SLUGS = [
   'dadish',
   'dadish-2',
   'dadish-3',
-  'dirt-bike-extreme-parkour',
   'drive-mad',
   'duo-vikings',
   'duo-vikings-2',
-  'duo-vikings-3',
   'fireboy-watergirl-6',
-  'flip-bottle',
-  'g-switch',
   'g-switch-2',
   'g-switch-3',
-  'g-switch-4',
-  'g-switch-5',
-  'glitch-dash',
   'google-snake',
-  'grab-the-apple',
-  'hexoboy',
-  'idle-ants',
-  'idle-mining-empire',
-  'idle-pet-business',
-  'idle-tree-city',
   'monkey-mart',
-  'monkey-mart-2',
   'monster-tracks',
-  'old-towers',
-  'one-escape',
-  'only-up-3d-parkour',
   'ovo',
-  'ovo-dimensions',
-  'parkour-climb-and-jump',
-  'perfect-peel',
-  'poor-eddie',
-  'puffy-cat',
-  'rabbit-samurai',
-  'rabbit-samurai-2',
-  'rabbit-samurai-3',
   'rolling-ball',
-  'sausage-flip',
-  'slidee',
-  'slimetris',
-  'squish-machine',
-  'squish-run',
-  'stickman-bike',
-  'stickman-climb',
-  'stickman-escape',
-  'stickman-hook-christmas-edition',
   'string-theory-2-remastered',
-  'string-theory-remastered',
-  'swingo',
-  'tail-swing',
-  'truck-loader-2',
-  'truck-loader-3',
-  'truck-loader-4',
   'tunnel-rush',
-  'ultimate-stunt-car-challenge',
-  'woodcutter-master-adventure',
-  'yokai-dungeon',
-  'zoom-be',
-  'zoom-be-2',
-  'zoom-be-3',
 ] as const;
 
 const CORE_INDEXABLE_GAME_SLUG_SET = new Set<string>(CORE_INDEXABLE_GAME_SLUGS);
@@ -135,6 +109,28 @@ export function getManualReviewReason(slug: string | null | undefined) {
   return MANUAL_REVIEW_GAME_REASONS[normalized] ?? null;
 }
 
+export function getRemovedGameRedirectTarget(slug: string | null | undefined) {
+  const normalized = normalizeGameSlug(slug) as RemovedGameSlug;
+  return REMOVED_GAME_REDIRECT_TARGETS[normalized] ?? null;
+}
+
+export function isRemovedGameSlug(slug: string | null | undefined) {
+  return Boolean(getRemovedGameRedirectTarget(slug));
+}
+
+export function getRetiredCatalogueRedirectTarget(slug: string | null | undefined) {
+  const normalized = normalizeGameSlug(slug) as RetiredCatalogueGameSlug;
+  return RETIRED_CATALOGUE_REDIRECT_TARGETS[normalized] ?? null;
+}
+
+export function isRetiredCatalogueGameSlug(slug: string | null | undefined) {
+  return Boolean(getRetiredCatalogueRedirectTarget(slug));
+}
+
+export function getGameRedirectTarget(slug: string | null | undefined) {
+  return getRemovedGameRedirectTarget(slug) ?? getRetiredCatalogueRedirectTarget(slug);
+}
+
 export function isCoreIndexableGame(slug: string | null | undefined) {
   const normalized = normalizeGameSlug(slug);
   return CORE_INDEXABLE_GAME_SLUG_SET.has(normalized) && !isGameUnderManualReview(normalized);
@@ -150,6 +146,10 @@ export function shouldNoIndexGame(slug: string | null | undefined) {
 
 export function shouldPromoteGameInCollections(slug: string | null | undefined) {
   return isCoreIndexableGame(slug);
+}
+
+export function canRenderGameIframe(slug: string | null | undefined) {
+  return !isGameUnderManualReview(slug);
 }
 
 export function getGameQualityTier(slug: string | null | undefined) {

@@ -1,6 +1,8 @@
 import { mockGames, type MockCategory, type MockGame, type MockTag } from '@/lib/mock-games';
 import { shouldPromoteGameInCollections } from '@/lib/games/quality-policy';
 
+export const MIN_INDEXABLE_TAG_GAME_COUNT = 3;
+
 export interface TaxonomyEntry<TItem> {
   item: TItem;
   games: MockGame[];
@@ -43,6 +45,10 @@ export function getCategoryEntry(slug: string): TaxonomyEntry<MockCategory> | un
 export function getTagEntry(slug: string): TaxonomyEntry<MockTag> | undefined {
   const normalized = slug.trim().toLowerCase();
   return getTagEntries().find((entry) => entry.item.slug === normalized);
+}
+
+export function shouldIndexTagEntry(entry: TaxonomyEntry<MockTag>) {
+  return entry.games.length >= MIN_INDEXABLE_TAG_GAME_COUNT;
 }
 
 export function pickLocalizedLabel(

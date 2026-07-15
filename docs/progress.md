@@ -1630,3 +1630,106 @@
 - 验证结果：54 tests、`pnpm type-check`、`pnpm lint`（0 errors，96 个既有 console warnings）、`pnpm build`、`git diff --check`、`pnpm check:internal-links` 全部通过。local production 中两篇中英文攻略均 HTTP 200，输出新 title/H1、FAQPage、Article citation、canonical 且无 `noindex`；`/admin`、`/admin/login`、favorites/ratings/counters API 均 404。`pnpm ops:monitoring` 在显式 local 配置下 site、robots、290 URL sitemap、health、search、Clarity tag 全部正常；GSC API 仍因无 OAuth 凭据 skipped，但本轮已通过 Chrome 后台读取真实数据。
 - 生产部署：Vercel production deployment `dpl_hZq5FgUrdys6ZQjTA796cfAbGJnr` Ready，别名包含 `https://lumagamehub.com` 与 `https://www.lumagamehub.com`。主域两篇英文目标攻略均 HTTP 200，输出新 title、目标 FAQ、官方 source citation、canonical 且无 `noindex`；`/admin` 与 `/api/favorites` 均 404。
 - 下一步：发布后 7-14 天复查 `big tower tiny square walkthrough`、`how to save pineapple in big tower tiny square`、`how many levels are in ovo`、`how to beat level 46 ovo` 的 impressions/CTR/position；Snake 页目前已有 920 impressions，先观察上一轮 title/FAQ 改动，不再拆竞争子页；iPhone 页平均位置 36.7，继续优化内容相关性和内链，不只反复改 title。
+
+### T-136 P0 catalogue truth and index-surface cleanup
+
+- 本次目标：按 2026-07-11 repository optimization plan 的优先级，先完成 P0 中对 AdSense/SEO 信任度影响最大的目录真实性、公开索引面、技术 SEO 和 local-mode API 封口。
+- 实际改动：`POST /api/games`、`PATCH /api/games/[id]`、`DELETE /api/games/[id]` 在 `GAME_CATALOG_MODE=local` 下统一返回 404；fallback list/search 不再输出推断的 `publishedAt`、`playCount`、`averageRating`，对应类型改为可选真实指标。
+- 公开面减法：fallback 目录和站内搜索只返回 `core-indexed` 游戏，`catalogue-only` 不再通过主目录或搜索被发现；`adam-and-eve-8` 因与 `adam-and-eve-7` 共用同一 iframe 转入 manual review，并退出 sitemap/推荐/播放器嵌入。
+- 技术 SEO：搜索页新增独立 metadata、canonical 和 `noindex,follow`，并从 sitemap 与 `llms.txt` 移除；`4399-sample` 调试页在生产环境 `notFound()`，不再作为可索引内容；`llms.txt` 去掉“ratings”等已不符合 local catalogue 事实的描述。
+- 来源披露：为本地导入游戏增加 `sourceType`、`sourceHost`、`sourcePageUrl`、`embedHost`、`developerVerified`、`embedPermissionStatus`；4399/ad-freegames 条目标注为公开分发来源和未验证开发者，页面文案不再称为 official source/developer。
+- 测试补充：新增/扩展 `tests/local-catalogue-api.test.ts`、`tests/fallback-games.test.ts`、`tests/seo-surface.test.ts`、`tests/source-disclosure.test.ts`，覆盖 local 写接口封口、无虚构指标、无重复 core iframe、catalogue-only 不进搜索目录、搜索页 noindex/sitemap 排除、来源披露和 manual-review iframe 闸门。
+- 验证结果：`pnpm type-check` 通过；`pnpm test -- --run` 19 files / 67 tests 全部通过；`pnpm check:internal-links` 通过；`pnpm lint` 0 errors，保留 96 个既有脚本 `console` warnings；`pnpm build` 通过，静态页生成 116 个，`patch-static-locale-html` 处理 28/28 英文静态 HTML。
+- 未处理项：没有提交或部署；没有触碰既有用户脏改动 `docs/google-adsense-end-to-end-sop.md`、`package.json` 和未跟踪知识库文件。`4399-sample` 仍有路由文件但生产返回 404，后续可作为 P1/P2 彻底删除文件和相关文案。
+- 下一步：继续 P0 第二段，修正 `scripts/audit-game-quality.ts` 的原创内容识别逻辑，生成逐 slug keep/merge/remove 决策表；随后按审计结果把 direct catalogue-only 详情页做 308/410 或补齐来源和原创内容。
+
+### T-137 Editorial-aware quality audit and per-slug decision table
+
+- 本次目标：继续 P0，修正 `scripts/audit-game-quality.ts` 的审计口径，让已有完整 `editorial-content.ts` 的核心游戏页不再被静态短描述误判为 thin content，并生成逐 slug 的后续动作表。
+- 实际改动：审计脚本拆出可测试纯函数 `getEditorialCoverage`、`scoreGame`、`buildAuditRows`、`buildDecisionRows`、`buildReport`；CLI 入口改为仅直接运行脚本时输出或写文件，测试 import 时不再打印整份报告。
+- 审计口径：新增 editorial coverage 状态 `complete / partial / missing`，优先统计英文与中文 editorial 的 summary、overview、how-to-play、controls、tips、FAQ、related guides；只有缺少完整 editorial 时才回退检查导入短描述。
+- 决策表：`docs/game-quality-audit.md` 已重写，新增 `Per-Slug Decision Table`，每个 slug 输出 `keep / improve / review / remove`、原因和下一步；当前为 200 total、92 core-indexed、88 catalogue-only、20 manual-review、108 noindex。
+- 重点结果：`g-switch-2` 等已有完整 editorial 的核心页现在为 `keep`，不再出现 `thin description`；`adam-and-eve-8` 继续为 `review`；`rublox-space-farm`、`super-omar-climb`、`temple-run-2`、`temple-run-2-holi-festival` 标记为 `remove` 候选。
+- 测试补充：新增 `tests/audit-game-quality.test.ts`，覆盖完整 editorial 不误判 thin content，以及逐 slug 决策表字段完整性和关键决策。
+- 验证结果：`pnpm type-check` 通过；`pnpm test -- --run` 20 files / 69 tests 全部通过；`pnpm check:internal-links` 通过；`pnpm lint` 0 errors，保留 96 个既有脚本 `console` warnings；`pnpm build` 通过，静态页生成 116 个，`patch-static-locale-html` 处理 28/28 英文静态 HTML。
+- 下一步：按 `docs/game-quality-audit.md` 的 decision table 处理 P0 减法：优先对 4 个 `remove` 候选做 410/308 决策；随后抽样 `catalogue-only` 的低需求页，合并或移除，不直接批量删除。
+
+### T-138 High-risk removed game redirects
+
+- 本次目标：继续 P0 减法，把 `docs/game-quality-audit.md` 标记为 `remove` 的高风险旧游戏页从公开详情渲染路径移除，同时保留用户路径到更安全、玩法相近的核心页面。
+- 实际改动：新增 `REMOVED_GAME_REDIRECT_TARGETS`、`getRemovedGameRedirectTarget` 和 `isRemovedGameSlug`；`temple-run-2`、`temple-run-2-holi-festival` 永久重定向到 `tunnel-rush`，`rublox-space-farm` 重定向到 `cow-bay`，`super-omar-climb` 重定向到 `apple-knight`。
+- 页面行为：动态游戏页在加载正文、iframe、结构化数据和来源披露前先检查 removed slug，并通过 `permanentRedirect(getLocalizedPath(locale, ...))` 发出本地化 308，避免继续暴露 franchise、Roblox-adjacent 或 Mario-like 风险页面。
+- 文档同步：`scripts/audit-game-quality.ts` 的 remove nextStep 改为“路由到更安全相关核心页”，并重新生成 `docs/game-quality-audit.md`；决策表继续保留逐 slug keep/improve/review/remove 口径。
+- 测试补充：`tests/source-disclosure.test.ts` 增加 removed slug 到安全核心页的映射断言，防止后续误删或改错目标。
+- 验证结果：`pnpm type-check` 通过；`pnpm test -- --run` 20 files / 70 tests 全部通过；`pnpm check:internal-links` 通过；`pnpm lint` 0 errors，保留 96 个既有脚本 `console` warnings；`pnpm build` 通过，静态页生成 116 个，`patch-static-locale-html` 处理 28/28 英文静态 HTML；本地 production server 抽查 4 个 removed slug 均返回 308 到对应安全核心页，目标页可 200 访问。
+- 下一步：继续 P1 做 catalogue-only 抽样合并，优先处理无原创内容、无来源把握、无搜索信号的旧条目；不做批量删除，先按风险和搜索价值逐页收口。
+
+### T-139 Catalogue-only series merge redirects
+
+- 本次目标：继续 P1 减法，抽样处理已不在 sitemap/search 的 `catalogue-only` 薄内容系列页，把低价值 direct URL 合并到已有核心页面，而不是继续保留一组近似空壳入口。
+- 实际改动：新增 `RETIRED_CATALOGUE_REDIRECT_TARGETS`、`getRetiredCatalogueRedirectTarget`、`isRetiredCatalogueGameSlug` 和统一 `getGameRedirectTarget`；动态游戏页改为使用统一重定向策略。
+- 合并映射：`duo-survival` -> `duo-vikings`，`duo-survival-2` -> `duo-vikings-2`，`duo-survival-3` -> `duo-vikings-3`；`fly-car-stunt`、`fly-car-stunt-2`、`fly-car-stunt-5` -> `ultimate-stunt-car-challenge`。
+- 文档同步：`scripts/audit-game-quality.ts` 新增 `merge` 决策类型，`docs/game-quality-audit.md` 已重新生成；这 6 个 retired catalogue-only 页现在在决策表中显示为合并到更强核心页。
+- 测试补充：`tests/source-disclosure.test.ts` 覆盖 removed 与 retired catalogue 两类映射，并断言统一 redirect lookup；`tests/audit-game-quality.test.ts` 覆盖 `merge` 决策。
+- 验证结果：`pnpm type-check` 通过；`pnpm test -- --run` 20 files / 72 tests 全部通过；`pnpm check:internal-links` 通过；`pnpm lint` 0 errors，保留 96 个既有脚本 `console` warnings；`pnpm build` 通过，静态页生成 116 个，`patch-static-locale-html` 处理 28/28 英文静态 HTML；本地 production server 抽查 6 个 retired catalogue-only slug 均返回 308 到对应核心页，4 个目标核心页均 200。
+- 下一步：完整门禁通过后，继续按同样模式审计下一组 catalogue-only：优先处理 combat/war/zombie 语义、placeholder thumbnail、短描述且无搜索信号的 direct URL。
+
+### T-140 Monitoring-led Big Tower Tiny Square 2 long-tail guide
+
+- 本次目标：读取监测数据后选择一个低竞争长尾机会，新增一篇有原创攻略价值、可索引、可内链的 SEO/GEO 页面，避免只铺薄内容 iframe。
+- 监测结果：`pnpm ops:monitoring` 显示主站、robots、290 URL sitemap、public health、search fallback 和 Clarity tag 可访问；`pnpm ops:growth` 仍因缺少本地 OAuth/API token 跳过 GA4/GSC/Clarity 后台 API。已登录浏览器读取 GSC：3 months 为 47 clicks / 2.38K impressions / CTR 2% / avg position 17.8，`google-snake-mods`、`best-free-iphone-games`、`drive-mad-walkthrough` 仍是主要已有信号，同时出现 `big tower tiny square 2 walkthrough` 0 clicks / 4 impressions / avg position 7.8、`big tower tiny square walkthrough` 0 / 15 / 6.0 和 `how to save pineapple in big tower tiny square` 0 / 2 / 7.5。
+- 数据限制：浏览器 GA4 当前默认打开的是 `ghibliart.top`，未归因到 Luma；Clarity 项目页提示会话过期，未读取到新 session/heatmap/dead-click 数据；因此本轮只把 GSC 与本地监控作为优化依据，不伪造行为数据。
+- 实际改动：新增 `big-tower-tiny-square-2-walkthrough` 中英文 SEO guide，包含完整 metadata、Quick answer、how to play、controls/double-jump timing、moving hazards/mobile notes、FAQPage、Article citation、官方来源链接、嵌入试玩块和相关游戏推荐；同步把既有 `big-tower-tiny-square-walkthrough` 的 related links 指向新攻略，形成 Big Tower 主题内链。
+- 预期 URL：`/en/guides/big-tower-tiny-square-2-walkthrough` 与 `/guides/big-tower-tiny-square-2-walkthrough`；页面围绕 `big tower tiny square 2 walkthrough`、`how to beat big tower tiny square 2`、`big tower tiny square 2 double jump`、`big tower tiny square 2 unblocked` 等长尾词写作，并明确不提供安装包、APK、ROM 或破解下载。
+- 验证结果：`pnpm type-check` 通过；`pnpm check:internal-links` 通过；`pnpm test -- --run` 20 files / 72 tests 全部通过；`pnpm lint` 0 errors，保留 96 个既有脚本 console warnings；`pnpm build` 通过，静态页生成 118 个，`patch-static-locale-html` 处理 29/29 英文静态 HTML；`git diff --check` 通过。本地 production server 抽查中英文新 URL 均 HTTP 200，输出 title、canonical、Article、FAQPage、H1、Quick answer、相关内链和游戏入口；本地 sitemap 包含新中英文 URL。
+- 下一步：部署后抽查生产 URL、sitemap 和 GSC URL inspection；7-14 天后复查 `big tower tiny square 2 walkthrough`、`big tower tiny square walkthrough`、`how to save pineapple in big tower tiny square` 的 impressions、CTR 和 position。若 Big Tower 主题继续增长，再拆 `how to save the pineapple` 或 `Big Tower Tiny Square checkpoints` 子攻略；否则优先回到 Snake Mods 与 iPhone games CTR 优化。
+
+### T-141 Full page quality score gate and index-surface reduction
+
+- 本次目标：检查所有公开页面并按性能、可玩性、热门程度、长尾词优质度、原创内容、来源风险和 AdSense 审核安全性打分；低于 80 分的页面必须优化到 80 分以上，或退出可索引面/合并到更强页面。
+- 检查结果：新增全页面评分报告 `docs/page-quality-scorecard.md`。当前共评分 248 行，其中可索引行 91、低于 80 分行 157、仍可索引且低于 80 分行 0；执行策略为 keep 91、noindex 3、redirect 10、remove-from-index 144。游戏质量审计同步为 200 个 fallback 游戏、46 个核心索引游戏、134 个 catalogue-only、20 个 manual-review、154 个 noindex 游戏页。
+- 实际改动：新增 `scripts/audit-page-quality.ts` 与 `pnpm audit:page-quality`；把低分核心游戏从 `CORE_INDEXABLE_GAME_SLUGS` 收口到 46 个；`string-theory-2-remastered` 补齐中英文原创 game editorial 后重新进入核心索引；`progression` 与 `timed-challenge` 等薄标签页改为 `noindex,follow` 并退出 sitemap。
+- 页面提质：`games-like-ovo` 从 74 分补强到 100 分，新增按技能选择、键盘/手机/网络限制、安全浏览器游戏检查清单、FAQ、官方来源 citation 和更稳妥的 metadata；正文不再承诺学校或公司网络一定可玩，也不引导下载、插件、APK 或绕过网络规则。
+- 减法与内链：将 `duo-survival-3`、`fly-car-stunt` 系列等合并目标改到仍保留索引资格的核心页面；清理 `games-to-play-when-bored`、`car-circle-guide`、`string-theory-2-remastered-guide`、`monkey-mart-guide`、`browser-games-for-low-end-pc` 中指向已降级游戏的推荐，避免高质量攻略把权重导向薄页。
+- 测试补充：新增 `tests/page-quality-scorecard.test.ts`，断言所有可索引评分页都不低于 80，并断言薄标签页不进 sitemap 且 metadata 输出 `noindex,follow`；更新来源披露/重定向测试覆盖新的安全目标。
+- 验证结果：`pnpm audit:page-quality`、`pnpm check:internal-links`、`pnpm type-check`、`pnpm test -- --run`、`pnpm lint`、`pnpm build`、`git diff --check` 均通过。本地 production server 抽查 `/en/guides/games-like-ovo`、`/en/games/string-theory-2-remastered`、`/en/games/tag/timed-challenge` 与 `sitemap.xml`：保留页 200 且在 sitemap，薄标签页 200 但 `noindex,follow` 且不在 sitemap。
+- 下一步：部署后用生产域重复 sitemap/robots/canonical/noindex 抽查，并观察 GSC 中被降级 slug 是否有真实展示或点击；只有补齐来源、原创内容、移动体验和可玩性达到 80+ 的页面，才重新放回核心索引。
+
+### T-142 Production index-surface verification and runtime sampling gate
+
+- 本次目标：按 T-141 后续要求，把当前本地索引面收口部署到生产，并在生产域复查 `sitemap`、`robots`、canonical、`noindex`；同时补一轮 Playwright/Lighthouse-style 批量采样，把移动端性能和可玩性纳入更硬的页面分数。
+- 远端/本地状态：远端 `origin/main` 仍为 `0a1bbf5`，本地工作树包含 T-136 到 T-141 的未提交质量收口改动；遵循日常维护规则，本轮未做 git commit，使用当前本地工作树通过 Vercel CLI 发布。
+- 实际改动：新增 `scripts/audit-runtime-quality.ts` 与 `pnpm audit:runtime-quality`，默认采样 `/en`、`/en/games`、3 个高价值 guide 和 2 个游戏页；报告写入 `docs/page-runtime-sampling.md`，对 canonical、移动端横向溢出、DCL/FCP/load、传输体积、请求数、console/page errors、Play button、iframe 和 Luma 全屏控件打分，样本低于 80 时失败。
+- 评分文档：`scripts/audit-page-quality.ts` 和 `docs/page-quality-scorecard.md` 已说明 runtime sampling 是静态页面分的 companion gate；静态 scorecard 继续保持 248 行评分、91 个可索引行、0 个可索引 under-80。
+- 本地验证：`pnpm audit:page-quality` 通过；`GAME_CATALOG_MODE=local pnpm exec next start -H 127.0.0.1 -p 3026` 后 `pnpm audit:runtime-quality -- --base-url http://127.0.0.1:3026` 通过，7 个样本最低 88；`pnpm type-check`、`pnpm test -- --run`（21 files / 74 tests）、`pnpm check:internal-links`、`pnpm lint`（0 errors，98 个既有脚本 console warnings）、`pnpm build`、`git diff --check` 均通过。
+- 生产部署：执行 `vercel deploy --prod --yes`，新 production URL 为 `https://251001-web-gamehub-rdg6-5yzux8tlk-yanruoyi999s-projects.vercel.app`，`https://www.lumagamehub.com` 已返回新内容。
+- 生产 SEO 复查：`robots.txt` 为 200，允许 `/`，禁止 `/admin` 与 `/api`，并指向 `https://www.lumagamehub.com/sitemap.xml`；生产 sitemap 为 192 URLs，包含 `games-like-ovo`、`drive-mad`、`string-theory-2-remastered`，不包含 `timed-challenge`、`progression`、`search`、`4399-sample`、`duo-survival` 或 `fly-car-stunt`。
+- 生产 canonical / noindex / redirect：`/en/guides/games-like-ovo`、`/en/games/string-theory-2-remastered`、`/en/games/drive-mad` 均 HTTP 200 且 canonical 指向生产域；`/en/games/tag/timed-challenge` 与 `/en/search` 均 HTTP 200、canonical 正常、`robots=noindex, follow`；`/en/games/duo-survival` HTTP 308 到 `/en/games/duo-vikings`。
+- 生产 runtime 采样：`pnpm audit:runtime-quality -- --base-url https://www.lumagamehub.com` 通过，7 个样本 under-80 为 0，最低分 100；`drive-mad` 与 `duo-vikings` 移动端均能看到 Play button，点击后 iframe 与 Luma 全屏控件可见。
+- GSC 状态：本地 `pnpm ops:monitoring` 仍显示 GSC API skipped，因为 `GSC_CLIENT_ID`、`GSC_CLIENT_SECRET`、`GSC_REFRESH_TOKEN` 未配置；Chrome DevTools 可控浏览器打开 Search Console 时进入 Google 登录页，无法读取已登录 GSC 页面。本轮没有伪造被降级页面搜索信号。被降级页面继续退出 sitemap/search/index surface，只有后续 GSC 证明有真实 impressions/clicks，且补齐原创内容、来源、可玩性并达到 80+，才恢复索引。
+- 生产监控：`pnpm ops:monitoring` 显示 site、robots、sitemap、public health、Clarity tag 均 ok；数据库配置仍为 Supabase direct serverless degraded，Meilisearch 仍指向 localhost degraded，search API 继续 fallback degraded，这些是外部配置项，未在本轮内容/索引面任务中改动。
+- 下一步：不要盲目扩张新游戏数量；优先用 GSC/Clarity 找已有曝光页加深。若要恢复任何降级页，先补来源披露、原创玩法、移动端实际采样和 80+ 静态/runtime 分数，再进 sitemap。
+
+### T-143 July 13 opportunity radar guide-first pages
+
+- 本次目标：读取 2026-07-13 Luma 游戏机会雷达和当前本地/远端状态，在不复制 iframe、不批量制造薄页的前提下，优先补强 P0 中已有集群缺口和低竞争新词页面。
+- 机会核验：CrazyGames live pages 复核 `Robby: Cross the Road for Brainrot`、`Obby: Parkour with Ragdoll`、`Rail Cart Buddies` 的 2026 年 7 月发布、设备支持、控制方式和核心玩法；Poki 新页只作为候选观察，未纳入本轮新增。Brainrot draft PR 仍处于冲突/未合并背景，本轮继续在当前本地工作树上小范围改动，没有 git commit。
+- 实际改动：补强既有 `robby-cross-the-road-for-brainrot-guide`，增加 E/F/Shift、基地槽位和升级顺序等实操段落；新增 `obby-parkour-with-ragdoll-guide` 与 `rail-cart-buddies-guide` 中英文 guide entry，包含 metadata、原创玩法建议、FAQPage、官方来源链接、相关内链和保守版权/安全表述。
+- 边界控制：本轮没有新增或复制 CrazyGames/Poki iframe，没有托管玩家地图、截图、APK、mod、作弊脚本、破解下载或未授权素材；Brainrot/Roblox-like 内容只作为非官方玩法攻略描述。
+- runtime gate：`scripts/audit-runtime-quality.ts` 默认采样扩展到 9 页，纳入 Obby/Rail 新指南；同时把 TTFB/transport 单独报告，页面评分改用 response-relative DCL/FCP/load，避免本机到 Vercel 约 5.5-6.2s TLS/TTFB 链路噪声把所有页面一起误判为 under-80。
+- 生产部署：执行 `vercel deploy --prod --yes`，新 production URL 为 `https://251001-web-gamehub-rdg6-gcjy9ychg-yanruoyi999s-projects.vercel.app`，`https://www.lumagamehub.com` 已返回新内容。
+- 生产 SEO 复查：`robots.txt` HTTP 200，继续指向 `https://www.lumagamehub.com/sitemap.xml`；生产 sitemap 为 196 URLs，包含 Robby、Obby、Rail 的英文 URL，并包含 Obby/Rail 中文 URL；`timed-challenge`、`progression`、`search`、`duo-survival` 继续不在 sitemap。
+- 生产 canonical / noindex：`/en/guides/robby-cross-the-road-for-brainrot-guide`、`/en/guides/obby-parkour-with-ragdoll-guide`、`/en/guides/rail-cart-buddies-guide` 均 HTTP 200、canonical 指向生产域、FAQ/source 存在、无 noindex；`/en/games/tag/timed-challenge` 与 `/en/search` 均为 `noindex, follow`。
+- 验证结果：`pnpm type-check`、`pnpm audit:page-quality`、`pnpm check:internal-links`、`pnpm test -- --run`（21 files / 74 tests）、`pnpm lint`（0 errors，98 个既有 console warnings）、`pnpm build`（122 static pages，31/31 English static HTML patched）、`git diff --check` 均通过；`pnpm audit:runtime-quality -- --base-url https://www.lumagamehub.com` 通过，9 个样本 under-80 为 0，最低分 100，两个游戏样本移动端 Play/iframe/fullscreen 可见。
+- 监控状态：`pnpm ops:monitoring` 显示 site、robots、sitemap、public health、Clarity tag 均 ok；database config、Meilisearch config 和 search API 仍为既有 degraded/fallback；GSC 仍 skipped，因为 `GSC_CLIENT_ID`、`GSC_CLIENT_SECRET`、`GSC_REFRESH_TOKEN` 未配置。本轮没有伪造被降级页面搜索信号，也没有恢复任何降级页索引。
+- 下一步：用 GSC/Clarity 优先观察已有曝光页和本轮新增指南是否出现真实 impressions/clicks；只有补齐原创内容、来源披露、移动端可玩性且静态/runtime 均 80+ 的页面，才恢复或扩大索引。P1 候选如 `Lumina Escape`、`Harbor Tycoon`、`ABLOCKALYPSE` 也应先做实测和来源核验，不批量铺低质量游戏数。
+
+### T-144 Main convergence and local catalogue read guard
+
+- 本次目标：按用户明确要求核对 GitHub 与本地累计改动，在完整门禁通过后将 T-136 至 T-143 的目录真实性、索引面收口、质量审计、运行时采样和攻略内容统一合入 `main` 并部署生产。
+- Git 状态：`git fetch --prune origin` 后本地基线与 `origin/main` 均为 `0a1bbf5`，ahead/behind 为 `0/0`；现有 4 个 draft PR 均为旧冲突分支，本轮不逐个硬合并，而以当前已验证工作树作为完整交付版本。
+- 发布前修复：本地 production runtime 发现 `GAME_CATALOG_MODE=local` 时目录页、详情页和 sitemap 仍可能尝试数据库。新增统一 `shouldUseCatalogueDatabase` 判定并接入三处读取路径，确保显式 local mode 不触发远端目录读取；测试先因缺少判定失败，再实现通过。
+- 性能结果：修复后本地 `/en/games` TTFB 从约 1.9 秒降到约 66 毫秒，`drive-mad` 与 `duo-vikings` 从约 1.6 秒降到 18-23 毫秒；服务端抽样期间不再出现数据库或 Redis 超时日志。
+- 验证结果：页面质量评分、内链、类型检查、Vitest、ESLint、Next production build、Playwright 移动端运行时采样和 `git diff --check` 均通过；Vitest 为 21 files / 75 tests，构建生成 122 个静态页并修正 31/31 英文静态 HTML，运行时 9 个样本 under-80 为 0、最低 88。
+- 已知外部限制：`pnpm audit:prod` 因 npm 官方旧 audit endpoint 已退役而收到 HTTP 410，不能把该结果解释为有漏洞或无漏洞；本轮不修改依赖锁文件来规避外部接口问题。
+- 下一步：将已验证分支 fast-forward 合并到本地 `main`，推送 GitHub，执行 Vercel production deployment，并在生产域复查 commit、health、robots、sitemap、canonical/noindex 与 runtime sampling。

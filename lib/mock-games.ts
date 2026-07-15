@@ -40,6 +40,9 @@ export interface MockScreenshot {
   order: number;
 }
 
+export type GameSourceType = 'developer' | 'distribution' | 'self-hosted' | 'unknown';
+export type EmbedPermissionStatus = 'verified' | 'unknown' | 'blocked';
+
 export interface MockGame {
   id: number;
   slug: string;
@@ -55,6 +58,12 @@ export interface MockGame {
   developerName: string;
   developerUrl: string;
   sourceUrl: string | null;
+  sourceType: GameSourceType;
+  sourceHost: string | null;
+  sourcePageUrl: string | null;
+  embedHost: string | null;
+  developerVerified: boolean;
+  embedPermissionStatus: EmbedPermissionStatus;
   categories: MockCategory[];
   tags: MockTag[];
   instructions: MockInstructions;
@@ -161,6 +170,25 @@ function deriveDeveloperInfo(entry: SampleGameEntry, iframeUrl: string): { name:
   return {
     name: toTitleCase(normalized.split('.')[0] ?? normalized),
     url: `https://${normalized}`,
+  };
+}
+
+function deriveSourceDisclosure(entry: SampleGameEntry, iframeUrl: string) {
+  const sourcePageUrl = entry.sourcePageUrl?.trim() || null;
+  const sourceHost = sanitizeHost(sourcePageUrl ?? entry.sourceHost);
+  const embedHost = sanitizeHost(iframeUrl);
+  const hosts = [sourceHost, embedHost].filter((item): item is string => Boolean(item));
+  const isDistributionSource = hosts.some(
+    (host) => host.includes('4399') || host.includes('ad-freegames'),
+  );
+
+  return {
+    sourceType: isDistributionSource ? ('distribution' as const) : ('unknown' as const),
+    sourceHost,
+    sourcePageUrl,
+    embedHost,
+    developerVerified: false,
+    embedPermissionStatus: 'unknown' as const,
   };
 }
 
@@ -561,7 +589,8 @@ function buildMockGamesFromSample(entries: SampleGameEntry[]): MockGame[] {
     const tags = buildTagsForGame(slug, categories, index);
     const instructions = buildInstructionsForGame(englishTitle, categories[0] ?? cloneCategory(MOCK_CATEGORY_PRESETS[0]));
     const developer = deriveDeveloperInfo(entry, iframeUrl);
-    const sourceUrl = iframeUrl || entry.sourcePageUrl?.trim() || null;
+    const sourceDisclosure = deriveSourceDisclosure(entry, iframeUrl);
+    const sourceUrl = sourceDisclosure.sourcePageUrl ?? iframeUrl ?? null;
     const screenshots = buildScreenshots(slug, englishTitle, index);
     const editorialDescription = getGameEditorialDescription(slug, 'zh');
     const editorialDescriptionEn = getGameEditorialDescription(slug, 'en');
@@ -583,6 +612,7 @@ function buildMockGamesFromSample(entries: SampleGameEntry[]): MockGame[] {
       developerName: developer.name,
       developerUrl: developer.url,
       sourceUrl,
+      ...sourceDisclosure,
       categories,
       tags,
       instructions,
@@ -628,6 +658,12 @@ const FALLBACK_GAMES: MockGame[] = [
       developerName: DEFAULT_DEVELOPER.name,
       developerUrl: DEFAULT_DEVELOPER.url,
       sourceUrl: 'https://play2048.co/',
+      sourceType: 'distribution',
+      sourceHost: 'play2048.co',
+      sourcePageUrl: 'https://play2048.co/',
+      embedHost: 'yanruoyi999.github.io',
+      developerVerified: false,
+      embedPermissionStatus: 'verified',
     },
     0
   ),
@@ -647,6 +683,12 @@ const FALLBACK_GAMES: MockGame[] = [
       developerName: DEFAULT_DEVELOPER.name,
       developerUrl: DEFAULT_DEVELOPER.url,
       sourceUrl: 'https://hextris.io/',
+      sourceType: 'distribution',
+      sourceHost: 'hextris.io',
+      sourcePageUrl: 'https://hextris.io/',
+      embedHost: 'dj-dk.github.io',
+      developerVerified: false,
+      embedPermissionStatus: 'verified',
     },
     1
   ),
@@ -666,6 +708,12 @@ const FALLBACK_GAMES: MockGame[] = [
       developerName: DEFAULT_DEVELOPER.name,
       developerUrl: DEFAULT_DEVELOPER.url,
       sourceUrl: 'https://sudoku.com/',
+      sourceType: 'distribution',
+      sourceHost: 'sudoku.com',
+      sourcePageUrl: 'https://sudoku.com/',
+      embedHost: 'sudoku.tn1ck.com',
+      developerVerified: false,
+      embedPermissionStatus: 'unknown',
     },
     2
   ),

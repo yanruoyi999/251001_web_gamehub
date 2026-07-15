@@ -28,9 +28,9 @@ export interface SearchGameItem {
   thumbnailUrl: string | null;
   isNew: boolean | null;
   isHot: boolean | null;
-  playCount: number | null;
-  averageRating: string | number | null;
-  publishedAt: Date | string | null;
+  playCount?: number | null;
+  averageRating?: string | number | null;
+  publishedAt?: Date | string | null;
 }
 
 export interface SearchResult {

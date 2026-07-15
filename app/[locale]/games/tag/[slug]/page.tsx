@@ -9,6 +9,7 @@ import {
   getTagEntries,
   getTagEntry,
   pickLocalizedLabel,
+  shouldIndexTagEntry,
 } from '@/lib/game-taxonomy';
 import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES, buildAbsoluteUrl } from '@/lib/seo';
 import { serializeJsonLd } from '@/lib/utils/json-ld';
@@ -46,6 +47,7 @@ export async function generateMetadata({ params }: TagPageProps): Promise<Metada
       ? `发现 ${entry.games.length} 款适合${label}的免费浏览器小游戏，直接在线游玩。`
       : `Discover ${entry.games.length} free browser games tagged ${label}. Play instantly online.`;
   const canonical = getLocalizedPath(locale, `/games/tag/${entry.item.slug}`);
+  const indexable = shouldIndexTagEntry(entry);
 
   return {
     title,
@@ -63,6 +65,12 @@ export async function generateMetadata({ params }: TagPageProps): Promise<Metada
         ]),
       ),
     },
+    robots: indexable
+      ? undefined
+      : {
+          index: false,
+          follow: true,
+        },
     openGraph: {
       title,
       description,

@@ -7,6 +7,7 @@ import {
 } from '@/lib/db/connection-policy';
 import { buildFallbackGameDetail } from '@/lib/games/fallback-detail';
 import { getMockGameById } from '@/lib/mock-games';
+import { isLocalCatalogueMode } from '@/lib/games/catalog-mode';
 
 const DEFAULT_GAME_DETAIL_TIMEOUT_MS = 1500;
 
@@ -50,6 +51,10 @@ function getFallbackDetail(gameId: number) {
   return mockGame ? buildFallbackGameDetail(mockGame) : null;
 }
 
+function localCatalogueResponse() {
+  return NextResponse.json({ error: 'Not found' }, { status: 404 });
+}
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
@@ -89,6 +94,8 @@ export async function PATCH(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
+  if (isLocalCatalogueMode()) return localCatalogueResponse();
+
   if (!isAdminRequestAuthenticated(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
@@ -119,6 +126,8 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
+  if (isLocalCatalogueMode()) return localCatalogueResponse();
+
   if (!isAdminRequestAuthenticated(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }

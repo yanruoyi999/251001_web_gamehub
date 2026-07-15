@@ -4,8 +4,9 @@ import type { MetadataRoute } from 'next';
 import { getLocalizedPath, locales } from '@/i18n/config';
 import { getSeoLandingPages } from '@/lib/seo-landing-content';
 import { mockGames } from '@/lib/mock-games';
-import { getCategoryEntries, getTagEntries } from '@/lib/game-taxonomy';
+import { getCategoryEntries, getTagEntries, shouldIndexTagEntry } from '@/lib/game-taxonomy';
 import { shouldIncludeGameInSitemap } from '@/lib/games/quality-policy';
+import { shouldUseCatalogueDatabase } from '@/lib/games/catalog-mode';
 import { buildAbsoluteUrl } from '@/lib/seo';
 import {
   getDatabaseConnectionMetadata,
@@ -58,7 +59,7 @@ function withSitemapTimeout<T>(promise: Promise<T>): Promise<T> {
 
 async function getSitemapGames(fallbackLastModified: Date): Promise<SitemapGameEntry[]> {
   const connection = getDatabaseConnectionMetadata();
-  if (!connection.configured || shouldSkipSupabaseDirectInServerless(connection)) {
+  if (!shouldUseCatalogueDatabase(connection) || shouldSkipSupabaseDirectInServerless(connection)) {
     return getFallbackSitemapGames(fallbackLastModified);
   }
 
@@ -115,12 +116,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       file: ['app', '[locale]', 'games', 'page.tsx'],
       changeFrequency: 'daily',
       priority: 0.85,
-    },
-    {
-      path: '/search',
-      file: ['app', '[locale]', 'search', 'page.tsx'],
-      changeFrequency: 'daily',
-      priority: 0.8,
     },
     {
       path: '/guides',
@@ -223,7 +218,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       });
     }
 
-    for (const tag of tags) {
+    for (const tag of tags.filter(shouldIndexTagEntry)) {
       entries.push({
         url: buildAbsoluteUrl(getLocalizedPath(locale, `/games/tag/${tag.item.slug}`)),
         lastModified: mockGamesUpdatedAt,
