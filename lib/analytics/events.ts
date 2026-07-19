@@ -17,11 +17,21 @@ function cleanProperties(properties?: AnalyticsProperties): Record<string, Analy
   ) as Record<string, AnalyticsValue>;
 }
 
+function getGa4Properties(properties: Record<string, AnalyticsValue>) {
+  const { source, ...ga4Properties } = properties;
+
+  if (source !== undefined && ga4Properties.interaction_source === undefined) {
+    ga4Properties.interaction_source = source;
+  }
+
+  return ga4Properties;
+}
+
 export function trackInteraction(eventName: string, properties?: AnalyticsProperties) {
   const cleanedProperties = cleanProperties(properties);
 
   track(eventName, cleanedProperties);
-  trackEvent(eventName, cleanedProperties);
+  trackEvent(eventName, getGa4Properties(cleanedProperties));
 
   if (typeof window !== 'undefined') {
     const clarity = (window as WindowWithClarity).clarity;

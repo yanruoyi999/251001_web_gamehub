@@ -21,6 +21,11 @@ const clarityProjectId =
   '';
 const defaultAnalyticsConsent: AnalyticsConsent =
   process.env.NEXT_PUBLIC_GAMEHUB_CLARITY_DEFAULT_CONSENT === 'denied' ? 'denied' : 'granted';
+const clarityProductionHosts = new Set(['lumagamehub.com', 'www.lumagamehub.com']);
+
+function isClarityProductionHost(hostname: string) {
+  return clarityProductionHosts.has(hostname.toLowerCase());
+}
 
 function setClarityConsent(analyticsStorage: AnalyticsConsent) {
   const clarity = window.clarity;
@@ -58,7 +63,7 @@ function loadClarity(projectId: string, analyticsStorage: AnalyticsConsent) {
 
 export function ClarityConsent() {
   useEffect(() => {
-    if (!clarityProjectId) return;
+    if (!clarityProjectId || !isClarityProductionHost(window.location.hostname)) return;
     const saved = window.localStorage.getItem(storageKey);
     loadClarity(
       clarityProjectId,

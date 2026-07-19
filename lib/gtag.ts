@@ -2,6 +2,8 @@ export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID ?? '';
 
 type GtagParams = {
   page_path: string;
+  page_location: string;
+  page_title: string;
 };
 
 declare global {
@@ -18,8 +20,10 @@ export const pageview = (url: string) => {
 
   if (typeof window.gtag !== 'function') return;
 
-  window.gtag('config', GA_TRACKING_ID, {
+  window.gtag('event', 'page_view', {
     page_path: url,
+    page_location: window.location.href,
+    page_title: document.title,
   } satisfies GtagParams);
 };
 

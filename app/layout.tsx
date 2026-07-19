@@ -133,18 +133,18 @@ export default async function RootLayout({
         </Suspense>
         {GA_TRACKING_ID ? (
           <>
+            <Script id="ga-init" strategy="beforeInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                window.gtag = window.gtag || function(){window.dataLayer.push(arguments);};
+                window.gtag('js', new Date());
+                window.gtag('config', '${GA_TRACKING_ID}', { send_page_view: false });
+              `}
+            </Script>
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
               strategy="afterInteractive"
             />
-            <Script id="ga-init" strategy="afterInteractive">
-              {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${GA_TRACKING_ID}', { page_path: window.location.pathname, send_page_view: false });
-              `}
-            </Script>
             <Suspense fallback={null}>
               <AnalyticsListener />
             </Suspense>

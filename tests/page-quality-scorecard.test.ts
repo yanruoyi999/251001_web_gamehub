@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import sitemap from '@/app/sitemap';
 import { generateMetadata as generateTagMetadata } from '@/app/[locale]/games/tag/[slug]/page';
-import { buildPageQualityRows } from '@/scripts/audit-page-quality';
+import { buildPageQualityRows, buildReport } from '@/scripts/audit-page-quality';
 import { buildAbsoluteUrl } from '@/lib/seo';
 
 describe('page quality scorecard', () => {
@@ -30,5 +30,12 @@ describe('page quality scorecard', () => {
       index: false,
       follow: true,
     });
+  });
+
+  it('writes exactly one trailing newline', () => {
+    const report = buildReport('2026-07-17T00:00:00.000Z');
+
+    expect(report.endsWith('\n')).toBe(true);
+    expect(report.endsWith('\n\n')).toBe(false);
   });
 });

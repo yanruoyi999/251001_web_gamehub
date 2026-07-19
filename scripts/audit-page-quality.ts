@@ -383,7 +383,7 @@ export function buildReport(generatedAt = new Date().toISOString()) {
     '',
   ];
 
-  return `${lines.join('\n')}\n`;
+  return lines.join('\n');
 }
 
 function runCli() {

@@ -1733,3 +1733,33 @@
 - 验证结果：页面质量评分、内链、类型检查、Vitest、ESLint、Next production build、Playwright 移动端运行时采样和 `git diff --check` 均通过；Vitest 为 21 files / 75 tests，构建生成 122 个静态页并修正 31/31 英文静态 HTML，运行时 9 个样本 under-80 为 0、最低 88。
 - 已知外部限制：`pnpm audit:prod` 因 npm 官方旧 audit endpoint 已退役而收到 HTTP 410，不能把该结果解释为有漏洞或无漏洞；本轮不修改依赖锁文件来规避外部接口问题。
 - 下一步：将已验证分支 fast-forward 合并到本地 `main`，推送 GitHub，执行 Vercel production deployment，并在生产域复查 commit、health、robots、sitemap、canonical/noindex 与 runtime sampling。
+
+### T-145 GA4 landing attribution and homepage dead-click remediation
+
+- 监测根因：05:00 GA4 近 7 天为 37 sessions / 8 views；同日固定日期重查为 10 个 `page_view`，但 landing 明细仍有 29 sessions 为 `(not set)`、7 sessions 为空。交叉查询确认缺失 landing 的 session 已产生 `session_start`、`first_visit`、`user_engagement` 和部分游戏事件；少量 page view 还存在 `page_path` 与实际 `page_location` 不一致。原实现关闭自动 page view，完全依赖 hydration 后 listener，再用二次 `config` 和单一 `page_path` 补偿，存在初始化/路由时序与陈旧路径归因问题。
+- 埋点修复：`app/layout.tsx` 在 hydration 前建立 `dataLayer/gtag` 队列，继续禁用 GA 自动 page view；`lib/gtag.ts` 对每次路由显式发送 `page_view`，包含 `page_path`、`page_location`、`page_title`。
+- 交互根因：Clarity 代表性 dead-click 回放显示用户在首页 00:02-00:06 多次点击“即开即玩”提示卡，后续才进入游戏库并成功启动 Google Snake。原卡片有 hover 样式却是非交互 `div`。
+- 交互修复：`app/[locale]/page.tsx` 把“即开即玩”卡改为可键盘聚焦的本地化游戏库链接，其他非交互特性卡去掉 hover 阴影。
+- 测试与验证：新增 `tests/ga4-bootstrap.test.ts`、`tests/gtag.test.ts`；`pnpm vitest run` 23 files / 77 tests、`pnpm type-check`、`pnpm build`、`git diff --check` 通过；`pnpm lint` 0 errors，保留 98 个既有脚本 console warnings。桌面和 390px 移动端英文首页均无横向溢出，“Instant Play”唯一、可见且实际点击到达 `/en/games`；测试环境未发送真实 GA4 数据。
+- 验证限制：本地 `next start` 的默认中文 `/` 与 `/zh` 出现互相重定向，生产 `/` 当前 HTTP 200；本轮不把仅 localhost 可复现且与生产监控根因无直接关系的路由差异混入修复，若生产出现 3xx loop 再升级。
+- 下一步：部署后按固定日期观察 `screenPageViews / sessions`、`(not set)` 与空 landing 的绝对数/占比，并按页面与控件复查首页 dead click；不改 GSC property、sitemap 或 indexing 设置。
+
+### T-146 Clarity production-host isolation and page-quality gate repair
+
+- 实时数据复核：GA4 只读 API 重查 2026-07-10..16 为 46 sessions / 9 views / 41 active users，其中 `(not set)` 37 sessions、空 landing 5；hostname 全为 `www.lumagamehub.com`，确认 T-145 针对的 page view 断链仍是旧生产代码问题。GSC 最终日期已前移至 07-15，当日 4 clicks / 152 impressions，属于正向搜索信号。
+- Clarity 根因：网络恢复后复用现有已登录 GameHub 项目，过去 3 天为 21 sessions、4 dead-click sessions；热门页面直接出现多条 `http://localhost/...`。`.env.local` 使用生产 Clarity ID，而原组件不校验 hostname，导致本地测试污染生产体验口径。后台项目网站 URL 已是正确的 `www.lumagamehub.com`，无需修改设置。
+- Clarity 修复：`components/analytics/ClarityConsent.tsx` 仅允许 `lumagamehub.com` 与 `www.lumagamehub.com` 加载生产项目；新增 `tests/clarity-consent.test.ts`，先复现 localhost 插入脚本，再验证 localhost 隔离和正式主域加载。
+- 发布门禁修复：`scripts/audit-page-quality.ts` 的报告行数组末尾已有空行，返回值又追加换行，导致每次审计后 `git diff --check` 报 EOF 空行并阻断自动任务。现改为只输出一个结尾换行，`tests/page-quality-scorecard.test.ts` 增加回归断言。
+- 验证结果：`pnpm audit:page-quality`、`pnpm check:internal-links`、`pnpm type-check`、`pnpm test -- --run`（24 files / 80 tests）、`pnpm lint`（0 errors / 98 个既有 warnings）、`pnpm build`（122 static pages / 31 English HTML patched）和 `git diff --check` 通过。移动 runtime 9 个样本 under-80 为 0、最低 88；1440x1000 与 390x844 首页均无横向溢出，Instant Play 唯一、可见并跳转 `/en/games`，localhost 不再加载 Clarity。
+- 边界与下一步：本轮未部署、未改 GA4/GSC/Clarity 后台。准确状态为本地修复完成，等待部署/数据验证；部署后观察 page views/session、缺失 landing、新增 localhost Clarity URL 和首页 dead click。localhost 根路径自循环未在生产复现，继续按 P2 观察。
+
+### T-147 GA4 acquisition source isolation and current monitoring recheck
+
+- 当前数据复核：GA4 只读 API 重查 2026-07-11..17 为 42 active users、45 sessions、9 views、174 events。05:00 报告中的 landing 为 `(not set)` 35、空值 6；当前同窗口变为 `(not set)` 40、空值 1，总缺失仍为 41/45，属于 GA4 后处理分桶变化，不是归因恢复。全部 45 sessions 的 hostname 仍为 `www.lumagamehub.com`。
+- 新增 P1 根因：session source/medium 中出现 `game_detail` 16 sessions 与 `guide_embed` 5 sessions，共污染 21/45 sessions。生产 bundle 与本地调用链确认 `game_play_start` 把 UI 入口写入通用参数 `source`，共享 `trackEvent` 又把该参数原样发送给 GA4，导致交互上下文被解释为流量来源。
+- 本地修复：`lib/analytics/events.ts` 只在发送 GA4 时将业务参数 `source` 映射为 `interaction_source`；Vercel Analytics 继续保留原有 `source`，Clarity 事件名不变。新增 `tests/analytics-events.test.ts`，先复现 GA4 收到保留字段，再验证两个分析出口各触发一次、GA4 不再收到 `source` 且保留 `interaction_source`。
+- GSC 复核：2026-06-18..07-15 property 总计 69 clicks / 3,474 impressions；95 个 under-80 页面在 page 维度保留历史 5 clicks / 310 impressions，但其中曾获点击的 4 页在最新可用 07-13..15 仅 2 impressions / 0 clicks。现有 under-80 页面继续 `noindex`/退出 sitemap，不恢复索引。
+- 既有待部署修复：T-145/T-146 的 GA4 显式 `page_view`、首页 Instant Play 真链接、Clarity 生产主机隔离和评分报告 EOF 修复仍只存在于本地工作树；生产 HTML 仍是旧 GA bootstrap，因此不能把当前后台数据写成已修复。
+- 验证结果：页面质量 250 行、93 个可索引、157 个 under-80、0 个 under-80 可索引；内链检查通过；`pnpm type-check` 通过；Vitest 25 files / 81 tests 通过；ESLint 0 errors / 98 个既有 warnings；production build 通过并生成 122 个静态页、修正 31/31 英文 HTML；移动 runtime 9 个样本 under-80 为 0、最低 88。1440x1000 与 390x844 首页无横向溢出，Instant Play 可达 `/en/games`，localhost 不加载 Clarity，游戏页点击后 iframe 与全屏控件可见。
+- 生产只读抽查：`robots.txt`、196 URL sitemap、canonical、under-80 页 `noindex,follow`、removed 页 308 和 `/api/health` 均符合当前策略；未提交 sitemap、未修改 GA4/GSC/Clarity 后台、未部署。
+- 下一步：部署后按固定窗口观察 `screenPageViews/sessions`、缺失 landing、`game_detail`/`guide_embed` 是否停止进入 acquisition source、首页 dead click 和新增 localhost Clarity URL；索引恢复仍要求原创内容、来源披露、可玩性及静态/runtime 分数均达到 80+。
