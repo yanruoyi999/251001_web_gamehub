@@ -4,6 +4,7 @@ import {
   checkDatabase,
   checkMeilisearch,
   checkRedis,
+  getHealthSummary,
   sanitizeHealthResult,
 } from '@/lib/ops/health';
 
@@ -55,6 +56,19 @@ describe('sanitizeHealthResult', () => {
 });
 
 describe('local catalogue health', () => {
+  it('exposes structured runtime modes for remote monitoring', async () => {
+    process.env.GAME_CATALOG_MODE = 'local';
+    process.env.CACHE_MODE = 'local';
+
+    await expect(getHealthSummary('public')).resolves.toMatchObject({
+      status: 'ok',
+      modes: {
+        catalogue: 'local',
+        cache: 'local',
+      },
+    });
+  });
+
   it('treats the database as intentionally disabled', async () => {
     process.env.GAME_CATALOG_MODE = 'local';
 

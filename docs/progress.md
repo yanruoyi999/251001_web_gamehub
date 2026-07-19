@@ -1763,3 +1763,13 @@
 - 验证结果：页面质量 250 行、93 个可索引、157 个 under-80、0 个 under-80 可索引；内链检查通过；`pnpm type-check` 通过；Vitest 25 files / 81 tests 通过；ESLint 0 errors / 98 个既有 warnings；production build 通过并生成 122 个静态页、修正 31/31 英文 HTML；移动 runtime 9 个样本 under-80 为 0、最低 88。1440x1000 与 390x844 首页无横向溢出，Instant Play 可达 `/en/games`，localhost 不加载 Clarity，游戏页点击后 iframe 与全屏控件可见。
 - 生产只读抽查：`robots.txt`、196 URL sitemap、canonical、under-80 页 `noindex,follow`、removed 页 308 和 `/api/health` 均符合当前策略；未提交 sitemap、未修改 GA4/GSC/Clarity 后台、未部署。
 - 下一步：部署后按固定窗口观察 `screenPageViews/sessions`、缺失 landing、`game_detail`/`guide_embed` 是否停止进入 acquisition source、首页 dead click 和新增 localhost Clarity URL；索引恢复仍要求原创内容、来源披露、可玩性及静态/runtime 分数均达到 80+。
+
+### T-148 Post-deploy analytics verification and monitoring runtime-mode repair
+
+- 最新巡检复核：05:00 报告的 2026-07-12..18 GA4 49 sessions / 9 views、45 个缺失 landing 和 `game_detail`/`guide_embed` source 均来自 09:44 部署前窗口。当前 Data API 的部署后新增明细与生产验收路径及时刻一致，属于内部流量；这些样本已有具体 landing，来源保持 direct，不能当作业务增长，也不能替代完整真实用户日。
+- 外部数据边界：GSC HTTP 200，final 仍截止 07-16，保持 74 clicks / 3,636 impressions；没有恢复任何降级页索引。Clarity 现有登录标签重载后仍为 `ERR_CONNECTION_CLOSED`，当前 dashboard TLS 路由不可读，不沿用昨日聚合。
+- 新根因：生产 `/api/health` 已明确 local catalogue/cache 模式正常，但 `pnpm ops:monitoring` 依据本机 `.env` 推断生产模式，误报 database、Meilisearch 与 fallback search degraded。
+- 本地修复：`lib/ops/health.ts` 输出非敏感结构化 runtime modes；`scripts/monitoring-status.ts` 对生产域优先采用远端 catalogue mode，仅在远端缺失 mode 或非生产目标时回退本机环境。`tests/health.test.ts` 与新增 `tests/monitoring-status.test.ts` 覆盖接口字段、远端优先和回退规则。
+- 验证结果：页面质量 250 rows / 93 indexable / 157 under-80 / 0 indexable under-80；内链通过；Vitest 26 files / 84 tests、type-check、build、diff-check 通过，lint 为 0 errors / 98 个既有 warnings，构建 122 页并修正 31/31 英文 HTML。本地 health 返回 `catalogue=local`、`cache=local`，监控将 database、Meilisearch 和 fallback search 判为 ok。
+- 页面与埋点验证：移动 runtime 9 页 under-80 为 0、最低 88；生产 1440x1000 与 390x844 无横向溢出、0 console errors、canonical 正确。阻断真实遥测后首屏/SPA 各 1 次 page view；移动 Drive Mad 只发送 `interaction_source=game_detail`，iframe 与全屏控件可见。robots、196 URL sitemap、可索引指南和薄标签 `noindex, follow` 均符合策略。
+- 当前状态：本地修复完成，等待本提交的生产验证；未改 GA4/GSC/Clarity/Typeform 后台。用户授权后已将自 2026-07-10 残留的 `.git/REBASE_HEAD` 及导致 `git fsck` 非法引用错误的 `.git/refs/.DS_Store` 分别备份到 `/tmp` 并清理；清理前后 HEAD、索引、工作区差异、暂存区和状态校验值一致，`git fsck --connectivity-only` 无引用错误。下一次巡检只用部署后的真实用户完整日判断 GA4，并在 Clarity 路由恢复后复查 localhost 与 dead click。

@@ -1,7 +1,10 @@
 import './load-env';
 
+import { pathToFileURL } from 'node:url';
+
 import { getDatabaseConnectionMetadata } from '@/lib/db/connection-policy';
 import { isLocalCatalogueMode } from '@/lib/games/catalog-mode';
+import type { RuntimeMode } from '@/lib/ops/health';
 import { getSiteBaseUrl } from '@/lib/seo';
 
 type CheckStatus = 'ok' | 'degraded' | 'skipped' | 'error';
@@ -10,6 +13,11 @@ interface CheckResult {
   name: string;
   status: CheckStatus;
   detail: string;
+}
+
+interface PublicHealthSnapshot {
+  result: CheckResult;
+  catalogueMode?: RuntimeMode;
 }
 
 const CHECK_TIMEOUT_MS = 15000;
@@ -22,6 +30,18 @@ function isProductionTarget(siteUrl: string) {
   } catch {
     return false;
   }
+}
+
+export function resolveMonitoringCatalogueMode(
+  siteUrl: string,
+  remoteMode: RuntimeMode | undefined,
+  localCatalogueMode: boolean,
+) {
+  if (isProductionTarget(siteUrl) && remoteMode) {
+    return remoteMode === 'local';
+  }
+
+  return localCatalogueMode;
 }
 
 function withTimeout<T>(promise: Promise<T>, timeoutMs: number, label: string): Promise<T> {
@@ -75,20 +95,31 @@ async function checkSitemap(siteUrl: string): Promise<CheckResult> {
   }
 }
 
-async function checkPublicHealth(siteUrl: string): Promise<CheckResult> {
+async function checkPublicHealth(siteUrl: string): Promise<PublicHealthSnapshot> {
   try {
     const { response, text } = await fetchText(`${siteUrl}/api/health`);
-    const payload = JSON.parse(text) as { status?: string };
+    const payload = JSON.parse(text) as {
+      status?: string;
+      modes?: {
+        catalogue?: RuntimeMode;
+        cache?: RuntimeMode;
+      };
+    };
     return {
-      name: 'public health',
-      status: response.ok && payload.status === 'ok' ? 'ok' : 'degraded',
-      detail: `HTTP ${response.status}, status=${payload.status ?? 'unknown'}`,
+      result: {
+        name: 'public health',
+        status: response.ok && payload.status === 'ok' ? 'ok' : 'degraded',
+        detail: `HTTP ${response.status}, status=${payload.status ?? 'unknown'}`,
+      },
+      catalogueMode: payload.modes?.catalogue,
     };
   } catch (error) {
     return {
-      name: 'public health',
-      status: 'error',
-      detail: error instanceof Error ? error.message : String(error),
+      result: {
+        name: 'public health',
+        status: 'error',
+        detail: error instanceof Error ? error.message : String(error),
+      },
     };
   }
 }
@@ -249,8 +280,8 @@ async function checkClarity(): Promise<CheckResult> {
   }
 }
 
-function checkDatabaseConfig(siteUrl: string): CheckResult {
-  if (isLocalCatalogueMode()) {
+function checkDatabaseConfig(siteUrl: string, localCatalogueMode: boolean): CheckResult {
+  if (localCatalogueMode) {
     return {
       name: 'database config',
       status: 'ok',
@@ -289,8 +320,8 @@ function checkDatabaseConfig(siteUrl: string): CheckResult {
   };
 }
 
-function checkMeilisearchConfig(siteUrl: string): CheckResult {
-  if (isLocalCatalogueMode()) {
+function checkMeilisearchConfig(siteUrl: string, localCatalogueMode: boolean): CheckResult {
+  if (localCatalogueMode) {
     return {
       name: 'meilisearch config',
       status: 'ok',
@@ -330,14 +361,19 @@ async function main() {
     process.env.MONITORING_SITE_URL ||
     process.env.GSC_SITE_URL ||
     (process.env.NODE_ENV === 'production' ? getSiteBaseUrl() : 'https://www.lumagamehub.com');
-  const localCatalogueMode = isLocalCatalogueMode();
+  const publicHealth = await checkPublicHealth(siteUrl);
+  const localCatalogueMode = resolveMonitoringCatalogueMode(
+    siteUrl,
+    publicHealth.catalogueMode,
+    isLocalCatalogueMode(),
+  );
   const checks = await Promise.all([
-    Promise.resolve(checkDatabaseConfig(siteUrl)),
-    Promise.resolve(checkMeilisearchConfig(siteUrl)),
+    Promise.resolve(checkDatabaseConfig(siteUrl, localCatalogueMode)),
+    Promise.resolve(checkMeilisearchConfig(siteUrl, localCatalogueMode)),
     checkUrl('site', siteUrl),
     checkUrl('robots', `${siteUrl}/robots.txt`),
     checkSitemap(siteUrl),
-    checkPublicHealth(siteUrl),
+    Promise.resolve(publicHealth.result),
     checkSearchEndpoint(siteUrl, localCatalogueMode),
     checkGsc(siteUrl),
     checkClarity(),
@@ -357,4 +393,6 @@ async function main() {
   process.exit(hasError ? 1 : 0);
 }
 
-main();
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main();
+}

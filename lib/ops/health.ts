@@ -11,6 +11,7 @@ import { isLocalCatalogueMode } from '@/lib/games/catalog-mode';
 
 export type HealthStatus = 'ok' | 'degraded' | 'error';
 export type HealthMode = 'public' | 'internal';
+export type RuntimeMode = 'local' | 'remote';
 
 export interface HealthCheckResult {
   name: 'database' | 'redis' | 'meilisearch';
@@ -21,6 +22,10 @@ export interface HealthCheckResult {
 export interface HealthSummary {
   status: HealthStatus;
   timestamp: string;
+  modes: {
+    catalogue: RuntimeMode;
+    cache: RuntimeMode;
+  };
   services: Record<HealthCheckResult['name'], Omit<HealthCheckResult, 'name'>>;
 }
 
@@ -198,6 +203,10 @@ export async function getHealthSummary(
   return {
     status,
     timestamp: new Date().toISOString(),
+    modes: {
+      catalogue: isLocalCatalogueMode() ? 'local' : 'remote',
+      cache: isLocalCacheMode() ? 'local' : 'remote',
+    },
     services: Object.fromEntries(
       results.map((result) => {
         const sanitized = sanitizeHealthResult(result, mode);
