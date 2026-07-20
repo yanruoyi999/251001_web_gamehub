@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { MessageCircle } from 'lucide-react';
 
 import { getLocalizedPath } from '@/i18n/config';
 import { trackInteraction } from '@/lib/analytics/events';
@@ -35,6 +36,7 @@ interface TypeformFeedbackButtonProps {
 export function TypeformFeedbackButton({ locale }: TypeformFeedbackButtonProps) {
   const pathname = usePathname();
   const isZh = locale === 'zh';
+  const label = isZh ? '反馈问题' : 'Feedback';
   const typeformHref = buildTypeformHref(locale, pathname);
 
   if (!typeformHref) {
@@ -48,9 +50,12 @@ export function TypeformFeedbackButton({ locale }: TypeformFeedbackButtonProps) 
             source: 'contact_fallback',
           })
         }
-        className="fixed bottom-5 right-5 z-40 rounded-full border border-border bg-background px-4 py-2 text-sm font-semibold text-foreground shadow-lg transition hover:bg-accent"
+        aria-label={label}
+        title={label}
+        className="z-40 mx-auto mb-[calc(1rem+env(safe-area-inset-bottom))] mt-4 inline-flex size-11 items-center justify-center rounded-full border border-border bg-background p-0 text-sm font-semibold text-foreground shadow-lg transition hover:bg-accent sm:fixed sm:bottom-5 sm:right-5 sm:m-0 sm:h-auto sm:w-auto sm:px-4 sm:py-2"
       >
-        {isZh ? '反馈问题' : 'Feedback'}
+        <MessageCircle className="size-5 sm:hidden" aria-hidden="true" />
+        <span className="hidden sm:inline">{label}</span>
       </Link>
     );
   }
@@ -67,9 +72,12 @@ export function TypeformFeedbackButton({ locale }: TypeformFeedbackButtonProps) 
           source: 'typeform',
         })
       }
-      className="fixed bottom-5 right-5 z-40 rounded-full border border-primary/20 bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-lg transition hover:bg-primary/90"
+      aria-label={label}
+      title={label}
+      className="z-40 mx-auto mb-[calc(1rem+env(safe-area-inset-bottom))] mt-4 inline-flex size-11 items-center justify-center rounded-full border border-primary/20 bg-primary p-0 text-sm font-semibold text-primary-foreground shadow-lg transition hover:bg-primary/90 sm:fixed sm:bottom-5 sm:right-5 sm:m-0 sm:h-auto sm:w-auto sm:px-4 sm:py-2"
     >
-      {isZh ? '反馈问题' : 'Feedback'}
+      <MessageCircle className="size-5 sm:hidden" aria-hidden="true" />
+      <span className="hidden sm:inline">{label}</span>
     </a>
   );
 }

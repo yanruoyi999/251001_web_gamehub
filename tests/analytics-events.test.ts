@@ -33,4 +33,25 @@ describe('trackInteraction', () => {
     });
     expect(gaTrackEvent).toHaveBeenCalledOnce();
   });
+
+  it('tracks the Typeform feedback CTA once with page context', () => {
+    trackInteraction('feedback_open', {
+      locale: 'en',
+      page: '/en/guides/hide-and-paint-guide',
+      source: 'typeform',
+    });
+
+    expect(vercelTrack).toHaveBeenCalledOnce();
+    expect(vercelTrack).toHaveBeenCalledWith('feedback_open', {
+      locale: 'en',
+      page: '/en/guides/hide-and-paint-guide',
+      source: 'typeform',
+    });
+    expect(gaTrackEvent).toHaveBeenCalledOnce();
+    expect(gaTrackEvent).toHaveBeenCalledWith('feedback_open', {
+      locale: 'en',
+      page: '/en/guides/hide-and-paint-guide',
+      interaction_source: 'typeform',
+    });
+  });
 });

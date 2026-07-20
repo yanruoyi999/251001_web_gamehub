@@ -1773,3 +1773,23 @@
 - 验证结果：页面质量 250 rows / 93 indexable / 157 under-80 / 0 indexable under-80；内链通过；Vitest 26 files / 84 tests、type-check、build、diff-check 通过，lint 为 0 errors / 98 个既有 warnings，构建 122 页并修正 31/31 英文 HTML。本地 health 返回 `catalogue=local`、`cache=local`，监控将 database、Meilisearch 和 fallback search 判为 ok。
 - 页面与埋点验证：移动 runtime 9 页 under-80 为 0、最低 88；生产 1440x1000 与 390x844 无横向溢出、0 console errors、canonical 正确。阻断真实遥测后首屏/SPA 各 1 次 page view；移动 Drive Mad 只发送 `interaction_source=game_detail`，iframe 与全屏控件可见。robots、196 URL sitemap、可索引指南和薄标签 `noindex, follow` 均符合策略。
 - 当前状态：本地修复完成，等待本提交的生产验证；未改 GA4/GSC/Clarity/Typeform 后台。用户授权后已将自 2026-07-10 残留的 `.git/REBASE_HEAD` 及导致 `git fsck` 非法引用错误的 `.git/refs/.DS_Store` 分别备份到 `/tmp` 并清理；清理前后 HEAD、索引、工作区差异、暂存区和状态校验值一致，`git fsck --connectivity-only` 无引用错误。下一次巡检只用部署后的真实用户完整日判断 GA4，并在 Clarity 路由恢复后复查 localhost 与 dead click。
+
+### T-149 Telemount verified walkthrough and mobile feedback overlap fix
+
+- 机会核验：只执行 2026-07-19 雷达中证据最强的 `Telemount Walkthrough`，没有批量新增其余候选。Hempuli 官方 itch.io 页面确认该作于 2026-07-16 发布、状态为 Released、平台为 HTML5，评论区存在第一关卡住、walkthrough 和跳关按键的真实需求；创作者本人确认 `Ctrl+Q` 跳关。
+- 实测纠错：实际运行官方网页版本后确认方向键用于移动/推动，`Z` 为撤销、`R` 为重开；先前把 `Z` 当成交互键的判断已撤回。使用开发者确认的跳关方式核对到标题房间后共有 15 个测试房间，随后进入通关画面；未发现触屏按键，因此页面明确标注桌面键盘适配，不虚构手机玩法。
+- 内容改动：`lib/seo-landing-content.ts` 新增中英文 `telemount-walkthrough`，包含第一关直接路线、全 15 关分段提示、撤销/重开/跳关风险、桌面适配、官方来源与社区完整通关参考；不嵌入或复制 itch.io 游戏文件。7 月新游集合增加相关内链，`scripts/audit-runtime-quality.ts` 将新页纳入默认移动采样。
+- 移动端根因与修复：390px 浏览器截图发现共享 `TypeformFeedbackButton` 的固定文字按钮遮挡长正文。`components/feedback/TypeformFeedbackButton.tsx` 改为移动端页尾文档流中的 44px `MessageCircle` 图标，桌面端继续固定显示文字；原 Typeform/contact 链路和 `feedback_open` 埋点不变。`tests/feedback-button.test.ts` 锁定可访问标签、移动图标和仅桌面固定行为。
+- 质量门槛：`tests/page-quality-scorecard.test.ts` 新增 Telemount 回归约束，锁定官方来源、无未授权 iframe、桌面限制、sitemap 和 80+ 索引门槛。静态评分为 100，所有可索引页面 under-80 为 0；Playwright 10 页移动采样 under-80 为 0、最低 88，Telemount 为 88、HTTP 200、canonical 存在、robots 为 index、无横向溢出、无 iframe。
+- 验证结果：`pnpm lint` 0 errors / 98 个既有 warnings；`pnpm type-check` 通过；Vitest 27 files / 86 tests 通过；`pnpm check:internal-links` 通过；production build 生成 124 个静态页并修正 32/32 英文 HTML；官方来源和社区参考链接均 HTTP 200；中英文构建产物均含正确 H1、source citation、canonical、无 `noindex`、无 iframe，sitemap 含两种语言 URL。
+- 验证边界：本地 `next start` 的默认中文无前缀 URL仍有既有自重定向差异，生产现有同类中文 URL 实测 HTTP 200，本轮不把仅 localhost 可复现问题混入内容修复。当前未 commit、未部署、未提交 GSC sitemap，也未修改任何分析后台；准确状态为本地修复完成，等待部署和生产数据验证。
+- 下一步：部署后复查新页生产 canonical、robots、sitemap、无 `noindex`、移动页面和来源链接；7-14 天后只依据 GSC 的 `telemount walkthrough`、`telemount level 1`、`telemount controls` impressions/clicks 决定是否继续加深。其余 2026-07-19 候选继续观察，不因平台新增而批量制造薄页。
+
+### T-150 Typeform funnel semantic diagnosis and monitoring rule fix
+
+- 最新信号：2026-07-21 05:00 报告显示 GameHub Typeform all-time views 9→11、starts/submissions 保持 2/2，而 GA4 2026-07-20 有 1 次 `form_start`。GA4 readonly API 重查仍为 4 sessions / 6 views / 21 events，hostname 仅正式域；GSC 06-21..07-18 为 81 clicks / 3,967 impressions，sitemap 196 submitted、0 error/warning。
+- 直接根因：GA4 的 `form_start` page 只指向 `/en/guides/hide-and-paint-guide`。该页继承全局站内搜索 `<form>`；共享反馈入口本身是 Typeform 外链并发送 `feedback_open`。因此差异来自 GA4 Enhanced Measurement 通用表单事件与 Typeform 自身漏斗的语义/窗口错配，不是提交链路断裂。
+- 本地修复：更新站点巡检 `ops/site-monitoring/automation-prompt.md`，要求 Luma 只用 `feedback_open` 对账 Typeform；未直接归属 Typeform 的通用 `form_start` 不再参与漏斗判断。`tests/analytics-events.test.ts` 新增反馈 CTA 单次事件、page/locale 参数和 `interaction_source=typeform` 回归约束；产品 page view、反馈跳转和 Clarity 代码不变。
+- 验证结果：针对性 2 files / 3 tests 通过；完整质量评分为 251 rows / 94 indexable / 0 indexable under-80，内链、type-check、27 files / 87 tests、lint 0 errors / 98 个既有 warnings、124 页 production build 与 diff-check 均通过。10 页移动 runtime 全部 80+、最低 88。
+- 浏览器与生产：390px 反馈入口为 44px 文档流图标，1440px 为固定文字按钮；两个视口均无横向溢出，Typeform 链接携带 `source/locale/page` 并可打开。生产 site/robots/196 URL sitemap/health/search/Clarity tag 正常；Google Snake Mods 与 Hide and Paint canonical 正确，抽样低分页继续 `noindex, follow`。
+- 边界：没有 commit、push、部署、GSC 提交或后台修改。T-149 仍为本地修复完成、等待部署/数据验证；下一轮以 `feedback_open` 和 Typeform 同窗新增数据复核反馈漏斗，并等待历史 `(not set)`、`game_detail`、`guide_embed` 退出完整窗口。

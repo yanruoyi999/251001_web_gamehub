@@ -44,6 +44,7 @@ const DEFAULT_SAMPLES: RuntimeSample[] = [
   { path: '/en/guides/big-tower-tiny-square-2-walkthrough', type: 'guide' },
   { path: '/en/guides/obby-parkour-with-ragdoll-guide', type: 'guide' },
   { path: '/en/guides/rail-cart-buddies-guide', type: 'guide' },
+  { path: '/en/guides/telemount-walkthrough', type: 'guide' },
   { path: '/en/games/drive-mad', type: 'game', requiresPlayableIframe: true },
   { path: '/en/games/duo-vikings', type: 'game', requiresPlayableIframe: true },
 ];

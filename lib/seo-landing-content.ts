@@ -1878,6 +1878,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     ],
     updatedAt: seoContentUpdatedAt,
     relatedSlugs: [
+      'telemount-walkthrough',
       'hide-and-paint-guide',
       'car-circle-guide',
       'monkey-tag-io-guide',
@@ -5811,6 +5812,357 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ],
         ctaLabel: '浏览物理和技巧游戏',
         ctaDescription: '先理解轨道逻辑，再和 Luma 已验证的驾驶、平台游戏对比。',
+      },
+    },
+  },
+  {
+    slug: 'telemount-walkthrough',
+    primaryKeyword: 'telemount walkthrough',
+    keywords: [
+      'telemount walkthrough',
+      'telemount level 1',
+      'telemount level solutions',
+      'telemount controls',
+      'how to skip level in telemount',
+      'telemount portal puzzle',
+      'telemount Hempuli',
+      'telemount itch io',
+    ],
+    updatedAt: seoContentUpdatedAt,
+    relatedSlugs: [
+      'best-new-browser-games-july-2026',
+      '0h-h1-binary-puzzle-guide',
+      'games-like-ovo',
+    ],
+    locales: {
+      en: {
+        metaTitle: 'Telemount Walkthrough: All 15 Levels, Controls and Skip',
+        metaDescription:
+          'Telemount walkthrough with verified controls, a direct Level 1 solution, spoiler-light routes for all 15 chambers, reset and skip warnings, and the official source.',
+        heading: 'Telemount Walkthrough: All 15 Test Chambers',
+        subheading:
+          'Verified keyboard controls, a direct first-chamber route, progressive hints for every level, and a source-safe way to play Hempuli’s portal puzzle.',
+        overview: [
+          'Telemount is a short HTML5 block-pushing puzzle by Hempuli. The public itch.io listing identifies it as a released browser puzzle, and its comments already contain real requests for a walkthrough and help with Level 1. Luma checked the live game on July 20, 2026 instead of inferring rules from the listing alone.',
+          'The live build contains 15 test chambers after the title room. The core loop is to push boxes and portal pieces, mount linked portal faces against usable surfaces, and reach the flag without losing a required piece behind water, walls, or hazard marks. This page does not copy or embed the itch.io game file; use the official creator page in the source section to play.',
+        ],
+        sections: [
+          {
+            title: 'Quick Answer: Controls and First Things to Try',
+            body:
+              'Use the arrow keys to move and push. Press Z to undo one move and R to restart the current chamber. There is no separate grab or portal button: placement happens through movement and pushing. Before resetting, use Z several times; a bad portal angle is often recoverable if you undo it immediately.',
+            bullets: [
+              'Arrow keys: move the character and push movable pieces.',
+              'Z: undo the latest move; repeat it to walk back through a sequence.',
+              'R: restart the current chamber when the position is no longer recoverable.',
+            ],
+          },
+          {
+            title: 'How the Portal Puzzles Work',
+            body:
+              'Treat every chamber as a Sokoban-style positioning problem with paired portal faces. A portal is useful only when its entrance, exit, and facing direction leave a walkable square. Boxes are not just obstacles: they can provide spacing, prevent a portal from being stranded, or let you change which surface receives a portal. Water, walls, blue panels, and X-marked hazards divide the board into zones, so solve the destination side before committing the entrance side.',
+            bullets: [
+              'Identify the flag room and decide which wall face can deliver you there.',
+              'Keep at least one square behind a movable piece so it can still be pushed again.',
+              'After every portal move, check where both the player and the remaining boxes can exit.',
+            ],
+          },
+          {
+            title: 'Level 1 Direct Solution',
+            body:
+              'Level 1 teaches the complete loop. Move the loose pieces out of the small central brick pocket, then use the open left side to get the portal faces onto useful walls. Seat one opening in the lower boundary and line its linked opening up with the enclosed flag room. Keep the plain box out of the entry lane. Once both openings face walkable squares, step into the lower portal and you will emerge inside the flag room.',
+            bullets: [
+              'Do not push the plain box into a corner; it is spacing, not the final target.',
+              'If a portal sits on the correct wall but faces a blocked square, undo before moving anything else.',
+              'The chamber ends when the character reaches the flag; the box does not need to touch it.',
+            ],
+          },
+          {
+            title: 'Levels 2 to 5: Build the Exit Before the Entrance',
+            body:
+              'These chambers add longer block rows, blue panels, water, narrow walls, and more than one plausible mounting point. The reliable order is destination first, transport second, entry last. If you enter a portal before confirming the exit square, you may cross a divider but leave the only movable piece on the wrong side.',
+            bullets: [
+              'Level 2: preserve one free lane beside the aligned blocks; use it to correct the portal facing before crossing the blue strip.',
+              'Level 3: the water cross separates the board into routes. Prepare the far-side exit, then use the near-side portal only after the return path is clear.',
+              'Level 4: use the narrow vertical wall as the stable mounting surface. Do not trap the loose box between the wall and an X-marked square.',
+              'Level 5: choose the portal nearest the flag as the destination. Move the remaining pieces in reverse order so the final entrance stays reachable.',
+            ],
+          },
+          {
+            title: 'Levels 6 to 10: Preserve a Recovery Square',
+            body:
+              'The middle chambers punish irreversible pushes more than they punish slow play. Mentally reserve one recovery square beside every portal or box. If a move fills that square, decide whether the piece is now in its final position; if not, undo. This is faster than discovering ten moves later that a portal is mounted on a surface you cannot approach.',
+            bullets: [
+              'Level 6: route around the central divider first and keep the lower hazard row out of your push line.',
+              'Level 7: move the four loose pieces as a queue, not a cluster; the rear square must stay open for the next push.',
+              'Level 8: stage the far opening above the compact barrier before sending the player through the near opening.',
+              'Level 9: use the long lower wall as an anchor and finish all low-side object movement before taking the high route toward the flag.',
+              'Level 10: the water-and-hazard strip is the commitment point. Build the exit near the upper-right flag, then cross once with the route already complete.',
+            ],
+          },
+          {
+            title: 'Levels 11 to 15: Track Portal Pairs Separately',
+            body:
+              'The final set combines split floors, repeated blue panels, compact corners, and eventually more than one labelled portal pair. Stop thinking of every portal as interchangeable. Track each pair by label and by exit direction, and solve one transport job at a time. A correct opening on the wrong pair does not help the route you are currently building.',
+            bullets: [
+              'Level 11: move the portal set across the divided floor while a central recovery lane is still open; only then commit to the lower-right flag route.',
+              'Level 12: treat the blue-panel chain as a sequencing test. Use Z after each experimental push so you never lose the last workable approach square.',
+              'Level 13: keep the middle lane clear and use the small wall group as the final anchor; unnecessary box movement creates the deadlock.',
+              'Level 14: solve the long chamber in phases: prepare the far exit, recover the transport pieces, then make the final crossing. Restart if a required portal is permanently boxed against the stepped wall.',
+              'Level 15: A and B are separate linked pairs. Match each entrance to its own exit, verify the facing direction, and reserve the lower-right route for the final walk to the flag.',
+            ],
+          },
+          {
+            title: 'Undo, Restart and the Developer-Confirmed Skip',
+            body:
+              'Z is the normal recovery tool and R is the clean chamber reset. Hempuli confirmed in the official itch.io comments that Ctrl+Q skips levels. Use that only when you deliberately want to bypass a chamber: it removes the learning step and can also conflict with browser or operating-system shortcuts. Do not press Ctrl+Shift+Q, which can close Firefox windows.',
+            bullets: [
+              'Use Z for a recent mistake; it is safer than rebuilding the chamber from memory.',
+              'Use R only after the required piece is genuinely stranded or the route is no longer readable.',
+              'Ctrl+Q is a skip, not an undo. Avoid Command+Q on macOS because that quits the browser.',
+            ],
+          },
+          {
+            title: 'Desktop, Mobile and Browser Fit',
+            body:
+              'The verified build uses a fixed square canvas and keyboard controls. No touch controls appeared during Luma’s July 20 mobile-layout check, so this guide does not claim phone or tablet playability. Use a desktop browser with a physical keyboard, click the game canvas once if keys do not respond, and avoid browser extensions that intercept arrow keys.',
+            bullets: [
+              'Recommended: desktop or laptop, physical keyboard, and the official itch.io player.',
+              'If arrows scroll the page, click inside the canvas and try again.',
+              'Do not install APKs, extensions, modified clients, or mirrored game files to add touch controls.',
+            ],
+          },
+          {
+            title: 'Verification and Source Boundaries',
+            body:
+              'Luma verified the live controls, counted the 15 chambers with the developer-confirmed skip, and compared the layouts with a complete community run. The creator page remains the authority for release status and future updates. The linked video is a secondary visual reference, not proof that every old route will survive a later build change.',
+            bullets: [
+              'Verified on July 20, 2026: live HTML5 launch, arrow movement, Z undo, R restart, 15 chambers, and desktop keyboard layout.',
+              'Creator-confirmed in the official comments: Ctrl+Q skips the current level.',
+              'Not claimed: touch support, downloadable builds, permanent save behavior, or permission for third-party iframe reuse.',
+            ],
+          },
+        ],
+        recommendations: [
+          {
+            slug: 'catch-the-candy',
+            pitch: 'A compact physics puzzle with short levels and clear object-positioning goals.',
+          },
+          {
+            slug: 'duo-vikings',
+            pitch: 'A room-by-room puzzle platformer that rewards planning switches and character positions.',
+          },
+          {
+            slug: 'drive-mad',
+            pitch: 'A physics challenge with fast retries when you want execution instead of portal logic.',
+          },
+          {
+            slug: 'ovo',
+            pitch: 'A precision platformer for players who prefer movement routes and instant restarts.',
+          },
+        ],
+        faqs: [
+          {
+            question: 'How many levels are in Telemount?',
+            answer:
+              'The HTML5 build checked by Luma on July 20, 2026 has 15 test chambers after the title room, followed by the winner screen.',
+          },
+          {
+            question: 'What are the Telemount controls?',
+            answer:
+              'Use the arrow keys to move and push, Z to undo, and R to restart the current chamber. Click the canvas first if the page has keyboard focus.',
+          },
+          {
+            question: 'How do I skip a level in Telemount?',
+            answer:
+              'Hempuli confirmed Ctrl+Q in the official itch.io comments. It skips rather than solves the chamber, and browser shortcuts may intercept it. Do not use Ctrl+Shift+Q.',
+          },
+          {
+            question: 'Can I play Telemount on mobile?',
+            answer:
+              'Luma did not find touch controls in the checked build, so this guide treats Telemount as a desktop keyboard game. A phone may display the canvas without providing a usable control scheme.',
+          },
+          {
+            question: 'Why am I stuck even though both portals are placed?',
+            answer:
+              'One opening probably faces a wall, hazard, or square the player cannot stand on, or a required box has lost its recovery square. Undo until both exits and the next push position are walkable.',
+          },
+        ],
+        externalLinks: [
+          {
+            href: 'https://hempuli.itch.io/telemount',
+            label: 'Official Telemount page by Hempuli',
+            description:
+              'Primary source for the released HTML5 game, creator attribution, update context, player comments, and the developer-confirmed skip command.',
+          },
+          {
+            href: 'https://www.youtube.com/watch?v=rT4L5pdwznQ',
+            label: 'Community full-run video',
+            description:
+              'Secondary visual reference for checking chamber order and layouts; it is not an official rules source or a Luma-hosted copy.',
+          },
+        ],
+        ctaLabel: 'Explore verified puzzle games',
+        ctaDescription:
+          'Compare Telemount’s portal planning with source-checked browser puzzles that Luma can safely launch.',
+      },
+      zh: {
+        metaTitle: 'Telemount 全 15 关攻略：操作、第一关与跳关说明',
+        metaDescription:
+          'Telemount 攻略：实测操作、第一关直接解法、全 15 个测试房间提示、撤销与跳关注意事项，以及官方游玩来源。',
+        heading: 'Telemount 全 15 个测试房间攻略',
+        subheading:
+          '实测键盘操作、第一关直接路线、每关渐进提示，以及 Hempuli 原作的安全游玩出口。',
+        overview: [
+          'Telemount 是 Hempuli 制作的短篇 HTML5 推箱解谜游戏。itch.io 官方页面将其标为已发布的浏览器 Puzzle，评论区已经出现 walkthrough 和第一关卡住的真实求助。Luma 于 2026 年 7 月 20 日实际启动游戏核对规则，没有只根据平台简介推测玩法。',
+          '当前网页版本在标题房间后共有 15 个测试房间。核心是推动箱子与传送门部件，把相连的传送门安装到可用表面，并在不把关键部件丢进水域、墙角或危险格的前提下到达旗帜。本页不复制或重新嵌入 itch.io 游戏文件，请通过文末创作者官方页面游玩。',
+        ],
+        sections: [
+          {
+            title: '快速答案：操作与第一步',
+            body:
+              '方向键用于移动和推动物体，Z 撤销一步，R 重开当前房间。游戏没有独立的抓取或传送按钮，传送门的安装由移动和推动完成。准备重开前先连续按几次 Z；刚放错方向的传送门通常可以立即撤回。',
+            bullets: [
+              '方向键：移动角色并推动可移动部件。',
+              'Z：撤销最近一步，可连续回退整段操作。',
+              'R：局面已经无法恢复时，重开当前测试房间。',
+            ],
+          },
+          {
+            title: '传送门谜题怎样运作',
+            body:
+              '把每关看成带成对传送门的 Sokoban 定位题。入口、出口和朝向都必须留下可站立格，传送门才真正有用。箱子不只是障碍，也能提供间距、防止传送门被困，或帮助改变安装表面。水、墙、蓝色面板和 X 标记会把地图切成多个区域，因此应先解决出口侧，再处理运输，最后才进入入口。',
+            bullets: [
+              '先找到旗帜房，判断哪一面墙能把角色送进去。',
+              '每个可移动部件后方至少保留一格，确保以后还能继续推。',
+              '每移动一次传送门，都重新确认角色和剩余箱子从哪里出来。',
+            ],
+          },
+          {
+            title: '第一关直接解法',
+            body:
+              '先把中央砖墙小区域里的松散部件推出去，利用左侧开阔空间把传送门送到可用墙面。把一个开口安装在下方边界，并让相连开口对准右上角封闭旗帜房。普通箱子不要挡住入口。两边开口都朝向可站立格后，从下方传送门进入，就会出现在旗帜房内。',
+            bullets: [
+              '不要把普通箱子推进角落；它用于控制间距，不是最终目标。',
+              '传送门虽然上墙但出口朝着砖块时，立刻撤销，不要继续走。',
+              '角色碰到旗帜即可过关，箱子不需要送到旗帜上。',
+            ],
+          },
+          {
+            title: '第 2 至 5 关：先出口，后入口',
+            body:
+              '这一组加入更长的方块队列、蓝色面板、水域、窄墙和多个看似可用的安装点。稳定顺序是先准备目的地，再运输部件，最后进入。如果没确认出口就穿过分隔区，很容易把唯一可移动部件留在错误一侧。',
+            bullets: [
+              '第 2 关：在整排方块旁保留一条自由通道，越过蓝色区域前先修正传送门朝向。',
+              '第 3 关：十字水域把路线分开。先放好远端出口，再确认近端入口不会切断返回路线。',
+              '第 4 关：把竖直窄墙当作稳定安装面，不要让箱子卡在墙和 X 格之间。',
+              '第 5 关：先确定最靠近旗帜的目的传送门，再按反向顺序移动其他部件，保证最终入口仍可接近。',
+            ],
+          },
+          {
+            title: '第 6 至 10 关：始终保留恢复格',
+            body:
+              '中段关卡更惩罚不可逆推动，而不是慢。给每个传送门或箱子在脑中预留一格恢复位置；如果一步操作占用了它，就判断该部件是否已经到最终位置，否则马上撤销。这样比十步后才发现传送门装在无法接近的墙上快得多。',
+            bullets: [
+              '第 6 关：先绕开中央分隔墙规划路线，不要让下方危险排进入推动线路。',
+              '第 7 关：把四个松散部件当队列移动，不要堆成一团；最后一个部件后方必须留空。',
+              '第 8 关：进入近端传送门前，先在小型障碍上方准备好远端开口。',
+              '第 9 关：以下方长墙作锚点，完成低处全部物体移动后再走高处旗帜路线。',
+              '第 10 关：水域与危险格带是不可逆节点。先在右上旗帜附近完成出口，再一次通过。',
+            ],
+          },
+          {
+            title: '第 11 至 15 关：分开记录每一对传送门',
+            body:
+              '最后五关组合了分层地面、连续蓝色面板、紧凑墙角，并最终出现多组带标记的传送门。不要再把所有传送门当作可互换部件，应分别记录每一对的标签与出口方向，一次只解决一项运输任务。正确位置配上错误传送门对，仍然无法完成当前路线。',
+            bullets: [
+              '第 11 关：中央恢复通道还开放时，把传送门组送过分层地面，再处理右下旗帜路线。',
+              '第 12 关：把连续蓝色面板当作顺序测试，每次试推后用 Z 检查，不能丢掉最后的接近格。',
+              '第 13 关：保持中央通道畅通，用小墙组作为最终锚点；多余的箱子移动才是死局来源。',
+              '第 14 关：分阶段完成：远端出口、回收运输部件、最后穿越。必要传送门被阶梯墙永久夹住时直接重开。',
+              '第 15 关：A 与 B 是两组独立传送门。分别匹配入口与出口并核对朝向，把右下路线留给最终到旗帜的一段。',
+            ],
+          },
+          {
+            title: '撤销、重开与开发者确认的跳关',
+            body:
+              'Z 是正常纠错工具，R 用于彻底重开当前房间。Hempuli 在 itch.io 官方评论中确认 Ctrl+Q 可以跳关。只有确实准备放弃当前关时才用它，因为它会跳过学习过程，也可能和浏览器或系统快捷键冲突。不要按 Ctrl+Shift+Q，该组合可能关闭 Firefox 窗口。',
+            bullets: [
+              '刚走错时优先用 Z，比凭记忆重建整关更稳。',
+              '必要部件真正被困、路线已经无法辨认时再按 R。',
+              'Ctrl+Q 是跳关，不是撤销；macOS 上不要误按会退出浏览器的 Command+Q。',
+            ],
+          },
+          {
+            title: '桌面、手机与浏览器适配',
+            body:
+              '实测版本使用固定方形 Canvas 和键盘控制。Luma 在 7 月 20 日移动布局检查中没有看到触屏按键，因此本攻略不声称手机或平板可玩。建议使用带实体键盘的桌面浏览器；方向键没有响应时先点击一次游戏画布，并检查是否有扩展拦截按键。',
+            bullets: [
+              '推荐环境：桌面或笔记本、实体键盘、itch.io 官方播放器。',
+              '方向键只滚动网页时，点击 Canvas 后再试。',
+              '不要为了触屏控制安装 APK、扩展、修改客户端或镜像文件。',
+            ],
+          },
+          {
+            title: '核验范围与来源边界',
+            body:
+              'Luma 实测了网页启动和按键，用开发者确认的跳关方式数出 15 个房间，并与一份完整社区通关视频比对布局。创作者页面仍是发布状态与后续更新的权威来源；视频只是辅助视觉参考，不能证明旧路线在未来版本中永久有效。',
+            bullets: [
+              '2026 年 7 月 20 日已核验：HTML5 启动、方向键、Z 撤销、R 重开、15 个房间和桌面键盘布局。',
+              '官方评论由创作者确认：Ctrl+Q 跳过当前关。',
+              '不作声明：触屏支持、下载版、永久存档行为或第三方重新嵌入授权。',
+            ],
+          },
+        ],
+        recommendations: [
+          { slug: 'catch-the-candy', pitch: '短关卡物理解谜，目标清楚，同样需要规划物体位置。' },
+          { slug: 'duo-vikings', pitch: '逐房间解谜平台游戏，需要安排机关和角色站位。' },
+          { slug: 'drive-mad', pitch: '想从传送逻辑切换到操作执行时，可尝试快速重开的物理挑战。' },
+          { slug: 'ovo', pitch: '偏好移动路线和即时重试的玩家可继续玩精准平台游戏。' },
+        ],
+        faqs: [
+          {
+            question: 'Telemount 一共有多少关？',
+            answer:
+              'Luma 于 2026 年 7 月 20 日核验的 HTML5 版本在标题房间后共有 15 个测试房间，之后进入通关画面。',
+          },
+          {
+            question: 'Telemount 怎么操作？',
+            answer:
+              '方向键移动和推动，Z 撤销，R 重开当前房间。网页没有键盘焦点时，先点击一次游戏 Canvas。',
+          },
+          {
+            question: 'Telemount 怎样跳关？',
+            answer:
+              'Hempuli 在 itch.io 官方评论中确认 Ctrl+Q 可跳关。它不会解开谜题，而且可能被浏览器快捷键拦截；不要使用 Ctrl+Shift+Q。',
+          },
+          {
+            question: 'Telemount 手机能玩吗？',
+            answer:
+              '本次核验没有发现触屏控制，因此 Luma 将其标为桌面键盘游戏。手机可能能显示 Canvas，但不代表有可用的操作方案。',
+          },
+          {
+            question: '两个传送门都放好了，为什么仍然卡住？',
+            answer:
+              '通常是某个开口朝向墙、危险格或角色无法站立的位置，或者必要箱子失去了恢复格。连续撤销，直到两个出口和下一次推动位置都可行。',
+          },
+        ],
+        externalLinks: [
+          {
+            href: 'https://hempuli.itch.io/telemount',
+            label: 'Hempuli 的 Telemount 官方页面',
+            description:
+              '主要来源，用于核对 HTML5 发布状态、创作者、更新背景、玩家评论和开发者确认的跳关按键。',
+          },
+          {
+            href: 'https://www.youtube.com/watch?v=rT4L5pdwznQ',
+            label: '社区完整通关视频',
+            description:
+              '用于辅助核对关卡顺序和布局，不是官方规则来源，也不是 Luma 托管的游戏副本。',
+          },
+        ],
+        ctaLabel: '浏览已核验的解谜游戏',
+        ctaDescription: '把 Telemount 的传送规划与 Luma 可安全启动、来源明确的浏览器谜题进行比较。',
       },
     },
   },
