@@ -430,6 +430,14 @@ const DEFAULT_TAG_SEQUENCE = [
 const CATEGORY_MAP = new Map(MOCK_CATEGORY_PRESETS.map((item) => [item.slug, item]));
 const TAG_MAP = new Map(MOCK_TAG_PRESETS.map((item) => [item.slug, item]));
 
+const GAME_CATEGORY_OVERRIDES: Record<string, string[]> = {
+  'google-snake': ['casual'],
+};
+
+const GAME_TAG_OVERRIDES: Record<string, string[]> = {
+  'google-snake': ['singleplayer', 'keyboard', 'short-session', 'high-score'],
+};
+
 const INSTRUCTION_TEMPLATES: Record<
   MockCategory['slug'],
   (title: string) => MockInstructions
@@ -548,6 +556,14 @@ function resolvePrimaryCategorySlug(slug: string, index: number): MockCategory['
 }
 
 function buildCategoriesForGame(slug: string, index: number): MockCategory[] {
+  const override = GAME_CATEGORY_OVERRIDES[slug];
+  if (override) {
+    return override
+      .map((slugKey) => CATEGORY_MAP.get(slugKey))
+      .filter((item): item is MockCategory => Boolean(item))
+      .map((item) => cloneCategory(item));
+  }
+
   const firstSlug = resolvePrimaryCategorySlug(slug, index);
   const secondarySlug =
     MOCK_CATEGORY_PRESETS[(index + 2) % MOCK_CATEGORY_PRESETS.length].slug;
@@ -563,6 +579,14 @@ function buildTagsForGame(
   categories: MockCategory[],
   index: number
 ): MockTag[] {
+  const override = GAME_TAG_OVERRIDES[slug];
+  if (override) {
+    return override
+      .map((slugKey) => TAG_MAP.get(slugKey))
+      .filter((item): item is MockTag => Boolean(item))
+      .map((item) => cloneTag(item));
+  }
+
   const lower = slug.toLowerCase();
   const collected = new Set<string>();
 

@@ -191,6 +191,10 @@ export default async function GuidePage({ params }: GuidePageProps) {
       : undefined);
   const { quickAnswer, detailSections } = getGuidePresentation(content);
   const quickAnswerBullets = quickAnswer.bullets?.slice(0, 3) ?? [];
+  const formattedUpdatedAt = new Intl.DateTimeFormat(locale === 'zh' ? 'zh-CN' : 'en-US', {
+    dateStyle: 'medium',
+    timeZone: 'UTC',
+  }).format(new Date(page.updatedAt));
 
   return (
     <article className="mx-auto w-full max-w-5xl px-6 py-12">
@@ -213,6 +217,15 @@ export default async function GuidePage({ params }: GuidePageProps) {
         </p>
         <h1 className="mt-2 text-4xl font-bold text-foreground">{content.heading}</h1>
         <p className="mt-4 text-lg text-muted-foreground">{content.subheading}</p>
+        <div className="mt-5 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
+          <span>{locale === 'zh' ? '作者：Luma Game Hub 编辑团队' : 'By Luma Game Hub Editorial'}</span>
+          <span aria-hidden="true">•</span>
+          <time dateTime={page.updatedAt}>
+            {locale === 'zh' ? `更新于 ${formattedUpdatedAt}` : `Updated ${formattedUpdatedAt}`}
+          </time>
+          <span aria-hidden="true">•</span>
+          <span>{locale === 'zh' ? '已对照来源核验' : 'Verified against source'}</span>
+        </div>
       </header>
 
       <section className="mx-auto mb-10 max-w-4xl rounded-2xl border border-primary/20 bg-primary/5 p-6 shadow-sm">
@@ -309,6 +322,49 @@ export default async function GuidePage({ params }: GuidePageProps) {
           <p key={index}>{paragraph}</p>
         ))}
       </section>
+
+      {content.screenshots?.length ? (
+        <section aria-labelledby="verified-game-views" className="mt-12">
+          <header className="mx-auto max-w-3xl text-center">
+            <h2 id="verified-game-views" className="text-2xl font-semibold text-foreground">
+              {locale === 'zh' ? '实测画面' : 'Verified game views'}
+            </h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {locale === 'zh'
+                ? '以下画面来自创作者官方 itch.io 页面中的 HTML5 版本，采集于 2026 年 7 月 21 日。'
+                : 'These views come from the HTML5 build on the creator’s official itch.io page, captured July 21, 2026.'}
+            </p>
+          </header>
+          <div className="mt-6 grid gap-5 md:grid-cols-3">
+            {content.screenshots.map((screenshot) => (
+              <figure
+                key={screenshot.url}
+                className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm"
+              >
+                <Image
+                  src={screenshot.url}
+                  alt={screenshot.alt}
+                  width={960}
+                  height={960}
+                  sizes="(min-width: 768px) 33vw, 100vw"
+                  className="aspect-square w-full bg-black object-contain"
+                />
+                <figcaption className="space-y-2 p-4 text-sm text-muted-foreground">
+                  <p>{screenshot.caption}</p>
+                  <a
+                    href={screenshot.sourceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex font-medium text-primary transition hover:text-primary/80"
+                  >
+                    {locale === 'zh' ? '核对官方来源 ↗' : 'Verify official source ↗'}
+                  </a>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <section id="guide-details" className="mt-12 space-y-10 scroll-mt-24">
         {detailSections.map((section) => (

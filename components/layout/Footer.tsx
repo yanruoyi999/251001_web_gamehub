@@ -9,18 +9,18 @@ export function Footer({ locale }: FooterProps) {
   const isZh = locale === 'zh';
   const localizedPath = (pathname = '') => getLocalizedPath(locale, pathname);
   const contactEmail = 'support@lumagamehub.com';
-  const resourceLinks = [
+  const trustLinks = [
     {
-      href: 'https://developers.google.com/search/docs/fundamentals/seo-starter-guide',
-      label: isZh ? 'Google SEO 入门指南' : 'Google SEO Starter Guide',
+      href: localizedPath('/about'),
+      label: isZh ? '我们如何筛选游戏' : 'How Luma reviews games',
     },
     {
-      href: 'https://transparency.google/intl/en/our-policies/product-terms/google-adsense/',
-      label: isZh ? 'AdSense 政策' : 'AdSense Policies',
+      href: localizedPath('/contact'),
+      label: isZh ? '举报游戏或申请下架' : 'Report a game or request removal',
     },
     {
-      href: 'https://opengameart.org',
-      label: isZh ? '开放游戏素材' : 'Open Game Art',
+      href: localizedPath('/privacy'),
+      label: isZh ? '隐私与 Cookie' : 'Privacy & Cookies',
     },
   ];
 
@@ -127,7 +127,7 @@ export function Footer({ locale }: FooterProps) {
 
           <div>
             <h3 className="mb-4 text-sm font-semibold text-foreground">
-              {isZh ? '联系与资源' : 'Contact & Resources'}
+              {isZh ? '信任与支持' : 'Trust & Support'}
             </h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
@@ -138,16 +138,14 @@ export function Footer({ locale }: FooterProps) {
                   {contactEmail}
                 </a>
               </li>
-              {resourceLinks.map((link) => (
+              {trustLinks.map((link) => (
                 <li key={link.href}>
-                  <a
+                  <Link
                     href={link.href}
-                    target="_blank"
-                    rel="noopener"
                     className="hover:text-primary"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

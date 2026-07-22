@@ -12,6 +12,7 @@ import { getMockGameBySlug, mockGames } from '@/lib/mock-games';
 import type { GameDetail } from '@/services/game.service';
 import type { EmbedPermissionStatus, GameSourceType, MockGame } from '@/lib/mock-games';
 import { getGameEditorialContent } from '@/lib/games/editorial-content';
+import { getRelatedGames } from '@/lib/games/related-games';
 import {
   canRenderGameIframe,
   getGameRedirectTarget,
@@ -41,6 +42,10 @@ type GameSourceDisclosure = {
   embedPermissionStatus?: EmbedPermissionStatus | null;
 };
 
+type GamePageDetail = Omit<GameDetail, 'publishedAt'> & {
+  publishedAt: Date | null;
+};
+
 const GAME_DETAIL_LOAD_TIMEOUT_MS = 1500;
 const RATING_LOAD_TIMEOUT_MS = 1500;
 
@@ -58,8 +63,8 @@ function withTimeout<T>(promise: Promise<T>, timeoutMs: number, label: string): 
   });
 }
 
-function buildGameDetailFromMock(mock: MockGame): GameDetail {
-  const now = new Date();
+function buildGameDetailFromMock(mock: MockGame): GamePageDetail {
+  const mockRecordTimestamp = new Date('2024-01-01T00:00:00.000Z');
   const instructionsZh = mock.instructions.zh.join('\n');
   const instructionsEn = mock.instructions.en.join('\n');
   const promoted = shouldPromoteGameInCollections(mock.slug);
@@ -87,9 +92,9 @@ function buildGameDetailFromMock(mock: MockGame): GameDetail {
     embedHost: mock.embedHost,
     developerVerified: mock.developerVerified,
     embedPermissionStatus: mock.embedPermissionStatus,
-    publishedAt: now,
-    createdAt: now,
-    updatedAt: now,
+    publishedAt: null,
+    createdAt: mockRecordTimestamp,
+    updatedAt: mockRecordTimestamp,
     stats: null,
     categories: mock.categories.map((category) => ({
       ...category,
@@ -110,9 +115,9 @@ function buildGameDetailFromMock(mock: MockGame): GameDetail {
       url: shot.url,
       publicId: null,
       order: shot.order,
-      createdAt: now,
+      createdAt: mockRecordTimestamp,
     })),
-  } as GameDetail & GameSourceDisclosure;
+  } as GamePageDetail & GameSourceDisclosure;
 }
 
 interface GamePageProps {
@@ -139,13 +144,13 @@ function canUseNextImage(src?: string | null) {
   );
 }
 
-function resolveGameTitle(game: GameDetail, locale: string) {
+function resolveGameTitle(game: GamePageDetail, locale: string) {
   return locale === 'en'
     ? pickLocalizedText(game.titleEn, game.title)
     : pickLocalizedText(game.title, game.titleEn);
 }
 
-function resolveGameDescription(game: GameDetail, locale: string) {
+function resolveGameDescription(game: GamePageDetail, locale: string) {
   return locale === 'en'
     ? pickLocalizedText(game.descriptionEn, game.description)
     : pickLocalizedText(game.description, game.descriptionEn);
@@ -154,7 +159,7 @@ function resolveGameDescription(game: GameDetail, locale: string) {
 const resolveGameDetailBySlug = cache(async function resolveGameDetailBySlug(
   slug: string,
   useCache = true,
-): Promise<{ game: GameDetail; isMockGame: boolean } | null> {
+): Promise<{ game: GamePageDetail; isMockGame: boolean } | null> {
   let dbGame: GameDetail | null = null;
   const connection = getDatabaseConnectionMetadata();
   const canUseDatabase =
@@ -376,18 +381,7 @@ export default async function GamePage({ params }: GamePageProps) {
       label: resolveLabel(tag.name, tag.nameEn),
     }))
     .filter((tag) => Boolean(tag.label));
-  const relatedCategorySlugs = new Set(categoryEntries.map((category) => category.slug));
-  const relatedTagSlugs = new Set(tagEntries.map((tag) => tag.slug));
-  const relatedGames = mockGames
-    .filter((candidate) => {
-      if (candidate.slug === game.slug) return false;
-      if (!shouldPromoteGameInCollections(candidate.slug)) return false;
-      return (
-        candidate.categories.some((category) => relatedCategorySlugs.has(category.slug)) ||
-        candidate.tags.some((tag) => relatedTagSlugs.has(tag.slug))
-      );
-    })
-    .slice(0, 3);
+  const relatedGames = getRelatedGames(game, mockGames, 3);
   const categoryLabels = categoryEntries.map((category) => category.label);
   const tagLabels = tagEntries.map((tag) => tag.label);
   const pageUrl = buildAbsoluteUrl(getLocalizedPath(locale, `/games/${game.slug}`));
@@ -537,7 +531,7 @@ export default async function GamePage({ params }: GamePageProps) {
 
   const qualityTier = getGameQualityTier(game.slug);
   const reviewReason = getManualReviewReason(game.slug);
-  const sourceDisclosure = game as GameDetail & GameSourceDisclosure;
+  const sourceDisclosure = game as GamePageDetail & GameSourceDisclosure;
   const sourceType = sourceDisclosure.sourceType ?? 'unknown';
   const developerVerified = sourceDisclosure.developerVerified === true;
   const sourceHost = sourceDisclosure.sourceHost ?? sourceDisclosure.embedHost ?? null;
@@ -613,7 +607,7 @@ export default async function GamePage({ params }: GamePageProps) {
                 </div>
                 </div>
               ) : null}
-              {catalogueUi.showPublishedDates ? (
+              {catalogueUi.showPublishedDates && game.publishedAt ? (
                 <div className="flex items-center gap-2">
                 <span className="text-2xl">📅</span>
                 <div>
@@ -949,7 +943,7 @@ export default async function GamePage({ params }: GamePageProps) {
                     ))}
                   </div>
                 </div>
-                {catalogueUi.showPublishedDates ? (
+                {catalogueUi.showPublishedDates && game.publishedAt ? (
                   <div>
                     <div className="mb-1 font-medium text-foreground">
                       {locale === 'zh' ? '发布时间' : 'Published'}
@@ -991,8 +985,8 @@ export default async function GamePage({ params }: GamePageProps) {
                   </div>
                 )}
                 {game.sourceUrl && (
-                  <div className="rounded-lg border border-green-100 bg-green-50/50 p-3">
-                    <div className="mb-1 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-green-700">
+                  <div className="rounded-lg border border-green-200 bg-green-50/70 p-3 dark:border-green-800 dark:bg-green-950/30">
+                    <div className="mb-1 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-green-700 dark:text-green-300">
                       <span>🔗</span>
                       {sourceLabel}
                     </div>
@@ -1006,7 +1000,7 @@ export default async function GamePage({ params }: GamePageProps) {
                       <span>{locale === 'zh' ? '打开来源页面' : 'Open Source Page'}</span>
                       <span>↗</span>
                     </a>
-                    <p className="mt-2 text-xs text-muted-foreground">
+                    <p className="mt-2 text-xs text-green-950/75 dark:text-green-100/75">
                       {sourceHost
                         ? locale === 'zh'
                           ? `来源主机：${sourceHost}。此链接不代表官方授权声明。`
@@ -1034,16 +1028,16 @@ export default async function GamePage({ params }: GamePageProps) {
             </Card>
 
             {/* Game Tips */}
-            <Card className="border-2 border-yellow-200 bg-yellow-50">
+            <Card className="border-2 border-yellow-200 bg-yellow-50 text-yellow-950 dark:border-yellow-800 dark:bg-yellow-950/30 dark:text-yellow-50">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-lg">
+                <CardTitle className="flex items-center gap-2 text-lg text-yellow-950 dark:text-yellow-50">
                   <span>💡</span>
                   {locale === 'zh' ? '游戏提示' : 'Game Tips'}
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 {sidebarTipItems.length > 0 ? (
-                  <ul className="space-y-2 text-sm text-foreground/90">
+                  <ul className="space-y-2 text-sm text-yellow-950/90 dark:text-yellow-50/90">
                     {sidebarTipItems.map((item, index) => (
                       <li key={index} className="flex gap-2">
                         <span>✓</span>
@@ -1052,7 +1046,7 @@ export default async function GamePage({ params }: GamePageProps) {
                     ))}
                   </ul>
                 ) : (
-                  <p className="text-sm text-foreground/90">
+                  <p className="text-sm text-yellow-950/90 dark:text-yellow-50/90">
                     {locale === 'zh'
                       ? '暂无具体指引，直接开始体验游戏吧！'
                       : 'No specific tips yet—jump in and explore!'}

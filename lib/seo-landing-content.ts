@@ -1,5 +1,3 @@
-import { statSync } from 'node:fs';
-import path from 'node:path';
 import type { Locale } from '@/i18n/config';
 
 export interface SeoLandingSection {
@@ -24,6 +22,13 @@ export interface SeoLandingExternalLink {
   description: string;
 }
 
+export interface SeoLandingScreenshot {
+  url: string;
+  alt: string;
+  caption: string;
+  sourceUrl: string;
+}
+
 export interface SeoLandingLocaleContent {
   metaTitle: string;
   metaDescription: string;
@@ -33,6 +38,7 @@ export interface SeoLandingLocaleContent {
   sections: SeoLandingSection[];
   recommendations: SeoLandingRecommendation[];
   faqs: SeoLandingFaq[];
+  screenshots?: SeoLandingScreenshot[];
   quickAnswerLink?: SeoLandingExternalLink;
   externalLinks?: SeoLandingExternalLink[];
   ctaLabel: string;
@@ -57,14 +63,7 @@ export interface SeoLandingPage {
   locales: Record<Locale, SeoLandingLocaleContent>;
 }
 
-const seoContentUpdatedAt = (() => {
-  try {
-    const stats = statSync(path.join(process.cwd(), 'lib', 'seo-landing-content.ts'));
-    return stats.mtime.toISOString();
-  } catch {
-    return new Date().toISOString();
-  }
-})();
+const seoContentUpdatedAt = '2026-07-20T00:00:00.000Z';
 
 const SEO_LANDING_PAGES: SeoLandingPage[] = [
   {
@@ -5834,7 +5833,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       'telemount Hempuli',
       'telemount itch io',
     ],
-    updatedAt: seoContentUpdatedAt,
+    updatedAt: '2026-07-21T00:00:00.000Z',
     relatedSlugs: [
       'best-new-browser-games-july-2026',
       '0h-h1-binary-puzzle-guide',
@@ -5851,6 +5850,29 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         overview: [
           'Telemount is a short HTML5 block-pushing puzzle by Hempuli. The public itch.io listing identifies it as a released browser puzzle, and its comments already contain real requests for a walkthrough and help with Level 1. Luma checked the live game on July 20, 2026 instead of inferring rules from the listing alone.',
           'The live build contains 15 test chambers after the title room. The core loop is to push boxes and portal pieces, mount linked portal faces against usable surfaces, and reach the flag without losing a required piece behind water, walls, or hazard marks. This page does not copy or embed the itch.io game file; use the official creator page in the source section to play.',
+        ],
+        screenshots: [
+          {
+            url: '/guide-screenshots/telemount-title-and-controls.png',
+            alt: 'Telemount title room showing the character, flag, arrow controls, R restart, and Z undo',
+            caption:
+              'Official HTML5 title room. The canvas itself shows arrow-key movement, R to restart, and Z to undo.',
+            sourceUrl: 'https://hempuli.itch.io/telemount',
+          },
+          {
+            url: '/guide-screenshots/telemount-level-1.png',
+            alt: 'Telemount Level 1 initial layout with player, flag, portal pieces, brick walls, and water',
+            caption:
+              'Level 1 starts with the player above the water barrier and the flag inside the compact upper room.',
+            sourceUrl: 'https://hempuli.itch.io/telemount',
+          },
+          {
+            url: '/guide-screenshots/telemount-level-2.png',
+            alt: 'Telemount Level 2 initial layout with a row of blocks, blue panels, hazards, and the goal flag',
+            caption:
+              'Level 2 makes the sequencing problem visible: movable blocks above, blue panels in the middle, and hazard marks below.',
+            sourceUrl: 'https://hempuli.itch.io/telemount',
+          },
         ],
         sections: [
           {
@@ -6022,6 +6044,26 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         overview: [
           'Telemount 是 Hempuli 制作的短篇 HTML5 推箱解谜游戏。itch.io 官方页面将其标为已发布的浏览器 Puzzle，评论区已经出现 walkthrough 和第一关卡住的真实求助。Luma 于 2026 年 7 月 20 日实际启动游戏核对规则，没有只根据平台简介推测玩法。',
           '当前网页版本在标题房间后共有 15 个测试房间。核心是推动箱子与传送门部件，把相连的传送门安装到可用表面，并在不把关键部件丢进水域、墙角或危险格的前提下到达旗帜。本页不复制或重新嵌入 itch.io 游戏文件，请通过文末创作者官方页面游玩。',
+        ],
+        screenshots: [
+          {
+            url: '/guide-screenshots/telemount-title-and-controls.png',
+            alt: 'Telemount 标题房间，画面显示角色、旗帜、方向键、R 重开与 Z 撤销',
+            caption: '官方 HTML5 标题房间；Canvas 直接标出了方向键移动、R 重开和 Z 撤销。',
+            sourceUrl: 'https://hempuli.itch.io/telemount',
+          },
+          {
+            url: '/guide-screenshots/telemount-level-1.png',
+            alt: 'Telemount 第一关初始布局，包含角色、旗帜、传送门部件、砖墙和水域',
+            caption: '第一关开局：角色位于水域上方，旗帜在上方紧凑的小房间内。',
+            sourceUrl: 'https://hempuli.itch.io/telemount',
+          },
+          {
+            url: '/guide-screenshots/telemount-level-2.png',
+            alt: 'Telemount 第二关初始布局，包含方块队列、蓝色面板、危险格和旗帜',
+            caption: '第二关把顺序难点摆在明面上：上方是可移动方块，中间是蓝色面板，下方是危险格。',
+            sourceUrl: 'https://hempuli.itch.io/telemount',
+          },
         ],
         sections: [
           {

@@ -1814,3 +1814,12 @@
 - 验证结果：页面质量 251 rows / 94 indexable / 0 indexable under-80，内链、type-check、34 files / 106 Vitest tests、lint 0 errors / 98 个既有 warnings、124 页 production build 和 `git diff --check` 通过。仓库 E2E 为 1 passed / 3 按既有契约 skipped；另行 390x844 与 1440x1000 验证均 HTTP 200、无溢出或重叠、遥测完成数为 0。
 - 运行时门禁：最终本地 10 页采样 under-80=0、最低 88；生产域 10 页隔离采样 under-80=0、最低 100，游戏 Play / iframe / fullscreen 通过。Telemount 生产实测的 GA4 和 Clarity 采集请求全部 blocked，匹配请求 finished=0。
 - 发布状态：2026-07-22 用户确认后已完成 T-151/T-152 合并发布。主提交 `397c50f`，CI 可移植性修正 `14dffc1`，Sharp/libvips 安全覆盖 `79b46de`；最终 GitHub Actions `29880062285` success，Vercel Production 构建日志确认 commit `79b46de` 并接管正式域。生产 10 页移动 runtime 最低 100，Play / iframe / fullscreen 通过，遥测完成数为 0。准确状态为已部署、等待新数据窗口验证；继续观察 06:00 批量 `first_visit` / `session_start`、Clarity bots excluded 和历史 source 退出，历史数据不回填。
+
+### T-153 Bing readiness and remaining trust fixes on the latest main
+
+- 基线收敛：没有把 2026-07-21 的旧工作树整体 rebase 到产品。以当前 `main=176fd1e` 新建隔离分支，只重新实现尚未进入主线的问题；T-151/T-152 已发布的首页、Header、移动筛选、27 张核心游戏截图、遥测隔离、Sharp override、lockfile 和 runtime 门禁均保留。
+- Bing 与 sitemap：移除静态页、本地游戏、分类和标签的文件 mtime/请求时间 `lastmod`；本地 production sitemap 为 198 URLs、58 个可信 `lastmod`、2 个稳定日期、0 个请求分钟日期。新增同源/去重/显式 URL/10,000 上限保护的 IndexNow 客户端、公开 key 文件和 `pnpm seo:indexnow`；key 部署前未发送线上通知。
+- 玩家信任：模拟目录游戏没有可信发布日期时写 `publishedAt: null` 并隐藏 Published；游戏来源和 Tips 卡补齐深色对比度；Footer 的外部 SEO/AdSense/素材链接改为站内 About、举报/下架 Contact、Privacy & Cookies。
+- 分类与呈现：Google Snake 固定为 Casual 和 single-player/keyboard/short-session/high-score，相关推荐固定为 G-Switch 2、OvO、Tunnel Rush，取消数组邻近造成的 Adam and Eve 误推荐。Telemount 在现有去重 Quick Answer 模板上增加编辑署名、稳定更新时间、来源核验状态和 3 张官方 HTML5 实测画面，不复制或嵌入 itch 游戏文件。
+- 验证结果：页面质量 251 rows / 94 indexable / 157 under-80 / 0 indexable under-80；内链与 type-check 通过；Vitest 38 files / 119 tests 全通过；lint 0 errors / 98 个既有 warnings；production build 124 页并修正 32/32 英文 HTML。5 个关键本地 production URL 均 HTTP 200；10 页移动 runtime under-80=0、最低 88，游戏 Play/iframe/fullscreen 通过。
+- 当前边界：本条记录写入时仍处于隔离分支，本轮补丁尚未 commit/push/deploy；Bing Webmaster 当前 property/sitemap 状态尚待已登录后台直接核验。只有生产 key 可访问后才允许对本次明确变更 URL 发送 IndexNow。

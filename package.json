@@ -23,6 +23,7 @@
     "audit:runtime-quality": "tsx scripts/audit-runtime-quality.ts",
     "ops:growth": "tsx scripts/growth-metrics.ts",
     "ops:monitoring": "tsx scripts/monitoring-status.ts",
+    "seo:indexnow": "tsx scripts/submit-indexnow.ts",
     "test": "vitest",
     "test:watch": "vitest --watch",
     "test:e2e": "playwright test",

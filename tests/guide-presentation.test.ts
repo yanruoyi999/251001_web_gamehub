@@ -1,4 +1,7 @@
+import crypto from 'node:crypto';
+import fs from 'node:fs';
 import { readFile } from 'node:fs/promises';
+import path from 'node:path';
 
 import { describe, expect, it } from 'vitest';
 
@@ -48,5 +51,20 @@ describe('guide presentation', () => {
     });
     expect(guidePageSource).toContain('playLabel={page.embedGame.playLabel?.[locale]}');
     expect(playerSource).toContain('playLabel?: string;');
+  });
+
+  it('publishes three distinct source-checked Telemount images with a stable date', () => {
+    const page = getSeoLandingPage('telemount-walkthrough');
+    const screenshots = page?.locales.en.screenshots ?? [];
+    const hashes = screenshots.map((screenshot) => {
+      const filePath = path.join(process.cwd(), 'public', screenshot.url);
+      expect(fs.existsSync(filePath)).toBe(true);
+      expect(screenshot.sourceUrl).toBe('https://hempuli.itch.io/telemount');
+      return crypto.createHash('sha256').update(fs.readFileSync(filePath)).digest('hex');
+    });
+
+    expect(page?.updatedAt).toBe('2026-07-21T00:00:00.000Z');
+    expect(screenshots).toHaveLength(3);
+    expect(new Set(hashes).size).toBe(3);
   });
 });

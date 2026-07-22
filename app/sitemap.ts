@@ -1,5 +1,3 @@
-import { statSync } from 'node:fs';
-import path from 'node:path';
 import type { MetadataRoute } from 'next';
 import { getLocalizedPath, locales } from '@/i18n/config';
 import { getSeoLandingPages } from '@/lib/seo-landing-content';
@@ -18,28 +16,18 @@ export const dynamic = 'force-dynamic';
 const SITEMAP_DB_TIMEOUT_MS = 2000;
 const standaloneGamePaths = ['/games/monster-survivors', '/games/solitaire'];
 
-function getFileLastModified(...segments: string[]): Date | undefined {
-  try {
-    const stats = statSync(path.join(process.cwd(), ...segments));
-    return stats.mtime;
-  } catch {
-    return undefined;
-  }
-}
-
 interface SitemapGameEntry {
   slug: string;
   isNew: boolean | null;
   lastModified?: Date | null;
 }
 
-function getFallbackSitemapGames(fallbackLastModified: Date): SitemapGameEntry[] {
+function getFallbackSitemapGames(): SitemapGameEntry[] {
   return mockGames
     .filter((game) => shouldIncludeGameInSitemap(game.slug))
     .map((game) => ({
       slug: game.slug,
       isNew: game.isNew,
-      lastModified: fallbackLastModified,
     }));
 }
 
@@ -57,10 +45,10 @@ function withSitemapTimeout<T>(promise: Promise<T>): Promise<T> {
   });
 }
 
-async function getSitemapGames(fallbackLastModified: Date): Promise<SitemapGameEntry[]> {
+async function getSitemapGames(): Promise<SitemapGameEntry[]> {
   const connection = getDatabaseConnectionMetadata();
   if (!shouldUseCatalogueDatabase(connection) || shouldSkipSupabaseDirectInServerless(connection)) {
-    return getFallbackSitemapGames(fallbackLastModified);
+    return getFallbackSitemapGames();
   }
 
   try {
@@ -94,69 +82,59 @@ async function getSitemapGames(fallbackLastModified: Date): Promise<SitemapGameE
     console.warn('Failed to load database games for sitemap, falling back to mock games:', error);
   }
 
-  return getFallbackSitemapGames(fallbackLastModified);
+  return getFallbackSitemapGames();
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entries: MetadataRoute.Sitemap = [];
   const staticPaths: Array<{
     path: string;
-    file: string[];
     changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'];
     priority: number;
   }> = [
     {
       path: '/',
-      file: ['app', '[locale]', 'page.tsx'],
       changeFrequency: 'daily',
       priority: 1,
     },
     {
       path: '/games',
-      file: ['app', '[locale]', 'games', 'page.tsx'],
       changeFrequency: 'daily',
       priority: 0.85,
     },
     {
       path: '/guides',
-      file: ['app', '[locale]', 'guides', 'page.tsx'],
       changeFrequency: 'weekly',
       priority: 0.75,
     },
     {
       path: '/guides/keyboard-only-browser-games',
-      file: ['app', '[locale]', 'guides', 'keyboard-only-browser-games', 'page.tsx'],
       changeFrequency: 'weekly',
       priority: 0.82,
     },
     {
       path: '/guides/quick-play-guide',
-      file: ['app', '[locale]', 'guides', 'quick-play-guide', 'page.tsx'],
       changeFrequency: 'monthly',
       priority: 0.74,
     },
     {
       path: '/guides/no-download-games',
-      file: ['app', '[locale]', 'guides', 'no-download-games', 'page.tsx'],
       changeFrequency: 'monthly',
       priority: 0.74,
     },
     // AdSense必需页面
     {
       path: '/privacy',
-      file: ['app', '[locale]', 'privacy', 'page.tsx'],
       changeFrequency: 'monthly',
       priority: 0.5,
     },
     {
       path: '/about',
-      file: ['app', '[locale]', 'about', 'page.tsx'],
       changeFrequency: 'monthly',
       priority: 0.6,
     },
     {
       path: '/contact',
-      file: ['app', '[locale]', 'contact', 'page.tsx'],
       changeFrequency: 'monthly',
       priority: 0.6,
     },
@@ -164,17 +142,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const guides = getSeoLandingPages();
   const categories = getCategoryEntries();
   const tags = getTagEntries();
-  const mockGamesUpdatedAt = getFileLastModified('lib', 'mock-games.ts') ?? new Date();
-  const sitemapGames = await getSitemapGames(mockGamesUpdatedAt);
+  const sitemapGames = await getSitemapGames();
 
   for (const locale of locales) {
     for (const staticPath of staticPaths) {
       const localizedPath = getLocalizedPath(locale, staticPath.path);
-      const lastModified = getFileLastModified(...staticPath.file) ?? new Date();
-
       entries.push({
         url: buildAbsoluteUrl(localizedPath),
-        lastModified,
         changeFrequency: staticPath.changeFrequency,
         priority: staticPath.priority,
       });
@@ -194,7 +168,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const localizedPath = getLocalizedPath(locale, `/games/${game.slug}`);
       entries.push({
         url: buildAbsoluteUrl(localizedPath),
-        lastModified: game.lastModified ?? mockGamesUpdatedAt,
+        ...(game.lastModified ? { lastModified: game.lastModified } : {}),
         changeFrequency: game.isNew ? 'weekly' : 'monthly',
         priority: 0.6,
       });
@@ -203,7 +177,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     for (const gamePath of standaloneGamePaths) {
       entries.push({
         url: buildAbsoluteUrl(getLocalizedPath(locale, gamePath)),
-        lastModified: getFileLastModified('app', '[locale]', ...gamePath.split('/').filter(Boolean), 'page.tsx') ?? mockGamesUpdatedAt,
         changeFrequency: 'monthly',
         priority: 0.55,
       });
@@ -212,7 +185,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     for (const category of categories) {
       entries.push({
         url: buildAbsoluteUrl(getLocalizedPath(locale, `/games/category/${category.item.slug}`)),
-        lastModified: mockGamesUpdatedAt,
         changeFrequency: 'weekly',
         priority: 0.72,
       });
@@ -221,7 +193,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     for (const tag of tags.filter(shouldIndexTagEntry)) {
       entries.push({
         url: buildAbsoluteUrl(getLocalizedPath(locale, `/games/tag/${tag.item.slug}`)),
-        lastModified: mockGamesUpdatedAt,
         changeFrequency: 'weekly',
         priority: 0.68,
       });
