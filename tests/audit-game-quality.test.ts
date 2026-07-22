@@ -25,4 +25,12 @@ describe('game quality audit', () => {
     expect(bySlug.get('fly-car-stunt')?.nextStep).toContain('redirect direct detail requests');
     expect(decisions.every((row) => row.slug && row.decision && row.reason)).toBe(true);
   });
+
+  it('uses real checked-in screenshots for every core indexed game', () => {
+    const placeholderRows = buildAuditRows().filter(
+      (row) => row.tier === 'core-indexed' && row.reasons.includes('placeholder thumbnail'),
+    );
+
+    expect(placeholderRows.map((row) => row.game.slug)).toEqual([]);
+  });
 });

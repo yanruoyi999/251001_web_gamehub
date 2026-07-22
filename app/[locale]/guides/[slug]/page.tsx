@@ -18,6 +18,7 @@ import {
   type SeoLandingPage,
 } from '@/lib/seo-landing-content';
 import { mockGames } from '@/lib/mock-games';
+import { getGuidePresentation } from '@/lib/guide-presentation';
 import {
   DEFAULT_OPEN_GRAPH_IMAGES,
   DEFAULT_TWITTER_IMAGES,
@@ -138,7 +139,9 @@ export default async function GuidePage({ params }: GuidePageProps) {
     dateModified: page.updatedAt,
     articleSection: 'Browser Games',
     keywords: page.keywords.join(', '),
-    citation: content.externalLinks?.map((link) => link.href),
+    citation: [content.quickAnswerLink, ...(content.externalLinks ?? [])]
+      .filter((link): link is NonNullable<typeof link> => Boolean(link))
+      .map((link) => link.href),
   };
   const jsonLdFaq = {
     '@context': 'https://schema.org',
@@ -186,9 +189,8 @@ export default async function GuidePage({ params }: GuidePageProps) {
     (page.embedGame?.playSlug
       ? gameIndex.get(page.embedGame.playSlug)?.thumbnailUrl
       : undefined);
-  const firstSection = content.sections[0];
-  const quickAnswerBody = firstSection?.body ?? content.overview[0];
-  const quickAnswerBullets = firstSection?.bullets?.slice(0, 3) ?? [];
+  const { quickAnswer, detailSections } = getGuidePresentation(content);
+  const quickAnswerBullets = quickAnswer.bullets?.slice(0, 3) ?? [];
 
   return (
     <article className="mx-auto w-full max-w-5xl px-6 py-12">
@@ -218,9 +220,9 @@ export default async function GuidePage({ params }: GuidePageProps) {
           {locale === 'zh' ? '快速答案' : 'Quick answer'}
         </p>
         <h2 className="mt-2 text-2xl font-semibold text-foreground">
-          {firstSection?.title ?? (locale === 'zh' ? '先看核心结论' : 'Start with the core idea')}
+          {quickAnswer.title}
         </h2>
-        <p className="mt-3 text-base leading-relaxed text-foreground/90">{quickAnswerBody}</p>
+        <p className="mt-3 text-base leading-relaxed text-foreground/90">{quickAnswer.body}</p>
         {quickAnswerBullets.length > 0 ? (
           <ul className="mt-4 grid gap-2 text-sm text-foreground/80 md:grid-cols-3">
             {quickAnswerBullets.map((item) => (
@@ -229,6 +231,24 @@ export default async function GuidePage({ params }: GuidePageProps) {
               </li>
             ))}
           </ul>
+        ) : null}
+        {content.quickAnswerLink ? (
+          <a
+            href={content.quickAnswerLink.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mx-auto mt-5 flex max-w-xl items-center justify-between gap-4 rounded-xl border border-primary/30 bg-background px-4 py-3 text-left shadow-sm transition hover:border-primary hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          >
+            <span>
+              <span className="block font-semibold text-primary">
+                {content.quickAnswerLink.label}
+              </span>
+              <span className="mt-1 block text-sm text-muted-foreground">
+                {content.quickAnswerLink.description}
+              </span>
+            </span>
+            <span aria-hidden className="text-primary">↗</span>
+          </a>
         ) : null}
         <div className="mt-5 flex flex-wrap justify-center gap-3 text-sm font-medium">
           <a
@@ -242,7 +262,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
               href="#play"
               className="rounded-full border border-primary/30 bg-background px-4 py-2 text-primary transition hover:bg-primary/10"
             >
-              {locale === 'zh' ? '先试玩游戏' : 'Play first'}
+              {page.embedGame.playLabel?.[locale] ?? (locale === 'zh' ? '先试玩游戏' : 'Play first')}
             </a>
           ) : null}
           <a
@@ -265,6 +285,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
                 locale={locale}
                 gameSlug={page.embedGame.playSlug ?? page.slug}
                 source="guide_embed"
+                playLabel={page.embedGame.playLabel?.[locale]}
               />
             </div>
           </div>
@@ -290,7 +311,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
       </section>
 
       <section id="guide-details" className="mt-12 space-y-10 scroll-mt-24">
-        {content.sections.map((section) => (
+        {detailSections.map((section) => (
           <div key={section.title} className="rounded-2xl border border-border bg-card p-6 shadow-sm">
             <h2 className="text-2xl font-semibold text-foreground">{section.title}</h2>
             <p className="mt-3 text-base text-foreground/90">{section.body}</p>

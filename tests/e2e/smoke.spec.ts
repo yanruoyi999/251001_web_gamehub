@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from './fixtures';
 
 test.describe.skip('Luma Game Hub smoke tests', () => {
   test('homepage renders title', async ({ page }) => {

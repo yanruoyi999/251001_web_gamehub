@@ -4,6 +4,13 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { chromium, devices, type Browser, type Page } from '@playwright/test';
 
+import {
+  installPlaywrightTelemetryIsolation,
+  isPlaywrightTelemetryRequest,
+} from './playwright-telemetry-isolation';
+
+export { isPlaywrightTelemetryRequest };
+
 type SampleType = 'static' | 'guide' | 'game';
 
 interface RuntimeSample {
@@ -12,7 +19,7 @@ interface RuntimeSample {
   requiresPlayableIframe?: boolean;
 }
 
-interface RuntimeResult extends RuntimeSample {
+export interface RuntimeResult extends RuntimeSample {
   url: string;
   status: number | null;
   score: number;
@@ -160,6 +167,7 @@ async function samplePage(browser: Browser, baseUrl: string, sample: RuntimeSamp
     ...devices['iPhone 12'],
     locale: 'en-US',
   });
+  await installPlaywrightTelemetryIsolation(context);
   const baseOrigin = new URL(baseUrl).origin;
   await context.route('**/*', async (route) => {
     const request = route.request();
@@ -175,7 +183,7 @@ async function samplePage(browser: Browser, baseUrl: string, sample: RuntimeSamp
       return;
     }
 
-    await route.continue();
+    await route.fallback();
   });
   const page = await context.newPage();
   page.setDefaultTimeout(3_000);
@@ -251,7 +259,7 @@ async function samplePage(browser: Browser, baseUrl: string, sample: RuntimeSamp
   };
 }
 
-function buildReport(results: RuntimeResult[], baseUrl: string, generatedAt = new Date().toISOString()) {
+export function buildReport(results: RuntimeResult[], baseUrl: string, generatedAt = new Date().toISOString()) {
   const underThreshold = results.filter((result) => result.score < DEFAULT_FAIL_UNDER);
   const lines = [
     '# Luma Runtime Quality Sampling',
@@ -259,7 +267,7 @@ function buildReport(results: RuntimeResult[], baseUrl: string, generatedAt = ne
     `Generated: ${generatedAt}`,
     `Base URL: ${baseUrl}`,
     '',
-    'Scope: mobile Playwright sampling for high-value indexable pages. This is a companion gate for `docs/page-quality-scorecard.md`, adding runtime performance, mobile layout, and actual playable-iframe checks that static scoring cannot prove. TTFB/transport is reported separately; page timing scores use response-relative DCL/FCP/load so one noisy network route does not downgrade every page equally.',
+    'Scope: mobile Playwright sampling for high-value indexable pages. This is a companion gate for `docs/page-quality-scorecard.md`, adding runtime performance, mobile layout, and actual playable-iframe checks that static scoring cannot prove. Analytics collection is blocked during sampling so automated visits do not contaminate GA4, Clarity, or Vercel telemetry. TTFB/transport is reported separately; page timing scores use response-relative DCL/FCP/load so one noisy network route does not downgrade every page equally.',
     '',
     '## Thresholds',
     '',
@@ -295,7 +303,6 @@ function buildReport(results: RuntimeResult[], baseUrl: string, generatedAt = ne
       result.fullscreenButtonVisible === null ? 'n/a' : result.fullscreenButtonVisible ? 'yes' : 'no',
       markdownEscape(result.reason),
     ].join(' | ')} |`),
-    '',
   ];
 
   return `${lines.join('\n')}\n`;

@@ -33,6 +33,7 @@ export interface SeoLandingLocaleContent {
   sections: SeoLandingSection[];
   recommendations: SeoLandingRecommendation[];
   faqs: SeoLandingFaq[];
+  quickAnswerLink?: SeoLandingExternalLink;
   externalLinks?: SeoLandingExternalLink[];
   ctaLabel: string;
   ctaDescription: string;
@@ -43,6 +44,7 @@ export interface SeoLandingEmbedGame {
   title: string;
   thumbnailUrl?: string;
   playSlug?: string;
+  playLabel?: Partial<Record<Locale, string>>;
 }
 
 export interface SeoLandingPage {
@@ -2192,6 +2194,10 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp44/chenling/20230830/05/index.html',
       title: 'Google Snake',
       playSlug: 'google-snake',
+      playLabel: {
+        en: 'Play standard Snake - no mods',
+        zh: '试玩标准 Snake（无模组）',
+      },
     },
     locales: {
       en: {
@@ -2344,12 +2350,12 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               'The known community mod options are free to use. You should not pay for a Snake mod installer or sign up on unrelated download sites.',
           },
         ],
+        quickAnswerLink: {
+          href: 'https://googlesnakemods.com/',
+          label: 'Open the maintained Google Snake Mods web version',
+          description: 'Maintainer-run no-download web version with the mod panel built in.',
+        },
         externalLinks: [
-          {
-            href: 'https://googlesnakemods.com/',
-            label: 'DarkSnakeGang Google Snake Mods web version',
-            description: 'Maintainer-run no-download web version with the mod panel built in.',
-          },
           {
             href: 'https://github.com/DarkSnakeGang/GoogleSnakeModLoader',
             label: 'Google Snake Mod Loader on GitHub',
@@ -2514,12 +2520,12 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               '已知社区模组选项是免费使用的。不要为 Snake mod 安装器付费,也不要在无关下载站注册。',
           },
         ],
+        quickAnswerLink: {
+          href: 'https://googlesnakemods.com/',
+          label: '打开维护中的 Google Snake Mods 网页版',
+          description: '由维护者运行、内置模组面板的免下载网页版。',
+        },
         externalLinks: [
-          {
-            href: 'https://googlesnakemods.com/',
-            label: 'DarkSnakeGang Google Snake Mods 网页版',
-            description: '由维护者运行、内置模组面板的免下载网页版。',
-          },
           {
             href: 'https://github.com/DarkSnakeGang/GoogleSnakeModLoader',
             label: 'GitHub 上的 Google Snake Mod Loader',

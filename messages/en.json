@@ -38,11 +38,10 @@
     "seoSection": {
       "title": "Free Games With No Downloads",
       "description": "Luma Game Hub focuses on low-friction browser games for players who want quick, safe, and useful recommendations instead of noisy game portals.",
-      "pointHeading": "Luma Game Hub Advantage",
       "points": [
-        "Each game has its own crawlable detail page with descriptions, controls, category links, and structured data.",
-        "Collections answer real search intent around lower-interruption play, mobile browser games, and quick boredom busters.",
-        "The catalogue is split by categories and tags so users can move naturally between related games."
+        "Check controls and device notes before loading a third-party player, so you know what to expect.",
+        "Use practical walkthroughs when a level, movement technique, or setup route is unclear.",
+        "Follow source and safety notes that distinguish direct browser play from downloads, mods, or external tools."
       ],
       "cta": "Read the low-interruption game guide"
     },
@@ -50,9 +49,9 @@
       "title": "Find Games For Every Short Break",
       "description": "Use Luma Game Hub as a lightweight discovery engine: quick puzzles, action games, platformers, racing, and casual sessions are all grouped for faster browsing.",
       "points": [
-        "Category pages collect action, puzzle, adventure, racing, strategy, and casual games into focused landing pages.",
-        "Tag pages highlight short-session games, keyboard controls, high-score challenges, and other gameplay patterns.",
-        "Guide pages connect commercial keywords with real game recommendations and internal links."
+        "Choose a category when you already know whether you want action, puzzles, platforming, racing, or casual play.",
+        "Use tags to narrow the list by controls, session style, and the kind of challenge you want next.",
+        "Open a guide when you need a tested route, clearer controls, or a safer way to reach an external game source."
       ],
       "cta": "See games to play when bored"
     },

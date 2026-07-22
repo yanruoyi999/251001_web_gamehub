@@ -6,6 +6,7 @@ import { getTranslations } from 'next-intl/server';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { FavoriteToggleButton } from '@/components/game/favorite-toggle';
+import { CollapsibleGameFilters } from '@/components/game/collapsible-game-filters';
 import { CategoryService, GameService, TagService } from '@/services';
 import { getLocalizedPath, locales, type Locale } from '@/i18n/config';
 import { listFallbackGames } from '@/lib/games/fallback-list';
@@ -322,6 +323,9 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
     favorite: t('actions.favorite'),
     unfavorite: t('actions.unfavorite'),
   };
+  const hasAdvancedFilters = Boolean(
+    categoryId || tagId || showNew || showHot || showFeatured || sortBy,
+  );
 
   return (
     <div className="mx-auto w-full max-w-6xl px-6 py-12">
@@ -339,15 +343,15 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
       </header>
 
       <Card className="mb-8">
-        <CardHeader className="pb-4">
+        <CardHeader className="p-4 pb-3 sm:p-6 sm:pb-4">
           <CardTitle className="text-xl font-semibold text-foreground">{t('filters.title')}</CardTitle>
           <CardDescription className="text-sm text-muted-foreground">
             {t('resultSummary', { value: formatNumber(total) })}
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <form className="grid gap-4 md:grid-cols-2 lg:grid-cols-3" method="get">
-            <div className="md:col-span-2">
+        <CardContent className="p-4 pt-0 sm:p-6 sm:pt-0">
+          <form className="space-y-4" method="get">
+            <div>
               <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
                 <span>{t('filters.searchPlaceholder')}</span>
                 <input
@@ -360,109 +364,115 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
               </label>
             </div>
 
-            <div>
-              <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
-                <span>{t('filters.categoryLabel')}</span>
-                <select
-                  name="categoryId"
-                  defaultValue={categoryId ? String(categoryId) : ''}
-                  className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring"
-                >
-                  <option value="">{t('filters.categoryAll')}</option>
-                  {categoryOptions.map((category) => (
-                    <option key={category.id} value={category.id}>
-                      {resolveLabel(category.name, category.nameEn)}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            </div>
-
-            <div>
-              <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
-                <span>{t('filters.tagLabel')}</span>
-                <select
-                  name="tagId"
-                  defaultValue={tagId ? String(tagId) : ''}
-                  className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring"
-                >
-                  <option value="">{t('filters.tagAll')}</option>
-                  {tagOptions.map((tag) => (
-                    <option key={tag.id} value={tag.id}>
-                      {resolveLabel(tag.name, tag.nameEn)}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            </div>
-
-            {catalogueUi.showCommunityMetrics ? (
+            <CollapsibleGameFilters
+              defaultOpen={hasAdvancedFilters}
+              showLabel={locale === 'zh' ? '更多筛选' : 'More filters'}
+              hideLabel={locale === 'zh' ? '收起筛选' : 'Hide filters'}
+            >
               <div>
                 <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
-                  <span>{t('filters.sortLabel')}</span>
-                  <div className="flex gap-2">
-                    <select
-                      name="sortBy"
-                      defaultValue={sortBy ?? 'publishedAt'}
-                      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring"
-                    >
-                      {SORT_OPTIONS.map((option) => {
-                        const optionKey = `filters.sort.${option}` as const;
-                        return (
-                          <option key={option} value={option}>
-                            {t(optionKey)}
-                          </option>
-                        );
-                      })}
-                    </select>
-                    <select
-                      name="sortOrder"
-                      defaultValue={sortOrder}
-                      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring"
-                    >
-                      <option value="desc">{t('filters.sortOrderDesc')}</option>
-                      <option value="asc">{t('filters.sortOrderAsc')}</option>
-                    </select>
-                  </div>
+                  <span>{t('filters.categoryLabel')}</span>
+                  <select
+                    name="categoryId"
+                    defaultValue={categoryId ? String(categoryId) : ''}
+                    className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring"
+                  >
+                    <option value="">{t('filters.categoryAll')}</option>
+                    {categoryOptions.map((category) => (
+                      <option key={category.id} value={category.id}>
+                        {resolveLabel(category.name, category.nameEn)}
+                      </option>
+                    ))}
+                  </select>
                 </label>
               </div>
-            ) : null}
 
-            <div className="flex flex-wrap gap-4 md:col-span-2 lg:col-span-3">
-              <label className="inline-flex items-center gap-2 text-sm text-foreground">
-                <input
-                  type="checkbox"
-                  name="isNew"
-                  value="1"
-                  defaultChecked={showNew}
-                  className="h-4 w-4 rounded border-input text-primary focus:ring-ring"
-                />
-                {t('filters.onlyNew')}
-              </label>
-              <label className="inline-flex items-center gap-2 text-sm text-foreground">
-                <input
-                  type="checkbox"
-                  name="isHot"
-                  value="1"
-                  defaultChecked={showHot}
-                  className="h-4 w-4 rounded border-input text-primary focus:ring-ring"
-                />
-                {t('filters.onlyHot')}
-              </label>
-              <label className="inline-flex items-center gap-2 text-sm text-foreground">
-                <input
-                  type="checkbox"
-                  name="featured"
-                  value="1"
-                  defaultChecked={showFeatured}
-                  className="h-4 w-4 rounded border-input text-primary focus:ring-ring"
-                />
-                {t('filters.onlyFeatured')}
-              </label>
-            </div>
+              <div>
+                <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
+                  <span>{t('filters.tagLabel')}</span>
+                  <select
+                    name="tagId"
+                    defaultValue={tagId ? String(tagId) : ''}
+                    className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring"
+                  >
+                    <option value="">{t('filters.tagAll')}</option>
+                    {tagOptions.map((tag) => (
+                      <option key={tag.id} value={tag.id}>
+                        {resolveLabel(tag.name, tag.nameEn)}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
 
-            <div className="flex gap-3 md:col-span-2 lg:col-span-3">
-              <Button type="submit" className="md:w-auto">
+              {catalogueUi.showCommunityMetrics ? (
+                <div>
+                  <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
+                    <span>{t('filters.sortLabel')}</span>
+                    <div className="flex gap-2">
+                      <select
+                        name="sortBy"
+                        defaultValue={sortBy ?? 'publishedAt'}
+                        className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring"
+                      >
+                        {SORT_OPTIONS.map((option) => {
+                          const optionKey = `filters.sort.${option}` as const;
+                          return (
+                            <option key={option} value={option}>
+                              {t(optionKey)}
+                            </option>
+                          );
+                        })}
+                      </select>
+                      <select
+                        name="sortOrder"
+                        defaultValue={sortOrder}
+                        className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring"
+                      >
+                        <option value="desc">{t('filters.sortOrderDesc')}</option>
+                        <option value="asc">{t('filters.sortOrderAsc')}</option>
+                      </select>
+                    </div>
+                  </label>
+                </div>
+              ) : null}
+
+              <div className="flex flex-wrap gap-4 md:col-span-2 lg:col-span-3">
+                <label className="inline-flex items-center gap-2 text-sm text-foreground">
+                  <input
+                    type="checkbox"
+                    name="isNew"
+                    value="1"
+                    defaultChecked={showNew}
+                    className="h-4 w-4 rounded border-input text-primary focus:ring-ring"
+                  />
+                  {t('filters.onlyNew')}
+                </label>
+                <label className="inline-flex items-center gap-2 text-sm text-foreground">
+                  <input
+                    type="checkbox"
+                    name="isHot"
+                    value="1"
+                    defaultChecked={showHot}
+                    className="h-4 w-4 rounded border-input text-primary focus:ring-ring"
+                  />
+                  {t('filters.onlyHot')}
+                </label>
+                <label className="inline-flex items-center gap-2 text-sm text-foreground">
+                  <input
+                    type="checkbox"
+                    name="featured"
+                    value="1"
+                    defaultChecked={showFeatured}
+                    className="h-4 w-4 rounded border-input text-primary focus:ring-ring"
+                  />
+                  {t('filters.onlyFeatured')}
+                </label>
+              </div>
+            </CollapsibleGameFilters>
+
+            <div className="flex gap-3">
+              <Button type="submit">
                 {t('filters.submit')}
               </Button>
               <Link

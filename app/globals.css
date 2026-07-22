@@ -12,8 +12,8 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
 
-    /* Primary: 翠绿 #10b766 */
-    --primary: 152 84% 39%;
+    /* Primary: 深翠绿 #047857，白底文字与白字按钮均满足 AA 对比度 */
+    --primary: 160 94% 24%;
     --primary-foreground: 0 0% 100%;
 
     /* Secondary: 浅绿底色，用于 chip / tag */
@@ -32,7 +32,7 @@
 
     --border: 214 22% 91%;
     --input: 214 22% 91%;
-    --ring: 152 84% 39%;
+    --ring: 160 94% 24%;
 
     --radius: 0.75rem;
   }

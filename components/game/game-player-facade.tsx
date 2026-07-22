@@ -14,6 +14,7 @@ interface GamePlayerFacadeProps {
   locale: string;
   gameSlug?: string;
   source?: string;
+  playLabel?: string;
 }
 
 function canUseNextImage(src?: string | null) {
@@ -49,6 +50,7 @@ export function GamePlayerFacade({
   locale,
   gameSlug,
   source = 'game_player',
+  playLabel,
 }: GamePlayerFacadeProps) {
   const [loaded, setLoaded] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -229,10 +231,10 @@ export function GamePlayerFacade({
             });
             setLoaded(true);
           }}
-          aria-label={locale === 'zh' ? `开始游玩 ${title}` : `Play ${title}`}
+          aria-label={playLabel ?? (locale === 'zh' ? `开始游玩 ${title}` : `Play ${title}`)}
           className="bg-white text-slate-950 hover:bg-white/90"
         >
-          {locale === 'zh' ? '开始游戏' : 'Play now'}
+          {playLabel ?? (locale === 'zh' ? '开始游戏' : 'Play now')}
         </Button>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 
 test.describe('游戏浏览流程', () => {
   test('首页可以正常渲染', async ({ page }) => {

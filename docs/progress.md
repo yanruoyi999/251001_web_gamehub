@@ -1793,3 +1793,24 @@
 - 验证结果：针对性 2 files / 3 tests 通过；完整质量评分为 251 rows / 94 indexable / 0 indexable under-80，内链、type-check、27 files / 87 tests、lint 0 errors / 98 个既有 warnings、124 页 production build 与 diff-check 均通过。10 页移动 runtime 全部 80+、最低 88。
 - 浏览器与生产：390px 反馈入口为 44px 文档流图标，1440px 为固定文字按钮；两个视口均无横向溢出，Typeform 链接携带 `source/locale/page` 并可打开。生产 site/robots/196 URL sitemap/health/search/Clarity tag 正常；Google Snake Mods 与 Hide and Paint canonical 正确，抽样低分页继续 `noindex, follow`。
 - 边界：没有 commit、push、部署、GSC 提交或后台修改。T-149 仍为本地修复完成、等待部署/数据验证；下一轮以 `feedback_open` 和 Typeform 同窗新增数据复核反馈漏斗，并等待历史 `(not set)`、`game_detail`、`guide_embed` 退出完整窗口。
+
+### T-151 Content honesty, mobile discovery, and real screenshot remediation
+
+- 本次目标：按站点审查结果逐项完成可在代码库内落地的优化，保留现有 URL、埋点与绿色视觉体系，优先解决攻略重复/承诺不准确、移动端导航与筛选过重、首页价值入口不明确以及核心游戏占位图问题。
+- 内容准确性：攻略模板只把第一节显示为 Quick Answer，不再在正文重复；Google Snake Mods 在 Quick Answer 直接给出维护方网页入口，并把站内试玩明确标成 `Play standard Snake - no mods` / `试玩标准 Snake（无模组）`，避免把标准 Snake 误说成模组版。
+- 移动体验：首页头部新增可访问的折叠菜单与站内搜索，语言、主题和菜单触控目标统一到至少 44px；游戏库始终显示基础搜索，分类/标签/状态折叠为移动端高级筛选。390px 本地实测无横向溢出，首张游戏卡从改造前约 805px 提前到约 612px。
+- 首页与素材：首页首屏改为 Google Snake Mods、OvO、Drive Mad、Solitaire 四个真实入口，移除编号式泛化优势文案；27 个核心可索引游戏由通用 SVG 占位图替换为现有可玩源的真实运行截图。人工检查发现 Monkey Mart 数据源实际打开 Blumgi Slime，已切换到仓库既有指南所用的真实 Monkey Mart 源并重新截图。
+- 可访问性：Lighthouse 首次发现浅色品牌绿在白底的对比度仅 2.62:1；已把浅色主题主色统一为深翠绿 `#047857`。最终本地 production build 的移动 Lighthouse 为 Performance 98、Accessibility 100、Best Practices 96、SEO 100、LCP 2.4s、CLS 0、TBT 30ms；Best Practices 的 4 条 console error 均来自 localhost 不提供 `/_vercel/insights/script.js` 与 `/_vercel/speed-insights/script.js`，不是生产业务请求。
+- 运行时与质量门：页面质量 251 rows / 94 indexable / 0 indexable under-80；内链、类型检查、Vitest、ESLint、production build、runtime sampling 与 `git diff --check` 均纳入最终门禁。移动 runtime 抽样 10 页，under-80 为 0、最低 88，游戏样本 Play/iframe/fullscreen 可见。
+- 覆盖缺口与边界：未获取到当前外链锚文本分布或 referring-domain 明细，因此没有伪造“锚文本已优化”的结论；该项需要 GSC/外链工具数据后单独处理。本轮未 commit、push、部署、提交 sitemap 或修改 GA4/GSC/Clarity/Typeform 后台，生产站仍保持原版本。
+
+### T-152 Playwright production telemetry isolation
+
+- 监控信号：2026-07-22 05:00 报告的 GA4 昨日 raw 值从前一日 4 sessions / 6 views 升到 43 / 46，但 engagement 仍为 0%。Analytics Data API HTTP 200 复核确认 06:00 集中 35 Safari mobile direct、2 Chrome `(not set)` 和 1 Chrome `game_detail` session，与 06:20-06:24 生产 runtime/E2E 验证和 Clarity 排除 60 bots 的时窗一致。
+- 直接根因：运行时采样器和仓库 E2E 会访问正式域，却没有统一隔离 GA4、Clarity 和 Vercel 采集请求；既有 localhost Clarity hostname 守卫无法覆盖生产自动化访问。这是测试流量污染，不是真实用户增长、认证失败或错误项目 ID。
+- 代码修复：新增 `scripts/playwright-telemetry-isolation.ts`，阻断 Google Analytics / DoubleClick、Clarity / Bing 像素与 Vercel Insights 采集端点，同时保留测量脚本和站点资源。`scripts/audit-runtime-quality.ts` 在创建页面前安装隔离，内部路由改用 `fallback()` 以组合多层规则；报告明确披露自动采样不写分析。
+- E2E 收口：新增 `tests/e2e/fixtures.ts`，`game-browsing.spec.ts` 和 `smoke.spec.ts` 统一从该 fixture 导入。`tests/playwright-analytics-isolation.test.ts` 覆盖真实采集端点、不误拦测量脚本/站点资源、runtime 安装顺序、所有 E2E spec 的 fixture 契约。
+- 浏览器回归发现并修正了第二个问题：直接把 TypeScript 函数传给 `addInitScript` 时，`tsx` 序列化生成 `__name is not defined`。现改用纯文本 bootstrap，实际页面错误已消失；本地剩余 4 条 console 信息仅为 `next start` 不提供 Vercel Insights 脚本的 404/MIME 噪声。
+- 验证结果：页面质量 251 rows / 94 indexable / 0 indexable under-80，内链、type-check、34 files / 106 Vitest tests、lint 0 errors / 98 个既有 warnings、124 页 production build 和 `git diff --check` 通过。仓库 E2E 为 1 passed / 3 按既有契约 skipped；另行 390x844 与 1440x1000 验证均 HTTP 200、无溢出或重叠、遥测完成数为 0。
+- 运行时门禁：最终本地 10 页采样 under-80=0、最低 88；生产域 10 页隔离采样 under-80=0、最低 100，游戏 Play / iframe / fullscreen 通过。Telemount 生产实测的 GA4 和 Clarity 采集请求全部 blocked，匹配请求 finished=0。
+- 发布边界：本轮只完成本地修复和只读生产验证，没有 commit、push、部署或改后台。工作树在本轮开始前已有 T-151 页面/素材改动，全部保留。准确状态为本地修复完成，等待部署/数据验证；部署后观察 06:00 批量 `first_visit` / `session_start`、Clarity bots excluded 和历史 source 退出，历史数据不回填。

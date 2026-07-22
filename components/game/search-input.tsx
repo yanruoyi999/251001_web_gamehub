@@ -9,6 +9,7 @@ import { trackEvent } from '@/lib/gtag';
 
 interface SearchInputProps {
   locale: string;
+  className?: string;
 }
 
 interface SuggestionItem {
@@ -35,7 +36,7 @@ function toOptionalString(value: unknown): string | null {
   return typeof value === 'string' && value.trim() ? value : null;
 }
 
-export function SearchInput({ locale }: SearchInputProps) {
+export function SearchInput({ locale, className }: SearchInputProps) {
   const router = useRouter();
   const t = useTranslations('nav');
 
@@ -154,7 +155,7 @@ export function SearchInput({ locale }: SearchInputProps) {
 
     if (loading) {
       return (
-        <li className="px-3 py-2 text-sm text-gray-500">
+        <li className="px-3 py-2 text-sm text-muted-foreground">
           {t('searchLoading')}
         </li>
       );
@@ -162,7 +163,7 @@ export function SearchInput({ locale }: SearchInputProps) {
 
     if (suggestions.length === 0) {
       return (
-        <li className="px-3 py-2 text-sm text-gray-400">
+        <li className="px-3 py-2 text-sm text-muted-foreground">
           {t('searchNoResult')}
         </li>
       );
@@ -174,9 +175,9 @@ export function SearchInput({ locale }: SearchInputProps) {
           type="button"
           onMouseDown={(event) => event.preventDefault()}
           onClick={() => handleSelect(item)}
-          className="flex w-full items-start gap-2 px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+          className="flex w-full items-start gap-2 px-3 py-2 text-left text-sm text-popover-foreground hover:bg-accent"
         >
-          <span className="line-clamp-1 font-medium text-gray-900">
+          <span className="line-clamp-1 font-medium text-popover-foreground">
             {locale === 'en' ? item.titleEn ?? item.title : item.title}
           </span>
         </button>
@@ -185,7 +186,7 @@ export function SearchInput({ locale }: SearchInputProps) {
   }, [open, loading, suggestions, locale, t, handleSelect]);
 
   return (
-    <div className="relative hidden w-64 md:block">
+    <div className={clsx('relative', className)}>
       <form onSubmit={handleSubmit}>
         <input
           type="search"
@@ -206,13 +207,13 @@ export function SearchInput({ locale }: SearchInputProps) {
             }
           }}
           placeholder={t('searchPlaceholder')}
-          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground shadow-sm placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring"
         />
       </form>
       {open ? (
         <ul
           className={clsx(
-            'absolute left-0 right-0 top-full z-30 mt-2 rounded-md border border-gray-200 bg-white shadow-lg',
+            'absolute left-0 right-0 top-full z-30 mt-2 rounded-md border border-border bg-popover text-popover-foreground shadow-lg',
             'max-h-72 overflow-y-auto',
           )}
         >
