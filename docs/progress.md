@@ -1802,7 +1802,7 @@
 - 首页与素材：首页首屏改为 Google Snake Mods、OvO、Drive Mad、Solitaire 四个真实入口，移除编号式泛化优势文案；27 个核心可索引游戏由通用 SVG 占位图替换为现有可玩源的真实运行截图。人工检查发现 Monkey Mart 数据源实际打开 Blumgi Slime，已切换到仓库既有指南所用的真实 Monkey Mart 源并重新截图。
 - 可访问性：Lighthouse 首次发现浅色品牌绿在白底的对比度仅 2.62:1；已把浅色主题主色统一为深翠绿 `#047857`。最终本地 production build 的移动 Lighthouse 为 Performance 98、Accessibility 100、Best Practices 96、SEO 100、LCP 2.4s、CLS 0、TBT 30ms；Best Practices 的 4 条 console error 均来自 localhost 不提供 `/_vercel/insights/script.js` 与 `/_vercel/speed-insights/script.js`，不是生产业务请求。
 - 运行时与质量门：页面质量 251 rows / 94 indexable / 0 indexable under-80；内链、类型检查、Vitest、ESLint、production build、runtime sampling 与 `git diff --check` 均纳入最终门禁。移动 runtime 抽样 10 页，under-80 为 0、最低 88，游戏样本 Play/iframe/fullscreen 可见。
-- 覆盖缺口与边界：未获取到当前外链锚文本分布或 referring-domain 明细，因此没有伪造“锚文本已优化”的结论；该项需要 GSC/外链工具数据后单独处理。本轮未 commit、push、部署、提交 sitemap 或修改 GA4/GSC/Clarity/Typeform 后台，生产站仍保持原版本。
+- 覆盖缺口与边界：未获取到当前外链锚文本分布或 referring-domain 明细，因此没有伪造“锚文本已优化”的结论；该项需要 GSC/外链工具数据后单独处理。2026-07-22 审计确认 T-151 与 T-152 共享 runtime、测试和记录，以同一发布范围进入 `main`；产品代码基线为 `79b46de`，生产桌面/移动端与图片加载均已验证。
 
 ### T-152 Playwright production telemetry isolation
 
@@ -1813,4 +1813,4 @@
 - 浏览器回归发现并修正了第二个问题：直接把 TypeScript 函数传给 `addInitScript` 时，`tsx` 序列化生成 `__name is not defined`。现改用纯文本 bootstrap，实际页面错误已消失；本地剩余 4 条 console 信息仅为 `next start` 不提供 Vercel Insights 脚本的 404/MIME 噪声。
 - 验证结果：页面质量 251 rows / 94 indexable / 0 indexable under-80，内链、type-check、34 files / 106 Vitest tests、lint 0 errors / 98 个既有 warnings、124 页 production build 和 `git diff --check` 通过。仓库 E2E 为 1 passed / 3 按既有契约 skipped；另行 390x844 与 1440x1000 验证均 HTTP 200、无溢出或重叠、遥测完成数为 0。
 - 运行时门禁：最终本地 10 页采样 under-80=0、最低 88；生产域 10 页隔离采样 under-80=0、最低 100，游戏 Play / iframe / fullscreen 通过。Telemount 生产实测的 GA4 和 Clarity 采集请求全部 blocked，匹配请求 finished=0。
-- 发布边界：本轮只完成本地修复和只读生产验证，没有 commit、push、部署或改后台。工作树在本轮开始前已有 T-151 页面/素材改动，全部保留。准确状态为本地修复完成，等待部署/数据验证；部署后观察 06:00 批量 `first_visit` / `session_start`、Clarity bots excluded 和历史 source 退出，历史数据不回填。
+- 发布状态：2026-07-22 用户确认后已完成 T-151/T-152 合并发布。主提交 `397c50f`，CI 可移植性修正 `14dffc1`，Sharp/libvips 安全覆盖 `79b46de`；最终 GitHub Actions `29880062285` success，Vercel Production 构建日志确认 commit `79b46de` 并接管正式域。生产 10 页移动 runtime 最低 100，Play / iframe / fullscreen 通过，遥测完成数为 0。准确状态为已部署、等待新数据窗口验证；继续观察 06:00 批量 `first_visit` / `session_start`、Clarity bots excluded 和历史 source 退出，历史数据不回填。
