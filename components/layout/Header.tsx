@@ -5,7 +5,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import { Menu, X } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { getLocalizedPath, isLocale } from '@/i18n/config';
 import { SearchInput } from '@/components/game/search-input';
@@ -68,14 +68,18 @@ export function Header() {
   const currentLocaleSegment = isLocale(segments[0])
     ? segments[0]
     : activeLocale;
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const mobileMenuRef = useRef<HTMLInputElement>(null);
+  const previousPathnameRef = useRef(pathname);
 
   useEffect(() => {
-    setMobileMenuOpen(false);
+    if (previousPathnameRef.current !== pathname && mobileMenuRef.current) {
+      mobileMenuRef.current.checked = false;
+    }
+    previousPathnameRef.current = pathname;
   }, [pathname]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/80 shadow-sm backdrop-blur-lg">
+    <header className="relative sticky top-0 z-50 border-b border-border bg-background/80 shadow-sm backdrop-blur-lg">
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 md:px-6">
         {/* Logo */}
         <Link
@@ -136,70 +140,95 @@ export function Header() {
 
         <div className="flex items-center gap-2 md:hidden">
           <ThemeToggle />
-          <button
-            type="button"
-            className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg border border-border bg-background text-foreground transition hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            aria-label={
-              currentLocaleSegment === 'zh'
-                ? mobileMenuOpen ? '关闭导航菜单' : '打开导航菜单'
-                : mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'
-            }
+          <input
+            ref={mobileMenuRef}
+            id="mobile-navigation-toggle"
+            type="checkbox"
+            className="peer sr-only"
             aria-controls="mobile-navigation"
-            aria-expanded={mobileMenuOpen}
-            onClick={() => setMobileMenuOpen((open) => !open)}
+          />
+          <label
+            htmlFor="mobile-navigation-toggle"
+            className="inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center rounded-lg border border-border bg-background text-foreground transition hover:bg-accent peer-checked:hidden peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-ring"
           >
-            {mobileMenuOpen ? (
-              <X className="h-5 w-5" aria-hidden="true" />
-            ) : (
-              <Menu className="h-5 w-5" aria-hidden="true" />
-            )}
-          </button>
-        </div>
-      </div>
+            <span className="sr-only">
+              {currentLocaleSegment === 'zh'
+                ? '打开导航菜单'
+                : 'Open navigation menu'}
+            </span>
+            <Menu className="h-5 w-5" aria-hidden="true" />
+          </label>
+          <label
+            htmlFor="mobile-navigation-toggle"
+            className="hidden min-h-11 min-w-11 cursor-pointer items-center justify-center rounded-lg border border-border bg-background text-foreground transition hover:bg-accent peer-checked:inline-flex peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-ring"
+          >
+            <span className="sr-only">
+              {currentLocaleSegment === 'zh'
+                ? '关闭导航菜单'
+                : 'Close navigation menu'}
+            </span>
+            <X className="h-5 w-5" aria-hidden="true" />
+          </label>
 
-      {mobileMenuOpen ? (
-        <div
-          id="mobile-navigation"
-          className="border-t border-border bg-background px-4 pb-5 pt-4 shadow-lg md:hidden"
-        >
-          <div className="mx-auto w-full max-w-7xl space-y-4">
-            <SearchInput locale={currentLocaleSegment} className="block w-full" />
-            <nav className="grid gap-1" aria-label={currentLocaleSegment === 'zh' ? '移动导航' : 'Mobile navigation'}>
-              {navItems.map((item) => {
-                const itemHref = getLocalizedPath(currentLocaleSegment, item.href);
-                const isActive = pathname === itemHref;
+          <div
+            id="mobile-navigation"
+            className="absolute left-0 right-0 top-full hidden border-t border-border bg-background px-4 pb-5 pt-4 shadow-lg peer-checked:block md:hidden"
+          >
+            <div className="mx-auto w-full max-w-7xl space-y-4">
+              <SearchInput
+                locale={currentLocaleSegment}
+                className="block w-full"
+              />
+              <nav
+                className="grid gap-1"
+                aria-label={
+                  currentLocaleSegment === 'zh'
+                    ? '移动导航'
+                    : 'Mobile navigation'
+                }
+              >
+                {navItems.map(item => {
+                  const itemHref = getLocalizedPath(
+                    currentLocaleSegment,
+                    item.href
+                  );
+                  const isActive = pathname === itemHref;
 
-                return (
-                  <Link
-                    key={item.href}
-                    href={itemHref}
-                    className={clsx(
-                      'flex min-h-11 items-center rounded-lg px-3 text-base font-medium transition-colors',
-                      isActive
-                        ? 'bg-primary/10 text-primary'
-                        : 'text-foreground hover:bg-accent',
-                    )}
-                    onClick={() =>
-                      trackEvent('nav_link_click', {
-                        target: item.href === '/' ? 'home' : item.href.replace('/', ''),
-                        locale: currentLocaleSegment,
-                      })
-                    }
-                  >
-                    {t(item.labelKey)}
-                  </Link>
-                );
-              })}
-            </nav>
-            <div className="flex items-center justify-between border-t border-border pt-4">
-              <span className="text-sm text-muted-foreground">
-                {currentLocaleSegment === 'zh' ? '语言' : 'Language'}
-              </span>
-              <LanguageSwitcher />
+                  return (
+                    <Link
+                      key={item.href}
+                      href={itemHref}
+                      className={clsx(
+                        'flex min-h-11 items-center rounded-lg px-3 text-base font-medium transition-colors',
+                        isActive
+                          ? 'bg-primary/10 text-primary'
+                          : 'text-foreground hover:bg-accent'
+                      )}
+                      onClick={() =>
+                        trackEvent('nav_link_click', {
+                          target:
+                            item.href === '/'
+                              ? 'home'
+                              : item.href.replace('/', ''),
+                          locale: currentLocaleSegment,
+                        })
+                      }
+                    >
+                      {t(item.labelKey)}
+                    </Link>
+                  );
+                })}
+              </nav>
+              <div className="flex items-center justify-between border-t border-border pt-4">
+                <span className="text-sm text-muted-foreground">
+                  {currentLocaleSegment === 'zh' ? '语言' : 'Language'}
+                </span>
+                <LanguageSwitcher />
+              </div>
             </div>
           </div>
         </div>
-      ) : null}
+      </div>
     </header>
   );
 }

@@ -17,13 +17,19 @@ const themeToggleSource = await readFile(
 
 describe('mobile header navigation', () => {
   it('provides an accessible mobile menu with navigation, search, and language controls', () => {
-    expect(headerSource).toContain("useState(false)");
+    expect(headerSource).toContain('type="checkbox"');
+    expect(headerSource).toContain('htmlFor="mobile-navigation-toggle"');
+    expect(headerSource).toContain('useRef<HTMLInputElement>(null)');
     expect(headerSource).toContain('aria-controls="mobile-navigation"');
-    expect(headerSource).toContain('aria-expanded={mobileMenuOpen}');
     expect(headerSource).toContain('id="mobile-navigation"');
-    expect(headerSource).toContain('<SearchInput locale={currentLocaleSegment} className="block w-full" />');
+    expect(headerSource).toContain('peer-checked:hidden');
+    expect(headerSource).toContain('peer-checked:block');
+    expect(headerSource).toMatch(
+      /<SearchInput\s+locale=\{currentLocaleSegment\}\s+className="block w-full"\s+\/>/,
+    );
     expect(headerSource).toContain('min-h-11 min-w-11');
     expect(headerSource).toContain('md:hidden');
+    expect(headerSource).not.toContain('useState');
   });
 
   it('lets each header placement control search visibility and uses theme tokens', () => {

@@ -22,11 +22,14 @@ describe('mobile game filters', () => {
     expect(gamesPageSource).toContain('className="space-y-4" method="get"');
   });
 
-  it('exposes an accessible 44px toggle while keeping the desktop grid visible', () => {
-    expect(collapsibleSource).toContain('aria-expanded={open}');
+  it('uses a native checkbox before hydration while keeping the desktop grid visible', () => {
+    expect(collapsibleSource).toContain('type="checkbox"');
+    expect(collapsibleSource).toContain('htmlFor="game-filter-toggle"');
+    expect(collapsibleSource).toContain('defaultChecked={defaultOpen}');
     expect(collapsibleSource).toContain('min-h-11');
     expect(collapsibleSource).toContain('md:hidden');
-    expect(collapsibleSource).toContain("open ? 'grid' : 'hidden'");
+    expect(collapsibleSource).toContain('peer-checked:grid');
     expect(collapsibleSource).toContain('md:grid md:grid-cols-2 lg:grid-cols-3');
+    expect(collapsibleSource).not.toContain('useState');
   });
 });

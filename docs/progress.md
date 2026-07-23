@@ -1824,3 +1824,13 @@
 - 验证结果：页面质量 251 rows / 94 indexable / 157 under-80 / 0 indexable under-80；内链与 type-check 通过；Vitest 38 files / 119 tests 全通过；lint 0 errors / 98 个既有 warnings；production build 124 页并修正 32/32 英文 HTML。5 个关键本地 production URL 均 HTTP 200；10 页移动 runtime under-80=0、最低 88，游戏 Play/iframe/fullscreen 通过。
 - 发布与生产验收：隔离分支提交 `0d0448f` 已 fast-forward 合入 `main` 并推送 GitHub；Vercel Git integration 于 2026-07-22 12:22（Asia/Shanghai）完成 Production 部署，部署元数据、`origin/main` 与本地 HEAD 均指向 `0d0448f`，`lumagamehub.com` 和 `www.lumagamehub.com` 已接管。生产 key 文件内容一致，sitemap 为 198 URLs / 58 个稳定 `lastmod` / 0 个请求分钟日期；Google Snake 分类与推荐、Telemount 3 张实测画面/署名/来源均在线。生产移动 runtime 抽样 10 页全部 100 分，游戏 Play/iframe/fullscreen 通过。
 - IndexNow 与外部边界：生产 key 验证成功后，仅提交本次 12 个明确变更 URL，IndexNow 返回 HTTP 202；这只证明服务接收，不等于已收录。Bing Webmaster 当前 property、验证和 sitemap 后台状态仍为 `未获取到`，原因是当前浏览器停在登录页；需用户完成登录后逐站核验，不能由代码或 HTTP 200 推断已接入。
+
+### T-154 Next.js security patch and hydration-independent mobile disclosures
+
+- 最新巡检信号：2026-07-23 02:00 的 Luma GA4 因 readonly ADC revoked/expired 为 `未获取到 / Blocked`；GSC 滚动 28 天为 87 clicks / 4,252 impressions，Clarity 滚动 3 天为 11 sessions、88 bots excluded、dead 2、quick back 1、0 rage/JS error。普通用户 token 对 GA4 Data 与 GSC 均为 403 insufficient scopes，确认是授权层问题，不用旧 GA4 数字回填。
+- P0 安全根因：实时 `pnpm audit --prod` 在 `next@15.5.18` 命中 3 high / 5 moderate；将 `next` 与 `eslint-config-next` 同补丁升级到 `15.5.21` 后复审为 `No known vulnerabilities found`。发布前复核发现远端 commit `4160d6e` 已于 2026-07-23 12:38（Asia/Shanghai）完成同一依赖升级并接管正式域，因此 T-154 不重复提交 `package.json` 或 lockfile，只保留移动交互修复。
+- P1 交互根因：生产 390x844 可复现 Header 菜单约 2.5 秒、游戏高级筛选约 1.4 秒 hydration 后才响应，之前首击被丢弃且无 JS error。两处 React state disclosure 改为原生 checkbox + label + CSS peer 状态，首击、开关图标/文案和内容显隐不再依赖 hydration；Header 仍在后续路径变化时关闭菜单。Clarity 没有页面/控件级证据，因此不把当前 dead 2 强行归因于这两个控件。
+- 验证结果：静态评分 251 rows / 94 indexable / 157 under-80 / 0 indexable under-80；生产 10 页隔离 runtime 全部 100，遥测 finished=0；本地修复后 10 页 runtime under-80=0、最低 88，扣分仅为 localhost 缺少 Vercel Insights 脚本。内链、顺序 type-check、38 files / 119 Vitest tests、Playwright 4 passed / 1 个既有 smoke skipped（含禁用 JavaScript 行为回归）、lint 0 errors / 98 个既有 warnings、124 页 Next.js 15.5.21 production build、32/32 英文 HTML 和 `git diff --check` 通过。
+- 浏览器验证：本地 production build 在禁用 JavaScript 的 390x844 视口中，菜单与筛选首击立即展开，Close/Hide 状态正确；启用 JavaScript 后 hydration 前后均保持展开，0 page/console error。1280px 桌面筛选保持可见，桌面与移动均无横向溢出。自动化采样继续使用 T-152 隔离器，不写入 GA4、Clarity 或 Vercel telemetry。
+- SEO 与内容边界：正式域核心页面、robots、198 URL sitemap、canonical、health、search 均健康；低分页面仍不在索引面，没有恢复索引或新增薄页。`google snake mods` 1/114 只列 P2 观察，待固定 GSC 窗口与内容证据后再优化。
+- 当前状态：安全补丁已随 `4160d6e` 上线；移动交互修复已本地提交并 rebase 到该生产基线，等待本轮 `main` push 与生产验证。未改 GA4/GSC/Clarity/Typeform 后台、提交 sitemap 或重新授权。下一轮观察固定完整日 GA4、Clarity bots/dead/quick、移动菜单/筛选控件级证据及现有高曝光页，不盲目扩张游戏数量。

@@ -1,8 +1,5 @@
-'use client';
-
 import { SlidersHorizontal } from 'lucide-react';
-import { type ReactNode, useId, useState } from 'react';
-import clsx from 'clsx';
+import { type ReactNode } from 'react';
 
 interface CollapsibleGameFiltersProps {
   children: ReactNode;
@@ -17,27 +14,32 @@ export function CollapsibleGameFilters({
   showLabel,
   hideLabel,
 }: CollapsibleGameFiltersProps) {
-  const [open, setOpen] = useState(defaultOpen);
-  const contentId = useId();
-
   return (
     <>
-      <button
-        type="button"
-        className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-md border border-input bg-background px-4 text-sm font-medium text-foreground shadow-sm transition hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring md:hidden"
-        aria-controls={contentId}
-        aria-expanded={open}
-        onClick={() => setOpen((current) => !current)}
+      <input
+        id="game-filter-toggle"
+        type="checkbox"
+        className="peer sr-only md:hidden"
+        defaultChecked={defaultOpen}
+        aria-controls="advanced-game-filters"
+      />
+      <label
+        htmlFor="game-filter-toggle"
+        className="flex min-h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-md border border-input bg-background px-4 text-sm font-medium text-foreground shadow-sm transition hover:bg-accent peer-checked:hidden peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-ring md:hidden"
       >
         <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
-        {open ? hideLabel : showLabel}
-      </button>
+        <span>{showLabel}</span>
+      </label>
+      <label
+        htmlFor="game-filter-toggle"
+        className="hidden min-h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-md border border-input bg-background px-4 text-sm font-medium text-foreground shadow-sm transition hover:bg-accent peer-checked:flex peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-ring md:hidden"
+      >
+        <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
+        <span>{hideLabel}</span>
+      </label>
       <div
-        id={contentId}
-        className={clsx(
-          'gap-4 md:grid md:grid-cols-2 lg:grid-cols-3',
-          open ? 'grid' : 'hidden',
-        )}
+        id="advanced-game-filters"
+        className="hidden gap-4 peer-checked:grid md:grid md:grid-cols-2 lg:grid-cols-3"
       >
         {children}
       </div>
