@@ -67,7 +67,20 @@ jobs:
           path: test-output.txt
 
       - name: Audit production dependencies
-        run: pnpm audit:prod
+        id: dependency_audit
+        shell: bash
+        run: |
+          set -o pipefail
+          pnpm audit:prod 2>&1 | tee dependency-audit-output.txt
+
+      - name: Upload dependency audit diagnostics
+        if: failure() && steps.dependency_audit.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-audit-diagnostics
+          if-no-files-found: error
+          retention-days: 7
+          path: dependency-audit-output.txt
 
       - name: Production build
         run: pnpm build
