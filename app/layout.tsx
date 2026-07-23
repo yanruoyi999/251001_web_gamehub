@@ -13,6 +13,8 @@ import { getSiteBaseUrl } from '@/lib/seo';
 import { serializeJsonLd } from '@/lib/utils/json-ld';
 
 const siteBaseUrl = getSiteBaseUrl();
+const googleSiteVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION?.trim();
+const bingSiteVerification = process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION?.trim();
 const siteJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
@@ -39,6 +41,15 @@ export const metadata: Metadata = {
     'browser games',
     'mobile friendly games',
   ],
+  verification:
+    googleSiteVerification || bingSiteVerification
+      ? {
+          ...(googleSiteVerification ? { google: googleSiteVerification } : {}),
+          ...(bingSiteVerification
+            ? { other: { 'msvalidate.01': bingSiteVerification } }
+            : {}),
+        }
+      : undefined,
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },
