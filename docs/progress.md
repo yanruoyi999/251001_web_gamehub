@@ -1834,3 +1834,14 @@
 - 浏览器验证：本地 production build 在禁用 JavaScript 的 390x844 视口中，菜单与筛选首击立即展开，Close/Hide 状态正确；启用 JavaScript 后 hydration 前后均保持展开，0 page/console error。1280px 桌面筛选保持可见，桌面与移动均无横向溢出。自动化采样继续使用 T-152 隔离器，不写入 GA4、Clarity 或 Vercel telemetry。
 - SEO 与内容边界：正式域核心页面、robots、198 URL sitemap、canonical、health、search 均健康；低分页面仍不在索引面，没有恢复索引或新增薄页。`google snake mods` 1/114 只列 P2 观察，待固定 GSC 窗口与内容证据后再优化。
 - 发布闭环：安全补丁已随 `4160d6e` 上线；移动交互修复提交 `71b8e50` 已 rebase 到该基线并推送 GitHub `main`，GitHub Actions `30013962951` success。Vercel Production `dpl_APeZRxLNTc6YMLTME8hkPdSNTgsU` Ready、元数据绑定同一 SHA，`lumagamehub.com` 与 `www.lumagamehub.com` 已接管。生产禁用 JavaScript 回归验证菜单与筛选首击通过；启用 JavaScript 的移动/桌面验证无溢出、0 page/console error、遥测 finished=0。核心页面、robots、198 URL sitemap、canonical/noindex、health、search 均通过，Vercel 最近 30 分钟无 runtime error。未改 GA4/GSC/Clarity/Typeform 后台、提交 sitemap 或重新授权；下一轮继续观察固定完整日 GA4、Clarity bots/dead/quick 和控件级证据，不盲目扩张游戏数量。
+
+### T-155 PostCSS security patch and current monitoring recheck
+
+- 最新巡检信号：2026-07-27 02:00 报告没有付款、隐私、交付或客户投诉 P0；GA4 固定窗口仍因 readonly ADC revoked/expired 为 `未获取到 / Blocked`。GSC current 28d 为 93 clicks / 约 4.37K impressions，Clarity current 3d 为 16 个非 bot sessions、排除 77 bots、dead 3、rage/quick back/JS error 均为 0。滚动窗口和聚合 dead 值不能直接作为代码根因。
+- P0 安全根因：本轮实时 `pnpm audit:prod` 在生产基线 PostCSS 8.5.10 新命中 2 个 high，分别涉及攻击者控制 source map 注释时的任意文件读取/信息泄露和 previous source map 路径穿越。直接根因是 pnpm override 把 Next.js、Tailwind 和相关工具链统一固定在漏洞版本。
+- 本地修复：`package.json` 将 PostCSS 直接依赖和 override 升级到 8.5.23，`pnpm-lock.yaml` 将全部解析路径统一到 8.5.23，并随上游依赖更新 Nano ID 到 3.3.16。修复后 `pnpm audit:prod` 返回 `No known vulnerabilities found`，`pnpm list postcss --depth 4` 确认无旧版本残留。
+- 页面与数据核验：Vercel 当前 Production、GitHub `main` 与本地修复前基线均为 `3cc63a9`，最近 24 小时无 runtime error；生产 Next.js 仍为 15.5.21。Google Admin/Data/GSC API 实测均为 403 insufficient scopes，未用旧数据回填。Google Snake Mods 的维护方链接和 Loader GitHub 均 HTTP 200；桌面与 390px 下主链接、标准 Snake 入口、canonical、反馈按钮布局和无横向溢出均通过，当前没有控件级 dead-click 根因，因此未改页面内容或交互。
+- SEO 与质量边界：静态评分 251 rows / 94 indexable / 157 under-80 / 0 indexable under-80；生产 robots 仅屏蔽 admin/API，sitemap 为 198 个唯一 URL并包含 Google Snake Mods，抽样低分 tag 继续 `noindex, follow` 且不在 sitemap。`google snake mods` 217 impressions / 3 clicks 缺固定 query-to-page 和 Keep/Reject 证据，本轮不改标题、索引策略或新增 URL。
+- 验证结果：内链检查通过；type-check 通过；Vitest 38 files / 119 tests 全通过；lint 0 errors / 98 个既有 warnings；Next.js 15.5.21 production build 生成 124/124 静态页并修正 32/32 英文 HTML。禁用 JavaScript 的移动 disclosure E2E 1 passed。本地 10 页移动 runtime 全部 80+、最低 88，生产 10 页全部 100；游戏 Play/iframe/fullscreen、桌面/移动无溢出均通过。
+- 发布边界：当前仅本地修复完成，未 commit、push、部署、提交 GSC sitemap、改分析后台或重新授权。生产在新部署前仍使用 PostCSS 8.5.10，必须写“等待部署/生产复审”，不能声称线上已修复。
+- 下一步：经确认发布后复查生产依赖审计、Vercel SHA/alias、核心页面、robots、198 URL sitemap、canonical/noindex 和移动 runtime；OAuth 恢复后再看固定完整日 GA4。Clarity 只在取得页面/控件级直接证据时修复；GSC 先完成现有 Google Snake Mods 页的 query-to-page/CTR/position 判断，继续优先加深已有曝光页，不扩张薄游戏数量。
