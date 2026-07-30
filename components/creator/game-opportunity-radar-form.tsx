@@ -73,7 +73,7 @@ export function GameOpportunityRadarForm({ locale }: GameOpportunityRadarFormPro
     if (hasTrackedPersonalizedResult.current) return;
 
     hasTrackedPersonalizedResult.current = true;
-    trackInteraction('game_opportunity_radar_result_personalized', {
+    trackInteraction('game_radar_result_personalized', {
       source: 'game_opportunity_radar',
       locale,
     });
@@ -90,7 +90,7 @@ export function GameOpportunityRadarForm({ locale }: GameOpportunityRadarFormPro
       const href = link.getAttribute('href') ?? '';
       if (!href.includes('Game%20Opportunity%20Radar')) return;
 
-      trackInteraction('game_opportunity_radar_report_intent_clicked', {
+      trackInteraction('game_radar_report_intent_clicked', {
         source: 'game_opportunity_radar',
         locale,
       });
