@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import * as React from 'react';
 
 import type { Locale } from '@/i18n/config';
 import {
@@ -54,13 +54,13 @@ const copy = {
 
 export function GameOpportunityRadarForm({ locale }: GameOpportunityRadarFormProps) {
   const text = copy[locale];
-  const [platform, setPlatform] = useState<GameOpportunityPlatform>('browser');
-  const [team, setTeam] = useState<GameOpportunityTeam>('solo');
-  const [budget, setBudget] = useState<GameOpportunityBudget>('lean');
-  const [timeline, setTimeline] = useState<GameOpportunityTimeline>('60d');
-  const [genre, setGenre] = useState<GameOpportunityGenre>('roguelike');
+  const [platform, setPlatform] = React.useState<GameOpportunityPlatform>('browser');
+  const [team, setTeam] = React.useState<GameOpportunityTeam>('solo');
+  const [budget, setBudget] = React.useState<GameOpportunityBudget>('lean');
+  const [timeline, setTimeline] = React.useState<GameOpportunityTimeline>('60d');
+  const [genre, setGenre] = React.useState<GameOpportunityGenre>('roguelike');
 
-  const result = useMemo(
+  const result = React.useMemo(
     () =>
       evaluateGameOpportunity(
         {
