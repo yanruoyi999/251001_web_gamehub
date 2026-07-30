@@ -14,7 +14,7 @@ describe('GameOpportunityRadarForm', () => {
     expect(html).toContain('Platform');
     expect(html).toContain('Browser / HTML5');
     expect(html).toContain('not a revenue forecast');
-    expect(html).toContain('Nothing you select is sent to a server');
+    expect(html).toContain('not sent to a server');
   });
 
   it('renders the Chinese evaluator and local-only privacy note', () => {
