@@ -70,6 +70,14 @@ export default async function GuidesPage({ params }: GuidesPageProps) {
       : 'From lower-interruption picks to mobile browser candidates, these guides organize games by real play scenarios. Check the device notes, choose a theme, and start playing.';
   const extraGuides = [
     {
+      href: getLocalizedPath(locale, '/guides/game-opportunity-radar'),
+      title: locale === 'zh' ? '游戏机会雷达：MVP 可行性初筛' : 'Game Opportunity Radar: MVP Feasibility',
+      summary:
+        locale === 'zh'
+          ? '面向独立开发者和小团队，根据平台、预算、周期与玩法复杂度，初筛首版范围、验证方式和主要风险。'
+          : 'A creator tool for indie developers and small teams to screen first-release scope, validation steps, and delivery risks from real constraints.',
+    },
+    {
       href: getLocalizedPath(locale, '/guides/keyboard-only-browser-games'),
       title: locale === 'zh' ? '只用键盘玩的浏览器小游戏' : 'Keyboard-Only Browser Games',
       summary:
