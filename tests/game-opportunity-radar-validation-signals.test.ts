@@ -17,13 +17,26 @@ describe('Game Opportunity Radar validation signals', () => {
     expect(source).toContain('Updated for your choices');
   });
 
-  it('records one personalized-result signal and report-intent clicks without sending selections', () => {
+  it('records GA4-compatible validation events without sending user selections', () => {
     const source = readFileSync(formPath, 'utf8');
+    const eventNames = Array.from(
+      source.matchAll(/trackInteraction\('([^']+)'/g),
+      (match) => match[1],
+    );
+    const personalizedProperties =
+      source.match(
+        /trackInteraction\('game_radar_result_personalized',\s*\{([\s\S]*?)\}\);/,
+      )?.[1] ?? '';
 
-    expect(source).toContain('game_opportunity_radar_result_personalized');
-    expect(source).toContain('game_opportunity_radar_report_intent_clicked');
-    expect(source).toContain("mailto:dev@lumagamehub.com");
+    expect(eventNames).toContain('game_radar_result_personalized');
+    expect(eventNames).toContain('game_radar_report_intent_clicked');
+    expect(eventNames.every((eventName) => eventName.length <= 40)).toBe(true);
+    expect(source).toContain('mailto:dev@lumagamehub.com');
     expect(source).toContain("source: 'game_opportunity_radar'");
-    expect(source).not.toContain('trackInteraction(\n        \'game_opportunity_radar_result_personalized\',\n        { platform');
+    expect(personalizedProperties).not.toContain('platform');
+    expect(personalizedProperties).not.toContain('team');
+    expect(personalizedProperties).not.toContain('budget');
+    expect(personalizedProperties).not.toContain('timeline');
+    expect(personalizedProperties).not.toContain('genre');
   });
 });
