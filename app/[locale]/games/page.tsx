@@ -323,6 +323,19 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
     favorite: t('actions.favorite'),
     unfavorite: t('actions.unfavorite'),
   };
+  const lumaOriginalCopy = locale === 'zh'
+    ? {
+        badge: 'Luma 原创互动游戏',
+        title: '花光比尔·盖茨的钱',
+        description: '拿到固定的1000亿美元，购买私人飞机、球队、医院和太空计划，看看你会成为哪种亿万富翁。',
+        action: '开始花钱',
+      }
+    : {
+        badge: 'Luma Original',
+        title: 'Spend Bill Gates Money',
+        description: 'Start with a fixed $100 billion, buy jets, teams, hospitals, and a space program, then discover your billionaire identity.',
+        action: 'Start spending',
+      };
   const hasAdvancedFilters = Boolean(
     categoryId || tagId || showNew || showHot || showFeatured || sortBy,
   );
@@ -483,6 +496,28 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
               </Link>
             </div>
           </form>
+        </CardContent>
+      </Card>
+
+      <Card className="mb-8 overflow-hidden border-primary/30 bg-gradient-to-r from-slate-950 to-slate-900 text-white">
+        <CardContent className="flex flex-col gap-5 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+          <div className="max-w-3xl">
+            <span className="inline-flex rounded-full border border-amber-300/40 bg-amber-300/10 px-3 py-1 text-xs font-bold uppercase tracking-wide text-amber-200">
+              {lumaOriginalCopy.badge}
+            </span>
+            <h2 className="mt-4 text-2xl font-black sm:text-3xl">
+              {lumaOriginalCopy.title}
+            </h2>
+            <p className="mt-3 leading-7 text-slate-300">
+              {lumaOriginalCopy.description}
+            </p>
+          </div>
+          <Link
+            href={getLocalizedPath(locale, '/games/spend-bill-gates-money')}
+            className="inline-flex min-h-11 flex-shrink-0 items-center justify-center rounded-xl bg-amber-300 px-5 py-3 font-black text-slate-950 transition hover:bg-amber-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-100"
+          >
+            {lumaOriginalCopy.action} →
+          </Link>
         </CardContent>
       </Card>
 
