@@ -4,6 +4,13 @@ on:
   push:
     branches:
       - audit/bing-seo-meta-fix-20260803
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
 
 permissions:
   contents: write
