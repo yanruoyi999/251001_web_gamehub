@@ -12,7 +12,7 @@ const shareSheetPath = path.join(
 );
 
 describe('SpendBillGatesMoneyGame client component', () => {
-  it('implements the bilingual mobile-first game contract', () => {
+  it('implements reversible quantities, persistent HUD, and channel sharing', () => {
     expect(existsSync(componentPath)).toBe(true);
     if (!existsSync(componentPath)) return;
 
@@ -22,18 +22,26 @@ describe('SpendBillGatesMoneyGame client component', () => {
     expect(source).toContain('SpendBillGatesMoneyGame');
     expect(source).toContain('START SPENDING');
     expect(source).toContain('开始花钱');
-    expect(source).toContain('sticky top-16 z-40');
+    expect(source).toContain('fixed left-0 right-0 top-16 z-40');
+    expect(source).not.toContain('sticky top-16 z-40');
+    expect(source).toContain('data-testid="billionaire-hud"');
+    expect(source).toContain('data-testid="billionaire-hud-spacer"');
+    expect(source).toContain('data-testid="billionaire-hud-finish"');
+    expect(source).toContain('data-testid={`remove-${product.id}`}');
+    expect(source).toContain('data-testid={`quantity-${product.id}`}');
+    expect(source).toContain('decrementPurchase');
+    expect(source).toContain('SpendBillGatesMoneyShareSheet');
+    expect(source).toContain('billionaire_share_open');
+    expect(source).toContain('billionaire_product_remove');
+    expect(source).toContain('billionaire_share_click');
     expect(source).toContain('md:grid-cols-3');
     expect(source).toContain('motion-reduce:animate-none');
     expect(source).toContain('aria-live="polite"');
     expect(source).toContain("product.feedback === 'epic'");
     expect(source).toContain("product.feedback === 'legendary'");
-    expect(source).toContain('navigator.share');
-    expect(source).toContain('navigator.clipboard.writeText');
     expect(source).toContain("trackInteraction('billionaire_game_start'");
     expect(source).toContain("trackInteraction('billionaire_product_buy'");
     expect(source).toContain("trackInteraction('billionaire_game_finish'");
-    expect(source).toContain("trackInteraction('billionaire_share_click'");
     expect(source).toContain("trackInteraction('billionaire_game_restart'");
     expect(source).toContain('PLAY AGAIN');
     expect(source).toContain('再玩一次');
