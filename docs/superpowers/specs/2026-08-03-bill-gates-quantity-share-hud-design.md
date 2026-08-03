@@ -32,7 +32,11 @@
 - 移除商品只显示轻量退款 Toast，不触发 Epic 全屏反馈。
 - 新增低基数事件 `billionaire_product_remove`，字段限制与购买事件一致。
 
-纯逻辑新增：
+纯逻辑由独立模块提供，避免继续扩大原商品规则文件：
+
+```text
+lib/games/spend-bill-gates-money-purchases.ts
+```
 
 ```ts
 decrementPurchase(purchases: Purchase[], productId: string): Purchase[]
@@ -123,13 +127,13 @@ x, telegram, whatsapp, facebook, wechat, weibo, qq, system, clipboard, manual
 
 新增：
 
+- `lib/games/spend-bill-gates-money-purchases.ts`：不可变的减少数量与移除购买纯函数。
 - `lib/games/spend-bill-gates-money-share.ts`：渠道排序、分享 URL 构造和类型。
 - `components/game/spend-bill-gates-money-share-sheet.tsx`：可访问的双语分享 Sheet/Dialog。
 - `tests/spend-bill-gates-money-share.test.ts`：分享 URL 与渠道排序。
 
 修改：
 
-- `lib/games/spend-bill-gates-money.ts`：减少数量纯函数。
 - `components/game/spend-bill-gates-money-game.tsx`：加减控制、固定 HUD、分享弹窗接入。
 - `tests/spend-bill-gates-money-data.test.ts`：退款与移除规则。
 - `tests/spend-bill-gates-money-game.test.ts`：静态 UI 契约。
