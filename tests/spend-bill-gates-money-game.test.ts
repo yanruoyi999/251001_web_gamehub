@@ -59,6 +59,8 @@ describe('SpendBillGatesMoneyGame client component', () => {
     expect(source).toContain('aria-modal="true"');
     expect(source).toContain('getShareChannels(locale)');
     expect(source).toContain("event.key === 'Escape'");
+    expect(source).toContain("event.key === 'Tab'");
+    expect(source).toContain('dialogRef');
     expect(source).toContain('previouslyFocusedRef');
     expect(source).toContain('navigator.share');
     expect(source).toContain('navigator.clipboard.writeText');
