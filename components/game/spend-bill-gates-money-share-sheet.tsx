@@ -53,6 +53,15 @@ const copy = {
   },
 } as const;
 
+const FOCUSABLE_SELECTOR = [
+  'button:not([disabled])',
+  '[href]',
+  'input:not([disabled])',
+  'select:not([disabled])',
+  'textarea:not([disabled])',
+  '[tabindex]:not([tabindex="-1"])',
+].join(',');
+
 function isShareAbort(error: unknown): boolean {
   return error instanceof DOMException && error.name === 'AbortError';
 }
@@ -72,6 +81,7 @@ export function SpendBillGatesMoneyShareSheet({
 }: SpendBillGatesMoneyShareSheetProps) {
   const text = copy[locale];
   const channels = getShareChannels(locale);
+  const dialogRef = React.useRef<HTMLElement | null>(null);
   const closeButtonRef = React.useRef<HTMLButtonElement | null>(null);
   const previouslyFocusedRef = React.useRef<HTMLElement | null>(null);
   const [status, setStatus] = React.useState<string | null>(null);
@@ -93,6 +103,34 @@ export function SpendBillGatesMoneyShareSheet({
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         onClose();
+        return;
+      }
+
+      if (event.key === 'Tab') {
+        const dialog = dialogRef.current;
+        if (!dialog) return;
+
+        const focusableElements = Array.from(
+          dialog.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR),
+        ).filter((element) => element.getClientRects().length > 0);
+        if (focusableElements.length === 0) return;
+
+        const first = focusableElements[0];
+        const last = focusableElements[focusableElements.length - 1];
+        const active = document.activeElement;
+        const activeInsideDialog =
+          active instanceof Node && dialog.contains(active);
+
+        if (event.shiftKey && (active === first || !activeInsideDialog)) {
+          event.preventDefault();
+          last.focus();
+          return;
+        }
+
+        if (!event.shiftKey && active === last) {
+          event.preventDefault();
+          first.focus();
+        }
       }
     };
 
@@ -235,6 +273,7 @@ export function SpendBillGatesMoneyShareSheet({
       }}
     >
       <section
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby="billionaire-share-title"
