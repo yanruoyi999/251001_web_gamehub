@@ -44,20 +44,48 @@ jobs:
       - name: Apply deterministic source patch
         run: python3 scripts/apply-bing-seo-fix.py
 
-      - name: Include out-of-tree unit regressions
+      - name: Repair test harness coverage
         shell: bash
         run: |
           set -euo pipefail
           python3 - <<'PY'
           from pathlib import Path
 
-          path = Path('vitest.config.mts')
-          text = path.read_text(encoding='utf-8')
-          old = "include: ['tests/**/*.test.ts'],"
-          new = "include: ['tests/**/*.test.ts', 'lib/**/*.test.ts'],"
-          if old not in text:
+          vitest_path = Path('vitest.config.mts')
+          vitest_text = vitest_path.read_text(encoding='utf-8')
+          vitest_old = "include: ['tests/**/*.test.ts'],"
+          vitest_new = "include: ['tests/**/*.test.ts', 'lib/**/*.test.ts'],"
+          if vitest_old not in vitest_text:
               raise SystemExit('Expected Vitest include pattern was not found')
-          path.write_text(text.replace(old, new, 1), encoding='utf-8')
+          vitest_path.write_text(vitest_text.replace(vitest_old, vitest_new, 1), encoding='utf-8')
+
+          playwright_path = Path('playwright.config.ts')
+          playwright_text = playwright_path.read_text(encoding='utf-8')
+          import_block = "import { defineConfig, devices } from '@playwright/test';\n\n"
+          replacement_import = (
+              "import { defineConfig, devices } from '@playwright/test';\n\n"
+              "const isCi = Boolean(process.env.CI);\n\n"
+          )
+          if import_block not in playwright_text:
+              raise SystemExit('Expected Playwright import block was not found')
+          playwright_text = playwright_text.replace(import_block, replacement_import, 1)
+          config_marker = "  retries: 0,\n  use: {"
+          config_replacement = (
+              "  retries: 0,\n"
+              "  webServer: {\n"
+              "    command: isCi ? 'pnpm start' : 'pnpm dev',\n"
+              "    url: 'http://localhost:3000/en',\n"
+              "    reuseExistingServer: !isCi,\n"
+              "    timeout: 120_000,\n"
+              "  },\n"
+              "  use: {"
+          )
+          if config_marker not in playwright_text:
+              raise SystemExit('Expected Playwright config marker was not found')
+          playwright_path.write_text(
+              playwright_text.replace(config_marker, config_replacement, 1),
+              encoding='utf-8',
+          )
           PY
 
       - name: Validate patch whitespace
