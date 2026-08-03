@@ -71,7 +71,9 @@ test.describe('Spend Bill Gates Money mobile upgrade flow', () => {
 
     await page.getByTestId('billionaire-share').click();
     const dialog = page.getByTestId('billionaire-share-dialog');
+    const closeButton = page.getByTestId('billionaire-share-close');
     await expect(dialog).toBeVisible();
+    await expect(closeButton).toBeFocused();
 
     const channelOrder = await dialog
       .locator('[data-testid^="share-channel-"]')
@@ -84,6 +86,11 @@ test.describe('Spend Bill Gates Money mobile upgrade flow', () => {
       'share-channel-whatsapp',
       'share-channel-facebook',
     ]);
+
+    await page.keyboard.press('Shift+Tab');
+    await expect(page.getByTestId('share-channel-copy')).toBeFocused();
+    await page.keyboard.press('Tab');
+    await expect(closeButton).toBeFocused();
 
     await page.getByTestId('share-channel-telegram').click();
     const opened = await page.evaluate(
