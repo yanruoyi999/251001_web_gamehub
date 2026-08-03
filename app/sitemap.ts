@@ -22,12 +22,7 @@ import {
 export const dynamic = 'force-dynamic';
 
 const SITEMAP_DB_TIMEOUT_MS = 2000;
-const standaloneGamePaths: Array<{
-  path: string;
-  changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'];
-  priority: number;
-  lastModified?: Date;
-}> = [
+const standaloneGamePaths = [
   {
     path: '/games/monster-survivors',
     changeFrequency: 'monthly',
@@ -44,7 +39,12 @@ const standaloneGamePaths: Array<{
     priority: 0.75,
     lastModified: new Date(SPEND_BILL_GATES_MONEY_UPDATED_AT),
   },
-];
+] satisfies Array<{
+  path: string;
+  changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'];
+  priority: number;
+  lastModified?: Date;
+}>;
 
 interface SitemapGameEntry {
   slug: string;
