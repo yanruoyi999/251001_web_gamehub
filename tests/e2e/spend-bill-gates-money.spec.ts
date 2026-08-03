@@ -1,7 +1,10 @@
 import { expect, test } from './fixtures';
 
 test.describe('Spend Bill Gates Money mobile flow', () => {
-  test.use({ viewport: { width: 375, height: 812 } });
+  test.use({
+    viewport: { width: 375, height: 812 },
+    reducedMotion: 'reduce',
+  });
 
   test('starts, buys each feedback tier, finishes, and restarts without overflow', async ({
     page,
