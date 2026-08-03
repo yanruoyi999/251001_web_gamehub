@@ -271,7 +271,10 @@ export function SpendBillGatesMoneyGame({
         });
         recordShare('web_share');
         return;
-      } catch {
+      } catch (error) {
+        if (error instanceof DOMException && error.name === 'AbortError') {
+          return;
+        }
         await copyShareText(shareText, url);
         return;
       }
@@ -365,7 +368,7 @@ export function SpendBillGatesMoneyGame({
 
           <div aria-live="polite" aria-atomic="true">
             {feedback && feedback.level !== 'epic' ? (
-              <div className="fixed left-4 right-4 top-20 z-[70] mx-auto max-w-md rounded-2xl border border-amber-200/30 bg-slate-900 px-5 py-4 text-center shadow-2xl motion-safe:animate-in motion-safe:slide-in-from-top-3">
+              <div className="fixed left-4 right-4 top-32 z-[70] mx-auto max-w-md rounded-2xl border border-amber-200/30 bg-slate-900 px-5 py-4 text-center shadow-2xl motion-safe:animate-in motion-safe:slide-in-from-top-3">
                 <p className="text-2xl" aria-hidden="true">
                   {feedback.product.emoji}
                 </p>
