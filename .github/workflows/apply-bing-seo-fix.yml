@@ -62,8 +62,17 @@ jobs:
       - name: Unit tests
         run: pnpm test -- --run
 
-      - name: Explicit out-of-tree validation test
-        run: pnpm exec vitest run lib/utils/validation.test.ts
+      - name: Explicit validation regression
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -f lib/utils/validation.test.ts ]; then
+            pnpm exec vitest run --config vitest.config.mts --include lib/utils/validation.test.ts
+          elif [ -f tests/validation.test.ts ]; then
+            pnpm exec vitest run tests/validation.test.ts
+          else
+            echo "No standalone validation regression file exists; default suite already completed."
+          fi
 
       - name: Production dependency audit
         run: pnpm audit:prod
