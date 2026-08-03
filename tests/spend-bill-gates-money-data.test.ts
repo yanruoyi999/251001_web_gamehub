@@ -11,6 +11,7 @@ import {
   getSpentBucket,
   upsertPurchase,
 } from '@/lib/games/spend-bill-gates-money';
+import { decrementPurchase } from '@/lib/games/spend-bill-gates-money-purchases';
 
 describe('Spend Bill Gates Money product data', () => {
   it('defines 15 valid bilingual products with unique ids', () => {
@@ -68,6 +69,44 @@ describe('Spend Bill Gates Money rules', () => {
     expect(upsertPurchase([], 'private-island')).toEqual([
       { productId: 'private-island', count: 1 },
     ]);
+  });
+
+  it('decrements repeated purchases, removes zero counts, and never mutates input', () => {
+    const original = [
+      { productId: 'private-jet', count: 2 },
+      { productId: 'super-yacht', count: 1 },
+    ];
+
+    const decremented = decrementPurchase(original, 'private-jet');
+    expect(decremented).toEqual([
+      { productId: 'private-jet', count: 1 },
+      { productId: 'super-yacht', count: 1 },
+    ]);
+    expect(original).toEqual([
+      { productId: 'private-jet', count: 2 },
+      { productId: 'super-yacht', count: 1 },
+    ]);
+
+    expect(decrementPurchase(decremented, 'private-jet')).toEqual([
+      { productId: 'super-yacht', count: 1 },
+    ]);
+    expect(decrementPurchase([], 'private-jet')).toEqual([]);
+    expect(decrementPurchase(original, 'unknown-product')).toEqual(original);
+  });
+
+  it('restores one product price after a buy-buy-remove sequence', () => {
+    const boughtTwice = upsertPurchase(
+      upsertPurchase([], 'private-jet'),
+      'private-jet',
+    );
+    expect(calculateRemainingWealth(boughtTwice)).toBe(
+      INITIAL_WEALTH - 150_000_000,
+    );
+
+    const removedOnce = decrementPurchase(boughtTwice, 'private-jet');
+    expect(calculateRemainingWealth(removedOnce)).toBe(
+      INITIAL_WEALTH - 75_000_000,
+    );
   });
 
   it('calculates remaining wealth using integer prices and never returns a negative value', () => {

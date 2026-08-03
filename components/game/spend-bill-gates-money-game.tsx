@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 
+import { SpendBillGatesMoneyShareSheet } from '@/components/game/spend-bill-gates-money-share-sheet';
 import { trackInteraction } from '@/lib/analytics/events';
 import {
   BILLIONAIRE_STYLE_COPY,
@@ -20,6 +21,8 @@ import {
   type Purchase,
   type SpendGameLocale,
 } from '@/lib/games/spend-bill-gates-money';
+import { decrementPurchase } from '@/lib/games/spend-bill-gates-money-purchases';
+import type { ShareMethod } from '@/lib/games/spend-bill-gates-money-share';
 
 interface SpendBillGatesMoneyGameProps {
   locale: SpendGameLocale;
@@ -28,6 +31,7 @@ interface SpendBillGatesMoneyGameProps {
 interface FeedbackState {
   product: Product;
   level: FeedbackLevel;
+  action: 'buy' | 'remove';
 }
 
 const copy = {
@@ -37,30 +41,30 @@ const copy = {
     start: '开始花钱 💰',
     promise: '没有限制。没有后果。只有你的财富。',
     fortune: '你的财富',
-    remaining: '剩余财富',
-    spent: '已花费',
     products: '选择你想买的东西',
-    productsIntro: '可以买很多次，但余额不能低于零。',
-    buy: '购买',
+    productsIntro: '可以重复购买，也可以随时减掉并退回金额。',
+    buy: '增加一件',
+    remove: '减少一件',
     cannotAfford: '余额不足',
     bought: '已购买',
+    refunded: '已退回',
     epicPrefix: '你刚刚买下了',
     purchases: '你的购买记录',
     emptyPurchases: '还没有购买任何东西。',
     done: '我买完了',
+    viewResult: '查看结果',
     doneHint: '至少购买一件商品后才能生成结果。',
     identityTitle: '你的亿万富翁身份',
     totalSpent: '你一共花了',
     moneyLeft: '还剩',
     share: '分享结果',
-    shareSuccess: '结果已复制，可以粘贴分享。',
-    shareManual: '自动分享失败，请复制下面的内容：',
     playAgain: '再玩一次',
     resultLead: '我在 Luma Game Hub 的亿万富翁模拟器中花了',
     resultIdentity: '我的亿万富翁身份是',
     resultChallenge: '你会怎么花这 1000 亿美元？',
     units: '件商品',
     progressLabel: '剩余财富比例',
+    quantity: '数量',
   },
   en: {
     inherited: 'YOU JUST INHERITED',
@@ -68,30 +72,30 @@ const copy = {
     start: 'START SPENDING 💰',
     promise: 'No limits. No consequences. Just your fortune.',
     fortune: 'YOUR FORTUNE',
-    remaining: 'Money remaining',
-    spent: 'Spent',
     products: 'Choose what you want to buy',
-    productsIntro: 'Buy items more than once, but your balance can never go below zero.',
-    buy: 'BUY',
+    productsIntro: 'Buy items more than once, or remove one to get the money back.',
+    buy: 'Add one',
+    remove: 'Remove one',
     cannotAfford: 'Not enough money',
     bought: 'Purchased',
+    refunded: 'Refunded',
     epicPrefix: 'YOU JUST BOUGHT',
     purchases: 'YOUR PURCHASES',
     emptyPurchases: 'You have not bought anything yet.',
     done: "I'M DONE",
+    viewResult: 'VIEW RESULT',
     doneHint: 'Buy at least one item before generating your result.',
     identityTitle: 'YOUR BILLIONAIRE IDENTITY',
     totalSpent: 'You spent',
     moneyLeft: 'Money left',
     share: 'SHARE RESULT',
-    shareSuccess: 'Result copied. Paste it anywhere to share.',
-    shareManual: 'Automatic sharing failed. Copy this text:',
     playAgain: 'PLAY AGAIN',
     resultLead: 'I spent',
     resultIdentity: 'My billionaire identity is',
     resultChallenge: 'How would you spend $100 billion?',
     units: 'items',
     progressLabel: 'Fortune remaining',
+    quantity: 'Quantity',
   },
 } as const;
 
@@ -118,8 +122,8 @@ export function SpendBillGatesMoneyGame({
   const [purchases, setPurchases] = React.useState<Purchase[]>([]);
   const [finished, setFinished] = React.useState(false);
   const [feedback, setFeedback] = React.useState<FeedbackState | null>(null);
-  const [shareStatus, setShareStatus] = React.useState<string | null>(null);
-  const [shareFallback, setShareFallback] = React.useState<string | null>(null);
+  const [shareOpen, setShareOpen] = React.useState(false);
+  const [shareUrl, setShareUrl] = React.useState('');
   const purchasesRef = React.useRef<Purchase[]>([]);
   const feedbackTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -140,24 +144,31 @@ export function SpendBillGatesMoneyGame({
   );
   const identity = calculateBillionaireStyle(purchases);
   const identityCopy = BILLIONAIRE_STYLE_COPY[identity];
+  const identityLabel = getLocalizedText(identityCopy.label, locale);
+  const shareTitle =
+    locale === 'zh'
+      ? '花光比尔·盖茨的钱 - 亿万富翁模拟器'
+      : 'Spend Bill Gates Money - Billionaire Life Simulator';
 
-  const showFeedback = React.useCallback((product: Product) => {
-    if (feedbackTimerRef.current) {
-      clearTimeout(feedbackTimerRef.current);
-    }
+  const showFeedback = React.useCallback(
+    (product: Product, action: FeedbackState['action']) => {
+      if (feedbackTimerRef.current) {
+        clearTimeout(feedbackTimerRef.current);
+      }
 
-    setFeedback({ product, level: product.feedback });
-    feedbackTimerRef.current = setTimeout(() => {
-      setFeedback(null);
-      feedbackTimerRef.current = null;
-    }, 1500);
-  }, []);
+      setFeedback({ product, level: product.feedback, action });
+      feedbackTimerRef.current = setTimeout(() => {
+        setFeedback(null);
+        feedbackTimerRef.current = null;
+      }, 1500);
+    },
+    [],
+  );
 
   const handleStart = () => {
     setStarted(true);
     setFinished(false);
-    setShareStatus(null);
-    setShareFallback(null);
+    setShareOpen(false);
     trackInteraction('billionaire_game_start', {
       source: 'spend_bill_gates_money',
       locale,
@@ -180,11 +191,29 @@ export function SpendBillGatesMoneyGame({
     const updatedPurchases = upsertPurchase(currentPurchases, product.id);
     purchasesRef.current = updatedPurchases;
     setPurchases(updatedPurchases);
-    setShareStatus(null);
-    setShareFallback(null);
-    showFeedback(product);
+    showFeedback(product, 'buy');
 
     trackInteraction('billionaire_product_buy', {
+      source: 'spend_bill_gates_money',
+      locale,
+      product_id: product.id,
+      feedback_level: product.feedback,
+      purchase_count: countPurchasedUnits(updatedPurchases),
+    });
+  };
+
+  const handleRemove = (product: Product) => {
+    if (!started || finished) return;
+
+    const currentPurchases = purchasesRef.current;
+    if (getPurchaseCount(currentPurchases, product.id) <= 0) return;
+
+    const updatedPurchases = decrementPurchase(currentPurchases, product.id);
+    purchasesRef.current = updatedPurchases;
+    setPurchases(updatedPurchases);
+    showFeedback(product, 'remove');
+
+    trackInteraction('billionaire_product_remove', {
       source: 'spend_bill_gates_money',
       locale,
       product_id: product.id,
@@ -201,8 +230,7 @@ export function SpendBillGatesMoneyGame({
     const currentSpent = calculateTotalSpent(currentPurchases);
     setFinished(true);
     setFeedback(null);
-    setShareStatus(null);
-    setShareFallback(null);
+    setShareOpen(false);
 
     trackInteraction('billionaire_game_finish', {
       source: 'spend_bill_gates_money',
@@ -211,19 +239,24 @@ export function SpendBillGatesMoneyGame({
       purchase_count: countPurchasedUnits(currentPurchases),
       spent_bucket: getSpentBucket(currentSpent),
     });
+
+    window.requestAnimationFrame(() => {
+      document
+        .getElementById('billionaire-result')
+        ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
   };
 
   const buildShareText = React.useCallback(() => {
-    const styleLabel = getLocalizedText(identityCopy.label, locale);
     if (locale === 'zh') {
-      return `${text.resultLead} ${formatFullUsd(totalSpent, locale)}。${text.resultIdentity}「${styleLabel}」。${text.resultChallenge}`;
+      return `${text.resultLead} ${formatFullUsd(totalSpent, locale)}。${text.resultIdentity}「${identityLabel}」。${text.resultChallenge}`;
     }
 
-    return `${text.resultLead} ${formatFullUsd(totalSpent, locale)} in Luma Game Hub's billionaire simulator. ${text.resultIdentity} “${styleLabel}.” ${text.resultChallenge}`;
-  }, [identityCopy.label, locale, text, totalSpent]);
+    return `${text.resultLead} ${formatFullUsd(totalSpent, locale)} in Luma Game Hub's billionaire simulator. ${text.resultIdentity} “${identityLabel}.” ${text.resultChallenge}`;
+  }, [identityLabel, locale, text.resultChallenge, text.resultIdentity, text.resultLead, totalSpent]);
 
   const recordShare = React.useCallback(
-    (method: 'web_share' | 'clipboard' | 'manual') => {
+    (method: ShareMethod) => {
       trackInteraction('billionaire_share_click', {
         source: 'spend_bill_gates_money',
         locale,
@@ -232,55 +265,24 @@ export function SpendBillGatesMoneyGame({
         purchase_count: purchaseCount,
         spent_bucket: getSpentBucket(totalSpent),
       });
-    }, [identity, locale, purchaseCount, totalSpent],
+    },
+    [identity, locale, purchaseCount, totalSpent],
   );
 
-  const copyShareText = React.useCallback(
-    async (shareText: string, url: string) => {
-      const textWithUrl = `${shareText}\n${url}`;
-      try {
-        await navigator.clipboard.writeText(textWithUrl);
-        setShareFallback(null);
-        setShareStatus(text.shareSuccess);
-        recordShare('clipboard');
-        return true;
-      } catch {
-        setShareStatus(null);
-        setShareFallback(textWithUrl);
-        recordShare('manual');
-        return false;
-      }
-    }, [recordShare, text.shareSuccess],
-  );
+  const closeShare = React.useCallback(() => {
+    setShareOpen(false);
+  }, []);
 
-  const handleShare = async () => {
-    const shareText = buildShareText();
-    const url = window.location.href;
-    setShareStatus(null);
-    setShareFallback(null);
-
-    if (typeof navigator.share === 'function') {
-      try {
-        await navigator.share({
-          title:
-            locale === 'zh'
-              ? '花光比尔·盖茨的钱 - 亿万富翁模拟器'
-              : 'Spend Bill Gates Money - Billionaire Life Simulator',
-          text: shareText,
-          url,
-        });
-        recordShare('web_share');
-        return;
-      } catch (error) {
-        if (error instanceof DOMException && error.name === 'AbortError') {
-          return;
-        }
-        await copyShareText(shareText, url);
-        return;
-      }
-    }
-
-    await copyShareText(shareText, url);
+  const handleOpenShare = () => {
+    setShareUrl(`${window.location.origin}${window.location.pathname}`);
+    setShareOpen(true);
+    trackInteraction('billionaire_share_open', {
+      source: 'spend_bill_gates_money',
+      locale,
+      identity,
+      purchase_count: purchaseCount,
+      spent_bucket: getSpentBucket(totalSpent),
+    });
   };
 
   const handleRestart = () => {
@@ -289,8 +291,8 @@ export function SpendBillGatesMoneyGame({
     setStarted(false);
     setFinished(false);
     setFeedback(null);
-    setShareStatus(null);
-    setShareFallback(null);
+    setShareOpen(false);
+    setShareUrl('');
     if (feedbackTimerRef.current) {
       clearTimeout(feedbackTimerRef.current);
       feedbackTimerRef.current = null;
@@ -334,54 +336,86 @@ export function SpendBillGatesMoneyGame({
 
       {started ? (
         <div id="billionaire-game-area" className="scroll-mt-32 pb-16">
-          <div className="sticky top-16 z-40 border-y border-white/10 bg-slate-950/95 px-4 py-2 shadow-lg backdrop-blur sm:px-6">
-            <div className="mx-auto flex min-h-14 w-full max-w-6xl items-center gap-4">
-              <div className="min-w-0 flex-1">
-                <p className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-amber-300">
-                  {text.fortune}
-                </p>
-                <p className="truncate text-xl font-black [font-variant-numeric:tabular-nums] sm:text-2xl">
-                  💰 {formatCompactUsd(remaining, locale)}
-                </p>
-              </div>
-              <div className="w-28 sm:w-52">
-                <div className="mb-1 flex items-center justify-between text-[0.65rem] text-slate-400">
-                  <span>{text.progressLabel}</span>
-                  <span>{progress}%</span>
+          {!finished ? (
+            <>
+              <div
+                data-testid="billionaire-hud"
+                className="fixed left-0 right-0 top-16 z-40 border-y border-white/10 bg-slate-950/95 px-3 py-2 shadow-lg backdrop-blur sm:px-6"
+              >
+                <div className="mx-auto flex min-h-14 w-full max-w-6xl items-center gap-2 sm:gap-4">
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[0.6rem] font-bold uppercase tracking-[0.14em] text-amber-300 sm:text-[0.65rem] sm:tracking-[0.18em]">
+                      {text.fortune}
+                    </p>
+                    <p className="truncate text-lg font-black [font-variant-numeric:tabular-nums] sm:text-2xl">
+                      💰 {formatCompactUsd(remaining, locale)}
+                    </p>
+                  </div>
+                  <div className="w-20 flex-shrink-0 sm:w-48">
+                    <div className="mb-1 flex items-center justify-between text-[0.6rem] text-slate-400 sm:text-[0.65rem]">
+                      <span className="hidden sm:inline">{text.progressLabel}</span>
+                      <span>{progress}%</span>
+                    </div>
+                    <div
+                      className="h-2 overflow-hidden rounded-full bg-slate-800"
+                      role="progressbar"
+                      aria-label={text.progressLabel}
+                      aria-valuemin={0}
+                      aria-valuemax={100}
+                      aria-valuenow={progress}
+                    >
+                      <div
+                        className="h-full rounded-full bg-amber-300 transition-[width] duration-300 motion-reduce:transition-none"
+                        style={{ width: `${progress}%` }}
+                      />
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    data-testid="billionaire-hud-finish"
+                    onClick={handleFinish}
+                    disabled={purchases.length === 0}
+                    className="inline-flex min-h-11 flex-shrink-0 items-center justify-center rounded-xl bg-amber-300 px-3 text-xs font-black text-slate-950 transition hover:bg-amber-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-100 disabled:cursor-not-allowed disabled:bg-slate-700 disabled:text-slate-400 sm:px-5 sm:text-sm"
+                  >
+                    {text.viewResult}
+                  </button>
                 </div>
-                <div
-                  className="h-2 overflow-hidden rounded-full bg-slate-800"
-                  role="progressbar"
-                  aria-label={text.progressLabel}
-                  aria-valuemin={0}
-                  aria-valuemax={100}
-                  aria-valuenow={progress}
-                >
-                  <div
-                    className="h-full rounded-full bg-amber-300 transition-[width] duration-300 motion-reduce:transition-none"
-                    style={{ width: `${progress}%` }}
-                  />
-                </div>
               </div>
-            </div>
-          </div>
+              <div
+                data-testid="billionaire-hud-spacer"
+                className="h-[72px]"
+                aria-hidden="true"
+              />
+            </>
+          ) : null}
 
           <div aria-live="polite" aria-atomic="true">
-            {feedback && feedback.level !== 'epic' ? (
-              <div className="fixed left-4 right-4 top-32 z-[70] mx-auto max-w-md rounded-2xl border border-amber-200/30 bg-slate-900 px-5 py-4 text-center shadow-2xl motion-safe:animate-in motion-safe:slide-in-from-top-3">
+            {feedback &&
+            (feedback.action === 'remove' || feedback.level !== 'epic') ? (
+              <div
+                className={`fixed left-4 right-4 top-36 z-[70] mx-auto max-w-md rounded-2xl border px-5 py-4 text-center shadow-2xl motion-safe:animate-in motion-safe:slide-in-from-top-3 ${
+                  feedback.action === 'remove'
+                    ? 'border-emerald-200/30 bg-emerald-950'
+                    : 'border-amber-200/30 bg-slate-900'
+                }`}
+              >
                 <p className="text-2xl" aria-hidden="true">
                   {feedback.product.emoji}
                 </p>
                 <p className="mt-1 font-bold text-white">
-                  {feedback.level === 'legendary' && feedback.product.toast
-                    ? getLocalizedText(feedback.product.toast, locale)
-                    : `-${formatCompactUsd(feedback.product.price, locale)} · ${getLocalizedText(feedback.product.name, locale)} ${text.bought}`}
+                  {feedback.action === 'remove'
+                    ? `+${formatCompactUsd(feedback.product.price, locale)} · ${getLocalizedText(feedback.product.name, locale)} ${text.refunded}`
+                    : feedback.level === 'legendary' && feedback.product.toast
+                      ? getLocalizedText(feedback.product.toast, locale)
+                      : `-${formatCompactUsd(feedback.product.price, locale)} · ${getLocalizedText(feedback.product.name, locale)} ${text.bought}`}
                 </p>
               </div>
             ) : null}
           </div>
 
-          {feedback && feedback.product.feedback === 'epic' ? (
+          {feedback &&
+          feedback.action === 'buy' &&
+          feedback.product.feedback === 'epic' ? (
             <div
               className="pointer-events-none fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/75 px-6 text-center backdrop-blur-sm motion-safe:animate-in motion-safe:fade-in"
               aria-hidden="true"
@@ -411,6 +445,7 @@ export function SpendBillGatesMoneyGame({
                   const canAfford = remaining >= product.price;
                   const isEpic = product.feedback === 'epic';
                   const isLegendary = product.feedback === 'legendary';
+                  const productName = getLocalizedText(product.name, locale);
 
                   return (
                     <article
@@ -438,9 +473,7 @@ export function SpendBillGatesMoneyGame({
                           </span>
                         ) : null}
                       </div>
-                      <h3 className="mt-5 text-xl font-black">
-                        {getLocalizedText(product.name, locale)}
-                      </h3>
+                      <h3 className="mt-5 text-xl font-black">{productName}</h3>
                       <p className="mt-2 text-2xl font-black text-amber-300 [font-variant-numeric:tabular-nums]">
                         {formatCompactUsd(product.price, locale)}
                       </p>
@@ -448,21 +481,42 @@ export function SpendBillGatesMoneyGame({
                         {getLocalizedText(product.description, locale)}
                       </p>
                       <div className="mt-auto pt-6">
-                        {count > 0 ? (
-                          <p className="mb-2 text-sm font-semibold text-emerald-300">
-                            {text.bought}: ×{count}
+                        <div className="grid grid-cols-[44px_1fr_44px] items-center gap-2">
+                          <button
+                            type="button"
+                            data-testid={`remove-${product.id}`}
+                            onClick={() => handleRemove(product)}
+                            disabled={count === 0}
+                            title={`${text.remove}: ${productName}`}
+                            aria-label={`${text.remove}: ${productName}`}
+                            className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-xl border border-white/15 bg-white/5 text-xl font-black text-white transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/20 disabled:cursor-not-allowed disabled:text-slate-600"
+                          >
+                            −
+                          </button>
+                          <div
+                            data-testid={`quantity-${product.id}`}
+                            aria-label={`${text.quantity}: ${count}`}
+                            className="flex min-h-11 items-center justify-center rounded-xl border border-white/10 bg-slate-950/70 px-3 text-center font-black text-emerald-300 [font-variant-numeric:tabular-nums]"
+                          >
+                            ×{count}
+                          </div>
+                          <button
+                            type="button"
+                            data-testid={`buy-${product.id}`}
+                            onClick={() => handleBuy(product)}
+                            disabled={!canAfford}
+                            title={canAfford ? `${text.buy}: ${productName}` : text.cannotAfford}
+                            aria-label={canAfford ? `${text.buy}: ${productName}` : `${productName}: ${text.cannotAfford}`}
+                            className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-xl bg-white text-xl font-black text-slate-950 transition hover:bg-amber-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-200/40 disabled:cursor-not-allowed disabled:bg-slate-700 disabled:text-slate-400"
+                          >
+                            +
+                          </button>
+                        </div>
+                        {!canAfford ? (
+                          <p className="mt-2 text-center text-xs text-slate-500">
+                            {text.cannotAfford}
                           </p>
                         ) : null}
-                        <button
-                          type="button"
-                          data-testid={`buy-${product.id}`}
-                          onClick={() => handleBuy(product)}
-                          disabled={!canAfford}
-                          title={canAfford ? text.buy : text.cannotAfford}
-                          className="inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-white px-4 py-2.5 text-sm font-black text-slate-950 transition hover:bg-amber-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-200/40 disabled:cursor-not-allowed disabled:bg-slate-700 disabled:text-slate-400"
-                        >
-                          {canAfford ? text.buy : text.cannotAfford}
-                        </button>
                       </div>
                     </article>
                   );
@@ -518,7 +572,10 @@ export function SpendBillGatesMoneyGame({
               </section>
             </div>
           ) : (
-            <div className="mx-auto w-full max-w-4xl px-4 py-12 sm:px-6">
+            <div
+              id="billionaire-result"
+              className="scroll-mt-24 mx-auto w-full max-w-4xl px-4 py-12 sm:px-6"
+            >
               <section className="rounded-3xl border border-amber-300/30 bg-gradient-to-b from-slate-900 to-slate-950 p-6 text-center shadow-2xl sm:p-10">
                 <p className="text-sm font-black uppercase tracking-[0.2em] text-amber-300">
                   {text.identityTitle}
@@ -527,7 +584,7 @@ export function SpendBillGatesMoneyGame({
                   {identityCopy.emoji}
                 </p>
                 <h2 className="mt-4 text-3xl font-black sm:text-5xl">
-                  {getLocalizedText(identityCopy.label, locale)}
+                  {identityLabel}
                 </h2>
                 <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-slate-300">
                   {getLocalizedText(identityCopy.description, locale)}
@@ -576,7 +633,7 @@ export function SpendBillGatesMoneyGame({
                   <button
                     type="button"
                     data-testid="billionaire-share"
-                    onClick={handleShare}
+                    onClick={handleOpenShare}
                     className="inline-flex min-h-12 items-center justify-center rounded-xl bg-amber-300 px-7 py-3 font-black text-slate-950 transition hover:bg-amber-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-100"
                   >
                     {text.share}
@@ -590,35 +647,25 @@ export function SpendBillGatesMoneyGame({
                     {text.playAgain}
                   </button>
                 </div>
-
-                {shareStatus ? (
-                  <p className="mt-4 text-sm font-semibold text-emerald-300" role="status">
-                    {shareStatus}
-                  </p>
-                ) : null}
-                {shareFallback ? (
-                  <div className="mt-5 text-left">
-                    <label
-                      htmlFor="billionaire-share-fallback"
-                      className="mb-2 block text-sm font-semibold text-amber-200"
-                    >
-                      {text.shareManual}
-                    </label>
-                    <textarea
-                      id="billionaire-share-fallback"
-                      readOnly
-                      value={shareFallback}
-                      rows={5}
-                      onFocus={(event) => event.currentTarget.select()}
-                      className="w-full rounded-xl border border-white/15 bg-slate-950 p-3 text-sm leading-6 text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300"
-                    />
-                  </div>
-                ) : null}
               </section>
             </div>
           )}
         </div>
       ) : null}
+
+      <SpendBillGatesMoneyShareSheet
+        locale={locale}
+        open={shareOpen}
+        onClose={closeShare}
+        shareText={buildShareText()}
+        shareUrl={shareUrl}
+        shareTitle={shareTitle}
+        identityEmoji={identityCopy.emoji}
+        identityLabel={identityLabel}
+        totalSpentLabel={text.totalSpent}
+        totalSpentValue={formatFullUsd(totalSpent, locale)}
+        onShare={recordShare}
+      />
 
       <style jsx>{`
         @keyframes billionaire-breathe {
