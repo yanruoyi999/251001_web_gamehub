@@ -11,7 +11,12 @@ import {
   pickLocalizedLabel,
   shouldIndexTagEntry,
 } from '@/lib/game-taxonomy';
-import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES, buildAbsoluteUrl } from '@/lib/seo';
+import {
+  DEFAULT_OPEN_GRAPH_IMAGES,
+  DEFAULT_TWITTER_IMAGES,
+  buildAbsoluteUrl,
+  buildContextualMetaDescription,
+} from '@/lib/seo';
 import { serializeJsonLd } from '@/lib/utils/json-ld';
 
 interface TagPageProps {
@@ -42,10 +47,17 @@ export async function generateMetadata({ params }: TagPageProps): Promise<Metada
     locale === 'zh'
       ? `${label}小游戏合集 - Luma Game Hub`
       : `${label} Games Collection - Luma Game Hub`;
-  const description =
-    locale === 'zh'
-      ? `发现 ${entry.games.length} 款适合${label}的免费浏览器小游戏，直接在线游玩。`
-      : `Discover ${entry.games.length} free browser games tagged ${label}. Play instantly online.`;
+  const description = buildContextualMetaDescription({
+    fallback:
+      locale === 'zh'
+        ? `发现 ${entry.games.length} 款带有“${label}”标签的免费浏览器小游戏，可直接在线游玩。`
+        : `Discover ${entry.games.length} free browser games tagged “${label}” and play them online.`,
+    context:
+      locale === 'zh'
+        ? '页面同时展示相关游戏分类、操作与设备信息、免下载说明和详情页入口，方便按玩法特征继续筛选。'
+        : 'The collection also connects related categories, controls and device notes, no-download guidance, and detailed game pages for further filtering.',
+    locale,
+  });
   const canonical = getLocalizedPath(locale, `/games/tag/${entry.item.slug}`);
   const indexable = shouldIndexTagEntry(entry);
 

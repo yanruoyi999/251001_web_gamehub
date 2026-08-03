@@ -11,6 +11,53 @@ export const DEFAULT_OPEN_GRAPH_IMAGES = [
 ];
 export const DEFAULT_TWITTER_IMAGES = [DEFAULT_OG_IMAGE];
 
+export type SeoContentLocale = 'zh' | 'en';
+
+interface ContextualMetaDescriptionOptions {
+  description?: string | null;
+  fallback: string;
+  context: string;
+  locale: SeoContentLocale;
+  minLength?: number;
+}
+
+function collapseMetaWhitespace(value?: string | null) {
+  return value?.replace(/\s+/g, ' ').trim() ?? '';
+}
+
+/**
+ * Keeps strong existing copy intact and expands only descriptions that are too
+ * short to explain the page. The added context must be page-specific and must
+ * not contain invented rankings, traffic, ratings, or demand claims.
+ */
+export function buildContextualMetaDescription({
+  description,
+  fallback,
+  context,
+  locale,
+  minLength,
+}: ContextualMetaDescriptionOptions): string {
+  const base = collapseMetaWhitespace(description) || collapseMetaWhitespace(fallback);
+  const supplementalContext = collapseMetaWhitespace(context);
+  const minimum = minLength ?? (locale === 'zh' ? 70 : 120);
+
+  if (!base) {
+    return supplementalContext;
+  }
+
+  if (base.length >= minimum || !supplementalContext) {
+    return base;
+  }
+
+  if (locale === 'zh') {
+    const separator = /[。！？]$/.test(base) ? '' : '。';
+    return `${base}${separator}${supplementalContext}`;
+  }
+
+  const separator = /[.!?]$/.test(base) ? ' ' : '. ';
+  return `${base}${separator}${supplementalContext}`;
+}
+
 let cachedBaseUrl: string | null = null;
 let warnedAboutFallback = false;
 

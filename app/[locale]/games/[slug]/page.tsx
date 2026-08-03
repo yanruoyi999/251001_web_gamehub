@@ -21,7 +21,12 @@ import {
   shouldNoIndexGame,
   shouldPromoteGameInCollections,
 } from '@/lib/games/quality-policy';
-import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES, buildAbsoluteUrl } from '@/lib/seo';
+import {
+  DEFAULT_OPEN_GRAPH_IMAGES,
+  DEFAULT_TWITTER_IMAGES,
+  buildAbsoluteUrl,
+  buildContextualMetaDescription,
+} from '@/lib/seo';
 import { getLocalizedPath, locales } from '@/i18n/config';
 import { serializeJsonLd } from '@/lib/utils/json-ld';
 import { getCatalogueUiCapabilities, shouldUseCatalogueDatabase } from '@/lib/games/catalog-mode';
@@ -207,6 +212,18 @@ export async function generateMetadata({ params }: GamePageProps): Promise<Metad
   const title = resolveGameTitle(game, locale);
   const editorialContent = getGameEditorialContent(game.slug, locale);
   const description = editorialContent?.metaDescription ?? resolveGameDescription(game, locale);
+  const seoDescription = buildContextualMetaDescription({
+    description,
+    fallback:
+      locale === 'zh'
+        ? `在线游玩 ${title}，无需下载或安装，浏览器直接打开。`
+        : `Play ${title} online in your browser with no download or installation required.`,
+    context:
+      locale === 'zh'
+        ? '页面提供操作方法、核心玩法提示、键盘或触屏设备支持、加载与安全说明，以及同类型浏览器游戏和实用攻略推荐。'
+        : 'The page includes controls, practical tips, keyboard or touch device notes, loading and safe-play guidance, plus related browser games and useful guides.',
+    locale: locale === 'en' ? 'en' : 'zh',
+  });
   const metadataTitle =
     editorialContent?.metaTitle ??
     (locale === 'zh'
@@ -239,11 +256,7 @@ export async function generateMetadata({ params }: GamePageProps): Promise<Metad
 
   return {
     title: metadataTitle,
-    description:
-      description ||
-      (locale === 'zh'
-        ? `在线游玩 ${title}，无需下载，浏览器直接打开。`
-        : `Play ${title} online in your browser with no downloads required.`),
+    description: seoDescription,
     keywords:
       locale === 'zh'
         ? [title, '免费在线游戏', '浏览器游戏', '无需下载小游戏', ...taxonomyKeywords]
@@ -265,7 +278,7 @@ export async function generateMetadata({ params }: GamePageProps): Promise<Metad
       : undefined,
     openGraph: {
       title: metadataTitle,
-      description,
+      description: seoDescription,
       url: canonical,
       type: 'website',
       images: image ?? DEFAULT_OPEN_GRAPH_IMAGES,
@@ -273,7 +286,7 @@ export async function generateMetadata({ params }: GamePageProps): Promise<Metad
     twitter: {
       card: 'summary_large_image',
       title: metadataTitle,
-      description,
+      description: seoDescription,
       images: image?.map((item) => item.url) ?? DEFAULT_TWITTER_IMAGES,
     },
   };
