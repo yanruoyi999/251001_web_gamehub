@@ -1,14 +1,12 @@
 import { expect, test } from './fixtures';
 
 test.describe('Spend Bill Gates Money mobile flow', () => {
-  test.use({
-    viewport: { width: 375, height: 812 },
-    reducedMotion: 'reduce',
-  });
+  test.use({ viewport: { width: 375, height: 812 } });
 
   test('starts, buys each feedback tier, finishes, and restarts without overflow', async ({
     page,
   }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/en/games/spend-bill-gates-money');
 
     const startButton = page.getByTestId('billionaire-start');
