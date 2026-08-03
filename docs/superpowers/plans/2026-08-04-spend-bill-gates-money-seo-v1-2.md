@@ -68,16 +68,18 @@
 
 ### Task 7: Full verification, review, merge, and production follow-through
 
-- [ ] Run `pnpm lint`.
-- [ ] Run `pnpm type-check`.
-- [ ] Run `pnpm check:internal-links`.
-- [ ] Run `pnpm test`.
-- [ ] Run the production dependency audit.
-- [ ] Run `pnpm build`.
-- [ ] Run Chromium Playwright E2E.
-- [ ] Review the complete diff for scope, SEO, accessibility, and routing regressions.
+- [x] Run `pnpm lint` — 0 errors; 98 pre-existing warnings.
+- [x] Run `pnpm type-check`.
+- [x] Run `pnpm check:internal-links` — 29 guides, 200 game slugs, and 24 rendered page files passed.
+- [x] Run `pnpm test` — 51 files and 166 tests passed.
+- [x] Run the production dependency audit — no known vulnerabilities found.
+- [x] Run `pnpm build` — 128 static pages and the dynamic OG PNG route built successfully.
+- [x] Run Chromium Playwright E2E — 6 passed and 1 existing conditional skip.
+- [x] Review the complete diff for scope, SEO, accessibility, and routing regressions.
 - [ ] Mark PR #15 ready and squash merge to `main`.
 - [ ] Verify `251001-web-gamehub-rdg6` receives a READY production deployment.
 - [ ] Verify formal Chinese and English pages, robots, sitemap, key file, PNG response, contextual links, and mobile HUD.
 - [ ] Confirm the IndexNow workflow receives HTTP 200 or 202 for the changed URL batch.
 - [ ] Update the release record with exact final commit, merge, deployment, and notification evidence.
+
+**GREEN evidence:** implementation commit `25e002246e25670624ffd22d8b7b3493da95cdcf`, GitHub Actions Run `30839537095`, job `91772929190`.
