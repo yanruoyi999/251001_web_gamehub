@@ -6,7 +6,9 @@
 - Backup branch: `backup/main-before-bill-gates-seo-v1-2-20260804`
 - Starting `main`: `56f442dda4d2b3ecb2d9623d0643e7b1af3e5c5a`
 - Pull request: #15
+- Pull request state: ready, reviewed, and squash merged
 - Verified implementation head: `25e002246e25670624ffd22d8b7b3493da95cdcf`
+- Squash merge commit: `9fd0512a7dc3c05cc5a6f1e7face4fa814598a3a`
 - Formal-domain Vercel project: `251001-web-gamehub-rdg6`
 - Formal-domain Vercel project ID: `prj_2FOg6BtpI4CAsnfWUCrdIpdJQlWM`
 
@@ -49,14 +51,16 @@
 - Next.js production build: passed; 128 static pages generated, 34/34 English static HTML files patched, localized game pages generated, and `/og/spend-bill-gates-money` included.
 - Chromium Playwright: 6 passed and 1 existing conditional skip.
 
-## Final release evidence
+## Production release evidence
 
-- Pull request ready state: pending.
-- Squash merge commit: pending.
-- Formal-domain deployment ID and deployed commit: pending.
-- Formal Chinese and English HTTP/metadata/content verification: pending.
-- Formal OG PNG, robots, sitemap, key file, contextual-link, and mobile-HUD verification: pending.
-- IndexNow response and submitted URL count: pending.
+- Merge-to-main: completed at commit `9fd0512a7dc3c05cc5a6f1e7face4fa814598a3a`.
+- Immediate formal-domain Vercel build: blocked before build start by Hobby `api-deployments-free-per-day` / `build-rate-limit`.
+- Code compilation or runtime failure: none observed; the limit rejection occurred before the formal project entered a build.
+- Controlled retry: scheduled for 2026-08-05 00:25 Asia/Shanghai, after the expected quota-reset window, and restricted to the formal-domain project.
+- Formal-domain deployment ID and deployed commit: pending quota reset.
+- Formal Chinese and English HTTP/metadata/content verification: pending quota reset.
+- Formal OG PNG, robots, sitemap, key file, contextual-link, and mobile-HUD verification: pending quota reset.
+- IndexNow response and submitted URL count: pending formal-domain release.
 
 ## Known non-blocking warnings
 
