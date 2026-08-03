@@ -8,6 +8,7 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { ClarityConsent } from '@/components/analytics/ClarityConsent';
 import { TypeformFeedbackButton } from '@/components/feedback/TypeformFeedbackButton';
+import { SpendBillGatesMoneyContextLinks } from '@/components/seo/spend-bill-gates-money-context-links';
 
 interface LocaleLayoutProps {
   children: ReactNode;
@@ -73,6 +74,7 @@ export default async function LocaleLayout({
       <div className="flex min-h-screen flex-col bg-background text-foreground">
         <Header />
         <main className="flex-1">{children}</main>
+        <SpendBillGatesMoneyContextLinks />
         <Footer locale={typedLocale} />
         <ClarityConsent />
         <TypeformFeedbackButton locale={typedLocale} />
