@@ -36,3 +36,5 @@ jobs:
           git add -A
           git commit -m 'feat: expand billionaire game SEO and discovery'
           git push origin HEAD:feat/spend-bill-gates-money-seo-v1-2-20260804
+
+# This follow-up commit intentionally triggers the workflow after it exists on the branch.
