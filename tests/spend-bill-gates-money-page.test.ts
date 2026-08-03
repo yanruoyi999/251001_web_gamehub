@@ -26,7 +26,7 @@ describe('Spend Bill Gates Money independent route', () => {
     expect(source).toContain('not affiliated with or endorsed by Bill Gates');
     expect(source).toContain('与比尔·盖茨、微软或任何相关组织无关');
     expect(source).toContain("getLocalizedPath(locale, '/games')");
-    expect(source).toContain("getLocalizedPath(locale, '/guides/no-download-games')");
+    expect(source).toContain("href: '/guides/no-download-games'");
     expect(source).toContain('serializeJsonLd');
   });
 });
