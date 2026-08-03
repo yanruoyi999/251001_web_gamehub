@@ -10,7 +10,12 @@ import {
   getTagEntries,
   pickLocalizedLabel,
 } from '@/lib/game-taxonomy';
-import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES, buildAbsoluteUrl } from '@/lib/seo';
+import {
+  DEFAULT_OPEN_GRAPH_IMAGES,
+  DEFAULT_TWITTER_IMAGES,
+  buildAbsoluteUrl,
+  buildContextualMetaDescription,
+} from '@/lib/seo';
 import { serializeJsonLd } from '@/lib/utils/json-ld';
 
 interface CategoryPageProps {
@@ -41,10 +46,23 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
     locale === 'zh'
       ? `${label}小游戏 - 免费在线浏览器游戏`
       : `${label} Browser Games - Free Online Games`;
-  const description =
-    locale === 'zh'
-      ? `在 Luma Game Hub 浏览 ${entry.games.length} 款${label}小游戏，全部支持浏览器即开即玩，无需下载。`
-      : `Browse ${entry.games.length} curated ${label.toLowerCase()} browser games on Luma Game Hub. Play instantly without downloads.`;
+  const sourceDescription = pickLocalizedLabel(
+    locale,
+    entry.item.description,
+    entry.item.descriptionEn,
+  );
+  const description = buildContextualMetaDescription({
+    description: sourceDescription,
+    fallback:
+      locale === 'zh'
+        ? `在 Luma Game Hub 浏览 ${entry.games.length} 款${label}小游戏，全部支持浏览器即开即玩，无需下载。`
+        : `Browse ${entry.games.length} curated ${label.toLowerCase()} browser games on Luma Game Hub and play without downloads.`,
+    context:
+      locale === 'zh'
+        ? '可继续查看每款游戏的操作方式、设备适配、玩法标签、安全来源说明和相关专题，按真实游玩需求选择下一款游戏。'
+        : 'Compare controls, device support, play tags, source notes, and related guides so you can choose the next game for your actual play situation.',
+    locale,
+  });
   const canonical = getLocalizedPath(locale, `/games/category/${entry.item.slug}`);
 
   return {

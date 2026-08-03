@@ -7,6 +7,7 @@ import {
   DEFAULT_OPEN_GRAPH_IMAGES,
   DEFAULT_TWITTER_IMAGES,
   buildAbsoluteUrl,
+  buildContextualMetaDescription,
   getSiteBaseUrl,
 } from '@/lib/seo';
 import { serializeJsonLd } from '@/lib/utils/json-ld';
@@ -150,10 +151,19 @@ export async function generateMetadata({
   const locale: Locale = localeParam === 'en' ? 'en' : 'zh';
   const content = pageCopy[locale];
   const path = getLocalizedPath(locale, '/guides/game-opportunity-radar');
+  const description = buildContextualMetaDescription({
+    description: content.metaDescription,
+    fallback: content.subheading,
+    context:
+      locale === 'zh'
+        ? '评估结果同时解释首版范围、第一轮变现实验、主要交付风险和下一步应收集的真实验证证据。'
+        : 'The result also explains first-release scope, an initial monetization experiment, the main delivery risk, and the real evidence to collect next.',
+    locale,
+  });
 
   return {
     title: content.metaTitle,
-    description: content.metaDescription,
+    description,
     keywords:
       locale === 'zh'
         ? ['游戏机会分析', '游戏 MVP', '独立游戏创业', 'Roblox 游戏创意', 'KK 地图开发']
@@ -169,7 +179,7 @@ export async function generateMetadata({
     },
     openGraph: {
       title: content.metaTitle,
-      description: content.metaDescription,
+      description,
       url: path,
       type: 'website',
       images: DEFAULT_OPEN_GRAPH_IMAGES,
@@ -177,7 +187,7 @@ export async function generateMetadata({
     twitter: {
       card: 'summary_large_image',
       title: content.metaTitle,
-      description: content.metaDescription,
+      description,
       images: DEFAULT_TWITTER_IMAGES,
     },
   };

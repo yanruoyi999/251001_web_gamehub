@@ -23,6 +23,7 @@ import {
   DEFAULT_OPEN_GRAPH_IMAGES,
   DEFAULT_TWITTER_IMAGES,
   buildAbsoluteUrl,
+  buildContextualMetaDescription,
   getSiteBaseUrl,
 } from '@/lib/seo';
 import { serializeJsonLd } from '@/lib/utils/json-ld';
@@ -55,10 +56,19 @@ export async function generateMetadata({
   const locale = (localeParam as Locale) ?? 'zh';
   const content = page.locales[locale] ?? page.locales.zh;
   const basePath = getLocalizedPath(locale, `/guides/${page.slug}`);
+  const description = buildContextualMetaDescription({
+    description: content.metaDescription,
+    fallback: content.subheading,
+    context:
+      locale === 'zh'
+        ? '本页包含可执行的玩法或选择建议、常见问题、相关游戏与专题内链，并明确标注来源、安全边界和设备适配信息。'
+        : 'This guide includes actionable play or selection advice, FAQs, related games and internal guides, plus source, safety, and device-context notes.',
+    locale,
+  });
 
   return {
     title: content.metaTitle,
-    description: content.metaDescription,
+    description,
     keywords: page.keywords,
     alternates: {
       canonical: basePath,
@@ -71,7 +81,7 @@ export async function generateMetadata({
     },
     openGraph: {
       title: content.metaTitle,
-      description: content.metaDescription,
+      description,
       url: basePath,
       type: 'article',
       publishedTime: page.updatedAt,
@@ -81,7 +91,7 @@ export async function generateMetadata({
     twitter: {
       card: 'summary_large_image',
       title: content.metaTitle,
-      description: content.metaDescription,
+      description,
       images: DEFAULT_TWITTER_IMAGES,
     },
   };
