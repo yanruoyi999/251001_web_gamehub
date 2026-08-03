@@ -2,9 +2,17 @@ import type { MetadataRoute } from 'next';
 import { getLocalizedPath, locales } from '@/i18n/config';
 import { getSeoLandingPages } from '@/lib/seo-landing-content';
 import { mockGames } from '@/lib/mock-games';
-import { getCategoryEntries, getTagEntries, shouldIndexTagEntry } from '@/lib/game-taxonomy';
+import {
+  getCategoryEntries,
+  getTagEntries,
+  shouldIndexTagEntry,
+} from '@/lib/game-taxonomy';
 import { shouldIncludeGameInSitemap } from '@/lib/games/quality-policy';
 import { shouldUseCatalogueDatabase } from '@/lib/games/catalog-mode';
+import {
+  SPEND_BILL_GATES_MONEY_PATH,
+  SPEND_BILL_GATES_MONEY_UPDATED_AT,
+} from '@/lib/games/spend-bill-gates-money-seo';
 import { buildAbsoluteUrl } from '@/lib/seo';
 import {
   getDatabaseConnectionMetadata,
@@ -15,10 +23,28 @@ export const dynamic = 'force-dynamic';
 
 const SITEMAP_DB_TIMEOUT_MS = 2000;
 const standaloneGamePaths = [
-  '/games/monster-survivors',
-  '/games/solitaire',
-  '/games/spend-bill-gates-money',
-];
+  {
+    path: '/games/monster-survivors',
+    changeFrequency: 'monthly',
+    priority: 0.55,
+  },
+  {
+    path: '/games/solitaire',
+    changeFrequency: 'monthly',
+    priority: 0.55,
+  },
+  {
+    path: SPEND_BILL_GATES_MONEY_PATH,
+    changeFrequency: 'weekly',
+    priority: 0.75,
+    lastModified: new Date(SPEND_BILL_GATES_MONEY_UPDATED_AT),
+  },
+] satisfies Array<{
+  path: string;
+  changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'];
+  priority: number;
+  lastModified?: Date;
+}>;
 
 interface SitemapGameEntry {
   slug: string;
@@ -51,7 +77,10 @@ function withSitemapTimeout<T>(promise: Promise<T>): Promise<T> {
 
 async function getSitemapGames(): Promise<SitemapGameEntry[]> {
   const connection = getDatabaseConnectionMetadata();
-  if (!shouldUseCatalogueDatabase(connection) || shouldSkipSupabaseDirectInServerless(connection)) {
+  if (
+    !shouldUseCatalogueDatabase(connection) ||
+    shouldSkipSupabaseDirectInServerless(connection)
+  ) {
     return getFallbackSitemapGames();
   }
 
@@ -83,7 +112,10 @@ async function getSitemapGames(): Promise<SitemapGameEntry[]> {
         }));
     }
   } catch (error) {
-    console.warn('Failed to load database games for sitemap, falling back to mock games:', error);
+    console.warn(
+      'Failed to load database games for sitemap, falling back to mock games:',
+      error,
+    );
   }
 
   return getFallbackSitemapGames();
@@ -131,7 +163,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly',
       priority: 0.74,
     },
-    // AdSense必需页面
     {
       path: '/privacy',
       changeFrequency: 'monthly',
@@ -164,7 +195,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
 
     for (const guide of guides) {
-      const localizedPath = getLocalizedPath(locale, `/guides/${guide.slug}`);
+      const localizedPath = getLocalizedPath(
+        locale,
+        `/guides/${guide.slug}`,
+      );
       entries.push({
         url: buildAbsoluteUrl(localizedPath),
         lastModified: new Date(guide.updatedAt),
@@ -183,17 +217,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       });
     }
 
-    for (const gamePath of standaloneGamePaths) {
+    for (const game of standaloneGamePaths) {
       entries.push({
-        url: buildAbsoluteUrl(getLocalizedPath(locale, gamePath)),
-        changeFrequency: 'monthly',
-        priority: 0.55,
+        url: buildAbsoluteUrl(getLocalizedPath(locale, game.path)),
+        ...(game.lastModified ? { lastModified: game.lastModified } : {}),
+        changeFrequency: game.changeFrequency,
+        priority: game.priority,
       });
     }
 
     for (const category of categories) {
       entries.push({
-        url: buildAbsoluteUrl(getLocalizedPath(locale, `/games/category/${category.item.slug}`)),
+        url: buildAbsoluteUrl(
+          getLocalizedPath(locale, `/games/category/${category.item.slug}`),
+        ),
         changeFrequency: 'weekly',
         priority: 0.72,
       });
@@ -201,7 +238,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     for (const tag of tags.filter(shouldIndexTagEntry)) {
       entries.push({
-        url: buildAbsoluteUrl(getLocalizedPath(locale, `/games/tag/${tag.item.slug}`)),
+        url: buildAbsoluteUrl(
+          getLocalizedPath(locale, `/games/tag/${tag.item.slug}`),
+        ),
         changeFrequency: 'weekly',
         priority: 0.68,
       });

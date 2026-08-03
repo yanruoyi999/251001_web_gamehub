@@ -1,0 +1,61 @@
+name: IndexNow changed URLs
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'app/[locale]/games/spend-bill-gates-money/**'
+      - 'app/[locale]/layout.tsx'
+      - 'app/og/spend-bill-gates-money/**'
+      - 'components/seo/spend-bill-gates-money-context-links.tsx'
+      - 'app/sitemap.ts'
+      - 'lib/games/spend-bill-gates-money-seo.ts'
+      - 'public/9140751f1bbe87e8c99a338470f94cbc.txt'
+      - 'scripts/submit-indexnow.ts'
+      - '.github/workflows/indexnow.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.28.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Wait for the formal-domain release
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 20); do
+            page="$(curl -fsSL --max-time 20 'https://www.lumagamehub.com/en/games/spend-bill-gates-money' || true)"
+            if grep -Fq 'money spending game with buy and sell' <<<"$page"; then
+              exit 0
+            fi
+            echo "Formal-domain SEO v1.2 not visible yet (attempt $attempt/20)."
+            sleep 30
+          done
+          echo 'Formal-domain release was not visible before the IndexNow timeout.' >&2
+          exit 1
+      - name: Notify IndexNow about changed URLs
+        run: >-
+          pnpm seo:indexnow --
+          --url /
+          --url /en
+          --url /games/spend-bill-gates-money
+          --url /en/games/spend-bill-gates-money
+          --url /guides/games-to-play-when-bored
+          --url /en/guides/games-to-play-when-bored
+          --url /guides/best-browser-games-5-minute-break
+          --url /en/guides/best-browser-games-5-minute-break
+          --url /guides/free-games-no-ads
+          --url /en/guides/free-games-no-ads
