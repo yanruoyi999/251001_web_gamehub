@@ -87,3 +87,25 @@ jobs:
 
       - name: Production build
         run: pnpm build
+
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: End-to-end tests
+        id: e2e_tests
+        shell: bash
+        run: |
+          set -o pipefail
+          pnpm test:e2e 2>&1 | tee e2e-output.txt
+
+      - name: Upload end-to-end diagnostics
+        if: failure() && steps.e2e_tests.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: end-to-end-diagnostics
+          if-no-files-found: warn
+          retention-days: 3
+          path: |
+            e2e-output.txt
+            playwright-report
+            test-results
