@@ -186,6 +186,7 @@ export function SpendBillGatesMoneyShareSheet({
 
     const copied = await copyResult('wechat', text.wechatCopied);
     if (copied) {
+      setStatus(null);
       setWechatInstruction(text.wechatCopied);
     }
   }, [copyResult, onClose, onShare, shareText, shareTitle, shareUrl, text.wechatCopied, text.wechatInside]);
