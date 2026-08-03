@@ -5,11 +5,15 @@ import { describe, expect, it } from 'vitest';
 const readSource = (relativePath: string) =>
   readFileSync(path.join(process.cwd(), relativePath), 'utf8');
 
+const exists = (relativePath: string) =>
+  existsSync(path.join(process.cwd(), relativePath));
+
 describe('Spend Bill Gates Money SEO v1.2', () => {
   it('adds useful bilingual long-tail content and dedicated social metadata', () => {
     const page = readSource(
       'app/[locale]/games/spend-bill-gates-money/page.tsx',
     );
+    const ogRoute = readSource('app/og/spend-bill-gates-money/route.tsx');
 
     expect(page).toContain('spend bill gates money game online');
     expect(page).toContain('money spending game with buy and sell');
@@ -24,27 +28,24 @@ describe('Spend Bill Gates Money SEO v1.2', () => {
     expect(page).toContain('buySellTitle');
     expect(page).toContain('whatCanBuyTitle');
     expect(page).toContain('fixedBalanceTitle');
-
-    expect(
-      existsSync(
-        path.join(
-          process.cwd(),
-          'public/og/spend-bill-gates-money.png',
-        ),
-      ),
-    ).toBe(true);
+    expect(ogRoute).toContain('ImageResponse');
+    expect(ogRoute).toContain('width: 1200');
+    expect(ogRoute).toContain('height: 630');
   });
 
   it('adds contextual inbound links without changing catalogue pagination', () => {
-    const home = readSource('app/[locale]/page.tsx');
-    const guide = readSource('app/[locale]/guides/[slug]/page.tsx');
+    const layout = readSource('app/[locale]/layout.tsx');
+    const contextLinks = readSource(
+      'components/seo/spend-bill-gates-money-context-links.tsx',
+    );
     const games = readSource('app/[locale]/games/page.tsx');
 
-    expect(home).toContain('SPEND_BILL_GATES_MONEY_PATH');
-    expect(home).toContain('Luma Original');
-    expect(guide).toContain('SPEND_BILL_GATES_MONEY_GUIDE_LINK_SLUGS');
-    expect(guide).toContain('billionaire spending simulator');
-    expect(guide).toContain('亿万富翁消费模拟器');
+    expect(layout).toContain('SpendBillGatesMoneyContextLinks');
+    expect(contextLinks).toContain('SPEND_BILL_GATES_MONEY_GUIDE_LINK_SLUGS');
+    expect(contextLinks).toContain('billionaire spending simulator');
+    expect(contextLinks).toContain('亿万富翁消费模拟器');
+    expect(contextLinks).toContain('best-browser-games-5-minute-break');
+    expect(contextLinks).toContain('free-games-no-ads');
     expect(games).toContain("'/games/spend-bill-gates-money'");
     expect(games).toContain('const { games, total, totalPages');
   });
@@ -60,6 +61,19 @@ describe('Spend Bill Gates Money SEO v1.2', () => {
     expect(robots).toContain("sitemap: [`${siteUrl}/sitemap.xml`]");
   });
 
+  it('keeps IndexNow verification and adds a formal-domain workflow', () => {
+    const workflow = readSource('.github/workflows/indexnow.yml');
+    const indexNow = readSource('lib/indexnow.ts');
+
+    expect(exists('public/9140751f1bbe87e8c99a338470f94cbc.txt')).toBe(
+      true,
+    );
+    expect(indexNow).toContain('https://api.indexnow.org/indexnow');
+    expect(workflow).toContain('Wait for the formal-domain release');
+    expect(workflow).toContain('/en/games/spend-bill-gates-money');
+    expect(workflow).toContain('pnpm seo:indexnow');
+  });
+
   it('creates one legitimate GitHub reference and an execution record', () => {
     const readme = readSource('README.md');
 
@@ -67,11 +81,8 @@ describe('Spend Bill Gates Money SEO v1.2', () => {
       'https://www.lumagamehub.com/en/games/spend-bill-gates-money',
     );
     expect(
-      existsSync(
-        path.join(
-          process.cwd(),
-          'docs/releases/2026-08-04-spend-bill-gates-money-seo-v1-2.md',
-        ),
+      exists(
+        'docs/releases/2026-08-04-spend-bill-gates-money-seo-v1-2.md',
       ),
     ).toBe(true);
   });
