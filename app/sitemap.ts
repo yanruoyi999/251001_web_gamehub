@@ -14,7 +14,11 @@ import {
 export const dynamic = 'force-dynamic';
 
 const SITEMAP_DB_TIMEOUT_MS = 2000;
-const standaloneGamePaths = ['/games/monster-survivors', '/games/solitaire'];
+const standaloneGamePaths = [
+  '/games/monster-survivors',
+  '/games/solitaire',
+  '/games/spend-bill-gates-money',
+];
 
 interface SitemapGameEntry {
   slug: string;
