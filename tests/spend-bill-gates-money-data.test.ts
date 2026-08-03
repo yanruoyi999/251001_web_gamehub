@@ -5,13 +5,13 @@ import {
   PRODUCTS,
   calculateBillionaireStyle,
   calculateRemainingWealth,
-  decrementPurchase,
   formatCompactUsd,
   formatFullUsd,
   getCategorySpend,
   getSpentBucket,
   upsertPurchase,
 } from '@/lib/games/spend-bill-gates-money';
+import { decrementPurchase } from '@/lib/games/spend-bill-gates-money-purchases';
 
 describe('Spend Bill Gates Money product data', () => {
   it('defines 15 valid bilingual products with unique ids', () => {
