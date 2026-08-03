@@ -22,7 +22,7 @@ import {
 export const dynamic = 'force-dynamic';
 
 const SITEMAP_DB_TIMEOUT_MS = 2000;
-const standaloneGames: Array<{
+const standaloneGamePaths: Array<{
   path: string;
   changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'];
   priority: number;
@@ -217,7 +217,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       });
     }
 
-    for (const game of standaloneGames) {
+    for (const game of standaloneGamePaths) {
       entries.push({
         url: buildAbsoluteUrl(getLocalizedPath(locale, game.path)),
         ...(game.lastModified ? { lastModified: game.lastModified } : {}),
