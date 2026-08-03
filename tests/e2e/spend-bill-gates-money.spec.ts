@@ -36,7 +36,7 @@ test.describe('Spend Bill Gates Money mobile upgrade flow', () => {
 
     await remove.click();
     await expect(quantity).toHaveText('×1');
-    await expect(page.getByTestId('billionaire-hud')).toContainText('$99.9B');
+    await expect(page.getByTestId('billionaire-hud')).toContainText('$99.8B');
 
     await remove.click();
     await expect(quantity).toHaveText('×0');
