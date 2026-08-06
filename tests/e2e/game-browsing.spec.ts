@@ -76,11 +76,17 @@ test.describe('游戏浏览流程', () => {
       });
     });
 
-    const fullscreenButton = page.getByRole('button', { name: 'Play fullscreen' });
+    const fullscreenButton = player.locator('button[aria-pressed]');
+    await expect(fullscreenButton).toHaveAccessibleName('Play fullscreen');
     await fullscreenButton.click();
 
     await expect(fullscreenButton).toHaveAttribute('aria-pressed', 'true');
+    await expect(fullscreenButton).toHaveAccessibleName('Exit fullscreen');
     await expect(page.locator('[data-viewport-fullscreen="true"]')).toBeVisible();
+
+    await page.keyboard.press('Escape');
+    await expect(player).toHaveAttribute('data-viewport-fullscreen', 'false');
+    await expect(fullscreenButton).toHaveAttribute('aria-pressed', 'false');
     expect(pageErrors).toEqual([]);
   });
 });
