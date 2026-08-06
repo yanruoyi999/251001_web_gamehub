@@ -17,6 +17,14 @@ function cleanProperties(properties?: AnalyticsProperties): Record<string, Analy
   ) as Record<string, AnalyticsValue>;
 }
 
+function runTelemetrySafely(callback: () => void) {
+  try {
+    callback();
+  } catch {
+    // Analytics is best-effort and must never block navigation or game controls.
+  }
+}
+
 function getGa4Properties(properties: Record<string, AnalyticsValue>) {
   const { source, ...ga4Properties } = properties;
 
@@ -30,13 +38,13 @@ function getGa4Properties(properties: Record<string, AnalyticsValue>) {
 export function trackInteraction(eventName: string, properties?: AnalyticsProperties) {
   const cleanedProperties = cleanProperties(properties);
 
-  track(eventName, cleanedProperties);
-  trackEvent(eventName, getGa4Properties(cleanedProperties));
+  runTelemetrySafely(() => track(eventName, cleanedProperties));
+  runTelemetrySafely(() => trackEvent(eventName, getGa4Properties(cleanedProperties)));
 
   if (typeof window !== 'undefined') {
     const clarity = (window as WindowWithClarity).clarity;
     if (typeof clarity === 'function') {
-      clarity('event', eventName);
+      runTelemetrySafely(() => clarity('event', eventName));
     }
   }
 }

@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 const { gaTrackEvent, vercelTrack } = vi.hoisted(() => ({
   gaTrackEvent: vi.fn(),
@@ -14,6 +14,10 @@ describe('trackInteraction', () => {
   beforeEach(() => {
     gaTrackEvent.mockReset();
     vercelTrack.mockReset();
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
   });
 
   it('keeps UI source context out of GA4 traffic attribution', () => {
@@ -53,5 +57,43 @@ describe('trackInteraction', () => {
       page: '/en/guides/hide-and-paint-guide',
       interaction_source: 'typeform',
     });
+  });
+
+  it('keeps user interactions alive when a telemetry provider throws', () => {
+    vercelTrack.mockImplementationOnce(() => {
+      throw new Error('analytics blocked');
+    });
+
+    expect(() =>
+      trackInteraction('game_fullscreen_toggle', {
+        game_slug: 'google-snake',
+        source: 'guide_embed',
+        entering: true,
+      }),
+    ).not.toThrow();
+
+    expect(gaTrackEvent).toHaveBeenCalledWith('game_fullscreen_toggle', {
+      game_slug: 'google-snake',
+      interaction_source: 'guide_embed',
+      entering: true,
+    });
+  });
+
+  it('isolates Clarity failures from navigation and controls', () => {
+    vi.stubGlobal('window', {
+      clarity: () => {
+        throw new Error('clarity blocked');
+      },
+    });
+
+    expect(() =>
+      trackInteraction('guide_recommendation_open', {
+        game_slug: 'ovo',
+        source: 'guide_recommendation',
+      }),
+    ).not.toThrow();
+
+    expect(vercelTrack).toHaveBeenCalledOnce();
+    expect(gaTrackEvent).toHaveBeenCalledOnce();
   });
 });
