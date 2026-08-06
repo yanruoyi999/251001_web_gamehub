@@ -77,6 +77,43 @@
   }
 }
 
+@layer components {
+  #recommendations [data-slot='card'] {
+    position: relative;
+    transition: transform 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+  }
+
+  #recommendations [data-slot='card'] a[href*='/games/']::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius);
+  }
+
+  #recommendations [data-slot='card']:has(a[href*='/games/']:focus-visible) {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+
+  @media (hover: hover) {
+    #recommendations [data-slot='card']:has(a[href*='/games/']):hover {
+      transform: translateY(-2px);
+      border-color: hsl(var(--primary) / 0.5);
+      box-shadow: 0 10px 25px -15px hsl(var(--foreground) / 0.45);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #recommendations [data-slot='card'] {
+      transition: none;
+    }
+
+    #recommendations [data-slot='card']:has(a[href*='/games/']):hover {
+      transform: none;
+    }
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

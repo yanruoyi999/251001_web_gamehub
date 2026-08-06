@@ -41,4 +41,46 @@ test.describe('游戏浏览流程', () => {
     await page.goto('/en/guides/best-free-iphone-games');
     await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   });
+
+  test('攻略推荐卡片的图片区域也能打开游戏详情', async ({ page }) => {
+    await page.goto('/en/guides/google-snake-mods');
+
+    const ovoCard = page
+      .locator('#recommendations [data-slot="card"]')
+      .filter({ has: page.locator('a[href="/en/games/ovo"]') });
+    const ovoLink = ovoCard.locator('a[href="/en/games/ovo"]');
+    await expect(ovoLink).toHaveAttribute('href', '/en/games/ovo');
+    await ovoCard.click({ position: { x: 24, y: 24 } });
+
+    await expect(page).toHaveURL(/\/en\/games\/ovo$/);
+  });
+
+  test('原生全屏被拒绝时无脚本错误并回退到视口全屏', async ({ page }) => {
+    const pageErrors: string[] = [];
+    page.on('pageerror', (error) => pageErrors.push(error.message));
+
+    await page.route('https://szhong.4399.com/**', async (route) => {
+      await route.fulfill({
+        contentType: 'text/html',
+        body: '<!doctype html><html><body>Snake test player</body></html>',
+      });
+    });
+    await page.goto('/en/guides/google-snake-mods');
+    await page.getByRole('button', { name: 'Play standard Snake - no mods' }).click();
+
+    const player = page.locator('[data-viewport-fullscreen]');
+    await player.evaluate((element) => {
+      Object.defineProperty(element, 'requestFullscreen', {
+        configurable: true,
+        value: () => Promise.reject(new DOMException('Denied for test', 'NotAllowedError')),
+      });
+    });
+
+    const fullscreenButton = page.getByRole('button', { name: 'Play fullscreen' });
+    await fullscreenButton.click();
+
+    await expect(fullscreenButton).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.locator('[data-viewport-fullscreen="true"]')).toBeVisible();
+    expect(pageErrors).toEqual([]);
+  });
 });
