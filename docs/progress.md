@@ -36,7 +36,7 @@
   - .env.example (环境变量模板)
 - [x] 基础页面创建
   - app/layout.tsx (根布局)
-  - app/page.tsx (首页)
+  - app/[locale]/page.tsx (本地化首页，根路径由 middleware 映射)
   - app/globals.css (全局样式)
 
 #### 技术栈确认
@@ -304,7 +304,7 @@
 - [x] 更新 `next.config.js`，声明 `locales`、`defaultLocale`
 - [x] 新增 `middleware.ts`，使用 `next-intl` 自动重定向语种
 - [x] 创建 `i18n/config.ts` 并准备 `messages/zh.json`、`messages/en.json`
-- [x] 新增 `app/[locale]/layout.tsx`、`app/[locale]/page.tsx`，在根 `app/page.tsx` 中重定向默认语言
+- [x] 新增 `app/[locale]/layout.tsx`、`app/[locale]/page.tsx`，由 `next-intl` middleware 统一处理默认语言根路径，避免额外根页成为潜在的第二路由权威
 
 #### 实现要点
 - 默认语言为中文（`zh`），使用 `localePrefix: 'as-needed'`
