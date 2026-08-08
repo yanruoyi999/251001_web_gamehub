@@ -2200,10 +2200,10 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     },
     locales: {
       en: {
-        metaTitle: 'Google Snake Mods: Mod Menu, Loader & Mobile Guide',
+        metaTitle: 'Google Snake Mods: Mod Menu, More Menu, Mods 2 & Loader',
         metaDescription:
-          'Looking for Google Snake Mods 2, a mod menu, or the Snake Mod Loader? Compare the maintained web version, userscript route, mobile limits, and safe fallback.',
-        heading: 'Google Snake Mods: Mod Menu, Loader and Mobile Options',
+          'Google Snake Mods 2 guide to Mod Menu, More Menu, Snake Mod Loader and Level Editor. Compare web and userscript routes, mobile limits, and safe setup.',
+        heading: 'Google Snake Mods: Mod Menu, More Menu, Loader & Mods 2',
         subheading: 'A current guide for Google Snake Mods 2, mod menu, and loader searches: what those terms mean, which route still works, and when to choose no-download standard Snake.',
         overview: [
           'Google Snake mods are community-made changes for the classic Snake game. The useful ones add a menu, extra apple modes, mouse controls, level editing, custom boards, visibility changes, and practice settings that the normal game does not expose.',
@@ -2211,7 +2211,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ],
         sections: [
           {
-            title: 'Quick Answer: Mod Menu or Snake Mod Loader?',
+            title: 'Google Snake Mods 2: Mod Menu, More Menu or Loader?',
             body: 'Use the maintained Google Snake Mods web version when you want the simplest mod menu with no separate setup. Use the DarkSnakeGang userscript loader only when you specifically want mods inside Google Search Snake and understand browser-extension permissions. “Google Snake Mods 2” is commonly used as a search phrase, not the name of an official sequel.',
             bullets: [
               'Want the simplest current route: use the modded web version from the DarkSnakeGang project.',
