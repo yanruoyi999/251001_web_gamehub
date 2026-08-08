@@ -7,7 +7,6 @@ import { shouldPromoteGameInCollections } from '@/lib/games/quality-policy';
 
 const MIN_INTERNAL_LINKS_PER_PAGE = 2;
 const MIN_INTERNAL_LINKS_PER_GUIDE = 2;
-const NON_RENDERED_REDIRECT_PAGES = new Set(['app/page.tsx']);
 
 function walkPages(directory: string): string[] {
   return readdirSync(directory).flatMap((entry) => {
@@ -95,10 +94,6 @@ for (const pageFile of pageFiles) {
   const source = readFileSync(pageFile, 'utf8');
   const relativePath = path.relative(process.cwd(), pageFile);
 
-  if (NON_RENDERED_REDIRECT_PAGES.has(relativePath)) {
-    continue;
-  }
-
   const explicitNavigationCount = countInternalNavigation(source);
   const inheritedCount = inheritedNavigationCredit(relativePath);
   const renderedNavigationCount = explicitNavigationCount + inheritedCount;
@@ -117,5 +112,5 @@ if (errors.length > 0) {
 }
 
 console.log(
-  `Internal link audit passed: ${guides.length} guides require at least ${MIN_INTERNAL_LINKS_PER_GUIDE} links, ${gameSlugs.size} game slugs validated, and ${pageFiles.length - NON_RENDERED_REDIRECT_PAGES.size} rendered page files require at least ${MIN_INTERNAL_LINKS_PER_PAGE} links including inherited layout navigation.`,
+  `Internal link audit passed: ${guides.length} guides require at least ${MIN_INTERNAL_LINKS_PER_GUIDE} links, ${gameSlugs.size} game slugs validated, and ${pageFiles.length} rendered page files require at least ${MIN_INTERNAL_LINKS_PER_PAGE} links including inherited layout navigation.`,
 );
