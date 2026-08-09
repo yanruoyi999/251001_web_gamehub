@@ -48,7 +48,7 @@ jobs:
           exit 1
       - name: Notify IndexNow about changed URLs
         run: >-
-          pnpm seo:indexnow --
+          pnpm seo:indexnow
           --url /
           --url /en
           --url /games/spend-bill-gates-money
