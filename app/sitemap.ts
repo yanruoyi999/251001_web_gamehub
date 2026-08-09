@@ -13,6 +13,10 @@ import {
   SPEND_BILL_GATES_MONEY_PATH,
   SPEND_BILL_GATES_MONEY_UPDATED_AT,
 } from '@/lib/games/spend-bill-gates-money-seo';
+import {
+  BRAINROT_REFLEX_PATH,
+  BRAINROT_REFLEX_UPDATED_AT,
+} from '@/lib/games/brainrot-reflex-seo';
 import { buildAbsoluteUrl } from '@/lib/seo';
 import {
   getDatabaseConnectionMetadata,
@@ -38,6 +42,12 @@ const standaloneGamePaths = [
     changeFrequency: 'weekly',
     priority: 0.75,
     lastModified: new Date(SPEND_BILL_GATES_MONEY_UPDATED_AT),
+  },
+  {
+    path: BRAINROT_REFLEX_PATH,
+    changeFrequency: 'weekly',
+    priority: 0.74,
+    lastModified: new Date(BRAINROT_REFLEX_UPDATED_AT),
   },
 ] satisfies Array<{
   path: string;

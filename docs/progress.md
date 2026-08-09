@@ -1845,3 +1845,14 @@
 - 验证结果：内链检查通过；type-check 通过；Vitest 38 files / 119 tests 全通过；lint 0 errors / 98 个既有 warnings；Next.js 15.5.21 production build 生成 124/124 静态页并修正 32/32 英文 HTML。禁用 JavaScript 的移动 disclosure E2E 1 passed。本地 10 页移动 runtime 全部 80+、最低 88，生产 10 页全部 100；游戏 Play/iframe/fullscreen、桌面/移动无溢出均通过。
 - 发布边界：当前仅本地修复完成，未 commit、push、部署、提交 GSC sitemap、改分析后台或重新授权。生产在新部署前仍使用 PostCSS 8.5.10，必须写“等待部署/生产复审”，不能声称线上已修复。
 - 下一步：经确认发布后复查生产依赖审计、Vercel SHA/alias、核心页面、robots、198 URL sitemap、canonical/noindex 和移动 runtime；OAuth 恢复后再看固定完整日 GA4。Clarity 只在取得页面/控件级直接证据时修复；GSC 先完成现有 Google Snake Mods 页的 query-to-page/CTR/position 判断，继续优先加深已有曝光页，不扩张薄游戏数量。
+
+### T-156 Steal a Brainrot unblocked validation experiment
+
+- 机会判断：用户提供的 2026 年 7 月 Semrush 截图显示 `steal a brainrot unblocked` 的美国月搜索量估算为 74K、全球 89.7K、KD 约 25%，但 CPC 为 `$0`、意图为信息型；该数据是第三方月度估算，不替代 GSC query-to-page 或当前真实搜索信号。
+- 来源与合规边界：官方游戏入口核对为 Roblox 的 `Steal a Brainrot` 页面；没有把不明 unblocked 镜像、扩展、APK、克隆或第三方 iframe 当作来源。Luma 页面明确不绕过网络限制、不托管 Roblox 副本，并提供官方入口说明。
+- 实际改动：新增 `app/[locale]/games/steal-a-brainrot-unblocked/page.tsx`、`components/game/brainrot-reflex-game.tsx` 和 `lib/games/brainrot-reflex-seo.ts`。页面包含中英文 metadata、canonical、VideoGame/FAQ/Breadcrumb JSON-LD、官方 Roblox 外链、移动说明、来源安全边界、相关 Brainrot/无下载内链，以及无需下载和登录的 Luma 原创 20 秒点击反应小游戏。
+- 站点发现与索引：`app/sitemap.ts` 新增中英文稳定 URL，未添加广告脚本、Adsterra、AdSense publisher ID 或任何账号/支付采集。该页面是 Luma 原创实验页，不声称为官方 Roblox 游戏。
+- 自动化验证：新增 `tests/brainrot-reflex-page.test.ts`；相关测试 4 files / 11 tests 通过，`pnpm type-check` 通过，`pnpm lint` 0 errors / 98 个既有 warnings，`git diff --check` 通过。`pnpm build` 使用 Next.js 15.5.21 生成 129 个静态页，新增 `/zh/games/steal-a-brainrot-unblocked` 与 `/en/games/steal-a-brainrot-unblocked`。
+- 浏览器验证：本地 production server 下 1280px 和 390px 视口均 HTTP 200、canonical 存在、无横向溢出、无 page error；点击开始与目标后得分变为 1，sitemap 同时包含默认中文 URL和英文 URL。当前浏览器未输出单独 `robots` meta，沿用全站默认索引策略，不等同于 noindex。
+- 发布边界：本轮候选内容已通过本地质量、构建和浏览器门禁；当前 checkout 为 `automation/bc-postmerge-fix-20260809-luma`，不是 `main`，必须先以远端 `main` 为基线完成版本核对与合并，再复查生产 canonical、robots、sitemap、页面可玩性和遥测隔离。已生成最终 Vercel Preview `https://251001-web-gamehub-rdg6-luak3amfh-yanruoyi999s-projects.vercel.app`，部署状态为 Ready，但匿名访问被项目 Deployment Protection 302 到 Vercel SSO，因此公开预览 Playwright 验收为 Blocked；未改变该项目保护设置。第三方搜索量和本地点击仍不能代替部署后的真实 GSC 展现。
+- 下一步：先观察该页面的真实 impressions、clicks、CTR、平均排名和 Clarity 非测试会话；若无 query-to-page 信号，不再复制 `unblocked` 薄页。AdSense/广告联盟接入等待页面完成来源、隐私和真实流量验证。
