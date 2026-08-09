@@ -14,4 +14,5 @@ export const SPEND_BILL_GATES_MONEY_GUIDE_LINK_SLUGS = [
   'games-to-play-when-bored',
   'best-browser-games-5-minute-break',
   'free-games-no-ads',
+  'google-snake-mods',
 ] as const;

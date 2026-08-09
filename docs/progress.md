@@ -1856,3 +1856,10 @@
 - 浏览器验证：本地 production server 下 1280px 和 390px 视口均 HTTP 200、canonical 存在、无横向溢出、无 page error；点击开始与目标后得分变为 1，sitemap 同时包含默认中文 URL和英文 URL。当前浏览器未输出单独 `robots` meta，沿用全站默认索引策略，不等同于 noindex。
 - 发布边界：本轮候选内容已通过本地质量、构建和浏览器门禁；当前 checkout 为 `automation/bc-postmerge-fix-20260809-luma`，不是 `main`，必须先以远端 `main` 为基线完成版本核对与合并，再复查生产 canonical、robots、sitemap、页面可玩性和遥测隔离。已生成最终 Vercel Preview `https://251001-web-gamehub-rdg6-luak3amfh-yanruoyi999s-projects.vercel.app`，部署状态为 Ready，但匿名访问被项目 Deployment Protection 302 到 Vercel SSO，因此公开预览 Playwright 验收为 Blocked；未改变该项目保护设置。第三方搜索量和本地点击仍不能代替部署后的真实 GSC 展现。
 - 下一步：先观察该页面的真实 impressions、clicks、CTR、平均排名和 Clarity 非测试会话；若无 query-to-page 信号，不再复制 `unblocked` 薄页。AdSense/广告联盟接入等待页面完成来源、隐私和真实流量验证。
+
+### T-157 Spend Bill Gates Money contextual discovery link
+
+- 内容范围：在已有高曝光的 `google-snake-mods` 指南中新增中英文上下文内链，指向 `spend-bill-gates-money`，并补齐 slug 映射与回归断言；不新增页面、不改游戏玩法、不接触分析后台。
+- 本地门禁：页面质量 251 rows / 94 indexable / 157 under-80 / 0 indexable under-80；内链检查、type-check、55 files / 176 tests、lint 0 errors / 98 个既有 warnings、`pnpm audit:prod` No known vulnerabilities、production build 129 个静态页 / 35 个英文 HTML 补丁和 `git diff --check` 均通过。
+- 运行时门禁：本地 `GAME_CATALOG_MODE=local` production server 的 10 页移动采样 under-80 为 0、最低 88；游戏 Play / iframe / fullscreen 通过。运行时报告仅作为本轮证据读取，未把生成的临时采样结果写入仓库。
+- 版本边界：以干净、精确的 `main` worktree `/private/tmp/luma-release-main-20260809` 为发布基线；本地 `main`、`origin/main` 与 GitHub `main` 在改动前均为 `d2b0cd8`，原 `automation/bc-postmerge-fix-20260809-luma` 工作区保留，不覆盖其文件。Git 提交、推送和生产部署按本轮门禁结果继续完成。

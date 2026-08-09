@@ -46,6 +46,9 @@ describe('Spend Bill Gates Money SEO v1.2', () => {
     expect(contextLinks).toContain('亿万富翁消费模拟器');
     expect(contextLinks).toContain('best-browser-games-5-minute-break');
     expect(contextLinks).toContain('free-games-no-ads');
+    expect(contextLinks).toContain("'google-snake-mods':");
+    expect(contextLinks).toContain('Try the money spending simulator');
+    expect(contextLinks).toContain('试玩花钱模拟游戏');
     expect(games).toContain("'/games/spend-bill-gates-money'");
     expect(games).toContain('const { games, total, totalPages');
   });
