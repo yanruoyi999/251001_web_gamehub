@@ -207,7 +207,10 @@ export default async function GuidePage({ params }: GuidePageProps) {
   }).format(new Date(page.updatedAt));
 
   return (
-    <article className="mx-auto w-full max-w-5xl px-6 py-12">
+    <article
+      className="mx-auto w-full max-w-5xl px-6 py-12"
+      data-printable-guide={page.printablePath ? 'true' : undefined}
+    >
       {structuredData.map((schema, index) => (
         <script
           key={index}
@@ -215,7 +218,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
           dangerouslySetInnerHTML={{ __html: serializeJsonLd(schema) }}
         />
       ))}
-      <nav className="mb-6 text-sm text-muted-foreground">
+      <nav className="mb-6 text-sm text-muted-foreground" data-print-hide>
         <Link href={getLocalizedPath(locale, '/guides')} className="hover:text-primary">
           {locale === 'zh' ? '← 返回专题合集' : '← Back to guides'}
         </Link>
@@ -237,6 +240,24 @@ export default async function GuidePage({ params }: GuidePageProps) {
           <span>{locale === 'zh' ? '已对照来源核验' : 'Verified against source'}</span>
         </div>
       </header>
+
+      {page.printablePath ? (
+        <div className="mb-8 flex flex-wrap justify-center gap-3" data-print-hide>
+          <a
+            href={page.printablePath}
+            download
+            className="inline-flex min-h-11 items-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          >
+            {locale === 'zh' ? '下载一页打印规则 PDF' : 'Download one-page printable PDF'}
+          </a>
+          <a
+            href="#guide-details"
+            className="inline-flex min-h-11 items-center rounded-md border border-border bg-background px-4 py-2 text-sm font-semibold text-foreground transition hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          >
+            {locale === 'zh' ? '查看完整规则' : 'Read the full rules'}
+          </a>
+        </div>
+      ) : null}
 
       <section className="mx-auto mb-10 max-w-4xl rounded-2xl border border-primary/20 bg-primary/5 p-6 shadow-sm">
         <p className="text-sm font-semibold uppercase tracking-wide text-primary">
@@ -332,6 +353,39 @@ export default async function GuidePage({ params }: GuidePageProps) {
           <p key={index}>{paragraph}</p>
         ))}
       </section>
+
+      {page.video ? (
+        <section className="mx-auto mt-12 max-w-3xl" data-print-hide>
+          <header className="mb-4">
+            <h2 className="text-2xl font-semibold text-foreground">
+              {locale === 'zh' ? '官方玩法视频' : 'Official play video'}
+            </h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {locale === 'zh'
+                ? '视频来自 Playworks 的公开活动页面；如果你的浏览器阻止第三方播放器，仍可直接按文字规则进行。'
+                : 'This video comes from Playworks’ public activity page. If your browser blocks third-party players, the written rules above are complete.'}
+            </p>
+          </header>
+          <div className="aspect-video overflow-hidden rounded-2xl border border-border bg-black shadow-sm">
+            <iframe
+              src={page.video.embedUrl}
+              title={page.video.title}
+              loading="lazy"
+              className="h-full w-full"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
+          </div>
+          <a
+            href={page.video.sourceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-flex text-sm font-medium text-primary transition hover:text-primary/80"
+          >
+            {locale === 'zh' ? '在 YouTube 核对视频来源 ↗' : 'Verify the video source on YouTube ↗'}
+          </a>
+        </section>
+      ) : null}
 
       {content.screenshots?.length ? (
         <section aria-labelledby="verified-game-views" className="mt-12">

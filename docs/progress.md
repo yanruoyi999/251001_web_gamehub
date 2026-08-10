@@ -1856,3 +1856,13 @@
 - 浏览器验证：本地 production server 下 1280px 和 390px 视口均 HTTP 200、canonical 存在、无横向溢出、无 page error；点击开始与目标后得分变为 1，sitemap 同时包含默认中文 URL和英文 URL。当前浏览器未输出单独 `robots` meta，沿用全站默认索引策略，不等同于 noindex。
 - 发布边界：本轮候选内容已通过本地质量、构建和浏览器门禁；当前 checkout 为 `automation/bc-postmerge-fix-20260809-luma`，不是 `main`，必须先以远端 `main` 为基线完成版本核对与合并，再复查生产 canonical、robots、sitemap、页面可玩性和遥测隔离。已生成最终 Vercel Preview `https://251001-web-gamehub-rdg6-luak3amfh-yanruoyi999s-projects.vercel.app`，部署状态为 Ready，但匿名访问被项目 Deployment Protection 302 到 Vercel SSO，因此公开预览 Playwright 验收为 Blocked；未改变该项目保护设置。第三方搜索量和本地点击仍不能代替部署后的真实 GSC 展现。
 - 下一步：先观察该页面的真实 impressions、clicks、CTR、平均排名和 Clarity 非测试会话；若无 query-to-page 信号，不再复制 `unblocked` 薄页。AdSense/广告联盟接入等待页面完成来源、隐私和真实流量验证。
+
+### T-157 Popcorn rules long-tail guide and one-page printable
+
+- 机会核验：本地研究证据 `/Users/yanruoyi/ai-native/ops/daily-longtail-research/reports/2026-08-10/popcorn-longtail-serp-check.md` 记录 US Desktop `how to play popcorn game` Volume 320、KD 7；Top 10 由 Mattel/IELLO 规则 PDF、Playworks/Drama Trunk 教程和视频组成。该词存在实体活动、课堂活动和 `Pass the Popcorn` 商品三种意图，因此没有把它包装成单一电子游戏，也没有新增低证据游戏页。
+- 来源核验：Playworks 页面确认球+拍手版的目标、回合、人数、时长和道具变体；Drama Trunk 页面用于课堂随机站起报数变体；Mattel 官方说明只用于区分 `Pass the Popcorn` 电影线索桌游。页面用独立说明标出规则差异，不复制规则 PDF 或视频内容。
+- 实际改动：`lib/seo-landing-content.ts` 新增中英文 `how-to-play-popcorn-game` guide，覆盖基础规则、计分/重置、课堂变体、商品版消歧、安全、五分钟流程、FAQ、来源和相关浏览器游戏；`app/[locale]/game/popcorn/how-to-play/page.tsx` 提供用户建议路径的永久重定向；guide 模板支持声明式官方视频和打印链接；新增一页 `public/printables/popcorn-game-rules.pdf`。打印样式隐藏站点导航、反馈和视频，仅保留规则卡内容。
+- SEO 与边界：规范 URL 为 `/en/guides/how-to-play-popcorn-game` 与 `/guides/how-to-play-popcorn-game`，自动进入 sitemap；`/game/popcorn/how-to-play` 不单独索引。页面无游戏 iframe，不声称存在官方线上电子游戏，不接 AdSense/广告联盟，不提交 GSC。
+- 验证结果：新页专测 3/3，完整 Vitest 56 files / 179 tests，E2E 11 passed，type-check 通过，lint 0 errors / 98 个既有 warnings，internal link audit 通过，production build 133 static pages，`pnpm audit:prod` 无已知漏洞，页面质量 252 rows / 95 indexable / 0 indexable under-80；Popcorn guide score 100。桌面 1280px 与移动 390px 均 HTTP 200、无横向溢出、无 page error、FAQ JSON-LD/视频/PDF 链接存在；兼容入口返回 308；PDF 为 1 页 Letter、可正常读取。
+- 发布状态：本轮仅完成本地代码、构建、浏览器和 PDF 验证，尚未 commit、push、生产部署或提交 GSC。主工作树原有 Spend Bill Gates 三个未提交文件未暂存、未修改。
+- 下一步：发布后复查规范 URL、308 入口、robots、canonical、sitemap 和 PDF 200；7–14 天后只用 GSC `how to play popcorn game`、`popcorn game rules`、`popcorn game classroom` 的 query-to-page、impressions、CTR、position 判断是否继续加深，不扩展 `popcorn game online` 游戏页。

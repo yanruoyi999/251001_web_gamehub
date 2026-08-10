@@ -25,7 +25,7 @@ export function Footer({ locale }: FooterProps) {
   ];
 
   return (
-    <footer className="border-t border-border bg-card">
+    <footer data-print-hide className="border-t border-border bg-card">
       <div className="mx-auto w-full max-w-7xl px-6 py-12">
         <div className="grid gap-8 md:grid-cols-4">
           <div className="md:col-span-1">
