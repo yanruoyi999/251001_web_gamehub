@@ -42,6 +42,7 @@ export function TypeformFeedbackButton({ locale }: TypeformFeedbackButtonProps) 
   if (!typeformHref) {
     return (
       <Link
+        data-print-hide
         href={getLocalizedPath(locale, '/contact')}
         onClick={() =>
           trackInteraction('feedback_open', {
@@ -62,6 +63,7 @@ export function TypeformFeedbackButton({ locale }: TypeformFeedbackButtonProps) 
 
   return (
     <a
+      data-print-hide
       href={typeformHref}
       target="_blank"
       rel="noopener noreferrer"

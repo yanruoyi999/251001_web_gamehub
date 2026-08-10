@@ -79,7 +79,7 @@ export function Header() {
   }, [pathname]);
 
   return (
-    <header className="relative sticky top-0 z-50 border-b border-border bg-background/80 shadow-sm backdrop-blur-lg">
+    <header data-print-hide className="relative sticky top-0 z-50 border-b border-border bg-background/80 shadow-sm backdrop-blur-lg">
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 md:px-6">
         {/* Logo */}
         <Link

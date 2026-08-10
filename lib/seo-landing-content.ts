@@ -53,6 +53,12 @@ export interface SeoLandingEmbedGame {
   playLabel?: Partial<Record<Locale, string>>;
 }
 
+export interface SeoLandingVideo {
+  embedUrl: string;
+  title: string;
+  sourceUrl: string;
+}
+
 export interface SeoLandingPage {
   slug: string;
   primaryKeyword: string;
@@ -60,6 +66,8 @@ export interface SeoLandingPage {
   updatedAt: string;
   relatedSlugs: string[];
   embedGame?: SeoLandingEmbedGame;
+  printablePath?: string;
+  video?: SeoLandingVideo;
   locales: Record<Locale, SeoLandingLocaleContent>;
 }
 
@@ -6211,6 +6219,241 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ],
         ctaLabel: '浏览已核验的解谜游戏',
         ctaDescription: '把 Telemount 的传送规划与 Luma 可安全启动、来源明确的浏览器谜题进行比较。',
+      },
+    },
+  },
+  {
+    slug: 'how-to-play-popcorn-game',
+    primaryKeyword: 'how to play popcorn game',
+    keywords: [
+      'how to play popcorn game',
+      'popcorn game rules',
+      'popcorn game instructions',
+      'popcorn game for kids',
+      'popcorn game classroom',
+      'popcorn ball game',
+      'pass the popcorn rules',
+    ],
+    updatedAt: '2026-08-11T00:00:00.000Z',
+    relatedSlugs: ['games-to-play-when-bored', 'best-new-browser-games-july-2026', 'best-free-iphone-games'],
+    printablePath: '/printables/popcorn-game-rules.pdf',
+    video: {
+      embedUrl: 'https://www.youtube-nocookie.com/embed/Ot40kdLBZhk?rel=0',
+      title: 'Playworks Popcorn ball and clapping game video',
+      sourceUrl: 'https://www.youtube.com/watch?v=Ot40kdLBZhk',
+    },
+    locales: {
+      en: {
+        metaTitle: 'How to Play Popcorn Game: Rules, Claps and Variations',
+        metaDescription:
+          'Learn how to play the Popcorn ball game with simple rules, clapping variations, classroom instructions, safety notes, and a printable PDF.',
+        heading: 'How to Play the Popcorn Game',
+        subheading:
+          'A clear rules guide for the ball-and-clap game, classroom Popcorn, and the separate Pass the Popcorn movie board game.',
+        overview: [
+          '“Popcorn game” can refer to more than one activity. This guide starts with the ball-and-clap version: toss a soft object, clap before it comes down, and try to increase your count. It also labels the classroom number game and Mattel’s Pass the Popcorn movie game separately so you can use the rules that match your group.',
+          'The ball version needs almost no equipment and works best as a short coordination challenge. Agree on the scoring or reset rule before the first turn, then keep the object soft, the throwing height comfortable, and the play area clear.',
+        ],
+        sections: [
+          {
+            title: 'Quick Answer: The Ball-and-Clap Rules',
+            body:
+              'Stand in a circle or give each player a clear space. Toss a soft ball or scarf straight up, clap once, and catch it. If you catch successfully, add one clap on your next attempt. A miss ends that attempt; use either “repeat the same number” for practice or “reset to one” for a competitive round. The winner is the player with the highest agreed score or the group that reaches the target together.',
+            bullets: [
+              'Players: one person, a partner, or a circle of players.',
+              'Equipment: one soft ball, beanbag, scarf, or light plastic bag.',
+              'Goal: complete more claps before the object lands without dropping it.',
+            ],
+          },
+          {
+            title: 'How to Play One Turn',
+            body:
+              'Start with the object in one hand and enough space to look up without stepping into another player. Toss it to a comfortable height, clap the required number of times, and catch it with the same or opposite hand. The first attempt is usually one clap. After a successful catch, increase the target by one clap on the next attempt. Each player gets one toss per turn when you are playing in a group.',
+            bullets: [
+              'Keep the toss vertical rather than throwing it across the circle.',
+              'Watch the object, not the clapping hands, during the final moment before the catch.',
+              'If the object drifts, move your feet first instead of reaching across another player.',
+            ],
+          },
+          {
+            title: 'Scoring, Misses and Reset Choices',
+            body:
+              'There is no single universal scorecard for the ball version, so choose one format before playing. In a best-score round, record the highest number of completed claps on one catch and give everyone the same number of attempts. In a steady-practice round, a player keeps trying the same target until they catch it, then moves up by one. For a fast group challenge, a dropped object or an incomplete catch can reset the next player to one clap.',
+            bullets: [
+              'Fair solo test: three attempts, highest completed clap count wins.',
+              'Cooperative target: the group tries to reach a shared number without rushing.',
+              'Use a visible timer only when every player gets the same time and object.',
+            ],
+          },
+          {
+            title: 'Classroom and Drama Popcorn Variation',
+            body:
+              'A different activity also called Popcorn is played without a ball. Players sit silently in a circle and stand one at a time while saying consecutive numbers: 1, 2, 3, and so on. The order must be unpredictable rather than moving around the circle. If two people stand or speak at the same time, everyone sits and the count restarts at one. This version measures listening and group timing, not catching skill.',
+            bullets: [
+              'Set the goal as “get everyone standing” or record the highest number reached.',
+              'Allow only the next number in the sequence; avoid side conversations.',
+              'For an extension, have the group clap once together after a collision, then restart.',
+            ],
+          },
+          {
+            title: 'Do Not Mix It Up with Pass the Popcorn',
+            body:
+              'Mattel’s Pass the Popcorn is a separate movie-clue board game. It uses movie cards and face-up tiles; a reader reveals clues, players guess only when they hold the matching clue tile, and a correct guess turns that tile face down. The first player to turn down all tiles wins the round, and the official rules use a four-tile round to finish the game. Do not use those product rules for the ball or classroom activity.',
+            bullets: [
+              'Ball Popcorn: toss, clap, catch, and build a personal count.',
+              'Classroom Popcorn: stand and say numbers through non-verbal coordination.',
+              'Pass the Popcorn: identify movies from clues using the commercial game components.',
+            ],
+          },
+          {
+            title: 'Safer Equipment and Easier Variations',
+            body:
+              'Use a scarf or light plastic produce bag when beginners need more hang time. A beanbag is easier to retrieve than a bouncing ball, while a foam ball is a good choice for a larger room. Lower the target to one or two claps, let players catch with two hands, or allow a bounce-free practice round before counting scores. Stop if the activity becomes uncomfortable or the space is too crowded.',
+            bullets: [
+              'Keep faces and fragile objects out of the throwing lane.',
+              'Do not use hard, wet, or heavy objects as substitutes.',
+              'For younger players, prioritize a controlled catch over a high clap count.',
+            ],
+          },
+          {
+            title: 'Five-Minute Printable Version',
+            body:
+              'For a quick session, choose one object, one target, and one reset rule. Give each player three turns: start at one clap, add one after a successful catch, and record the best result. End with one cooperative round where everyone attempts the same target. The printable rules sheet linked above keeps the setup, turn sequence, reset options, and safety reminder on one page.',
+            bullets: [
+              'Minute 1: explain and demonstrate one clap plus a safe catch.',
+              'Minutes 2–4: play three equal turns per person.',
+              'Minute 5: compare scores or try one shared group target.',
+            ],
+          },
+        ],
+        recommendations: [
+          { slug: 'google-snake', pitch: 'A quick solo browser challenge when you want a score chase without physical equipment.' },
+          { slug: 'ovo', pitch: 'A short-retry precision platform game for players who enjoy timing and controlled movement.' },
+          { slug: 'catch-the-candy', pitch: 'A physics puzzle with clear object movement and compact problem-solving rounds.' },
+          { slug: 'drive-mad', pitch: 'A browser timing challenge that rewards balance, patience, and repeated attempts.' },
+        ],
+        faqs: [
+          {
+            question: 'What is the basic Popcorn game?',
+            answer:
+              'The common ball version is a toss-and-clap activity: throw a soft object up, clap before catching it, and add a clap after each successful attempt. Some classrooms use “Popcorn” for a separate standing-and-number cooperation game.',
+          },
+          {
+            question: 'How many claps do you do in the Popcorn game?',
+            answer:
+              'Start with one clap. After a successful catch, add one clap on the next attempt. The group can choose a fixed target, a best score, or a reset-to-one rule after a miss.',
+          },
+          {
+            question: 'What happens when you miss the ball?',
+            answer:
+              'Agree before starting. For practice, repeat the same target. For a competitive round, record the best completed count or reset the next attempt to one clap.',
+          },
+          {
+            question: 'Can you play Popcorn in a classroom?',
+            answer:
+              'Yes, with a soft object and enough space. You can also use the no-ball classroom variation where students stand randomly and say consecutive numbers; simultaneous movement resets the count.',
+          },
+          {
+            question: 'Is Popcorn the same as Pass the Popcorn?',
+            answer:
+              'No. Pass the Popcorn is a separate movie-clue board game with cards and tiles. This page separates those product rules from the ball and classroom activities.',
+          },
+        ],
+        externalLinks: [
+          {
+            href: 'https://www.playworks.org/game-library/popcorn/',
+            label: 'Playworks Popcorn game instructions',
+            description: 'Primary source for the ball-and-clap rules, player count, timing, and object variations.',
+          },
+          {
+            href: 'https://service.mattel.com/instruction_sheets/Y2852-0920.pdf',
+            label: 'Mattel Pass the Popcorn instructions',
+            description: 'Official product manual used only to distinguish the movie-clue board game from the activity.',
+          },
+          {
+            href: 'https://www.dramatrunk.com/drama-game-popcorn',
+            label: 'Drama Trunk classroom Popcorn',
+            description: 'Reference for the separate standing-and-number cooperative drama variation.',
+          },
+        ],
+        ctaLabel: 'Browse more short browser games',
+        ctaDescription: 'Switch from a physical group activity to a quick, source-labelled browser challenge.',
+      },
+      zh: {
+        metaTitle: 'Popcorn Game 怎么玩：拍手规则、课堂变体与打印版',
+        metaDescription:
+          '了解 Popcorn 游戏怎么玩：抛球拍手规则、课堂合作变体、安全建议、Pass the Popcorn 消歧，以及一页式可打印规则 PDF。',
+        heading: 'Popcorn Game 怎么玩？',
+        subheading:
+          '一页看懂抛球拍手版、课堂数字合作版，以及不同的 Pass the Popcorn 电影桌游规则。',
+        overview: [
+          '“Popcorn game”并不是唯一一种游戏。本页先介绍最常见的抛球拍手版：把柔软物体抛起，在落下前拍手，再接住并逐步增加拍手次数；同时单独标出课堂数字合作版和 Mattel 的 Pass the Popcorn 电影桌游，避免把不同规则混在一起。',
+          '抛球版几乎不需要准备，适合短时间协调练习。开始前先约定计分或失误后的重置方式，并使用柔软物体、合适高度和没有障碍的空间。',
+        ],
+        sections: [
+          {
+            title: '快速答案：抛球拍手版规则',
+            body:
+              '玩家围成圈或各自站在安全位置。把软球、豆袋或围巾向上抛起，拍手一次，然后接住。成功后下一次增加一次拍手；失误结束本次尝试，可以选择“保持同样次数练习”，也可以选择“重置为一次”进行比赛。最高完成次数或最先完成约定目标的人获胜。',
+            bullets: ['人数：单人、两人或多人围圈。', '道具：软球、豆袋、围巾或轻质塑料袋。', '目标：在接住前完成更多次拍手，且不掉落物体。'],
+          },
+          {
+            title: '一轮具体怎么玩',
+            body:
+              '先确认抬头和移动都有空间。把物体抛到舒服的高度，完成目标次数后接住。第一次通常从一次拍手开始；成功后下一次加一次。多人轮流时，每个人每轮只抛一次，避免节奏过快。',
+            bullets: ['尽量垂直向上抛，不要横向抛向圈内。', '最后接球前优先看物体，不要只看拍手。', '物体飘走时先移动脚步，不要跨过其他玩家伸手。'],
+          },
+          {
+            title: '计分、失误与重置方式',
+            body:
+              '抛球版没有唯一的通用计分表，开始前要先约定。可以给每人三次机会，记录单次完成的最高拍手数；也可以把同一个次数重复练习，成功后再加一。快速团体版则可以规定掉落或未完成时下一位从一次重新开始。',
+            bullets: ['公平单人赛：每人三次机会，最高次数获胜。', '合作目标：全组一起完成约定次数，不追求最快。', '使用计时器时，要保证每个人的时间和道具相同。'],
+          },
+          {
+            title: '课堂与戏剧版 Popcorn',
+            body:
+              '另一种也叫 Popcorn 的课堂活动不使用球。玩家安静坐成一圈，随机站起并依次说出 1、2、3、4……，不能沿着圆圈顺序轮流。如果两个人同时站起或说话，全组坐下，从 1 重新开始。这一版练习的是倾听和集体节奏，不是接球技巧。',
+            bullets: ['目标可以是让全组站起，或记录最高连续数字。', '只说当前应接的数字，其他时间保持安静。', '发生冲突后可以先全组同时拍手一次，再重新开始。'],
+          },
+          {
+            title: '不要和 Pass the Popcorn 混淆',
+            body:
+              'Mattel 的 Pass the Popcorn 是另一款电影线索桌游：使用电影卡和正面朝上的图块，读卡者逐步公布线索，玩家只有在拥有对应类型图块时才能猜，猜对后把该图块翻面。最先翻完自己图块的人赢下一轮。它不是抛球拍手版，也不是课堂数字版。',
+            bullets: ['抛球 Popcorn：抛起、拍手、接住，累积个人次数。', '课堂 Popcorn：随机站起并连续报数，依靠非语言配合。', 'Pass the Popcorn：根据电影线索猜片名，需要商品组件。'],
+          },
+          {
+            title: '更安全、更容易的道具和变体',
+            body:
+              '初学者可以使用围巾或轻质塑料袋，获得更多反应时间；豆袋比弹跳球更容易捡回，泡沫球适合空间较大的场地。可以先把目标降到一两次拍手，允许双手接住，或者先练习不计分的回合。空间拥挤或动作不舒服时应停止。',
+            bullets: ['把脸部和易碎物品移出抛球路线。', '不要使用坚硬、湿滑或过重的物体。', '低龄玩家优先练习稳定接住，不追求高次数。'],
+          },
+          {
+            title: '五分钟打印版玩法',
+            body:
+              '快速开始时只确定一个道具、一个目标和一种重置规则。每位玩家完成三轮：从一次拍手开始，成功后加一次，记录最高成绩。最后进行一轮全组合作目标。上方打印规则页把准备、回合、重置和安全提醒压缩到一页。',
+            bullets: ['第 1 分钟：示范一次拍手和安全接球。', '第 2–4 分钟：每人完成三次公平回合。', '第 5 分钟：比较成绩或完成一次共同目标。'],
+          },
+        ],
+        recommendations: [
+          { slug: 'google-snake', pitch: '想换成无需实体道具的短局挑战，可以试试浏览器里的分数追逐。' },
+          { slug: 'ovo', pitch: '喜欢节奏和精确操作时，可以尝试快速重开的平台游戏。' },
+          { slug: 'catch-the-candy', pitch: '通过物体移动解决短关卡的物理解谜。' },
+          { slug: 'drive-mad', pitch: '强调平衡、耐心和反复尝试的浏览器时机挑战。' },
+        ],
+        faqs: [
+          { question: 'Popcorn game 基本怎么玩？', answer: '常见抛球版是把软物体抛起，在接住前拍手，成功后下一次增加一次。课堂里也可能把“Popcorn”用于随机站起报数的合作游戏。' },
+          { question: 'Popcorn 要拍手几次？', answer: '从一次开始。成功接住后下一次加一次。全组可以提前约定固定目标、最高分或失误重置为一次。' },
+          { question: '没有接住球怎么办？', answer: '开始前先约定：练习版重复同一次数，比赛版记录最高成绩，或失误后从一次重新开始。' },
+          { question: 'Popcorn 能在课堂玩吗？', answer: '可以，使用软物体并清理活动空间；也可以使用不抛球的课堂版本，随机站起并连续报数，同时动作会让全组重置。' },
+          { question: '它和 Pass the Popcorn 一样吗？', answer: '不一样。Pass the Popcorn 是使用电影卡和图块的桌游，本页把它与抛球版、课堂版分开说明。' },
+        ],
+        externalLinks: [
+          { href: 'https://www.playworks.org/game-library/popcorn/', label: 'Playworks Popcorn 玩法说明', description: '抛球拍手版的主要来源，核对人数、时长、规则和道具变体。' },
+          { href: 'https://service.mattel.com/instruction_sheets/Y2852-0920.pdf', label: 'Mattel Pass the Popcorn 官方说明', description: '只用于区分电影线索桌游，不把商品规则当作通用 Popcorn 活动。' },
+          { href: 'https://www.dramatrunk.com/drama-game-popcorn', label: 'Drama Trunk 课堂 Popcorn', description: '用于核对随机站起、连续报数和冲突重置的戏剧课堂变体。' },
+        ],
+        ctaLabel: '浏览更多短局浏览器游戏',
+        ctaDescription: '从实体团体活动切换到无需下载、来源清楚的浏览器挑战。',
       },
     },
   },

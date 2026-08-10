@@ -1863,3 +1863,13 @@
 - 本地门禁：页面质量 251 rows / 94 indexable / 157 under-80 / 0 indexable under-80；内链检查、type-check、55 files / 176 tests、lint 0 errors / 98 个既有 warnings、`pnpm audit:prod` No known vulnerabilities、production build 129 个静态页 / 35 个英文 HTML 补丁和 `git diff --check` 均通过。
 - 运行时门禁：本地 `GAME_CATALOG_MODE=local` production server 的 10 页移动采样 under-80 为 0、最低 88；游戏 Play / iframe / fullscreen 通过。运行时报告仅作为本轮证据读取，未把生成的临时采样结果写入仓库。
 - 版本边界：以干净、精确的 `main` worktree `/private/tmp/luma-release-main-20260809` 为发布基线；本地 `main`、`origin/main` 与 GitHub `main` 在改动前均为 `d2b0cd8`，原 `automation/bc-postmerge-fix-20260809-luma` 工作区保留，不覆盖其文件。Git 提交、推送和生产部署按本轮门禁结果继续完成。
+
+### T-157 Popcorn rules long-tail guide and one-page printable
+
+- 机会核验：本地研究证据 `/Users/yanruoyi/ai-native/ops/daily-longtail-research/reports/2026-08-10/popcorn-longtail-serp-check.md` 记录 US Desktop `how to play popcorn game` Volume 320、KD 7；Top 10 由 Mattel/IELLO 规则 PDF、Playworks/Drama Trunk 教程和视频组成。该词存在实体活动、课堂活动和 `Pass the Popcorn` 商品三种意图，因此没有把它包装成单一电子游戏，也没有新增低证据游戏页。
+- 来源核验：Playworks 页面确认球+拍手版的目标、回合、人数、时长和道具变体；Drama Trunk 页面用于课堂随机站起报数变体；Mattel 官方说明只用于区分 `Pass the Popcorn` 电影线索桌游。页面用独立说明标出规则差异，不复制规则 PDF 或视频内容。
+- 实际改动：`lib/seo-landing-content.ts` 新增中英文 `how-to-play-popcorn-game` guide，覆盖基础规则、计分/重置、课堂变体、商品版消歧、安全、五分钟流程、FAQ、来源和相关浏览器游戏；`app/[locale]/game/popcorn/how-to-play/page.tsx` 提供用户建议路径的永久重定向；guide 模板支持声明式官方视频和打印链接；新增一页 `public/printables/popcorn-game-rules.pdf`。打印样式隐藏站点导航、反馈和视频，仅保留规则卡内容。
+- SEO 与边界：规范 URL 为 `/en/guides/how-to-play-popcorn-game` 与 `/guides/how-to-play-popcorn-game`，自动进入 sitemap；`/game/popcorn/how-to-play` 不单独索引。页面无游戏 iframe，不声称存在官方线上电子游戏，不接 AdSense/广告联盟，不提交 GSC。
+- 验证结果：新页专测 3/3，完整 Vitest 56 files / 179 tests，E2E 11 passed，type-check 通过，lint 0 errors / 98 个既有 warnings，internal link audit 通过，production build 133 static pages，`pnpm audit:prod` 无已知漏洞，页面质量 252 rows / 95 indexable / 0 indexable under-80；Popcorn guide score 100。桌面 1280px 与移动 390px 均 HTTP 200、无横向溢出、无 page error、FAQ JSON-LD/视频/PDF 链接存在；兼容入口返回 308；PDF 为 1 页 Letter、可正常读取。
+- 发布状态：本轮仅完成本地代码、构建、浏览器和 PDF 验证，尚未 commit、push、生产部署或提交 GSC。主工作树原有 Spend Bill Gates 三个未提交文件未暂存、未修改。
+- 下一步：发布后复查规范 URL、308 入口、robots、canonical、sitemap 和 PDF 200；7–14 天后只用 GSC `how to play popcorn game`、`popcorn game rules`、`popcorn game classroom` 的 query-to-page、impressions、CTR、position 判断是否继续加深，不扩展 `popcorn game online` 游戏页。

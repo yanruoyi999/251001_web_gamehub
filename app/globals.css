@@ -119,3 +119,33 @@
     text-wrap: balance;
   }
 }
+
+@media print {
+  body:has([data-printable-guide='true']) {
+    background: #fff !important;
+    color: #111827 !important;
+  }
+
+  body:has([data-printable-guide='true']) [data-print-hide] {
+    display: none !important;
+  }
+
+  body:has([data-printable-guide='true']) [data-printable-guide='true'] {
+    max-width: none !important;
+    padding: 0 !important;
+  }
+
+  body:has([data-printable-guide='true']) [data-printable-guide='true'] section {
+    break-inside: avoid;
+  }
+
+  body:has([data-printable-guide='true']) [data-printable-guide='true'] .bg-card,
+  body:has([data-printable-guide='true']) [data-printable-guide='true'] .bg-secondary {
+    background: #fff !important;
+    box-shadow: none !important;
+  }
+
+  body:has([data-printable-guide='true']) [data-printable-guide='true'] .text-muted-foreground {
+    color: #374151 !important;
+  }
+}
