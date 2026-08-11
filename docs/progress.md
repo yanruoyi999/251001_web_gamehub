@@ -1871,5 +1871,13 @@
 - 实际改动：`lib/seo-landing-content.ts` 新增中英文 `how-to-play-popcorn-game` guide，覆盖基础规则、计分/重置、课堂变体、商品版消歧、安全、五分钟流程、FAQ、来源和相关浏览器游戏；`app/[locale]/game/popcorn/how-to-play/page.tsx` 提供用户建议路径的永久重定向；guide 模板支持声明式官方视频和打印链接；新增一页 `public/printables/popcorn-game-rules.pdf`。打印样式隐藏站点导航、反馈和视频，仅保留规则卡内容。
 - SEO 与边界：规范 URL 为 `/en/guides/how-to-play-popcorn-game` 与 `/guides/how-to-play-popcorn-game`，自动进入 sitemap；`/game/popcorn/how-to-play` 不单独索引。页面无游戏 iframe，不声称存在官方线上电子游戏，不接 AdSense/广告联盟，不提交 GSC。
 - 验证结果：新页专测 3/3，完整 Vitest 56 files / 179 tests，E2E 11 passed，type-check 通过，lint 0 errors / 98 个既有 warnings，internal link audit 通过，production build 133 static pages，`pnpm audit:prod` 无已知漏洞，页面质量 252 rows / 95 indexable / 0 indexable under-80；Popcorn guide score 100。桌面 1280px 与移动 390px 均 HTTP 200、无横向溢出、无 page error、FAQ JSON-LD/视频/PDF 链接存在；兼容入口返回 308；PDF 为 1 页 Letter、可正常读取。
-- 发布状态：本轮仅完成本地代码、构建、浏览器和 PDF 验证，尚未 commit、push、生产部署或提交 GSC。主工作树原有 Spend Bill Gates 三个未提交文件未暂存、未修改。
+- 发布状态（本地验证阶段）：本轮在 commit 前已完成本地代码、构建、浏览器和 PDF 验证；该阶段尚未 commit、push、生产部署或提交 GSC。主工作树原有 Spend Bill Gates 三个未提交文件未暂存、未修改；后续发布结果见下方回执。
 - 下一步：发布后复查规范 URL、308 入口、robots、canonical、sitemap 和 PDF 200；7–14 天后只用 GSC `how to play popcorn game`、`popcorn game rules`、`popcorn game classroom` 的 query-to-page、impressions、CTR、position 判断是否继续加深，不扩展 `popcorn game online` 游戏页。
+
+### T-157 发布回执（2026-08-11）
+
+- Git：功能分支提交 `f562e8f` 已推送；以 `origin/main` 的 `c469635` 为基线合并后，主线提交为 `ef1bf81`，已推送到 `origin/main`。原工作树的 Spend Bill Gates 三个未提交文件未进入本次发布。
+- 发布验证：GitHub CI `31444331383`（`ef1bf81`）为 success；Vercel production `dpl_CSxjbNEjTNZkL7xUA18GQWsY776K` 为 Ready，并接管 `https://www.lumagamehub.com` 与 `https://lumagamehub.com`。
+- 生产冒烟：中英文规范页 HTTP 200、canonical 正确、无 noindex；兼容入口返回 308；robots HTTP 200 且指向主 sitemap；sitemap HTTP 200、206 个 URL，包含中英文 Popcorn guide；PDF HTTP 200 / application/pdf；health 与 search API HTTP 200。桌面 1280px、移动 390px 均无横向溢出和 page error。
+- GSC：在 `sc-domain:lumagamehub.com` 的已登录 Search Console 会话中重新提交 `https://www.lumagamehub.com/sitemap.xml`；页面显示 `Sitemap submitted successfully`，Last read 为 2026-08-11、Status 为 Success、Discovered pages 为 206、videos 为 0。
+- 后续观察：GSC 提交成功只证明 sitemap 已被接收/读取，不代表新页已索引或产生流量；7–14 天后观察 `how to play popcorn game`、`popcorn game rules`、`popcorn game classroom` 的 query-to-page、impressions、clicks、CTR、position。
