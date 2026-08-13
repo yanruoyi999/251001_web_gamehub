@@ -4,6 +4,7 @@ import { useEffect, useState, useTransition } from 'react';
 import clsx from 'clsx';
 
 import { Button } from '@/components/ui/button';
+import { trackInteraction } from '@/lib/analytics/events';
 
 interface FavoriteToggleButtonProps {
   gameId: number;
@@ -13,6 +14,8 @@ interface FavoriteToggleButtonProps {
     unfavorite: string;
   };
   fallbackKey?: string;
+  gameSlug?: string | null;
+  surface?: 'game_detail' | 'game_list';
   storageMode?: 'local' | 'remote-with-local-fallback';
 }
 
@@ -69,6 +72,8 @@ export function FavoriteToggleButton({
   initialFavorite,
   labels,
   fallbackKey,
+  gameSlug,
+  surface = 'game_detail',
   storageMode = 'remote-with-local-fallback',
 }: FavoriteToggleButtonProps) {
   const [isFavorite, setIsFavorite] = useState(initialFavorite);
@@ -90,12 +95,23 @@ export function FavoriteToggleButton({
     }
   }, [fallbackKey]);
 
+  const trackFavoriteChange = (nextState: boolean) => {
+    trackInteraction(nextState ? 'favorite_add' : 'favorite_remove', {
+      game_id: gameId,
+      game_slug: gameSlug,
+      favorite_surface: surface,
+      storage_mode: storageMode,
+      source: 'favorite_toggle',
+    });
+  };
+
   const handleToggle = () => {
     startTransition(async () => {
       if (storageMode === 'local' && fallbackKey) {
         const nextState = !isFavorite;
         setIsFavorite(nextState);
         updateLocalFavorite(fallbackKey, nextState);
+        trackFavoriteChange(nextState);
         return;
       }
 
@@ -122,6 +138,7 @@ export function FavoriteToggleButton({
           if (fallbackKey) {
             updateLocalFavorite(fallbackKey, nextState);
           }
+          trackFavoriteChange(nextState);
           return;
         } catch (error) {
           console.error('收藏状态更新失败', error);
@@ -133,6 +150,7 @@ export function FavoriteToggleButton({
         const nextState = !isFavorite;
         setIsFavorite(nextState);
         updateLocalFavorite(fallbackKey, nextState);
+        trackFavoriteChange(nextState);
       }
     });
   };

@@ -600,6 +600,8 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
                         initialFavorite={Boolean(game.isFavorite)}
                         labels={favoriteLabels}
                         fallbackKey={game.slug ? `slug:${game.slug.toLowerCase()}` : `id:${game.id}`}
+                        gameSlug={game.slug}
+                        surface="game_list"
                         storageMode={catalogueUi.favoriteStorage}
                       />
                     </div>

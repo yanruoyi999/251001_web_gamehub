@@ -7,6 +7,7 @@ import { cache } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { FavoriteToggleButton } from '@/components/game/favorite-toggle';
 import { GamePlayerFacade } from '@/components/game/game-player-facade';
+import { DailyRecommendation } from '@/components/retention/daily-recommendation';
 import { GameService, RatingService } from '@/services';
 import { getMockGameBySlug, mockGames } from '@/lib/mock-games';
 import type { GameDetail } from '@/services/game.service';
@@ -27,7 +28,7 @@ import {
   buildAbsoluteUrl,
   buildContextualMetaDescription,
 } from '@/lib/seo';
-import { getLocalizedPath, locales } from '@/i18n/config';
+import { getLocalizedPath, locales, type Locale } from '@/i18n/config';
 import { serializeJsonLd } from '@/lib/utils/json-ld';
 import { getCatalogueUiCapabilities, shouldUseCatalogueDatabase } from '@/lib/games/catalog-mode';
 import {
@@ -640,6 +641,8 @@ export default async function GamePage({ params }: GamePageProps) {
                 initialFavorite={isFavorite}
                 labels={favoriteLabels}
                 fallbackKey={favoriteFallbackKey}
+                gameSlug={game.slug}
+                surface="game_detail"
                 storageMode={catalogueUi.favoriteStorage}
               />
             ) : (
@@ -1067,6 +1070,8 @@ export default async function GamePage({ params }: GamePageProps) {
                 )}
               </CardContent>
             </Card>
+
+            <DailyRecommendation locale={locale as Locale} surface="game_detail" excludeSlug={game.slug} />
 
             {/* Similar Games */}
             <Card>
