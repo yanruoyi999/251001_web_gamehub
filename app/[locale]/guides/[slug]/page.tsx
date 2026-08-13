@@ -319,7 +319,11 @@ export default async function GuidePage({ params }: GuidePageProps) {
       </section>
 
       {page.embedGame ? (
-        <section id="play" className="mx-auto mb-12 max-w-4xl scroll-mt-24">
+        <section
+          id="play"
+          tabIndex={-1}
+          className="mx-auto mb-12 max-w-4xl scroll-mt-24 focus:outline-none"
+        >
           <div className="overflow-hidden rounded-2xl border border-border bg-black shadow-sm">
             <div className="aspect-video">
               <GamePlayerFacade
@@ -330,6 +334,11 @@ export default async function GuidePage({ params }: GuidePageProps) {
                 gameSlug={page.embedGame.playSlug ?? page.slug}
                 source="guide_embed"
                 playLabel={page.embedGame.playLabel?.[locale]}
+                fallbackHref={
+                  page.embedGame.playSlug
+                    ? getLocalizedPath(locale, `/games/${page.embedGame.playSlug}`)
+                    : undefined
+                }
               />
             </div>
           </div>
@@ -430,7 +439,11 @@ export default async function GuidePage({ params }: GuidePageProps) {
         </section>
       ) : null}
 
-      <section id="guide-details" className="mt-12 space-y-10 scroll-mt-24">
+      <section
+        id="guide-details"
+        tabIndex={-1}
+        className="mt-12 space-y-10 scroll-mt-24 focus:outline-none"
+      >
         {detailSections.map((section) => (
           <div key={section.title} className="rounded-2xl border border-border bg-card p-6 shadow-sm">
             <h2 className="text-2xl font-semibold text-foreground">{section.title}</h2>
@@ -446,7 +459,11 @@ export default async function GuidePage({ params }: GuidePageProps) {
         ))}
       </section>
 
-      <section id="recommendations" className="mt-16 scroll-mt-24">
+      <section
+        id="recommendations"
+        tabIndex={-1}
+        className="mt-16 scroll-mt-24 focus:outline-none"
+      >
         <header className="mb-6 text-center">
           <h2 className="text-3xl font-semibold text-foreground">
             {locale === 'zh' ? '精选推荐' : 'Featured Picks'}

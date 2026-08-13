@@ -47,4 +47,30 @@ test.describe('mobile disclosures without hydration', () => {
       )
       .toBe(true);
   });
+
+  test('keeps guide play intent actionable before hydration', async ({ page }) => {
+    await page.goto('/en/guides/google-snake-mods');
+
+    const playLink = page.locator('#play').getByRole('link', {
+      name: 'Play standard Snake - no mods',
+    });
+
+    await expect(playLink).toHaveAttribute('href', '/en/games/google-snake');
+    await playLink.click();
+    await expect(page).toHaveURL(/\/en\/games\/google-snake$/);
+  });
+
+  test('moves focus to guide jump targets before hydration', async ({ page }) => {
+    await page.goto('/en/guides/google-snake-mods');
+    await page.getByRole('link', { name: 'Read the guide' }).click();
+
+    await expect(page).toHaveURL(/#guide-details$/);
+    await expect(page.locator('#guide-details')).toBeFocused();
+
+    await page.goto('/en/guides/google-snake-mods');
+    await page.getByRole('link', { name: 'See similar games' }).click();
+
+    await expect(page).toHaveURL(/#recommendations$/);
+    await expect(page.locator('#recommendations')).toBeFocused();
+  });
 });

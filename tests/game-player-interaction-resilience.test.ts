@@ -24,14 +24,20 @@ describe('search-session interaction resilience', () => {
   });
 
   it('updates play state before best-effort analytics', () => {
-    const analyticsCall = playerSource.indexOf("trackInteraction('game_play_start'");
-    const handlerStart = playerSource.lastIndexOf('onClick={() => {', analyticsCall);
+    const handlerStart = playerSource.indexOf('const startGame = () => {');
     const handler = playerSource.slice(handlerStart, handlerStart + 500);
 
+    expect(handlerStart).toBeGreaterThanOrEqual(0);
     expect(handler.indexOf('setLoaded(true)')).toBeGreaterThanOrEqual(0);
     expect(handler.indexOf("trackInteraction('game_play_start'")).toBeGreaterThan(
       handler.indexOf('setLoaded(true)'),
     );
+  });
+
+  it('keeps a native guide fallback when hydration is delayed', () => {
+    expect(playerSource).toContain('fallbackHref?: string;');
+    expect(playerSource).toContain('href={fallbackHref}');
+    expect(playerSource).toContain('event.preventDefault();');
   });
 
   it('guards repeated fullscreen transitions and supports Escape fallback exit', () => {

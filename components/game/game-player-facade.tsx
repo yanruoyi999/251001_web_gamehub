@@ -15,6 +15,7 @@ interface GamePlayerFacadeProps {
   gameSlug?: string;
   source?: string;
   playLabel?: string;
+  fallbackHref?: string;
 }
 
 function canUseNextImage(src?: string | null) {
@@ -51,6 +52,7 @@ export function GamePlayerFacade({
   gameSlug,
   source = 'game_player',
   playLabel,
+  fallbackHref,
 }: GamePlayerFacadeProps) {
   const [loaded, setLoaded] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -104,6 +106,18 @@ export function GamePlayerFacade({
   }, [gameSlug, isViewportFullscreen, locale, source, title]);
 
   const isExpanded = isFullscreen || isViewportFullscreen;
+  const accessiblePlayLabel =
+    playLabel ?? (locale === 'zh' ? `开始游玩 ${title}` : `Play ${title}`);
+  const visiblePlayLabel = playLabel ?? (locale === 'zh' ? '开始游戏' : 'Play now');
+
+  const startGame = () => {
+    setLoaded(true);
+    trackInteraction('game_play_start', {
+      game_slug: gameSlug ?? title,
+      locale,
+      source,
+    });
+  };
 
   const toggleFullscreen = async () => {
     if (fullscreenTransitionRef.current) return;
@@ -268,22 +282,34 @@ export function GamePlayerFacade({
             ? '点击后才会加载第三方游戏资源，首屏速度更快。'
             : 'The third-party game loads only after you click, keeping the first view faster.'}
         </p>
-        <Button
-          type="button"
-          size="lg"
-          onClick={() => {
-            setLoaded(true);
-            trackInteraction('game_play_start', {
-              game_slug: gameSlug ?? title,
-              locale,
-              source,
-            });
-          }}
-          aria-label={playLabel ?? (locale === 'zh' ? `开始游玩 ${title}` : `Play ${title}`)}
-          className="bg-white text-slate-950 hover:bg-white/90"
-        >
-          {playLabel ?? (locale === 'zh' ? '开始游戏' : 'Play now')}
-        </Button>
+        {fallbackHref ? (
+          <Button
+            asChild
+            size="lg"
+            className="bg-white text-slate-950 hover:bg-white/90"
+          >
+            <a
+              href={fallbackHref}
+              onClick={(event) => {
+                event.preventDefault();
+                startGame();
+              }}
+              aria-label={accessiblePlayLabel}
+            >
+              {visiblePlayLabel}
+            </a>
+          </Button>
+        ) : (
+          <Button
+            type="button"
+            size="lg"
+            onClick={startGame}
+            aria-label={accessiblePlayLabel}
+            className="bg-white text-slate-950 hover:bg-white/90"
+          >
+            {visiblePlayLabel}
+          </Button>
+        )}
       </div>
     </div>
   );

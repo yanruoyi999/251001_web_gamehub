@@ -1881,3 +1881,11 @@
 - 生产冒烟：中英文规范页 HTTP 200、canonical 正确、无 noindex；兼容入口返回 308；robots HTTP 200 且指向主 sitemap；sitemap HTTP 200、206 个 URL，包含中英文 Popcorn guide；PDF HTTP 200 / application/pdf；health 与 search API HTTP 200。桌面 1280px、移动 390px 均无横向溢出和 page error。
 - GSC：在 `sc-domain:lumagamehub.com` 的已登录 Search Console 会话中重新提交 `https://www.lumagamehub.com/sitemap.xml`；页面显示 `Sitemap submitted successfully`，Last read 为 2026-08-11、Status 为 Success、Discovered pages 为 206、videos 为 0。
 - 后续观察：GSC 提交成功只证明 sitemap 已被接收/读取，不代表新页已索引或产生流量；7–14 天后观察 `how to play popcorn game`、`popcorn game rules`、`popcorn game classroom` 的 query-to-page、impressions、clicks、CTR、position。
+
+### T-158 Google Snake Mods Clarity first-click remediation
+
+- 行为证据：用户提供的 27 条脱敏 Clarity 摘要中，23 条进入 Google Snake Mods 指南、18 条明确尝试或启动标准 Snake、10 条使用全屏、8 条包含 dead click、无响应或延迟描述；分类允许重叠且样本窗口未知，不作为总体比例。2026-08-13 巡检另记录 GA4 current 28d 481 sessions / 692 views、目标 landing 193 sessions、`game_fullscreen_toggle` 204 events，以及 GSC `google snake mods` 到目标页 41 clicks / 2,383 impressions。当前 Clarity 30/30 Data Export 请求均因 HTTP 429 未获取到，不能记录为 0。
+- 直接根因：生产 390x844 禁用 JavaScript 最小复现确认 SSR 可见的 Play 控件完全依赖 hydration，点击不改变 URL、DOM 或 iframe；`#play`、`#guide-details`、`#recommendations` 可滚动但目标不可聚焦。这与早期首击无响应和锚点 dead-click 摘要相符，但页面隐藏、文本选择、外链离站等正常行为未被误归因。
+- 本地修改：`components/game/game-player-facade.tsx` 为 Play 增加同站原生 `fallbackHref`，正常 hydration 时仍原位加载 iframe，hydration 延迟或不可用时导航至本地化游戏页；`app/[locale]/guides/[slug]/page.tsx` 为三个锚点目标增加焦点能力并传入 fallback。同步更新 `tests/e2e/mobile-disclosure.spec.ts`、`tests/e2e/game-browsing.spec.ts` 与 `tests/game-player-interaction-resilience.test.ts`。
+- 验证结果：TDD 修复前用例按预期失败，修复后无 JavaScript 移动用例 3/3；针对性 Vitest 3 files / 11 tests、完整 Vitest 56 files / 180 tests、Playwright production mode 13/13、type-check、内链、`pnpm audit:prod` 和 Next.js 15.5.21 production build 均通过。Lint 0 errors / 98 个既有 console warnings，构建 133 个静态页；390x844 与 1440x1000 均无溢出或页面错误，锚点获得焦点，启用 JavaScript 的 Play 原位只加载 1 个 iframe。
+- 发布边界：修复位于隔离工作树 `/private/tmp/luma-clarity-first-click-20260813`、分支 `codex/luma-clarity-first-click-20260813`，基于 `origin/main@6292adbd50d115085c0433c0d5ea68e643d00eef`。主工作树既有 Spend Bill Gates 三个未提交文件未修改、未暂存。本轮未 commit、push、部署、提交 GSC 或修改分析后台；准确状态为本地修复完成，等待部署/数据验证。

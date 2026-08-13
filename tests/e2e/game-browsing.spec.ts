@@ -174,7 +174,10 @@ test.describe('游戏浏览流程', () => {
       });
     });
     await page.goto('/en/guides/google-snake-mods');
-    await page.getByRole('button', { name: 'Play standard Snake - no mods' }).click();
+    await page
+      .locator('#play')
+      .getByRole('link', { name: 'Play standard Snake - no mods' })
+      .click();
 
     const player = page.locator('[data-viewport-fullscreen]');
     await player.evaluate((element) => {
