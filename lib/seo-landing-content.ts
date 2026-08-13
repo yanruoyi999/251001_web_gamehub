@@ -59,15 +59,24 @@ export interface SeoLandingVideo {
   sourceUrl: string;
 }
 
+export interface SeoLandingIntentCta {
+  hookId: string;
+  viewEvent: string;
+  clickEvent: string;
+  anchorId: string;
+}
+
 export interface SeoLandingPage {
   slug: string;
   primaryKeyword: string;
   keywords: string[];
   updatedAt: string;
   relatedSlugs: string[];
+  indexable?: boolean;
   embedGame?: SeoLandingEmbedGame;
   printablePath?: string;
   video?: SeoLandingVideo;
+  intentCta?: SeoLandingIntentCta;
   locales: Record<Locale, SeoLandingLocaleContent>;
 }
 
@@ -6219,6 +6228,350 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ],
         ctaLabel: '浏览已核验的解谜游戏',
         ctaDescription: '把 Telemount 的传送规划与 Luma 可安全启动、来源明确的浏览器谜题进行比较。',
+      },
+    },
+  },
+  {
+    slug: 'friday-night-funkin-loading-guide',
+    primaryKeyword: 'fnf unblocked loading issues',
+    keywords: [
+      'fnf unblocked',
+      'friday night funkin unblocked',
+      'friday night funkin loading issues',
+      'fnf black screen',
+      'fnf lag fix',
+      'fnf audio delay',
+      'friday night funkin browser controls',
+    ],
+    updatedAt: '2026-08-13T00:00:00.000Z',
+    indexable: false,
+    relatedSlugs: [
+      'google-snake-mods',
+      'games-to-play-when-bored',
+      'best-browser-games-5-minute-break',
+    ],
+    intentCta: {
+      hookId: 'original_rhythm_avatar',
+      viewEvent: 'ai_hook_view',
+      clickEvent: 'ai_hook_click',
+      anchorId: 'original-rhythm-avatar',
+    },
+    locales: {
+      en: {
+        metaTitle: "Friday Night Funkin' Unblocked: Fix Loading & Play Smoothly",
+        metaDescription:
+          "Troubleshoot Friday Night Funkin' browser loading, black screens, stutter, audio delay, and mobile controls with a safe official-source checklist.",
+        heading: "Friday Night Funkin' Unblocked: Fix Loading Issues & Play Smoothly",
+        subheading:
+          "A practical browser checklist for loading errors, dropped inputs, audio delay, and the limits of mobile play.",
+        overview: [
+          "This page focuses on the problems players actually hit when a browser build does not start cleanly: a black screen, an endless loading state, stutter, or audio that arrives late. It is an original troubleshooting guide, not a rehosted game or a download page.",
+          "For a safe starting point, use the creator's official itch.io page. Luma does not host Friday Night Funkin' files, copy its assets, or promise that a third-party mirror will remain available. If a school, workplace, or managed network blocks a game, use an approved route instead of trying to bypass that policy.",
+        ],
+        sections: [
+          {
+            title: 'Start with the official source and a clean tab',
+            body:
+              "Before changing browser settings, confirm that you are on the creator's official page or a source you can verify. A clean tab separates a real game problem from a broken mirror, stale ad script, or extension conflict.",
+            bullets: [
+              "Open the official itch.io source in a current browser.",
+              'Use one normal tab first; do not test several mirrors at the same time.',
+              'Do not download an EXE, APK, browser extension, or “unlocker” to fix a browser game.',
+              'If the page is blocked by an organization, follow its access rules rather than trying to evade them.',
+            ],
+          },
+          {
+            title: 'Black screen or endless loading',
+            body:
+              'A black canvas usually means the browser has not completed the page scripts or the source itself failed. Give the first load a short moment, then reload once. Repeated refreshes can hide the real cause and make a temporary network delay look like a game bug.',
+            bullets: [
+              'Check that JavaScript is enabled and that the tab is not in a restricted reader or text-only mode.',
+              'Reload once after closing heavy tabs, video players, or downloads.',
+              'Temporarily disable a content-blocking extension for the verified source if it is safe to do so, then restore it after testing.',
+              'If only a mirror is blank while the official source works, treat the mirror as the problem and leave it.',
+            ],
+          },
+          {
+            title: 'Stutter, lag, or dropped inputs',
+            body:
+              'Rhythm games expose timing problems quickly. Reduce background work before changing the game itself: close other heavy tabs, stop an active download, and keep the game in a visible foreground tab. A busy device or power-saving mode can make input feel late even when the page loaded correctly.',
+            bullets: [
+              'Test in a fresh tab with other video and canvas-heavy pages closed.',
+              'Keep the browser and operating system updated enough to support the current page scripts.',
+              'Avoid switching tabs during a song; background throttling can interrupt animation or audio timing.',
+              'If the same device stutters only on one mirror, use the verified source instead of installing a performance “fix”.',
+            ],
+          },
+          {
+            title: 'Audio is late or out of sync',
+            body:
+              'Audio delay can come from the output device, a backgrounded tab, or the page losing its audio context. First verify the system volume and output, then reload the page in the foreground. Bluetooth devices can add noticeable latency for timing-sensitive play, so compare with the built-in speakers or wired headphones when available.',
+            bullets: [
+              'Confirm that the tab is not muted and that the intended output device is selected.',
+              'Reload once after returning the game tab to the foreground.',
+              'Compare Bluetooth with built-in speakers or wired headphones before changing game settings.',
+              'If audio is missing only on a third-party copy, do not trust a “codec” or “audio fix” download.',
+            ],
+          },
+          {
+            title: 'Desktop and mobile controls',
+            body:
+              "Keyboard timing is the safer assumption for a rhythm game. The official browser page and a particular device may not offer the same touch controls, screen size, or performance. Treat mobile play as a device check, not as a promise that every song or control layout is supported.",
+            bullets: [
+              'On desktop, click the game once before using the documented keyboard controls.',
+              'On mobile, rotate only if the page layout becomes easier to read; do not assume a touch overlay exists.',
+              'If taps do nothing, use a supported keyboard device or return to the official source notes.',
+              'Keep the play area visible and avoid opening system overlays during a song.',
+            ],
+          },
+          {
+            title: 'What “unblocked” does and does not mean',
+            body:
+              '“Unblocked” is a search label, not proof that a page is official, safe, or authorized. It should not be used to promise access through a school or workplace filter. Luma provides troubleshooting and source context only; it does not bypass network controls or repackage the game.',
+            bullets: [
+              'Prefer a source that names the creator and gives a clear route to the original page.',
+              'Avoid pages that require an unknown extension, executable, APK, or notification permission.',
+              'Do not paste mirror-provided scripts into the browser console.',
+              'Report a broken or suspicious source instead of trying several download buttons.',
+            ],
+          },
+          {
+            title: 'When a mirror is the problem',
+            body:
+              'A page that shows a blank rectangle, redirects repeatedly, or places unrelated download buttons around the game is not a good diagnostic baseline. Compare it with the official source once, record the browser and device you used, and stop testing the mirror if the official page works.',
+            bullets: [
+              'Record the browser, device class, and symptom before changing several variables.',
+              'Use the official source link below to separate source failure from local browser failure.',
+              'Do not copy FNF characters, music, screenshots, HTML5 packages, or mods into a Luma page.',
+              'This Luma experiment has no account, email, photo, audio, or upload step.',
+            ],
+          },
+        ],
+        recommendations: [
+          {
+            slug: 'google-snake',
+            pitch:
+              'For a lighter fallback, try standard Google Snake in the browser without installing anything.',
+          },
+          {
+            slug: 'ovo',
+            pitch:
+              'If rhythm timing is not working on your device, switch to a short browser platform challenge instead of a random mirror.',
+          },
+          {
+            slug: 'tunnel-rush',
+            pitch:
+              'For a quick-restart reaction game, try a lightweight alternative with a clear play route.',
+          },
+        ],
+        faqs: [
+          {
+            question: "Why is Friday Night Funkin' stuck on a black screen?",
+            answer:
+              'Check the verified source, JavaScript, one clean tab, and extension conflicts first. If the official source works but a mirror does not, the mirror is the likely cause.',
+          },
+          {
+            question: "How do I fix Friday Night Funkin' lag in a browser?",
+            answer:
+              'Close heavy tabs and downloads, keep the game in the foreground, and compare the official source on the same device. Avoid unknown performance downloads or scripts.',
+          },
+          {
+            question: "Why is FNF audio delayed?",
+            answer:
+              'Check the selected output, reload in a foreground tab, and compare Bluetooth with built-in speakers or wired headphones. The delay may come from the device rather than the page.',
+          },
+          {
+            question: "Can I play Friday Night Funkin' on a phone?",
+            answer:
+              'You can test the official browser page on a phone, but do not assume touch controls or desktop-level timing. If taps do not respond, use a supported keyboard device or follow the source notes.',
+          },
+          {
+            question: "Does Luma host an unblocked FNF game?",
+            answer:
+              'No. Luma provides an original troubleshooting guide and a link to the creator source. It does not rehost the game, copy its assets, bypass network policies, or provide download packages.',
+          },
+        ],
+        quickAnswerLink: {
+          href: 'https://ninja-muffin24.itch.io/funkin',
+          label: "Open the creator's official FNF source",
+          description:
+            "Use this source to compare a real browser-loading problem with an unreliable mirror. Luma does not control the external page.",
+        },
+        externalLinks: [
+          {
+            href: 'https://ninja-muffin24.itch.io/funkin',
+            label: "Friday Night Funkin' on itch.io",
+            description:
+              "The creator's public source page for checking the current browser build, platform notes, and source context.",
+          },
+          {
+            href: 'https://github.com/FunkinCrew/Funkin',
+            label: 'Funkin source repository',
+            description:
+              'A public project source reference; repository code and game assets can have different usage terms.',
+          },
+        ],
+        ctaLabel: 'Try the Original Rhythm Battle Avatar',
+        ctaDescription:
+          'This is an anonymous interest test for a future original concept. No sign-up, upload, or generated asset is available in this experiment.',
+      },
+      zh: {
+        metaTitle: "Friday Night Funkin' Unblocked：加载问题排查与流畅游玩",
+        metaDescription:
+          "排查 Friday Night Funkin' 网页版黑屏、卡顿、音频延迟和手机端控制问题，并通过官方来源确认安全的游玩路径。",
+        heading: "Friday Night Funkin' Unblocked：加载问题与流畅游玩",
+        subheading:
+          '面向浏览器黑屏、输入延迟、音画不同步和移动端限制的原创排障清单。',
+        overview: [
+          '本页集中处理浏览器版常见的真实问题：黑屏、无限加载、卡顿、按键掉帧和音频延迟。这是原创排障指南，不托管游戏文件，也不是下载页面。',
+          '建议先从创作者的官方 itch.io 页面开始核对。Luma 不托管 Friday Night Funkin\' 文件、不复制其素材，也不保证第三方镜像长期可用。如果学校、公司或受管网络阻止游戏，应遵守网络策略，不尝试绕过限制。',
+        ],
+        sections: [
+          {
+            title: '先确认官方来源，再用干净标签页测试',
+            body:
+              '在调整浏览器设置前，先确认当前页面是创作者官方页面或可核对的来源。使用一个干净标签页，可以区分游戏本身的问题、失效镜像、广告脚本和扩展冲突。',
+            bullets: [
+              '在较新的浏览器中打开官方 itch.io 来源。',
+              '先只使用一个普通标签页，不要同时测试多个镜像。',
+              '不要为了修复网页游戏下载 EXE、APK、浏览器扩展或所谓解锁器。',
+              '如果受管网络阻止页面，应遵守组织规则，不要规避访问策略。',
+            ],
+          },
+          {
+            title: '黑屏或一直加载',
+            body:
+              '黑色画布通常说明页面脚本还没有完成，或当前来源本身加载失败。首次打开可以短暂等待，然后只刷新一次。连续刷新会把临时网络延迟伪装成游戏故障。',
+            bullets: [
+              '确认 JavaScript 已启用，标签页没有处于阅读器或纯文本模式。',
+              '关闭视频、下载任务和其他占用较高的标签页后再刷新一次。',
+              '如果确认来源允许，可暂时停用内容拦截扩展进行对照，测试后恢复。',
+              '如果只有镜像黑屏、官方来源正常，应把问题归因于镜像并停止使用。',
+            ],
+          },
+          {
+            title: '卡顿、掉帧或按键没有反应',
+            body:
+              '节奏游戏会很快暴露时序问题。先减少设备后台负载：关闭其他重页面、停止下载，并让游戏保持在前台。设备忙碌或省电模式可能让输入显得延迟，即使页面已经成功加载。',
+            bullets: [
+              '在新标签页测试，并关闭视频和其他 Canvas 较重的页面。',
+              '保持浏览器和系统处于能支持当前页面脚本的版本。',
+              '演奏时尽量不要切换标签页，后台节流可能打断动画或音频。',
+              '如果同一设备只在某个镜像卡顿，优先回到可核对的官方来源。',
+            ],
+          },
+          {
+            title: '音频延迟或音画不同步',
+            body:
+              '音频延迟可能来自输出设备、后台标签页，或页面失去音频上下文。先确认系统音量和输出设备，再让游戏回到前台并重新加载。对节奏要求高的游玩，蓝牙设备的延迟也可能比内置扬声器或有线耳机明显。',
+            bullets: [
+              '确认标签页没有静音，并选择了正确的系统输出设备。',
+              '让游戏回到前台后再刷新一次。',
+              '如果可以，比较蓝牙设备与内置扬声器或有线耳机。',
+              '如果只有第三方复制页没有声音，不要下载所谓 codec 或音频修复包。',
+            ],
+          },
+          {
+            title: '桌面端与手机端控制',
+            body:
+              '节奏操作默认应先按键盘路径理解。官方网页和不同设备不一定有相同的触控控制、屏幕比例和性能表现。手机端适合做设备检查，不应被理解为所有歌曲和控制布局都已适配。',
+            bullets: [
+              '桌面端先点击游戏区域，再按来源页面说明使用键盘。',
+              '手机端只有在页面更易阅读时再尝试横屏，不要假设一定有触控层。',
+              '如果点击没有反应，使用受支持的键盘设备或回到官方来源说明。',
+              '游玩时保持游戏区域可见，避免打开系统浮层。',
+            ],
+          },
+          {
+            title: '“Unblocked”不代表什么',
+            body:
+              '“Unblocked”是搜索标签，不代表页面官方、安全或获得授权，也不应被用来承诺绕过学校或公司的网络过滤。Luma 只提供排障和来源说明，不绕过网络控制，也不重新打包游戏。',
+            bullets: [
+              '优先选择标明创作者并能回到原始页面的来源。',
+              '避开要求安装未知扩展、可执行文件、APK 或通知权限的页面。',
+              '不要把镜像页面提供的脚本粘贴到浏览器控制台。',
+              '遇到可疑下载按钮应反馈问题，不要继续尝试。',
+            ],
+          },
+          {
+            title: '什么时候应判断是镜像的问题',
+            body:
+              '如果页面只有空白矩形、反复跳转，或游戏周围出现无关下载按钮，它就不是可靠的诊断基线。用官方来源对照一次，记录浏览器和设备，若官方正常就停止测试该镜像。',
+            bullets: [
+              '在改动多个变量前，先记录浏览器、设备类型和具体症状。',
+              '使用下方官方链接区分来源故障和本地浏览器故障。',
+              '不要把 FNF 角色、音乐、截图、HTML5 包或模组复制进 Luma 页面。',
+              '本实验不收集账号、邮箱、照片、音频或上传文件。',
+            ],
+          },
+        ],
+        recommendations: [
+          {
+            slug: 'google-snake',
+            pitch:
+              '如果当前设备不适合节奏游戏，可以先玩无需安装的标准 Google Snake。',
+          },
+          {
+            slug: 'ovo',
+            pitch:
+              '如果设备上的节奏操作不稳定，可以换成短局平台挑战，不必继续尝试随机镜像。',
+          },
+          {
+            slug: 'tunnel-rush',
+            pitch:
+              '想找可以快速重开的轻量替代项时，可以试试这款反应类网页游戏。',
+          },
+        ],
+        faqs: [
+          {
+            question: "Friday Night Funkin' 为什么黑屏？",
+            answer:
+              '先确认可核对的来源、JavaScript、干净标签页和扩展冲突。如果官方来源正常而镜像黑屏，问题更可能在镜像。',
+          },
+          {
+            question: '怎么解决 FNF 网页版卡顿？',
+            answer:
+              '关闭重标签页和下载任务，让游戏保持前台，并在同一设备对照官方来源。不要安装未知的性能修复包或脚本。',
+          },
+          {
+            question: 'FNF 音频为什么延迟？',
+            answer:
+              '检查输出设备，让游戏回到前台后重新加载，并比较蓝牙与内置扬声器或有线耳机。延迟可能来自设备而不是网页。',
+          },
+          {
+            question: 'Friday Night Funkin\' 能在手机上玩吗？',
+            answer:
+              '可以尝试在手机打开官方网页，但不要默认触控控制和桌面端一样。如果点击没有反应，应使用受支持的键盘设备或查看来源说明。',
+          },
+          {
+            question: 'Luma 是否托管 unblocked FNF 游戏？',
+            answer:
+              '不托管。Luma 提供原创排障指南并链接创作者来源，不重新托管游戏、不复制素材、不绕过网络策略，也不提供下载包。',
+          },
+        ],
+        quickAnswerLink: {
+          href: 'https://ninja-muffin24.itch.io/funkin',
+          label: '打开创作者官方 FNF 来源',
+          description:
+            '用它对照真实的网页加载问题和不可靠镜像。外部页面不由 Luma 控制。',
+        },
+        externalLinks: [
+          {
+            href: 'https://ninja-muffin24.itch.io/funkin',
+            label: "itch.io 上的 Friday Night Funkin'",
+            description:
+              '创作者公开来源页面，用于核对当前网页版本、平台说明和来源背景。',
+          },
+          {
+            href: 'https://github.com/FunkinCrew/Funkin',
+            label: 'Funkin 开源项目仓库',
+            description:
+              '公开项目来源参考；仓库代码和游戏素材可能适用不同的使用条款。',
+          },
+        ],
+        ctaLabel: '试试原创节奏对战头像',
+        ctaDescription:
+          '这是对未来原创概念的匿名兴趣测试。本实验没有注册、上传或可生成的素材。',
       },
     },
   },

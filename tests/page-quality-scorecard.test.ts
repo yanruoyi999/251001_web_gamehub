@@ -58,6 +58,17 @@ describe('page quality scorecard', () => {
     expect(row?.score).toBeGreaterThanOrEqual(80);
   });
 
+  it('honors explicit noindex guide policy in the scorecard', () => {
+    const row = buildPageQualityRows().find(
+      (candidate) => candidate.path === '/guides/friday-night-funkin-loading-guide',
+    );
+
+    expect(row).toMatchObject({
+      indexable: false,
+      action: 'noindex',
+    });
+  });
+
   it('writes exactly one trailing newline', () => {
     const report = buildReport('2026-07-17T00:00:00.000Z');
 

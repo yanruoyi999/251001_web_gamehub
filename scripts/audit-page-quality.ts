@@ -114,15 +114,18 @@ function scoreGuide(page: ReturnType<typeof getSeoLandingPages>[number]): PageQu
   }
 
   const finalScore = clampScore(score);
+  const indexable = page.indexable !== false;
   return {
     path: `/guides/${page.slug}`,
     type: 'guide',
     score: finalScore,
-    indexable: true,
-    action: finalScore >= 80 ? 'keep' : 'improve',
+    indexable,
+    action: !indexable ? 'noindex' : finalScore >= 80 ? 'keep' : 'improve',
     reason: reasons.join('; ') || 'Original guide has metadata, sections, FAQ, related links, and source/play context.',
     nextStep:
-      finalScore >= 80
+      !indexable
+        ? 'Keep noindex,follow and exclude from sitemap while the experiment is being evaluated.'
+        : finalScore >= 80
         ? 'Keep indexed; revisit only when GSC exposes a sharper long-tail query.'
         : 'Add original sections, FAQs, related links, and source/play context before keeping as an index target.',
   };

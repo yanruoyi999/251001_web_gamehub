@@ -189,7 +189,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6,
     },
   ];
-  const guides = getSeoLandingPages();
+  const guides = getSeoLandingPages().filter((guide) => guide.indexable !== false);
   const categories = getCategoryEntries();
   const tags = getTagEntries();
   const sitemapGames = await getSitemapGames();

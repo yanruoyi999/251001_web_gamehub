@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { GamePlayerFacade } from '@/components/game/game-player-facade';
+import { IntentCta } from '@/components/seo/intent-cta';
 import {
   getSeoLandingPage,
   getSeoLandingPages,
@@ -94,6 +95,14 @@ export async function generateMetadata({
       description,
       images: DEFAULT_TWITTER_IMAGES,
     },
+    ...(page.indexable === false
+      ? {
+          robots: {
+            index: false,
+            follow: true,
+          },
+        }
+      : {}),
   };
 }
 
@@ -545,18 +554,31 @@ export default async function GuidePage({ params }: GuidePageProps) {
         </dl>
       </section>
 
-      <section className="mt-12 text-center">
-        <Button
-          asChild
-          size="lg"
-          className="bg-primary text-primary-foreground shadow-md transition hover:bg-primary/90"
-        >
-          <Link href={getLocalizedPath(locale, '/games')}>
-            {content.ctaLabel}
-          </Link>
-        </Button>
-        <p className="mt-3 text-sm text-muted-foreground">{content.ctaDescription}</p>
-      </section>
+      {page.intentCta ? (
+        <IntentCta
+          anchorId={page.intentCta.anchorId}
+          clickEvent={page.intentCta.clickEvent}
+          hookId={page.intentCta.hookId}
+          label={content.ctaLabel}
+          locale={locale}
+          pagePath={getLocalizedPath(locale, `/guides/${page.slug}`)}
+          viewEvent={page.intentCta.viewEvent}
+          description={content.ctaDescription}
+        />
+      ) : (
+        <section className="mt-12 text-center">
+          <Button
+            asChild
+            size="lg"
+            className="bg-primary text-primary-foreground shadow-md transition hover:bg-primary/90"
+          >
+            <Link href={getLocalizedPath(locale, '/games')}>
+              {content.ctaLabel}
+            </Link>
+          </Button>
+          <p className="mt-3 text-sm text-muted-foreground">{content.ctaDescription}</p>
+        </section>
+      )}
 
       {relatedPages.length > 0 ? (
         <section className="mt-16 border-t border-border pt-10">
