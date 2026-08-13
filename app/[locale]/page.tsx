@@ -180,6 +180,8 @@ export default async function HomePage({
             </div>
           </header>
 
+          <DailyRecommendation locale={locale} surface="home" />
+
           <section aria-labelledby="curated-starts" className="mt-12">
             <div className="mb-5 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
               <div>
@@ -235,8 +237,6 @@ export default async function HomePage({
               ))}
             </div>
           </section>
-
-          <DailyRecommendation locale={locale} surface="home" />
 
           <section className="mt-20 space-y-6 text-left">
             <h2 className="text-center text-3xl font-semibold text-foreground md:text-4xl">

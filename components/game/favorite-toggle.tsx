@@ -15,7 +15,7 @@ interface FavoriteToggleButtonProps {
   };
   fallbackKey?: string;
   gameSlug?: string | null;
-  surface?: 'game_detail' | 'game_list';
+  surface?: 'daily_recommendation' | 'game_detail' | 'game_list';
   storageMode?: 'local' | 'remote-with-local-fallback';
 }
 
@@ -165,11 +165,13 @@ export function FavoriteToggleButton({
       aria-label={isFavorite ? labels.unfavorite : labels.favorite}
       disabled={isPending}
       onClick={handleToggle}
+      data-favorite-toggle
+      data-favorite-surface={surface}
       className={clsx(
-        'w-[120px] justify-center gap-1 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide',
+        'min-h-10 min-w-[116px] justify-center gap-2 rounded-md border px-3 py-2 text-sm font-semibold',
         isFavorite
-          ? 'bg-rose-100 text-rose-700 hover:bg-rose-100'
-          : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+          ? 'border-rose-300 bg-rose-100 text-rose-800 hover:bg-rose-100 dark:border-rose-700 dark:bg-rose-950/50 dark:text-rose-200'
+          : 'border-emerald-700/35 bg-background text-emerald-800 hover:bg-emerald-50 dark:border-emerald-400/40 dark:text-emerald-300 dark:hover:bg-emerald-950/30'
       )}
     >
       <span aria-hidden>{isFavorite ? '♥' : '♡'}</span>

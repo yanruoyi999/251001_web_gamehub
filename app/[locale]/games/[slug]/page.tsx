@@ -523,8 +523,8 @@ export default async function GamePage({ params }: GamePageProps) {
   const recentRatings = ratingsResult.ratings;
 
   const favoriteLabels = {
-    favorite: locale === 'zh' ? '收藏' : 'Favorite',
-    unfavorite: locale === 'zh' ? '取消收藏' : 'Unfavorite',
+    favorite: locale === 'zh' ? '收藏游戏' : 'Save game',
+    unfavorite: locale === 'zh' ? '已收藏' : 'Saved',
   };
 
   const canFavorite = game.status === 'active';
@@ -715,6 +715,15 @@ export default async function GamePage({ params }: GamePageProps) {
               </CardContent>
             </Card>
 
+            <div className="mb-8 lg:hidden">
+              <DailyRecommendation
+                locale={locale as Locale}
+                surface="game_detail"
+                excludeSlug={game.slug}
+                placement="mobile"
+              />
+            </div>
+
             {editorialContent ? (
               <Card className="mb-8">
                 <CardHeader>
@@ -892,6 +901,15 @@ export default async function GamePage({ params }: GamePageProps) {
 
           {/* Sidebar */}
           <div className="space-y-6">
+            <div className="hidden lg:block">
+              <DailyRecommendation
+                locale={locale as Locale}
+                surface="game_detail"
+                excludeSlug={game.slug}
+                placement="desktop"
+              />
+            </div>
+
             {/* Game Info */}
             <Card>
               <CardHeader>
@@ -1070,8 +1088,6 @@ export default async function GamePage({ params }: GamePageProps) {
                 )}
               </CardContent>
             </Card>
-
-            <DailyRecommendation locale={locale as Locale} surface="game_detail" excludeSlug={game.slug} />
 
             {/* Similar Games */}
             <Card>
