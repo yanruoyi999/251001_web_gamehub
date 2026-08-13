@@ -1889,3 +1889,11 @@
 - 本地修改：`components/game/game-player-facade.tsx` 为 Play 增加同站原生 `fallbackHref`，正常 hydration 时仍原位加载 iframe，hydration 延迟或不可用时导航至本地化游戏页；`app/[locale]/guides/[slug]/page.tsx` 为三个锚点目标增加焦点能力并传入 fallback。同步更新 `tests/e2e/mobile-disclosure.spec.ts`、`tests/e2e/game-browsing.spec.ts` 与 `tests/game-player-interaction-resilience.test.ts`。
 - 验证结果：TDD 修复前用例按预期失败，修复后无 JavaScript 移动用例 3/3；针对性 Vitest 3 files / 11 tests、完整 Vitest 56 files / 180 tests、Playwright production mode 13/13、type-check、内链、`pnpm audit:prod` 和 Next.js 15.5.21 production build 均通过。Lint 0 errors / 98 个既有 console warnings，构建 133 个静态页；390x844 与 1440x1000 均无溢出或页面错误，锚点获得焦点，启用 JavaScript 的 Play 原位只加载 1 个 iframe。
 - 发布边界：修复位于隔离工作树 `/private/tmp/luma-clarity-first-click-20260813`、分支 `codex/luma-clarity-first-click-20260813`，基于 `origin/main@6292adbd50d115085c0433c0d5ea68e643d00eef`。主工作树既有 Spend Bill Gates 三个未提交文件未修改、未暂存。本轮未 commit、push、部署、提交 GSC 或修改分析后台；准确状态为本地修复完成，等待部署/数据验证。
+
+### T-158 发布回执（2026-08-13）
+
+- 版本闭环：隔离分支提交 `dc67d30` 已推送，并从共同基线 `6292adb` 以 `--ff-only` 合入 GitHub `main`；本地 main、`origin/main` 与 GitHub API 均指向同一代码提交。原工作树的 Spend Bill Gates 三个未提交文件未修改、未暂存、未进入发布。
+- 发布门禁：本地 lint 0 errors / 98 个既有 warnings，type-check、内链、56 files / 180 Vitest tests、生产依赖审计、133 页 Next.js 15.5.21 build、CI 模式 13/13 Playwright 和 `git diff --check` 通过。一次 npm registry `ECONNRESET` 重试后成功；一次高负载下 dev server 并发 E2E 抖动在生产 `next start` 单 worker 与 GitHub CI 中均未复现，未据此修改健康代码。
+- GitHub/Vercel：Actions `31658308298` 对 `dc67d30` 为 success；Vercel Production `dpl_Dz5vrag7KwhXjivpcsQp2JNGBSf1` Ready，`lumagamehub.com` 与 `www.lumagamehub.com` 均已接管。
+- 生产验收：Google Snake Mods 指南、Google Snake 游戏页、robots、sitemap、health 和 search 均 HTTP 200；SSR Play 控件包含 `/en/games/google-snake` fallback，移动无 JavaScript 3/3 与游戏全屏 1/1 通过。目标页 canonical 正确且无 noindex；robots 指向主 sitemap；sitemap 为 206 URLs 并包含目标指南；health 为 `status=ok`、catalogue/cache 均为 local。
+- 数据边界：本次未修改 GA4、GSC、Clarity 或 Vercel Analytics 后台，也未提交 GSC sitemap。产品修复已经上线；dead click、quick back、`game_play_start` 与 `game_fullscreen_toggle` 的实际变化仍需等待 Clarity 配额恢复和新的真实用户窗口验证。
