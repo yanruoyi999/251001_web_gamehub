@@ -6,6 +6,7 @@ import { getMessages, getTranslations } from 'next-intl/server';
 
 import { getLocalizedPath, locales, type Locale } from '@/i18n/config';
 import { serializeJsonLd } from '@/lib/utils/json-ld';
+import { DailyRecommendation } from '@/components/retention/daily-recommendation';
 
 type FaqItem = { question: string; answer: string };
 
@@ -234,6 +235,8 @@ export default async function HomePage({
               ))}
             </div>
           </section>
+
+          <DailyRecommendation locale={locale} surface="home" />
 
           <section className="mt-20 space-y-6 text-left">
             <h2 className="text-center text-3xl font-semibold text-foreground md:text-4xl">

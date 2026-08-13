@@ -1897,3 +1897,11 @@
 - GitHub/Vercel：Actions `31658308298` 对 `dc67d30` 为 success；Vercel Production `dpl_Dz5vrag7KwhXjivpcsQp2JNGBSf1` Ready，`lumagamehub.com` 与 `www.lumagamehub.com` 均已接管。
 - 生产验收：Google Snake Mods 指南、Google Snake 游戏页、robots、sitemap、health 和 search 均 HTTP 200；SSR Play 控件包含 `/en/games/google-snake` fallback，移动无 JavaScript 3/3 与游戏全屏 1/1 通过。目标页 canonical 正确且无 noindex；robots 指向主 sitemap；sitemap 为 206 URLs 并包含目标指南；health 为 `status=ok`、catalogue/cache 均为 local。
 - 数据边界：本次未修改 GA4、GSC、Clarity 或 Vercel Analytics 后台，也未提交 GSC sitemap。产品修复已经上线；dead click、quick back、`game_play_start` 与 `game_fullscreen_toggle` 的实际变化仍需等待 Clarity 配额恢复和新的真实用户窗口验证。
+
+### T-159 留存实验：今日推荐、无账号收藏与行为埋点（2026-08-13）
+
+- 目标：针对“500 访客约 10 个回访”的待核实信号，先做不需要登录、积分或 PII 的 14 天留存实验；该比例尚未被 GA4 cohort 口径确认，不能当作正式留存率。
+- 实际改动：新增 `lib/retention/daily-recommendation.ts` 和 `components/retention/daily-recommendation.tsx`，按 Asia/Shanghai 日期在首页与游戏详情页展示稳定的今日推荐；推荐只链接到现有 Luma 游戏详情页，不新增低证据游戏和外部账号流程。
+- 收藏与埋点：保留现有 localStorage/匿名服务端回退收藏机制，为游戏列表和详情页补充 `favorite_add`、`favorite_remove`，并补充 `recommendation_view`、`recommendation_click`；参数仅包含游戏 slug、推荐 ID、日期、页面 surface 和存储模式，不采集邮箱、账号或上传内容。
+- 验证范围：新增每日推荐稳定性、上海日期切换、排除当前游戏和埋点契约测试；提交前执行完整页面质量、内链、类型、Vitest、lint、生产构建、diff-check 与桌面/移动浏览器验收。
+- 数据边界：部署后仅观察 `recommendation_view`、`recommendation_click`、`favorite_add`、GA4 Returning Users/D1/D7；事件到达不等于回访，下一轮需按同一窗口区分 users、sessions、consent 和回访用户。
