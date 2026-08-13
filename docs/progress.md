@@ -1975,3 +1975,11 @@
 - 修复范围：首页推荐提到主按钮之后，按上海日期从 6 个已核心收录游戏中稳定轮换 3 张卡；每张卡直接显示“收藏游戏”。详情页收藏改为高对比边框按钮；桌面推荐位于右栏顶部，手机推荐位于播放器之后。
 - 埋点边界：保留 `recommendation_view`、`recommendation_click`和 `favorite_add/remove`；桌面与手机响应式实例只有当前视口实例会上报推荐曝光，不因 CSS 隐藏副本重复计数。
 - 验证结果：TDD 失败用例先复现了旧布局；修复后 59 files / 195 tests、type-check、内链、lint 0 errors / 98 个既有 warnings、Next.js 15.5.21 production build 和 `git diff --check` 通过。本地生产包在 1440x900 和 390x844 下均无横向溢出；首页显示 3 张推荐和 3 个收藏按钮，收藏后 `aria-pressed=true` 且 localStorage 写入正确；详情页桌面只显示 1 个右栏实例，手机只显示 1 个播放器后实例。
+
+### T-161 留存入口 hydration 与首击可用性修复（2026-08-13）
+
+- 生产复核：主域已能看到首页 3 张推荐和收藏按钮，但首次交互检查捕获 React 418 hydration mismatch；单纯检查静态 HTML、元素数量或 HTTP 200 会漏掉该问题。收藏按钮在 hydration 完成后可写入 localStorage，但错误期间的真实首击存在被丢弃风险。
+- 直接根因：默认中文页面在静态构建中使用内部 `/zh` 路径，浏览器公开 URL 使用无前缀 `/`。Header 用原始 `usePathname()` 判断 active 状态，导致服务端和浏览器生成不同 class/下划线；全局 Spend Bill Gates Money 上下文入口也只识别公开路径，导致服务端缺少整个 `aside`、客户端再插入。首页和指定中文指南因此发生结构不一致。
+- 修复范围：`i18n/config.ts` 新增默认语言公开路径归一化，Header 的桌面/移动 active 状态统一使用归一化路径；上下文入口同时识别 `/zh` 与无前缀中文路径。每日推荐改用服务端提供的上海日期快照，首页按 24 小时 ISR 更新，避免浏览器在首屏 hydration 中自行切换推荐集合。
+- 回归验证：新增默认语言路径、上下文入口路径等价和推荐日期快照测试；完整 Vitest 61 files / 201 tests、Next.js 15.5.21 production build 135/135、内链、类型、lint 与 `git diff --check` 通过。本地 production 在首页、OvO 详情和 Google Snake Mods 指南均为 0 hydration/page error；1440x900 与 390x844 无横向溢出，首页 3 张推荐/3 个收藏、详情当前视口 1 个推荐实例均可见，收藏物理点击后 `aria-pressed=true` 且 localStorage 写入正确。
+- 数据边界：本地交互验证使用遥测隔离，不代表 GA4/Clarity 已收到真实用户事件；部署后仍需复查主域 hydration error、首击收藏和 `recommendation_view/click`、`favorite_add` 的后续真实窗口。

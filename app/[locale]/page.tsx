@@ -5,6 +5,7 @@ import { ArrowRight, Check } from 'lucide-react';
 import { getMessages, getTranslations } from 'next-intl/server';
 
 import { getLocalizedPath, locales, type Locale } from '@/i18n/config';
+import { getShanghaiDateKey } from '@/lib/retention/daily-recommendation';
 import { serializeJsonLd } from '@/lib/utils/json-ld';
 import { DailyRecommendation } from '@/components/retention/daily-recommendation';
 
@@ -40,6 +41,7 @@ interface CuratedEntry {
 }
 
 export const dynamic = 'force-static';
+export const revalidate = 86_400;
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -66,6 +68,7 @@ export default async function HomePage({
   const seoPoints = Array.isArray(seoSection.points) ? seoSection.points : [];
   const evilPoints = Array.isArray(evilSection.points) ? evilSection.points : [];
   const faqItems = Array.isArray(faqSection.items) ? faqSection.items : [];
+  const recommendationDateKey = getShanghaiDateKey();
   const curatedEntries: CuratedEntry[] = locale === 'zh'
     ? [
         {
@@ -180,7 +183,11 @@ export default async function HomePage({
             </div>
           </header>
 
-          <DailyRecommendation locale={locale} surface="home" />
+          <DailyRecommendation
+            dateKey={recommendationDateKey}
+            locale={locale}
+            surface="home"
+          />
 
           <section aria-labelledby="curated-starts" className="mt-12">
             <div className="mb-5 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">

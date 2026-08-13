@@ -8,6 +8,14 @@ export function isLocale(value: string | undefined | null): value is Locale {
   return Boolean(value && (locales as readonly string[]).includes(value));
 }
 
+export function normalizePublicPathname(pathname: string): string {
+  if (pathname === `/${defaultLocale}`) return '/';
+  if (pathname.startsWith(`/${defaultLocale}/`)) {
+    return pathname.slice(defaultLocale.length + 1) || '/';
+  }
+  return pathname;
+}
+
 export function getLocalizedPath(locale: Locale | string, pathname = ''): string {
   const resolvedLocale = isLocale(locale) ? locale : defaultLocale;
   const normalizedPath =

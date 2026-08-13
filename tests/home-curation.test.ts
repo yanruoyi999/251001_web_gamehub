@@ -17,7 +17,7 @@ const featuredScreenshots = [
 describe('homepage curation', () => {
   it('puts real high-signal game and guide cards in the hero', () => {
     expect(homeSource).toContain('curatedEntries');
-    expect(homeSource).toContain('<DailyRecommendation locale={locale} surface="home" />');
+    expect(homeSource).toContain('<DailyRecommendation');
     expect(homeSource).toContain('/guides/google-snake-mods');
     expect(homeSource).toContain('/guides/ovo-walkthrough');
     expect(homeSource).toContain('/guides/drive-mad-level-tips');
