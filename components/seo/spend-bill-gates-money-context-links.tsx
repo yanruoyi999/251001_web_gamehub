@@ -90,12 +90,14 @@ const guideCopy: Record<string, Record<Locale, ContextCopy>> = {
   },
 };
 
-function resolveContext(pathname: string): {
+export function resolveSpendBillContext(pathname: string): {
   locale: Locale;
   copy: ContextCopy;
 } | null {
-  const locale: Locale = pathname === '/en' || pathname.startsWith('/en/') ? 'en' : 'zh';
-  const localizedPrefix = locale === 'en' ? '/en' : '';
+  const hasEnglishPrefix = pathname === '/en' || pathname.startsWith('/en/');
+  const hasChinesePrefix = pathname === '/zh' || pathname.startsWith('/zh/');
+  const locale: Locale = hasEnglishPrefix ? 'en' : 'zh';
+  const localizedPrefix = hasEnglishPrefix ? '/en' : hasChinesePrefix ? '/zh' : '';
   const pathWithoutLocale = pathname.slice(localizedPrefix.length) || '/';
 
   if (pathWithoutLocale === '/') {
@@ -116,7 +118,7 @@ function resolveContext(pathname: string): {
 
 export function SpendBillGatesMoneyContextLinks() {
   const pathname = usePathname();
-  const context = resolveContext(pathname);
+  const context = resolveSpendBillContext(pathname);
 
   if (!context) return null;
 

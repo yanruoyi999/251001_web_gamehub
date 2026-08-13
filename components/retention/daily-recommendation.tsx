@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, CalendarDays } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { FavoriteToggleButton } from '@/components/game/favorite-toggle';
 import type { Locale } from '@/i18n/config';
@@ -11,36 +11,31 @@ import { getLocalizedPath } from '@/i18n/config';
 import { trackInteraction } from '@/lib/analytics/events';
 import {
   getDailyRecommendations,
-  getShanghaiDateKey,
   type DailyRecommendationEntry,
 } from '@/lib/retention/daily-recommendation';
 
 interface DailyRecommendationProps {
+  dateKey: string;
   excludeSlug?: string;
   locale: Locale;
   placement?: 'default' | 'desktop' | 'mobile';
   surface: 'home' | 'game_detail';
 }
 
-const SERVER_FALLBACK_DATE_KEY = 'server-fallback';
-
 export function DailyRecommendation({
+  dateKey,
   excludeSlug,
   locale,
   placement = 'default',
   surface,
 }: DailyRecommendationProps) {
   const recommendationCount = surface === 'home' ? 3 : 1;
-  const [dateKey, setDateKey] = useState<string | null>(null);
   const [placementActive, setPlacementActive] = useState(placement === 'default');
-  const [recommendations, setRecommendations] = useState<DailyRecommendationEntry[]>(() =>
-    getDailyRecommendations(SERVER_FALLBACK_DATE_KEY, excludeSlug, recommendationCount),
+  const recommendations = useMemo(
+    () => getDailyRecommendations(dateKey, excludeSlug, recommendationCount),
+    [dateKey, excludeSlug, recommendationCount],
   );
   const trackedViews = useRef(new Set<string>());
-
-  useEffect(() => {
-    setDateKey(getShanghaiDateKey());
-  }, []);
 
   useEffect(() => {
     if (placement === 'default') {
@@ -59,12 +54,7 @@ export function DailyRecommendation({
   }, [placement]);
 
   useEffect(() => {
-    if (!dateKey) return;
-    setRecommendations(getDailyRecommendations(dateKey, excludeSlug, recommendationCount));
-  }, [dateKey, excludeSlug, recommendationCount]);
-
-  useEffect(() => {
-    if (!dateKey || !placementActive) return;
+    if (!placementActive) return;
 
     recommendations.forEach((recommendation) => {
       const trackingKey = `${dateKey}:${surface}:${recommendation.slug}`;
@@ -83,7 +73,7 @@ export function DailyRecommendation({
     trackInteraction('recommendation_click', {
       recommendation_id: recommendation.id,
       recommendation_slug: recommendation.slug,
-      recommendation_date: dateKey ?? SERVER_FALLBACK_DATE_KEY,
+      recommendation_date: dateKey,
       recommendation_surface: surface,
     });
   };

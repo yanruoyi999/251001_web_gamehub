@@ -12,8 +12,8 @@ const recommendationSource = await readFile(
 
 describe('retention experiment wiring', () => {
   it('places the homepage recommendation before the existing curated cards', () => {
-    expect(homeSource).toContain('<DailyRecommendation locale={locale} surface="home" />');
-    expect(homeSource.indexOf('<DailyRecommendation locale={locale} surface="home" />')).toBeLessThan(
+    expect(homeSource).toContain('<DailyRecommendation');
+    expect(homeSource.indexOf('<DailyRecommendation')).toBeLessThan(
       homeSource.indexOf('<section aria-labelledby="curated-starts"'),
     );
   });
@@ -40,6 +40,15 @@ describe('retention experiment wiring', () => {
     expect(recommendationSource).toContain('<FavoriteToggleButton');
     expect(recommendationSource).toContain('surface="daily_recommendation"');
     expect(recommendationSource).toContain('storageMode="local"');
+  });
+
+  it('hydrates recommendations from the same server-provided date snapshot', () => {
+    expect(recommendationSource).toContain('dateKey: string');
+    expect(recommendationSource).not.toContain('setDateKey');
+    expect(recommendationSource).not.toContain('SERVER_FALLBACK_DATE_KEY');
+    expect(homeSource).toContain('dateKey={recommendationDateKey}');
+    expect(homeSource).toContain('export const revalidate = 86_400');
+    expect(gameSource).toContain('dateKey={recommendationDateKey}');
   });
 
   it('tracks recommendation view and click without collecting identity fields', () => {

@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import { Menu, X } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 
-import { getLocalizedPath, isLocale } from '@/i18n/config';
+import { getLocalizedPath, isLocale, normalizePublicPathname } from '@/i18n/config';
 import { SearchInput } from '@/components/game/search-input';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { trackEvent } from '@/lib/gtag';
@@ -64,6 +64,7 @@ export function Header() {
   const t = useTranslations('nav');
   const activeLocale = useLocale();
   const pathname = usePathname();
+  const publicPathname = normalizePublicPathname(pathname);
   const segments = pathname.split('/').filter(Boolean);
   const currentLocaleSegment = isLocale(segments[0])
     ? segments[0]
@@ -104,7 +105,7 @@ export function Header() {
         <nav className="hidden items-center gap-8 md:flex">
           {navItems.map((item) => {
             const itemHref = getLocalizedPath(currentLocaleSegment, item.href);
-            const isActive = pathname === itemHref;
+            const isActive = publicPathname === itemHref;
             return (
               <Link
                 key={item.href}
@@ -192,7 +193,7 @@ export function Header() {
                     currentLocaleSegment,
                     item.href
                   );
-                  const isActive = pathname === itemHref;
+                  const isActive = publicPathname === itemHref;
 
                   return (
                     <Link

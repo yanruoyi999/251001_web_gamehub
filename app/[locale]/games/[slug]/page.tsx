@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { FavoriteToggleButton } from '@/components/game/favorite-toggle';
 import { GamePlayerFacade } from '@/components/game/game-player-facade';
 import { DailyRecommendation } from '@/components/retention/daily-recommendation';
+import { getShanghaiDateKey } from '@/lib/retention/daily-recommendation';
 import { GameService, RatingService } from '@/services';
 import { getMockGameBySlug, mockGames } from '@/lib/mock-games';
 import type { GameDetail } from '@/services/game.service';
@@ -295,6 +296,7 @@ export async function generateMetadata({ params }: GamePageProps): Promise<Metad
 
 export default async function GamePage({ params }: GamePageProps) {
   const { locale, slug } = await params;
+  const recommendationDateKey = getShanghaiDateKey();
   const redirectTarget = getGameRedirectTarget(slug);
 
   if (redirectTarget) {
@@ -717,6 +719,7 @@ export default async function GamePage({ params }: GamePageProps) {
 
             <div className="mb-8 lg:hidden">
               <DailyRecommendation
+                dateKey={recommendationDateKey}
                 locale={locale as Locale}
                 surface="game_detail"
                 excludeSlug={game.slug}
@@ -903,6 +906,7 @@ export default async function GamePage({ params }: GamePageProps) {
           <div className="space-y-6">
             <div className="hidden lg:block">
               <DailyRecommendation
+                dateKey={recommendationDateKey}
                 locale={locale as Locale}
                 surface="game_detail"
                 excludeSlug={game.slug}
