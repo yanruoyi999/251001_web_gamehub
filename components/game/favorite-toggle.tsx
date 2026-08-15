@@ -1,10 +1,14 @@
-"use client";
+'use client';
 
 import { useEffect, useState, useTransition } from 'react';
 import clsx from 'clsx';
 
 import { Button } from '@/components/ui/button';
 import { trackInteraction } from '@/lib/analytics/events';
+import {
+  readLocalFavorites,
+  updateLocalFavorite,
+} from '@/lib/retention/local-favorites';
 
 interface FavoriteToggleButtonProps {
   gameId: number;
@@ -15,56 +19,12 @@ interface FavoriteToggleButtonProps {
   };
   fallbackKey?: string;
   gameSlug?: string | null;
-  surface?: 'daily_recommendation' | 'game_detail' | 'game_list';
+  surface?:
+    | 'daily_recommendation'
+    | 'game_detail'
+    | 'game_list'
+    | 'saved_games';
   storageMode?: 'local' | 'remote-with-local-fallback';
-}
-
-const LOCAL_STORAGE_KEY = 'gamehub:favorites';
-
-function readLocalFavorites(): Set<string> {
-  if (typeof window === 'undefined') {
-    return new Set();
-  }
-
-  try {
-    const raw = window.localStorage.getItem(LOCAL_STORAGE_KEY);
-    if (!raw) return new Set();
-
-    const parsed = JSON.parse(raw);
-    if (Array.isArray(parsed)) {
-      return new Set(parsed.filter((item) => typeof item === 'string'));
-    }
-    return new Set();
-  } catch (error) {
-    console.error('解析本地收藏数据失败', error);
-    return new Set();
-  }
-}
-
-function writeLocalFavorites(values: Set<string>) {
-  if (typeof window === 'undefined') {
-    return;
-  }
-
-  try {
-    window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(Array.from(values)));
-  } catch (error) {
-    console.error('写入本地收藏数据失败', error);
-  }
-}
-
-function updateLocalFavorite(key: string, nextState: boolean) {
-  if (typeof window === 'undefined') {
-    return;
-  }
-
-  const favorites = readLocalFavorites();
-  if (nextState) {
-    favorites.add(key);
-  } else {
-    favorites.delete(key);
-  }
-  writeLocalFavorites(favorites);
 }
 
 export function FavoriteToggleButton({

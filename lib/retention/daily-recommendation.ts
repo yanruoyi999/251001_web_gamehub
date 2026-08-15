@@ -26,17 +26,17 @@ export const DAILY_RECOMMENDATION_POOL: readonly DailyRecommendationEntry[] = [
     action: { zh: '开始游玩', en: 'Play now' },
   },
   {
-    id: 'ovo',
-    gameId: 127,
-    slug: 'ovo',
-    image: '/game-screenshots/ovo.png',
-    title: { zh: 'OvO', en: 'OvO' },
+    id: 'spend-bill-gates-money',
+    gameId: 0,
+    slug: 'spend-bill-gates-money',
+    image: '/og/spend-bill-gates-money',
+    title: { zh: '花光比尔·盖茨的钱', en: 'Spend Bill Gates Money' },
     description: {
-      zh: '用滑铲、蹬墙跳和俯冲跳练习精准平台操作。',
-      en: 'Practice precise platforming with slides, wall jumps, and dive jumps.',
+      zh: '用买入、撤销和消费分类，体验一场完全原创的1000亿美元模拟。',
+      en: 'Use buy, remove, and spending categories in Luma’s original $100 billion simulator.',
     },
-    eyebrow: { zh: '精准跑酷', en: 'Precision parkour' },
-    action: { zh: '打开游戏', en: 'Open game' },
+    eyebrow: { zh: 'Luma 原创', en: 'Luma original' },
+    action: { zh: '开始消费', en: 'Start spending' },
   },
   {
     id: 'drive-mad',
@@ -95,30 +95,39 @@ export const DAILY_RECOMMENDATION_POOL: readonly DailyRecommendationEntry[] = [
 function hashDateKey(dateKey: string) {
   return Array.from(dateKey).reduce(
     (total, character, index) => total + character.charCodeAt(0) * (index + 1),
-    0,
+    0
   );
 }
 
 export function getDailyRecommendation(
   dateKey: string,
-  excludeSlug?: string,
+  excludeSlug?: string
 ): DailyRecommendationEntry {
-  return getDailyRecommendations(dateKey, excludeSlug, 1)[0] ?? DAILY_RECOMMENDATION_POOL[0];
+  return (
+    getDailyRecommendations(dateKey, excludeSlug, 1)[0] ??
+    DAILY_RECOMMENDATION_POOL[0]
+  );
 }
 
 export function getDailyRecommendations(
   dateKey: string,
   excludeSlug?: string,
-  limit = 3,
+  limit = 3
 ): DailyRecommendationEntry[] {
-  const candidates = DAILY_RECOMMENDATION_POOL.filter((entry) => entry.slug !== excludeSlug);
-  const available = candidates.length > 0 ? candidates : DAILY_RECOMMENDATION_POOL;
-  const requestedCount = Math.max(1, Math.min(Math.floor(limit), available.length));
+  const candidates = DAILY_RECOMMENDATION_POOL.filter(
+    entry => entry.slug !== excludeSlug
+  );
+  const available =
+    candidates.length > 0 ? candidates : DAILY_RECOMMENDATION_POOL;
+  const requestedCount = Math.max(
+    1,
+    Math.min(Math.floor(limit), available.length)
+  );
   const startIndex = hashDateKey(dateKey) % available.length;
 
   return Array.from(
     { length: requestedCount },
-    (_, offset) => available[(startIndex + offset) % available.length],
+    (_, offset) => available[(startIndex + offset) % available.length]
   ).filter((entry): entry is DailyRecommendationEntry => Boolean(entry));
 }
 
@@ -129,6 +138,6 @@ export function getShanghaiDateKey(date = new Date()) {
     month: '2-digit',
     day: '2-digit',
   }).formatToParts(date);
-  const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+  const values = Object.fromEntries(parts.map(part => [part.type, part.value]));
   return `${values.year}-${values.month}-${values.day}`;
 }

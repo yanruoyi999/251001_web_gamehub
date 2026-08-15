@@ -21,17 +21,18 @@ export default function middleware(request: NextRequest) {
   }
 
   const pathLocale = url.pathname.split('/')[1];
-  const locale = locales.find((candidate) => candidate === pathLocale) ?? defaultLocale;
+  const locale =
+    locales.find(candidate => candidate === pathLocale) ?? defaultLocale;
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set('x-next-intl-locale', locale);
 
-  const response = intlMiddleware(new NextRequest(request, { headers: requestHeaders }));
+  const response = intlMiddleware(
+    new NextRequest(request, { headers: requestHeaders })
+  );
   response.headers.set('Content-Language', locale);
   return response;
 }
 
 export const config = {
-  matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico|.*\\.\\w+$).*)',
-  ],
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|og/|.*\\.\\w+$).*)'],
 };

@@ -44,7 +44,7 @@ export const dynamic = 'force-static';
 export const revalidate = 86_400;
 
 export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
+  return locales.map(locale => ({ locale }));
 }
 
 export default async function HomePage({
@@ -64,85 +64,96 @@ export default async function HomePage({
   const evilSection = homeMessages.evilSection ?? {};
   const faqSection = homeMessages.faq ?? {};
 
-  const heroTitle = typeof homeMessages.title === 'string' ? homeMessages.title : t('title');
+  const heroTitle =
+    typeof homeMessages.title === 'string' ? homeMessages.title : t('title');
   const seoPoints = Array.isArray(seoSection.points) ? seoSection.points : [];
-  const evilPoints = Array.isArray(evilSection.points) ? evilSection.points : [];
+  const evilPoints = Array.isArray(evilSection.points)
+    ? evilSection.points
+    : [];
   const faqItems = Array.isArray(faqSection.items) ? faqSection.items : [];
   const recommendationDateKey = getShanghaiDateKey();
-  const curatedEntries: CuratedEntry[] = locale === 'zh'
-    ? [
-        {
-          href: getLocalizedPath(locale, '/guides/google-snake-mods'),
-          image: '/game-screenshots/google-snake.png',
-          eyebrow: '当前热门指南',
-          title: 'Google Snake Mods',
-          description: '先分清模组网页版、Loader 和标准 Snake，避免失效书签与未知下载。',
-          action: '查看安全选择',
-        },
-        {
-          href: getLocalizedPath(locale, '/guides/ovo-walkthrough'),
-          image: '/game-screenshots/ovo.png',
-          eyebrow: '跑酷攻略',
-          title: 'OvO',
-          description: '用滑铲、蹬墙跳和俯冲跳拆解容易卡住的精准平台关卡。',
-          action: '打开 OvO 攻略',
-        },
-        {
-          href: getLocalizedPath(locale, '/guides/drive-mad-level-tips'),
-          image: '/game-screenshots/drive-mad.png',
-          eyebrow: '关卡技巧',
-          title: 'Drive Mad',
-          description: '按翻车、落地、桥梁和跳跃问题查找具体的油门与平衡方法。',
-          action: '查看关卡技巧',
-        },
-        {
-          href: getLocalizedPath(locale, '/games/solitaire'),
-          image: '/game-screenshots/solitaire.png',
-          eyebrow: '直接游玩',
-          title: 'Solitaire',
-          description: '无需安装或注册，打开后即可开始一局经典纸牌。',
-          action: '开始 Solitaire',
-        },
-      ]
-    : [
-        {
-          href: getLocalizedPath(locale, '/guides/google-snake-mods'),
-          image: '/game-screenshots/google-snake.png',
-          eyebrow: 'Popular guide',
-          title: 'Google Snake Mods',
-          description: 'Compare the maintained mod page, loader route, and clearly labelled standard Snake fallback.',
-          action: 'Choose a safe route',
-        },
-        {
-          href: getLocalizedPath(locale, '/guides/ovo-walkthrough'),
-          image: '/game-screenshots/ovo.png',
-          eyebrow: 'Parkour walkthrough',
-          title: 'OvO',
-          description: 'Use slides, wall jumps, and dive jumps to solve the precision rooms that stop most runs.',
-          action: 'Open the OvO guide',
-        },
-        {
-          href: getLocalizedPath(locale, '/guides/drive-mad-level-tips'),
-          image: '/game-screenshots/drive-mad.png',
-          eyebrow: 'Level tips',
-          title: 'Drive Mad',
-          description: 'Find focused throttle and balance fixes for flips, landings, bridges, and gaps.',
-          action: 'See level tips',
-        },
-        {
-          href: getLocalizedPath(locale, '/games/solitaire'),
-          image: '/game-screenshots/solitaire.png',
-          eyebrow: 'Play now',
-          title: 'Solitaire',
-          description: 'Start a classic card game in the browser with no install or Luma account.',
-          action: 'Play Solitaire',
-        },
-      ];
+  const curatedEntries: CuratedEntry[] =
+    locale === 'zh'
+      ? [
+          {
+            href: getLocalizedPath(locale, '/guides/google-snake-mods'),
+            image: '/game-screenshots/google-snake.png',
+            eyebrow: '当前热门指南',
+            title: 'Google Snake Mods',
+            description:
+              '先分清模组网页版、Loader 和标准 Snake，避免失效书签与未知下载。',
+            action: '查看安全选择',
+          },
+          {
+            href: getLocalizedPath(locale, '/games/big-tower-tiny-square'),
+            image: '/game-screenshots/big-tower-tiny-square.png',
+            eyebrow: '关键词测试',
+            title: 'Big Tower Tiny Square',
+            description:
+              '围绕 big tall small 的搜索意图，直接体验带检查点的垂直平台挑战。',
+            action: '开始爬塔',
+          },
+          {
+            href: getLocalizedPath(locale, '/games/g-switch-2'),
+            image: '/game-screenshots/g-switch-2.png',
+            eyebrow: '关键词测试',
+            title: 'G-Switch 2',
+            description:
+              '测试 gravity run 相关需求，练习反转重力、读障碍和保持跑线。',
+            action: '开始跑酷',
+          },
+          {
+            href: getLocalizedPath(locale, '/games/solitaire'),
+            image: '/game-screenshots/solitaire.png',
+            eyebrow: '直接游玩',
+            title: 'Solitaire',
+            description: '无需安装或注册，打开后即可开始一局经典纸牌。',
+            action: '开始 Solitaire',
+          },
+        ]
+      : [
+          {
+            href: getLocalizedPath(locale, '/guides/google-snake-mods'),
+            image: '/game-screenshots/google-snake.png',
+            eyebrow: 'Popular guide',
+            title: 'Google Snake Mods',
+            description:
+              'Compare the maintained mod page, loader route, and clearly labelled standard Snake fallback.',
+            action: 'Choose a safe route',
+          },
+          {
+            href: getLocalizedPath(locale, '/games/big-tower-tiny-square'),
+            image: '/game-screenshots/big-tower-tiny-square.png',
+            eyebrow: 'Keyword test',
+            title: 'Big Tower Tiny Square',
+            description:
+              'Test the big tall small intent with a checkpoint-based vertical platform challenge.',
+            action: 'Climb the tower',
+          },
+          {
+            href: getLocalizedPath(locale, '/games/g-switch-2'),
+            image: '/game-screenshots/g-switch-2.png',
+            eyebrow: 'Keyword test',
+            title: 'G-Switch 2',
+            description:
+              'Test the gravity run intent with gravity flips, obstacle reading, and clean lines.',
+            action: 'Start the run',
+          },
+          {
+            href: getLocalizedPath(locale, '/games/solitaire'),
+            image: '/game-screenshots/solitaire.png',
+            eyebrow: 'Play now',
+            title: 'Solitaire',
+            description:
+              'Start a classic card game in the browser with no install or Luma account.',
+            action: 'Play Solitaire',
+          },
+        ];
 
   const faqJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: faqItems.map((item) => ({
+    mainEntity: faqItems.map(item => ({
       '@type': 'Question',
       name: item.question,
       acceptedAnswer: {
@@ -192,8 +203,13 @@ export default async function HomePage({
           <section aria-labelledby="curated-starts" className="mt-12">
             <div className="mb-5 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <h2 id="curated-starts" className="text-2xl font-semibold text-foreground">
-                  {locale === 'zh' ? '从这些游戏开始' : 'Start with these games'}
+                <h2
+                  id="curated-starts"
+                  className="text-2xl font-semibold text-foreground"
+                >
+                  {locale === 'zh'
+                    ? '从这些游戏开始'
+                    : 'Start with these games'}
                 </h2>
                 <p className="mt-1 text-sm text-muted-foreground">
                   {locale === 'zh'
@@ -231,7 +247,9 @@ export default async function HomePage({
                     <p className="text-xs font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-400">
                       {entry.eyebrow}
                     </p>
-                    <h3 className="mt-1 text-xl font-semibold text-foreground">{entry.title}</h3>
+                    <h3 className="mt-1 text-xl font-semibold text-foreground">
+                      {entry.title}
+                    </h3>
                     <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
                       {entry.description}
                     </p>
@@ -252,7 +270,9 @@ export default async function HomePage({
             <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
               <div className="max-w-3xl">
                 <p className="text-sm font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-400">
-                  {locale === 'zh' ? 'Luma 原创互动游戏' : 'Luma original browser game'}
+                  {locale === 'zh'
+                    ? 'Luma 原创互动游戏'
+                    : 'Luma original browser game'}
                 </p>
                 <h2
                   id="homepage-spend-bill-gates-money"
@@ -272,7 +292,9 @@ export default async function HomePage({
                 href={getLocalizedPath(locale, '/games/spend-bill-gates-money')}
                 className="inline-flex min-h-11 flex-shrink-0 items-center justify-center gap-2 rounded-lg bg-emerald-700 px-5 py-2.5 font-semibold text-white transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
-                {locale === 'zh' ? '开始花光1000亿美元' : 'Spend $100 billion online'}
+                {locale === 'zh'
+                  ? '开始花光1000亿美元'
+                  : 'Spend $100 billion online'}
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </div>
@@ -285,7 +307,7 @@ export default async function HomePage({
               {seoSection.description ?? t('seoSection.description')}
             </p>
             <ul className="mx-auto grid max-w-4xl gap-3 md:grid-cols-3">
-              {seoPoints.map((point) => (
+              {seoPoints.map(point => (
                 <li
                   key={point}
                   className="flex gap-3 rounded-xl border border-border bg-background/80 p-5 shadow-sm"
@@ -293,7 +315,9 @@ export default async function HomePage({
                   <span className="mt-0.5 flex h-6 w-6 flex-none items-center justify-center rounded-full bg-emerald-700/10 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-400">
                     <Check className="h-4 w-4" aria-hidden="true" />
                   </span>
-                  <p className="text-sm leading-relaxed text-muted-foreground">{point}</p>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    {point}
+                  </p>
                 </li>
               ))}
             </ul>
@@ -310,7 +334,9 @@ export default async function HomePage({
             ) : null}
           </section>
 
-          {(evilSection.title || evilSection.description || evilPoints.length > 0) ? (
+          {evilSection.title ||
+          evilSection.description ||
+          evilPoints.length > 0 ? (
             <section className="mt-16 space-y-6 text-left">
               <h2 className="text-center text-3xl font-semibold text-foreground md:text-4xl">
                 {evilSection.title ?? t('evilSection.title')}
@@ -319,7 +345,7 @@ export default async function HomePage({
                 {evilSection.description ?? t('evilSection.description')}
               </p>
               <div className="mx-auto grid max-w-4xl gap-4 md:grid-cols-3">
-                {evilPoints.map((point) => (
+                {evilPoints.map(point => (
                   <p
                     key={point}
                     className="rounded-xl border border-border bg-background/80 p-5 text-sm leading-relaxed text-muted-foreground shadow-sm"
@@ -331,7 +357,10 @@ export default async function HomePage({
               {evilSection.cta ? (
                 <div className="flex justify-center pt-2">
                   <Link
-                    href={getLocalizedPath(locale, '/guides/games-to-play-when-bored')}
+                    href={getLocalizedPath(
+                      locale,
+                      '/guides/games-to-play-when-bored'
+                    )}
                     className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-emerald-700 px-5 py-2.5 font-medium text-emerald-700 transition hover:bg-emerald-700/10 dark:border-emerald-400 dark:text-emerald-400"
                   >
                     {evilSection.cta}
@@ -347,7 +376,7 @@ export default async function HomePage({
               {faqSection.title ?? t('faq.title')}
             </h2>
             <div className="mx-auto max-w-3xl space-y-3">
-              {faqItems.map((item) => (
+              {faqItems.map(item => (
                 <details
                   key={item.question}
                   className="group rounded-xl border border-border bg-background/80 p-4"

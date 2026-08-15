@@ -4,13 +4,13 @@ import { describe, expect, it } from 'vitest';
 
 const homeSource = await readFile(
   new URL('../app/[locale]/page.tsx', import.meta.url),
-  'utf8',
+  'utf8'
 );
 
 const featuredScreenshots = [
   'google-snake.png',
-  'ovo.png',
-  'drive-mad.png',
+  'big-tower-tiny-square.png',
+  'g-switch-2.png',
   'solitaire.png',
 ];
 
@@ -19,10 +19,14 @@ describe('homepage curation', () => {
     expect(homeSource).toContain('curatedEntries');
     expect(homeSource).toContain('<DailyRecommendation');
     expect(homeSource).toContain('/guides/google-snake-mods');
-    expect(homeSource).toContain('/guides/ovo-walkthrough');
-    expect(homeSource).toContain('/guides/drive-mad-level-tips');
+    expect(homeSource).toContain('/games/big-tower-tiny-square');
+    expect(homeSource).toContain('/games/g-switch-2');
     expect(homeSource).toContain('/games/solitaire');
-    expect(homeSource).toContain("getLocalizedPath(locale, '/games/spend-bill-gates-money')");
+    expect(homeSource).toContain(
+      "getLocalizedPath(locale, '/games/spend-bill-gates-money')"
+    );
+    expect(homeSource).not.toContain('/guides/ovo-walkthrough');
+    expect(homeSource).not.toContain('/guides/drive-mad-level-tips');
     expect(homeSource).toContain('priority={index < 2}');
     expect(homeSource).not.toContain('<FeatureCard');
   });
@@ -34,9 +38,9 @@ describe('homepage curation', () => {
 
   it('uses checked-in gameplay screenshots for every featured card', async () => {
     await Promise.all(
-      featuredScreenshots.map((name) =>
-        access(new URL(`../public/game-screenshots/${name}`, import.meta.url)),
-      ),
+      featuredScreenshots.map(name =>
+        access(new URL(`../public/game-screenshots/${name}`, import.meta.url))
+      )
     );
   });
 

@@ -7,7 +7,11 @@ import clsx from 'clsx';
 import { Menu, X } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 
-import { getLocalizedPath, isLocale, normalizePublicPathname } from '@/i18n/config';
+import {
+  getLocalizedPath,
+  isLocale,
+  normalizePublicPathname,
+} from '@/i18n/config';
 import { SearchInput } from '@/components/game/search-input';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { trackEvent } from '@/lib/gtag';
@@ -15,6 +19,7 @@ import { trackEvent } from '@/lib/gtag';
 const navItems = [
   { href: '/', labelKey: 'home' },
   { href: '/games', labelKey: 'games' },
+  { href: '/games/saved', labelKey: 'saved' },
   { href: '/guides', labelKey: 'guides' },
 ];
 
@@ -35,7 +40,7 @@ function LanguageSwitcher() {
 
   return (
     <div className="flex items-center gap-2">
-      {options.map((item) => (
+      {options.map(item => (
         <Link
           key={item.code}
           href={getLocalizedPath(item.code, pathWithoutLocale)}
@@ -80,7 +85,10 @@ export function Header() {
   }, [pathname]);
 
   return (
-    <header data-print-hide className="relative sticky top-0 z-50 border-b border-border bg-background/80 shadow-sm backdrop-blur-lg">
+    <header
+      data-print-hide
+      className="relative sticky top-0 z-50 border-b border-border bg-background/80 shadow-sm backdrop-blur-lg"
+    >
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 md:px-6">
         {/* Logo */}
         <Link
@@ -103,7 +111,7 @@ export function Header() {
 
         {/* Navigation */}
         <nav className="hidden items-center gap-8 md:flex">
-          {navItems.map((item) => {
+          {navItems.map(item => {
             const itemHref = getLocalizedPath(currentLocaleSegment, item.href);
             const isActive = publicPathname === itemHref;
             return (
@@ -118,7 +126,8 @@ export function Header() {
                 )}
                 onClick={() =>
                   trackEvent('nav_link_click', {
-                    target: item.href === '/' ? 'home' : item.href.replace('/', ''),
+                    target:
+                      item.href === '/' ? 'home' : item.href.replace('/', ''),
                     locale: currentLocaleSegment,
                   })
                 }

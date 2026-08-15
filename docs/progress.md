@@ -1994,3 +1994,13 @@
 - 生产接口：规范化重定向后 `robots.txt`、`sitemap.xml`、`/api/health`、`/api/search?q=snake&limit=3` 均 HTTP 200；sitemap 为 198 个唯一 URL。health 仍明确为 local catalogue/cache/local search，未切换生产数据库或搜索服务。
 - 数据边界：本次未改 GA4、GSC、Clarity、Vercel 项目设置、环境变量或权限；`recommendation_view`、`recommendation_click`、`favorite_add`、`favorite_remove` 仅完成代码触发和隔离浏览器验证，真实到达量、D1/D7 回访和 GSC query-to-page 需下一个后台窗口确认，不将本次发布当作业务效果证明。
 - 下一巡检：按同一窗口观察推荐曝光/点击、收藏添加/移除、GA4 Returning Users/D1/D7、Google Snake query-to-page、Clarity dead/rage/quick back，以及首页与详情页移动端可玩性；继续保持固定推荐池，不因一次发布扩张低证据游戏。
+
+### T-166 收藏页与推荐分层修复（2026-08-15）
+
+- 用户复核信号：收藏按钮已经能写入当前浏览器，但站内没有“我的收藏”入口；首页 `Start with these games` 与每日推荐存在重复，OvO 仍被推荐，且其来源策略已标记为未核验，不应继续作为增长入口。用户要求将 Spend Bill Gates Money 放入推荐，并用不同的关键词测试页填充 Start with。
+- 直接改动：新增 noindex 的 `/games/saved` 中英文页面、顶栏入口和首页“查看我的收藏”入口；将收藏键读取/写入/同窗变更通知抽到 `lib/retention/local-favorites.ts`，通过 `/api/games/saved` 按当前浏览器的 `slug:` 键解析现有目录与 Luma 原创 Spend 页面，不引入登录、账号或 PII。
+- 推荐分层：`DAILY_RECOMMENDATION_POOL` 移除 OvO、加入 Spend Bill Gates Money；首页 Start with 保留真实需求 Google Snake，改用 Big Tower Tiny Square、G-Switch 2 和 Solitaire，避免与每日推荐重复，并把 `big tall small`、`gravity run` 作为关键词测试入口。OvO 页面本身仍遵守既有 noindex/source gate，不因本轮推荐调整恢复索引。
+- 运行时修复：发现 Spend 推荐使用的 `/og/spend-bill-gates-money` 被国际化 middleware 重写为 `/zh/og/...`，导致图片请求 404/500；matcher 增加 `og/` 排除后，生产构建下该端点返回 `200 image/png`。新增 OG 路由回归测试。
+- 验证结果：页面质量审计 255 rows / 91 indexable / 0 indexable under-80；内链审计通过；全量 Vitest 66 files / 219 tests 通过；type-check、lint（0 errors / 98 个既有 warnings）、production build（141 static pages）、`git diff --check` 通过；Playwright 收藏专项桌面/移动 2/2、与既有游戏浏览 9/9 通过；移动 runtime 10/10 页面 80+，最低 88。API saved 返回 Spend/Google Snake 摘要，robots 与 sitemap 仍 HTTP 200。
+- 发布边界：本轮只完成当前隔离发布工作树的本地修复与验证，未 commit、push、合入 `main`、部署生产、修改后台或提交 GSC。原工作树 `/Users/yanruoyi/ai-native/active/251001_web_游戏聚合网站` 的既有未提交文件未触碰、未暂存、未进入本轮。
+- 下一步：发布后复查 `/games/saved` 的入口、localStorage 收藏读写、首页三张推荐与 Start with 去重、Spend OG 图片、canonical/robots/sitemap 和 Clarity/GA4 收藏与推荐事件；GSC 只观察不同测试页的真实 query-to-page，不把本地曝光实验当成收录或流量结果。

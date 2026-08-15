@@ -8,6 +8,7 @@
   "nav": {
     "home": "Home",
     "games": "Games",
+    "saved": "Saved",
     "guides": "Guides",
     "cta": "Admin",
     "searchPlaceholder": "Search games",
@@ -226,10 +227,22 @@
       "title": "Controls",
       "description": "Desktop controls are the most reliable for this action game.",
       "items": {
-        "move": { "label": "Move", "value": "Use the keyboard movement keys or on-screen controls, depending on the browser build, to keep distance from enemy groups." },
-        "aim": { "label": "Positioning", "value": "Most survival pressure is solved by positioning. Keep moving through gaps instead of waiting for enemies to reach you." },
-        "upgrades": { "label": "Upgrades", "value": "When an upgrade panel appears, choose the option that fixes your current weakness rather than the flashiest number." },
-        "fullscreen": { "label": "Fullscreen", "value": "Use fullscreen on desktop so you can see enemy lanes earlier and avoid accidental edge traps." }
+        "move": {
+          "label": "Move",
+          "value": "Use the keyboard movement keys or on-screen controls, depending on the browser build, to keep distance from enemy groups."
+        },
+        "aim": {
+          "label": "Positioning",
+          "value": "Most survival pressure is solved by positioning. Keep moving through gaps instead of waiting for enemies to reach you."
+        },
+        "upgrades": {
+          "label": "Upgrades",
+          "value": "When an upgrade panel appears, choose the option that fixes your current weakness rather than the flashiest number."
+        },
+        "fullscreen": {
+          "label": "Fullscreen",
+          "value": "Use fullscreen on desktop so you can see enemy lanes earlier and avoid accidental edge traps."
+        }
       }
     },
     "faq": {
@@ -302,8 +315,14 @@
       "genre": { "label": "Genre", "value": "Card puzzle" },
       "session": { "label": "Session", "value": "Relaxed short sessions" },
       "controls": { "label": "Controls", "value": "Mouse or touch" },
-      "devices": { "label": "Devices", "value": "Desktop, tablet, and mobile browser" },
-      "source": { "label": "Play source", "value": "Embedded browser game source; no installer, APK, ROM, or cracked download is offered on Luma." }
+      "devices": {
+        "label": "Devices",
+        "value": "Desktop, tablet, and mobile browser"
+      },
+      "source": {
+        "label": "Play source",
+        "value": "Embedded browser game source; no installer, APK, ROM, or cracked download is offered on Luma."
+      }
     },
     "tips": {
       "title": "Tips",
@@ -329,10 +348,22 @@
       "title": "Controls",
       "description": "Simple browser controls for desktop and touch devices.",
       "items": {
-        "move": { "label": "Move cards", "value": "Click or tap a card, then place it on a valid tableau stack, foundation pile, or open column." },
-        "stock": { "label": "Draw stock", "value": "Use the stock pile when no visible tableau move helps. Review the waste card before cycling again." },
-        "foundation": { "label": "Build foundations", "value": "Send aces and same-suit sequences upward only when the move keeps the tableau flexible." },
-        "fullscreen": { "label": "Fullscreen", "value": "Open fullscreen if cards feel cramped on a smaller display." }
+        "move": {
+          "label": "Move cards",
+          "value": "Click or tap a card, then place it on a valid tableau stack, foundation pile, or open column."
+        },
+        "stock": {
+          "label": "Draw stock",
+          "value": "Use the stock pile when no visible tableau move helps. Review the waste card before cycling again."
+        },
+        "foundation": {
+          "label": "Build foundations",
+          "value": "Send aces and same-suit sequences upward only when the move keeps the tableau flexible."
+        },
+        "fullscreen": {
+          "label": "Fullscreen",
+          "value": "Open fullscreen if cards feel cramped on a smaller display."
+        }
       }
     },
     "faq": {
