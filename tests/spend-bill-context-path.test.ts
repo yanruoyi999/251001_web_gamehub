@@ -8,12 +8,12 @@ describe('Spend Bill Gates Money contextual path normalization', () => {
   });
 
   it('returns the same Chinese guide context for public and internal locale paths', () => {
-    expect(resolveSpendBillContext('/zh/guides/google-snake-mods')).toEqual(
-      resolveSpendBillContext('/guides/google-snake-mods'),
+    expect(resolveSpendBillContext('/zh/guides/games-to-play-when-bored')).toEqual(
+      resolveSpendBillContext('/guides/games-to-play-when-bored'),
     );
   });
 
   it('keeps the English localized path behavior unchanged', () => {
-    expect(resolveSpendBillContext('/en/guides/google-snake-mods')?.locale).toBe('en');
+    expect(resolveSpendBillContext('/en/guides/games-to-play-when-bored')?.locale).toBe('en');
   });
 });
