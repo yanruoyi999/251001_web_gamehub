@@ -1920,3 +1920,12 @@
 - 修复范围：`i18n/config.ts` 新增默认语言公开路径归一化，Header 的桌面/移动 active 状态统一使用归一化路径；上下文入口同时识别 `/zh` 与无前缀中文路径。每日推荐改用服务端提供的上海日期快照，首页按 24 小时 ISR 更新，避免浏览器在首屏 hydration 中自行切换推荐集合。
 - 回归验证：新增默认语言路径、上下文入口路径等价和推荐日期快照测试；完整 Vitest 61 files / 201 tests、Next.js 15.5.21 production build 135/135、内链、类型、lint 与 `git diff --check` 通过。本地 production 在首页、OvO 详情和 Google Snake Mods 指南均为 0 hydration/page error；1440x900 与 390x844 无横向溢出，首页 3 张推荐/3 个收藏、详情当前视口 1 个推荐实例均可见，收藏物理点击后 `aria-pressed=true` 且 localStorage 写入正确。
 - 数据边界：本地交互验证使用遥测隔离，不代表 GA4/Clarity 已收到真实用户事件；部署后仍需复查主域 hydration error、首击收藏和 `recommendation_view/click`、`favorite_add` 的后续真实窗口。
+
+### T-162 Google Snake Level Editor 来源核验指南（2026-08-15）
+
+- 现有信号：最新本地巡检窗口中的 Level Editor query-to-page 集群已有真实 GSC 信号；当前 7 天为 6 clicks / 154 impressions / 平均排名 7.21，上一 7 天为 5 / 62 / 7.76。该数据支持先加深现有 Google Snake 曝光页，不支持复制模组或批量扩张薄页。
+- 来源与版权边界：唯一主要来源为 DarkSnakeGang 的 `GoogleSnakeLevelEditor` GitHub 仓库。页面明确说明项目仍为 work in progress、README 安装章节未完成、并非 Google 官方功能；Luma 不托管模组、不复制代码或素材、不提供未知镜像和控制台脚本。
+- 实际改动：`lib/seo-landing-content.ts` 新增中英文 `google-snake-level-editor` 指南，覆盖水果/墙体/Sokoban 放置、预设、自定义关卡、导入导出、Wall/Sokoban 模式、20 关 Challenge Mode、Random Ham Mode、手机限制、常见故障、FAQ、官方来源和站内相关推荐；`google-snake-mods` 增加反向内链。首版保持 `noindex, follow`，canonical 固定为生产规范 URL，且不进入 sitemap、不新增 iframe。
+- TDD 与质量门：新增 `tests/google-snake-level-editor-guide.test.ts`，先以 4 个缺页失败进入 RED，再实现到 5/5 GREEN；完整 Vitest 为 62 files / 206 tests，通过内部链接、type-check、Next.js 15.5.21 production build 和静态页面生成。页面质量为 100/100。隔离 worktree 的普通 lint 因向上同时发现两份 Next ESLint 插件而冲突；使用 `--no-eslintrc --config .eslintrc.json` 的等价检查为 0 errors / 98 个既有 `no-console` warnings。
+- 浏览器验证：本地 production server 的 1440x1000 与 390x844 页面均 HTTP 200、无横向溢出、canonical 正确、`noindex, follow`、0 iframe、官方来源存在。真实滚动后 3 张推荐图均完成加载且 `naturalWidth > 0`，无图片 4xx/5xx。移动 Lighthouse 为 Performance 92、Accessibility 100、Best Practices 96、LCP 2.7s、CLS 0、TBT 150ms；SEO 61 的失败项来自预览阶段主动 noindex 和 localhost 与生产 canonical 域不同。
+- 安全与发布边界：GitHub Advisory `GHSA-2v37-7h3g-55p8` 要求 Nano ID 3.x 至少为 3.3.18；Next.js 15.5.22 仍声明 PostCSS 8.4.31，不能自动修复当前 override 链。本轮只把 `nanoid` override 从 3.3.17 升到 3.3.18，独立安全提交为 `f556a42`；`pnpm why nanoid --prod` 确认生产路径统一到 3.3.18，`pnpm audit:prod` 返回 `No known vulnerabilities found`。Level Editor 内容仍待独立提交、push 和 Preview 验收，未取消 noindex、未部署生产、未提交 GSC。

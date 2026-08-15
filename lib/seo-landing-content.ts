@@ -2205,7 +2205,12 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       'google snake unblocked',
     ],
     updatedAt: seoContentUpdatedAt,
-    relatedSlugs: ['best-browser-games-5-minute-break', 'games-to-play-when-bored', 'free-games-no-ads'],
+    relatedSlugs: [
+      'google-snake-level-editor',
+      'best-browser-games-5-minute-break',
+      'games-to-play-when-bored',
+      'free-games-no-ads',
+    ],
     embedGame: {
       iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp44/chenling/20230830/05/index.html',
       title: 'Google Snake',
@@ -2555,6 +2560,361 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ],
         ctaLabel: '浏览更多网页游戏',
         ctaDescription: '打开游戏库,继续寻找无需下载的短局浏览器游戏。',
+      },
+    },
+  },
+  {
+    slug: 'google-snake-level-editor',
+    primaryKeyword: 'google snake level editor',
+    keywords: [
+      'google snake level editor',
+      'google snake level editor mod',
+      'google snake mods level editor',
+      'google snake level editor free',
+      'google snake level maker',
+      'google snake level codes',
+      'google snake custom levels',
+      'google snake challenge mode',
+    ],
+    updatedAt: '2026-08-15T00:00:00.000Z',
+    indexable: false,
+    relatedSlugs: [
+      'google-snake-mods',
+      'best-browser-games-5-minute-break',
+      'browser-games-for-low-end-pc',
+    ],
+    locales: {
+      en: {
+        metaTitle: 'Google Snake Level Editor: Presets, Challenges & Setup',
+        metaDescription:
+          'Learn what the Google Snake Level Editor mod can build, how presets and Challenge Mode work, why Wall or Sokoban mode matters, and which source to trust.',
+        heading: 'Google Snake Level Editor Guide: Presets, Challenges & Safe Setup',
+        subheading:
+          'A source-checked guide to custom boards, preset sharing, Challenge Mode, Random Ham Mode, and the limits of the current work-in-progress project.',
+        overview: [
+          'Google Snake Level Editor is a community mod for placing fruit, walls, and Sokoban boxes directly onto a Snake board. Its project documentation also describes premade levels, custom presets, import and export, a 20-level challenge, and Random Ham patterns. It is not an official Google feature, and Luma does not host the mod or copy its files.',
+          'The DarkSnakeGang repository still labels the editor as a work in progress and leaves its installation section unfinished. That changes the safest answer: verify the current project status first, use the broader maintained mod route only when it exposes the editor you expect, and do not follow an old video or mirror that promises a one-click download.',
+        ],
+        sections: [
+          {
+            title: 'Quick answer: check the project before trying a setup',
+            body:
+              'Start with the DarkSnakeGang Level Editor repository linked above. The README is the primary source for the feature list, but it does not currently provide a finished installation walkthrough. Treat any exact setup sequence on another site as version-specific until the project confirms it.',
+            bullets: [
+              'Use the repository to verify the current feature list and project status.',
+              'Do not download an EXE, DMG, APK, or unrelated browser optimizer for a Snake editor mod.',
+              'Do not paste code from comments, short-link pages, or unknown video descriptions into the browser console.',
+              'If the maintained mod page does not show Level Editor, stop rather than switching to an unverified mirror.',
+            ],
+          },
+          {
+            title: 'What the Level Editor can place on a board',
+            body:
+              'The documented editor lets a player place fruit, walls, and Sokoban boxes with the mouse. That makes it useful for controlled routing problems: you can put an apple near a narrow exit, test a wall pattern, or arrange Sokoban objects before starting a run.',
+            bullets: [
+              'Fruit placement creates a specific route target instead of relying on a random spawn.',
+              'Wall placement is useful for practicing escape lanes and tight turns.',
+              'Sokoban boxes create object-pushing layouts that need the matching game mode.',
+              'Keep a simple open route while learning the editor before building dense boards.',
+            ],
+          },
+          {
+            title: 'Start with a premade preset before building your own',
+            body:
+              'The presets panel is the clearest first test because it separates editor controls from level design. Open one premade layout, inspect where the objects appear, and confirm that the selected game mode interacts with them before changing several settings at once.',
+            bullets: [
+              'Load one preset and verify fruit, walls, and boxes appear where expected.',
+              'Run a short attempt before editing the preset.',
+              'Change one object group at a time so a broken layout is easy to diagnose.',
+              'Return to a known preset if a custom board becomes impossible to read or finish.',
+            ],
+          },
+          {
+            title: 'Build and save a custom preset',
+            body:
+              'A custom preset should describe one clear challenge rather than fill every tile. Decide what the player is practicing, leave a valid starting area, then place the minimum number of objects needed to create that problem. Test the board yourself before treating it as shareable.',
+            bullets: [
+              'Choose one goal, such as a narrow wall route or a Sokoban positioning problem.',
+              'Leave enough open cells for the snake to begin moving safely.',
+              'Check that food and required objects are reachable under the selected mode.',
+              'Save a clean revision before experimenting with a harder variation.',
+            ],
+          },
+          {
+            title: 'Import, export, and sharing boundaries',
+            body:
+              'The project lists importing and exporting custom presets as a sharing feature. A preset should be treated as configuration for this editor, not as permission to redistribute the mod, its artwork, or someone else\'s full package. Luma does not maintain a public preset upload or code library.',
+            bullets: [
+              'Export only a preset you created or have permission to share.',
+              'Keep the game mode and editor version next to a shared preset description.',
+              'Import only from a source you trust and reject anything that asks you to run unrelated code.',
+              'Do not rename an executable or extension package as a level code.',
+            ],
+          },
+          {
+            title: 'Why Wall Mode or Sokoban Mode changes the result',
+            body:
+              'The repository warns that the snake passes through placed walls or Sokoban boxes by default. Select Wall Mode, Sokoban Mode, or a compatible Blender combination when those objects are meant to block or interact with the snake. If a board looks correct but objects have no effect, check the game mode before rebuilding it.',
+            bullets: [
+              'Use Wall Mode when placed walls should cause normal wall collisions.',
+              'Use Sokoban Mode when boxes are part of the puzzle behavior.',
+              'Use a compatible Blender setup only after each mode works by itself.',
+              'Record the required mode with every preset you share.',
+            ],
+          },
+          {
+            title: 'Challenge Mode and Random Ham Mode',
+            body:
+              'Challenge Mode is documented as a series of 20 increasingly difficult Snake levels. Random Ham Mode creates random, always-winnable small wall patterns; “Ham” refers to a Hamiltonian cycle. These are different practice tools: Challenge Mode tests a fixed sequence, while Random Ham Mode varies the board pattern.',
+            bullets: [
+              'Use Challenge Mode when you want repeatable progression across fixed levels.',
+              'Replay a failed challenge before changing unrelated menu settings.',
+              'Use Random Ham Mode for route-reading practice on changing small patterns.',
+              'Do not present a community completion video as an official level solution.',
+            ],
+          },
+          {
+            title: 'Mobile limits and common failures',
+            body:
+              'The repository describes mouse placement and does not document a complete touch workflow. Verify the editor on desktop first. On a phone, a missing pointer action, cramped panel, or unavailable extension can prevent editing even when standard Snake still runs.',
+            bullets: [
+              'If taps place nothing, do not assume the board file is broken; the editor may expect a mouse.',
+              'If a preset loads but objects do not collide, verify Wall or Sokoban mode.',
+              'If the menu disappeared after an update, return to the project source instead of reinstalling an old mirror.',
+              'For immediate play without editor setup, open standard Snake from the recommendation below.',
+            ],
+          },
+        ],
+        recommendations: [
+          {
+            slug: 'google-snake',
+            pitch:
+              'Play a standard Snake-style round first so normal routing and collision rules are clear before testing custom boards.',
+          },
+          {
+            slug: 'string-theory-2-remastered',
+            pitch:
+              'Try a compact browser puzzle when you want deliberate object positioning without installing a mod.',
+          },
+          {
+            slug: 'tunnel-rush',
+            pitch:
+              'Switch to a quick reflex challenge if you want immediate browser play instead of an editor workflow.',
+          },
+        ],
+        faqs: [
+          {
+            question: 'Is Google Snake Level Editor an official Google feature?',
+            answer:
+              'No. It is a community project associated with DarkSnakeGang. Luma provides source context and usage guidance but is not affiliated with Google or the mod maintainers.',
+          },
+          {
+            question: 'How do I install Google Snake Level Editor?',
+            answer:
+              'The project currently labels itself work in progress and its README installation section is unfinished. Check the repository and maintained mod page for current instructions instead of relying on an old bookmark, mirror, or download bundle.',
+          },
+          {
+            question: 'Why does my snake pass through walls in the editor?',
+            answer:
+              'Placed objects do not automatically change collision rules. Select Wall Mode for walls, Sokoban Mode for boxes, or a compatible Blender combination before testing the board.',
+          },
+          {
+            question: 'Can I share Google Snake custom levels?',
+            answer:
+              'The project documents import and export for custom presets. Share only presets you created or have permission to distribute, include the required mode and version, and do not bundle the mod or unrelated executable files.',
+          },
+          {
+            question: 'Does Google Snake Level Editor work on mobile?',
+            answer:
+              'A complete touch workflow is not documented, while mouse placement is. Test on desktop first; mobile browser and extension limits can prevent editing even when the standard game remains playable.',
+          },
+        ],
+        quickAnswerLink: {
+          href: 'https://github.com/DarkSnakeGang/GoogleSnakeLevelEditor',
+          label: 'Check the Google Snake Level Editor project status',
+          description:
+            'Primary source for the editor feature list, work-in-progress status, releases, and current project notes.',
+        },
+        externalLinks: [
+          {
+            href: 'https://github.com/DarkSnakeGang/GoogleSnakeLevelEditor',
+            label: 'Google Snake Level Editor on GitHub',
+            description:
+              'Primary project source for documented objects, presets, Challenge Mode, Random Ham Mode, and setup status.',
+          },
+          {
+            href: 'https://googlesnakemods.com/',
+            label: 'Maintained Google Snake Mods web route',
+            description:
+              'Community-maintained web route to check which mod modules are currently available without using an unknown mirror.',
+          },
+        ],
+        ctaLabel: 'Browse verified browser games',
+        ctaDescription:
+          'Use Luma\'s reviewed game catalogue when you want immediate play without installing a community editor.',
+      },
+      zh: {
+        metaTitle: 'Google Snake Level Editor：预设、挑战与安全设置',
+        metaDescription:
+          '了解 Google Snake Level Editor 能编辑什么、预设和挑战模式如何工作、为什么要切换 Wall 或 Sokoban 模式，以及应该核对哪个来源。',
+        heading: 'Google Snake Level Editor 指南：预设、挑战与安全设置',
+        subheading:
+          '基于项目来源说明自定义棋盘、预设分享、Challenge Mode、Random Ham Mode，以及当前开发中版本的明确限制。',
+        overview: [
+          'Google Snake Level Editor 是社区制作的编辑器模组，可以直接在 Snake 棋盘上放置水果、墙体和 Sokoban 箱子。项目文档还列出了预制关卡、自定义预设、导入导出、20 关挑战和 Random Ham 随机图案。它不是 Google 官方功能，Luma 不托管模组，也不复制其文件。',
+          'DarkSnakeGang 仓库目前仍将编辑器标为 work in progress，安装章节也没有完成。因此安全做法不是照搬旧视频步骤，而是先核对项目状态，只在维护中的模组路线确实提供编辑器时使用，并避开承诺一键下载的未知镜像。',
+        ],
+        sections: [
+          {
+            title: '快速结论：先核对项目，再尝试设置',
+            body:
+              '先打开上方 DarkSnakeGang Level Editor 仓库。README 是功能列表的主要来源，但目前没有完整安装流程。其他网站提供的精确步骤都可能只适用于旧版本，必须以项目当前说明为准。',
+            bullets: [
+              '用仓库核对当前功能、发布记录和开发状态。',
+              '不要为了 Snake 编辑器下载 EXE、DMG、APK 或无关的浏览器优化器。',
+              '不要把评论区、短链接页或未知视频描述里的代码粘贴到控制台。',
+              '维护中的模组页没有 Level Editor 时，应停止操作，不要转向未知镜像。',
+            ],
+          },
+          {
+            title: 'Level Editor 能在棋盘上放什么',
+            body:
+              '项目记录的编辑能力包括用鼠标放置水果、墙体和 Sokoban 箱子。这样可以构造明确的路线问题：把水果放在狭窄出口附近、测试墙体图案，或在开始前布置需要推动的箱子。',
+            bullets: [
+              '水果位置可以固定路线目标，不再完全依赖随机生成。',
+              '墙体适合练习逃生空间、转向和窄路控制。',
+              'Sokoban 箱子用于物体推动谜题，需要匹配的游戏模式。',
+              '刚开始编辑时保留宽松路线，不要一次填满棋盘。',
+            ],
+          },
+          {
+            title: '先加载预制关卡，再创建自己的预设',
+            body:
+              'Presets 面板是最清楚的第一步，因为它能把编辑器控制问题和关卡设计问题分开。先加载一个预设，确认物体位置和当前模式的交互，再逐项修改。',
+            bullets: [
+              '加载一个预设，确认水果、墙体和箱子出现在预期位置。',
+              '修改前先试玩一次，确认原始关卡行为。',
+              '每次只改一组物体，出现问题时更容易定位。',
+              '自定义棋盘难以辨认或无法完成时，回到已知预设重新开始。',
+            ],
+          },
+          {
+            title: '创建并保存自定义 Preset',
+            body:
+              '一个好的自定义预设应该只表达一个明确挑战，而不是把每个格子都塞满。先决定训练目标，留出安全起步区域，再放置完成该问题所需的最少物体。分享前必须自己完整测试。',
+            bullets: [
+              '先确定目标，例如窄墙路线或 Sokoban 位置谜题。',
+              '为蛇保留足够的起始移动空间。',
+              '确认食物和必要物体在所选模式下可以到达。',
+              '做更难变体前，先保存一个可以正常运行的版本。',
+            ],
+          },
+          {
+            title: '导入、导出和分享边界',
+            body:
+              '项目把自定义预设的导入和导出列为分享功能。预设只应被视为编辑器配置，不代表你有权重新分发模组、美术或他人的完整包。Luma 不提供公开预设上传或代码库。',
+            bullets: [
+              '只导出自己制作或明确获得分享许可的预设。',
+              '分享时同时写明需要的游戏模式和编辑器版本。',
+              '只从可信来源导入，遇到要求运行无关代码的文件应立即停止。',
+              '不要把可执行程序或扩展包伪装成 level code。',
+            ],
+          },
+          {
+            title: '为什么 Wall Mode 和 Sokoban Mode 很重要',
+            body:
+              '仓库明确提醒：默认状态下，蛇会直接穿过放置的墙体或 Sokoban 箱子。想让这些物体产生阻挡或推动效果，必须选择 Wall Mode、Sokoban Mode，或兼容的 Blender 组合。棋盘看起来正常但物体没有作用时，应先检查模式。',
+            bullets: [
+              '墙体需要使用 Wall Mode 才会按墙体碰撞规则工作。',
+              '箱子需要使用 Sokoban Mode 才会参与谜题行为。',
+              '先分别验证单一模式，再尝试 Blender 组合。',
+              '分享每个预设时都要记录它依赖的模式。',
+            ],
+          },
+          {
+            title: 'Challenge Mode 与 Random Ham Mode',
+            body:
+              'Challenge Mode 在项目中被描述为 20 个逐渐变难的 Snake 关卡。Random Ham Mode 会生成随机且理论上可完成的小型墙体图案，其中 Ham 指 Hamiltonian cycle。前者适合固定进度挑战，后者适合变化路线练习。',
+            bullets: [
+              '想按固定顺序推进时使用 Challenge Mode。',
+              '某关失败后先重试，不要同时更改多个菜单设置。',
+              '想练习读取变化图案时使用 Random Ham Mode。',
+              '不要把社区通关视频写成官方关卡答案。',
+            ],
+          },
+          {
+            title: '手机限制和常见故障',
+            body:
+              '仓库说明的是鼠标放置，没有记录完整触控流程，因此应先在桌面端核对编辑器。手机上可能因为缺少鼠标动作、面板过窄或无法使用扩展而不能编辑，即使标准 Snake 仍然可以运行。',
+            bullets: [
+              '点击没有放置物体时，不要直接判断预设损坏，编辑器可能依赖鼠标。',
+              '预设已加载但物体没有碰撞时，检查 Wall 或 Sokoban 模式。',
+              '更新后菜单消失时回到项目来源，不要重新安装旧镜像。',
+              '想立即游玩、不做编辑设置时，可以打开下方推荐的标准 Snake。',
+            ],
+          },
+        ],
+        recommendations: [
+          {
+            slug: 'google-snake',
+            pitch: '先玩一局标准 Snake，熟悉普通路线和碰撞规则后再测试自定义棋盘。',
+          },
+          {
+            slug: 'string-theory-2-remastered',
+            pitch: '想练习物体位置和逻辑判断、但不想安装模组时，可以尝试紧凑的浏览器谜题。',
+          },
+          {
+            slug: 'tunnel-rush',
+            pitch: '如果想立即开始短局反应挑战，可以换成不需要编辑器设置的浏览器游戏。',
+          },
+        ],
+        faqs: [
+          {
+            question: 'Google Snake Level Editor 是 Google 官方功能吗?',
+            answer:
+              '不是。它是与 DarkSnakeGang 社区相关的项目。Luma 只提供来源和使用边界说明，与 Google 或模组维护者没有隶属关系。',
+          },
+          {
+            question: 'Google Snake Level Editor 怎么安装?',
+            answer:
+              '项目目前仍标为 work in progress，README 的安装章节也没有完成。应核对仓库和维护中的模组页，不要照搬旧书签、未知镜像或下载包。',
+          },
+          {
+            question: '为什么蛇会穿过编辑器里的墙?',
+            answer:
+              '放置物体不会自动改变碰撞规则。墙体要选择 Wall Mode，箱子要选择 Sokoban Mode，或使用兼容的 Blender 组合。',
+          },
+          {
+            question: '可以分享 Google Snake 自定义关卡吗?',
+            answer:
+              '项目支持自定义预设导入导出。只分享自己制作或有权分发的预设，同时注明模式和版本，不要捆绑模组或无关可执行文件。',
+          },
+          {
+            question: 'Google Snake Level Editor 能在手机上用吗?',
+            answer:
+              '项目记录的是鼠标放置，没有完整触控流程。建议先在桌面端验证，手机浏览器和扩展限制可能导致无法编辑。',
+          },
+        ],
+        quickAnswerLink: {
+          href: 'https://github.com/DarkSnakeGang/GoogleSnakeLevelEditor',
+          label: '核对 Google Snake Level Editor 项目状态',
+          description: '查看编辑器功能、开发中状态、发布记录和当前项目说明的主要来源。',
+        },
+        externalLinks: [
+          {
+            href: 'https://github.com/DarkSnakeGang/GoogleSnakeLevelEditor',
+            label: 'GitHub 上的 Google Snake Level Editor',
+            description:
+              '核对物体、预设、Challenge Mode、Random Ham Mode 和设置状态的主要项目来源。',
+          },
+          {
+            href: 'https://googlesnakemods.com/',
+            label: '维护中的 Google Snake Mods 网页路线',
+            description: '核对当前可用模组模块，避免使用未知镜像或重新打包下载站。',
+          },
+        ],
+        ctaLabel: '浏览已审核的网页游戏',
+        ctaDescription: '想立即游玩、不安装社区编辑器时，可以打开 Luma 已审核的游戏目录。',
       },
     },
   },

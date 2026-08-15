@@ -1,6 +1,6 @@
 # Luma Page Quality Scorecard
 
-Generated: 2026-07-15T04:18:29.439Z
+Generated: 2026-08-15T04:32:46.357Z
 
 Scope: public content and utility pages represented by the local catalogue, SEO guide registry, taxonomy, and sitemap policy. API/admin routes are not treated as content pages.
 
@@ -16,11 +16,11 @@ Scope: public content and utility pages represented by the local catalogue, SEO 
 
 ## Summary
 
-- Total scored rows: 250
-- Indexable rows: 93
+- Total scored rows: 254
+- Indexable rows: 95
 - Under-80 rows: 157
 - Under-80 rows still indexable: 0
-- Actions: keep=93, noindex=3, redirect=10, remove-from-index=144
+- Actions: keep=95, noindex=5, redirect=10, remove-from-index=144
 
 ## Under-80 Handling
 
@@ -46,33 +46,6 @@ Scope: public content and utility pages represented by the local catalogue, SEO 
 | /guides | static | 90 | yes | keep | Guide index links to original SEO/GEO pages and no-download helper guides. | Keep indexed and order cards by live GSC demand when enough data accumulates. |
 | /privacy | static | 90 | yes | keep | Privacy page covers analytics, cookies, third-party services, and advertising disclosure. | Update when AdSense publisher ID and CMP flow are actually added. |
 | / | static | 92 | yes | keep | Primary entry point with curated navigation and current core game surfaces. | Continue rotating high-signal guide/game links from GSC. |
-| /games/blockman-climb | game | 93 | yes | keep | placeholder thumbnail | Keep indexed; optimize only when monitoring shows demand or playability friction. |
-| /games/blumgi-ball | game | 93 | yes | keep | placeholder thumbnail | Keep indexed; optimize only when monitoring shows demand or playability friction. |
-| /games/blumgi-bloom | game | 93 | yes | keep | placeholder thumbnail | Keep indexed; optimize only when monitoring shows demand or playability friction. |
-| /games/blumgi-rocket | game | 93 | yes | keep | placeholder thumbnail | Keep indexed; optimize only when monitoring shows demand or playability friction. |
-| /games/castle-pals | game | 93 | yes | keep | placeholder thumbnail | Keep indexed; optimize only when monitoring shows demand or playability friction. |
-| /games/catch-the-candy | game | 93 | yes | keep | placeholder thumbnail | Keep indexed; optimize only when monitoring shows demand or playability friction. |
-| /games/cats-love-cake | game | 93 | yes | keep | placeholder thumbnail | Keep indexed; optimize only when monitoring shows demand or playability friction. |
-| /games/cats-love-cake-2 | game | 93 | yes | keep | placeholder thumbnail | Keep indexed; optimize only when monitoring shows demand or playability friction. |
-| /games/city-bike-stunt | game | 93 | yes | keep | placeholder thumbnail | Keep indexed; optimize only when monitoring shows demand or playability friction. |
-| /games/cover-orange | game | 93 | yes | keep | placeholder thumbnail | Keep indexed; optimize only when monitoring shows demand or playability friction. |
-| /games/cover-orange-journey | game | 93 | yes | keep | placeholder thumbnail | Keep indexed; optimize only when monitoring shows demand or playability friction. |
-| /games/cow-bay | game | 93 | yes | keep | placeholder thumbnail | Keep indexed; optimize only when monitoring shows demand or playability friction. |
-| /games/crazy-kick | game | 93 | yes | keep | placeholder thumbnail | Keep indexed; optimize only when monitoring shows demand or playability friction. |
-| /games/dadish | game | 93 | yes | keep | placeholder thumbnail | Keep indexed; optimize only when monitoring shows demand or playability friction. |
-| /games/dadish-2 | game | 93 | yes | keep | placeholder thumbnail | Keep indexed; optimize only when monitoring shows demand or playability friction. |
-| /games/dadish-3 | game | 93 | yes | keep | placeholder thumbnail | Keep indexed; optimize only when monitoring shows demand or playability friction. |
-| /games/drive-mad | game | 93 | yes | keep | placeholder thumbnail | Keep indexed; optimize only when monitoring shows demand or playability friction. |
-| /games/duo-vikings | game | 93 | yes | keep | placeholder thumbnail | Keep indexed; optimize only when monitoring shows demand or playability friction. |
-| /games/duo-vikings-2 | game | 93 | yes | keep | placeholder thumbnail | Keep indexed; optimize only when monitoring shows demand or playability friction. |
-| /games/fireboy-watergirl-6 | game | 93 | yes | keep | placeholder thumbnail | Keep indexed; optimize only when monitoring shows demand or playability friction. |
-| /games/g-switch-2 | game | 93 | yes | keep | placeholder thumbnail | Keep indexed; optimize only when monitoring shows demand or playability friction. |
-| /games/g-switch-3 | game | 93 | yes | keep | placeholder thumbnail | Keep indexed; optimize only when monitoring shows demand or playability friction. |
-| /games/monkey-mart | game | 93 | yes | keep | placeholder thumbnail | Keep indexed; optimize only when monitoring shows demand or playability friction. |
-| /games/monster-tracks | game | 93 | yes | keep | placeholder thumbnail | Keep indexed; optimize only when monitoring shows demand or playability friction. |
-| /games/ovo | game | 93 | yes | keep | placeholder thumbnail | Keep indexed; optimize only when monitoring shows demand or playability friction. |
-| /games/rolling-ball | game | 93 | yes | keep | placeholder thumbnail | Keep indexed; optimize only when monitoring shows demand or playability friction. |
-| /games/tunnel-rush | game | 93 | yes | keep | placeholder thumbnail | Keep indexed; optimize only when monitoring shows demand or playability friction. |
 | /guides/string-theory-2-remastered-guide | guide | 94 | yes | keep | medium guide body (549 en words / 1250 zh chars) | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
 | /guides/adam-and-eve-walkthrough | guide | 95 | yes | keep | needs at least 2 related guide links | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
 | /guides/best-free-iphone-games | guide | 95 | yes | keep | needs playable embed or source citation | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
@@ -96,8 +69,35 @@ Scope: public content and utility pages represented by the local catalogue, SEO 
 | /games/beat-line | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
 | /games/big-tower-tiny-square | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
 | /games/big-tower-tiny-square-2 | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
+| /games/blockman-climb | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
+| /games/blumgi-ball | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
+| /games/blumgi-bloom | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
+| /games/blumgi-rocket | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
+| /games/castle-pals | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
+| /games/catch-the-candy | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
+| /games/cats-love-cake | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
+| /games/cats-love-cake-2 | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
+| /games/city-bike-stunt | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
+| /games/cover-orange | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
+| /games/cover-orange-journey | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
+| /games/cow-bay | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
+| /games/crazy-kick | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
+| /games/dadish | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
+| /games/dadish-2 | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
+| /games/dadish-3 | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
+| /games/drive-mad | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
+| /games/duo-vikings | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
+| /games/duo-vikings-2 | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
+| /games/fireboy-watergirl-6 | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
+| /games/g-switch-2 | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
+| /games/g-switch-3 | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
 | /games/google-snake | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
+| /games/monkey-mart | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
+| /games/monster-tracks | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
+| /games/ovo | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
+| /games/rolling-ball | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
 | /games/string-theory-2-remastered | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
+| /games/tunnel-rush | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
 | /games/category/action | category | 100 | yes | keep | Action category has enough core games and internal links. | Keep indexed; improve copy only if the category gains search impressions. |
 | /games/category/adventure | category | 100 | yes | keep | Adventure category has enough core games and internal links. | Keep indexed; improve copy only if the category gains search impressions. |
 | /games/category/casual | category | 100 | yes | keep | Casual category has enough core games and internal links. | Keep indexed; improve copy only if the category gains search impressions. |
@@ -120,11 +120,13 @@ Scope: public content and utility pages represented by the local catalogue, SEO 
 | /guides/games-like-ovo | guide | 100 | yes | keep | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
 | /guides/google-snake-mods | guide | 100 | yes | keep | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
 | /guides/hide-and-paint-guide | guide | 100 | yes | keep | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
+| /guides/how-to-play-popcorn-game | guide | 100 | yes | keep | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
 | /guides/monkey-tag-io-guide | guide | 100 | yes | keep | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
 | /guides/obby-parkour-with-ragdoll-guide | guide | 100 | yes | keep | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
 | /guides/ovo-walkthrough | guide | 100 | yes | keep | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
 | /guides/rail-cart-buddies-guide | guide | 100 | yes | keep | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
 | /guides/robby-cross-the-road-for-brainrot-guide | guide | 100 | yes | keep | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
+| /guides/telemount-walkthrough | guide | 100 | yes | keep | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
 | /games/gun-battle-3 | game | 41 | no | remove-from-index | thin description (15 en words / 39 zh chars); placeholder thumbnail; Gun combat query and title risk; keep out of index until source and presentation are reviewed. | Keep noindex and withhold iframe until source, IP, theme, and AdSense suitability are reviewed. |
 | /games/hunter-hitman | game | 41 | no | remove-from-index | thin description (14 en words / 40 zh chars); placeholder thumbnail; Hitman/assassin wording; review content suitability before indexing. | Keep noindex and withhold iframe until source, IP, theme, and AdSense suitability are reviewed. |
 | /games/merge-alphabet-lore | game | 41 | no | remove-from-index | thin description (15 en words / 46 zh chars); placeholder thumbnail; Possible third-party IP/trend term; review trademark and source risk. | Keep noindex and withhold iframe until source, IP, theme, and AdSense suitability are reviewed. |
@@ -282,3 +284,5 @@ Scope: public content and utility pages represented by the local catalogue, SEO 
 | /search | utility | 72 | no | noindex | Utility search results page is useful for users but not a stable landing page. | Keep noindex,follow and exclude from sitemap. |
 | /games/tag/progression | tag | 78 | no | noindex | too few core games (2) | Removed from sitemap and marked noindex until it has at least 3 strong core games. |
 | /games/tag/timed-challenge | tag | 78 | no | noindex | too few core games (1) | Removed from sitemap and marked noindex until it has at least 3 strong core games. |
+| /guides/friday-night-funkin-loading-guide | guide | 100 | no | noindex | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep noindex,follow and exclude from sitemap while the experiment is being evaluated. |
+| /guides/google-snake-level-editor | guide | 100 | no | noindex | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep noindex,follow and exclude from sitemap while the experiment is being evaluated. |
