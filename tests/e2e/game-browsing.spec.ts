@@ -153,14 +153,17 @@ test.describe('游戏浏览流程', () => {
   test('攻略推荐卡片的图片区域也能打开游戏详情', async ({ page }) => {
     await page.goto('/en/guides/google-snake-mods');
 
-    const ovoCard = page
-      .locator('#recommendations [data-slot="card"]')
-      .filter({ has: page.locator('a[href="/en/games/ovo"]') });
-    const ovoLink = ovoCard.locator('a[href="/en/games/ovo"]');
-    await expect(ovoLink).toHaveAttribute('href', '/en/games/ovo');
-    await ovoCard.click({ position: { x: 24, y: 24 } });
+    const recommendations = page.locator('#recommendations');
+    await expect(recommendations.locator('a[href="/en/games/ovo"]')).toHaveCount(0);
 
-    await expect(page).toHaveURL(/\/en\/games\/ovo$/);
+    const tunnelRushCard = recommendations
+      .locator('[data-slot="card"]')
+      .filter({ has: page.locator('a[href="/en/games/tunnel-rush"]') });
+    const tunnelRushLink = tunnelRushCard.locator('a[href="/en/games/tunnel-rush"]');
+    await expect(tunnelRushLink).toHaveAttribute('href', '/en/games/tunnel-rush');
+    await tunnelRushCard.click({ position: { x: 24, y: 24 } });
+
+    await expect(page).toHaveURL(/\/en\/games\/tunnel-rush$/);
   });
 
   test('原生全屏被拒绝时无脚本错误并回退到视口全屏', async ({ page }) => {
