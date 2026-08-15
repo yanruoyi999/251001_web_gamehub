@@ -1935,3 +1935,11 @@
 - 发布回执：代码提交 `4cfa6f9` 与 E2E 契约修正 `f045bab` 已推送审计分支和 GitHub `main`；GitHub Actions `31880869113` 对 `f045bab` 为 success，包含 13/13 Playwright E2E。Vercel Production `dpl_DqdEi5WKAZU2VTisGf84t1TTCEMS` 已 Ready，并接管 `lumagamehub.com`、`www.lumagamehub.com` 和项目默认域。
 - 生产验收：Dominoes 中英文页 HTTP 200、canonical 正确、`noindex, follow`、0 iframe、sitemap 排除，桌面/390px 移动端 8/8 训练局面完成且无横向溢出；OvO 游戏页 `noindex, follow` 且无 iframe，OvO 攻略页保留 Coolmath 来源链接；四个低分指南均 noindex 且不在 sitemap。正式域 robots、198 URL sitemap、health、search 均 HTTP 200。Playwright 遥测隔离下 finished telemetry requests=0。
 - 未验证边界：Cloudflare 边缘注入的 `static.cloudflareinsights.com` 脚本被当前 CSP 拒绝，产生外部 CSP console 信息，但没有 page error 或遥测完成请求；未擅自放宽 CSP 或修改 Cloudflare 后台。Dominoes 仍保持 noindex，等待原创内容、来源、可玩性达到 80+ 且产生真实 GSC query-to-page 信号后再讨论索引。
+
+### T-164 Google Snake Mods 生产行为复核与运行时采样（2026-08-15）
+
+- 证据范围：最新巡检报告 `/Users/yanruoyi/ai-native/ops/site-monitoring/reports/2026-08-15/02-00.md` 中 Luma current28 为 303 clicks / 11,435 impressions / 2.65% CTR / 7.62 position；`google snake mods`、`snake mods`、`snake game mod menu` 等 query-to-page 仍集中到现有指南。Coolmath Organic Positions 截图只作为候选发现，不作为 Luma 需求事实。
+- 生产复现：桌面 1280px 与移动 390px 访问 `/en/guides/google-snake-mods`；`Read the guide` 跳转并聚焦 `#guide-details`，`See similar games` 跳转并聚焦 `#recommendations`，Play standard Snake 保持当前页并加载 1 个 iframe；无横向溢出、无 page error。
+- 判断：用户提供的 dead-click 摘要在当前生产版本未复现为应用层死链，因此本轮不做猜测性页面重构。每页唯一 console error 是 Cloudflare 边缘注入脚本被当前 CSP 拒绝；未确认需要启用 Cloudflare Insights，不放宽 CSP。
+- 批量采样：使用现有 `scripts/audit-runtime-quality.ts` 对生产 10 页执行移动 Playwright 采样；10/10 HTTP 200，0 页低于 80，最低运行时分 96；Google Snake Mods 96，canonical/robots/移动布局正常。采样隔离 GA4、Clarity、Vercel telemetry，不污染后台数据。
+- 后续：继续观察 Google Snake Mods query-to-page、CTR、position、`game_play_start`、`game_fullscreen_toggle`、Clarity dead/rage/quick back；不因一次摘要直接新增低质量游戏页。
