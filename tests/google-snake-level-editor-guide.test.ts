@@ -8,26 +8,23 @@ import { getSeoLandingPage } from '@/lib/seo-landing-content';
 const slug = 'google-snake-level-editor';
 const sourceUrl = 'https://github.com/DarkSnakeGang/GoogleSnakeLevelEditor';
 
-describe('Google Snake Level Editor guide preview', () => {
-  it('keeps the first version noindex with a self-referencing canonical', async () => {
+describe('Google Snake Level Editor guide release', () => {
+  it('is indexable with a self-referencing canonical', async () => {
     const page = getSeoLandingPage(slug);
     const metadata = await generateMetadata({
       params: Promise.resolve({ locale: 'en', slug }),
     });
 
-    expect(page?.indexable).toBe(false);
-    expect(metadata.robots).toMatchObject({
-      index: false,
-      follow: true,
-    });
+    expect(page?.indexable).toBe(true);
+    expect(metadata.robots).toBeUndefined();
     expect(metadata.alternates?.canonical).toBe('/en/guides/' + slug);
   });
 
-  it('stays out of sitemap until the preview passes the quality gates', async () => {
+  it('publishes both localized canonical URLs in the sitemap', async () => {
     const urls = (await sitemap()).map((entry) => entry.url);
 
-    expect(urls.some((url) => url.endsWith('/en/guides/' + slug))).toBe(false);
-    expect(urls.some((url) => url.endsWith('/zh/guides/' + slug))).toBe(false);
+    expect(urls.some((url) => new URL(url).pathname === '/en/guides/' + slug)).toBe(true);
+    expect(urls.some((url) => new URL(url).pathname === '/guides/' + slug)).toBe(true);
   });
 
   it('covers the source-backed editor workflow without adding another external game iframe', () => {

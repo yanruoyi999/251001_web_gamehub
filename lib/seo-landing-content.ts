@@ -2577,7 +2577,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       'google snake challenge mode',
     ],
     updatedAt: '2026-08-15T00:00:00.000Z',
-    indexable: false,
+    indexable: true,
     relatedSlugs: [
       'google-snake-mods',
       'best-browser-games-5-minute-break',

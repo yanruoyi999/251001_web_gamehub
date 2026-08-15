@@ -1897,6 +1897,7 @@
 - GitHub/Vercel：Actions `31658308298` 对 `dc67d30` 为 success；Vercel Production `dpl_Dz5vrag7KwhXjivpcsQp2JNGBSf1` Ready，`lumagamehub.com` 与 `www.lumagamehub.com` 均已接管。
 - 生产验收：Google Snake Mods 指南、Google Snake 游戏页、robots、sitemap、health 和 search 均 HTTP 200；SSR Play 控件包含 `/en/games/google-snake` fallback，移动无 JavaScript 3/3 与游戏全屏 1/1 通过。目标页 canonical 正确且无 noindex；robots 指向主 sitemap；sitemap 为 206 URLs 并包含目标指南；health 为 `status=ok`、catalogue/cache 均为 local。
 - 数据边界：本次未修改 GA4、GSC、Clarity 或 Vercel Analytics 后台，也未提交 GSC sitemap。产品修复已经上线；dead click、quick back、`game_play_start` 与 `game_fullscreen_toggle` 的实际变化仍需等待 Clarity 配额恢复和新的真实用户窗口验证。
+
 ### T-162 Google Snake Level Editor 来源核验指南（2026-08-15）
 
 - 现有信号：最新本地巡检窗口中的 Level Editor query-to-page 集群已有真实 GSC 信号；当前 7 天为 6 clicks / 154 impressions / 平均排名 7.21，上一 7 天为 5 / 62 / 7.76。该数据支持先加深现有 Google Snake 曝光页，不支持复制模组或批量扩张薄页。
@@ -1906,3 +1907,11 @@
 - 浏览器验证：本地 production server 的 1440x1000 与 390x844 页面均 HTTP 200、无横向溢出、canonical 正确、`noindex, follow`、0 iframe、官方来源存在。真实滚动后 3 张推荐图均完成加载且 `naturalWidth > 0`，无图片 4xx/5xx。移动 Lighthouse 为 Performance 92、Accessibility 100、Best Practices 96、LCP 2.7s、CLS 0、TBT 150ms；SEO 61 的失败项来自预览阶段主动 noindex 和 localhost 与生产 canonical 域不同。
 - 安全与发布边界：GitHub Advisory `GHSA-2v37-7h3g-55p8` 要求 Nano ID 3.x 至少为 3.3.18；Next.js 15.5.22 仍声明 PostCSS 8.4.31，不能自动修复当前 override 链。本轮只把 `nanoid` override 从 3.3.17 升到 3.3.18，独立安全提交为 `f556a42`；`pnpm why nanoid --prod` 确认生产路径统一到 3.3.18，`pnpm audit:prod` 返回 `No known vulnerabilities found`。Level Editor 内容独立提交为 `5dc016b`，两个提交均已推送至 `origin/feat/google-snake-level-editor-20260815`。
 - Preview 验收：Vercel Preview 部署 `dpl_AzvikSdeeSkT5a8A4Q6AsbnAxEtc` 于 2026-08-15 14:17:25 +08:00 达到 `Ready`，目标为 `preview`。认证 CLI 验证页面、`/sitemap.xml` 与 `/robots.txt` 均 HTTP 200；页面 title、生产 canonical、`noindex, follow`、官方来源、0 iframe 和 sitemap 排除均正确。复用已登录 Chrome 以 390x844 在线复查，无横向溢出，页面可正常阅读。匿名访问因既有 Vercel Deployment Protection 跳转登录页，该保护未被关闭。本轮未修改 `main`、生产别名、indexability、GSC 或 Vercel 后台设置，Luma Snake 未启动。
+
+### T-162 可索引发布候选（2026-08-15）
+
+- Git 边界：从 `origin/main@5f9efbf` 新建隔离分支，只 cherry-pick Nano ID 安全修复、Level Editor 内容和 Preview 回执；`docs/progress.md` 冲突只保留 T-162，明确排除 T-159/T-160/T-161 留存提交及其产品文件。主检出的既有 FNF/SEO 未提交修改未暂存、未覆盖。
+- 索引切换：仅将 `google-snake-level-editor` 的 `indexable` 从 `false` 改为 `true`，同步把测试改为要求无 `noindex` robots、英文和默认中文 canonical URL 均进入 sitemap；页面正文、标题、来源链接和零 iframe 边界不变。
+- 验证结果：TDD 先得到 indexability 与 sitemap 两个预期失败，修复后专测 5/5、完整 Vitest 58 files / 189 tests；页面质量 254 rows / 96 indexable / 0 indexable under-80，目标页 100。内链、type-check、生产依赖审计和 137 页 production build 通过；隔离 lint 为 0 errors / 98 个既有 warnings，普通 lint 仅受父仓库重复 Next ESLint 插件发现影响。
+- 运行时验证：本地移动批量采样 10 页全部 80+、最低 88；目标页 390x844 为 HTTP 200、无横向溢出、无 robots meta、生产 canonical 正确、0 iframe、官方来源存在。`robots.txt` 与 `sitemap.xml` 均 HTTP 200，sitemap 为 208 URLs 并包含中英文目标 URL。
+- 当前状态：可索引发布候选已在本地完成，尚未提交该索引切换、推送干净分支、合入 `main`、部署生产或向 GSC 请求索引；这些外部状态必须在后续回执中分别验证。
