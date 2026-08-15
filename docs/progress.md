@@ -1943,3 +1943,13 @@
 - 判断：用户提供的 dead-click 摘要在当前生产版本未复现为应用层死链，因此本轮不做猜测性页面重构。每页唯一 console error 是 Cloudflare 边缘注入脚本被当前 CSP 拒绝；未确认需要启用 Cloudflare Insights，不放宽 CSP。
 - 批量采样：使用现有 `scripts/audit-runtime-quality.ts` 对生产 10 页执行移动 Playwright 采样；10/10 HTTP 200，0 页低于 80，最低运行时分 96；Google Snake Mods 96，canonical/robots/移动布局正常。采样隔离 GA4、Clarity、Vercel telemetry，不污染后台数据。
 - 后续：继续观察 Google Snake Mods query-to-page、CTR、position、`game_play_start`、`game_fullscreen_toggle`、Clarity dead/rage/quick back；不因一次摘要直接新增低质量游戏页。
+
+### T-165 Google Snake Mods 服务端内链修复（2026-08-15）
+
+- 原始信号：用户在 `google-snake-mods` 页面没有看到指向 `spend-bill-gates-money` 的内链。复核发现，历史提交 `c469635` 已将链接加入 `usePathname` 客户端布局组件；正式域 hydration 后可见，但原始 HTML 不包含该链接，首屏或禁用 JavaScript 场景下不可稳定发现。
+- 直接根因：内链依赖客户端 hydration，而不是指南页面服务端输出；这不是目标 URL、canonical 或生产路由错误。未修改用户原工作树 `/Users/yanruoyi/ai-native/active/251001_web_游戏聚合网站`。
+- 实际改动：`app/[locale]/guides/[slug]/page.tsx` 在 `page.slug === 'google-snake-mods'` 时服务端渲染中英文上下文链接；`app/[locale]/page.tsx` 在首页服务端渲染中英文上下文链接；从 `components/seo/spend-bill-gates-money-context-links.tsx` 和 `lib/games/spend-bill-gates-money-seo.ts` 移除首页/Snake 的客户端重复映射；`tests/spend-bill-gates-money-seo-v1-2.test.ts` 和 `tests/home-curation.test.ts` 增加回归断言。
+- 当前验证：针对性 Vitest 9/9、完整 Vitest 61 files / 198 tests、type-check、内链审计、生产依赖审计、lint（0 errors / 98 个既有 warnings）、Next.js 15.5.21 production build（139/139 静态页）和 `git diff --check` 均通过。首页与 Snake 中英文原始 HTML，以及启用/禁用 JavaScript 的桌面 1280px、移动 390px 页面均找到唯一目标链接；无横向溢出、无 page error。
+- 追加正式域只读复查：当前 `/en` 与 `/en/guides/google-snake-mods` 原始 HTML 均已有目标 href，但位于旧版布局底部上下文区；本地新增的首页主体区和 Snake 指南主体区尚未部署，不能把线上旧链接归因于本轮改动。
+- 发布边界：本修复只在干净隔离分支 `/Users/yanruoyi/ai-native/.worktrees/luma-dominoes-ovo-release-20260815`，当前尚未 commit、push 或部署；生产数据和 GSC 索引状态不因本地修改而改变。外部论坛/Reddit backlink 未执行。
+- 下一步：如需上线，再独立核对本地与 GitHub `main` 后提交、push、部署；部署后复查 canonical、robots、sitemap、移动布局和真实 GSC query-to-page。内链存在不等于页面已索引。

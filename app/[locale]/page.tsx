@@ -235,6 +235,39 @@ export default async function HomePage({
             </div>
           </section>
 
+          <section
+            aria-labelledby="homepage-spend-bill-gates-money"
+            className="mx-auto mt-12 max-w-4xl border-t border-border pt-10"
+          >
+            <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+              <div className="max-w-3xl">
+                <p className="text-sm font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-400">
+                  {locale === 'zh' ? 'Luma 原创互动游戏' : 'Luma original browser game'}
+                </p>
+                <h2
+                  id="homepage-spend-bill-gates-money"
+                  className="mt-2 text-2xl font-semibold text-foreground"
+                >
+                  {locale === 'zh'
+                    ? '试试花光1000亿美元的在线消费模拟器'
+                    : 'Try an online $100 billion spending simulator'}
+                </h2>
+                <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+                  {locale === 'zh'
+                    ? '无需下载或注册，直接在浏览器中购买、撤销并比较不同消费方案。'
+                    : 'Buy, undo, and compare spending plans in the browser with no download or account required.'}
+                </p>
+              </div>
+              <Link
+                href={getLocalizedPath(locale, '/games/spend-bill-gates-money')}
+                className="inline-flex min-h-11 flex-shrink-0 items-center justify-center gap-2 rounded-lg bg-emerald-700 px-5 py-2.5 font-semibold text-white transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              >
+                {locale === 'zh' ? '开始花光1000亿美元' : 'Spend $100 billion online'}
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </div>
+          </section>
+
           <section className="mt-20 space-y-6 text-left">
             <h2 className="text-center text-3xl font-semibold text-foreground md:text-4xl">
               {seoSection.title ?? t('seoSection.title')}

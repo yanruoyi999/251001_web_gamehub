@@ -377,6 +377,36 @@ export default async function GuidePage({ params }: GuidePageProps) {
         ))}
       </section>
 
+      {page.slug === 'google-snake-mods' ? (
+        <section
+          aria-labelledby="related-spend-bill-gates-money"
+          className="mx-auto mt-12 max-w-3xl border-t border-border pt-8"
+        >
+          <p className="text-sm font-semibold uppercase tracking-wide text-primary">
+            {locale === 'zh' ? '相似浏览器游戏' : 'Similar browser game'}
+          </p>
+          <h2
+            id="related-spend-bill-gates-money"
+            className="mt-2 text-2xl font-semibold text-foreground"
+          >
+            {locale === 'zh'
+              ? '想换个挑战？试试花光1000亿美元'
+              : 'Try a different challenge: spend $100 billion'}
+          </h2>
+          <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+            {locale === 'zh'
+              ? '如果你喜欢快速打开的浏览器挑战，可以试试无需下载、支持撤销购买并生成分享结果的亿万富翁消费模拟器。'
+              : 'If you like quick browser challenges, try a no-download billionaire spending simulator with reversible purchases and a shareable result.'}
+          </p>
+          <Link
+            href={getLocalizedPath(locale, '/games/spend-bill-gates-money')}
+            className="mt-4 inline-flex min-h-11 items-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          >
+            {locale === 'zh' ? '试玩花钱模拟游戏' : 'Try the money spending simulator'} →
+          </Link>
+        </section>
+      ) : null}
+
       {page.video ? (
         <section className="mx-auto mt-12 max-w-3xl" data-print-hide>
           <header className="mb-4">

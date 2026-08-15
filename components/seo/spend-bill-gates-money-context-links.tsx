@@ -16,21 +16,6 @@ interface ContextCopy {
   action: string;
 }
 
-const homeCopy: Record<Locale, ContextCopy> = {
-  zh: {
-    eyebrow: 'Luma Original',
-    title: '用1000亿美元做一次选择实验',
-    body: '在原创亿万富翁消费模拟器中增加或减少商品，比较不同购买方案，并生成你的消费身份。',
-    action: '开始花光1000亿美元',
-  },
-  en: {
-    eyebrow: 'Luma Original',
-    title: 'Turn $100 billion into a choice experiment',
-    body: 'Use reversible purchases in a billionaire spending simulator, compare different plans, and reveal your spending identity.',
-    action: 'Spend $100 billion online',
-  },
-};
-
 const guideCopy: Record<string, Record<Locale, ContextCopy>> = {
   'games-to-play-when-bored': {
     zh: {
@@ -74,20 +59,6 @@ const guideCopy: Record<string, Record<Locale, ContextCopy>> = {
       action: 'Play Spend Bill Gates Money',
     },
   },
-  'google-snake-mods': {
-    zh: {
-      eyebrow: '相似浏览器游戏',
-      title: '想换个挑战？试试花光1000亿美元',
-      body: '如果你喜欢快速打开的浏览器挑战，可以试试无需下载、支持撤销购买并生成分享结果的亿万富翁消费模拟器。',
-      action: '试玩花钱模拟游戏',
-    },
-    en: {
-      eyebrow: 'Similar browser game',
-      title: 'Try a different challenge: spend $100 billion',
-      body: 'If you like quick browser challenges, try a no-download billionaire spending simulator with reversible purchases and a shareable result.',
-      action: 'Try the money spending simulator',
-    },
-  },
 };
 
 function resolveContext(pathname: string): {
@@ -97,10 +68,6 @@ function resolveContext(pathname: string): {
   const locale: Locale = pathname === '/en' || pathname.startsWith('/en/') ? 'en' : 'zh';
   const localizedPrefix = locale === 'en' ? '/en' : '';
   const pathWithoutLocale = pathname.slice(localizedPrefix.length) || '/';
-
-  if (pathWithoutLocale === '/') {
-    return { locale, copy: homeCopy[locale] };
-  }
 
   const guidePrefix = '/guides/';
   if (!pathWithoutLocale.startsWith(guidePrefix)) return null;

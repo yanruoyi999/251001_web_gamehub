@@ -21,6 +21,7 @@ describe('homepage curation', () => {
     expect(homeSource).toContain('/guides/ovo-walkthrough');
     expect(homeSource).toContain('/guides/drive-mad-level-tips');
     expect(homeSource).toContain('/games/solitaire');
+    expect(homeSource).toContain("getLocalizedPath(locale, '/games/spend-bill-gates-money')");
     expect(homeSource).toContain('priority={index < 2}');
     expect(homeSource).not.toContain('<FeatureCard');
   });

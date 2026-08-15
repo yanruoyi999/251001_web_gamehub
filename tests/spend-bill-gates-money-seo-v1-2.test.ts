@@ -39,6 +39,7 @@ describe('Spend Bill Gates Money SEO v1.2', () => {
       'components/seo/spend-bill-gates-money-context-links.tsx',
     );
     const games = readSource('app/[locale]/games/page.tsx');
+    const home = readSource('app/[locale]/page.tsx');
 
     expect(layout).toContain('SpendBillGatesMoneyContextLinks');
     expect(contextLinks).toContain('SPEND_BILL_GATES_MONEY_GUIDE_LINK_SLUGS');
@@ -46,9 +47,16 @@ describe('Spend Bill Gates Money SEO v1.2', () => {
     expect(contextLinks).toContain('亿万富翁消费模拟器');
     expect(contextLinks).toContain('best-browser-games-5-minute-break');
     expect(contextLinks).toContain('free-games-no-ads');
-    expect(contextLinks).toContain("'google-snake-mods':");
-    expect(contextLinks).toContain('Try the money spending simulator');
-    expect(contextLinks).toContain('试玩花钱模拟游戏');
+    expect(contextLinks).not.toContain("'google-snake-mods':");
+    expect(contextLinks).not.toContain('homeCopy');
+    expect(home).toContain("getLocalizedPath(locale, '/games/spend-bill-gates-money')");
+    expect(home).toContain('Spend $100 billion online');
+    expect(home).toContain('开始花光1000亿美元');
+    const guides = readSource('app/[locale]/guides/[slug]/page.tsx');
+    expect(guides).toContain("page.slug === 'google-snake-mods'");
+    expect(guides).toContain("'/games/spend-bill-gates-money'");
+    expect(guides).toContain('Try the money spending simulator');
+    expect(guides).toContain('试玩花钱模拟游戏');
     expect(games).toContain("'/games/spend-bill-gates-money'");
     expect(games).toContain('const { games, total, totalPages');
   });
