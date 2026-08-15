@@ -1915,3 +1915,12 @@
 - 验证结果：TDD 先得到 indexability 与 sitemap 两个预期失败，修复后专测 5/5、完整 Vitest 58 files / 189 tests；页面质量 254 rows / 96 indexable / 0 indexable under-80，目标页 100。内链、type-check、生产依赖审计和 137 页 production build 通过；隔离 lint 为 0 errors / 98 个既有 warnings，普通 lint 仅受父仓库重复 Next ESLint 插件发现影响。
 - 运行时验证：本地移动批量采样 10 页全部 80+、最低 88；目标页 390x844 为 HTTP 200、无横向溢出、无 robots meta、生产 canonical 正确、0 iframe、官方来源存在。`robots.txt` 与 `sitemap.xml` 均 HTTP 200，sitemap 为 208 URLs 并包含中英文目标 URL。
 - 当前状态：可索引发布候选已在本地完成，尚未提交该索引切换、推送干净分支、合入 `main`、部署生产或向 GSC 请求索引；这些外部状态必须在后续回执中分别验证。
+
+### T-162 生产发布与 GSC 回执（2026-08-15）
+
+- Git 边界：从 `origin/main@5f9efbf` 建立干净发布分支，只带入 Nano ID 安全修复 `44bb691`、Level Editor 内容 `761dc21`、Preview 回执 `5780fc9` 和索引切换 `5f91c01`；T-159/T-160/T-161 留存提交及主检出的既有未提交文件均未进入发布。该分支以 `--ff-only` 合入 `main`，产品发布时本地 `main`、`origin/main` 与 GitHub `main` 均为 `5f91c0158e62518d27f5bf15efc508d1d2204d99`。
+- GitHub 与 Vercel：GitHub Actions `31871157494` 对产品 SHA 为 success；Vercel Production `dpl_HYYm6mxhUfnZ3wn1sdMqFtMLNXss` 为 Ready，部署元数据绑定同一 Git SHA，`lumagamehub.com` 与 `www.lumagamehub.com` 均已接管。
+- 生产 SEO：中英文 Level Editor 规范页均 HTTP 200、canonical 正确且无 `noindex`；`robots.txt` 允许指南抓取并指向主 sitemap；sitemap 为 208 个唯一 URL，包含 `/guides/google-snake-level-editor` 与 `/en/guides/google-snake-level-editor`。页面保留 0 iframe、2 个官方来源链接和非 Google 官方声明。
+- 生产体验：390x844 Playwright 验证无横向溢出、0 page error、0 遥测完成请求；10 页移动运行时批量采样全部 80+、最低 96，游戏 Play、iframe 与 fullscreen 检查通过。
+- GSC 回执：`sc-domain:lumagamehub.com` 的 URL Inspection 初始显示 `URL is not on Google / URL is unknown to Google`；2026-08-15 15:15（Asia/Shanghai）Live Test 显示 `URL is available to Google`、`Page can be indexed`，并检测到 1 个有效 Breadcrumb。经用户确认后提交单 URL 索引请求，GSC 返回 `Indexing requested`，说明 URL 已加入优先抓取队列；该回执不等于页面已经收录，也未重复提交 sitemap。
+- 后续观察：等待 Google 重新抓取后，按固定窗口观察该页的索引状态、Level Editor query-to-page、impressions、clicks、CTR 与平均排名；只有真实信号持续且内容质量保持 80+ 才继续加深，不据此扩张薄页或模组镜像。
