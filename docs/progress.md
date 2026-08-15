@@ -2004,3 +2004,13 @@
 - 验证结果：页面质量审计 255 rows / 91 indexable / 0 indexable under-80；内链审计通过；全量 Vitest 66 files / 219 tests 通过；type-check、lint（0 errors / 98 个既有 warnings）、production build（141 static pages）、`git diff --check` 通过；Playwright 收藏专项桌面/移动 2/2、与既有游戏浏览 9/9 通过；移动 runtime 10/10 页面 80+，最低 88。API saved 返回 Spend/Google Snake 摘要，robots 与 sitemap 仍 HTTP 200。
 - 发布边界：本轮只完成当前隔离发布工作树的本地修复与验证，未 commit、push、合入 `main`、部署生产、修改后台或提交 GSC。原工作树 `/Users/yanruoyi/ai-native/active/251001_web_游戏聚合网站` 的既有未提交文件未触碰、未暂存、未进入本轮。
 - 下一步：发布后复查 `/games/saved` 的入口、localStorage 收藏读写、首页三张推荐与 Start with 去重、Spend OG 图片、canonical/robots/sitemap 和 Clarity/GA4 收藏与推荐事件；GSC 只观察不同测试页的真实 query-to-page，不把本地曝光实验当成收录或流量结果。
+
+### T-166 收藏页与推荐分层生产发布回执（2026-08-15）
+
+- Git 回执：发布提交 `3c872752a85df6515a062ead8d6e34b7f4aa359e` 已提交并推送；专用 `main` 工作树先从 `388b587` 快进到 GitHub `main@4fa5ee8`，再快进到 `3c87275`，GitHub `main` 与本地 `main` 已一致。原工作树 `/Users/yanruoyi/ai-native/active/251001_web_游戏聚合网站` 的未提交文件未触碰、未暂存、未进入发布。
+- Vercel 回执：正式项目 `251001-web-gamehub-rdg6` 部署 `dpl_Av2y2ycoKja8WzFUkPBXKuacyRrX` 已 `Ready`，正式域 `lumagamehub.com`、`www.lumagamehub.com` 和项目域均已接管。
+- 构建回执：Vercel 使用 Next.js 15.5.21，构建生成 141 个静态页；`/games/saved`、`/api/games/saved` 和 `/og/spend-bill-gates-money` 均进入部署输出。
+- 正式域验证：首页、英文首页、默认/英文收藏页、robots、sitemap、health、search 均 HTTP 200；收藏页为 `noindex, follow`，canonical 分别指向默认中文公开路径和 `/en/games/saved`；sitemap 保持 198 个 URL并包含 Spend 页面。
+- 浏览器验证：正式域 Playwright 收藏与游戏浏览共 9/9；桌面端可从首页进入收藏页并读取 Spend，390px 移动端可取消收藏并回到空状态；无横向溢出和 page error。生产移动运行时采样 10/10 通过，最低 96，游戏 Play/fullscreen 检查通过。
+- 业务边界：OvO 已从每日推荐和首页 Start with 移除，但其游戏页仍保持既有 noindex/source gate；本次未修改 GA4、GSC、Clarity、数据库、搜索服务、环境变量或权限。收藏为浏览器本地存储，不提供跨设备同步。
+- 下一巡检：观察 `favorite_add/remove`、`recommendation_view/click`、Google Snake 与测试页的 GSC query-to-page、GA4 Returning Users/D1/D7、Clarity dead/rage/quick back；不把本次自动化访问当作真实用户数据。
