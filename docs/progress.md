@@ -1953,3 +1953,11 @@
 - 追加正式域只读复查：当前 `/en` 与 `/en/guides/google-snake-mods` 原始 HTML 均已有目标 href，但位于旧版布局底部上下文区；本地新增的首页主体区和 Snake 指南主体区尚未部署，不能把线上旧链接归因于本轮改动。
 - 发布边界：本修复只在干净隔离分支 `/Users/yanruoyi/ai-native/.worktrees/luma-dominoes-ovo-release-20260815`，当前尚未 commit、push 或部署；生产数据和 GSC 索引状态不因本地修改而改变。外部论坛/Reddit backlink 未执行。
 - 下一步：如需上线，再独立核对本地与 GitHub `main` 后提交、push、部署；部署后复查 canonical、robots、sitemap、移动布局和真实 GSC query-to-page。内链存在不等于页面已索引。
+
+### T-165 发布回执（2026-08-15）
+
+- Git：提交 `411016c65f21f2cbb1ecd79df7e4bf68749f4a75` 已推送至审计分支和 GitHub `main`；发布分支、本地 `main` 与 `origin/main` 已对齐。原工作树 `/Users/yanruoyi/ai-native/active/251001_web_游戏聚合网站` 的既有未提交修改未触碰、未暂存、未进入本次发布。
+- GitHub：CI run `31883782712` 为 `success`，包含 lint、type-check、内链检查、单测、依赖审计、production build 与 E2E；IndexNow run `31883782695` 为 `success`。
+- Vercel：Production deployment `dpl_4f6UzCnuGtBrDZ42ZMYrJzNZxf7U` 已 `Ready`，部署 URL 为 `https://251001-web-gamehub-rdg6-85o8kbfi3-yanruoyi999s-projects.vercel.app`，正式域已接管。
+- 生产验收：`/en` 与 `/en/guides/google-snake-mods` 均 HTTP 200、canonical 正确、无 `noindex`；服务端 HTML 已包含主体区目标内链。Playwright 在桌面 1440px 与移动 390px 均确认链接可见、无横向溢出、无 page error。robots、sitemap、health、search API 均 HTTP 200；sitemap 为 198 个 URL并包含 `spend-bill-gates-money`。
+- 数据边界：本次未修改 GSC、Clarity 或其他生产后台设置；本地监控因 GSC/Clarity 凭据未配置而跳过对应读取，不将其记为 0。内链上线不等于页面已索引，继续等待 GSC query-to-page 与 Clarity 新窗口数据。
