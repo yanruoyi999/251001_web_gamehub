@@ -1983,3 +1983,14 @@
 - 修复范围：`i18n/config.ts` 新增默认语言公开路径归一化，Header 的桌面/移动 active 状态统一使用归一化路径；上下文入口同时识别 `/zh` 与无前缀中文路径。每日推荐改用服务端提供的上海日期快照，首页按 24 小时 ISR 更新，避免浏览器在首屏 hydration 中自行切换推荐集合。
 - 回归验证：新增默认语言路径、上下文入口路径等价和推荐日期快照测试；完整 Vitest 61 files / 201 tests、Next.js 15.5.21 production build 135/135、内链、类型、lint 与 `git diff --check` 通过。本地 production 在首页、OvO 详情和 Google Snake Mods 指南均为 0 hydration/page error；1440x900 与 390x844 无横向溢出，首页 3 张推荐/3 个收藏、详情当前视口 1 个推荐实例均可见，收藏物理点击后 `aria-pressed=true` 且 localStorage 写入正确。
 - 数据边界：本地交互验证使用遥测隔离，不代表 GA4/Clarity 已收到真实用户事件；部署后仍需复查主域 hydration error、首击收藏和 `recommendation_view/click`、`favorite_add` 的后续真实窗口。
+
+### T-159/T-160/T-161 留存实验生产发布回执（2026-08-15）
+
+- 发布范围：从最新 `origin/main@388b587a42967f234a31603cd317a36fd6a26d44` rebase 的隔离分支发布今日推荐、无账号收藏、响应式推荐位、hydration 日期快照和可见性修复；原工作树 `/Users/yanruoyi/ai-native/active/251001_web_游戏聚合网站` 的既有未提交修改未触碰、未暂存、未进入本次发布。
+- Git 回执：留存代码提交 `b99bed3`、`85f4080`、`275483f` 与测试修正 `8bb5732` 已提交；审计分支使用 `--force-with-lease` 更新，GitHub `main` 从 `388b587` 快进到 `8bb5732`。分支和 `main` 推送均成功。
+- CI/自动化：GitHub Actions CI `31886405357` 对 `8bb5732ed542c74102a5f1a222917ba75fb7e51c` 为 `success`，包含 lint、type-check、内链、215 个单测、依赖审计、生产构建和 E2E；IndexNow `31886405336` 为 `success`。本地生产依赖审计为 `No known vulnerabilities found`。
+- Vercel：Production deployment `dpl_HesCfZjuZyuE1b8PRBXEMV3AkeTd` 已 `Ready`，构建日志明确从 GitHub `main` commit `8bb5732` 构建；`lumagamehub.com`、`www.lumagamehub.com` 和项目默认域均已接管。
+- 生产体验：正式域首页桌面/390px 移动端均显示 3 张“今日推荐”卡和 3 个收藏按钮；收藏可切换 `aria-pressed` 并写入当前浏览器 localStorage。Google Snake 详情页桌面和移动端各有 2 套响应式 DOM，但每个 viewport 仅 1 个可见推荐区、1 张推荐卡和 1 个收藏按钮；四个场景无 page error、无横向溢出。首页保留 `/en/games/spend-bill-gates-money` 服务端内链。
+- 生产接口：规范化重定向后 `robots.txt`、`sitemap.xml`、`/api/health`、`/api/search?q=snake&limit=3` 均 HTTP 200；sitemap 为 198 个唯一 URL。health 仍明确为 local catalogue/cache/local search，未切换生产数据库或搜索服务。
+- 数据边界：本次未改 GA4、GSC、Clarity、Vercel 项目设置、环境变量或权限；`recommendation_view`、`recommendation_click`、`favorite_add`、`favorite_remove` 仅完成代码触发和隔离浏览器验证，真实到达量、D1/D7 回访和 GSC query-to-page 需下一个后台窗口确认，不将本次发布当作业务效果证明。
+- 下一巡检：按同一窗口观察推荐曝光/点击、收藏添加/移除、GA4 Returning Users/D1/D7、Google Snake query-to-page、Clarity dead/rage/quick back，以及首页与详情页移动端可玩性；继续保持固定推荐池，不因一次发布扩张低证据游戏。
