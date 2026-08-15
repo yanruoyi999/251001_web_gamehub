@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { GamePlayerFacade } from '@/components/game/game-player-facade';
+import { DominoesTraining } from '@/components/game/dominoes-training';
 import { IntentCta } from '@/components/seo/intent-cta';
 import {
   getSeoLandingPage,
@@ -326,6 +327,10 @@ export default async function GuidePage({ params }: GuidePageProps) {
           </a>
         </div>
       </section>
+
+      {page.interactiveWidget === 'dominoes-training' ? (
+        <DominoesTraining locale={locale} />
+      ) : null}
 
       {page.embedGame ? (
         <section

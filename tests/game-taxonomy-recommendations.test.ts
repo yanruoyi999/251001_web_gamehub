@@ -18,7 +18,7 @@ describe('game taxonomy and recommendations', () => {
     const game = getMockGameBySlug('google-snake');
     const related = getRelatedGames(game!, mockGames, 3).map((candidate) => candidate.slug);
 
-    expect(related).toEqual(['g-switch-2', 'ovo', 'tunnel-rush']);
+    expect(related).toEqual(['g-switch-2', 'g-switch-3', 'tunnel-rush']);
     expect(related).not.toContain('adam-and-eve-4');
   });
 });

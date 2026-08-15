@@ -1,4 +1,5 @@
 import type { Locale } from '@/i18n/config';
+import { isGameUnderManualReview } from '@/lib/games/quality-policy';
 
 export interface SeoLandingSection {
   title: string;
@@ -77,6 +78,7 @@ export interface SeoLandingPage {
   printablePath?: string;
   video?: SeoLandingVideo;
   intentCta?: SeoLandingIntentCta;
+  interactiveWidget?: 'dominoes-training';
   locales: Record<Locale, SeoLandingLocaleContent>;
 }
 
@@ -3528,11 +3530,6 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     ],
     updatedAt: seoContentUpdatedAt,
     relatedSlugs: ['games-like-ovo', 'drive-mad-walkthrough', 'big-tower-tiny-square-walkthrough'],
-    embedGame: {
-      iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp41/liuxinyu/20230129/1/index.html',
-      title: 'OvO',
-      playSlug: 'ovo',
-    },
     locales: {
       en: {
         metaTitle: 'OvO Walkthrough: Level 46, Level Count & Movement Tips',
@@ -3542,7 +3539,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         subheading: 'Use the right movement chain, check which build you are playing, and follow the common Level 46 portal route.',
         overview: [
           'OvO is a minimalist parkour platformer where a small runner jumps, slides, dives, and wall-jumps toward each flag. The official Dedra Games mobile listing says there are more than 50 levels, while browser editions and later community builds can show a different total or order. Check the version and obstacle layout before following a numbered solution.',
-          'This guide starts with the movement chain that solves most failed jumps, then gives a concise route for the commonly indexed Level 46 layout. Use the embedded player to compare the obstacles on your screen; if they do not match, use the mechanic-based fixes instead of forcing the wrong numbered route.',
+          'This guide starts with the movement chain that solves most failed jumps, then gives a concise route for the commonly indexed Level 46 layout. Use the source links below to verify the build you are playing; if the obstacles do not match, use the mechanic-based fixes instead of forcing the wrong numbered route.',
         ],
         sections: [
           {
@@ -3609,8 +3606,13 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             description: 'Publisher page used to cross-check current browser and mobile controls, including slide-jumps, dives, transparent platforms, and wall jumps.',
           },
         ],
-        ctaLabel: 'Play OvO now',
-        ctaDescription: 'Jump into OvO free in your browser and put these tricks to work.',
+        quickAnswerLink: {
+          href: 'https://www.coolmathgames.com/0-ovo',
+          label: 'Open the current OvO source page',
+          description: 'Use the source page to check the current browser build before applying a numbered route.',
+        },
+        ctaLabel: 'Browse related precision games',
+        ctaDescription: 'The embedded mirror is withheld while the current source permission is being reviewed.',
       },
       zh: {
         metaTitle: 'OvO 攻略:Level 46 过法、关卡数量与操作技巧',
@@ -3675,8 +3677,13 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             description: '用于交叉核对当前浏览器和手机操作,包括滑跳、俯冲、透明平台与蹬墙。',
           },
         ],
-        ctaLabel: '立即开玩 OvO',
-        ctaDescription: '在浏览器里免费玩 OvO,把这些技巧用起来。',
+        quickAnswerLink: {
+          href: 'https://www.coolmathgames.com/0-ovo',
+          label: '打开当前 OvO 来源页面',
+          description: '先核对当前浏览器版本，再使用对应的关卡路线。',
+        },
+        ctaLabel: '浏览相关精准操作游戏',
+        ctaDescription: '当前镜像来源仍在复查，暂不在本页加载第三方播放器。',
       },
     },
   },
@@ -3685,6 +3692,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     primaryKeyword: 'tunnel rush',
     keywords: ['tunnel rush', 'tunnel rush unblocked', 'tunnel rush 2', 'tunnel rush tips', 'tunnel rush high score'],
     updatedAt: seoContentUpdatedAt,
+    indexable: false,
     relatedSlugs: ['ovo-walkthrough'],
     embedGame: {
       iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp44/gamehwq/20230830/12a/index.html',
@@ -3788,6 +3796,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     primaryKeyword: 'monkey mart',
     keywords: ['monkey mart', 'monkey mart guide', 'how to unlock all monkey mart', 'monkey mart recipes', 'monkey mart tips'],
     updatedAt: seoContentUpdatedAt,
+    indexable: false,
     relatedSlugs: [],
     embedGame: {
       iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp41/gamehwq/20221216/09/index.htm',
@@ -4225,6 +4234,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     primaryKeyword: 'g-switch 3',
     keywords: ['g-switch 3', 'g switch 3 unblocked', 'g-switch multiplayer', 'how to play g-switch 3'],
     updatedAt: seoContentUpdatedAt,
+    indexable: false,
     relatedSlugs: [],
     embedGame: {
       iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp41/liuxinyu/20221121/2/index.html',
@@ -4326,6 +4336,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     primaryKeyword: 'fireboy and watergirl',
     keywords: ['fireboy and watergirl', '2 player games', 'fireboy and watergirl walkthrough', 'fireboy and watergirl unblocked'],
     updatedAt: seoContentUpdatedAt,
+    indexable: false,
     relatedSlugs: [],
     embedGame: {
       iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp41/cwb/20221213/01/index.htm',
@@ -7170,12 +7181,261 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       },
     },
   },
+  {
+    slug: 'how-to-play-dominoes',
+    primaryKeyword: 'how to play dominoes',
+    keywords: [
+      'how to play dominoes',
+      'dominoes rules',
+      'dominoes basics',
+      'how to play dominoes for beginners',
+      'domino chain rules',
+    ],
+    updatedAt: '2026-08-15T00:00:00.000Z',
+    relatedSlugs: [
+      'games-to-play-when-bored',
+      'best-new-browser-games-july-2026',
+      'best-free-iphone-games',
+    ],
+    indexable: false,
+    interactiveWidget: 'dominoes-training',
+    locales: {
+      en: {
+        metaTitle: 'How to Play Dominoes: Basic Rules and Interactive Practice',
+        metaDescription:
+          'Learn how to play dominoes from the open ends of the chain, rotate matching tiles, handle doubles, and practice eight beginner positions in an original trainer.',
+        heading: 'How to Play Dominoes: Basic Rules and Practice',
+        subheading:
+          'A source-labelled beginner guide with an original interactive trainer for reading the two open ends of a domino chain.',
+        overview: [
+          'Most beginner dominoes turns become easier when you reduce them to one question: which pip is exposed on the end where you want to play? This guide uses the common matching-chain idea, then calls out where named table variants can change the draw, pass, and scoring rules.',
+          'The practice tool below contains eight fixed positions rather than a full competitive table. It is designed to teach the first decision loop: read the ends, scan the hand, rotate the tile if needed, and choose the side that matches.',
+        ],
+        sections: [
+          {
+            title: 'Quick answer: match one open end',
+            body:
+              'Start a chain with any tile when the table is empty. After that, place a tile at the left or right end only when one of its pips matches the exposed number on that end. You may turn a tile around; the pip touching the chain must match. Doubles still expose their number, and the exact draw, pass, and scoring rule depends on the dominoes variant being played.',
+            bullets: [
+              'Read the left and right exposed pips before choosing a tile.',
+              'A tile can be rotated; orientation is not a reason to reject a match.',
+              'When no tile fits, follow the table rule instead of inventing a universal pass rule.',
+            ],
+          },
+          {
+            title: 'The first turn: read the board before your hand',
+            body:
+              'Look only at the two exposed ends of the chain. The pips in the middle no longer accept a connection, so scanning every number on the table can make a legal move look harder than it is. Say the two active numbers to yourself, then look for those numbers in your hand.',
+            bullets: [
+              'Name the left end and the right end in order.',
+              'Check every tile for either active number.',
+              'Choose the side before placing the tile so the move has a clear reason.',
+            ],
+          },
+          {
+            title: 'Rotate tiles and read doubles correctly',
+            body:
+              'A 2-6 tile can connect to an exposed 2 or an exposed 6. Rotate it so the matching pip touches the chain. A double such as 4-4 still contributes the number 4 to the open end; whether a specific game treats doubles as crosswise spinners is a variant rule that should be agreed before play.',
+            bullets: [
+              'Do not reject a tile because the matching pip is on the “wrong” half.',
+              'Treat a double as its pip value for this beginner exercise.',
+              'Keep special double rules separate from the basic matching rule.',
+            ],
+          },
+          {
+            title: 'A reliable four-step turn',
+            body:
+              'Use the same sequence every time: read both ends, scan the hand, choose the matching side, then rotate and place the tile. This reduces rushed moves and makes it easier to explain why a move is legal. In a real game, use the published rules for the named variant before applying a scoring strategy.',
+            bullets: [
+              'Step 1: identify the two exposed pips.',
+              'Step 2: mark every tile that contains either pip.',
+              'Step 3: prefer a legal side you can explain clearly.',
+              'Step 4: update the new exposed pip after the placement.',
+            ],
+          },
+          {
+            title: 'What happens when nothing fits?',
+            body:
+              'There is no single answer for every dominoes game. Some draw games require a player to draw until a playable tile appears or the boneyard is empty; blocking games may let the player pass. Confirm the table name, player count, draw pile, and scoring method before the first round. This page does not present one house rule as universal.',
+            bullets: [
+              'Ask whether the game is a draw game or a blocking game.',
+              'Confirm whether one tile or multiple tiles may be drawn.',
+              'Confirm how a blocked round is scored before playing for points.',
+            ],
+          },
+          {
+            title: 'Common beginner mistakes',
+            body:
+              'The most common error is matching a number in the middle of the chain instead of an exposed end. Other mistakes are forgetting that tiles can rotate, choosing a tile before choosing a side, and assuming that every version uses the same draw or double rule. Slow down until the basic read becomes automatic.',
+            bullets: [
+              'Middle pips do not create new playable ends.',
+              'A legal tile can still be placed on the wrong side.',
+              'A familiar house rule is not automatically the official rule of another variant.',
+            ],
+          },
+          {
+            title: 'A short practice routine',
+            body:
+              'Run the trainer once without chasing speed. For each position, say the active ends aloud, select one matching tile, and explain why the side works. Then repeat the positions and try to reduce unnecessary attempts. The goal is a repeatable read, not a high score or a simulated full table.',
+            bullets: [
+              'Round one: use the hint whenever the active end is unclear.',
+              'Round two: read the ends before touching a tile.',
+              'Round three: explain each legal move in one sentence.',
+            ],
+          },
+          {
+            title: 'Use the named rules for a full game',
+            body:
+              'For a complete round, use a rules source that matches the game you intend to play. Pagat’s dominoes basics reference describes common matching and variant concepts, but it is still important to verify the table’s player count, draw procedure, scoring, and regional conventions. Luma’s trainer is a learning aid, not a replacement for the rules of a specific set.',
+          },
+        ],
+        recommendations: [
+          { slug: 'google-snake', pitch: 'A quick score-chasing browser game when you want a short solo session.' },
+          { slug: 'catch-the-candy', pitch: 'A compact physics puzzle that rewards reading the active object and planning one move ahead.' },
+          { slug: 'drive-mad', pitch: 'A timing and balance challenge for players who prefer repeated precision attempts.' },
+        ],
+        faqs: [
+          {
+            question: 'What is the basic rule of dominoes?',
+            answer:
+              'In a common matching-chain game, place a tile at an open end when one of its pips matches the exposed pip on that end. The tile may be rotated. Draw, pass, doubles, and scoring rules vary by named variant.',
+          },
+          {
+            question: 'Can you turn a domino tile around?',
+            answer:
+              'Yes. A tile can be rotated so the matching pip touches the chain. The two values on the tile stay the same; only its orientation changes.',
+          },
+          {
+            question: 'What if I cannot play a domino?',
+            answer:
+              'Check the table rules. A draw game may require drawing from the boneyard, while a blocking game may allow a pass. There is no single universal procedure.',
+          },
+          {
+            question: 'Are doubles special in dominoes?',
+            answer:
+              'Often, but the exact treatment differs. This beginner trainer reads a double by its pip value; a specific game may define extra placement or scoring rules.',
+          },
+        ],
+        quickAnswerLink: {
+          href: 'https://www.pagat.com/domino/basics.html',
+          label: 'Check the Pagat dominoes basics reference',
+          description: 'Use the external reference to compare common rules with the variant you plan to play.',
+        },
+        externalLinks: [
+          {
+            href: 'https://www.pagat.com/domino/basics.html',
+            label: 'Pagat: Dominoes basics',
+            description: 'Reference for common matching-chain mechanics and differences between dominoes variants.',
+          },
+          {
+            href: 'https://www.britannica.com/topic/dominoes',
+            label: 'Encyclopaedia Britannica: dominoes',
+            description: 'Background reference for the tile set and broad game context; check the named table rules separately.',
+          },
+        ],
+        ctaLabel: 'Browse more puzzle games',
+        ctaDescription: 'Try another short browser challenge after the rules practice.',
+      },
+      zh: {
+        metaTitle: 'Dominoes 怎么玩：基础规则与互动练习',
+        metaDescription:
+          '从开放端读牌、旋转匹配骨牌、理解对子和无牌可接规则开始，完成 8 个 Luma 原创 Dominoes 入门练习局面。',
+        heading: 'Dominoes 怎么玩：基础规则与练习',
+        subheading: '带来源说明的入门规则页，用原创互动训练器练习读骨牌链两端。',
+        overview: [
+          'Dominoes 入门时可以先把问题缩小为一个判断：你准备连接的那一端露出的点数是多少？本页采用常见的匹配接龙思路，同时明确说明抽牌、跳过和计分会随具体玩法变化。',
+          '下面的训练器包含 8 个固定局面，不模拟完整比赛。它只训练第一层决策：读两端、扫描手牌、必要时旋转骨牌，再选择匹配的一端。',
+        ],
+        sections: [
+          {
+            title: '快速答案：匹配一个开放端',
+            body: '空牌面时可以用任意牌开始。之后只能把骨牌接在左端或右端，并且其中一个点数要匹配该端露出的数字。骨牌可以旋转；接触牌链的那一侧必须匹配。对子仍然按它的点数读，本桌具体的抽牌、跳过和计分方式要以正在玩的版本为准。',
+            bullets: ['先读左端和右端露出的数字。', '骨牌可以旋转，不要因为方向不同就排除匹配牌。', '没有牌可接时遵守本桌规则，不要假设所有玩法都一样。'],
+          },
+          {
+            title: '第一步：先读牌面，再看手牌',
+            body: '只看牌链最左和最右的开放端。中间的点数不能再接牌，逐个扫描整条牌链反而容易把简单决策弄复杂。先说出左右两端，再在手牌中找这两个数字。',
+            bullets: ['按顺序说出左端和右端。', '检查每张手牌是否包含任意一个开放数字。', '先决定要接哪一端，再放牌。'],
+          },
+          {
+            title: '旋转骨牌，并正确理解对子',
+            body: '2-6 可以连接露出的 2，也可以连接露出的 6，只需要旋转让匹配点数贴到牌链。4-4 这样的对子仍然露出 4；某些玩法会把对子横放或当作特殊牌，这属于变体规则，需要开局前先约定。',
+            bullets: ['匹配数字在“另一半”也可以旋转后使用。', '本入门练习按点数读取对子。', '把特殊对子规则和基础匹配规则分开。'],
+          },
+          {
+            title: '稳定的四步出牌顺序',
+            body: '每次都使用同一套顺序：读两端、扫手牌、选匹配的一端、旋转并放牌。这样可以减少抢拍，也更容易说明为什么这一步合法。真正比赛时，再根据具体玩法使用对应的计分策略。',
+            bullets: ['第 1 步：找出两个开放点数。', '第 2 步：标记含有任一开放点数的手牌。', '第 3 步：选择能解释清楚的合法端。', '第 4 步：放牌后重新读新的开放点数。'],
+          },
+          {
+            title: '没有牌可接时怎么办？',
+            body: '没有适用于所有 Dominoes 玩法的唯一答案。有些抽牌玩法要从牌堆抽到可出的牌，或牌堆为空后停抽；堵牌玩法可能允许跳过。开局前确认玩法名称、人数、牌堆和计分方式，本页不会把某一种家庭规则包装成通用规则。',
+            bullets: ['先确认是抽牌玩法还是堵牌玩法。', '确认一次抽一张还是可以连续抽牌。', '确认牌局堵住后如何计分。'],
+          },
+          {
+            title: '入门时最常见的错误',
+            body: '最常见的错误是去匹配牌链中间的数字，而不是两个开放端。另一些错误是忘记骨牌可以旋转、先选牌再想放哪边，以及把熟悉的家庭规则当成所有玩法的规则。',
+            bullets: ['中间点数不会产生新的接牌端。', '牌匹配不代表左右两端都能放，位置仍然重要。', '熟悉的家庭玩法不一定适用于另一种比赛。'],
+          },
+          {
+            title: '五分钟练习路线',
+            body: '先不追求速度，完成一遍训练器。每个局面先说出开放端，选一张匹配牌，再说明为什么能接。第二遍减少不必要的尝试。目标是形成可重复的读牌动作，而不是追求模拟完整比赛的高分。',
+            bullets: ['第一遍：看不清开放端时使用提示。', '第二遍：先读两端，再碰手牌。', '第三遍：用一句话说明每个合法选择。'],
+          },
+          {
+            title: '完整比赛要看具体玩法说明',
+            body: '如果要进行完整牌局，应使用和计划玩的玩法相匹配的规则来源。Pagat 的基础资料可以帮助对照常见的匹配与变体概念，但仍要确认人数、抽牌、计分和地区习惯。Luma 训练器是学习工具，不能替代某一套骨牌的完整说明。',
+          },
+        ],
+        recommendations: [
+          { slug: 'google-snake', pitch: '想进行短局分数挑战时，可以打开这款浏览器小游戏。' },
+          { slug: 'catch-the-candy', pitch: '通过观察物体和提前规划解决短关卡的物理解谜。' },
+          { slug: 'drive-mad', pitch: '喜欢反复练习精确操作时，可以尝试平衡和时机挑战。' },
+        ],
+        faqs: [
+          { question: 'Dominoes 的基本规则是什么？', answer: '常见匹配接龙玩法中，把一张牌接到开放端，并让其中一个点数匹配该端露出的数字。骨牌可以旋转；抽牌、跳过、对子和计分随具体玩法变化。' },
+          { question: '骨牌可以翻转方向吗？', answer: '可以。把匹配的点数旋转到靠近牌链的一侧即可，骨牌上的两个数字不会改变。' },
+          { question: '没有牌可接怎么办？', answer: '查看本桌规则。抽牌玩法可能要求从牌堆抽牌，堵牌玩法可能允许跳过，没有统一适用于所有玩法的处理方式。' },
+          { question: '对子在 Dominoes 里有特殊规则吗？', answer: '有些玩法有，但处理方式不同。本入门训练器按对子点数判断，具体牌局可能另有横放或计分规则。' },
+        ],
+        quickAnswerLink: {
+          href: 'https://www.pagat.com/domino/basics.html',
+          label: '查看 Pagat Dominoes 基础资料',
+          description: '用外部资料对照常见规则，再确认你准备玩的具体版本。',
+        },
+        externalLinks: [
+          { href: 'https://www.pagat.com/domino/basics.html', label: 'Pagat：Dominoes 基础规则', description: '用于核对常见匹配接龙机制和不同 Dominoes 玩法差异。' },
+          { href: 'https://www.britannica.com/topic/dominoes', label: 'Encyclopaedia Britannica：dominoes', description: '用于了解骨牌和玩法背景，具体桌规仍需单独确认。' },
+        ],
+        ctaLabel: '浏览更多益智游戏',
+        ctaDescription: '完成规则练习后，继续尝试另一款短局浏览器挑战。',
+      },
+    },
+  },
 ];
 
+function getPublicSeoLandingPage(page: SeoLandingPage): SeoLandingPage {
+  return {
+    ...page,
+    locales: Object.fromEntries(
+      Object.entries(page.locales).map(([locale, content]) => [
+        locale,
+        {
+          ...content,
+          recommendations: content.recommendations.filter(
+            (recommendation) => !isGameUnderManualReview(recommendation.slug),
+          ),
+        },
+      ]),
+    ) as Record<Locale, SeoLandingLocaleContent>,
+  };
+}
+
 export function getSeoLandingPages(): SeoLandingPage[] {
-  return SEO_LANDING_PAGES;
+  return SEO_LANDING_PAGES.map(getPublicSeoLandingPage);
 }
 
 export function getSeoLandingPage(slug: string): SeoLandingPage | undefined {
-  return SEO_LANDING_PAGES.find((page) => page.slug === slug);
+  const page = SEO_LANDING_PAGES.find((candidate) => candidate.slug === slug);
+  return page ? getPublicSeoLandingPage(page) : undefined;
 }

@@ -1,6 +1,7 @@
 export const MANUAL_REVIEW_GAME_REASONS = {
   'adam-and-eve-zombies': 'Zombie theme; review tone, iframe behavior, and age suitability before indexing.',
   'adam-and-eve-8': 'Duplicate iframe mapping with Adam and Eve 7; keep out of index until the correct playable source is verified.',
+  'ovo': 'The creator source describes OvO as exclusive to Coolmath Games; the current 4399 mirror has no verified embed permission. Keep noindex and withhold the iframe until source rights are confirmed.',
   'balance-duel': 'Public store descriptions center on gun/recoil shooting duels; keep out of index during AdSense review prep.',
   'gun-battle-3': 'Gun combat query and title risk; keep out of index until source and presentation are reviewed.',
   'hero-tower-wars': 'War-themed title; review violence level and source clarity before surfacing.',

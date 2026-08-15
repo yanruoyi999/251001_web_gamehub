@@ -1924,3 +1924,12 @@
 - 生产体验：390x844 Playwright 验证无横向溢出、0 page error、0 遥测完成请求；10 页移动运行时批量采样全部 80+、最低 96，游戏 Play、iframe 与 fullscreen 检查通过。
 - GSC 回执：`sc-domain:lumagamehub.com` 的 URL Inspection 初始显示 `URL is not on Google / URL is unknown to Google`；2026-08-15 15:15（Asia/Shanghai）Live Test 显示 `URL is available to Google`、`Page can be indexed`，并检测到 1 个有效 Breadcrumb。经用户确认后提交单 URL 索引请求，GSC 返回 `Indexing requested`，说明 URL 已加入优先抓取队列；该回执不等于页面已经收录，也未重复提交 sitemap。
 - 后续观察：等待 Google 重新抓取后，按固定窗口观察该页的索引状态、Level Editor query-to-page、impressions、clicks、CTR 与平均排名；只有真实信号持续且内容质量保持 80+ 才继续加深，不据此扩张薄页或模组镜像。
+
+### T-163 Dominoes trainer and OvO source gate release candidate (2026-08-15)
+
+- 发布基线：从 GitHub `origin/main@23371ad0f0ec895420550bc883bc2909e720d377` 建立干净隔离分支；既有工作树上的 Spend Bill Gates、FNF、留存和其他未提交改动未复制、未暂存、未进入本轮发布。
+- 直接修复：新增 `/guides/how-to-play-dominoes` 中英文规则页和原创 8 局交互训练器；训练器只使用本地规则与固定局面，不嵌入第三方游戏。将 OvO 的未核验 4399 来源标记为 manual review，游戏页保持 `noindex, follow` 且移除 iframe；OvO 攻略页只保留可核验的 Coolmath 来源链接。公共推荐过滤 manual-review 游戏，避免继续导流到未核验来源。
+- 索引边界：Dominoes 页首版保持 `noindex, follow`、不进入 sitemap；OvO 游戏页不进入 sitemap。四个静态质量分为 79 的既有指南（Tunnel Rush、Monkey Mart、G-Switch 3、Fireboy and Watergirl）同步改为 `noindex, follow` 并从 sitemap 排除，避免低于 80 的页面继续作为索引目标；OvO 攻略页仍是独立来源说明页，不承诺游戏托管权。
+- 验证结果：目标测试 3 files / 10 tests、完整 Vitest 61 files / 198 tests、内链检查、type-check、lint（0 errors / 98 个既有 no-console warnings）、`pnpm audit:prod`（No known vulnerabilities found）、Next.js 15.5.21 production build（139/139 静态页）和 `git diff --check` 通过。页面质量 255 rows / 91 indexable / 0 indexable under-80。
+- 浏览器与运行时：本地 production server 下 Dominoes 桌面 1280px 与移动 390px 均 HTTP 200、无横向溢出，8/8 训练局面完成；Dominoes/OvO 元数据、canonical、noindex、iframe 和 sitemap 排除均符合预期。10 页移动运行时二次采样 under-80=0、最低 88；剩余 4 条 console error 为本地 `next start` 缺少 Vercel Insights/Speed Insights 脚本的 404/MIME 噪声，未发现页面 JS error，生产需单独复查。
+- 当前状态：本地发布候选已完成代码、测试、构建和浏览器验证；截至本记录写入时尚未 commit、push、合入 GitHub `main`、部署生产或修改 GSC/后台设置。部署后必须重新核对生产 SHA、核心页面、canonical、robots、noindex、sitemap 和移动端可玩性；Dominoes 只有在原创内容、来源和可玩性证据持续达到 80+ 后再讨论取消 noindex。

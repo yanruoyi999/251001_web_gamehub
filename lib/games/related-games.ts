@@ -7,7 +7,7 @@ interface RelatedGameCandidate {
 }
 
 const RELATED_GAME_OVERRIDES: Record<string, string[]> = {
-  'google-snake': ['g-switch-2', 'ovo', 'tunnel-rush'],
+  'google-snake': ['g-switch-2', 'g-switch-3', 'tunnel-rush'],
 };
 
 export function getRelatedGames<T extends RelatedGameCandidate>(
