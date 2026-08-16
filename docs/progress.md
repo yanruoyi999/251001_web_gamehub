@@ -2051,3 +2051,13 @@
 - 发布回归：提交 `72e01ad` 已合入 GitHub `main`，CI `31942845920` 的 lint、type-check、内链、239 个单测、依赖审计和 production build 均通过，但多浏览器 E2E 中 4 个 Snake 3D 测试在动态 Three.js 导入尚未完成或 WebGL 不可用时提前读取画布，导致 CI 阻断；Vercel 未继续部署。
 - 直接修复：Snake 3D stage 新增 `data-snake-phase`；E2E 等待 `playing/dead/error` 明确状态最长 30 秒。支持 WebGL 的浏览器继续执行非空画布像素检查；浏览器确实不提供 WebGL 时验证用户可见的启动错误态，不把环境能力误报成应用崩溃。
 - 发布边界：修复仍在隔离分支，需重新通过完整本地门禁、推送修复提交、快进 `main` 后等待新的 CI，再确认 Vercel 生产部署。页面继续保持 `noindex`，不提交 GSC。
+
+### T-168 Luma Snake 3D 原创游戏生产发布回执（2026-08-16）
+
+- Git 回执：E2E 兼容性修复提交 `3d827ba497df975b2d2ed2367b06b5e73f4abe76` 已推送功能分支；专用干净 `main` 工作树从 `72e01ad` 快进到 `3d827ba`，GitHub `main` 推送成功。原工作树 `/Users/yanruoyi/ai-native/active/251001_web_游戏聚合网站` 的既有未提交文件未触碰、未暂存、未进入本次发布。
+- CI 回执：GitHub Actions CI `31943344999` 为 `success`，包含 lint、type-check、内链、239 个单测、生产依赖审计、143 个静态页构建、79 个 E2E（3 个受环境能力限制的 skip）和 runtime-quality gate。首次 CI `31942845920` 的 Snake 3D 画布时序问题已由 `data-snake-phase` 等待逻辑修复，未绕过失败门禁。
+- Vercel 回执：Production deployment `dpl_FPJBmS4xxZR8DdcuW7WJPHKGUXiW` 已 `Ready`；构建日志明确显示从 GitHub `main` commit `3d827ba` 克隆，Next.js 15.5.21 生成 143/143 静态页，正式域 `lumagamehub.com`、`www.lumagamehub.com` 和项目域均已接管。
+- 生产验收：`/en/games/snake-3d` HTTP 200，标题、`noindex, follow`、canonical 正确；sitemap 不含 Snake 3D，robots、health、search API 均 HTTP 200。health 继续显示 `catalogue=local`、`cache=local`、local search，未切换生产数据库或搜索服务。
+- 运行时验收：正式域 Snake 3D Playwright Chromium/Pixel 7 为 3 passed、1 desktop skip；点击 Play 后动态脚本才请求，画布非空渲染，移动触控和无横向溢出通过。正式域移动运行时抽样 10 页全部 92+，最低 92；抽样脚本阻断自动化遥测，不把该访问计入 GA4、Clarity 或 Vercel 业务数据。
+- 索引与行为门槛：页面质量分 94 和 runtime 通过只是发布必要条件；页面继续保持 `noindex, follow` 且不进入 sitemap。首周必须等待真实 `snake_3d_first_death`，只有 Play 到首次死亡中位时长在 45 秒到 3 分钟之间，才讨论取消 noindex；当前不能用自动化测试替代真实用户数据。
+- 外部状态边界：本次未修改 GSC、GA4、Clarity、数据库、搜索服务、环境变量、Cloudflare 或权限，未提交 GSC sitemap。生产依赖审计 `pnpm audit:prod` 为 `No known vulnerabilities found`；完整开发依赖审计的新增 advisory 仍需另行治理，不纳入本次生产代码发布。
