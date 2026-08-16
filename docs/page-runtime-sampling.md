@@ -1,7 +1,7 @@
 # Luma Runtime Quality Sampling
 
-Generated: 2026-08-15T13:52:34.632Z
-Base URL: http://127.0.0.1:3107
+Generated: 2026-08-16T03:27:31.645Z
+Base URL: http://localhost:3220
 
 Scope: mobile Playwright sampling for high-value indexable pages. This is a companion gate for `docs/page-quality-scorecard.md`, adding runtime performance, mobile layout, and actual playable-iframe checks that static scoring cannot prove. Analytics collection is blocked during sampling so automated visits do not contaminate GA4, Clarity, or Vercel telemetry. TTFB/transport is reported separately; page timing scores use response-relative DCL/FCP/load so one noisy network route does not downgrade every page equally.
 
@@ -15,19 +15,19 @@ Scope: mobile Playwright sampling for high-value indexable pages. This is a comp
 
 - Sampled pages: 10
 - Under 80: 0
-- Minimum score: 88
+- Minimum score: 96
 
 ## Samples
 
 | Path | Type | Score | Status | TTFB | DCL after response | Load after response | FCP after response | Transfer | Requests | Canonical | Robots | Mobile overflow | Playable | Fullscreen | Reason |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- | --- | --- | --- | --- | --- |
-| /en | static | 100 | 200 | 29ms | 102ms | 682ms | 135ms | 180KB | 16 | yes | index | no | n/a | n/a | Mobile runtime sample passed the current performance and playability thresholds. |
-| /en/games | static | 88 | 200 | 46ms | 59ms | 117ms | 86ms | 359KB | 28 | yes | index | no | n/a | n/a | 4 console errors |
-| /en/guides/games-like-ovo | guide | 88 | 200 | 29ms | 70ms | 141ms | 95ms | 210KB | 21 | yes | index | no | n/a | n/a | 4 console errors |
-| /en/guides/google-snake-mods | guide | 88 | 200 | 10ms | 17ms | 84ms | 62ms | 211KB | 21 | yes | index | no | n/a | n/a | 4 console errors |
-| /en/guides/big-tower-tiny-square-2-walkthrough | guide | 88 | 200 | 13ms | 16ms | 76ms | 51ms | 215KB | 21 | yes | index | no | n/a | n/a | 4 console errors |
-| /en/guides/obby-parkour-with-ragdoll-guide | guide | 88 | 200 | 19ms | 55ms | 104ms | 69ms | 203KB | 20 | yes | index | no | n/a | n/a | 4 console errors |
-| /en/guides/rail-cart-buddies-guide | guide | 88 | 200 | 15ms | 17ms | 97ms | 57ms | 203KB | 20 | yes | index | no | n/a | n/a | 4 console errors |
-| /en/guides/telemount-walkthrough | guide | 88 | 200 | 18ms | 18ms | 83ms | 58ms | 238KB | 23 | yes | index | no | n/a | n/a | 4 console errors |
-| /en/games/drive-mad | game | 88 | 200 | 20ms | 96ms | 98ms | 76ms | 211KB | 22 | yes | index | no | yes | yes | 4 console errors |
-| /en/games/duo-vikings | game | 88 | 200 | 21ms | 57ms | 92ms | 71ms | 205KB | 22 | yes | index | no | yes | yes | 4 console errors |
+| /en | static | 100 | 200 | 193ms | 169ms | 326ms | 187ms | 282KB | 26 | yes | index | no | n/a | n/a | Mobile runtime sample passed the current performance and playability thresholds. |
+| /en/games | static | 100 | 200 | 100ms | 100ms | 175ms | 124ms | 359KB | 26 | yes | index | no | n/a | n/a | Mobile runtime sample passed the current performance and playability thresholds. |
+| /en/guides/games-like-ovo | guide | 100 | 200 | 45ms | 75ms | 152ms | 91ms | 210KB | 19 | yes | index | no | n/a | n/a | Mobile runtime sample passed the current performance and playability thresholds. |
+| /en/guides/google-snake-mods | guide | 100 | 200 | 15ms | 16ms | 93ms | 53ms | 211KB | 19 | yes | index | no | n/a | n/a | Mobile runtime sample passed the current performance and playability thresholds. |
+| /en/guides/big-tower-tiny-square-2-walkthrough | guide | 100 | 200 | 17ms | 17ms | 80ms | 55ms | 215KB | 19 | yes | index | no | n/a | n/a | Mobile runtime sample passed the current performance and playability thresholds. |
+| /en/guides/obby-parkour-with-ragdoll-guide | guide | 100 | 200 | 13ms | 43ms | 104ms | 55ms | 203KB | 18 | yes | index | no | n/a | n/a | Mobile runtime sample passed the current performance and playability thresholds. |
+| /en/guides/rail-cart-buddies-guide | guide | 100 | 200 | 16ms | 17ms | 78ms | 52ms | 203KB | 18 | yes | index | no | n/a | n/a | Mobile runtime sample passed the current performance and playability thresholds. |
+| /en/guides/telemount-walkthrough | guide | 100 | 200 | 24ms | 59ms | 125ms | 72ms | 238KB | 21 | yes | index | no | n/a | n/a | Mobile runtime sample passed the current performance and playability thresholds. |
+| /en/games/drive-mad | game | 96 | 200 | 32ms | 66ms | 173ms | 96ms | 211KB | 20 | yes | index | no | yes | yes | 1 console errors |
+| /en/games/duo-vikings | game | 96 | 200 | 59ms | 144ms | 239ms | 165ms | 208KB | 20 | yes | index | no | yes | yes | 1 console errors |

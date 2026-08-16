@@ -68,6 +68,18 @@ async function clickLanguageLinkAndExpect({
   }
 }
 
+async function ensureLanguageSwitcherVisible(page: Page, language: string) {
+  const languageLink = page.getByRole('link', { name: language, exact: true });
+  if (await languageLink.isVisible()) return;
+
+  const openMenu = page
+    .locator('label[for="mobile-navigation-toggle"]')
+    .filter({ hasText: /open navigation menu|打开导航菜单/i });
+  await openMenu.click();
+  await expect(page.locator('#mobile-navigation')).toBeVisible();
+  await expect(languageLink).toBeVisible();
+}
+
 test.describe('游戏浏览流程', () => {
   test('首页可以正常渲染', async ({ page }) => {
     const response = await page.goto('/');
@@ -85,9 +97,7 @@ test.describe('游戏浏览流程', () => {
     await expect(page).toHaveURL('/');
     await expect(page.locator('body')).toBeVisible();
     await expect(page.locator('html')).toHaveAttribute('lang', 'zh');
-    const languageToggle = page.getByRole('link', { name: 'EN', exact: true });
-
-    await expect(languageToggle).toBeVisible();
+    await ensureLanguageSwitcherVisible(page, 'EN');
     await clickLanguageLinkAndExpect({
       page,
       linkName: 'EN',
@@ -129,12 +139,7 @@ test.describe('游戏浏览流程', () => {
 
     expect(englishResponse?.ok()).toBe(true);
     await expect(page).toHaveURL('/en');
-    const languageToggle = page.getByRole('link', {
-      name: '中文',
-      exact: true,
-    });
-
-    await expect(languageToggle).toBeVisible();
+    await ensureLanguageSwitcherVisible(page, '中文');
     await clickLanguageLinkAndExpect({
       page,
       linkName: '中文',

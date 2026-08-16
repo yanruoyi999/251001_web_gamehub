@@ -88,8 +88,8 @@ jobs:
       - name: Production build
         run: pnpm build
 
-      - name: Install Playwright Chromium
-        run: pnpm exec playwright install --with-deps chromium
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium firefox webkit
 
       - name: End-to-end tests
         id: e2e_tests
@@ -109,3 +109,34 @@ jobs:
             e2e-output.txt
             playwright-report
             test-results
+
+      - name: Start local production server
+        run: |
+          GAME_CATALOG_MODE=local CACHE_MODE=local pnpm start -p 3217 > next-start.log 2>&1 &
+          for attempt in {1..30}; do
+            if curl --fail --silent http://localhost:3217/api/health > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat next-start.log
+          exit 1
+
+      - name: Runtime quality gate
+        id: runtime_quality
+        shell: bash
+        run: |
+          set -o pipefail
+          pnpm audit:runtime-quality -- --base-url http://localhost:3217 --write /tmp/page-runtime-sampling.md 2>&1 | tee runtime-quality-output.txt
+
+      - name: Upload runtime diagnostics
+        if: failure() && steps.runtime_quality.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: runtime-quality-diagnostics
+          if-no-files-found: warn
+          retention-days: 3
+          path: |
+            runtime-quality-output.txt
+            next-start.log
+            /tmp/page-runtime-sampling.md

@@ -52,7 +52,9 @@ pnpm build
 pnpm test:e2e
 ```
 
-The GitHub Actions CI workflow runs the repository gates for pull requests. Browser E2E tests use Chromium.
+The GitHub Actions CI workflow runs the repository gates for pull requests. Browser E2E covers Chromium, Firefox, WebKit, Pixel 7, and iPhone 13, followed by a mobile runtime-quality sampling gate.
+
+For safety, an unset or unknown `GAME_CATALOG_MODE` falls back to the checked-in local catalogue. Set it explicitly to `remote` only when the production database and write-path configuration have been reviewed. GA4, Vercel Analytics, Speed Insights, and Clarity are isolated from local/preview hosts; Clarity also requires explicit visitor consent on the formal production domain.
 
 ## Main routes
 

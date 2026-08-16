@@ -33,5 +33,22 @@ export default defineConfig({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
+    {
+      name: 'firefox',
+      testIgnore: /mobile-disclosure\.spec\.ts/,
+      use: { ...devices['Desktop Firefox'] },
+    },
+    {
+      name: 'webkit',
+      use: { ...devices['Desktop Safari'] },
+    },
+    {
+      name: 'pixel-7',
+      use: { ...devices['Pixel 7'] },
+    },
+    {
+      name: 'iphone-13',
+      use: { ...devices['iPhone 13'] },
+    },
   ],
 });

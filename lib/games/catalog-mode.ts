@@ -1,11 +1,21 @@
 import type { DatabaseConnectionMetadata } from '@/lib/db/connection-policy';
 
+export type CatalogueMode = 'local' | 'remote';
+
+export function getCatalogueMode(env: NodeJS.ProcessEnv = process.env): CatalogueMode {
+  const configuredMode = env.GAME_CATALOG_MODE?.trim().toLowerCase();
+
+  // Remote persistence is opt-in. A missing or unknown value must never make
+  // a production request attempt an unverified database connection.
+  return configuredMode === 'remote' || configuredMode === 'database' ? 'remote' : 'local';
+}
+
 export function isLocalCatalogueMode(env: NodeJS.ProcessEnv = process.env) {
-  return env.GAME_CATALOG_MODE?.trim().toLowerCase() === 'local';
+  return getCatalogueMode(env) === 'local';
 }
 
 export function isCataloguePersistenceEnabled(env: NodeJS.ProcessEnv = process.env) {
-  return !isLocalCatalogueMode(env);
+  return getCatalogueMode(env) === 'remote';
 }
 
 export function shouldUseCatalogueDatabase(

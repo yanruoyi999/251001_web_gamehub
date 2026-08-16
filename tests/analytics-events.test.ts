@@ -80,7 +80,9 @@ describe('trackInteraction', () => {
   });
 
   it('isolates Clarity failures from navigation and controls', () => {
+    vi.stubEnv('NODE_ENV', 'production');
     vi.stubGlobal('window', {
+      location: { hostname: 'www.lumagamehub.com' },
       clarity: () => {
         throw new Error('clarity blocked');
       },

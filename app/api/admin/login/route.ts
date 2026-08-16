@@ -8,50 +8,23 @@ import {
 import { getClientIp } from '@/lib/http/client-ip';
 import { hashIp } from '@/lib/utils/hash';
 import { isLocalCatalogueMode } from '@/lib/games/catalog-mode';
+import {
+  clearAdminLoginAttempts,
+  consumeAdminLoginAttempt,
+} from '@/lib/auth/admin-rate-limit';
 
 const MAX_FAILED_ATTEMPTS = 5;
 const LOGIN_WINDOW_MS = 15 * 60 * 1000;
-const MAX_LOGIN_RATE_LIMIT_KEYS = 5_000;
-
-type LoginAttempt = {
-  count: number;
-  resetAt: number;
-};
-
-const failedLoginAttempts = new Map<string, LoginAttempt>();
 
 function getClientKey(request: Request) {
   return hashIp(getClientIp(request));
 }
 
-function getActiveAttempt(key: string, now = Date.now()) {
-  const current = failedLoginAttempts.get(key);
-  if (!current || current.resetAt <= now) {
-    if (current) failedLoginAttempts.delete(key);
-    return null;
-  }
-  return current;
-}
+function hasAllowedAdminOrigin(request: Request) {
+  const origin = request.headers.get('origin');
+  if (!origin) return process.env.NODE_ENV !== 'production';
 
-function recordFailedAttempt(key: string, now = Date.now()) {
-  const current = getActiveAttempt(key, now);
-  const next = current
-    ? { count: current.count + 1, resetAt: current.resetAt }
-    : { count: 1, resetAt: now + LOGIN_WINDOW_MS };
-  failedLoginAttempts.set(key, next);
-
-  if (failedLoginAttempts.size > MAX_LOGIN_RATE_LIMIT_KEYS) {
-    failedLoginAttempts.forEach((entry, candidateKey) => {
-      if (entry.resetAt <= now) failedLoginAttempts.delete(candidateKey);
-    });
-    while (failedLoginAttempts.size > MAX_LOGIN_RATE_LIMIT_KEYS) {
-      const oldestKey = failedLoginAttempts.keys().next().value as string | undefined;
-      if (!oldestKey) break;
-      failedLoginAttempts.delete(oldestKey);
-    }
-  }
-
-  return next;
+  return origin === 'https://www.lumagamehub.com' || origin === 'https://lumagamehub.com';
 }
 
 export async function POST(request: Request) {
@@ -59,16 +32,30 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Not found' }, { status: 404 });
   }
 
-  const clientKey = getClientKey(request);
-  const activeAttempt = getActiveAttempt(clientKey);
+  if (!hasAllowedAdminOrigin(request)) {
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+  }
 
-  if (activeAttempt && activeAttempt.count >= MAX_FAILED_ATTEMPTS) {
-    const retryAfterSeconds = Math.max(1, Math.ceil((activeAttempt.resetAt - Date.now()) / 1000));
+  const clientKey = getClientKey(request);
+  const rateLimit = await consumeAdminLoginAttempt(
+    clientKey,
+    MAX_FAILED_ATTEMPTS,
+    Math.ceil(LOGIN_WINDOW_MS / 1000),
+  );
+
+  if (!rateLimit.available) {
+    return NextResponse.json(
+      { error: 'Admin login is temporarily unavailable' },
+      { status: 503 },
+    );
+  }
+
+  if (!rateLimit.allowed) {
     return NextResponse.json(
       { error: 'Too many login attempts. Try again later.' },
       {
         status: 429,
-        headers: { 'Retry-After': String(retryAfterSeconds) },
+        headers: { 'Retry-After': String(rateLimit.retryAfterSeconds) },
       },
     );
   }
@@ -84,15 +71,13 @@ export async function POST(request: Request) {
     }
 
     if (!validateAdminPassword(password)) {
-      const attempt = recordFailedAttempt(clientKey);
-      const remaining = Math.max(0, MAX_FAILED_ATTEMPTS - attempt.count);
       return NextResponse.json(
-        { error: 'Invalid password', remainingAttempts: remaining },
+        { error: 'Invalid password' },
         { status: 401 },
       );
     }
 
-    failedLoginAttempts.delete(clientKey);
+    await clearAdminLoginAttempts(clientKey);
     await createAdminSession();
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {

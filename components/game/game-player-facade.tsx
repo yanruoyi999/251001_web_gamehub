@@ -26,15 +26,6 @@ function canUseNextImage(src?: string | null) {
   );
 }
 
-function needsUnsandboxedIframe(src: string) {
-  try {
-    const { hostname } = new URL(src);
-    return hostname === '4399.com' || hostname.endsWith('.4399.com');
-  } catch {
-    return false;
-  }
-}
-
 type WebkitFullscreenDocument = Document & {
   webkitExitFullscreen?: () => Promise<void> | void;
   webkitFullscreenElement?: Element | null;
@@ -60,9 +51,8 @@ export function GamePlayerFacade({
   const [isFullscreenTransitioning, setIsFullscreenTransitioning] = useState(false);
   const fullscreenTransitionRef = useRef(false);
   const playerRef = useRef<HTMLDivElement>(null);
-  const sandbox = needsUnsandboxedIframe(iframeUrl)
-    ? undefined
-    : 'allow-scripts allow-fullscreen allow-pointer-lock allow-popups';
+  const sandbox =
+    'allow-scripts allow-same-origin allow-fullscreen allow-pointer-lock allow-popups';
 
   useEffect(() => {
     const fullscreenDocument = document as WebkitFullscreenDocument;

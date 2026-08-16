@@ -3,6 +3,7 @@
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { pageview, GA_TRACKING_ID } from '@/lib/gtag';
+import { shouldLoadProductionTelemetry } from '@/lib/analytics/runtime';
 
 const AnalyticsListener = () => {
   const pathname = usePathname();
@@ -10,7 +11,11 @@ const AnalyticsListener = () => {
   const search = searchParams?.toString();
 
   useEffect(() => {
-    if (!GA_TRACKING_ID || !pathname) return;
+    if (
+      !GA_TRACKING_ID ||
+      !pathname ||
+      !shouldLoadProductionTelemetry(window.location.hostname)
+    ) return;
 
     const url = search ? `${pathname}?${search}` : pathname;
     let retryTimer: number | undefined;

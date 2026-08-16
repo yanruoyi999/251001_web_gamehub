@@ -1,11 +1,11 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-function stubBrowser(hostname: string) {
+function stubBrowser(hostname: string, savedConsent: string | null = null) {
   const insertBefore = vi.fn();
 
   vi.stubGlobal('window', {
     location: { hostname },
-    localStorage: { getItem: vi.fn(() => null) },
+    localStorage: { getItem: vi.fn(() => savedConsent), setItem: vi.fn() },
   });
   vi.stubGlobal('document', {
     createElement: vi.fn(() => ({})),
@@ -25,7 +25,10 @@ describe('ClarityConsent', () => {
 
   it('does not load the production project on localhost', async () => {
     vi.stubEnv('NEXT_PUBLIC_GAMEHUB_CLARITY_PROJECT_ID', 'test-project');
-    vi.doMock('react', () => ({ useEffect: (effect: () => void) => effect() }));
+    vi.doMock('react', () => ({
+      useEffect: (effect: () => void) => effect(),
+      useState: (initial: unknown) => [initial, vi.fn()],
+    }));
     const { insertBefore } = stubBrowser('localhost');
 
     const { ClarityConsent } = await import('@/components/analytics/ClarityConsent');
@@ -34,10 +37,27 @@ describe('ClarityConsent', () => {
     expect(insertBefore).not.toHaveBeenCalled();
   });
 
-  it('loads the configured project on the canonical production host', async () => {
+  it('does not load on the canonical production host without explicit consent', async () => {
     vi.stubEnv('NEXT_PUBLIC_GAMEHUB_CLARITY_PROJECT_ID', 'test-project');
-    vi.doMock('react', () => ({ useEffect: (effect: () => void) => effect() }));
+    vi.doMock('react', () => ({
+      useEffect: (effect: () => void) => effect(),
+      useState: (initial: unknown) => [initial, vi.fn()],
+    }));
     const { insertBefore } = stubBrowser('www.lumagamehub.com');
+
+    const { ClarityConsent } = await import('@/components/analytics/ClarityConsent');
+    ClarityConsent();
+
+    expect(insertBefore).not.toHaveBeenCalled();
+  });
+
+  it('loads only after explicit granted consent on the canonical production host', async () => {
+    vi.stubEnv('NEXT_PUBLIC_GAMEHUB_CLARITY_PROJECT_ID', 'test-project');
+    vi.doMock('react', () => ({
+      useEffect: (effect: () => void) => effect(),
+      useState: (initial: unknown) => [initial, vi.fn()],
+    }));
+    const { insertBefore } = stubBrowser('www.lumagamehub.com', 'granted');
 
     const { ClarityConsent } = await import('@/components/analytics/ClarityConsent');
     ClarityConsent();

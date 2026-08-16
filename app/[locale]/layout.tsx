@@ -76,7 +76,7 @@ export default async function LocaleLayout({
         <main className="flex-1">{children}</main>
         <SpendBillGatesMoneyContextLinks />
         <Footer locale={typedLocale} />
-        <ClarityConsent />
+        <ClarityConsent locale={typedLocale} />
         <TypeformFeedbackButton locale={typedLocale} />
       </div>
     </NextIntlClientProvider>

@@ -75,8 +75,14 @@ function signaturesMatch(actual: string, expected: string) {
 export function verifyAdminSessionToken(token?: string | null) {
   if (!token) return false;
 
-  const [encodedPayload, signature] = token.split('.');
+  const parts = token.split('.');
+  if (parts.length !== 2) return false;
+
+  const [encodedPayload, signature] = parts;
   if (!encodedPayload || !signature) return false;
+  if (!/^[A-Za-z0-9_-]+$/.test(encodedPayload) || !/^[A-Za-z0-9_-]+$/.test(signature)) {
+    return false;
+  }
 
   try {
     if (!signaturesMatch(signature, signPayload(encodedPayload))) {
@@ -85,14 +91,28 @@ export function verifyAdminSessionToken(token?: string | null) {
 
     const payload = JSON.parse(Buffer.from(encodedPayload, 'base64url').toString('utf8')) as {
       v?: number;
+      iat?: number;
       exp?: number;
+      nonce?: string;
     };
 
-    if (payload.v !== ADMIN_SESSION_VERSION || typeof payload.exp !== 'number') {
+    const now = Math.floor(Date.now() / 1000);
+    if (
+      payload.v !== ADMIN_SESSION_VERSION ||
+      typeof payload.iat !== 'number' ||
+      typeof payload.exp !== 'number' ||
+      typeof payload.nonce !== 'string' ||
+      !Number.isInteger(payload.iat) ||
+      !Number.isInteger(payload.exp) ||
+      payload.exp <= now ||
+      payload.exp > payload.iat + ADMIN_SESSION_MAX_AGE ||
+      payload.iat > now + 60 ||
+      payload.nonce.length < 16
+    ) {
       return false;
     }
 
-    return payload.exp > Math.floor(Date.now() / 1000);
+    return true;
   } catch {
     return false;
   }
@@ -103,7 +123,7 @@ export async function createAdminSession() {
   cookieStore.set(ADMIN_SESSION_COOKIE, createAdminSessionToken(), {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
+    sameSite: 'strict',
     maxAge: ADMIN_SESSION_MAX_AGE,
     path: '/',
   });
@@ -114,7 +134,7 @@ export async function destroyAdminSession() {
   cookieStore.set(ADMIN_SESSION_COOKIE, '', {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
+    sameSite: 'strict',
     maxAge: 0,
     path: '/',
   });

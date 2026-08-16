@@ -1,3 +1,5 @@
+import { shouldLoadProductionTelemetry } from '@/lib/analytics/runtime';
+
 export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID ?? '';
 
 type GtagParams = {
@@ -16,7 +18,11 @@ declare global {
 type EventParams = Record<string, string | number | boolean | undefined>;
 
 export const pageview = (url: string) => {
-  if (!GA_TRACKING_ID || typeof window === 'undefined') return;
+  if (
+    !GA_TRACKING_ID ||
+    typeof window === 'undefined' ||
+    !shouldLoadProductionTelemetry(window.location?.hostname ?? '')
+  ) return;
 
   if (typeof window.gtag !== 'function') return;
 
@@ -28,7 +34,11 @@ export const pageview = (url: string) => {
 };
 
 export const trackEvent = (action: string, params: EventParams = {}) => {
-  if (!GA_TRACKING_ID || typeof window === 'undefined') return;
+  if (
+    !GA_TRACKING_ID ||
+    typeof window === 'undefined' ||
+    !shouldLoadProductionTelemetry(window.location?.hostname ?? '')
+  ) return;
   if (typeof window.gtag !== 'function') return;
 
   window.gtag('event', action, params);

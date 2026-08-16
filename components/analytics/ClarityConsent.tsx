@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
+import { isFormalProductionHost } from '@/lib/analytics/runtime';
 
 declare global {
   interface Window {
@@ -13,19 +15,16 @@ interface QueuedClarityFunction {
   q?: unknown[][];
 }
 
+interface ClarityConsentProps {
+  locale?: 'en' | 'zh';
+}
+
 const storageKey = 'gamehub_clarity_consent';
 type AnalyticsConsent = 'granted' | 'denied';
 const clarityProjectId =
   process.env.NEXT_PUBLIC_GAMEHUB_CLARITY_PROJECT_ID ||
   process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID ||
   '';
-const defaultAnalyticsConsent: AnalyticsConsent =
-  process.env.NEXT_PUBLIC_GAMEHUB_CLARITY_DEFAULT_CONSENT === 'denied' ? 'denied' : 'granted';
-const clarityProductionHosts = new Set(['lumagamehub.com', 'www.lumagamehub.com']);
-
-function isClarityProductionHost(hostname: string) {
-  return clarityProductionHosts.has(hostname.toLowerCase());
-}
 
 function setClarityConsent(analyticsStorage: AnalyticsConsent) {
   const clarity = window.clarity;
@@ -38,7 +37,7 @@ function setClarityConsent(analyticsStorage: AnalyticsConsent) {
   }
 }
 
-function loadClarity(projectId: string, analyticsStorage: AnalyticsConsent) {
+function loadClarity(projectId: string) {
   if (!projectId) return;
 
   if (!window.clarity) {
@@ -58,18 +57,65 @@ function loadClarity(projectId: string, analyticsStorage: AnalyticsConsent) {
     })(window, document, 'script', projectId);
   }
 
-  setClarityConsent(analyticsStorage);
+  setClarityConsent('granted');
 }
 
-export function ClarityConsent() {
+export function ClarityConsent({ locale = 'en' }: ClarityConsentProps = {}) {
+  const [consent, setConsent] = useState<AnalyticsConsent | 'prompt' | 'unknown'>('unknown');
+
   useEffect(() => {
-    if (!clarityProjectId || !isClarityProductionHost(window.location.hostname)) return;
+    if (!clarityProjectId || !isFormalProductionHost(window.location.hostname)) return;
+
     const saved = window.localStorage.getItem(storageKey);
-    loadClarity(
-      clarityProjectId,
-      saved === 'granted' || saved === 'denied' ? saved : defaultAnalyticsConsent,
-    );
+    if (saved === 'granted') {
+      setConsent('granted');
+      loadClarity(clarityProjectId);
+      return;
+    }
+
+    setConsent(saved === 'denied' ? 'denied' : 'prompt');
   }, []);
 
-  return null;
+  if (consent !== 'prompt') return null;
+
+  const isChinese = locale === 'zh';
+  const copy = isChinese
+    ? '我们使用匿名分析帮助改进页面和游戏体验。'
+    : 'We use anonymous analytics to improve the site and game experience.';
+
+  const grant = () => {
+    window.localStorage.setItem(storageKey, 'granted');
+    setConsent('granted');
+    loadClarity(clarityProjectId);
+  };
+
+  const deny = () => {
+    window.localStorage.setItem(storageKey, 'denied');
+    setConsent('denied');
+  };
+
+  return (
+    <aside
+      aria-label={isChinese ? '分析同意' : 'Analytics consent'}
+      className="fixed inset-x-4 bottom-4 z-50 flex max-w-xl flex-col gap-3 rounded-lg border border-border bg-background/95 p-4 shadow-lg backdrop-blur sm:left-6 sm:right-auto"
+    >
+      <p className="text-sm text-foreground">{copy}</p>
+      <div className="flex flex-wrap gap-2">
+        <button
+          type="button"
+          className="rounded-md bg-primary px-3 py-2 text-sm font-medium text-primary-foreground"
+          onClick={grant}
+        >
+          {isChinese ? '允许分析' : 'Allow analytics'}
+        </button>
+        <button
+          type="button"
+          className="rounded-md border border-border px-3 py-2 text-sm font-medium text-foreground"
+          onClick={deny}
+        >
+          {isChinese ? '拒绝' : 'Decline'}
+        </button>
+      </div>
+    </aside>
+  );
 }

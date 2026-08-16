@@ -2,6 +2,7 @@
 
 import { track } from '@vercel/analytics';
 import { trackEvent } from '@/lib/gtag';
+import { shouldLoadProductionTelemetry } from '@/lib/analytics/runtime';
 
 type AnalyticsValue = string | number | boolean;
 type AnalyticsProperties = Record<string, AnalyticsValue | null | undefined>;
@@ -38,7 +39,13 @@ function getGa4Properties(properties: Record<string, AnalyticsValue>) {
 export function trackInteraction(eventName: string, properties?: AnalyticsProperties) {
   const cleanedProperties = cleanProperties(properties);
 
-  runTelemetrySafely(() => track(eventName, cleanedProperties));
+  const canSendBrowserTelemetry =
+    typeof window === 'undefined' ||
+    shouldLoadProductionTelemetry(window.location?.hostname ?? '');
+
+  if (canSendBrowserTelemetry) {
+    runTelemetrySafely(() => track(eventName, cleanedProperties));
+  }
   runTelemetrySafely(() => trackEvent(eventName, getGa4Properties(cleanedProperties)));
 
   if (typeof window !== 'undefined') {

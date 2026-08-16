@@ -34,6 +34,7 @@ function withGameListTimeout<T>(promise: Promise<T>, label: string): Promise<T> 
 function shouldUsePublicCatalogueFallback() {
   const databaseConnection = getDatabaseConnectionMetadata();
   return (
+    isLocalCatalogueMode() ||
     !databaseConnection.configured ||
     (
       process.env.GAME_LIST_ALLOW_SUPABASE_DIRECT_IN_SERVERLESS !== 'true' &&

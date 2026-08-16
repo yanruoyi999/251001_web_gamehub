@@ -9,6 +9,7 @@ import { defaultLocale, getLocalizedPath, isLocale, locales } from '@/i18n/confi
 import AnalyticsListener from '@/components/layout/AnalyticsListener';
 import LocaleDocumentSync from '@/components/layout/LocaleDocumentSync';
 import { GA_TRACKING_ID } from '@/lib/gtag';
+import { shouldLoadProductionTelemetry } from '@/lib/analytics/runtime';
 import { getSiteBaseUrl } from '@/lib/seo';
 import { serializeJsonLd } from '@/lib/utils/json-ld';
 
@@ -109,15 +110,21 @@ export default async function RootLayout({
   const requestHeaders = await headers();
   const requestLocale = requestHeaders.get('x-next-intl-locale');
   const documentLocale = isLocale(requestLocale) ? requestLocale : defaultLocale;
+  const requestHost = (requestHeaders.get('x-forwarded-host') ?? requestHeaders.get('host') ?? '')
+    .split(',')[0]
+    .trim()
+    .split(':')[0];
+  const telemetryEnabled = shouldLoadProductionTelemetry(requestHost);
 
   return (
     <html lang={documentLocale} data-locale={documentLocale} suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://www.google-analytics.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://www.clarity.ms" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://scripts.clarity.ms" />
-        <link rel="dns-prefetch" href="https://form.typeform.com" />
+        {telemetryEnabled ? (
+          <>
+            <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
+            <link rel="preconnect" href="https://www.google-analytics.com" crossOrigin="anonymous" />
+          </>
+        ) : null}
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -142,7 +149,7 @@ export default async function RootLayout({
         <Suspense fallback={null}>
           <LocaleDocumentSync />
         </Suspense>
-        {GA_TRACKING_ID ? (
+        {telemetryEnabled && GA_TRACKING_ID ? (
           <>
             <Script id="ga-init" strategy="beforeInteractive">
               {`
@@ -162,8 +169,12 @@ export default async function RootLayout({
           </>
         ) : null}
         {children}
-        <Analytics />
-        <SpeedInsights />
+        {telemetryEnabled ? (
+          <>
+            <Analytics />
+            <SpeedInsights />
+          </>
+        ) : null}
       </body>
     </html>
   );

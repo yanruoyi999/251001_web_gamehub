@@ -9,10 +9,14 @@ describe('pageview', () => {
 
   it('sends one explicit page_view with landing-page fields', async () => {
     vi.stubEnv('NEXT_PUBLIC_GA_ID', 'G-TEST123');
+    vi.stubEnv('NODE_ENV', 'production');
     const gtag = vi.fn();
     vi.stubGlobal('window', {
       gtag,
-      location: { href: 'https://www.lumagamehub.com/en/games?tag=arcade' },
+      location: {
+        hostname: 'www.lumagamehub.com',
+        href: 'https://www.lumagamehub.com/en/games?tag=arcade',
+      },
     });
     vi.stubGlobal('document', { title: 'Free Browser Games' });
 

@@ -2014,3 +2014,13 @@
 - 浏览器验证：正式域 Playwright 收藏与游戏浏览共 9/9；桌面端可从首页进入收藏页并读取 Spend，390px 移动端可取消收藏并回到空状态；无横向溢出和 page error。生产移动运行时采样 10/10 通过，最低 96，游戏 Play/fullscreen 检查通过。
 - 业务边界：OvO 已从每日推荐和首页 Start with 移除，但其游戏页仍保持既有 noindex/source gate；本次未修改 GA4、GSC、Clarity、数据库、搜索服务、环境变量或权限。收藏为浏览器本地存储，不提供跨设备同步。
 - 下一巡检：观察 `favorite_add/remove`、`recommendation_view/click`、Google Snake 与测试页的 GSC query-to-page、GA4 Returning Users/D1/D7、Clarity dead/rage/quick back；不把本次自动化访问当作真实用户数据。
+
+### T-167 共享审计整改：遥测、来源隔离与管理面安全（2026-08-16）
+
+- 原始信号：共享审计指出当前仓库未应用审计 ZIP 中的安全与运行时整改，重点包括宽泛 iframe CSP、未明确的目录模式、管理登录保护不足、本地/预览遥测污染、Clarity 默认加载，以及缺少多浏览器与移动运行时硬门禁。该审计没有提供新的生产事故、支付、客户投诉或数据泄露证据；本轮按代码证据处理为 P1 防护与可验证性问题，不把它升级为已发生的 P0 事件。
+- 直接根因：`GAME_CATALOG_MODE` 缺省/未知值原先可能进入远程路径；CSP 使用通配符且 4399 子域存在无 sandbox 例外；管理员 token/cookie 校验和登录限流缺少严格格式、Origin 与共享 Redis fail-closed；根布局无条件输出 Vercel 遥测和外部预连接；Clarity 没有把正式域与明确同意作为加载门禁；Playwright 仅覆盖 Chromium。
+- 本地修复：`lib/games/catalog-mode.ts` 改为 remote opt-in、缺省 fail-closed local，并让 public games API 遵守该模式；`next.config.js` 收紧 iframe 到实际 HTTPS 来源；`components/game/game-player-facade.tsx` 移除任意 4399 unsandboxed 例外；`lib/auth/admin.ts`、`lib/auth/admin-rate-limit.ts`、`app/api/admin/login/route.ts` 加入 token/cookie/Origin/Redis 保护；`lib/analytics/runtime.ts`、`app/layout.tsx`、`components/layout/AnalyticsListener.tsx`、`lib/gtag.ts`、`lib/analytics/events.ts` 将遥测限制到正式生产域；`components/analytics/ClarityConsent.tsx` 改为同意后加载；`playwright.config.ts` 与 `.github/workflows/ci.yml` 加入 Firefox/WebKit/Pixel 7/iPhone 13 和生产 runtime-quality gate。移动端语言切换测试改为先打开真实移动导航菜单。
+- 验证：`pnpm exec vitest run` 通过 71 files / 233 tests；`pnpm type-check` 通过；`pnpm lint` 0 errors（98 个既有 no-console warnings）；`pnpm check:internal-links` 通过（200 game slugs、27 rendered page files）；`pnpm audit:prod` 为 No known vulnerabilities；Next.js 15.5.21 production build 141 static pages；Playwright 72/72；移动 runtime 10/10，最低 96，canonical/robots/移动溢出/游戏 Play/fullscreen 均通过。采样报告保存在 `docs/page-runtime-sampling.md`。
+- 环境边界：本地 `next start -p` 默认绑定验证通过；此前用 `-H 127.0.0.1` 启动会制造 localhost locale 重定向循环，确认是启动方式差异而非本轮代码回归。当前未修改生产环境变量、数据库、搜索服务、GA4、GSC、Clarity、Cloudflare 或权限；未 commit、push、合入 main、部署或提交 GSC。
+- 下一巡检：部署后复查正式域首页/指南的遥测请求是否只在正式域出现，Clarity 是否仅在同意后加载，`game_play_start`/`game_fullscreen_toggle`、`recommendation_view/click`、`favorite_add/remove` 是否无重复；同时观察 admin login 429/503、数据库/缓存模式、GSC query-to-page、canonical/robots/sitemap 和移动 runtime 分数。
+- 待确认：若要发布，需要先从当前隔离分支复核发布范围，再由用户确认 commit、push、合入 `main` 与生产部署；本轮不执行外部状态变更。

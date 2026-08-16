@@ -39,6 +39,7 @@ describe('/api/games route fallback', () => {
   });
 
   it('returns a degraded local catalogue when the database list fails', async () => {
+    process.env.GAME_CATALOG_MODE = 'remote';
     listGamesMock.mockRejectedValue(new Error('database unavailable'));
 
     const { GET } = await import('@/app/api/games/route');
@@ -52,6 +53,7 @@ describe('/api/games route fallback', () => {
   });
 
   it('skips the database when configuration is not safe for public runtime', async () => {
+    process.env.GAME_CATALOG_MODE = 'remote';
     getDatabaseConnectionMetadataMock.mockReturnValue({ configured: false });
 
     const { GET } = await import('@/app/api/games/route');
