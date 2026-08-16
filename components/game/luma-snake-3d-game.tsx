@@ -511,6 +511,7 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
         ref={stageRef}
         className="relative isolate overflow-hidden rounded-xl border border-slate-800 bg-[#07141a] shadow-2xl shadow-slate-950/20"
         data-snake-stage="true"
+        data-snake-phase={phase}
       >
         <canvas
           ref={canvasRef}

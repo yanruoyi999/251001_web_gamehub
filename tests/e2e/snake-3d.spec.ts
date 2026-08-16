@@ -32,6 +32,19 @@ test.describe('Luma Snake 3D', () => {
       .poll(() => scriptRequests.some((url) => !initialScriptRequests.has(url)))
       .toBe(true);
 
+    const stage = page.locator('[data-snake-stage]');
+    await expect(stage).toHaveAttribute(
+      'data-snake-phase',
+      /^(playing|dead|error)$/,
+      { timeout: 30_000 }
+    );
+
+    const phase = await stage.getAttribute('data-snake-phase');
+    if (phase === 'error') {
+      await expect(page.getByText(/could not start in this browser/i)).toBeVisible();
+      return;
+    }
+
     const canvasState = await page.evaluate(() => {
       const canvas = document.querySelector<HTMLCanvasElement>('[data-snake-canvas]');
       if (!canvas) return { hasContext: false, width: 0, height: 0, pixel: [] };

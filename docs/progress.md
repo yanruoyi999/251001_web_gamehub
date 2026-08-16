@@ -2045,3 +2045,9 @@
 - 浏览器验收：本地 production server 使用 Playwright Chromium 与 Pixel 7 验证，桌面渲染与像素读取通过、首屏无 Three.js 脚本请求、点击 Play 后才加载动态脚本；移动触控按钮、画布尺寸和无横向溢出通过。桌面和 Pixel 7 截图均确认棋盘、蛇身、食物非空渲染。未声称已完成全浏览器矩阵或生产验证。
 - 索引与行为门槛：页面质量 80+ 只是必要条件；发布后首周必须有真实 `snake_3d_first_death` 数据，并且从 Play 到首次死亡的中位时长在 45 秒到 3 分钟之间，才讨论取消 `noindex`。低于 30 秒先调难度/引导，高于 5 分钟先排查过易或挂机；当前没有生产用户数据，不能提前判定通过。
 - 发布边界：当前仅完成隔离工作树 `/Users/yanruoyi/ai-native/.worktrees/luma-snake-3d-20260816` 的本地实现和验证，尚未 commit、push、合入 `main`、部署生产、修改 GSC/GA4/Clarity、提交 sitemap 或改变后台环境。主工作树 `/Users/yanruoyi/ai-native/active/251001_web_游戏聚合网站` 未触碰。
+
+### T-168 CI E2E 兼容性修复（2026-08-16）
+
+- 发布回归：提交 `72e01ad` 已合入 GitHub `main`，CI `31942845920` 的 lint、type-check、内链、239 个单测、依赖审计和 production build 均通过，但多浏览器 E2E 中 4 个 Snake 3D 测试在动态 Three.js 导入尚未完成或 WebGL 不可用时提前读取画布，导致 CI 阻断；Vercel 未继续部署。
+- 直接修复：Snake 3D stage 新增 `data-snake-phase`；E2E 等待 `playing/dead/error` 明确状态最长 30 秒。支持 WebGL 的浏览器继续执行非空画布像素检查；浏览器确实不提供 WebGL 时验证用户可见的启动错误态，不把环境能力误报成应用崩溃。
+- 发布边界：修复仍在隔离分支，需重新通过完整本地门禁、推送修复提交、快进 `main` 后等待新的 CI，再确认 Vercel 生产部署。页面继续保持 `noindex`，不提交 GSC。
