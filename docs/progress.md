@@ -2024,3 +2024,11 @@
 - 环境边界：本地 `next start -p` 默认绑定验证通过；此前用 `-H 127.0.0.1` 启动会制造 localhost locale 重定向循环，确认是启动方式差异而非本轮代码回归。当前未修改生产环境变量、数据库、搜索服务、GA4、GSC、Clarity、Cloudflare 或权限；未 commit、push、合入 main、部署或提交 GSC。
 - 下一巡检：部署后复查正式域首页/指南的遥测请求是否只在正式域出现，Clarity 是否仅在同意后加载，`game_play_start`/`game_fullscreen_toggle`、`recommendation_view/click`、`favorite_add/remove` 是否无重复；同时观察 admin login 429/503、数据库/缓存模式、GSC query-to-page、canonical/robots/sitemap 和移动 runtime 分数。
 - 待确认：若要发布，需要先从当前隔离分支复核发布范围，再由用户确认 commit、push、合入 `main` 与生产部署；本轮不执行外部状态变更。
+
+### T-167 共享审计整改生产发布回执（2026-08-16）
+
+- Git：修复提交 `5a636185ae3840ae376685947f15b0cd09e5557c` 已推送审计分支；专用 `main` 工作树从 `f3d5885` 快进合入该提交并推送，GitHub `main` 与本地 `main` 已一致。原工作树 `/Users/yanruoyi/ai-native/active/251001_web_游戏聚合网站` 的既有未提交文件未触碰、未暂存、未进入本次发布。
+- CI：GitHub Actions CI `31925583076` 为 `success`，包含 lint、type-check、内链、233 个单测、依赖审计、production build、72 项多浏览器/移动 E2E 和 runtime-quality gate。
+- Vercel：Production deployment `dpl_EgP8KsTYJNsHQmTiLCFLoSCvYuve` 已 `Ready`，构建日志明确从 GitHub `main` commit `5a63618` 构建；正式域 `lumagamehub.com`、`www.lumagamehub.com` 和项目域均已接管。
+- 生产验收：主页、robots、sitemap、health、search API 均 HTTP 200；sitemap 为 198 个 URL；canonical、OvO/收藏页 `noindex, follow` 和精确 iframe CSP 符合预期。正式域移动 runtime 10/10 通过，最低 92，游戏 Play/fullscreen、移动布局和遥测隔离检查通过。
+- 环境边界：生产 health 当前明确为 `catalogue=local`、`cache=local`、local search，未切换生产数据库或搜索服务；本次未修改 GSC、GA4、Clarity、Cloudflare、环境变量或权限，也未提交 GSC sitemap。生产数据指标和 Clarity 同意后的真实事件仍需下一巡检窗口确认。
