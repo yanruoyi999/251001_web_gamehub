@@ -9,6 +9,7 @@ import {
   shouldIndexTagEntry,
 } from '@/lib/game-taxonomy';
 import { getSeoLandingPages, type SeoLandingLocaleContent } from '@/lib/seo-landing-content';
+import { LUMA_SNAKE_3D_PATH } from '@/lib/games/luma-snake-3d-seo';
 
 type PageType = 'static' | 'guide' | 'game' | 'category' | 'tag' | 'utility';
 type PageAction = 'keep' | 'improve' | 'noindex' | 'redirect' | 'remove-from-index';
@@ -199,6 +200,22 @@ function scoreStaticPages(): PageQualityRow[] {
   ];
 }
 
+function scoreStandalonePages(): PageQualityRow[] {
+  return [
+    {
+      path: LUMA_SNAKE_3D_PATH,
+      type: 'game',
+      score: 94,
+      indexable: false,
+      action: 'noindex',
+      reason:
+        'Original game page has bilingual play instructions, daily-challenge explanation, mobile controls, FAQ, structured data, and related internal links.',
+      nextStep:
+        'Keep noindex until desktop/mobile runtime checks, first-death duration evidence, and the 80+ release gate are complete; then add it to the sitemap in a separate indexability change.',
+    },
+  ];
+}
+
 function scoreCategoryPages(): PageQualityRow[] {
   return getCategoryEntries().map((entry) => {
     const label = pickLocalizedLabel('en', entry.item.name, entry.item.nameEn);
@@ -316,6 +333,7 @@ function scoreGamePages(): PageQualityRow[] {
 export function buildPageQualityRows() {
   return [
     ...scoreStaticPages(),
+    ...scoreStandalonePages(),
     ...getSeoLandingPages().map(scoreGuide),
     ...scoreCategoryPages(),
     ...scoreTagPages(),

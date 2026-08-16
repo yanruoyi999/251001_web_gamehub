@@ -2032,3 +2032,16 @@
 - Vercel：Production deployment `dpl_EgP8KsTYJNsHQmTiLCFLoSCvYuve` 已 `Ready`，构建日志明确从 GitHub `main` commit `5a63618` 构建；正式域 `lumagamehub.com`、`www.lumagamehub.com` 和项目域均已接管。
 - 生产验收：主页、robots、sitemap、health、search API 均 HTTP 200；sitemap 为 198 个 URL；canonical、OvO/收藏页 `noindex, follow` 和精确 iframe CSP 符合预期。正式域移动 runtime 10/10 通过，最低 92，游戏 Play/fullscreen、移动布局和遥测隔离检查通过。
 - 环境边界：生产 health 当前明确为 `catalogue=local`、`cache=local`、local search，未切换生产数据库或搜索服务；本次未修改 GSC、GA4、Clarity、Cloudflare、环境变量或权限，也未提交 GSC sitemap。生产数据指标和 Clarity 同意后的真实事件仍需下一巡检窗口确认。
+
+### T-168 Luma Snake 3D 原创游戏首版候选（2026-08-16）
+
+- 需求边界：最新关键词研究报告 `/Users/yanruoyi/ai-native/ops/daily-longtail-research/user-research/2026-08-16-luma-top5-keyword-opportunities.md` 将 `snake game 3d` 列为 22.2K 搜索量、KD 29 的第三方候选；该数据来自 2026-08-14 Semrush US desktop 截图，不是 Luma GSC 需求事实。本轮只做 Luma 原创游戏首版，不复制或嵌入 Google Snake、Hexanaut、Electron Dash 等第三方游戏。
+- Day 1 实现：新增纯函数 Snake 引擎，包含 UTC 日期挑战键、确定性每日挑战 ID、分数重置、食物生成、墙/身体碰撞、反向转向保护和首局时长分桶（少于 30 秒、30-45 秒、45 秒-3 分钟、3-5 分钟、超过 5 分钟）。首局时长从 Play 点击开始计时，首次死亡只上报一次 `snake_3d_first_death`。
+- Day 2-3 实现：新增 Three.js 场景并保持懒加载，首屏不加载 Three.js；点击 Play 后才创建 WebGL 场景。支持方向键/WASD、移动触控方向键、暂停/恢复、全屏、标签页隐藏暂停和浏览器本地最高分。启用绘制缓冲保留以支持自动画布像素验收；场景规模为 14x14 轻量棋盘。
+- Day 4 实现：新增中英文静态路由 `/games/snake-3d`，含原创声明、玩法/控制/UTC挑战/生存技巧、FAQ、VideoGame/FAQ/Breadcrumb JSON-LD、canonical/hreflang/OG 图片和 4 条相关内链。页面质量审计分数 94，但当前保持 `noindex, follow` 且不进入 sitemap。
+- 埋点：使用既有 `trackInteraction` 记录 `game_play_start`、`snake_3d_retry`、`snake_3d_first_death`、`snake_3d_load_error`、全屏切换/错误；参数包含 challenge ID、attempt、score、首局秒数和时长分桶，不收集账号或 PII。
+- 修改文件：`lib/games/luma-snake-3d.ts`、`lib/games/luma-snake-3d-seo.ts`、`components/game/luma-snake-3d-game.tsx`、`app/[locale]/games/snake-3d/page.tsx`、`app/og/luma-snake-3d/route.tsx`、`scripts/audit-page-quality.ts`、`tests/luma-snake-3d.test.ts`、`tests/audit-page-quality.test.ts`、`tests/e2e/snake-3d.spec.ts`、`package.json`、`pnpm-lock.yaml`。
+- 验证：先以缺失引擎模块得到预期 RED，再补最小实现并通过目标测试 5/5；完整 Vitest 73 files / 239 tests、type-check、internal-link audit、`git diff --check` 和生产依赖审计均通过。全量 lint 为 0 errors / 98 个仓库既有 `no-console` warnings。Next.js 15.5.21 production build 143/143 静态页通过；页面输出 HTTP 200、`noindex, follow`、canonical 正确，sitemap 不含该路由，robots 正常。
+- 浏览器验收：本地 production server 使用 Playwright Chromium 与 Pixel 7 验证，桌面渲染与像素读取通过、首屏无 Three.js 脚本请求、点击 Play 后才加载动态脚本；移动触控按钮、画布尺寸和无横向溢出通过。桌面和 Pixel 7 截图均确认棋盘、蛇身、食物非空渲染。未声称已完成全浏览器矩阵或生产验证。
+- 索引与行为门槛：页面质量 80+ 只是必要条件；发布后首周必须有真实 `snake_3d_first_death` 数据，并且从 Play 到首次死亡的中位时长在 45 秒到 3 分钟之间，才讨论取消 `noindex`。低于 30 秒先调难度/引导，高于 5 分钟先排查过易或挂机；当前没有生产用户数据，不能提前判定通过。
+- 发布边界：当前仅完成隔离工作树 `/Users/yanruoyi/ai-native/.worktrees/luma-snake-3d-20260816` 的本地实现和验证，尚未 commit、push、合入 `main`、部署生产、修改 GSC/GA4/Clarity、提交 sitemap 或改变后台环境。主工作树 `/Users/yanruoyi/ai-native/active/251001_web_游戏聚合网站` 未触碰。
