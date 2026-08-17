@@ -460,6 +460,12 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
       );
 
       sceneRef.current = controller;
+      trackInteraction('snake_3d_ready', {
+        game_slug: 'snake-3d',
+        challenge_id: challengeId,
+        challenge_mode: 'daily',
+        attempt: nextAttempt,
+      });
       setPhase('playing');
       controller.start();
     } catch (error) {

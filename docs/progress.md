@@ -2061,3 +2061,27 @@
 - 运行时验收：正式域 Snake 3D Playwright Chromium/Pixel 7 为 3 passed、1 desktop skip；点击 Play 后动态脚本才请求，画布非空渲染，移动触控和无横向溢出通过。正式域移动运行时抽样 10 页全部 92+，最低 92；抽样脚本阻断自动化遥测，不把该访问计入 GA4、Clarity 或 Vercel 业务数据。
 - 索引与行为门槛：页面质量分 94 和 runtime 通过只是发布必要条件；页面继续保持 `noindex, follow` 且不进入 sitemap。首周必须等待真实 `snake_3d_first_death`，只有 Play 到首次死亡中位时长在 45 秒到 3 分钟之间，才讨论取消 noindex；当前不能用自动化测试替代真实用户数据。
 - 外部状态边界：本次未修改 GSC、GA4、Clarity、数据库、搜索服务、环境变量、Cloudflare 或权限，未提交 GSC sitemap。生产依赖审计 `pnpm audit:prod` 为 `No known vulnerabilities found`；完整开发依赖审计的新增 advisory 仍需另行治理，不纳入本次生产代码发布。
+
+### T-169 Snake 3D 受控发现入口本地修复（2026-08-17）
+
+- 原始信号：生产巡检和历史复核确认 `/en/games/snake-3d` 已部署但没有从首页、游戏列表、Google Snake Mods 或 Google Snake 游戏详情页进入的可见入口；页面保持 `noindex, follow`，因此只能靠直接 URL 或外部发现收集行为数据。
+- 直接根因：`app/[locale]/games/[slug]/page.tsx` 的 Google Snake 详情页只渲染通用相似游戏和推荐，不包含针对 `google-snake` 的 Snake 3D 发现区；Snake 3D 页面自身的相关链接不能把用户带回实验入口。
+- 本地修改：在 Google Snake 详情页增加服务端渲染的 `data-snake-3d-discovery` 区块和中英文入口，目标为本地化 `/games/snake-3d`；入口由 `Snake3DDiscoveryLink` 统一记录一次 `snake_3d_discovery_click`（locale、page、source、game_slug）。没有修改 Google Snake Mods 父页、Snake 3D 的 `noindex`、sitemap 或生产后台。
+- 回归验证：先运行新增测试得到预期 RED（入口字符串不存在），实现后 `tests/snake-3d-discovery.test.ts`、`tests/game-taxonomy-recommendations.test.ts`、`tests/luma-snake-3d.test.ts` 共 3 files / 8 tests 通过；`pnpm type-check` 通过；`pnpm lint` 0 errors、98 个既有 warnings；`pnpm build` 生成 143/143 页面；`git diff --check` 通过。
+- 浏览器验证：本地 production server 使用 Playwright Chromium，桌面 1280px 与 Pixel 7 均确认 Google Snake 详情 HTTP 200、入口在服务端 HTML 中且唯一、href 为 `/en/games/snake-3d`；Snake 3D HTTP 200、robots 为 `noindex, follow`、不在 sitemap、两种视口均无横向溢出、无 page error。
+- 遥测验证：入口改为独立客户端链接组件，点击一次只发送一次 `snake_3d_discovery_click`，参数包含 `game_slug`、`locale`、`page` 和 `source=google_snake_game_detail`；桌面与 Pixel 7 均验证事件一次、无 page error、无横向溢出。页面既有 `recommendation_view` 与该入口事件分开记录。
+- 当前状态：本地隔离 worktree `/tmp/luma-snake3d-discovery-20260817` 的候选修复完成，尚未 commit、push、合入 `main` 或部署生产；真实 `snake_3d_first_death`、retry、duration 数据仍未获取到。
+- 下一步：发布前复核候选与当前 `main` 差异；发布后观察 Snake 3D 入口点击、`game_play_start`、`snake_3d_first_death`、首次死亡时长中位数和移动可玩性。继续保持 noindex，直到真实首周中位时长达到 45 秒至 3 分钟且质量门禁持续通过。
+- 待用户确认：commit、push、合入 `main`、生产部署。
+
+### T-170 Luma 历史事项台账同步（2026-08-17）
+
+- 本次仅同步运维记录，没有新增产品代码，也没有改变当前 Snake 3D 候选的发布边界。
+- 完成项、隔离工作树候选、等待数据/审批、明确不执行项已统一记录在 `/Users/yanruoyi/ai-native/ops/site-monitoring/work-management.md` 的 `2026-08-17 Luma 历史事项总账与待办同步`。
+- 本地候选状态保持：T-169 尚未 commit、push、合入 `main` 或部署；页面继续 `noindex, follow`，等待真实首死时长与用户确认。
+
+### T-169 Snake 3D 计量埋点补齐（2026-08-17）
+
+- 入口组件新增 `snake_3d_discovery_view`，仅在发现区进入视口后记录一次；原有 `snake_3d_discovery_click` 保持不变，因此入口点击率可以使用同一发现区的曝光作为分母。
+- Snake 3D 在 Three.js 场景完成首帧渲染并创建控制器后新增 `snake_3d_ready`；`game_play_start` 仍表示用户点击开始，`snake_3d_load_error` 仍记录启动失败，三者不混用。
+- 新增回归断言覆盖 IntersectionObserver 曝光、入口点击和 ready 事件顺序。当前仍未 commit、push、合入 `main` 或部署；生产真实数据尚未产生。

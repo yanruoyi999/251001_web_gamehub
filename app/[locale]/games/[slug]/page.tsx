@@ -7,6 +7,7 @@ import { cache } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { FavoriteToggleButton } from '@/components/game/favorite-toggle';
 import { GamePlayerFacade } from '@/components/game/game-player-facade';
+import { Snake3DDiscoveryLink } from '@/components/game/snake-3d-discovery-link';
 import { DailyRecommendation } from '@/components/retention/daily-recommendation';
 import { getShanghaiDateKey } from '@/lib/retention/daily-recommendation';
 import { GameService, RatingService } from '@/services';
@@ -1092,6 +1093,30 @@ export default async function GamePage({ params }: GamePageProps) {
                 )}
               </CardContent>
             </Card>
+
+            {game.slug === 'google-snake' ? (
+              <Card data-snake-3d-discovery className="border-primary/30 bg-primary/5">
+                <CardHeader>
+                  <CardTitle className="text-lg">
+                    {locale === 'zh' ? '想试试 3D 贪吃蛇？' : 'Try an original 3D snake challenge'}
+                  </CardTitle>
+                  <CardDescription>
+                    {locale === 'zh'
+                      ? '从 Google Snake 详情页进入 Luma 的原创 3D 每日挑战；不替代标准 Snake，也不改变本页的 Mod 指南。'
+                      : 'Open Luma\'s original 3D daily challenge from this Google Snake page. It is a separate experiment, not a replacement for standard Snake or the Mods guide.'}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Snake3DDiscoveryLink
+                    href={getLocalizedPath(locale, `/games/snake-3d`)}
+                    locale={locale}
+                    page={getLocalizedPath(locale, `/games/${game.slug}`)}
+                  >
+                    {locale === 'zh' ? '试玩 Luma Snake 3D' : 'Play Luma Snake 3D'}
+                  </Snake3DDiscoveryLink>
+                </CardContent>
+              </Card>
+            ) : null}
 
             {/* Similar Games */}
             <Card>
