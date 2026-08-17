@@ -2088,8 +2088,8 @@
 
 ### T-169 Snake 3D 受控发现入口生产发布记录（2026-08-17）
 
-- 发布提交：`8398337` 已从隔离分支推送，并 fast-forward 合入 GitHub `main`；本地 `main`、`origin/main` 和 GitHub `main` 均指向该 SHA。
-- Vercel Production：部署 `dpl_DiX6MhUN2dv5v7b6Bw53q7cEiBPn` 为 `Ready`，正式别名接管 `https://lumagamehub.com`、`https://www.lumagamehub.com`。
+- 功能提交：`8398337` 已从隔离分支推送，并 fast-forward 合入 GitHub `main`；随后以 `eba5501` 补充本次发布记录。当前本地 `main`、`origin/main` 和 GitHub `main` 均指向 `eba5501`。
+- Vercel Production：功能部署 `dpl_DiX6MhUN2dv5v7b6Bw53q7cEiBPn` 和记录同步后的最终部署 `dpl_DrG3nVwb7zN44AEzbguMFEsceyKN` 均为 `Ready`；当前正式别名接管 `https://lumagamehub.com`、`https://www.lumagamehub.com`。
 - 生产接口：主页、`robots.txt`、`sitemap.xml`、`/api/health`、`/api/search?q=snake&limit=3`、Google Snake 详情页和 Snake 3D 均 HTTP 200；health 为 `status=ok`，sitemap 为 198 URLs。
 - 索引边界：`/en/games/snake-3d` canonical 正确、`noindex` 保持、不在 sitemap；Google Snake 详情页存在单一可见 Snake 3D 入口，桌面和 Pixel 7 均无横向溢出。
 - 浏览器验收：正式域 Snake 3D Playwright Chromium/Pixel 7 为 3 passed、1 个既有桌面移动控件契约 skip；生产移动 runtime 10 页 under-80 为 0，最低 92。自动化遥测隔离已启用，不计入 GA4、Clarity 或 Vercel Analytics。
