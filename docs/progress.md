@@ -2085,3 +2085,13 @@
 - 入口组件新增 `snake_3d_discovery_view`，仅在发现区进入视口后记录一次；原有 `snake_3d_discovery_click` 保持不变，因此入口点击率可以使用同一发现区的曝光作为分母。
 - Snake 3D 在 Three.js 场景完成首帧渲染并创建控制器后新增 `snake_3d_ready`；`game_play_start` 仍表示用户点击开始，`snake_3d_load_error` 仍记录启动失败，三者不混用。
 - 新增回归断言覆盖 IntersectionObserver 曝光、入口点击和 ready 事件顺序。当前仍未 commit、push、合入 `main` 或部署；生产真实数据尚未产生。
+
+### T-169 Snake 3D 受控发现入口生产发布记录（2026-08-17）
+
+- 发布提交：`8398337` 已从隔离分支推送，并 fast-forward 合入 GitHub `main`；本地 `main`、`origin/main` 和 GitHub `main` 均指向该 SHA。
+- Vercel Production：部署 `dpl_DiX6MhUN2dv5v7b6Bw53q7cEiBPn` 为 `Ready`，正式别名接管 `https://lumagamehub.com`、`https://www.lumagamehub.com`。
+- 生产接口：主页、`robots.txt`、`sitemap.xml`、`/api/health`、`/api/search?q=snake&limit=3`、Google Snake 详情页和 Snake 3D 均 HTTP 200；health 为 `status=ok`，sitemap 为 198 URLs。
+- 索引边界：`/en/games/snake-3d` canonical 正确、`noindex` 保持、不在 sitemap；Google Snake 详情页存在单一可见 Snake 3D 入口，桌面和 Pixel 7 均无横向溢出。
+- 浏览器验收：正式域 Snake 3D Playwright Chromium/Pixel 7 为 3 passed、1 个既有桌面移动控件契约 skip；生产移动 runtime 10 页 under-80 为 0，最低 92。自动化遥测隔离已启用，不计入 GA4、Clarity 或 Vercel Analytics。
+- 验证限制：合并后的嵌套 worktree 运行 lint 时，ESLint 发现父仓库与当前 worktree 两份 `@next/next` 插件；同一 SHA 的隔离候选已通过 lint（0 errors、98 个既有 warnings），合并 main 的 type-check、74 files/242 tests、build 和 diff-check 均通过。
+- 当前状态：入口已上线，进入 7 天真实行为观察；`snake_3d_discovery_view`、`snake_3d_discovery_click`、`snake_3d_ready`、`game_play_start`、`snake_3d_first_death`、`snake_3d_retry` 和 `snake_3d_load_error` 等待真实用户数据。Snake 通过行为门禁前，不取消 noindex；Circle、Speed Draw 和 Games for Trains 不提前开发。
