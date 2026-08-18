@@ -3919,8 +3919,10 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       'how to beat big tower tiny square',
       'how to save pineapple in big tower tiny square',
       'big tower tiny square 2 walkthrough',
+      'big tower tiny square ending',
+      'big tower tiny square games in order',
     ],
-    updatedAt: seoContentUpdatedAt,
+    updatedAt: '2026-08-18T00:00:00.000Z',
     relatedSlugs: ['big-tower-tiny-square-2-walkthrough', 'ovo-walkthrough', 'games-like-ovo', 'games-to-play-when-bored'],
     embedGame: {
       iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp40/liuxinyu/20221028/1/index.html',
@@ -3962,6 +3964,10 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             body: 'The sequel changes tower layouts and hazard combinations, so an original-game room map will not match. The transferable method is to stop at each safe tile, watch one complete hazard cycle, test the first jump without spending the second, and then use the extra jump only to correct height or distance.',
           },
           {
+            title: 'Ending and Game Order',
+            body: 'If you are deciding where to start, play Big Tower Tiny Square first and then try Big Tower Tiny Square 2. The first game establishes the pineapple rescue objective and the checkpoint rhythm; the sequel is better treated as a separate set of rooms rather than a continuation with the same route. This guide does not invent a hidden ending or an unofficial level list when the live build does not document one.',
+          },
+          {
             title: 'Safe Browser Play',
             body: 'The developer EvilObjective publishes an official Big Tower Tiny Square page on itch.io. The Luma player is a browser embed; it does not require a plugin or executable. Leave any mirror that asks for an extension, installer, or unrelated permission.',
           },
@@ -3976,6 +3982,8 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           { question: 'How do you double jump in Big Tower Tiny Square?', answer: 'Press jump again while in mid-air. The trick is timing — save the second jump for the apex of your first jump to clear the longest gaps.' },
           { question: 'Is Big Tower Tiny Square hard?', answer: 'It is challenging but fair, with frequent checkpoints so deaths cost only a few seconds. Most hard sections are timing puzzles you learn by repetition.' },
           { question: 'Is there a Big Tower Tiny Square 2 walkthrough?', answer: 'The sequel uses different rooms, but the same checkpoint method works: observe a full cycle, test the first jump, and reserve the second jump for a height or distance correction.' },
+          { question: 'Does Big Tower Tiny Square have an ending?', answer: 'The documented objective is to climb the tower and save the Pineapple. Treat reaching the summit as the ending goal; Luma does not claim an extra hidden ending or publish an unverified room-by-room order.' },
+          { question: 'Which Big Tower Tiny Square game should I play first?', answer: 'Start with Big Tower Tiny Square, then try Big Tower Tiny Square 2. The first game teaches the core checkpoint and double-jump rhythm, while the sequel uses different rooms and tighter hazard combinations.' },
           { question: 'Do I need to download Big Tower Tiny Square?', answer: 'No download is needed for the browser player on this page. The developer also maintains an official itch.io page; avoid unofficial installers and browser extensions.' },
         ],
         externalLinks: [
@@ -4018,6 +4026,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             ],
           },
           { title: 'Big Tower Tiny Square 2 攻略基础', body: '续作的房间和障碍组合不同,原版房间路线不能直接套用。通用方法是停在安全格看完一个完整周期,第一次只测试基础跳,确认高度或距离不足后才在下一次用第二跳修正。' },
+          { title: '结局与游玩顺序', body: '如果你在决定先玩哪一作,建议先玩 Big Tower Tiny Square,再尝试 Big Tower Tiny Square 2。第一作先建立救菠萝目标、存档点和二段跳节奏,续作更像一组独立房间,不能直接套用原版路线。当前没有可靠来源时,本页不编造隐藏结局或未经验证的逐关顺序。' },
           { title: '安全浏览器游玩', body: '开发者 EvilObjective 在 itch.io 维护官方页面。Luma 使用浏览器嵌入,不要求插件或可执行安装包;遇到要求扩展、安装器或无关权限的镜像应直接离开。' },
         ],
         recommendations: [
@@ -4030,6 +4039,8 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           { question: 'Big Tower Tiny Square 怎么二段跳?', answer: '空中再按一次跳。诀窍在时机——把第二跳留到第一跳的最高点,用来越过最长的缝隙。' },
           { question: 'Big Tower Tiny Square 难吗?', answer: '有挑战但公平,存档点密集,死亡只损失几秒。大多数难段是靠反复练习掌握的时机谜题。' },
           { question: 'Big Tower Tiny Square 2 怎么过?', answer: '续作房间不同,但可沿用存档点打法:看完一个障碍周期,先测试基础跳,再把第二跳用于修正高度或距离。' },
+          { question: 'Big Tower Tiny Square 有结局吗?', answer: '目前可核对的目标是爬到塔顶救回菠萝。可以把到达塔顶视为通关目标;没有可靠来源时,Luma 不宣称存在额外隐藏结局,也不发布未经验证的逐关顺序。' },
+          { question: 'Big Tower Tiny Square 两作先玩哪个?', answer: '建议先玩第一作 Big Tower Tiny Square,再玩 Big Tower Tiny Square 2。第一作先教会存档点和二段跳节奏,续作房间不同、障碍组合更紧。' },
           { question: 'Big Tower Tiny Square 需要下载吗?', answer: '本页浏览器播放器无需下载。开发者也有 itch.io 官方页面;不要安装非官方安装器或浏览器扩展。' },
         ],
         externalLinks: [
