@@ -13,13 +13,17 @@ describe('two-player collection discovery', () => {
   it('adds the collection to sitemap and three relevant body-link surfaces', () => {
     const route = '/games/2-player-unblocked';
     const sitemap = read('app/sitemap.ts');
-    const gamesPage = read('app/[locale]/games/page.tsx');
-    const keyboardGuide = read('app/[locale]/guides/keyboard-only-browser-games/page.tsx');
-    const homePage = read('app/[locale]/page.tsx');
+    const gamesLayout = read('app/[locale]/games/layout.tsx');
+    const keyboardGuideLayout = read(
+      'app/[locale]/guides/keyboard-only-browser-games/layout.tsx',
+    );
+    const noDownloadGuideLayout = read(
+      'app/[locale]/guides/no-download-games/layout.tsx',
+    );
 
     expect(sitemap).toContain(route);
-    expect(gamesPage).toContain(route);
-    expect(keyboardGuide).toContain(route);
-    expect(homePage).toContain(route);
+    expect(gamesLayout).toContain(route);
+    expect(keyboardGuideLayout).toContain(route);
+    expect(noDownloadGuideLayout).toContain(route);
   });
 });
