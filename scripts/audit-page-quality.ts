@@ -153,6 +153,17 @@ function scoreStaticPages(): PageQualityRow[] {
       nextStep: 'Keep indexed; improve only if Clarity shows poor navigation or search friction.',
     },
     {
+      path: '/games/2-player-unblocked',
+      type: 'static',
+      score: 96,
+      indexable: true,
+      action: 'keep',
+      reason:
+        'Dedicated bilingual collection has three provenance-approved self-hosted games, click-to-load runtimes, P1/P2 controls, device limitations, license/source notes, FAQ, CollectionPage/ItemList schema, canonical locale metadata, and relevant inbound links without fake metrics.',
+      nextStep:
+        'Keep indexed as the single two-player query hub; expand only after 2-6 weeks of real GSC and play-funnel evidence.',
+    },
+    {
       path: '/guides',
       type: 'static',
       score: 90,
