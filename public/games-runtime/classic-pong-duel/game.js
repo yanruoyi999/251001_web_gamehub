@@ -24,6 +24,10 @@
     scoreTwo: 0,
   };
 
+  function signalReady() {
+    window.parent.postMessage({ type: 'luma-game-ready', gameSlug: GAME_SLUG }, '*');
+  }
+
   function clamp(value, min, max) {
     return Math.min(max, Math.max(min, value));
   }
@@ -123,6 +127,18 @@
     requestAnimationFrame(frame);
   }
 
+  window.addEventListener('message', (event) => {
+    const message = event.data;
+    if (
+      event.source === window.parent &&
+      message &&
+      message.type === 'luma-parent-ready' &&
+      message.gameSlug === GAME_SLUG
+    ) {
+      signalReady();
+    }
+  });
+
   window.addEventListener('keydown', (event) => {
     if (['KeyW', 'KeyS', 'ArrowUp', 'ArrowDown'].includes(event.code)) {
       event.preventDefault();
@@ -139,5 +155,5 @@
   });
 
   render();
-  window.parent.postMessage({ type: 'luma-game-ready', gameSlug: GAME_SLUG }, '*');
+  signalReady();
 })();
