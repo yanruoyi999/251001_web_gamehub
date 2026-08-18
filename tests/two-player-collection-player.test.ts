@@ -26,7 +26,9 @@ describe('two-player collection player contract', () => {
     const source = fs.readFileSync(COMPONENT_PATH, 'utf8');
 
     expect((source.match(/<iframe\b/g) ?? []).length).toBe(1);
-    expect(source).toContain("sandbox=\"allow-scripts allow-fullscreen\"");
+    expect(source).toContain('sandbox="allow-scripts"');
+    expect(source).toContain('allow="fullscreen"');
+    expect(source).not.toContain('sandbox="allow-scripts allow-fullscreen"');
     expect(source).toContain('activeSlug');
     expect(source).toContain('startGame');
     expect(source).toContain('setActiveSlug(null)');
