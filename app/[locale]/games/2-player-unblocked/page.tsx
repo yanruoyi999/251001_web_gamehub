@@ -10,7 +10,7 @@ import { serializeJsonLd } from '@/lib/utils/json-ld';
 export const dynamic = 'force-static';
 export const revalidate = 86_400;
 
-export const TWO_PLAYER_PATH = '/games/2-player-unblocked';
+const TWO_PLAYER_PATH = '/games/2-player-unblocked';
 
 const copy = {
   en: {
