@@ -2095,3 +2095,10 @@
 - 浏览器验收：正式域 Snake 3D Playwright Chromium/Pixel 7 为 3 passed、1 个既有桌面移动控件契约 skip；生产移动 runtime 10 页 under-80 为 0，最低 92。自动化遥测隔离已启用，不计入 GA4、Clarity 或 Vercel Analytics。
 - 验证限制：合并后的嵌套 worktree 运行 lint 时，ESLint 发现父仓库与当前 worktree 两份 `@next/next` 插件；同一 SHA 的隔离候选已通过 lint（0 errors、98 个既有 warnings），合并 main 的 type-check、74 files/242 tests、build 和 diff-check 均通过。
 - 当前状态：入口已上线，进入 7 天真实行为观察；`snake_3d_discovery_view`、`snake_3d_discovery_click`、`snake_3d_ready`、`game_play_start`、`snake_3d_first_death`、`snake_3d_retry` 和 `snake_3d_load_error` 等待真实用户数据。Snake 通过行为门禁前，不取消 noindex；Circle、Speed Draw 和 Games for Trains 不提前开发。
+
+### 2026-08-18 依赖安全候选与 Big Tower 长尾发布记录
+
+- 发布范围：仅包含依赖安全 overrides/锁文件更新，以及既有 `big-tower-tiny-square-walkthrough` 的 `ending`、`games in order` 关键词和中英文 FAQ/说明补充；未纳入 Circle 评分预研、主工作树其他未提交改动、Snake 3D 索引策略或外部服务配置。
+- Git 状态：发布分支基于本地 `main`、`origin/main` 和 GitHub `main` 同一 SHA `fc8877c`；候选提交为 `7292124`（依赖）和 `aa70029`（Big Tower），本记录随发布分支合入 `main`。
+- 验证：依赖生产审计无已知漏洞；Vitest 76 files / 247 tests、type-check、内链检查、lint（0 errors、98 个既有 warnings）、Next.js 15.5.21 build 143/143、Playwright 20 tests 中 17 passed / 3 个既有能力 skip、`git diff --check` 均通过。
+- 发布后观察：继续观察 Big Tower 相关 query 的 impressions、clicks、position；不新增 URL，不修改 canonical、robots、noindex 或 sitemap 规则。
