@@ -391,7 +391,7 @@ export function TwoPlayerCollectionPlayer({ locale, games }: TwoPlayerCollection
               ref={iframeRef}
               src={activeGame.runtimePath}
               title={activeGame.title[locale]}
-              sandbox="allow-scripts allow-fullscreen"
+              sandbox="allow-scripts"
               allow="fullscreen"
               allowFullScreen
               referrerPolicy="no-referrer"
