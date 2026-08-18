@@ -203,6 +203,14 @@ export function TwoPlayerCollectionPlayer({ locale, games }: TwoPlayerCollection
     });
   };
 
+  const handleIframeLoad = () => {
+    if (!activeGame) return;
+    iframeRef.current?.contentWindow?.postMessage(
+      { type: 'luma-parent-ready', gameSlug: activeGame.slug },
+      '*',
+    );
+  };
+
   const handleIframeError = () => {
     if (!activeGame) return;
     setLoadState('error');
@@ -395,6 +403,7 @@ export function TwoPlayerCollectionPlayer({ locale, games }: TwoPlayerCollection
               allow="fullscreen"
               allowFullScreen
               referrerPolicy="no-referrer"
+              onLoad={handleIframeLoad}
               onError={handleIframeError}
               className="h-full min-h-[260px] w-full border-0 bg-slate-950 sm:min-h-0"
               data-two-player-runtime={activeGame.slug}
