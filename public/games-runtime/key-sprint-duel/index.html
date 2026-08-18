@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Key Sprint Duel</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="game-shell" data-game-slug="key-sprint-duel">
+    <header class="game-header">
+      <div><strong>P1</strong> <span id="score-one">0</span>/20</div>
+      <h1>Key Sprint Duel</h1>
+      <div><strong>P2</strong> <span id="score-two">0</span>/20</div>
+    </header>
+    <div class="board sprint-board" id="board" tabindex="0" aria-label="Key Sprint Duel racetrack">
+      <div class="lane">
+        <span class="progress-label">P1 · alternate A / D</span>
+        <div class="runner runner-one" id="runner-one">P1</div>
+      </div>
+      <div class="lane">
+        <span class="progress-label">P2 · alternate ← / →</span>
+        <div class="runner runner-two" id="runner-two">P2</div>
+      </div>
+      <p class="status" id="status">Press Enter to start</p>
+    </div>
+    <p class="instructions">Alternate your two keys. Key repeat does not count. First to 20 clean steps wins.</p>
+  </main>
+  <script src="./game.js"></script>
+</body>
+</html>
