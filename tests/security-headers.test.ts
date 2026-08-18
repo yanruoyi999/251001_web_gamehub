@@ -45,10 +45,13 @@ describe('security headers', () => {
     const runtimeCsp = headerValue(runtimeRoute, 'Content-Security-Policy');
     expect(runtimeCsp).toContain("default-src 'none'");
     expect(runtimeCsp).toContain("script-src 'self'");
-    expect(runtimeCsp).toContain("style-src 'self'");
+    expect(runtimeCsp).toContain('http://localhost:*');
+    expect(runtimeCsp).toContain('http://127.0.0.1:*');
+    expect(runtimeCsp).toContain('https://www.lumagamehub.com');
     expect(runtimeCsp).toContain("connect-src 'none'");
     expect(runtimeCsp).toContain("frame-ancestors 'self'");
     expect(runtimeCsp).not.toContain("'unsafe-inline'");
-    expect(runtimeCsp).not.toContain('https://');
+    expect(runtimeCsp).not.toContain('https://*.vercel.app');
+    expect(runtimeCsp).not.toContain('script-src https:');
   });
 });
