@@ -19,6 +19,10 @@
     lastTwo: null,
   };
 
+  function signalReady() {
+    window.parent.postMessage({ type: 'luma-game-ready', gameSlug: GAME_SLUG }, '*');
+  }
+
   function render() {
     const maxLeft = 88;
     runnerOne.style.left = `${3 + (state.one / GOAL) * maxLeft}%`;
@@ -65,6 +69,18 @@
     if (state.two === GOAL) finish('P2');
   }
 
+  window.addEventListener('message', (event) => {
+    const message = event.data;
+    if (
+      event.source === window.parent &&
+      message &&
+      message.type === 'luma-parent-ready' &&
+      message.gameSlug === GAME_SLUG
+    ) {
+      signalReady();
+    }
+  });
+
   window.addEventListener('keydown', (event) => {
     if (event.code === 'Enter') {
       event.preventDefault();
@@ -86,5 +102,5 @@
   });
 
   render();
-  window.parent.postMessage({ type: 'luma-game-ready', gameSlug: GAME_SLUG }, '*');
+  signalReady();
 })();
