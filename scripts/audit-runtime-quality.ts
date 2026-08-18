@@ -46,6 +46,7 @@ const DEFAULT_FAIL_UNDER = 80;
 const DEFAULT_SAMPLES: RuntimeSample[] = [
   { path: '/en', type: 'static' },
   { path: '/en/games', type: 'static' },
+  { path: '/en/games/2-player-unblocked', type: 'game', requiresPlayableIframe: true },
   { path: '/en/guides/games-like-ovo', type: 'guide' },
   { path: '/en/guides/google-snake-mods', type: 'guide' },
   { path: '/en/guides/big-tower-tiny-square-2-walkthrough', type: 'guide' },
@@ -198,7 +199,9 @@ async function samplePage(browser: Browser, baseUrl: string, sample: RuntimeSamp
   const url = buildUrl(baseUrl, sample.path);
   const response = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 15_000 });
   await page.waitForTimeout(sample.requiresPlayableIframe ? 2_000 : 600);
-  const playButton = page.locator('button').filter({ hasText: /play now|开始游戏/i }).first();
+  const twoPlayerPlayButton = page.locator('[data-two-player-start]').first();
+  const genericPlayButton = page.locator('button').filter({ hasText: /play now|开始游戏/i }).first();
+  const playButton = (await twoPlayerPlayButton.count()) > 0 ? twoPlayerPlayButton : genericPlayButton;
 
   const [
     performanceData,
@@ -225,11 +228,14 @@ async function samplePage(browser: Browser, baseUrl: string, sample: RuntimeSamp
     }
 
     iframeVisibleAfterPlay = await page.locator('iframe').first().isVisible().catch(() => false);
-    fullscreenButtonVisible = await page
+    const twoPlayerFullscreenButton = page.locator('[data-two-player-fullscreen]').first();
+    const genericFullscreenButton = page
       .getByRole('button', { name: /play fullscreen|全屏游玩|exit fullscreen|退出全屏/i })
-      .first()
-      .isVisible()
-      .catch(() => false);
+      .first();
+    const fullscreenButton = (await twoPlayerFullscreenButton.count()) > 0
+      ? twoPlayerFullscreenButton
+      : genericFullscreenButton;
+    fullscreenButtonVisible = await fullscreenButton.isVisible().catch(() => false);
   }
 
   const resultWithoutScore = {
