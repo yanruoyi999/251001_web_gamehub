@@ -15,6 +15,10 @@
     finished: false,
   };
 
+  function signalReady() {
+    window.parent.postMessage({ type: 'luma-game-ready', gameSlug: GAME_SLUG }, '*');
+  }
+
   function score(owner) {
     return state.cells.filter((cell) => cell === owner).length;
   }
@@ -83,6 +87,18 @@
     }
   }
 
+  window.addEventListener('message', (event) => {
+    const message = event.data;
+    if (
+      event.source === window.parent &&
+      message &&
+      message.type === 'luma-parent-ready' &&
+      message.gameSlug === GAME_SLUG
+    ) {
+      signalReady();
+    }
+  });
+
   window.addEventListener('keydown', (event) => {
     if (state.finished && event.code === 'KeyR') {
       event.preventDefault();
@@ -125,5 +141,5 @@
   });
 
   render();
-  window.parent.postMessage({ type: 'luma-game-ready', gameSlug: GAME_SLUG }, '*');
+  signalReady();
 })();
