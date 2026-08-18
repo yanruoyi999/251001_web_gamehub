@@ -38,6 +38,49 @@ const securityHeaders = [
   },
 ];
 
+/**
+ * Game runtimes are deliberately sandboxed by the parent iframe. They need a
+ * narrowly scoped exception to the main site's anti-framing policy so Luma can
+ * embed its own static runtime documents. The runtime CSP stays local-only and
+ * does not inherit analytics, forms, remote frames, or other application
+ * capabilities.
+ */
+const gameRuntimeSecurityHeaders = [
+  {
+    key: 'Content-Security-Policy',
+    value: [
+      "default-src 'none'",
+      "base-uri 'none'",
+      "object-src 'none'",
+      "form-action 'none'",
+      "script-src 'self'",
+      "style-src 'self'",
+      "img-src 'self' data:",
+      "font-src 'none'",
+      "media-src 'none'",
+      "connect-src 'none'",
+      "frame-src 'none'",
+      "frame-ancestors 'self'",
+    ].join('; '),
+  },
+  {
+    key: 'Referrer-Policy',
+    value: 'no-referrer',
+  },
+  {
+    key: 'X-Frame-Options',
+    value: 'SAMEORIGIN',
+  },
+  {
+    key: 'X-Content-Type-Options',
+    value: 'nosniff',
+  },
+  {
+    key: 'Permissions-Policy',
+    value: 'camera=(), microphone=(), geolocation=()',
+  },
+];
+
 const nextConfig = {
   images: {
     remotePatterns: [
@@ -57,6 +100,10 @@ const nextConfig = {
       {
         source: '/(.*)',
         headers: securityHeaders,
+      },
+      {
+        source: '/games-runtime/:path*',
+        headers: gameRuntimeSecurityHeaders,
       },
     ];
   },
