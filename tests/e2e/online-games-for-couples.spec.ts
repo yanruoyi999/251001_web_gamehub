@@ -34,15 +34,15 @@ test.describe('Online Games for Couples', () => {
   });
 
   test('reuses a shared challenge code and prompt order after reload', async ({ page }) => {
-    await page.goto(`${COUPLES_PATH}?challenge=LUMA22`);
+    await page.goto(`${COUPLES_PATH}?challenge=DATE88`);
 
-    await expect(page.locator('[data-couple-challenge-code]')).toHaveText('LUMA22');
+    await expect(page.locator('[data-couple-challenge-code]')).toHaveText('DATE88');
     await page.locator('[data-couple-start]').click();
     const firstPrompt = await page.locator('[data-couple-prompt]').textContent();
     expect(firstPrompt).toBeTruthy();
 
     await page.reload();
-    await expect(page.locator('[data-couple-challenge-code]')).toHaveText('LUMA22');
+    await expect(page.locator('[data-couple-challenge-code]')).toHaveText('DATE88');
     await page.locator('[data-couple-start]').click();
     await expect(page.locator('[data-couple-prompt]')).toHaveText(firstPrompt ?? '');
   });
