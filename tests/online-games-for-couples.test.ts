@@ -80,6 +80,7 @@ describe('online games for couples', () => {
     expect(source).toContain("searchParams.set('challenge'");
     expect(source).toContain('navigator.clipboard');
     expect(source).toContain('aria-live="polite"');
+    expect(source).toContain('data-clarity-mask="true"');
     expect(source).not.toMatch(/searchParams\.set\(['"](?:answer|player|partner)/);
     expect(source).not.toContain('localStorage');
     expect(source).not.toContain('fetch(');
