@@ -4,6 +4,9 @@ export type EnglishHtmlNormalizationStatus =
   | 'next-error-shell';
 
 const HTML_TAG = /<html\b[^>]*>/i;
+const KNOWN_NEXT_REDIRECT_SHELL_SUFFIXES = [
+  '/en/game/popcorn/how-to-play.html',
+] as const;
 
 function hasLocaleMarker(openingTag: string, locale: 'en' | 'zh') {
   return (
@@ -14,6 +17,13 @@ function hasLocaleMarker(openingTag: string, locale: 'en' | 'zh') {
 
 function isNextErrorShell(openingTag: string) {
   return /\bid=["']__next_error__["']/i.test(openingTag);
+}
+
+function isKnownNextRedirectShell(fileLabel: string) {
+  const normalizedLabel = `/${fileLabel.replace(/\\/g, '/').replace(/^\/+/, '')}`;
+  return KNOWN_NEXT_REDIRECT_SHELL_SUFFIXES.some((suffix) =>
+    normalizedLabel.endsWith(suffix),
+  );
 }
 
 export function normalizeEnglishStaticHtml(
@@ -27,6 +37,10 @@ export function normalizeEnglishStaticHtml(
   }
 
   if (isNextErrorShell(openingTag)) {
+    if (!isKnownNextRedirectShell(fileLabel)) {
+      throw new Error(`Unexpected Next error shell in ${fileLabel}`);
+    }
+
     return { html, status: 'next-error-shell' };
   }
 
