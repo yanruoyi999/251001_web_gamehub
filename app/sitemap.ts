@@ -154,6 +154,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.84,
     },
     {
+      path: '/games/online-games-for-couples',
+      changeFrequency: 'weekly',
+      priority: 0.83,
+    },
+    {
       path: '/guides',
       changeFrequency: 'weekly',
       priority: 0.75,
