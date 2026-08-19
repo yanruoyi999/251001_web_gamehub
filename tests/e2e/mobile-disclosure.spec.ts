@@ -3,7 +3,6 @@ import { expect, test } from './fixtures';
 test.describe('mobile disclosures without hydration', () => {
   test.use({
     hasTouch: true,
-    isMobile: true,
     javaScriptEnabled: false,
     viewport: { width: 390, height: 844 },
   });
