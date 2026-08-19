@@ -7,6 +7,8 @@ const couplesModuleUrl = new URL('../lib/games/online-games-for-couples.ts', imp
 const couplesModulePath = fileURLToPath(couplesModuleUrl);
 const couplesPlayerUrl = new URL('../components/game/online-games-for-couples-player.tsx', import.meta.url);
 const couplesPlayerPath = fileURLToPath(couplesPlayerUrl);
+const couplesPageUrl = new URL('../app/[locale]/games/online-games-for-couples/page.tsx', import.meta.url);
+const couplesPagePath = fileURLToPath(couplesPageUrl);
 
 async function loadCouplesModule() {
   return await import('../lib/games/online-games-for-couples');
@@ -81,5 +83,32 @@ describe('online games for couples', () => {
     expect(source).not.toMatch(/searchParams\.set\(['"](?:answer|player|partner)/);
     expect(source).not.toContain('localStorage');
     expect(source).not.toContain('fetch(');
+  });
+
+  it('publishes one indexable couples hub with the approved keyword cluster and schemas', () => {
+    expect(existsSync(couplesPagePath)).toBe(true);
+    const source = readFileSync(couplesPagePath, 'utf8');
+
+    expect(source).toContain('Online Games for Couples');
+    expect(source).toContain('online games for couples');
+    expect(source).toContain('couple games online');
+    expect(source).toContain('games for couples online');
+    expect(source).toContain('online couples games');
+    expect(source).toContain('OnlineGamesForCouplesPlayer');
+    expect(source).toContain("'CollectionPage'");
+    expect(source).toContain("'ItemList'");
+    expect(source).toContain("'FAQPage'");
+    expect(source).toContain("'BreadcrumbList'");
+    expect(source).toContain("'x-default'");
+    expect(source).toContain('index: true');
+    expect(source).toContain('follow: true');
+    expect(source).toContain('same device');
+    expect(source).toContain('long-distance');
+    expect(source).toContain('stay only in this tab');
+
+    const playerIndex = source.indexOf('<OnlineGamesForCouplesPlayer');
+    const longFormIndex = source.indexOf('data-couples-guide-content');
+    expect(playerIndex).toBeGreaterThan(0);
+    expect(longFormIndex).toBeGreaterThan(playerIndex);
   });
 });
