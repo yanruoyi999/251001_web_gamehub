@@ -8,17 +8,16 @@ function source(relativePath: string) {
 }
 
 describe('online games for couples discovery', () => {
-  it('publishes the couples hub through sitemap and three relevant contextual surfaces', () => {
+  it('publishes the couples hub through sitemap and relevant SSR contextual surfaces', () => {
     const sitemap = source('app/sitemap.ts');
-    const games = source('app/[locale]/games/page.tsx');
-    const twoPlayer = source('app/[locale]/games/2-player-unblocked/page.tsx');
+    const gamesLayout = source('app/[locale]/games/layout.tsx');
     const guidePage = source('app/[locale]/guides/[slug]/page.tsx');
     const home = source('app/[locale]/page.tsx');
 
     expect(sitemap).toContain("path: '/games/online-games-for-couples'");
-    expect(games).toContain("'/games/online-games-for-couples'");
-    expect(twoPlayer).toContain("'/games/online-games-for-couples'");
-    expect(guidePage).toContain("page.slug === 'free-games-no-ads'");
+    expect(gamesLayout).toContain("'/games/online-games-for-couples'");
+    expect(gamesLayout).toContain('Couple');
+    expect(guidePage).toContain("page.slug === 'no-download-games'");
     expect(guidePage).toContain("'/games/online-games-for-couples'");
     expect(home).not.toContain('/games/online-games-for-couples');
   });
