@@ -521,6 +521,30 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
         </CardContent>
       </Card>
 
+      <Card className="mb-8 border-primary/20 bg-primary/5">
+        <CardContent className="flex flex-col gap-5 p-6 sm:flex-row sm:items-center sm:justify-between">
+          <div className="max-w-3xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">
+              {locale === 'zh' ? 'Luma 原创 · 两个人一起玩' : 'Luma Original · Play together'}
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-foreground">
+              {locale === 'zh' ? '情侣在线小游戏' : 'Online Games for Couples'}
+            </h2>
+            <p className="mt-2 text-sm leading-7 text-muted-foreground">
+              {locale === 'zh'
+                ? '二选一、默契匹配和轻量情侣挑战都在浏览器本地运行；同设备可轮流作答，异地只需共享挑战码即可获得相同题目顺序。'
+                : 'Play three local-only couple interactions on one device, or share a challenge code so long-distance partners get the same prompt order without an account.'}
+            </p>
+          </div>
+          <Link
+            href={getLocalizedPath(locale, '/games/online-games-for-couples')}
+            className="inline-flex min-h-11 flex-shrink-0 items-center justify-center rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            {locale === 'zh' ? '打开情侣互动' : 'Play Couple Games'} →
+          </Link>
+        </CardContent>
+      </Card>
+
       {games.length === 0 ? (
         <div className="rounded-lg border border-dashed border-border bg-card px-6 py-12 text-center text-muted-foreground">
           {t('empty')}
