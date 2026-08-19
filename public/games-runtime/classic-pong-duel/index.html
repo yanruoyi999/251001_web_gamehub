@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Classic Pong Duel</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="game-shell" data-game-slug="classic-pong-duel">
+    <header class="game-header">
+      <div><strong>P1</strong> <span id="score-one">0</span></div>
+      <h1>Classic Pong Duel</h1>
+      <div><strong>P2</strong> <span id="score-two">0</span></div>
+    </header>
+    <div class="board pong-board" id="board" tabindex="0" aria-label="Classic Pong Duel playfield">
+      <div class="center-line" aria-hidden="true"></div>
+      <div class="paddle paddle-one" id="paddle-one" aria-hidden="true"></div>
+      <div class="paddle paddle-two" id="paddle-two" aria-hidden="true"></div>
+      <div class="ball" id="ball" aria-hidden="true"></div>
+      <p class="status" id="status">Press Enter to start</p>
+    </div>
+    <p class="instructions">P1: W / S · P2: ↑ / ↓ · Enter: start or restart</p>
+  </main>
+  <script src="./game.js"></script>
+</body>
+</html>

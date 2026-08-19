@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-labelledby="title desc">
+  <title id="title">Key Sprint Duel preview</title>
+  <desc id="desc">Two bright runners race along separate lanes toward a finish line.</desc>
+  <rect width="800" height="450" rx="28" fill="#07110d"/>
+  <text x="400" y="72" text-anchor="middle" fill="#f4fff8" font-family="system-ui, sans-serif" font-size="34" font-weight="800">KEY SPRINT DUEL</text>
+  <rect x="60" y="120" width="680" height="105" rx="18" fill="#102319" stroke="#315646" stroke-width="3"/>
+  <rect x="60" y="255" width="680" height="105" rx="18" fill="#102319" stroke="#315646" stroke-width="3"/>
+  <path d="M690 120v240" stroke="#f4fff8" stroke-width="6" stroke-dasharray="14 12"/>
+  <rect x="390" y="143" width="66" height="60" rx="14" fill="#4ade80"/>
+  <rect x="505" y="278" width="66" height="60" rx="14" fill="#60a5fa"/>
+  <text x="423" y="181" text-anchor="middle" fill="#06250f" font-family="system-ui, sans-serif" font-size="22" font-weight="800">P1</text>
+  <text x="538" y="316" text-anchor="middle" fill="#06162c" font-family="system-ui, sans-serif" font-size="22" font-weight="800">P2</text>
+  <text x="180" y="185" text-anchor="middle" fill="#b7c9bf" font-family="system-ui, sans-serif" font-size="20">A / D</text>
+  <text x="180" y="320" text-anchor="middle" fill="#b7c9bf" font-family="system-ui, sans-serif" font-size="20">← / →</text>
+</svg>

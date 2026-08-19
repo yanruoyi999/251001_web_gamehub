@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Grid Claim Duel</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="game-shell" data-game-slug="grid-claim-duel">
+    <header class="game-header">
+      <div><strong>P1</strong> <span id="score-one">0</span></div>
+      <h1>Grid Claim Duel</h1>
+      <div><strong>P2</strong> <span id="score-two">0</span></div>
+    </header>
+    <p class="turn-banner" id="turn-banner">P1 turn · move with WASD, claim with F</p>
+    <div class="board grid-board" id="board" tabindex="0" aria-label="Grid Claim Duel five by five board"></div>
+    <p class="instructions">P1: WASD + F · P2: Arrow keys + Enter · R: restart after the board is full</p>
+  </main>
+  <script src="./game.js"></script>
+</body>
+</html>

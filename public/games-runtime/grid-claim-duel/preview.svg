@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-labelledby="title desc">
+  <title id="title">Grid Claim Duel preview</title>
+  <desc id="desc">A five by five strategy grid split between green and blue player claims.</desc>
+  <rect width="800" height="450" rx="28" fill="#07110d"/>
+  <text x="400" y="62" text-anchor="middle" fill="#f4fff8" font-family="system-ui, sans-serif" font-size="34" font-weight="800">GRID CLAIM DUEL</text>
+  <g transform="translate(214 84)">
+    <rect width="372" height="330" rx="24" fill="#0d1b15" stroke="#4ade80" stroke-width="4"/>
+    <g fill="#163024">
+      <rect x="18" y="18" width="60" height="54" rx="8"/><rect x="87" y="18" width="60" height="54" rx="8"/><rect x="156" y="18" width="60" height="54" rx="8"/><rect x="225" y="18" width="60" height="54" rx="8"/><rect x="294" y="18" width="60" height="54" rx="8"/>
+      <rect x="18" y="81" width="60" height="54" rx="8"/><rect x="87" y="81" width="60" height="54" rx="8"/><rect x="156" y="81" width="60" height="54" rx="8"/><rect x="225" y="81" width="60" height="54" rx="8"/><rect x="294" y="81" width="60" height="54" rx="8"/>
+      <rect x="18" y="144" width="60" height="54" rx="8"/><rect x="87" y="144" width="60" height="54" rx="8"/><rect x="156" y="144" width="60" height="54" rx="8"/><rect x="225" y="144" width="60" height="54" rx="8"/><rect x="294" y="144" width="60" height="54" rx="8"/>
+      <rect x="18" y="207" width="60" height="54" rx="8"/><rect x="87" y="207" width="60" height="54" rx="8"/><rect x="156" y="207" width="60" height="54" rx="8"/><rect x="225" y="207" width="60" height="54" rx="8"/><rect x="294" y="207" width="60" height="54" rx="8"/>
+      <rect x="18" y="270" width="60" height="42" rx="8"/><rect x="87" y="270" width="60" height="42" rx="8"/><rect x="156" y="270" width="60" height="42" rx="8"/><rect x="225" y="270" width="60" height="42" rx="8"/><rect x="294" y="270" width="60" height="42" rx="8"/>
+    </g>
+    <rect x="18" y="18" width="60" height="54" rx="8" fill="#1f7a45"/><rect x="87" y="81" width="60" height="54" rx="8" fill="#1f7a45"/><rect x="225" y="207" width="60" height="54" rx="8" fill="#1f7a45"/>
+    <rect x="294" y="18" width="60" height="54" rx="8" fill="#1f5f9d"/><rect x="225" y="81" width="60" height="54" rx="8" fill="#1f5f9d"/><rect x="87" y="207" width="60" height="54" rx="8" fill="#1f5f9d"/>
+    <rect x="156" y="144" width="60" height="54" rx="8" fill="none" stroke="#facc15" stroke-width="6"/>
+  </g>
+</svg>

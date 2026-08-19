@@ -149,6 +149,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.85,
     },
     {
+      path: '/games/2-player-unblocked',
+      changeFrequency: 'weekly',
+      priority: 0.84,
+    },
+    {
       path: '/guides',
       changeFrequency: 'weekly',
       priority: 0.75,

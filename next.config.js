@@ -3,6 +3,21 @@ const createNextIntlPlugin = require('next-intl/plugin');
 const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
+function toHttpsSource(hostname) {
+  if (!hostname || !/^[a-z0-9.-]+(?::\d+)?$/i.test(hostname)) return null;
+  return `https://${hostname}`;
+}
+
+const runtimeAssetSources = [
+  "'self'",
+  'http://localhost:*',
+  'http://127.0.0.1:*',
+  'https://lumagamehub.com',
+  'https://www.lumagamehub.com',
+  toHttpsSource(process.env.VERCEL_URL),
+  toHttpsSource(process.env.VERCEL_PROJECT_PRODUCTION_URL),
+].filter(Boolean);
+
 /** @type {import('next').NextConfig} */
 const securityHeaders = [
   {
@@ -38,6 +53,50 @@ const securityHeaders = [
   },
 ];
 
+/**
+ * Game runtimes are sandboxed by the parent iframe without allow-same-origin.
+ * WebKit therefore treats the child document as an opaque origin and does not
+ * reliably match external relative CSS/JS against CSP 'self'. We list only
+ * the known Luma/local build origins (plus the exact Vercel host injected at
+ * build time) so Safari can load the self-hosted files without enabling broad
+ * network access or unsafe-inline execution.
+ */
+const gameRuntimeSecurityHeaders = [
+  {
+    key: 'Content-Security-Policy',
+    value: [
+      "default-src 'none'",
+      "base-uri 'none'",
+      "object-src 'none'",
+      "form-action 'none'",
+      `script-src ${runtimeAssetSources.join(' ')}`,
+      `style-src ${runtimeAssetSources.join(' ')}`,
+      `img-src ${runtimeAssetSources.join(' ')} data:`,
+      "font-src 'none'",
+      "media-src 'none'",
+      "connect-src 'none'",
+      "frame-src 'none'",
+      "frame-ancestors 'self'",
+    ].join('; '),
+  },
+  {
+    key: 'Referrer-Policy',
+    value: 'no-referrer',
+  },
+  {
+    key: 'X-Frame-Options',
+    value: 'SAMEORIGIN',
+  },
+  {
+    key: 'X-Content-Type-Options',
+    value: 'nosniff',
+  },
+  {
+    key: 'Permissions-Policy',
+    value: 'camera=(), microphone=(), geolocation=()',
+  },
+];
+
 const nextConfig = {
   images: {
     remotePatterns: [
@@ -57,6 +116,10 @@ const nextConfig = {
       {
         source: '/(.*)',
         headers: securityHeaders,
+      },
+      {
+        source: '/games-runtime/:path*',
+        headers: gameRuntimeSecurityHeaders,
       },
     ];
   },
