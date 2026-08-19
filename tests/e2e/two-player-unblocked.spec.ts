@@ -34,8 +34,10 @@ test.describe('2 Player Unblocked collection', () => {
     const paddleOne = frame.locator('#paddle-one');
     const paddleTwo = frame.locator('#paddle-two');
 
-    await board.focus();
-    await board.press('Enter');
+    // Match the real user flow. WebKit only routes subsequent hardware-keyboard
+    // input into a sandboxed iframe after a user activation inside that frame.
+    await board.click();
+    await page.keyboard.press('Enter');
     await expect(paddleOne).toHaveAttribute('style', /top:/);
     await expect(paddleTwo).toHaveAttribute('style', /top:/);
 
