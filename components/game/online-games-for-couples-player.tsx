@@ -365,7 +365,9 @@ export function OnlineGamesForCouplesPlayer({
               <>
                 <div className="space-y-3" data-couple-player-one>
                   <p className="font-semibold text-foreground">{copy.playerOne}</p>
-                  {renderChoiceButtons(currentPrompt, 1)}
+                  {playerOneChoice === null || playerTwoChoice !== null
+                    ? renderChoiceButtons(currentPrompt, 1)
+                    : null}
                   {playerOneChoice !== null && playerTwoChoice === null ? (
                     <p className="text-sm text-muted-foreground">{copy.locked}</p>
                   ) : null}
