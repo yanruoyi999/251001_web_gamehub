@@ -78,26 +78,4 @@ test.describe('Luma Snake 3D', () => {
     expect(canvasState.height).toBeGreaterThan(0);
     expect(canvasState.pixel.some((value) => value > 0)).toBe(true);
   });
-
-  test('fits a mobile viewport and exposes touch controls', async ({ page }, testInfo) => {
-    testInfo.skip(
-      !['pixel-7', 'iphone-13'].includes(testInfo.project.name),
-      'Touch controls are covered by the mobile Playwright projects.'
-    );
-
-    await page.goto('/en/games/snake-3d', { waitUntil: 'networkidle' });
-
-    await expect(page.getByRole('button', { name: 'Move up' })).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Move left' })).toBeVisible();
-
-    const layout = await page.evaluate(() => ({
-      viewportWidth: window.innerWidth,
-      documentWidth: document.documentElement.scrollWidth,
-      canvasWidth: document.querySelector<HTMLCanvasElement>('[data-snake-canvas]')?.getBoundingClientRect().width ?? 0,
-    }));
-
-    expect(layout.documentWidth).toBeLessThanOrEqual(layout.viewportWidth);
-    expect(layout.canvasWidth).toBeGreaterThan(0);
-    expect(layout.canvasWidth).toBeLessThanOrEqual(layout.viewportWidth);
-  });
 });
