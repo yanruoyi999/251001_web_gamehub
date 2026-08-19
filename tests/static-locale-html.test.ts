@@ -18,7 +18,7 @@ describe('static English locale HTML normalization', () => {
     expect(result).toEqual({ html, status: 'already-correct' });
   });
 
-  test('classifies Next redirect/error shells separately from localized pages', () => {
+  test('classifies the known Popcorn redirect shell separately from localized pages', () => {
     const html = '<!doctype html><html id="__next_error__"><body>redirect shell</body></html>';
     const result = normalizeEnglishStaticHtml(
       html,
@@ -26,6 +26,15 @@ describe('static English locale HTML normalization', () => {
     );
 
     expect(result).toEqual({ html, status: 'next-error-shell' });
+  });
+
+  test('fails closed on an unexpected Next error shell', () => {
+    expect(() =>
+      normalizeEnglishStaticHtml(
+        '<!doctype html><html id="__next_error__"><body>unexpected shell</body></html>',
+        'en/guides/unexpected.html',
+      ),
+    ).toThrow(/Unexpected Next error shell/);
   });
 
   test('still fails closed on an unknown normal page without locale markers', () => {
