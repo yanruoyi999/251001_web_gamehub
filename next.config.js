@@ -28,10 +28,17 @@ const securityHeaders = [
       "object-src 'none'",
       "form-action 'self'",
       "img-src 'self' data: https://res.cloudinary.com https://*.google-analytics.com https://*.googletagmanager.com https://*.clarity.ms https://c.bing.com",
+      // Static App Router output contains Next bootstrap/RSC inline script
+      // elements, so script-src still needs unsafe-inline until the app adopts
+      // request nonces. Inline event-handler attributes are not required and
+      // are denied separately.
       `script-src 'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ''} https://*.googletagmanager.com https://www.clarity.ms https://scripts.clarity.ms`,
+      "script-src-attr 'none'",
       "style-src 'self' 'unsafe-inline'",
       "connect-src 'self' https://res.cloudinary.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.google.com https://*.clarity.ms",
-      "frame-src 'self' https://yanruoyi999.github.io https://dj-dk.github.io https://sudoku.tn1ck.com https://playpager.com https://cloud.onlinegames.io https://sda.4399.com https://sxiao.4399.com https://szhong.4399.com https://www.friv2018.com",
+      // sda.4399.com / sxiao.4399.com only backed retired Temple Run
+      // entries, and friv2018 only backed manual-review Raft Wars entries.
+      "frame-src 'self' https://yanruoyi999.github.io https://dj-dk.github.io https://sudoku.tn1ck.com https://playpager.com https://cloud.onlinegames.io https://szhong.4399.com",
       "frame-ancestors 'none'",
     ].join('; '),
   },

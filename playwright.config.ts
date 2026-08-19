@@ -35,7 +35,6 @@ export default defineConfig({
     },
     {
       name: 'firefox',
-      testIgnore: /mobile-disclosure\.spec\.ts/,
       use: { ...devices['Desktop Firefox'] },
     },
     {

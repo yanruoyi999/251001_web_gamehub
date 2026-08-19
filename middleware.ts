@@ -9,6 +9,10 @@ const intlMiddleware = createMiddleware({
   localePrefix,
   localeCookie: false,
   localeDetection: false,
+  // Page metadata already emits canonical/hreflang/x-default. Keeping a second
+  // automatic Link header created conflicting x-default targets for as-needed
+  // default-locale routes, so HTML metadata is the single SEO source of truth.
+  alternateLinks: false,
 });
 
 export default function middleware(request: NextRequest) {

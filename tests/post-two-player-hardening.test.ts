@@ -64,10 +64,14 @@ describe('post Two-Player launch hardening contracts', () => {
     const pkg = JSON.parse(readFileSync('package.json', 'utf8')) as {
       scripts?: Record<string, string>;
     };
+    const productionSmoke = readFileSync(
+      'tests/production-e2e/two-player-smoke.spec.ts',
+      'utf8',
+    );
 
     expect(pkg.scripts?.['test:e2e:production-smoke']).toBeTruthy();
-    expect(existsSync('tests/e2e/production-two-player-smoke.spec.ts')).toBe(
-      true,
-    );
+    expect(existsSync('playwright.production.config.ts')).toBe(true);
+    expect(existsSync('.github/workflows/production-smoke.yml')).toBe(true);
+    expect(productionSmoke).toContain("from '../e2e/fixtures'");
   });
 });
