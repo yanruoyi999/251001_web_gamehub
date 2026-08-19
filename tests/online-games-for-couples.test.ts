@@ -16,12 +16,12 @@ describe('online games for couples', () => {
   });
 
   it('defines one couples hub and exactly three original interactions', async () => {
-    const module = await loadCouplesModule() as Record<string, unknown>;
+    const subject = await loadCouplesModule() as Record<string, unknown>;
 
-    expect(module.COUPLES_GAMES_PATH).toBe('/games/online-games-for-couples');
-    expect(Array.isArray(module.COUPLE_GAMES)).toBe(true);
+    expect(subject.COUPLES_GAMES_PATH).toBe('/games/online-games-for-couples');
+    expect(Array.isArray(subject.COUPLE_GAMES)).toBe(true);
 
-    const games = module.COUPLE_GAMES as Array<{ slug: string; prompts: unknown[] }>;
+    const games = subject.COUPLE_GAMES as Array<{ slug: string; prompts: unknown[] }>;
     expect(games.map((game) => game.slug)).toEqual([
       'this-or-that-duo',
       'couple-match-quiz',
@@ -31,22 +31,22 @@ describe('online games for couples', () => {
   });
 
   it('normalizes challenge codes without carrying answer data', async () => {
-    const module = await loadCouplesModule() as Record<string, unknown>;
-    expect(typeof module.normalizeChallengeCode).toBe('function');
+    const subject = await loadCouplesModule() as Record<string, unknown>;
+    expect(typeof subject.normalizeChallengeCode).toBe('function');
 
-    const normalize = module.normalizeChallengeCode as (value?: string | null) => string;
+    const normalize = subject.normalizeChallengeCode as (value?: string | null) => string;
     expect(normalize(' ab-12 cd ')).toBe('AB12CD');
     expect(normalize('')).toMatch(/^[A-Z2-9]{6}$/);
 
-    const games = module.COUPLE_GAMES as Array<Record<string, unknown>>;
+    const games = subject.COUPLE_GAMES as Array<Record<string, unknown>>;
     expect(JSON.stringify(games)).not.toMatch(/playerAnswer|partnerAnswer|savedAnswer|userName/i);
   });
 
   it('uses the challenge code to produce a deterministic shared prompt order', async () => {
-    const module = await loadCouplesModule() as Record<string, unknown>;
-    expect(typeof module.buildCouplePromptOrder).toBe('function');
+    const subject = await loadCouplesModule() as Record<string, unknown>;
+    expect(typeof subject.buildCouplePromptOrder).toBe('function');
 
-    const buildOrder = module.buildCouplePromptOrder as (
+    const buildOrder = subject.buildCouplePromptOrder as (
       gameSlug: string,
       challengeCode: string,
     ) => Array<{ id: string }>;
