@@ -49,5 +49,15 @@ export default defineConfig({
       name: 'iphone-13',
       use: { ...devices['iPhone 13'] },
     },
+    {
+      name: 'pixel-7-touch',
+      testDir: './tests/mobile-e2e',
+      use: { ...devices['Pixel 7'] },
+    },
+    {
+      name: 'iphone-13-touch',
+      testDir: './tests/mobile-e2e',
+      use: { ...devices['iPhone 13'] },
+    },
   ],
 });
