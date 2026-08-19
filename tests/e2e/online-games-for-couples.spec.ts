@@ -17,6 +17,18 @@ test.describe('Online Games for Couples', () => {
     expect(hasOverflow).toBe(false);
   });
 
+  test('hides player one choice before player two answers', async ({ page }) => {
+    await page.goto(COUPLES_PATH);
+    await page.locator('[data-couple-game="couple-match-quiz"]').click();
+    await page.locator('[data-couple-start]').click();
+
+    await page.locator('[data-couple-choice="1-0"]').click();
+
+    await expect(page.locator('[data-couple-choice^="1-"]')).toHaveCount(0);
+    await expect(page.getByText('Choice locked. Hand the screen to the other player.')).toBeVisible();
+    await expect(page.locator('[data-couple-choice="2-0"]')).toBeVisible();
+  });
+
   test('completes the match quiz using two local players', async ({ page }) => {
     await page.goto(COUPLES_PATH);
     await page.locator('[data-couple-game="couple-match-quiz"]').click();
