@@ -1,10 +1,12 @@
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
 import { describe, expect, it } from 'vitest';
 
 const couplesModuleUrl = new URL('../lib/games/online-games-for-couples.ts', import.meta.url);
 const couplesModulePath = fileURLToPath(couplesModuleUrl);
+const couplesPlayerUrl = new URL('../components/game/online-games-for-couples-player.tsx', import.meta.url);
+const couplesPlayerPath = fileURLToPath(couplesPlayerUrl);
 
 async function loadCouplesModule() {
   return await import('../lib/games/online-games-for-couples');
@@ -58,5 +60,26 @@ describe('online games for couples', () => {
     expect(first).toEqual(repeated);
     expect(first).not.toEqual(different);
     expect(new Set(first).size).toBe(first.length);
+  });
+
+  it('keeps the interactive couples player local-only and shareable by challenge code', () => {
+    expect(existsSync(couplesPlayerPath)).toBe(true);
+    const source = readFileSync(couplesPlayerPath, 'utf8');
+
+    expect(source).toContain("'use client'");
+    expect(source).toContain('this-or-that-duo');
+    expect(source).toContain('couple-match-quiz');
+    expect(source).toContain('quick-couple-challenge');
+    expect(source).toContain("trackInteraction('couples_collection_view'");
+    expect(source).toContain("trackInteraction('couple_game_select'");
+    expect(source).toContain("trackInteraction('couple_game_start'");
+    expect(source).toContain("trackInteraction('couple_game_complete'");
+    expect(source).toContain("trackInteraction('couple_share'");
+    expect(source).toContain("searchParams.set('challenge'");
+    expect(source).toContain('navigator.clipboard');
+    expect(source).toContain('aria-live="polite"');
+    expect(source).not.toMatch(/searchParams\.set\(['"](?:answer|player|partner)/);
+    expect(source).not.toContain('localStorage');
+    expect(source).not.toContain('fetch(');
   });
 });
