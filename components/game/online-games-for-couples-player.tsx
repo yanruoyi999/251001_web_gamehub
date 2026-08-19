@@ -276,7 +276,12 @@ export function OnlineGamesForCouplesPlayer({
     : 0;
 
   return (
-    <section id="play-couple-games" className="scroll-mt-24 space-y-6" data-couples-player>
+    <section
+      id="play-couple-games"
+      className="scroll-mt-24 space-y-6"
+      data-couples-player
+      data-clarity-mask="true"
+    >
       <div className="rounded-2xl border border-primary/20 bg-primary/5 p-5">
         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">{copy.eyebrow}</p>
         <div className="mt-3 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
