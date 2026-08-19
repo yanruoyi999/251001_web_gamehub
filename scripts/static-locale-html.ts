@@ -1,4 +1,7 @@
-export type EnglishHtmlNormalizationStatus = 'patched' | 'already-correct';
+export type EnglishHtmlNormalizationStatus =
+  | 'patched'
+  | 'already-correct'
+  | 'next-error-shell';
 
 const HTML_TAG = /<html\b[^>]*>/i;
 
@@ -9,6 +12,10 @@ function hasLocaleMarker(openingTag: string, locale: 'en' | 'zh') {
   );
 }
 
+function isNextErrorShell(openingTag: string) {
+  return /\bid=["']__next_error__["']/i.test(openingTag);
+}
+
 export function normalizeEnglishStaticHtml(
   html: string,
   fileLabel = 'unknown English static HTML file',
@@ -17,6 +24,10 @@ export function normalizeEnglishStaticHtml(
 
   if (!openingTag) {
     throw new Error(`Missing <html> tag in ${fileLabel}`);
+  }
+
+  if (isNextErrorShell(openingTag)) {
+    return { html, status: 'next-error-shell' };
   }
 
   if (hasLocaleMarker(openingTag, 'en')) {
