@@ -164,6 +164,17 @@ function scoreStaticPages(): PageQualityRow[] {
         'Keep indexed as the single two-player query hub; expand only after 2-6 weeks of real GSC and play-funnel evidence.',
     },
     {
+      path: '/games/online-games-for-couples',
+      type: 'static',
+      score: 95,
+      indexable: true,
+      action: 'keep',
+      reason:
+        'Dedicated bilingual couples hub has three Luma-original local-only interactions, deterministic challenge-code sharing without answer leakage, no account or database dependency, useful same-device and long-distance guidance, FAQ, CollectionPage/ItemList schema, canonical locale metadata, and relevant SSR inbound links.',
+      nextStep:
+        'Keep indexed as the single couples query hub; add variants only after real GSC and completion/share data shows a distinct search intent.',
+    },
+    {
       path: '/guides',
       type: 'static',
       score: 90,
