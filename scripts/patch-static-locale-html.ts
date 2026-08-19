@@ -31,22 +31,32 @@ if (existsSync(appDir)) {
 
 let patched = 0;
 let alreadyCorrect = 0;
-let verified = 0;
+let redirectShells = 0;
 
 for (const file of enHtmlFiles) {
   const current = readFileSync(file, 'utf8');
-  const result = normalizeEnglishStaticHtml(current, path.relative(process.cwd(), file));
+  const result = normalizeEnglishStaticHtml(
+    current,
+    path.relative(process.cwd(), file),
+  );
 
   if (result.status === 'patched') {
     writeFileSync(file, result.html);
     patched += 1;
-  } else {
-    alreadyCorrect += 1;
+    continue;
   }
 
-  verified += 1;
+  if (result.status === 'already-correct') {
+    alreadyCorrect += 1;
+    continue;
+  }
+
+  redirectShells += 1;
 }
 
+const verified = patched + alreadyCorrect;
+const localizedCandidates = enHtmlFiles.length - redirectShells;
+
 console.log(
-  `Verified ${verified}/${enHtmlFiles.length} English static HTML files (${patched} patched, ${alreadyCorrect} already correct).`,
+  `Verified ${verified}/${localizedCandidates} English localized static HTML files (${patched} patched, ${alreadyCorrect} already correct); classified ${redirectShells} Next redirect/error shell(s) separately.`,
 );
