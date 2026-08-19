@@ -114,6 +114,13 @@ export function OnlineGamesForCouplesPlayer({
   const currentPrompt = orderedPrompts[roundIndex];
 
   useEffect(() => {
+    if (initialChallengeCode) return;
+    const sharedChallenge = new URLSearchParams(window.location.search).get('challenge');
+    if (!sharedChallenge) return;
+    setChallengeCode(normalizeChallengeCode(sharedChallenge));
+  }, [initialChallengeCode]);
+
+  useEffect(() => {
     if (collectionTrackedRef.current) return;
     collectionTrackedRef.current = true;
     trackInteraction('couples_collection_view', {
