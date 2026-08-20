@@ -9,9 +9,10 @@ const sortingPlayerUrl = new URL('../components/game/sorting-games-player.tsx', 
 const sortingPlayerPath = fileURLToPath(sortingPlayerUrl);
 const sortingPageUrl = new URL('../app/[locale]/games/sorting-games/page.tsx', import.meta.url);
 const sortingPagePath = fileURLToPath(sortingPageUrl);
+const sortingModuleImportPath = '../lib/games/sorting-games';
 
 async function loadSortingModule() {
-  return await import('../lib/games/sorting-games');
+  return await import(sortingModuleImportPath);
 }
 
 describe('original sorting games hub', () => {
