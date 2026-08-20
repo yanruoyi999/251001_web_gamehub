@@ -38,6 +38,9 @@ describe('Spend Bill Gates Money SEO v1.2', () => {
     const contextLinks = readSource(
       'components/seo/spend-bill-gates-money-context-links.tsx',
     );
+    const dailyRecommendations = readSource(
+      'lib/retention/daily-recommendation.ts',
+    );
     const games = readSource('app/[locale]/games/page.tsx');
     const home = readSource('app/[locale]/page.tsx');
 
@@ -49,9 +52,10 @@ describe('Spend Bill Gates Money SEO v1.2', () => {
     expect(contextLinks).toContain('free-games-no-ads');
     expect(contextLinks).not.toContain("'google-snake-mods':");
     expect(contextLinks).not.toContain('homeCopy');
-    expect(home).toContain("getLocalizedPath(locale, '/games/spend-bill-gates-money')");
-    expect(home).toContain('Spend $100 billion online');
-    expect(home).toContain('开始花光1000亿美元');
+    expect(dailyRecommendations).toContain("slug: 'spend-bill-gates-money'");
+    expect(home).not.toContain('homepage-spend-bill-gates-money');
+    expect(home).not.toContain('Spend $100 billion online');
+    expect(home).not.toContain('开始花光1000亿美元');
     const guides = readSource('app/[locale]/guides/[slug]/page.tsx');
     expect(guides).toContain("page.slug === 'google-snake-mods'");
     expect(guides).toContain("'/games/spend-bill-gates-money'");
