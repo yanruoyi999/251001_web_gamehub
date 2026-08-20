@@ -48,6 +48,7 @@ const DEFAULT_SAMPLES: RuntimeSample[] = [
   { path: '/en/games', type: 'static' },
   { path: '/en/games/2-player-unblocked', type: 'game', requiresPlayableIframe: true },
   { path: '/en/games/online-games-for-couples', type: 'static' },
+  { path: '/en/games/sorting-games', type: 'static' },
   { path: '/en/guides/games-like-ovo', type: 'guide' },
   { path: '/en/guides/google-snake-mods', type: 'guide' },
   { path: '/en/guides/big-tower-tiny-square-2-walkthrough', type: 'guide' },
