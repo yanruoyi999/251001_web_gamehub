@@ -8,9 +8,11 @@ const read = (path: string) =>
 describe('curated shelf UI refresh contracts', () => {
   it('keeps one main landmark per localized page tree', async () => {
     const layout = await read('app/[locale]/layout.tsx');
+    const snake3d = await read('app/[locale]/games/snake-3d/page.tsx');
     expect(layout).toContain('id="main-content"');
     expect(layout).toContain('<main id="main-content"');
     expect(layout).not.toContain('<main className="flex-1">{children}</main>');
+    expect(snake3d).not.toContain('<main className=');
   });
 
   it('puts discovery controls and horizontal shelves near the homepage entry point', async () => {
