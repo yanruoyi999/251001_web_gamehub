@@ -2102,3 +2102,14 @@
 - Git 状态：发布分支基于本地 `main`、`origin/main` 和 GitHub `main` 同一 SHA `fc8877c`；候选提交为 `7292124`（依赖）和 `aa70029`（Big Tower），本记录随发布分支合入 `main`。
 - 验证：依赖生产审计无已知漏洞；Vitest 76 files / 247 tests、type-check、内链检查、lint（0 errors、98 个既有 warnings）、Next.js 15.5.21 build 143/143、Playwright 20 tests 中 17 passed / 3 个既有能力 skip、`git diff --check` 均通过。
 - 发布后观察：继续观察 Big Tower 相关 query 的 impressions、clicks、position；不新增 URL，不修改 canonical、robots、noindex 或 sitemap 规则。
+
+### T-180 Luma Checkers 原创规则训练器候选（2026-08-20）
+
+- 分支边界：从干净 `origin/main@84a6c6c0b005f366b9b5f7245f2ed6a04a00da66` 创建隔离工作树 `/tmp/luma-checkers-mvp-20260820`，分支为 `codex/luma-checkers-mvp-20260820`；主工作树及既有未提交改动未触碰。
+- 产品范围：新增单一实验页 `/[locale]/games/checkers-rules`，实现原创 8x8 本地双人 Checkers 训练器，包含 12+12 初始棋子、强制吃子、连续跳吃、升王、胜负判定和移动端触控棋盘；不使用第三方 iframe、素材、账号或上传。
+- 内容与 SEO：中英文规则说明、FAQ、官方规则参考链接、VideoGame/FAQ/Breadcrumb JSON-LD、自引用 canonical/hreflang；页面质量审计评分 88，保持 `noindex, follow`，不进入 sitemap。
+- 行为采样：游戏目录增加一个受控入口；入口只记录一次 `checkers_discovery_view`/`checkers_discovery_click`。游戏记录 `checkers_game_ready`、`checkers_game_start`、`checkers_move_attempt`、`checkers_game_complete`、`checkers_retry`，只发送走法类型、合法性、胜方、步数和时长区间，不发送棋盘坐标或 PII。
+- 修改文件：`app/[locale]/games/page.tsx`、`app/[locale]/games/checkers-rules/page.tsx`、`components/game/checkers-discovery-card.tsx`、`components/game/luma-checkers-game.tsx`、`lib/games/luma-checkers.ts`、`lib/games/luma-checkers-seo.ts`、`scripts/audit-page-quality.ts` 及对应单测/E2E。
+- 验证：规则/页面/质量测试通过；全量 Vitest 87 files / 275 tests；type-check 通过；lint 0 errors；Prettier check 通过；Next.js 15.5.21 build 147/147；Chromium/Pixel 7/iPhone 13 E2E 8 passed / 1 mobile-scope skip，覆盖目录入口、noindex、canonical、sitemap 排除、首步合法走法和移动端无横向溢出。
+- 等待数据：真实 discovery view/click、ready/start、合法走法、完成率、重试率和对局时长尚未产生；Preview/生产部署后才可观察，自动化测试不计入业务数据。只有行为样本和质量门槛足够后，才另行评估取消 noindex 与加入 sitemap。
+- 发布边界：本轮仅完成隔离分支本地代码和验证，尚未 push、合入 `main`、部署 Preview/生产、提交 GSC 或修改 GA4/Clarity/数据库/搜索服务/权限。

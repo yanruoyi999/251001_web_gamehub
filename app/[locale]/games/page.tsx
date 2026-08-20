@@ -5,6 +5,7 @@ import { getTranslations } from 'next-intl/server';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { CheckersDiscoveryCard } from '@/components/game/checkers-discovery-card';
 import { FavoriteToggleButton } from '@/components/game/favorite-toggle';
 import { CollapsibleGameFilters } from '@/components/game/collapsible-game-filters';
 import { CategoryService, GameService, TagService } from '@/services';
@@ -354,6 +355,8 @@ export default async function GamesPage({ params, searchParams }: GamesPageProps
           {t('backToHome')}
         </Link>
       </header>
+
+      <CheckersDiscoveryCard locale={locale} />
 
       <Card className="mb-8">
         <CardHeader className="p-4 pb-3 sm:p-6 sm:pb-4">

@@ -9,6 +9,7 @@ import {
   shouldIndexTagEntry,
 } from '@/lib/game-taxonomy';
 import { getSeoLandingPages, type SeoLandingLocaleContent } from '@/lib/seo-landing-content';
+import { LUMA_CHECKERS_PATH } from '@/lib/games/luma-checkers-seo';
 import { LUMA_SNAKE_3D_PATH } from '@/lib/games/luma-snake-3d-seo';
 
 type PageType = 'static' | 'guide' | 'game' | 'category' | 'tag' | 'utility';
@@ -223,6 +224,17 @@ function scoreStandalonePages(): PageQualityRow[] {
         'Original game page has bilingual play instructions, daily-challenge explanation, mobile controls, FAQ, structured data, and related internal links.',
       nextStep:
         'Keep noindex until desktop/mobile runtime checks, first-death duration evidence, and the 80+ release gate are complete; then add it to the sitemap in a separate indexability change.',
+    },
+    {
+      path: LUMA_CHECKERS_PATH,
+      type: 'game',
+      score: 88,
+      indexable: false,
+      action: 'noindex',
+      reason:
+        'Original rules trainer has bilingual explanations, a playable local board, mandatory-capture feedback, FAQ, source reference, privacy boundary, and related links.',
+      nextStep:
+        'Keep noindex,follow and exclude from sitemap during the behavior experiment; evaluate real starts, valid moves, completions, and duration buckets before any indexability change.',
     },
   ];
 }
