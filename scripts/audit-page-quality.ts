@@ -175,6 +175,17 @@ function scoreStaticPages(): PageQualityRow[] {
         'Keep indexed as the single couples query hub; add variants only after real GSC and completion/share data shows a distinct search intent.',
     },
     {
+      path: '/games/sorting-games',
+      type: 'static',
+      score: 96,
+      indexable: true,
+      action: 'keep',
+      reason:
+        'Dedicated bilingual sorting hub has three Luma-original local-only games, deterministic procedural challenge generation, no third-party game runtime or asset dependency, focused sorting intent, FAQ, CollectionPage/ItemList/VideoGame schema, canonical locale metadata, and targeted contextual inbound links.',
+      nextStep:
+        'Keep indexed as the single sorting-games query hub; split color, number, or other sorting variants only after real GSC and completion data proves a distinct growing intent.',
+    },
+    {
       path: '/guides',
       type: 'static',
       score: 90,

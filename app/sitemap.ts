@@ -159,6 +159,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.83,
     },
     {
+      path: '/games/sorting-games',
+      changeFrequency: 'weekly',
+      priority: 0.82,
+    },
+    {
       path: '/guides',
       changeFrequency: 'weekly',
       priority: 0.75,
