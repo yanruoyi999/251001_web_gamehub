@@ -411,11 +411,11 @@ export default async function HomePage({
 
           <ShelfSection
             id="testing-games"
-            title={locale === 'zh' ? '正在测试的新游戏' : 'Games in testing'}
+            title={locale === 'zh' ? '更多值得玩的游戏' : 'More games to play'}
             description={
               locale === 'zh'
-                ? '这些页面对应当前正在验证的搜索需求，先直接试玩，再根据真实反馈决定是否扩展。'
-                : 'These pages test current search demand with a playable route before deeper expansion.'
+                ? '再挑几款轻松上手的挑战、益智或街机游戏，找到下一款想玩的。'
+                : 'Pick another quick challenge, puzzle, or arcade game for your next round.'
             }
             browseHref={getLocalizedPath(locale, '/games')}
             browseLabel={locale === 'zh' ? '查看全部游戏' : 'Browse all games'}

@@ -22,7 +22,7 @@ test.describe('Luma Game Hub smoke tests', () => {
       page.getByRole('heading', { name: 'Popular guides' }),
     ).toBeVisible();
     await expect(
-      page.getByRole('heading', { name: 'Games in testing' }),
+      page.getByRole('heading', { name: 'More games to play' }),
     ).toBeVisible();
     await expect(page.getByRole('link', { name: 'View saved games' })).toHaveAttribute(
       'href',

@@ -117,8 +117,8 @@ export function SavedGames({ locale }: SavedGamesProps) {
         </h2>
         <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-muted-foreground">
           {locale === 'zh'
-            ? '在今日推荐、游戏库或游戏详情页点击心形按钮，收藏会保存在当前浏览器。'
-            : 'Use the heart button in Today’s picks, the game library, or a game detail page. Saves stay in this browser.'}
+            ? '在今日推荐、游戏库或游戏详情页点击书签按钮，收藏会保存在当前浏览器。'
+            : 'Use the bookmark button in Today’s picks, the game library, or a game detail page. Saves stay in this browser.'}
         </p>
         <Link
           href={getLocalizedPath(locale, '/games')}
