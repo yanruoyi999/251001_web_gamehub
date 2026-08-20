@@ -1,0 +1,90 @@
+'use client';
+
+import Link from 'next/link';
+import { useEffect, useRef } from 'react';
+
+import { trackInteraction } from '@/lib/analytics/events';
+import { getLocalizedPath, type Locale } from '@/i18n/config';
+
+const copy = {
+  en: {
+    eyebrow: 'Luma Lab experiment',
+    title: 'Draw a Perfect Circle',
+    description: 'Try an original geometry-based drawing game with a local best score and a UTC daily challenge.',
+    action: 'Try the circle game',
+  },
+  zh: {
+    eyebrow: 'Luma Lab 实验',
+    title: '在线画一个完美的圆',
+    description: '体验原创几何绘图游戏，成绩保存在本地，并提供 UTC 每日挑战。',
+    action: '试玩画圆游戏',
+  },
+} as const;
+
+export function CircleDiscoveryCard({ locale }: { locale: Locale }) {
+  const content = copy[locale];
+  const viewedRef = useRef(false);
+  const cardRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const card = cardRef.current;
+    if (!card) return;
+
+    const recordView = () => {
+      if (viewedRef.current) return;
+      viewedRef.current = true;
+      trackInteraction('circle_discovery_view', {
+        game_slug: 'luma-circle',
+        locale,
+      });
+    };
+
+    if (!('IntersectionObserver' in window)) {
+      recordView();
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries.some(entry => entry.isIntersecting)) {
+          recordView();
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.4 },
+    );
+    observer.observe(card);
+
+    return () => observer.disconnect();
+  }, [locale]);
+
+  return (
+    <section
+      ref={cardRef}
+      className="mb-8 border border-emerald-300/40 bg-emerald-50 px-6 py-6 text-emerald-950 sm:px-8"
+      data-circle-discovery="true"
+    >
+      <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+        <div className="max-w-3xl">
+          <p className="text-xs font-bold uppercase tracking-[0.14em] text-emerald-700">{content.eyebrow}</p>
+          <h2 className="mt-2 text-2xl font-black tracking-tight">{content.title}</h2>
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-emerald-900/80">{content.description}</p>
+        </div>
+        <Link
+          href={getLocalizedPath(locale, '/games/draw-a-perfect-circle')}
+          className="inline-flex min-h-11 flex-shrink-0 items-center justify-center rounded-md bg-emerald-700 px-5 py-3 text-sm font-bold text-white transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-offset-2"
+          onClick={() =>
+            trackInteraction('circle_discovery_click', {
+              game_slug: 'luma-circle',
+              locale,
+              source: 'games_directory',
+            })
+          }
+          data-circle-discovery-link="true"
+        >
+          {content.action}
+        </Link>
+      </div>
+    </section>
+  );
+}

@@ -2102,3 +2102,14 @@
 - Git 状态：发布分支基于本地 `main`、`origin/main` 和 GitHub `main` 同一 SHA `fc8877c`；候选提交为 `7292124`（依赖）和 `aa70029`（Big Tower），本记录随发布分支合入 `main`。
 - 验证：依赖生产审计无已知漏洞；Vitest 76 files / 247 tests、type-check、内链检查、lint（0 errors、98 个既有 warnings）、Next.js 15.5.21 build 143/143、Playwright 20 tests 中 17 passed / 3 个既有能力 skip、`git diff --check` 均通过。
 - 发布后观察：继续观察 Big Tower 相关 query 的 impressions、clicks、position；不新增 URL，不修改 canonical、robots、noindex 或 sitemap 规则。
+
+### T-179 Luma Circle 原创 noindex MVP 候选（2026-08-20）
+
+- 研究决策：历史图片、关键词记录和公开来源核对后，本轮只实现 `draw a perfect circle` 对应的原创 Circle 实验。Snow Rush 3D 的公开 GameDistribution 页面能证明存在分发入口，但不能替代发布者账号许可；Extreme Run 3D 仅找到第三方页面；Troll Face Quest 属于专有品牌；Online Rhythm Games 仍缺少三款逐一核验的合法游戏池。上述候选没有进入本分支。
+- 实现范围：新增 `/en/games/draw-a-perfect-circle` 与 `/zh/games/draw-a-perfect-circle`，纯前端画布、练习/UTC 每日挑战、圆度/闭合度/平滑度/覆盖度评分、本地最高分、重试与分享；不保存轨迹、不上传图片、不收集邮箱或 PII。
+- 索引边界：页面 `noindex, follow`、自引用 canonical，不加入 sitemap；游戏目录只增加一个受控实验入口，用 IntersectionObserver 一次记录 `circle_discovery_view`，点击记录 `circle_discovery_click`。
+- 埋点：`circle_game_ready`、`circle_game_start`、`circle_draw_start`、`circle_draw_complete`、`circle_retry`、`circle_daily_complete`、`circle_share`；只发送 locale、模式、挑战日期、输入类型、分数/时长区间等边界字段，不发送绘图坐标。
+- 修改文件：`app/[locale]/games/draw-a-perfect-circle/page.tsx`、`app/[locale]/games/page.tsx`、`components/game/luma-circle-game.tsx`、`components/game/circle-discovery-card.tsx`、`lib/games/luma-circle.ts`、`lib/games/luma-circle-seo.ts`及对应单测/E2E。
+- 验证：定向 Vitest 7/7、type-check、lint 0 errors、Next.js 15.5.21 production build 147/147；Playwright Chromium、Pixel 7、iPhone 13 共 8 passed / 1 条按项目条件 skip；meta robots、canonical、sitemap 排除、桌面/移动截图已核对。
+- 当前状态：独立工作树 `/tmp/luma-circle-mvp-20260820`，基于 `origin/main@84a6c6c0`；本地候选尚未 push、合入 `main`、部署预览或生产。真实 `circle_discovery_view/click`、ready、完成率、重试率、时长中位数和 GSC query-to-page 尚未获取。
+- 下一步：先由用户确认是否发布该候选到 Preview；Preview 验证后仍保持 noindex，至少采样有效曝光、启动和完成行为，再决定是否继续优化或另行评估索引。Circle 不与 Checkers、Speed Draw、Games for Trains 并行开发。

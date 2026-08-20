@@ -15,6 +15,8 @@ const seoSource = await readFile(
   'utf8',
 );
 const sitemapSource = await readFile(new URL('../app/sitemap.ts', import.meta.url), 'utf8');
+const gamesPageSource = await readFile(new URL('../app/[locale]/games/page.tsx', import.meta.url), 'utf8');
+const discoverySource = await readFile(new URL('../components/game/circle-discovery-card.tsx', import.meta.url), 'utf8');
 
 describe('Luma Circle test page boundary', () => {
   it('keeps the page crawlable but out of the index while the experiment runs', () => {
@@ -36,5 +38,12 @@ describe('Luma Circle test page boundary', () => {
     expect(componentSource).toContain('duration_bucket');
     expect(componentSource).not.toContain('points: pointsRef.current');
     expect(seoSource).toContain("export const LUMA_CIRCLE_PATH = '/games/draw-a-perfect-circle';");
+  });
+
+  it('uses one controlled directory entry for discovery measurement', () => {
+    expect(gamesPageSource).toContain('CircleDiscoveryCard');
+    expect(discoverySource).toContain("trackInteraction('circle_discovery_view'");
+    expect(discoverySource).toContain("trackInteraction('circle_discovery_click'");
+    expect(discoverySource).toContain("source: 'games_directory'");
   });
 });

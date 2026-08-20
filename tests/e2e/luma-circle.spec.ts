@@ -1,6 +1,16 @@
 import { expect, test } from './fixtures';
 
 test.describe('Luma Circle test page', () => {
+  test('is linked from the games directory as one controlled experiment entry', async ({ page }) => {
+    await page.goto('/en/games', { waitUntil: 'networkidle' });
+    const link = page.locator('[data-circle-discovery-link="true"]');
+
+    await expect(page.locator('[data-circle-discovery="true"]')).toBeVisible();
+    await expect(link).toHaveAttribute('href', '/en/games/draw-a-perfect-circle');
+    await link.click();
+    await expect(page).toHaveURL(/\/en\/games\/draw-a-perfect-circle$/);
+  });
+
   test('renders a noindex page and completes a desktop drawing attempt', async ({ page }) => {
     const response = await page.goto('/en/games/draw-a-perfect-circle', { waitUntil: 'networkidle' });
 
