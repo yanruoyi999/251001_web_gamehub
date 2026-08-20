@@ -28,10 +28,10 @@ const savedGamesSource = await readFile(
 );
 
 describe('retention experiment wiring', () => {
-  it('places the homepage recommendation before the existing curated cards', () => {
+  it('places the homepage recommendation before the guide and game shelves', () => {
     expect(homeSource).toContain('<DailyRecommendation');
     expect(homeSource.indexOf('<DailyRecommendation')).toBeLessThan(
-      homeSource.indexOf('<section aria-labelledby="curated-starts"')
+      homeSource.indexOf('<ShelfSection')
     );
   });
 

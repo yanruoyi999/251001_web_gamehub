@@ -21,7 +21,10 @@ describe('curated shelf UI refresh contracts', () => {
       "aria-label={locale === 'zh' ? '快速分类' : 'Quick categories'}"
     );
     expect(homepage).toContain('auto-cols-[82%]');
-    expect(homepage).toContain('section aria-labelledby="curated-starts"');
+    expect(homepage).toContain('id="popular-guides"');
+    expect(homepage).toContain('id="testing-games"');
+    expect(homepage).not.toContain('id="curated-starts"');
+    expect(homepage).not.toContain('homepage-spend-bill-gates-money');
     expect(homepage).not.toContain('bg-gradient-to-br');
   });
 

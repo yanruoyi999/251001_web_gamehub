@@ -31,13 +31,89 @@ type HomeMessages = {
   };
 };
 
-interface CuratedEntry {
+interface ShelfEntry {
   href: string;
   image: string;
   eyebrow: string;
   title: string;
   description: string;
   action: string;
+}
+
+interface ShelfSectionProps {
+  id: string;
+  title: string;
+  description: string;
+  browseHref: string;
+  browseLabel: string;
+  entries: ShelfEntry[];
+  priorityFirstImages?: boolean;
+}
+
+function ShelfSection({
+  id,
+  title,
+  description,
+  browseHref,
+  browseLabel,
+  entries,
+  priorityFirstImages = false,
+}: ShelfSectionProps) {
+  return (
+    <section aria-labelledby={id} className="mt-10">
+      <div className="mb-5 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h2 id={id} className="text-xl font-semibold text-foreground sm:text-2xl">
+            {title}
+          </h2>
+          <p className="mt-1 text-sm text-muted-foreground">{description}</p>
+        </div>
+        <Link
+          href={browseHref}
+          className="mt-2 inline-flex items-center gap-1 text-sm font-medium text-emerald-700 hover:text-emerald-800 sm:mt-0 dark:text-emerald-400 dark:hover:text-emerald-300"
+        >
+          {browseLabel}
+          <ArrowRight className="h-4 w-4" aria-hidden="true" />
+        </Link>
+      </div>
+
+      <div className="grid grid-flow-col auto-cols-[82%] gap-3 overflow-x-auto pb-3 snap-x sm:auto-cols-[46%] lg:grid-flow-row lg:auto-cols-auto lg:grid-cols-3 lg:overflow-visible">
+        {entries.map((entry, index) => (
+          <Link
+            key={entry.href}
+            href={entry.href}
+            className="group flex h-full snap-start flex-col overflow-hidden rounded-xl border border-border bg-card text-left shadow-none transition hover:-translate-y-0.5 hover:border-emerald-700/50 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          >
+            <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+              <Image
+                src={entry.image}
+                alt={`${entry.title} gameplay`}
+                fill
+                sizes="(max-width: 640px) 82vw, (max-width: 1024px) 46vw, 33vw"
+                className="object-cover transition duration-300 group-hover:scale-[1.03]"
+                priority={priorityFirstImages && index < 2}
+              />
+            </div>
+            <div className="flex flex-1 flex-col p-4">
+              <p className="text-xs font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-400">
+                {entry.eyebrow}
+              </p>
+              <h3 className="mt-1 text-lg font-semibold text-foreground">
+                {entry.title}
+              </h3>
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+                {entry.description}
+              </p>
+              <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-emerald-700 dark:text-emerald-400">
+                {entry.action}
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </span>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
 }
 
 export const dynamic = 'force-static';
@@ -72,18 +148,70 @@ export default async function HomePage({
     : [];
   const faqItems = Array.isArray(faqSection.items) ? faqSection.items : [];
   const recommendationDateKey = getShanghaiDateKey();
-  const curatedEntries: CuratedEntry[] =
+  const popularGuideEntries: ShelfEntry[] =
     locale === 'zh'
       ? [
           {
             href: getLocalizedPath(locale, '/guides/google-snake-mods'),
             image: '/game-screenshots/google-snake.png',
-            eyebrow: '当前热门指南',
+            eyebrow: '热门攻略',
             title: 'Google Snake Mods',
             description:
               '先分清模组网页版、Loader 和标准 Snake，避免失效书签与未知下载。',
-            action: '查看安全选择',
+            action: '阅读攻略',
           },
+          {
+            href: getLocalizedPath(locale, '/guides/drive-mad-walkthrough'),
+            image: '/game-screenshots/drive-mad.png',
+            eyebrow: '热门攻略',
+            title: 'Drive Mad Walkthrough',
+            description:
+              '掌握油门、刹车和翻车后的重试节奏，处理桥梁、斜坡与高难关卡。',
+            action: '阅读攻略',
+          },
+          {
+            href: getLocalizedPath(locale, '/guides/quick-play-guide'),
+            image: '/game-screenshots/tunnel-rush.png',
+            eyebrow: '场景攻略',
+            title: '快速游玩指南',
+            description:
+              '按启动速度、规则清晰度和暂停成本，快速找到适合短暂休息的浏览器游戏。',
+            action: '查看指南',
+          },
+        ]
+      : [
+          {
+            href: getLocalizedPath(locale, '/guides/google-snake-mods'),
+            image: '/game-screenshots/google-snake.png',
+            eyebrow: 'Popular guide',
+            title: 'Google Snake Mods',
+            description:
+              'Compare the maintained mod page, loader route, and clearly labelled standard Snake fallback.',
+            action: 'Read the guide',
+          },
+          {
+            href: getLocalizedPath(locale, '/guides/drive-mad-walkthrough'),
+            image: '/game-screenshots/drive-mad.png',
+            eyebrow: 'Popular guide',
+            title: 'Drive Mad Walkthrough',
+            description:
+              'Use lighter throttle, earlier braking, and fast retries for bridges, slopes, and hard levels.',
+            action: 'Read the guide',
+          },
+          {
+            href: getLocalizedPath(locale, '/guides/quick-play-guide'),
+            image: '/game-screenshots/tunnel-rush.png',
+            eyebrow: 'Play context',
+            title: 'Quick Play Guide',
+            description:
+              'Choose browser games by launch speed, clear rules, and how easily you can pause a short session.',
+            action: 'Read the guide',
+          },
+        ];
+
+  const testingGameEntries: ShelfEntry[] =
+    locale === 'zh'
+      ? [
           {
             href: getLocalizedPath(locale, '/games/big-tower-tiny-square'),
             image: '/game-screenshots/big-tower-tiny-square.png',
@@ -112,15 +240,6 @@ export default async function HomePage({
           },
         ]
       : [
-          {
-            href: getLocalizedPath(locale, '/guides/google-snake-mods'),
-            image: '/game-screenshots/google-snake.png',
-            eyebrow: 'Popular guide',
-            title: 'Google Snake Mods',
-            description:
-              'Compare the maintained mod page, loader route, and clearly labelled standard Snake fallback.',
-            action: 'Choose a safe route',
-          },
           {
             href: getLocalizedPath(locale, '/games/big-tower-tiny-square'),
             image: '/game-screenshots/big-tower-tiny-square.png',
@@ -227,105 +346,32 @@ export default async function HomePage({
             surface="home"
           />
 
-          <section aria-labelledby="curated-starts" className="mt-10">
-            <div className="mb-5 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <h2
-                  id="curated-starts"
-                  className="text-xl font-semibold text-foreground sm:text-2xl"
-                >
-                  {locale === 'zh'
-                    ? '从这些游戏开始'
-                    : 'Start with these games'}
-                </h2>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {locale === 'zh'
-                    ? '基于当前搜索需求与可用玩法挑选，直接进入游戏或实用攻略。'
-                    : 'Current high-signal picks with a direct game or a practical guide behind every card.'}
-                </p>
-              </div>
-              <Link
-                href={getLocalizedPath(locale, '/games')}
-                className="mt-2 inline-flex items-center gap-1 text-sm font-medium text-emerald-700 hover:text-emerald-800 sm:mt-0 dark:text-emerald-400 dark:hover:text-emerald-300"
-              >
-                {locale === 'zh' ? '查看全部游戏' : 'Browse all games'}
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
-            </div>
+          <ShelfSection
+            id="popular-guides"
+            title={locale === 'zh' ? '热门攻略' : 'Popular guides'}
+            description={
+              locale === 'zh'
+                ? '先解决玩法、控制和卡关问题，再决定要不要开始下一局。'
+                : 'Solve controls, walkthrough, and stuck-point questions before starting the next round.'
+            }
+            browseHref={getLocalizedPath(locale, '/guides')}
+            browseLabel={locale === 'zh' ? '查看全部攻略' : 'Browse all guides'}
+            entries={popularGuideEntries}
+          />
 
-            <div className="grid grid-flow-col auto-cols-[82%] gap-3 overflow-x-auto pb-3 snap-x sm:auto-cols-[46%] lg:grid-flow-row lg:auto-cols-auto lg:grid-cols-4 lg:overflow-visible">
-              {curatedEntries.map((entry, index) => (
-                <Link
-                  key={entry.href}
-                  href={entry.href}
-                  className="group flex h-full snap-start flex-col overflow-hidden rounded-xl border border-border bg-card text-left shadow-none transition hover:-translate-y-0.5 hover:border-emerald-700/50 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                >
-                  <div className="relative aspect-[4/3] overflow-hidden bg-muted">
-                    <Image
-                      src={entry.image}
-                      alt={`${entry.title} gameplay`}
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      className="object-cover transition duration-300 group-hover:scale-[1.03]"
-                      priority={index < 2}
-                    />
-                  </div>
-                  <div className="flex flex-1 flex-col p-4">
-                    <p className="text-xs font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-400">
-                      {entry.eyebrow}
-                    </p>
-                    <h3 className="mt-1 text-lg font-semibold text-foreground">
-                      {entry.title}
-                    </h3>
-                    <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
-                      {entry.description}
-                    </p>
-                    <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-emerald-700 dark:text-emerald-400">
-                      {entry.action}
-                      <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </section>
-
-          <section
-            aria-labelledby="homepage-spend-bill-gates-money"
-            className="mt-7 border-y border-border py-5"
-          >
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div className="max-w-3xl">
-                <p className="text-xs font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-400">
-                  {locale === 'zh'
-                    ? 'Luma 原创互动游戏'
-                    : 'Luma original browser game'}
-                </p>
-                <h2
-                  id="homepage-spend-bill-gates-money"
-                  className="mt-1 text-lg font-semibold text-foreground"
-                >
-                  {locale === 'zh'
-                    ? '试试花光1000亿美元的在线消费模拟器'
-                    : 'Try an online $100 billion spending simulator'}
-                </h2>
-                <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                  {locale === 'zh'
-                    ? '无需下载或注册，直接在浏览器中购买、撤销并比较不同消费方案。'
-                    : 'Buy, undo, and compare spending plans in the browser with no download or account required.'}
-                </p>
-              </div>
-              <Link
-                href={getLocalizedPath(locale, '/games/spend-bill-gates-money')}
-                className="inline-flex min-h-10 flex-shrink-0 items-center justify-center gap-2 rounded-md bg-emerald-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-              >
-                {locale === 'zh'
-                  ? '开始花光1000亿美元'
-                  : 'Spend $100 billion online'}
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
-            </div>
-          </section>
+          <ShelfSection
+            id="testing-games"
+            title={locale === 'zh' ? '正在测试的新游戏' : 'Games in testing'}
+            description={
+              locale === 'zh'
+                ? '这些页面对应当前正在验证的搜索需求，先直接试玩，再根据真实反馈决定是否扩展。'
+                : 'These pages test current search demand with a playable route before deeper expansion.'
+            }
+            browseHref={getLocalizedPath(locale, '/games')}
+            browseLabel={locale === 'zh' ? '查看全部游戏' : 'Browse all games'}
+            entries={testingGameEntries}
+            priorityFirstImages
+          />
           <section className="mt-14 space-y-5 border-t border-border pt-10 text-left">
             <h2 className="text-2xl font-semibold text-foreground md:text-3xl">
               {seoSection.title ?? t('seoSection.title')}
