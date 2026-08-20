@@ -141,17 +141,12 @@ export function DailyRecommendation({
             className="group overflow-hidden rounded-md border border-[#dce4df] bg-white transition hover:-translate-y-0.5 hover:border-emerald-700/60 hover:shadow-[0_8px_20px_-16px_rgba(16,58,38,0.65)] dark:border-border dark:bg-card"
             data-recommendation-card={recommendation.slug}
           >
-            <Link
-              href={getLocalizedPath(locale, `/games/${recommendation.slug}`)}
-              onClick={() => handleClick(recommendation)}
-              className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-inset"
-            >
-              <div
-                className={
-                  isHome
-                    ? 'relative aspect-[16/10] overflow-hidden bg-[#102033]'
-                    : 'relative aspect-[16/10] overflow-hidden bg-[#102033]'
-                }
+            <div className="relative aspect-[4/3] overflow-hidden bg-[#102033]">
+              <Link
+                href={getLocalizedPath(locale, `/games/${recommendation.slug}`)}
+                onClick={() => handleClick(recommendation)}
+                aria-label={recommendation.title[locale]}
+                className="absolute inset-0 z-0 block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-inset"
               >
                 <Image
                   src={recommendation.image}
@@ -164,13 +159,30 @@ export function DailyRecommendation({
                   }
                   className={`${recommendation.slug === 'spend-bill-gates-money' ? 'object-contain' : 'object-cover'} transition duration-300 group-hover:scale-[1.03]`}
                 />
-                {isHome ? (
-                  <span className="absolute left-2 top-2 rounded-sm bg-[#102033]/90 px-1.5 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-white">
-                    {recommendation.eyebrow[locale]}
-                  </span>
-                ) : null}
-              </div>
-            </Link>
+              </Link>
+              {isHome ? (
+                <span className="pointer-events-none absolute left-2 top-2 z-10 rounded-sm bg-[#102033]/90 px-1.5 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-white">
+                  {recommendation.eyebrow[locale]}
+                </span>
+              ) : null}
+              {isHome ? (
+                <div className="absolute bottom-2 right-2 z-10 rounded-md bg-white/95 p-0.5 shadow-sm dark:bg-slate-950/95">
+                  <FavoriteToggleButton
+                    gameId={recommendation.gameId}
+                    initialFavorite={false}
+                    labels={{
+                      favorite: locale === 'zh' ? '收藏游戏' : 'Save game',
+                      unfavorite: locale === 'zh' ? '已收藏' : 'Saved',
+                    }}
+                    fallbackKey={`slug:${recommendation.slug}`}
+                    gameSlug={recommendation.slug}
+                    surface="daily_recommendation"
+                    storageMode="local"
+                    compact
+                  />
+                </div>
+              ) : null}
+            </div>
 
             <div className={isHome ? 'p-2 sm:p-2.5' : 'p-3 sm:p-4'}>
               {!isHome ? (
@@ -221,19 +233,6 @@ export function DailyRecommendation({
                   {recommendation.action[locale]}
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </Link>
-                <FavoriteToggleButton
-                  gameId={recommendation.gameId}
-                  initialFavorite={false}
-                  labels={{
-                    favorite: locale === 'zh' ? '收藏游戏' : 'Save game',
-                    unfavorite: locale === 'zh' ? '已收藏' : 'Saved',
-                  }}
-                  fallbackKey={`slug:${recommendation.slug}`}
-                  gameSlug={recommendation.slug}
-                  surface="daily_recommendation"
-                  storageMode="local"
-                  compact
-                />
               </div>
             </div>
           </article>

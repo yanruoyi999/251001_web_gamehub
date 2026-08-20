@@ -9,6 +9,7 @@ import { getShanghaiDateKey } from '@/lib/retention/daily-recommendation';
 import { serializeJsonLd } from '@/lib/utils/json-ld';
 import { DailyRecommendation } from '@/components/retention/daily-recommendation';
 import { SearchInput } from '@/components/game/search-input';
+import { PortalRail } from '@/components/layout/PortalRail';
 
 type FaqItem = { question: string; answer: string };
 
@@ -95,7 +96,7 @@ function ShelfSection({
             data-shelf-card
             className="group flex h-full flex-col overflow-hidden rounded-md border border-[#dce4df] bg-white text-left transition hover:-translate-y-0.5 hover:border-emerald-700/60 hover:shadow-[0_8px_20px_-16px_rgba(16,58,38,0.65)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 dark:border-border dark:bg-card"
           >
-            <div className="relative aspect-[16/10] overflow-hidden bg-muted">
+            <div className="relative aspect-[4/3] overflow-hidden bg-muted">
               <Image
                 src={entry.image}
                 alt={`${entry.title} gameplay`}
@@ -104,11 +105,11 @@ function ShelfSection({
                 className="object-cover transition duration-300 group-hover:scale-[1.03]"
                 priority={priorityFirstImages && index < 2}
               />
+              <span className="absolute left-2 top-2 rounded-sm bg-[#102033]/90 px-1.5 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-white">
+                {entry.eyebrow}
+              </span>
             </div>
             <div className="flex flex-1 flex-col p-2 sm:p-2.5">
-              <p className="truncate text-[9px] font-bold uppercase tracking-[0.12em] text-emerald-700 dark:text-emerald-400">
-                {entry.eyebrow}
-              </p>
               <h3 className="mt-0.5 line-clamp-2 text-sm font-black leading-5 text-foreground sm:text-base">
                 {entry.title}
               </h3>
@@ -327,7 +328,9 @@ export default async function HomePage({
   return (
     <>
       <div className="bg-[#f7f8f6] px-3 pb-20 pt-2 sm:px-4 md:px-6 md:pt-3 dark:bg-background">
-        <div className="mx-auto w-full max-w-7xl">
+        <div className="mx-auto grid w-full max-w-7xl md:grid-cols-[52px_minmax(0,1fr)] md:gap-4">
+          <PortalRail locale={locale} active="home" />
+          <div className="min-w-0">
           <header className="flex flex-col gap-1 border-b border-[#dce4df] pb-2 md:flex-row md:items-center md:justify-between dark:border-border">
             <div className="min-w-0 max-w-4xl">
               <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-emerald-800 dark:text-emerald-400">
@@ -515,6 +518,7 @@ export default async function HomePage({
               ))}
             </div>
           </section>
+          </div>
         </div>
       </div>
 

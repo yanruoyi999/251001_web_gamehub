@@ -53,7 +53,8 @@ describe('homepage curation', () => {
 
   it('uses an accessible green for homepage text and primary actions', () => {
     expect(homeSource).toContain('bg-emerald-700');
-    expect(homeSource).toContain('text-emerald-700 dark:text-emerald-400');
+    expect(homeSource).toContain('text-emerald-700');
+    expect(homeSource).toContain('dark:text-emerald-400');
     expect(homeSource).not.toContain('bg-primary px-7');
   });
 });

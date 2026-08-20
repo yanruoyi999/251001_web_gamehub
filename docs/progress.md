@@ -2181,3 +2181,12 @@
 - 验证：`pnpm lint`、`pnpm type-check`、定向 Vitest 17/17、Next.js 15.5.21 production build 145/145、`git diff --check` 通过；Chromium/Pixel 7/iPhone 13 首页与模板 smoke 9/9，Pixel 7 touch/iPhone 13 touch Snake 3D 2/2。全量 E2E 106/107；唯一失败为既有 Firefox Spend 数量/分享弹窗时序用例，单独 3 次复跑 3/6 通过，未触及本轮样式文件。
 - CI 修正：远端首轮单测失败仅来自 `tests/games-filter-mobile.test.ts` 对旧 `space-y-4` class 的脆弱字符串断言；已改为检查新的紧凑桌面/移动布局前缀，未改变运行时代码。修正后本地全量 Vitest 为 86 files / 272 tests 通过。
 - 发布边界：本轮尚未 commit、push、合入 `main` 或部署生产；下一步先推送分支生成新的受保护 Preview，供用户再次确认视觉。生产 GA4、GSC、Clarity 与访客变化仍须部署后观察，不能由 Preview 或自动化访问代替。
+
+### T-172 游戏门户视觉第五轮门户化修正（2026-08-21）
+
+- 反馈信号：用户对第四轮页面仍不满意，要求回看历史聊天截图并参考 Coolmath Games、Playhop、1001Games 与 itch.io 的真实门户结构。当前目标是让首屏更像“浏览游戏目录”，而不是营销式落地页。
+- 本地修改：新增 `components/layout/PortalRail.tsx`，在首页和游戏目录桌面端增加图标快捷侧栏；`app/[locale]/page.tsx` 与 `components/retention/daily-recommendation.tsx` 将货架图片恢复为 4:3、把分类标签移到图片上、把本地收藏按钮放到推荐图片右下角；`app/[locale]/games/page.tsx` 接入同一侧栏。移动端保持现有两列图片优先布局，不显示重复侧栏。
+- 交互边界：收藏按钮已从游戏详情链接内部移出，避免嵌套交互元素；收藏仍写入既有本地存储并进入 `/games/saved`，推荐仍只使用既有安全池和 `recommendation_view`、`recommendation_click`、`favorite_add/remove` 事件。未修改 URL、canonical、hreflang、robots/noindex、sitemap、FAQ/JSON-LD、GA4/Clarity ID、游戏来源、iframe 边界、数据库或搜索服务。
+- 验证：`pnpm lint`、`pnpm type-check`、`git diff --check`、`pnpm build`（Next.js 15.5.21，145/145 静态页）通过；本地 390px 首页与目录检查 `documentWidth=390`、`bodyWidth=390`、`main=1`，360/390/412 三个宽度均无横向溢出；Chromium/Pixel 7/iPhone 13 smoke 9/9，移动无 hydration 披露用例 15/15 通过。
+- 远端状态：GitHub CI `32396306999` 的静态检查、单测、构建通过，但 E2E 在 10 分钟超时，11 项失败集中在跨浏览器页面导航超时和 WebKit Pong 动画断言；同一批移动披露用例在本地当前生产构建 15/15 通过，不能把该远端运行记为全绿，也不能据此归因于本轮 CSS。Vercel 最新推送仍受平台 `Deployment rate limited — retry in 24 hours` 限制，尚无本轮最新公开 Preview。
+- 发布边界：本轮代码尚未合入 `main`、尚未部署生产、未修改 GA4/GSC/Clarity 或外部后台；待 Vercel 限流解除后生成最新 Preview，由用户复核视觉，再决定是否发布。生产流量恢复仍需真实 GA4、GSC、Clarity 数据，不能由本地或旧 Preview 替代。

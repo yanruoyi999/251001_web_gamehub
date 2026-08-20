@@ -26,6 +26,7 @@ import {
   getDatabaseConnectionMetadata,
   shouldSkipSupabaseDirectInServerless,
 } from '@/lib/db/connection-policy';
+import { PortalRail } from '@/components/layout/PortalRail';
 
 export const dynamic = 'force-dynamic';
 
@@ -402,7 +403,9 @@ export default async function GamesPage({
 
   return (
     <div className="min-h-full bg-[#f7f8f6] px-3 py-3 sm:px-4 md:px-6 md:py-5 dark:bg-background">
-      <div className="mx-auto w-full max-w-[1480px]">
+      <div className="mx-auto grid w-full max-w-[1480px] md:grid-cols-[52px_minmax(0,1fr)] md:gap-4">
+      <PortalRail locale={locale} active="games" />
+      <div className="min-w-0">
       <header className="mb-3 flex flex-col gap-1 border-b border-[#dce4df] pb-3 md:flex-row md:items-end md:justify-between dark:border-border">
         <div>
           <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-emerald-800 dark:text-emerald-400">
@@ -786,6 +789,7 @@ export default async function GamesPage({
           )}
         </nav>
       ) : null}
+      </div>
       </div>
     </div>
   );
