@@ -19,7 +19,7 @@ describe('mobile game filters', () => {
     expect(gamesPageSource.indexOf('name="search"')).toBeLessThan(
       gamesPageSource.indexOf('<CollapsibleGameFilters'),
     );
-    expect(gamesPageSource).toContain('className="space-y-4" method="get"');
+    expect(gamesPageSource).toContain('className="space-y-3 md:grid');
   });
 
   it('uses a native checkbox before hydration while keeping the desktop grid visible', () => {

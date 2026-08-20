@@ -162,7 +162,7 @@ test.describe('游戏浏览流程', () => {
     await expect(recommendations.locator('a[href="/en/games/ovo"]')).toHaveCount(0);
 
     const tunnelRushCard = recommendations
-      .locator('[data-slot="card"]')
+      .locator('article')
       .filter({ has: page.locator('a[href="/en/games/tunnel-rush"]') });
     const tunnelRushLink = tunnelRushCard.locator('a[href="/en/games/tunnel-rush"]');
     await expect(tunnelRushLink).toHaveCount(2);
@@ -170,7 +170,7 @@ test.describe('游戏浏览流程', () => {
     await tunnelRushLink.first().scrollIntoViewIfNeeded();
     await tunnelRushLink.first().click({ position: { x: 24, y: 24 } });
 
-    await expect(page).toHaveURL(/\/en\/games\/tunnel-rush$/);
+    await page.waitForURL(/\/en\/games\/tunnel-rush$/);
   });
 
   test('原生全屏被拒绝时无脚本错误并回退到视口全屏', async ({ page }) => {
