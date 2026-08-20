@@ -258,19 +258,19 @@ export default async function HomePage({
           {
             href: getLocalizedPath(locale, '/games/big-tower-tiny-square'),
             image: '/game-screenshots/big-tower-tiny-square.png',
-            eyebrow: '关键词测试',
+            eyebrow: '平台跳跃',
             title: 'Big Tower Tiny Square',
             description:
-              '围绕 big tall small 的搜索意图，直接体验带检查点的垂直平台挑战。',
+              '沿着检查点登上高塔，掌握跳跃时机，避开每一段危险平台。',
             action: '开始爬塔',
           },
           {
             href: getLocalizedPath(locale, '/games/g-switch-2'),
             image: '/game-screenshots/g-switch-2.png',
-            eyebrow: '关键词测试',
+            eyebrow: '重力跑酷',
             title: 'G-Switch 2',
             description:
-              '测试 gravity run 相关需求，练习反转重力、读障碍和保持跑线。',
+              '在地面和天花板之间翻转重力，读懂障碍，保持节奏一路前进。',
             action: '开始跑酷',
           },
           {
@@ -286,19 +286,19 @@ export default async function HomePage({
           {
             href: getLocalizedPath(locale, '/games/big-tower-tiny-square'),
             image: '/game-screenshots/big-tower-tiny-square.png',
-            eyebrow: 'Keyword test',
+            eyebrow: 'Platform challenge',
             title: 'Big Tower Tiny Square',
             description:
-              'Test the big tall small intent with a checkpoint-based vertical platform challenge.',
+              'Climb through checkpoint-filled tower rooms with careful jumps and well-timed retries.',
             action: 'Climb the tower',
           },
           {
             href: getLocalizedPath(locale, '/games/g-switch-2'),
             image: '/game-screenshots/g-switch-2.png',
-            eyebrow: 'Keyword test',
+            eyebrow: 'Gravity runner',
             title: 'G-Switch 2',
             description:
-              'Test the gravity run intent with gravity flips, obstacle reading, and clean lines.',
+              'Flip between floor and ceiling, read each obstacle, and keep the run moving.',
             action: 'Start the run',
           },
           {
