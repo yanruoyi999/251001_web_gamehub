@@ -5,7 +5,7 @@
 @layer base {
   /* 亮色：清新绿（白底 + 翠绿点睛） */
   :root {
-    --background: 0 0% 100%;
+    --background: 210 24% 98%;
     --foreground: 222 47% 11%;
     --card: 0 0% 100%;
     --card-foreground: 222 47% 11%;
@@ -34,7 +34,7 @@
     --input: 214 22% 91%;
     --ring: 160 94% 24%;
 
-    --radius: 0.75rem;
+    --radius: 0.625rem;
   }
 
   /* 暗色：街机霓虹（近黑底 + 电光绿） */
@@ -72,15 +72,31 @@
   * {
     @apply border-border;
   }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
-    @apply bg-background text-foreground;
+    @apply min-w-0 bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
   }
 }
 
 @layer components {
   #recommendations [data-slot='card'] {
     position: relative;
-    transition: transform 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+    transition:
+      transform 150ms ease,
+      border-color 150ms ease,
+      box-shadow 150ms ease;
   }
 
   #recommendations [data-slot='card'] a[href*='/games/']::after {
@@ -114,12 +130,6 @@
   }
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
-
 @media print {
   body:has([data-printable-guide='true']) {
     background: #fff !important;
@@ -135,17 +145,25 @@
     padding: 0 !important;
   }
 
-  body:has([data-printable-guide='true']) [data-printable-guide='true'] section {
+  body:has([data-printable-guide='true'])
+    [data-printable-guide='true']
+    section {
     break-inside: avoid;
   }
 
-  body:has([data-printable-guide='true']) [data-printable-guide='true'] .bg-card,
-  body:has([data-printable-guide='true']) [data-printable-guide='true'] .bg-secondary {
+  body:has([data-printable-guide='true'])
+    [data-printable-guide='true']
+    .bg-card,
+  body:has([data-printable-guide='true'])
+    [data-printable-guide='true']
+    .bg-secondary {
     background: #fff !important;
     box-shadow: none !important;
   }
 
-  body:has([data-printable-guide='true']) [data-printable-guide='true'] .text-muted-foreground {
+  body:has([data-printable-guide='true'])
+    [data-printable-guide='true']
+    .text-muted-foreground {
     color: #374151 !important;
   }
 }

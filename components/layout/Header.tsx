@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
-import { Menu, X } from 'lucide-react';
+import { Bookmark, Gamepad2, Menu, X } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 
 import {
@@ -87,9 +87,9 @@ export function Header() {
   return (
     <header
       data-print-hide
-      className="relative sticky top-0 z-50 border-b border-border bg-background/80 shadow-sm backdrop-blur-lg"
+      className="relative sticky top-0 z-50 border-b border-border/80 bg-background/90 backdrop-blur-lg"
     >
-      <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 md:px-6">
+      <div className="mx-auto flex h-14 w-full max-w-7xl items-center justify-between gap-4 px-4 md:h-16 md:px-6">
         {/* Logo */}
         <Link
           href={getLocalizedPath(currentLocaleSegment)}
@@ -101,8 +101,8 @@ export function Header() {
             })
           }
         >
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-lg shadow-primary/20">
-            <span className="text-lg font-bold">L</span>
+          <div className="flex size-8 items-center justify-center rounded-md bg-primary text-primary-foreground shadow-sm shadow-primary/20">
+            <Gamepad2 className="size-4" aria-hidden="true" />
           </div>
           <span className="truncate text-lg font-bold text-foreground sm:text-xl">
             Luma <span className="hidden text-primary sm:inline">Game Hub</span>
@@ -110,7 +110,12 @@ export function Header() {
         </Link>
 
         {/* Navigation */}
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav
+          aria-label={
+            currentLocaleSegment === 'zh' ? '主导航' : 'Primary navigation'
+          }
+          className="hidden items-center gap-6 lg:flex"
+        >
           {navItems.map(item => {
             const itemHref = getLocalizedPath(currentLocaleSegment, item.href);
             const isActive = publicPathname === itemHref;
@@ -119,11 +124,12 @@ export function Header() {
                 key={item.href}
                 href={itemHref}
                 className={clsx(
-                  'relative text-sm font-medium transition-colors',
+                  'relative min-h-11 inline-flex items-center text-sm font-medium transition-colors',
                   isActive
                     ? 'text-primary'
                     : 'text-muted-foreground hover:text-foreground'
                 )}
+                aria-current={isActive ? 'page' : undefined}
                 onClick={() =>
                   trackEvent('nav_link_click', {
                     target:
@@ -148,7 +154,26 @@ export function Header() {
           <LanguageSwitcher />
         </div>
 
-        <div className="flex items-center gap-2 md:hidden">
+        <div className="flex items-center gap-1.5 md:hidden">
+          <Link
+            href={getLocalizedPath(currentLocaleSegment, '/games/saved')}
+            className="inline-flex size-11 items-center justify-center rounded-md text-foreground transition hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            aria-label={
+              currentLocaleSegment === 'zh'
+                ? '打开我的收藏'
+                : 'Open saved games'
+            }
+            title={currentLocaleSegment === 'zh' ? '我的收藏' : 'Saved games'}
+            onClick={() =>
+              trackEvent('nav_link_click', {
+                target: 'saved',
+                locale: currentLocaleSegment,
+                source: 'mobile_quick_action',
+              })
+            }
+          >
+            <Bookmark className="size-5" aria-hidden="true" />
+          </Link>
           <ThemeToggle />
           <input
             ref={mobileMenuRef}
