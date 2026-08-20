@@ -2118,3 +2118,10 @@
 - Preview：部署 `dpl_3KZPFdoMWRNJRdE174g5iXZ83C2A` 已 `Ready`，Preview 受 Vercel 保护层约束。受保护读取确认首页、游戏目录、Google Snake Mods、Spend 与 Snake 3D 均为单一 `<main>`；canonical 保持正确，Snake 3D 为 `noindex, follow` 且不在 sitemap；robots、health、search 均正常，sitemap 200 URLs；浏览器网络未观察到 GA4/Clarity 请求。Preview Lighthouse 的 SEO 低分来自保护层 `x-robots-tag: noindex` 与 Vercel feedback 脚本 CSP 报错，不代表生产页面 SEO 结果。
 - 根因修复：Preview 首轮发现独立 Snake 3D 路由仍嵌套 `<main>`；已在 `app/[locale]/games/snake-3d/page.tsx` 改为普通容器，并在 `tests/ui-refresh-contract.test.ts` 增加回归断言，提交 `d674f94`。
 - 当前状态：分支已推送，Preview 已验证；尚未合入 `main`、部署生产或用 GA4 判断 UI 结果。由于此前 UI 变更与访客下降存在时间相关性，正式发布前需由用户确认 main/生产发布范围；生产后观察 GA4 page_view/session_start、GSC 展现/点击/排名、Clarity dead/rage/quick back、recommendation_view/click 和 favorite_add/remove。
+
+### T-172 UI 改版 CI 复核（2026-08-20）
+
+- 本地 CI 模式回归：生产构建完成后，`CI=1 pnpm test:e2e` 全量 97/97 通过；此前远端失败的移动披露/游戏目录 30 项和 Pong WebKit 3 项也分别通过。Spend Firefox 交互重复测试 6 次出现 1 次时序失败，页面实际组件与本次 UI 分支均未修改，不能归因于本次 UI 改版。
+- GitHub CI：PR #24 的静态检查、type-check、内链检查、单测、生产依赖审计、Next.js 生产构建和浏览器安装均通过；最近一次 E2E 仍有 1 项既有 Firefox Spend 异步交互测试失败（购买数量/分享弹窗时序），因此 CI 当前不是绿色，未绕过门禁、未修改测试以隐藏失败。
+- 发布边界：当前分支 `codex/ui-curated-shelf-20260820` 与 `origin/codex/ui-curated-shelf-20260820` 同为 `b07b606`，工作树干净；`origin/main` 仍为 `80abea6`。Preview 仍可用于人工复核，未合入 `main`、未部署生产、未修改 GA4/GSC/Clarity、数据库、搜索服务或索引配置。
+- 下一步：先由用户确认是否接受这个独立的 CI 时序风险并发布；若不接受，则单独治理 Spend Firefox 测试稳定性，不把该测试修复混入 UI 改版。
