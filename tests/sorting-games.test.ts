@@ -11,8 +11,56 @@ const sortingPageUrl = new URL('../app/[locale]/games/sorting-games/page.tsx', i
 const sortingPagePath = fileURLToPath(sortingPageUrl);
 const sortingModuleImportPath = '../lib/games/sorting-games';
 
+type ColorState = string[][];
+
 async function loadSortingModule() {
   return await import(sortingModuleImportPath);
+}
+
+function colorStateKey(state: ColorState) {
+  return JSON.stringify(state);
+}
+
+function isSolvedColorState(state: ColorState) {
+  const filled = state.filter((stack) => stack.length > 0);
+  return filled.length === 4 && filled.every(
+    (stack) => stack.length === 3 && stack.every((color) => color === stack[0]),
+  );
+}
+
+function hasColorStackSolution(initial: ColorState) {
+  const queue: ColorState[] = [initial.map((stack) => [...stack])];
+  const seen = new Set([colorStateKey(initial)]);
+
+  while (queue.length > 0) {
+    const state = queue.shift();
+    if (!state) break;
+    if (isSolvedColorState(state)) return true;
+
+    for (let sourceIndex = 0; sourceIndex < state.length; sourceIndex += 1) {
+      const source = state[sourceIndex];
+      if (source.length === 0) continue;
+      const movingColor = source[source.length - 1];
+
+      for (let destinationIndex = 0; destinationIndex < state.length; destinationIndex += 1) {
+        if (sourceIndex === destinationIndex) continue;
+        const destination = state[destinationIndex];
+        const destinationTop = destination[destination.length - 1];
+        if (destination.length >= 3) continue;
+        if (destination.length > 0 && destinationTop !== movingColor) continue;
+
+        const next = state.map((stack) => [...stack]);
+        next[sourceIndex].pop();
+        next[destinationIndex].push(movingColor);
+        const key = colorStateKey(next);
+        if (seen.has(key)) continue;
+        seen.add(key);
+        queue.push(next);
+      }
+    }
+  }
+
+  return false;
 }
 
 describe('original sorting games hub', () => {
@@ -65,6 +113,18 @@ describe('original sorting games hub', () => {
     const differentColors = buildColors('COLOR9');
     expect(firstColors).toEqual(repeatedColors);
     expect(firstColors).not.toEqual(differentColors);
+  });
+
+  it('only emits color-stack starting states that have a legal solution path', async () => {
+    const subject = await loadSortingModule() as Record<string, unknown>;
+    const buildColors = subject.buildColorStackPuzzle as (code: string) => string[][];
+    const representativeCodes = ['SORT88', 'COLOR9', 'LUMA22', 'ABC234', 'DATE88', 'GAMES9'];
+
+    for (const code of representativeCodes) {
+      const puzzle = buildColors(code);
+      expect(puzzle).toHaveLength(5);
+      expect(hasColorStackSolution(puzzle), `${code} should be solvable`).toBe(true);
+    }
   });
 
   it('keeps the player local-only, original, and shareable only by challenge code', () => {
