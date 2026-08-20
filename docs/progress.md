@@ -2206,3 +2206,9 @@
 - Lighthouse 移动复核：`/en` 96/96/100/100、`/en/games` 92/100/100/92、`/en/guides/google-snake-mods` 98/96/100/100、`/en/games/spend-bill-gates-money` 97/96/100/100（依次为 Performance/Accessibility/Best Practices/SEO）；均达到本轮目标，目录页 SEO 分数沿用现有站点审计边界，未改 URL 或索引策略。
 - 运行时采样：`docs/page-runtime-sampling.md` 已基于最新本地生产构建 `http://localhost:3232` 重写，11 个页面、最低 96、低于 80 为 0；自动化采样阻断 GA4、Clarity 和 Vercel telemetry。
 - 发布边界：只提交 `codex/ui-curated-shelf-20260820` 的门户 UI 与验证记录；不合入 `main`、不部署生产、不修改 GA4/GSC/Clarity、数据库、搜索服务或外部环境配置。Preview 仅用于用户视觉复核。
+### T-173 玩家导向货架文案与收藏图标说明修正（2026-08-21）
+
+- 首页原“Games in testing / 正在测试的新游戏”属于内部实验语义，改为玩家可理解的“More games to play / 更多值得玩的游戏”，描述改为下一款游戏推荐语义；保留内部 `testing-games` 锚点以避免无关结构变化。
+- 收藏说明与实际 Lucide `Bookmark` 控件对齐：每日推荐和已收藏空状态统一使用“书签 / bookmark”，不再误称为心形。
+- 未改路由、canonical、robots、noindex、sitemap、GA4/Clarity 事件名或收藏存储逻辑。
+- 验证：针对性 Vitest 17/17、type-check、lint、Next.js 15.5.21 生产构建（145 static pages）和 Chromium smoke 3/3 通过；英文/中文首页与收藏页均无旧 heart/心形文案，390px 移动端文档宽度无溢出。

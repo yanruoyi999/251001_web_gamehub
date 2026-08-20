@@ -122,8 +122,8 @@ export function DailyRecommendation({
         {surface === 'home' ? (
           <p className="hidden max-w-md text-xs text-muted-foreground sm:block sm:text-right">
             {locale === 'zh'
-              ? '点击心形即可收藏到当前浏览器，下次回来继续。'
-              : 'Use the heart to save a game in this browser and return to it later.'}
+              ? '点击书签即可收藏到当前浏览器，下次回来继续。'
+              : 'Use the bookmark to save a game in this browser and return to it later.'}
           </p>
         ) : null}
       </div>
