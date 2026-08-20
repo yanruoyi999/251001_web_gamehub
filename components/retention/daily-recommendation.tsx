@@ -85,7 +85,7 @@ export function DailyRecommendation({
   return (
     <section
       aria-labelledby={`daily-recommendation-${surface}-${placement}`}
-      className={surface === 'home' ? 'mt-10' : ''}
+      className={surface === 'home' ? 'mt-8 md:mt-10' : ''}
       data-recommendation-surface={surface}
     >
       <div className="mb-4 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
@@ -107,7 +107,7 @@ export function DailyRecommendation({
           </div>
           <h2
             id={`daily-recommendation-${surface}-${placement}`}
-            className="mt-1 text-2xl font-semibold text-foreground"
+            className="mt-1 text-xl font-semibold text-foreground sm:text-2xl"
           >
             {surface === 'home'
               ? locale === 'zh'
@@ -119,7 +119,7 @@ export function DailyRecommendation({
           </h2>
         </div>
         {surface === 'home' ? (
-          <p className="max-w-md text-sm text-muted-foreground sm:text-right">
+          <p className="hidden max-w-md text-sm text-muted-foreground sm:block sm:text-right">
             {locale === 'zh'
               ? '点击心形即可收藏到当前浏览器，下次回来继续。'
               : 'Use the heart to save a game in this browser and return to it later.'}
@@ -129,13 +129,15 @@ export function DailyRecommendation({
 
       <div
         className={
-          surface === 'home' ? 'grid gap-4 md:grid-cols-3' : 'grid gap-4'
+          surface === 'home'
+            ? 'grid grid-flow-col auto-cols-[82%] gap-3 overflow-x-auto pb-3 snap-x sm:auto-cols-[46%] lg:grid-flow-row lg:auto-cols-auto lg:grid-cols-3 lg:overflow-visible'
+            : 'grid gap-4'
         }
       >
         {recommendations.map(recommendation => (
           <article
             key={recommendation.id}
-            className="overflow-hidden rounded-lg border border-emerald-700/25 bg-card shadow-sm"
+            className="snap-start overflow-hidden rounded-xl border border-border bg-card shadow-none transition hover:border-primary/40 hover:shadow-sm"
             data-recommendation-card={recommendation.slug}
           >
             <Link
@@ -150,7 +152,7 @@ export function DailyRecommendation({
                   fill
                   sizes={
                     surface === 'home'
-                      ? '(max-width: 768px) 100vw, 33vw'
+                      ? '(max-width: 640px) 82vw, (max-width: 1024px) 46vw, 33vw'
                       : '33vw'
                   }
                   className="object-cover transition duration-300 group-hover:scale-[1.03]"
@@ -158,7 +160,7 @@ export function DailyRecommendation({
               </div>
             </Link>
 
-            <div className="p-4">
+            <div className="p-4 sm:p-5">
               <p className="text-xs font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-400">
                 {recommendation.eyebrow[locale]}
               </p>
