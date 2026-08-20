@@ -2125,3 +2125,14 @@
 - GitHub CI：PR #24 早期运行曾出现 Firefox 时序失败和设备首屏导航超时；随后最新运行 `32378098459` 已全绿，静态检查、type-check、内链检查、单测、生产依赖审计、Next.js 生产构建、97 项 E2E 和 runtime quality gate 全部通过。未绕过门禁、未修改测试以隐藏失败。
 - 发布边界：当前分支 `codex/ui-curated-shelf-20260820` 与 `origin/codex/ui-curated-shelf-20260820` 同为 `b07b606`，工作树干净；`origin/main` 仍为 `80abea6`。Preview 仍可用于人工复核，未合入 `main`、未部署生产、未修改 GA4/GSC/Clarity、数据库、搜索服务或索引配置。
 - 下一步：先由用户确认是否接受这个独立的 CI 时序风险并发布；若不接受，则单独治理 Spend Firefox 测试稳定性，不把该测试修复混入 UI 改版。
+
+### T-172 首页货架语义修正与本地复验（2026-08-20）
+
+- 复核发现：首版首页仍把攻略、测试游戏和 Spend 入口混在“Start with”语义下，未严格满足“今日推荐 / 热门攻略 / 正在测试的新游戏”三类独立货架。该问题属于信息架构和重复入口问题，不是 GA4 数据缺失。
+- 本地修正：`app/[locale]/page.tsx` 新增独立的 `热门攻略` 与 `正在测试的新游戏` 服务端货架；`今日推荐` 继续使用既有 `DailyRecommendation`、`recommendation_view/click`、无账号收藏和 `/games/saved` 入口；移除首页独立 Spend CTA，Spend 仍保留在每日推荐池及既有游戏目录/上下文内链中。未改 URL、canonical、hreflang、robots、noindex、sitemap、来源策略或事件名。
+- 回归覆盖：更新 `tests/home-curation.test.ts`、`tests/ui-refresh-contract.test.ts`、`tests/retention-contract.test.ts`、`tests/spend-bill-gates-money-seo-v1-2.test.ts`，新增 `tests/e2e/smoke.spec.ts` 的三货架、收藏入口和移动无横向溢出检查。
+- 验证结果：目标契约 21/21；完整 Vitest 86 files / 271 tests；type-check、lint（0 errors，98 个既有 warnings）、Next.js 15.5.21 production build（145 static pages）、internal-link audit 均通过。页面质量审计 257 rows / 92 indexable / 0 indexable under-80；移动运行时 11/11、最低 96、under-80 为 0。
+- 浏览器与性能：Chromium 与 Pixel 7 首页货架专项 4/4；本地移动 Lighthouse（临时 CLI 13.4.1，Node 20 出现其要求 Node >=22.19 的工具警告，不影响页面构建）首页 Performance/Accessibility/Best Practices/SEO 为 90/100/100/100，游戏目录 93/98/96/100，Google Snake Mods 指南 87/100/100/100，Spend 93/100/100/100；四页 CLS 为 0。完整本地 E2E 当前 96/97，唯一失败仍是 Spend Firefox 分享对话框在点击后 5 秒内未出现，连续复跑可复现；该组件不在本轮 UI 改动范围，且此前远端 CI `32378098459` 已全绿，作为独立残余风险记录，不用 UI 改版掩盖。
+- 发布边界：代码提交 `9157ab0` 已推送到 `codex/ui-curated-shelf-20260820`；PR #24 的 CI `32380843003` 已全绿（包含 97 项远端 E2E 和 runtime quality gate）。新 Preview `https://251001-web-gamehub-rdg6-git-codex-8f1c09-yanruoyi999s-projects.vercel.app/en` 已 Ready，但仍受 Vercel 保护层约束，未合入 `main` 或部署生产。GA4、GSC、Clarity、数据库、搜索服务、Vercel 设置和索引策略未修改；真实流量下降/恢复不能由本地测试或 Preview 自动化证明。
+- Preview 复核：受保护 Chrome 的桌面/390px 移动检查确认三个货架和收藏入口均可见，热门攻略与测试游戏各 3 张卡，`main` 数量为 1、document width 等于 viewport width；canonical 仍指向正式域，robots/sitemap 返回 200，sitemap 为 200 个 URL。Preview 网络仅见 Vercel feedback 脚本和站内资源，未见 GA4/Clarity 请求；Preview Lighthouse SEO 69 受保护层 noindex 影响，不作为生产 SEO 结论。
+- 下一步：发布前仍需用户确认是否合入 `main` 和生产部署。生产后观察 GA4 page_view/session_start、GSC 展现/点击/排名、Clarity dead/rage/quick back、`recommendation_view/click` 和 `favorite_add/remove`，不把自动化访问计作真实用户行为。
