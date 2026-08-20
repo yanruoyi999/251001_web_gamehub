@@ -23,6 +23,14 @@ describe('homepage curation', () => {
     expect(homeSource).toContain('<DailyRecommendation');
     expect(homeSource).toContain('id="popular-guides"');
     expect(homeSource).toContain('id="testing-games"');
+    expect(homeSource).toContain('More games to play');
+    expect(homeSource).toContain('更多值得玩的游戏');
+    expect(homeSource).toContain('Platform challenge');
+    expect(homeSource).toContain('Gravity runner');
+    expect(homeSource).not.toContain('Keyword test');
+    expect(homeSource).not.toContain('关键词测试');
+    expect(homeSource).not.toContain('Test the big tall small intent');
+    expect(homeSource).not.toContain('测试 gravity run 相关需求');
     expect(homeSource).toContain('/guides/google-snake-mods');
     expect(homeSource).toContain('/guides/drive-mad-walkthrough');
     expect(homeSource).toContain('/guides/quick-play-guide');
