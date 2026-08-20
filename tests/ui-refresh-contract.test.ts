@@ -20,7 +20,7 @@ describe('curated shelf UI refresh contracts', () => {
     expect(homepage).toContain(
       "aria-label={locale === 'zh' ? '快速分类' : 'Quick categories'}"
     );
-    expect(homepage).toContain('auto-cols-[38%]');
+    expect(homepage).toContain('grid-cols-2');
     expect(homepage).toContain('game-shelf-scroll');
     expect(homepage).toContain('id="popular-guides"');
     expect(homepage).toContain('id="testing-games"');

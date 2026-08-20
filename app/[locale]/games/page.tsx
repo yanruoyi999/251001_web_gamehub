@@ -401,9 +401,9 @@ export default async function GamesPage({
   );
 
   return (
-    <div className="min-h-full bg-[#f1f7e9] px-3 py-3 sm:px-4 md:px-6 md:py-5 dark:bg-background">
+    <div className="min-h-full bg-[#f7f8f6] px-3 py-3 sm:px-4 md:px-6 md:py-5 dark:bg-background">
       <div className="mx-auto w-full max-w-[1480px]">
-      <header className="mb-3 flex flex-col gap-1 border-b border-[#cbdccf] pb-3 md:flex-row md:items-end md:justify-between dark:border-border">
+      <header className="mb-3 flex flex-col gap-1 border-b border-[#dce4df] pb-3 md:flex-row md:items-end md:justify-between dark:border-border">
         <div>
           <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-emerald-800 dark:text-emerald-400">
             {locale === 'zh' ? '打开、选择、开始' : 'Open, choose, play'}
@@ -423,8 +423,8 @@ export default async function GamesPage({
         </Link>
       </header>
 
-      <section className="mb-3 border-b border-[#cbdccf] py-2.5 dark:border-border">
-        <CardHeader className="p-0 pb-3">
+      <section className="mb-2 border-b border-[#dce4df] py-2.5 dark:border-border">
+        <CardHeader className="flex items-baseline justify-between gap-3 p-0 pb-2">
           <CardTitle className="text-base font-black text-foreground sm:text-lg">
             {t('filters.title')}
           </CardTitle>
@@ -433,7 +433,7 @@ export default async function GamesPage({
           </CardDescription>
         </CardHeader>
         <CardContent className="p-0">
-          <form className="space-y-4" method="get">
+          <form className="space-y-3 md:grid md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:gap-3 md:space-y-0" method="get">
             <div>
               <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
                 <span>{t('filters.searchPlaceholder')}</span>
@@ -442,7 +442,7 @@ export default async function GamesPage({
                   name="search"
                   defaultValue={search}
                   placeholder={t('filters.searchPlaceholder')}
-                  className="min-h-11 w-full rounded-md border border-[#b9cebf] bg-white px-3 py-2 text-sm text-foreground shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring dark:border-input dark:bg-background"
+                  className="min-h-10 w-full rounded-md border border-[#cfdad4] bg-white px-3 py-2 text-sm text-foreground shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring dark:border-input dark:bg-background"
                 />
               </label>
             </div>
@@ -556,13 +556,13 @@ export default async function GamesPage({
               </div>
             </CollapsibleGameFilters>
 
-            <div className="flex gap-2">
+            <div className="flex gap-2 md:col-start-2">
               <Button type="submit" className="min-h-10 rounded-md bg-emerald-700 px-4 text-sm font-bold hover:bg-emerald-800">
                 {t('filters.submit')}
               </Button>
               <Link
                 href={gamesPath}
-                className="inline-flex min-h-10 items-center rounded-md border border-[#b9cebf] bg-white px-4 py-2 text-sm font-bold text-emerald-800 shadow-sm transition hover:bg-[#e4f0e7] dark:border-input dark:bg-background dark:text-foreground"
+                className="inline-flex min-h-10 items-center rounded-md border border-[#cfdad4] bg-white px-4 py-2 text-sm font-bold text-emerald-800 shadow-sm transition hover:bg-[#edf3ef] dark:border-input dark:bg-background dark:text-foreground"
               >
                 {t('filters.reset')}
               </Link>
@@ -573,7 +573,7 @@ export default async function GamesPage({
 
       <nav
         aria-label={locale === 'zh' ? '游戏分类快捷入口' : 'Game category shortcuts'}
-        className="mb-4 flex gap-2 overflow-x-auto pb-1"
+        className="mb-4 flex gap-2 overflow-x-auto border-b border-[#dce4df] pb-3"
       >
         {[
           ...categoryOptions.slice(0, 7).map(category => ({
@@ -592,7 +592,7 @@ export default async function GamesPage({
           <Link
             key={item.href}
             href={item.href}
-            className="inline-flex min-h-9 shrink-0 items-center rounded-md border border-[#c3d5c8] bg-white px-3 text-xs font-bold text-[#30483a] transition hover:border-emerald-700/50 hover:bg-[#e4f0e7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:border-border dark:bg-card dark:text-foreground"
+            className="inline-flex min-h-9 shrink-0 items-center rounded-full border border-[#d5e0da] bg-white px-3 text-xs font-bold text-[#30483a] transition hover:border-emerald-700/50 hover:bg-[#edf3ef] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:border-border dark:bg-card dark:text-foreground"
           >
             {item.label}
           </Link>
@@ -604,7 +604,7 @@ export default async function GamesPage({
           {t('empty')}
         </div>
       ) : (
-        <div className="grid grid-cols-2 gap-2.5 sm:gap-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7">
           {games.map(game => {
             const displayTitle =
               locale === 'en' ? (game.titleEn ?? game.title) : game.title;
@@ -622,7 +622,7 @@ export default async function GamesPage({
             return (
               <Card
                 key={game.id}
-                className="group flex h-full flex-col justify-between overflow-hidden rounded-[8px] border-[#cbdccf] bg-white transition hover:-translate-y-0.5 hover:border-emerald-700/60 hover:shadow-[0_8px_20px_-16px_rgba(16,58,38,0.65)] dark:border-border dark:bg-card"
+                className="group flex h-full flex-col justify-between overflow-hidden rounded-md border-[#dce4df] bg-white transition hover:-translate-y-0.5 hover:border-emerald-700/60 hover:shadow-[0_8px_20px_-16px_rgba(16,58,38,0.65)] dark:border-border dark:bg-card"
               >
                 <Link
                   href={getLocalizedPath(locale, `/games/${game.slug}`)}

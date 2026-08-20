@@ -2172,3 +2172,11 @@
 - 兼容边界：没有新增游戏、来源、iframe 或页面 URL；没有改 canonical、hreflang、robots/noindex、sitemap、FAQ/JSON-LD、GA4/Clarity ID 和事件名；收藏仍使用本地存储并链接到 `/games/saved`，Preview 不加载生产遥测。
 - 验证：`pnpm lint`、`pnpm type-check`、相关 Vitest 17/17、`git diff --check` 和 Next.js 15.5.21 production build 145/145 通过。390px 浏览器验证 `documentWidth=390`、`bodyWidth=390`、首页推荐卡 6 张、收藏入口存在、两个内容货架存在；此前远端重跑 CI `32391279699`（build `96500286516`）107/107 E2E、runtime gate 和构建均通过。
 - 发布边界：本次第三轮修改尚未 commit、push、合入 `main` 或部署生产；将先推送当前 UI 分支生成新 Preview，供用户对照历史参考站复核。生产流量下降/恢复仍需真实 GA4、GSC、Clarity 数据，不能由本地或 Preview 自动化代替。
+
+### T-172 游戏门户视觉第四轮门户化修正（2026-08-21）
+
+- 反馈信号：用户对第三轮 Preview 仍不满意，要求回看历史截图并更贴近 Coolmath Games、Playhop、1001Games 和 itch.io 的门户结构；第三轮仍有“内容落地页”观感，移动横向卡片会截断标题，浅绿色大画布和重复说明降低了首屏扫描效率。
+- 本地修改：`app/[locale]/page.tsx` 与 `components/retention/daily-recommendation.tsx` 改为中性门户底色、图像优先双列/多列货架、紧凑胶囊分类和 16:10 卡片；`app/[locale]/games/page.tsx` 将目录筛选压缩为搜索优先、分类快捷入口和密集游戏网格。收藏、`/games/saved`、推荐曝光/点击事件和现有内容入口保持不变。
+- 兼容边界：未修改 URL、canonical、hreflang、robots/noindex、sitemap、FAQ/JSON-LD、游戏来源、iframe 边界、GA4/Clarity ID、事件名、数据库、搜索服务或环境变量。
+- 验证：`pnpm lint`、`pnpm type-check`、定向 Vitest 17/17、Next.js 15.5.21 production build 145/145、`git diff --check` 通过；Chromium/Pixel 7/iPhone 13 首页与模板 smoke 9/9，Pixel 7 touch/iPhone 13 touch Snake 3D 2/2。全量 E2E 106/107；唯一失败为既有 Firefox Spend 数量/分享弹窗时序用例，单独 3 次复跑 3/6 通过，未触及本轮样式文件。
+- 发布边界：本轮尚未 commit、push、合入 `main` 或部署生产；下一步先推送分支生成新的受保护 Preview，供用户再次确认视觉。生产 GA4、GSC、Clarity 与访客变化仍须部署后观察，不能由 Preview 或自动化访问代替。

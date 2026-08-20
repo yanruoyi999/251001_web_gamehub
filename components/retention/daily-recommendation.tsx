@@ -86,10 +86,10 @@ export function DailyRecommendation({
   return (
     <section
       aria-labelledby={`daily-recommendation-${surface}-${placement}`}
-      className={surface === 'home' ? 'mt-5 md:mt-7' : ''}
+      className={surface === 'home' ? 'mt-5 md:mt-6' : ''}
       data-recommendation-surface={surface}
     >
-      <div className="mb-2 flex flex-col gap-1 border-b border-[#cbdccf] pb-2 sm:flex-row sm:items-end sm:justify-between dark:border-border">
+      <div className="mb-3 flex flex-col gap-1 border-b-2 border-[#18251f] pb-2 sm:flex-row sm:items-end sm:justify-between dark:border-border">
         <div>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
             <p className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.16em] text-emerald-800 dark:text-emerald-400">
@@ -108,7 +108,7 @@ export function DailyRecommendation({
           </div>
           <h2
             id={`daily-recommendation-${surface}-${placement}`}
-            className="mt-1 text-lg font-black tracking-tight text-[#163b2b] sm:text-xl dark:text-foreground"
+            className="mt-1 text-lg font-black tracking-tight text-[#18251f] sm:text-xl dark:text-foreground"
           >
             {surface === 'home'
               ? locale === 'zh'
@@ -131,14 +131,14 @@ export function DailyRecommendation({
       <div
         className={
           surface === 'home'
-            ? 'game-shelf-scroll grid grid-flow-col auto-cols-[38%] gap-2.5 overflow-x-auto pb-2 snap-x sm:auto-cols-[24%] lg:grid-flow-row lg:auto-cols-auto lg:grid-cols-6 lg:overflow-visible'
+            ? 'game-shelf-scroll grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6'
             : 'grid gap-4'
         }
       >
         {recommendations.map(recommendation => (
           <article
             key={recommendation.id}
-            className="group snap-start overflow-hidden rounded-[8px] border border-[#cbdccf] bg-white transition hover:-translate-y-0.5 hover:border-emerald-700/60 hover:shadow-[0_8px_20px_-16px_rgba(16,58,38,0.65)] dark:border-border dark:bg-card"
+            className="group overflow-hidden rounded-md border border-[#dce4df] bg-white transition hover:-translate-y-0.5 hover:border-emerald-700/60 hover:shadow-[0_8px_20px_-16px_rgba(16,58,38,0.65)] dark:border-border dark:bg-card"
             data-recommendation-card={recommendation.slug}
           >
             <Link
@@ -149,7 +149,7 @@ export function DailyRecommendation({
               <div
                 className={
                   isHome
-                    ? 'relative aspect-[4/3] overflow-hidden bg-[#102033]'
+                    ? 'relative aspect-[16/10] overflow-hidden bg-[#102033]'
                     : 'relative aspect-[16/10] overflow-hidden bg-[#102033]'
                 }
               >

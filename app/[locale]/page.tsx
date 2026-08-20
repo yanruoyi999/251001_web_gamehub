@@ -68,13 +68,13 @@ function ShelfSection({
         : 'lg:grid-cols-3';
 
   return (
-    <section aria-labelledby={id} className="mt-8" data-catalog-shelf>
-      <div className="mb-2 flex flex-col gap-1 border-b border-[#cbdccf] pb-2 sm:flex-row sm:items-end sm:justify-between dark:border-border">
+    <section aria-labelledby={id} className="mt-7" data-catalog-shelf>
+      <div className="mb-3 flex flex-col gap-1 border-b-2 border-[#18251f] pb-2 sm:flex-row sm:items-end sm:justify-between dark:border-border">
         <div>
-          <h2 id={id} className="text-lg font-black tracking-tight text-[#163b2b] sm:text-xl dark:text-foreground">
+          <h2 id={id} className="text-lg font-black tracking-tight text-[#18251f] sm:text-xl dark:text-foreground">
             {title}
           </h2>
-          <p className="mt-0.5 max-w-2xl text-[11px] leading-4 text-[#66806f] sm:text-xs dark:text-muted-foreground">
+          <p className="mt-0.5 hidden max-w-2xl text-[11px] leading-4 text-[#66746d] sm:block sm:text-xs dark:text-muted-foreground">
             {description}
           </p>
         </div>
@@ -87,15 +87,15 @@ function ShelfSection({
         </Link>
       </div>
 
-      <div className={`game-shelf-scroll grid grid-flow-col auto-cols-[38%] gap-2.5 overflow-x-auto pb-2 snap-x sm:auto-cols-[24%] lg:grid-flow-row lg:auto-cols-auto ${desktopGridClass} lg:overflow-visible`}>
+      <div className={`game-shelf-scroll grid grid-cols-2 gap-3 sm:grid-cols-3 ${desktopGridClass}`}>
         {entries.map((entry, index) => (
           <Link
             key={entry.href}
             href={entry.href}
             data-shelf-card
-            className="group flex h-full snap-start flex-col overflow-hidden rounded-[8px] border border-[#cbdccf] bg-white text-left transition hover:-translate-y-0.5 hover:border-emerald-700/60 hover:shadow-[0_8px_20px_-16px_rgba(16,58,38,0.65)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 dark:border-border dark:bg-card"
+            className="group flex h-full flex-col overflow-hidden rounded-md border border-[#dce4df] bg-white text-left transition hover:-translate-y-0.5 hover:border-emerald-700/60 hover:shadow-[0_8px_20px_-16px_rgba(16,58,38,0.65)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 dark:border-border dark:bg-card"
           >
-            <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+            <div className="relative aspect-[16/10] overflow-hidden bg-muted">
               <Image
                 src={entry.image}
                 alt={`${entry.title} gameplay`}
@@ -109,7 +109,7 @@ function ShelfSection({
               <p className="truncate text-[9px] font-bold uppercase tracking-[0.12em] text-emerald-700 dark:text-emerald-400">
                 {entry.eyebrow}
               </p>
-              <h3 className="mt-0.5 line-clamp-1 text-sm font-black leading-5 text-foreground sm:text-base">
+              <h3 className="mt-0.5 line-clamp-2 text-sm font-black leading-5 text-foreground sm:text-base">
                 {entry.title}
               </h3>
               <p className="sr-only">
@@ -326,12 +326,12 @@ export default async function HomePage({
 
   return (
     <>
-      <div className="bg-[#f1f7e9] px-3 pb-20 pt-2 sm:px-4 md:px-6 md:pt-3 dark:bg-background">
+      <div className="bg-[#f7f8f6] px-3 pb-20 pt-2 sm:px-4 md:px-6 md:pt-3 dark:bg-background">
         <div className="mx-auto w-full max-w-7xl">
-          <header className="flex flex-col gap-1 border-b border-[#cbdccf] pb-2 md:flex-row md:items-center md:justify-between dark:border-border">
+          <header className="flex flex-col gap-1 border-b border-[#dce4df] pb-2 md:flex-row md:items-center md:justify-between dark:border-border">
             <div className="min-w-0 max-w-4xl">
               <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-emerald-800 dark:text-emerald-400">
-                {locale === 'zh' ? '精选浏览器游戏' : 'Curated browser games'}
+                {locale === 'zh' ? '免费在线小游戏' : 'Free browser games'}
               </p>
               <h1 className="mt-0.5 max-w-4xl text-lg font-black tracking-tight text-[#152238] sm:text-xl dark:text-foreground">
                 {heroTitle}
@@ -364,7 +364,7 @@ export default async function HomePage({
 
           <nav
             aria-label={locale === 'zh' ? '快速分类' : 'Quick categories'}
-            className="mt-1 flex gap-4 overflow-x-auto border-b border-[#cbdccf] pb-2 dark:border-border"
+            className="mt-2 flex gap-1.5 overflow-x-auto border-b border-[#dce4df] pb-2 dark:border-border"
           >
             {[
               { href: '/games/category/action', zh: '动作', en: 'Action' },
@@ -380,7 +380,7 @@ export default async function HomePage({
               <Link
                 key={item.href}
                 href={getLocalizedPath(locale, item.href)}
-                className="inline-flex min-h-8 shrink-0 items-center border-b-2 border-transparent px-0.5 text-[11px] font-bold text-[#30483a] transition hover:border-emerald-700/60 hover:text-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:text-foreground"
+                className="inline-flex min-h-8 shrink-0 items-center rounded-full border border-[#d5e0da] bg-white px-3 text-[11px] font-bold text-[#30483a] transition hover:border-emerald-700/60 hover:text-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:border-border dark:bg-card dark:text-foreground"
               >
                 {locale === 'zh' ? item.zh : item.en}
               </Link>
