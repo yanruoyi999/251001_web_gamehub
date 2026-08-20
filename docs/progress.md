@@ -2179,4 +2179,5 @@
 - 本地修改：`app/[locale]/page.tsx` 与 `components/retention/daily-recommendation.tsx` 改为中性门户底色、图像优先双列/多列货架、紧凑胶囊分类和 16:10 卡片；`app/[locale]/games/page.tsx` 将目录筛选压缩为搜索优先、分类快捷入口和密集游戏网格。收藏、`/games/saved`、推荐曝光/点击事件和现有内容入口保持不变。
 - 兼容边界：未修改 URL、canonical、hreflang、robots/noindex、sitemap、FAQ/JSON-LD、游戏来源、iframe 边界、GA4/Clarity ID、事件名、数据库、搜索服务或环境变量。
 - 验证：`pnpm lint`、`pnpm type-check`、定向 Vitest 17/17、Next.js 15.5.21 production build 145/145、`git diff --check` 通过；Chromium/Pixel 7/iPhone 13 首页与模板 smoke 9/9，Pixel 7 touch/iPhone 13 touch Snake 3D 2/2。全量 E2E 106/107；唯一失败为既有 Firefox Spend 数量/分享弹窗时序用例，单独 3 次复跑 3/6 通过，未触及本轮样式文件。
+- CI 修正：远端首轮单测失败仅来自 `tests/games-filter-mobile.test.ts` 对旧 `space-y-4` class 的脆弱字符串断言；已改为检查新的紧凑桌面/移动布局前缀，未改变运行时代码。修正后本地全量 Vitest 为 86 files / 272 tests 通过。
 - 发布边界：本轮尚未 commit、push、合入 `main` 或部署生产；下一步先推送分支生成新的受保护 Preview，供用户再次确认视觉。生产 GA4、GSC、Clarity 与访客变化仍须部署后观察，不能由 Preview 或自动化访问代替。
