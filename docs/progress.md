@@ -2122,6 +2122,6 @@
 ### T-172 UI 改版 CI 复核（2026-08-20）
 
 - 本地 CI 模式回归：生产构建完成后，`CI=1 pnpm exec playwright test --workers=2` 全量 97/97 通过；此前远端失败的移动披露/游戏目录 30 项和 Pong WebKit 3 项也分别通过。Spend Firefox 交互重复测试 6 次出现 1 次时序失败，页面实际组件与本次 UI 分支均未修改，不能归因于本次 UI 改版。
-- GitHub CI：PR #24 最新运行的静态检查、type-check、内链检查、单测、生产依赖审计、Next.js 生产构建和浏览器安装均通过；E2E 为 86/97，11 项失败全部是 WebKit、Pixel 7、iPhone 13 对 `/`、`/en` 或 `/zh` 的 60 秒首次导航超时，没有 UI 断言失败。`origin/main` 当前 SHA `80abea6` 的最新 CI 为绿色；未绕过门禁、未修改测试以隐藏失败。
+- GitHub CI：PR #24 早期运行曾出现 Firefox 时序失败和设备首屏导航超时；随后最新运行 `32378098459` 已全绿，静态检查、type-check、内链检查、单测、生产依赖审计、Next.js 生产构建、97 项 E2E 和 runtime quality gate 全部通过。未绕过门禁、未修改测试以隐藏失败。
 - 发布边界：当前分支 `codex/ui-curated-shelf-20260820` 与 `origin/codex/ui-curated-shelf-20260820` 同为 `b07b606`，工作树干净；`origin/main` 仍为 `80abea6`。Preview 仍可用于人工复核，未合入 `main`、未部署生产、未修改 GA4/GSC/Clarity、数据库、搜索服务或索引配置。
 - 下一步：先由用户确认是否接受这个独立的 CI 时序风险并发布；若不接受，则单独治理 Spend Firefox 测试稳定性，不把该测试修复混入 UI 改版。
