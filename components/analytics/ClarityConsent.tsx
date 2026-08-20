@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useEffect } from 'react';
 
@@ -60,7 +60,8 @@ function loadClarity(projectId: string) {
 
 export function ClarityConsent({ locale = 'en' }: ClarityConsentProps = {}) {
   useEffect(() => {
-    if (!clarityProjectId || !isFormalProductionHost(window.location.hostname)) return;
+    if (!clarityProjectId || !isFormalProductionHost(window.location.hostname))
+      return;
 
     loadClarity(clarityProjectId);
   }, []);

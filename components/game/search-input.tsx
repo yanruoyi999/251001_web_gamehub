@@ -10,6 +10,7 @@ import { trackEvent } from '@/lib/gtag';
 interface SearchInputProps {
   locale: string;
   className?: string;
+  variant?: 'default' | 'header';
 }
 
 interface SuggestionItem {
@@ -36,7 +37,11 @@ function toOptionalString(value: unknown): string | null {
   return typeof value === 'string' && value.trim() ? value : null;
 }
 
-export function SearchInput({ locale, className }: SearchInputProps) {
+export function SearchInput({
+  locale,
+  className,
+  variant = 'default',
+}: SearchInputProps) {
   const router = useRouter();
   const t = useTranslations('nav');
 
@@ -186,7 +191,7 @@ export function SearchInput({ locale, className }: SearchInputProps) {
   }, [open, loading, suggestions, locale, t, handleSelect]);
 
   return (
-    <div className={clsx('relative', className)}>
+    <div className={clsx('relative', className)} data-site-search={variant}>
       <form onSubmit={handleSubmit}>
         <input
           type="search"
@@ -207,7 +212,12 @@ export function SearchInput({ locale, className }: SearchInputProps) {
             }
           }}
           placeholder={t('searchPlaceholder')}
-          className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground shadow-sm placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring"
+          className={clsx(
+            'w-full rounded-md border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2',
+            variant === 'header'
+              ? 'border-white/15 bg-white/10 text-white placeholder:text-white/55 focus:border-emerald-300 focus:ring-emerald-300/30'
+              : 'border-input bg-background text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-ring',
+          )}
         />
       </form>
       {open ? (

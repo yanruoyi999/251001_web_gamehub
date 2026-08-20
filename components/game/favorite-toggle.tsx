@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useTransition } from 'react';
 import clsx from 'clsx';
+import { Bookmark } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { trackInteraction } from '@/lib/analytics/events';
@@ -25,6 +26,7 @@ interface FavoriteToggleButtonProps {
     | 'game_list'
     | 'saved_games';
   storageMode?: 'local' | 'remote-with-local-fallback';
+  compact?: boolean;
 }
 
 export function FavoriteToggleButton({
@@ -35,6 +37,7 @@ export function FavoriteToggleButton({
   gameSlug,
   surface = 'game_detail',
   storageMode = 'remote-with-local-fallback',
+  compact = false,
 }: FavoriteToggleButtonProps) {
   const [isFavorite, setIsFavorite] = useState(initialFavorite);
   const [isPending, startTransition] = useTransition();
@@ -127,15 +130,25 @@ export function FavoriteToggleButton({
       onClick={handleToggle}
       data-favorite-toggle
       data-favorite-surface={surface}
+      title={
+        compact ? (isFavorite ? labels.unfavorite : labels.favorite) : undefined
+      }
       className={clsx(
-        'min-h-10 min-w-[116px] justify-center gap-2 rounded-md border px-3 py-2 text-sm font-semibold',
+        compact
+          ? 'size-10 min-h-10 min-w-10 justify-center rounded-md border p-0 text-sm font-semibold'
+          : 'min-h-10 min-w-[116px] justify-center gap-2 rounded-md border px-3 py-2 text-sm font-semibold',
         isFavorite
           ? 'border-rose-300 bg-rose-100 text-rose-800 hover:bg-rose-100 dark:border-rose-700 dark:bg-rose-950/50 dark:text-rose-200'
           : 'border-emerald-700/35 bg-background text-emerald-800 hover:bg-emerald-50 dark:border-emerald-400/40 dark:text-emerald-300 dark:hover:bg-emerald-950/30'
       )}
     >
-      <span aria-hidden>{isFavorite ? '♥' : '♡'}</span>
-      <span>{isFavorite ? labels.unfavorite : labels.favorite}</span>
+      <Bookmark
+        className={clsx('size-4', isFavorite && 'fill-current')}
+        aria-hidden="true"
+      />
+      <span className={compact ? 'sr-only' : undefined}>
+        {isFavorite ? labels.unfavorite : labels.favorite}
+      </span>
     </Button>
   );
 }

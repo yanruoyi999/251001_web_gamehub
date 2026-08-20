@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -17,7 +17,8 @@ const formId =
   '';
 
 function buildTypeformHref(locale: string, pathname: string | null) {
-  const base = formUrl || (formId ? `https://form.typeform.com/to/${formId}` : '');
+  const base =
+    formUrl || (formId ? `https://form.typeform.com/to/${formId}` : '');
   if (!base) return '';
 
   const url = new URL(base);
@@ -33,7 +34,9 @@ interface TypeformFeedbackButtonProps {
   locale: string;
 }
 
-export function TypeformFeedbackButton({ locale }: TypeformFeedbackButtonProps) {
+export function TypeformFeedbackButton({
+  locale,
+}: TypeformFeedbackButtonProps) {
   const pathname = usePathname();
   const isZh = locale === 'zh';
   const label = isZh ? '反馈问题' : 'Feedback';
@@ -53,7 +56,7 @@ export function TypeformFeedbackButton({ locale }: TypeformFeedbackButtonProps) 
         }
         aria-label={label}
         title={label}
-        className="z-40 mx-auto mb-[calc(1rem+env(safe-area-inset-bottom))] mt-4 inline-flex size-11 items-center justify-center rounded-full border border-border bg-background p-0 text-sm font-semibold text-foreground shadow-lg transition hover:bg-accent sm:fixed sm:bottom-5 sm:right-5 sm:m-0 sm:h-auto sm:w-auto sm:px-4 sm:py-2"
+        className="z-40 mx-auto mb-[calc(1rem+env(safe-area-inset-bottom))] mt-4 inline-flex size-11 items-center justify-center rounded-full border border-border bg-background p-0 text-sm font-semibold text-foreground shadow-lg transition hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:fixed sm:bottom-5 sm:right-5 sm:m-0 sm:h-auto sm:w-auto sm:px-4 sm:py-2"
       >
         <MessageCircle className="size-5 sm:hidden" aria-hidden="true" />
         <span className="hidden sm:inline">{label}</span>
@@ -76,7 +79,7 @@ export function TypeformFeedbackButton({ locale }: TypeformFeedbackButtonProps) 
       }
       aria-label={label}
       title={label}
-      className="z-40 mx-auto mb-[calc(1rem+env(safe-area-inset-bottom))] mt-4 inline-flex size-11 items-center justify-center rounded-full border border-primary/20 bg-primary p-0 text-sm font-semibold text-primary-foreground shadow-lg transition hover:bg-primary/90 sm:fixed sm:bottom-5 sm:right-5 sm:m-0 sm:h-auto sm:w-auto sm:px-4 sm:py-2"
+      className="z-40 mx-auto mb-[calc(1rem+env(safe-area-inset-bottom))] mt-4 inline-flex size-11 items-center justify-center rounded-full border border-primary/20 bg-primary p-0 text-sm font-semibold text-primary-foreground shadow-lg transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:fixed sm:bottom-5 sm:right-5 sm:m-0 sm:h-auto sm:w-auto sm:px-4 sm:py-2"
     >
       <MessageCircle className="size-5 sm:hidden" aria-hidden="true" />
       <span className="hidden sm:inline">{label}</span>
