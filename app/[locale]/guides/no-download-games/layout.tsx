@@ -5,6 +5,7 @@ import { getLocalizedPath, type Locale } from '@/i18n/config';
 
 const TWO_PLAYER_PATH = '/games/2-player-unblocked';
 const COUPLES_GAMES_PATH = '/games/online-games-for-couples';
+const SORTING_GAMES_PATH = '/games/sorting-games';
 
 interface NoDownloadGuideLayoutProps {
   children: ReactNode;
@@ -19,8 +20,8 @@ export default async function NoDownloadGuideLayout({ children, params }: NoDown
   return (
     <>
       {children}
-      <aside className="mx-auto w-full max-w-5xl px-6 pb-12" aria-label={isZh ? '无需下载的多人浏览器游戏' : 'No-download games to play together'}>
-        <div className="grid gap-4 md:grid-cols-2">
+      <aside className="mx-auto w-full max-w-5xl px-6 pb-12" aria-label={isZh ? '无需下载的浏览器游戏' : 'No-download browser games'}>
+        <div className="grid gap-4 md:grid-cols-3">
           <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
             <h2 className="text-lg font-semibold text-foreground">
               {isZh ? '无需下载，也可以两个人一起玩' : 'No download, two players'}
@@ -55,6 +56,26 @@ export default async function NoDownloadGuideLayout({ children, params }: NoDown
               className="mt-4 inline-flex min-h-11 items-center rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
             >
               {isZh ? '玩情侣在线互动' : 'Play online couple games'}
+            </Link>
+          </section>
+
+          <section className="rounded-2xl border border-emerald-500/25 bg-emerald-500/5 p-5 shadow-sm">
+            <p className="text-xs font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-300">
+              {isZh ? 'Luma 原创分类游戏' : 'Luma Original Sorting'}
+            </p>
+            <h2 className="mt-2 text-lg font-semibold text-foreground">
+              {isZh ? '颜色、数字与形状分类小游戏' : 'Sort colors, numbers, and shapes'}
+            </h2>
+            <p className="mt-2 text-sm leading-6 text-muted-foreground">
+              {isZh
+                ? '三款完全由 Luma 实现的分类小游戏直接在浏览器运行，不使用第三方游戏 iframe、素材或复制关卡。'
+                : 'Three sorting games built by Luma run directly in the browser with no third-party game iframe, copied level pack, or external game asset.'}
+            </p>
+            <Link
+              href={getLocalizedPath(locale, SORTING_GAMES_PATH)}
+              className="mt-4 inline-flex min-h-11 items-center rounded-xl border border-emerald-500/30 bg-background px-4 py-2 text-sm font-semibold text-emerald-700 hover:border-emerald-500 dark:text-emerald-300"
+            >
+              {isZh ? '玩原创分类小游戏' : 'Play original Sorting Games'}
             </Link>
           </section>
         </div>
