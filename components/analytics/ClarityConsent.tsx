@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 import { isFormalProductionHost } from '@/lib/analytics/runtime';
 
@@ -26,6 +27,11 @@ const clarityProjectId =
   process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID ||
   '';
 
+function isClarityExcludedPath(pathname: string | null) {
+  if (!pathname) return false;
+  return pathname.replace(/\/+$/, '').endsWith('/games/online-games-for-couples');
+}
+
 function setClarityConsent(analyticsStorage: AnalyticsConsent) {
   const clarity = window.clarity;
 
@@ -34,6 +40,14 @@ function setClarityConsent(analyticsStorage: AnalyticsConsent) {
       ad_Storage: 'denied',
       analytics_Storage: analyticsStorage,
     });
+  }
+}
+
+function stopClarityTracking() {
+  const clarity = window.clarity;
+
+  if (typeof clarity === 'function') {
+    clarity('consent', false);
   }
 }
 
@@ -61,12 +75,20 @@ function loadClarity(projectId: string) {
 }
 
 export function ClarityConsent({ locale = 'en' }: ClarityConsentProps = {}) {
+  const pathname = usePathname();
   const [consent, setConsent] = useState<AnalyticsConsent | 'prompt' | 'unknown'>('unknown');
 
   useEffect(() => {
     if (!clarityProjectId || !isFormalProductionHost(window.location.hostname)) return;
 
     const saved = window.localStorage.getItem(storageKey);
+
+    if (isClarityExcludedPath(pathname)) {
+      stopClarityTracking();
+      setConsent(saved === 'granted' || saved === 'denied' ? saved : 'unknown');
+      return;
+    }
+
     if (saved === 'granted') {
       setConsent('granted');
       loadClarity(clarityProjectId);
@@ -74,9 +96,9 @@ export function ClarityConsent({ locale = 'en' }: ClarityConsentProps = {}) {
     }
 
     setConsent(saved === 'denied' ? 'denied' : 'prompt');
-  }, []);
+  }, [pathname]);
 
-  if (consent !== 'prompt') return null;
+  if (consent !== 'prompt' || isClarityExcludedPath(pathname)) return null;
 
   const isChinese = locale === 'zh';
   const copy = isChinese
@@ -84,6 +106,7 @@ export function ClarityConsent({ locale = 'en' }: ClarityConsentProps = {}) {
     : 'We use anonymous analytics to improve the site and game experience.';
 
   const grant = () => {
+    if (isClarityExcludedPath(pathname)) return;
     window.localStorage.setItem(storageKey, 'granted');
     setConsent('granted');
     loadClarity(clarityProjectId);

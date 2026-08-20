@@ -489,7 +489,18 @@ export default async function TwoPlayerUnblockedPage({ params }: TwoPlayerUnbloc
 
       <section className="mt-10 border-t border-border pt-8">
         <h2 className="text-xl font-bold text-foreground">{content.relatedTitle}</h2>
+        <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">
+          {locale === 'zh'
+            ? '这里的游戏专注同一台设备和实体键盘；如果更想玩情侣默契题、轮流作答或异地共享同一题组，可以进入情侣在线小游戏合集。'
+            : 'This collection is for same-device keyboard play. For couple prompts, turn-taking, or a shared long-distance challenge deck, use the couples collection instead.'}
+        </p>
         <div className="mt-4 flex flex-wrap gap-3">
+          <Link
+            href={getLocalizedPath(locale, '/games/online-games-for-couples')}
+            className="inline-flex min-h-11 items-center rounded-xl border border-primary/30 bg-primary/5 px-4 py-2 text-sm font-semibold text-primary hover:bg-primary/10"
+          >
+            {locale === 'zh' ? '情侣在线小游戏' : 'Online Games for Couples'}
+          </Link>
           <Link
             href={getLocalizedPath(locale, '/games')}
             className="inline-flex min-h-11 items-center rounded-xl border border-border bg-card px-4 py-2 text-sm font-medium text-foreground hover:border-primary"
