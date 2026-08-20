@@ -35,11 +35,11 @@ export const revalidate = 86400;
 
 export function generateStaticParams() {
   const pages = getSeoLandingPages();
-  return locales.flatMap((locale) =>
-    pages.map((page) => ({
+  return locales.flatMap(locale =>
+    pages.map(page => ({
       locale,
       slug: page.slug,
-    })),
+    }))
   );
 }
 
@@ -75,10 +75,10 @@ export async function generateMetadata({
     alternates: {
       canonical: basePath,
       languages: Object.fromEntries(
-        locales.map((loc) => [
+        locales.map(loc => [
           loc === 'zh' ? 'zh-CN' : 'en-US',
           getLocalizedPath(loc, `/guides/${page.slug}`),
-        ]),
+        ])
       ),
     },
     openGraph: {
@@ -111,13 +111,13 @@ interface GuidePageProps {
   params: Promise<{ locale: string; slug: string }>;
 }
 
-const gameIndex = new Map(mockGames.map((game) => [game.slug, game]));
+const gameIndex = new Map(mockGames.map(game => [game.slug, game]));
 
 function getRelatedPages(current: SeoLandingPage, locale: Locale) {
   return current.relatedSlugs
-    .map((slug) => getSeoLandingPage(slug))
+    .map(slug => getSeoLandingPage(slug))
     .filter((page): page is SeoLandingPage => Boolean(page))
-    .map((page) => ({
+    .map(page => ({
       slug: page.slug,
       heading: page.locales[locale]?.heading ?? page.locales.zh.heading,
     }));
@@ -134,7 +134,9 @@ export default async function GuidePage({ params }: GuidePageProps) {
 
   const siteBaseUrl = getSiteBaseUrl();
   const content = page.locales[locale] ?? page.locales.zh;
-  const pageUrl = buildAbsoluteUrl(getLocalizedPath(locale, `/guides/${page.slug}`));
+  const pageUrl = buildAbsoluteUrl(
+    getLocalizedPath(locale, `/guides/${page.slug}`)
+  );
   const jsonLdArticle = {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -161,12 +163,12 @@ export default async function GuidePage({ params }: GuidePageProps) {
     keywords: page.keywords.join(', '),
     citation: [content.quickAnswerLink, ...(content.externalLinks ?? [])]
       .filter((link): link is NonNullable<typeof link> => Boolean(link))
-      .map((link) => link.href),
+      .map(link => link.href),
   };
   const jsonLdFaq = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: content.faqs.map((faq) => ({
+    mainEntity: content.faqs.map(faq => ({
       '@type': 'Question',
       name: faq.question,
       acceptedAnswer: {
@@ -175,9 +177,10 @@ export default async function GuidePage({ params }: GuidePageProps) {
       },
     })),
   };
-  const breadcrumbLabels = locale === 'zh'
-    ? ['首页', '专题合集', content.heading]
-    : ['Home', 'Guides', content.heading];
+  const breadcrumbLabels =
+    locale === 'zh'
+      ? ['首页', '专题合集', content.heading]
+      : ['Home', 'Guides', content.heading];
   const jsonLdBreadcrumb = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -211,14 +214,17 @@ export default async function GuidePage({ params }: GuidePageProps) {
       : undefined);
   const { quickAnswer, detailSections } = getGuidePresentation(content);
   const quickAnswerBullets = quickAnswer.bullets?.slice(0, 3) ?? [];
-  const formattedUpdatedAt = new Intl.DateTimeFormat(locale === 'zh' ? 'zh-CN' : 'en-US', {
-    dateStyle: 'medium',
-    timeZone: 'UTC',
-  }).format(new Date(page.updatedAt));
+  const formattedUpdatedAt = new Intl.DateTimeFormat(
+    locale === 'zh' ? 'zh-CN' : 'en-US',
+    {
+      dateStyle: 'medium',
+      timeZone: 'UTC',
+    }
+  ).format(new Date(page.updatedAt));
 
   return (
     <article
-      className="mx-auto w-full max-w-5xl px-6 py-12"
+      className="mx-auto w-full max-w-6xl px-4 py-6 md:px-6 md:py-8"
       data-printable-guide={page.printablePath ? 'true' : undefined}
     >
       {structuredData.map((schema, index) => (
@@ -228,37 +234,54 @@ export default async function GuidePage({ params }: GuidePageProps) {
           dangerouslySetInnerHTML={{ __html: serializeJsonLd(schema) }}
         />
       ))}
-      <nav className="mb-6 text-sm text-muted-foreground" data-print-hide>
-        <Link href={getLocalizedPath(locale, '/guides')} className="hover:text-primary">
+      <nav className="mb-5 text-sm text-muted-foreground" data-print-hide>
+        <Link
+          href={getLocalizedPath(locale, '/guides')}
+          className="hover:text-primary"
+        >
           {locale === 'zh' ? '← 返回专题合集' : '← Back to guides'}
         </Link>
       </nav>
 
-      <header className="mb-8 text-center">
-        <p className="text-sm font-semibold uppercase tracking-wide text-primary">
+      <header className="mb-7 max-w-4xl">
+        <p className="text-xs font-semibold uppercase tracking-wide text-primary">
           {page.primaryKeyword}
         </p>
-        <h1 className="mt-2 text-4xl font-bold text-foreground">{content.heading}</h1>
-        <p className="mt-4 text-lg text-muted-foreground">{content.subheading}</p>
-        <div className="mt-5 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
-          <span>{locale === 'zh' ? '作者：Luma Game Hub 编辑团队' : 'By Luma Game Hub Editorial'}</span>
+        <h1 className="mt-2 max-w-4xl text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl">
+          {content.heading}
+        </h1>
+        <p className="mt-3 max-w-3xl text-base leading-7 text-muted-foreground sm:text-lg">
+          {content.subheading}
+        </p>
+        <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground sm:text-sm">
+          <span>
+            {locale === 'zh'
+              ? '作者：Luma Game Hub 编辑团队'
+              : 'By Luma Game Hub Editorial'}
+          </span>
           <span aria-hidden="true">•</span>
           <time dateTime={page.updatedAt}>
-            {locale === 'zh' ? `更新于 ${formattedUpdatedAt}` : `Updated ${formattedUpdatedAt}`}
+            {locale === 'zh'
+              ? `更新于 ${formattedUpdatedAt}`
+              : `Updated ${formattedUpdatedAt}`}
           </time>
           <span aria-hidden="true">•</span>
-          <span>{locale === 'zh' ? '已对照来源核验' : 'Verified against source'}</span>
+          <span>
+            {locale === 'zh' ? '已对照来源核验' : 'Verified against source'}
+          </span>
         </div>
       </header>
 
       {page.printablePath ? (
-        <div className="mb-8 flex flex-wrap justify-center gap-3" data-print-hide>
+        <div className="mb-7 flex flex-wrap gap-3" data-print-hide>
           <a
             href={page.printablePath}
             download
             className="inline-flex min-h-11 items-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
-            {locale === 'zh' ? '下载一页打印规则 PDF' : 'Download one-page printable PDF'}
+            {locale === 'zh'
+              ? '下载一页打印规则 PDF'
+              : 'Download one-page printable PDF'}
           </a>
           <a
             href="#guide-details"
@@ -269,18 +292,23 @@ export default async function GuidePage({ params }: GuidePageProps) {
         </div>
       ) : null}
 
-      <section className="mx-auto mb-10 max-w-4xl rounded-2xl border border-primary/20 bg-primary/5 p-6 shadow-sm">
-        <p className="text-sm font-semibold uppercase tracking-wide text-primary">
+      <section className="mb-9 max-w-4xl border-y border-primary/20 bg-primary/5 px-4 py-5 sm:px-6">
+        <p className="text-xs font-semibold uppercase tracking-wide text-primary">
           {locale === 'zh' ? '快速答案' : 'Quick answer'}
         </p>
-        <h2 className="mt-2 text-2xl font-semibold text-foreground">
+        <h2 className="mt-2 text-xl font-semibold text-foreground sm:text-2xl">
           {quickAnswer.title}
         </h2>
-        <p className="mt-3 text-base leading-relaxed text-foreground/90">{quickAnswer.body}</p>
+        <p className="mt-3 text-base leading-relaxed text-foreground/90">
+          {quickAnswer.body}
+        </p>
         {quickAnswerBullets.length > 0 ? (
           <ul className="mt-4 grid gap-2 text-sm text-foreground/80 md:grid-cols-3">
-            {quickAnswerBullets.map((item) => (
-              <li key={item} className="rounded-xl border border-border bg-background/80 p-3">
+            {quickAnswerBullets.map(item => (
+              <li
+                key={item}
+                className="border-l-2 border-primary/30 bg-background/80 p-3"
+              >
                 {item}
               </li>
             ))}
@@ -291,7 +319,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
             href={content.quickAnswerLink.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="mx-auto mt-5 flex max-w-xl items-center justify-between gap-4 rounded-xl border border-primary/30 bg-background px-4 py-3 text-left shadow-sm transition hover:border-primary hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="mt-5 flex max-w-xl items-center justify-between gap-4 rounded-md border border-primary/30 bg-background px-4 py-3 text-left transition hover:border-primary hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             <span>
               <span className="block font-semibold text-primary">
@@ -301,27 +329,30 @@ export default async function GuidePage({ params }: GuidePageProps) {
                 {content.quickAnswerLink.description}
               </span>
             </span>
-            <span aria-hidden className="text-primary">↗</span>
+            <span aria-hidden className="text-primary">
+              ↗
+            </span>
           </a>
         ) : null}
-        <div className="mt-5 flex flex-wrap justify-center gap-3 text-sm font-medium">
+        <div className="mt-5 flex flex-wrap gap-2 text-sm font-medium">
           <a
             href="#guide-details"
-            className="rounded-full bg-primary px-4 py-2 text-primary-foreground shadow-sm transition hover:bg-primary/90"
+            className="rounded-md bg-primary px-4 py-2 text-primary-foreground shadow-sm transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             {locale === 'zh' ? '继续看指南' : 'Read the guide'}
           </a>
           {page.embedGame ? (
             <a
               href="#play"
-              className="rounded-full border border-primary/30 bg-background px-4 py-2 text-primary transition hover:bg-primary/10"
+              className="rounded-md border border-primary/30 bg-background px-4 py-2 text-primary transition hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
-              {page.embedGame.playLabel?.[locale] ?? (locale === 'zh' ? '先试玩游戏' : 'Play first')}
+              {page.embedGame.playLabel?.[locale] ??
+                (locale === 'zh' ? '先试玩游戏' : 'Play first')}
             </a>
           ) : null}
           <a
             href="#recommendations"
-            className="rounded-full border border-border bg-background px-4 py-2 text-foreground transition hover:bg-secondary"
+            className="rounded-md border border-border bg-background px-4 py-2 text-foreground transition hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             {locale === 'zh' ? '看相似游戏' : 'See similar games'}
           </a>
@@ -336,9 +367,9 @@ export default async function GuidePage({ params }: GuidePageProps) {
         <section
           id="play"
           tabIndex={-1}
-          className="mx-auto mb-12 max-w-4xl scroll-mt-24 focus:outline-none"
+          className="mb-10 max-w-4xl scroll-mt-24 focus:outline-none"
         >
-          <div className="overflow-hidden rounded-2xl border border-border bg-black shadow-sm">
+          <div className="overflow-hidden rounded-xl border border-border bg-black shadow-sm">
             <div className="aspect-video">
               <GamePlayerFacade
                 iframeUrl={page.embedGame.iframeUrl}
@@ -350,7 +381,10 @@ export default async function GuidePage({ params }: GuidePageProps) {
                 playLabel={page.embedGame.playLabel?.[locale]}
                 fallbackHref={
                   page.embedGame.playSlug
-                    ? getLocalizedPath(locale, `/games/${page.embedGame.playSlug}`)
+                    ? getLocalizedPath(
+                        locale,
+                        `/games/${page.embedGame.playSlug}`
+                      )
                     : undefined
                 }
               />
@@ -359,7 +393,10 @@ export default async function GuidePage({ params }: GuidePageProps) {
           {page.embedGame.playSlug ? (
             <p className="mt-3 text-center text-sm text-muted-foreground">
               <Link
-                href={getLocalizedPath(locale, `/games/${page.embedGame.playSlug}`)}
+                href={getLocalizedPath(
+                  locale,
+                  `/games/${page.embedGame.playSlug}`
+                )}
                 className="font-medium text-primary transition hover:text-primary/80"
               >
                 {locale === 'zh'
@@ -371,7 +408,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
         </section>
       ) : null}
 
-      <section className="mx-auto max-w-3xl space-y-4 text-base leading-relaxed text-foreground/90">
+      <section className="max-w-3xl space-y-4 text-base leading-relaxed text-foreground/90">
         {content.overview.map((paragraph, index) => (
           <p key={index}>{paragraph}</p>
         ))}
@@ -380,7 +417,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
       {page.slug === 'google-snake-mods' ? (
         <section
           aria-labelledby="related-spend-bill-gates-money"
-          className="mx-auto mt-12 max-w-3xl border-t border-border pt-8"
+          className="mt-10 max-w-3xl border-t border-border pt-7"
         >
           <p className="text-sm font-semibold uppercase tracking-wide text-primary">
             {locale === 'zh' ? '相似浏览器游戏' : 'Similar browser game'}
@@ -402,7 +439,10 @@ export default async function GuidePage({ params }: GuidePageProps) {
             href={getLocalizedPath(locale, '/games/spend-bill-gates-money')}
             className="mt-4 inline-flex min-h-11 items-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
-            {locale === 'zh' ? '试玩花钱模拟游戏' : 'Try the money spending simulator'} →
+            {locale === 'zh'
+              ? '试玩花钱模拟游戏'
+              : 'Try the money spending simulator'}{' '}
+            →
           </Link>
         </section>
       ) : null}
@@ -435,7 +475,9 @@ export default async function GuidePage({ params }: GuidePageProps) {
             rel="noopener noreferrer"
             className="mt-3 inline-flex text-sm font-medium text-primary transition hover:text-primary/80"
           >
-            {locale === 'zh' ? '在 YouTube 核对视频来源 ↗' : 'Verify the video source on YouTube ↗'}
+            {locale === 'zh'
+              ? '在 YouTube 核对视频来源 ↗'
+              : 'Verify the video source on YouTube ↗'}
           </a>
         </section>
       ) : null}
@@ -443,7 +485,10 @@ export default async function GuidePage({ params }: GuidePageProps) {
       {content.screenshots?.length ? (
         <section aria-labelledby="verified-game-views" className="mt-12">
           <header className="mx-auto max-w-3xl text-center">
-            <h2 id="verified-game-views" className="text-2xl font-semibold text-foreground">
+            <h2
+              id="verified-game-views"
+              className="text-2xl font-semibold text-foreground"
+            >
               {locale === 'zh' ? '实测画面' : 'Verified game views'}
             </h2>
             <p className="mt-2 text-sm text-muted-foreground">
@@ -453,7 +498,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
             </p>
           </header>
           <div className="mt-6 grid gap-5 md:grid-cols-3">
-            {content.screenshots.map((screenshot) => (
+            {content.screenshots.map(screenshot => (
               <figure
                 key={screenshot.url}
                 className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm"
@@ -474,7 +519,9 @@ export default async function GuidePage({ params }: GuidePageProps) {
                     rel="noopener noreferrer"
                     className="inline-flex font-medium text-primary transition hover:text-primary/80"
                   >
-                    {locale === 'zh' ? '核对官方来源 ↗' : 'Verify official source ↗'}
+                    {locale === 'zh'
+                      ? '核对官方来源 ↗'
+                      : 'Verify official source ↗'}
                   </a>
                 </figcaption>
               </figure>
@@ -488,9 +535,14 @@ export default async function GuidePage({ params }: GuidePageProps) {
         tabIndex={-1}
         className="mt-12 space-y-10 scroll-mt-24 focus:outline-none"
       >
-        {detailSections.map((section) => (
-          <div key={section.title} className="rounded-2xl border border-border bg-card p-6 shadow-sm">
-            <h2 className="text-2xl font-semibold text-foreground">{section.title}</h2>
+        {detailSections.map(section => (
+          <div
+            key={section.title}
+            className="rounded-2xl border border-border bg-card p-6 shadow-sm"
+          >
+            <h2 className="text-2xl font-semibold text-foreground">
+              {section.title}
+            </h2>
             <p className="mt-3 text-base text-foreground/90">{section.body}</p>
             {section.bullets ? (
               <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-muted-foreground">
@@ -520,19 +572,22 @@ export default async function GuidePage({ params }: GuidePageProps) {
         </header>
 
         <div className="grid gap-6 md:grid-cols-2">
-          {content.recommendations.map((item) => {
+          {content.recommendations.map(item => {
             const game = gameIndex.get(item.slug);
             const gameTitle =
               locale === 'zh'
-                ? game?.title ?? item.slug
-                : game?.titleEn ?? game?.title ?? item.slug;
+                ? (game?.title ?? item.slug)
+                : (game?.titleEn ?? game?.title ?? item.slug);
             const gameDescription =
               locale === 'zh'
-                ? game?.description ?? ''
-                : game?.descriptionEn ?? game?.description ?? '';
+                ? (game?.description ?? '')
+                : (game?.descriptionEn ?? game?.description ?? '');
 
             return (
-              <Card key={item.slug} className="flex h-full flex-col justify-between border border-border">
+              <Card
+                key={item.slug}
+                className="flex h-full flex-col justify-between border border-border"
+              >
                 {game?.thumbnailUrl?.startsWith('/game-screenshots/') ? (
                   <div className="relative aspect-video overflow-hidden border-b border-border bg-muted">
                     <Image
@@ -563,8 +618,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
                     >
                       {locale === 'zh'
                         ? `查看 ${gameTitle} 游戏详情`
-                        : `See ${gameTitle} browser game details`}
-                      {' '}
+                        : `See ${gameTitle} browser game details`}{' '}
                       →
                     </Link>
                   </div>
@@ -575,14 +629,19 @@ export default async function GuidePage({ params }: GuidePageProps) {
         </div>
       </section>
 
-      <section className="mt-16 rounded-2xl border border-border bg-secondary p-8">
+      <section className="mt-14 border-t border-border bg-secondary/60 px-5 py-7 sm:px-7">
         <h2 className="text-2xl font-semibold text-foreground">
           {locale === 'zh' ? '常见问题' : 'Frequently Asked Questions'}
         </h2>
         <dl className="mt-6 space-y-6">
           {content.faqs.map((faq, index) => (
-            <div key={index} className="rounded-xl border border-border bg-card p-5 shadow-sm">
-              <dt className="text-base font-semibold text-foreground">{faq.question}</dt>
+            <div
+              key={index}
+              className="border-b border-border bg-card/60 p-4 last:border-b-0"
+            >
+              <dt className="text-base font-semibold text-foreground">
+                {faq.question}
+              </dt>
               <dd className="mt-2 text-sm text-foreground/90">{faq.answer}</dd>
             </div>
           ))}
@@ -611,7 +670,9 @@ export default async function GuidePage({ params }: GuidePageProps) {
               {content.ctaLabel}
             </Link>
           </Button>
-          <p className="mt-3 text-sm text-muted-foreground">{content.ctaDescription}</p>
+          <p className="mt-3 text-sm text-muted-foreground">
+            {content.ctaDescription}
+          </p>
         </section>
       )}
 
@@ -621,7 +682,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
             {locale === 'zh' ? '相关主题' : 'Related Guides'}
           </h2>
           <ul className="mt-4 space-y-3 text-sm">
-            {relatedPages.map((related) => (
+            {relatedPages.map(related => (
               <li key={related.slug}>
                 <Link
                   href={getLocalizedPath(locale, `/guides/${related.slug}`)}
@@ -647,8 +708,11 @@ export default async function GuidePage({ params }: GuidePageProps) {
               : 'Use these external links to verify the game source and creator context; they do not imply a commercial partnership with Luma.'}
           </p>
           <ul className="mt-4 grid gap-3 text-sm md:grid-cols-3">
-            {content.externalLinks.map((link) => (
-              <li key={link.href} className="rounded-xl border border-border bg-card p-4">
+            {content.externalLinks.map(link => (
+              <li
+                key={link.href}
+                className="rounded-xl border border-border bg-card p-4"
+              >
                 <a
                   href={link.href}
                   target="_blank"
