@@ -80,7 +80,7 @@ function ShelfSection({
         </Link>
       </div>
 
-      <div className="grid grid-flow-col auto-cols-[38%] gap-2.5 overflow-x-auto pb-2 snap-x sm:auto-cols-[24%] lg:grid-flow-row lg:auto-cols-auto lg:grid-cols-6 lg:overflow-visible">
+      <div className="game-shelf-scroll grid grid-flow-col auto-cols-[38%] gap-2.5 overflow-x-auto pb-2 snap-x sm:auto-cols-[24%] lg:grid-flow-row lg:auto-cols-auto lg:grid-cols-6 lg:overflow-visible">
         {entries.map((entry, index) => (
           <Link
             key={entry.href}

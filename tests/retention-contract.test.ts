@@ -55,7 +55,7 @@ describe('retention experiment wiring', () => {
     );
   });
 
-  it('renders three visible recommendation cards with local favorite actions', () => {
+  it('renders visible recommendation cards with local favorite actions', () => {
     expect(recommendationSource).toContain('getDailyRecommendations');
     expect(recommendationSource).toContain('data-recommendation-card');
     expect(recommendationSource).toContain('<FavoriteToggleButton');

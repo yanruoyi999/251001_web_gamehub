@@ -2156,3 +2156,11 @@
 - 测试与构建：`pnpm test -- --run` 通过 86 files / 272 tests；`pnpm type-check`、定向 ESLint、`git diff --check`、`pnpm build`（Next.js 15.5.21，145 个静态页）、`pnpm check:internal-links` 和 `pnpm audit:prod` 通过。Playwright Chromium、Pixel 7、Pixel 7 touch 首页/目录/Snake 3D专项 7/7 通过。首轮 E2E 仅因首页攻略货架由 3 张扩为 5 张而触发旧断言，更新测试契约后复跑通过，不是产品回归。
 - 未验证与发布边界：本轮改动尚未合入 `main` 或部署生产；当前分支将先生成新 Preview 供视觉复核。Preview 的保护层可能使 Lighthouse SEO 显示 noindex，不作为生产索引结论。真实访客下降/恢复、GA4、GSC 和 Clarity 变化必须等生产部署后按自然流量观察，不能用本地或 Preview 自动化替代。
 - 下一步：核对新 Preview 的桌面/360/390/412 移动首屏、收藏入口、货架点击和模板操作栏；用户确认前不合入 `main`，不部署生产。
+
+### T-172 UI 二次修订移动端与卡片交互修复（2026-08-21）
+
+- 远端首轮 CI `32388559848` 原始信号：静态检查、类型检查、内链审计、单测、依赖审计和生产构建通过；E2E 107 项中 101 通过，6 项失败。失败集中在所有浏览器的攻略推荐图片点击断链，以及 iPhone 13 首页文档宽度 638px。
+- 根因：攻略模板从旧 `Card` 改成扁平 `<article>` 时去掉了旧 CSS 覆盖层，图片本身不再是可点击详情链接；首页货架从 3 张扩为 5 张后，WebKit 将横向 CSS Grid 滚动容器的绘制区域计入根文档宽度，造成移动端横向溢出断言失败。
+- 修复文件：`app/[locale]/guides/[slug]/page.tsx` 将推荐图片显式包在对应游戏详情 `Link` 中并保留键盘 focus；`app/[locale]/page.tsx`、`components/retention/daily-recommendation.tsx` 为首页横向货架加入 `game-shelf-scroll`；`app/globals.css` 对该局部容器使用 `contain: paint`，不影响货架自身横向滚动；`tests/e2e/game-browsing.spec.ts` 改为验证图片链接并等待真实路由，`tests/ui-refresh-contract.test.ts` 和 `tests/retention-contract.test.ts` 同步语义断言。
+- 验证：iPhone 13 WebKit 文档宽度从 638px 修复为 390px，三个货架仍可滚动；攻略图片详情点击在 Chromium、Firefox、WebKit、Pixel 7、iPhone 13 为 5/5；生产构建生成 145/145 静态页；串行 `CI=1 pnpm exec playwright test --workers=2` 为 107/107 通过。此前一次本地 CI 未启动是因为定向 dev 测试覆盖了 `.next`，重建后复跑通过。
+- 发布边界：修复尚未合入 `main`、尚未部署生产；当前只推送功能分支，等待远端 CI 与新 Preview。URL、canonical、hreflang、robots/noindex、sitemap、GA4/Clarity 事件、数据库、搜索服务和来源边界未改变。

@@ -131,7 +131,7 @@ export function DailyRecommendation({
       <div
         className={
           surface === 'home'
-            ? 'grid grid-flow-col auto-cols-[38%] gap-2.5 overflow-x-auto pb-2 snap-x sm:auto-cols-[24%] lg:grid-flow-row lg:auto-cols-auto lg:grid-cols-6 lg:overflow-visible'
+            ? 'game-shelf-scroll grid grid-flow-col auto-cols-[38%] gap-2.5 overflow-x-auto pb-2 snap-x sm:auto-cols-[24%] lg:grid-flow-row lg:auto-cols-auto lg:grid-cols-6 lg:overflow-visible'
             : 'grid gap-4'
         }
       >

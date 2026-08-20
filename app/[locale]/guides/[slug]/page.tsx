@@ -584,15 +584,21 @@ export default async function GuidePage({ params }: GuidePageProps) {
                 className="group flex h-full flex-col justify-between overflow-hidden rounded-[8px] border border-[#cbdccf] bg-white transition hover:-translate-y-0.5 hover:border-primary/50 dark:border-border dark:bg-card"
               >
                 {game?.thumbnailUrl?.startsWith('/game-screenshots/') ? (
+                  <Link
+                    href={getLocalizedPath(locale, `/games/${item.slug}`)}
+                    aria-label={locale === 'zh' ? `打开${gameTitle}` : `Open ${gameTitle}`}
+                    className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+                  >
                     <div className="relative aspect-[4/3] overflow-hidden border-b border-border bg-muted">
-                    <Image
-                      src={game.thumbnailUrl}
-                      alt={`${gameTitle} gameplay screenshot`}
-                      fill
-                      sizes="(min-width: 768px) 50vw, 100vw"
-                      className="object-cover"
-                    />
-                  </div>
+                      <Image
+                        src={game.thumbnailUrl}
+                        alt={`${gameTitle} gameplay screenshot`}
+                        fill
+                        sizes="(min-width: 768px) 50vw, 100vw"
+                        className="object-cover transition duration-300 group-hover:scale-[1.03]"
+                      />
+                    </div>
+                  </Link>
                 ) : null}
                 <div className="p-3">
                   <h3 className="text-base font-black text-foreground">

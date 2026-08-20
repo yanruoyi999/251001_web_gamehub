@@ -81,6 +81,10 @@
 }
 
 @layer utilities {
+  .game-shelf-scroll {
+    contain: paint;
+  }
+
   .text-balance {
     text-wrap: balance;
   }
