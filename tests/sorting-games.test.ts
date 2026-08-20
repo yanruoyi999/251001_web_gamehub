@@ -67,10 +67,26 @@ describe('original sorting games hub', () => {
     expect(firstColors).not.toEqual(differentColors);
   });
 
-  it('keeps the future player local-only and shareable only by challenge code', () => {
-    if (!existsSync(sortingPlayerPath)) return;
+  it('keeps the player local-only, original, and shareable only by challenge code', () => {
+    expect(existsSync(sortingPlayerPath)).toBe(true);
     const source = readFileSync(sortingPlayerPath, 'utf8');
 
+    expect(source).toContain("'use client'");
+    expect(source).toContain('color-stack-sort');
+    expect(source).toContain('number-order-sprint');
+    expect(source).toContain('shape-shelf-sort');
+    expect(source).toContain("trackInteraction('sorting_collection_view'");
+    expect(source).toContain("trackInteraction('sorting_game_switch'");
+    expect(source).toContain("trackInteraction('sorting_game_start'");
+    expect(source).toContain("trackInteraction('sorting_game_complete'");
+    expect(source).toContain("trackInteraction('sorting_challenge_share'");
+    expect(source).toContain("searchParams.set('challenge'");
+    expect(source).toContain('navigator.clipboard');
+    expect(source).toContain('aria-live="polite"');
+    expect(source).toContain('data-sorting-game');
+    expect(source).toContain('data-number-tile');
+    expect(source).toContain('data-color-stack');
+    expect(source).toContain('data-shape-card');
     expect(source).not.toContain('fetch(');
     expect(source).not.toContain('localStorage');
     expect(source).not.toMatch(/https?:\/\//);
