@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { getLocalizedPath, locales } from '@/i18n/config';
 import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES } from '@/lib/seo';
 import { searchFallbackGames } from '@/lib/games/fallback-search';
+import { getCatalogueUiCapabilities } from '@/lib/games/catalog-mode';
 import { SearchService } from '@/services';
 
 export const dynamic = 'force-dynamic';
@@ -82,6 +83,7 @@ async function safeSearchGames(query: string, page: number) {
 export default async function SearchPage({ params, searchParams }: SearchPageProps) {
   const [{ locale }, resolvedSearchParams] = await Promise.all([params, searchParams]);
   const t = await getTranslations('Search');
+  const catalogueUi = getCatalogueUiCapabilities();
 
   const query = typeof resolvedSearchParams.q === 'string' ? resolvedSearchParams.q : '';
   const pageParam = resolvedSearchParams.page ? Number(resolvedSearchParams.page) : undefined;
@@ -148,13 +150,13 @@ export default async function SearchPage({ params, searchParams }: SearchPagePro
                         {displayTitle}
                       </Link>
                     </CardTitle>
-                    <CardDescription className="text-sm text-gray-500">
-                      {t('published', {
-                        date: game.publishedAt
-                          ? new Date(game.publishedAt).toLocaleDateString(locale)
-                          : '—',
-                      })}
-                    </CardDescription>
+                    {catalogueUi.showPublishedDates && game.publishedAt ? (
+                      <CardDescription className="text-sm text-gray-500">
+                        {t('published', {
+                          date: new Date(game.publishedAt).toLocaleDateString(locale),
+                        })}
+                      </CardDescription>
+                    ) : null}
                   </CardHeader>
                   <CardContent className="space-y-2 text-sm text-gray-600">
                     <Link
