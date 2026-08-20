@@ -55,6 +55,22 @@ export const SORTING_GAMES: SortingGameDefinition[] = [
 const challengeAlphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 const colorPool = ['coral', 'sky', 'mint', 'violet'] as const;
 
+/**
+ * Luma-authored abstract layouts. Each number is a color slot, not a branded
+ * game asset or imported level. Every template was verified against the local
+ * move rules before being admitted here. Challenge codes relabel colors and
+ * reorder the four filled stacks, which preserves solvability while creating
+ * many deterministic visual variants.
+ */
+const solvableColorTemplates = [
+  [[2, 1, 3], [3, 1, 3], [2, 0, 2], [0, 1, 0]],
+  [[3, 3, 0], [2, 1, 1], [0, 2, 3], [2, 0, 1]],
+  [[1, 2, 0], [2, 0, 3], [3, 2, 1], [0, 1, 3]],
+  [[1, 2, 3], [0, 1, 1], [3, 0, 2], [2, 3, 0]],
+  [[3, 3, 0], [1, 2, 0], [2, 1, 1], [2, 3, 0]],
+  [[2, 0, 0], [1, 1, 1], [3, 0, 2], [2, 3, 3]],
+] as const;
+
 export type SortingColor = (typeof colorPool)[number];
 export type ShapeShelf = 'three-sides' | 'four-sides' | 'round-other';
 
@@ -155,25 +171,15 @@ export function buildNumberSprint(challengeCode: string): number[] {
 
 export function buildColorStackPuzzle(challengeCode: string): SortingColor[][] {
   const normalized = normalizeSortingChallengeCode(challengeCode);
-  const tiles = colorPool.flatMap((color) => [color, color, color]);
-  let shuffled = shuffleWithSeed(tiles, `colors:${normalized}`);
+  const templateIndex = hashSeed(`color-template:${normalized}`) % solvableColorTemplates.length;
+  const template = solvableColorTemplates[templateIndex];
+  const colorMap = shuffleWithSeed(colorPool, `color-map:${normalized}`);
+  const mappedStacks: SortingColor[][] = template.map((stack) =>
+    stack.map((colorIndex) => colorMap[colorIndex]),
+  );
+  const orderedStacks = shuffleWithSeed(mappedStacks, `stack-order:${normalized}`);
 
-  const looksSolved = shuffled.every((color, index) => {
-    const groupStart = Math.floor(index / 3) * 3;
-    return shuffled[groupStart] === color;
-  });
-
-  if (looksSolved) {
-    shuffled = [...shuffled.slice(1), shuffled[0]];
-  }
-
-  return [
-    shuffled.slice(0, 3),
-    shuffled.slice(3, 6),
-    shuffled.slice(6, 9),
-    shuffled.slice(9, 12),
-    [],
-  ];
+  return [...orderedStacks.map((stack) => [...stack]), []];
 }
 
 export function buildShapeOrder(challengeCode: string): SortingShape[] {
