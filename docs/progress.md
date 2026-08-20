@@ -2110,3 +2110,11 @@
 - 修改文件：`app/layout.tsx`、`components/analytics/ProductionTelemetry.tsx`、`tests/ga4-bootstrap.test.ts`。遥测改为 hydration 后根据浏览器真实 hostname 加载，Preview/localhost 仍不加载。
 - 验证：回归测试先 RED 2/2 后转为 GREEN；全量 Vitest 85 files / 267 tests、type-check、internal-link audit、production audit、显式全量 ESLint、diff-check 和 Next.js 15.5.21 生产构建（145 路由）通过。浏览器中正式域只有 1 个 GA 脚本和 1 次 `page_view`，Preview 无遥测请求，两者均无 page error。
 - 数据边界：当前只能证明本地代码与生产构建候选正确；真实 GA4 恢复需部署后等待后台处理，历史漏采不可回填。UI 改版继续暂停，等待 3 个完整自然日 GA4/GSC 基线。
+
+### T-172 精选游戏货架 UI 改版 Preview 验证（2026-08-20）
+
+- 发布范围：在独立分支 `codex/ui-curated-shelf-20260820` 完成共享 Header/Footer、首页精选货架与今日推荐、游戏目录网格、游戏详情与攻略模板的紧凑布局和移动端适配；保留 URL、canonical、hreflang、robots/noindex、sitemap、FAQ/JSON-LD、既有 GA4/Clarity 事件名与第三方来源边界。未修改生产数据库、搜索服务、后台配置或索引策略。
+- 本地验证：`pnpm test --run` 通过 86 files / 271 tests；`pnpm type-check`、`pnpm lint`、`pnpm build`、`pnpm check:internal-links` 和页面质量/运行时质量审计通过。Next.js 15.5.21 生产构建生成 145 个静态页；本地移动 Lighthouse 为首页 90/100、游戏目录 92/98、Google Snake Mods 指南 92/100、Spend 96/100（Performance/Accessibility）。
+- Preview：部署 `dpl_3KZPFdoMWRNJRdE174g5iXZ83C2A` 已 `Ready`，Preview 受 Vercel 保护层约束。受保护读取确认首页、游戏目录、Google Snake Mods、Spend 与 Snake 3D 均为单一 `<main>`；canonical 保持正确，Snake 3D 为 `noindex, follow` 且不在 sitemap；robots、health、search 均正常，sitemap 200 URLs；浏览器网络未观察到 GA4/Clarity 请求。Preview Lighthouse 的 SEO 低分来自保护层 `x-robots-tag: noindex` 与 Vercel feedback 脚本 CSP 报错，不代表生产页面 SEO 结果。
+- 根因修复：Preview 首轮发现独立 Snake 3D 路由仍嵌套 `<main>`；已在 `app/[locale]/games/snake-3d/page.tsx` 改为普通容器，并在 `tests/ui-refresh-contract.test.ts` 增加回归断言，提交 `d674f94`。
+- 当前状态：分支已推送，Preview 已验证；尚未合入 `main`、部署生产或用 GA4 判断 UI 结果。由于此前 UI 变更与访客下降存在时间相关性，正式发布前需由用户确认 main/生产发布范围；生产后观察 GA4 page_view/session_start、GSC 展现/点击/排名、Clarity dead/rage/quick back、recommendation_view/click 和 favorite_add/remove。
