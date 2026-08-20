@@ -38,6 +38,7 @@ function withGameDetailTimeout<T>(promise: Promise<T>, label: string): Promise<T
 function shouldUseGameDetailFallback() {
   const databaseConnection = getDatabaseConnectionMetadata();
   return (
+    isLocalCatalogueMode() ||
     !databaseConnection.configured ||
     (
       process.env.GAME_DETAIL_ALLOW_SUPABASE_DIRECT_IN_SERVERLESS !== 'true' &&
