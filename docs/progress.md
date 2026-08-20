@@ -2190,3 +2190,19 @@
 - 验证：`pnpm lint`、`pnpm type-check`、`git diff --check`、`pnpm build`（Next.js 15.5.21，145/145 静态页）通过；本地 390px 首页与目录检查 `documentWidth=390`、`bodyWidth=390`、`main=1`，360/390/412 三个宽度均无横向溢出；Chromium/Pixel 7/iPhone 13 smoke 9/9，移动无 hydration 披露用例 15/15 通过。
 - 远端状态：GitHub CI `32396306999` 的静态检查、单测、构建通过，但 E2E 在 10 分钟超时，11 项失败集中在跨浏览器页面导航超时和 WebKit Pong 动画断言；同一批移动披露用例在本地当前生产构建 15/15 通过，不能把该远端运行记为全绿，也不能据此归因于本轮 CSS。Vercel 最新推送仍受平台 `Deployment rate limited — retry in 24 hours` 限制，尚无本轮最新公开 Preview。
 - 发布边界：本轮代码尚未合入 `main`、尚未部署生产、未修改 GA4/GSC/Clarity 或外部后台；待 Vercel 限流解除后生成最新 Preview，由用户复核视觉，再决定是否发布。生产流量恢复仍需真实 GA4、GSC、Clarity 数据，不能由本地或旧 Preview 替代。
+
+### T-172 游戏门户移动货架与攻略模板收口（2026-08-21）
+
+- 根因：第五轮桌面门户结构已接近参考站，但移动端货架仍由固定双列网格承载，卡片过宽、下一项不可见；攻略模板还有少量 `rounded-2xl` 视觉残留，与编辑式内容布局不一致。
+- 修改：`app/globals.css` 为既有 `.game-shelf-scroll` 增加手机端横向滚动、固定自动列宽、滚动吸附和局部绘制隔离；首页货架与 `DailyRecommendation` 卡片标记 `snap-start`；攻略视频、精选游戏和外部链接卡统一压缩为 `rounded-md`。没有改变 URL、canonical、hreflang、robots/noindex、sitemap、FAQ/JSON-LD、GA4/Clarity ID 或事件名。
+- 验证范围：新增 UI 契约检查移动端自动列与滚动吸附；Smoke 继续检查首页三个货架、收藏入口、无根文档横向溢出。待本轮本地测试、构建、Playwright 和新 Preview 完成后再记录结果。
+- 发布边界：只在 `codex/ui-curated-shelf-20260820` 分支推进；不合入 `main`、不部署生产、不改外部监测或数据库/搜索服务。
+- Lighthouse 复核补丁：移动采样初始 `/en/games` Accessibility 为 94，直接根因为 Filters 使用 `h3` 跳过 `h2`，以及两个次要文字节点对比度为 4.46；已改为 `h2` 并使用更深的中性文字色，首页 95、Snake 指南 96、Spend 99 未改动。
+
+### T-172 游戏门户 Preview 前最终回归（2026-08-21）
+
+- 本地验证：`pnpm test -- --run` 为 86 files / 272 tests 通过；`pnpm lint`、`pnpm type-check`、`pnpm audit:prod`、`pnpm check:internal-links`、`git diff --check` 和 Next.js 15.5.21 production build（145/145 静态页）通过。
+- 浏览器验证：全量 Playwright 为 105 passed / 2 failed；失败均为既有 `Spend Bill Gates Money` 分享弹窗在 Firefox 与 WebKit 的时序问题，未触及本轮文件。Chromium、Pixel 7、iPhone 13 smoke 与移动披露用例通过；360/390/412px 首页均保持 `documentWidth=viewport`，三个货架均为横向可滚动列。
+- Lighthouse 移动复核：`/en` 96/96/100/100、`/en/games` 92/100/100/92、`/en/guides/google-snake-mods` 98/96/100/100、`/en/games/spend-bill-gates-money` 97/96/100/100（依次为 Performance/Accessibility/Best Practices/SEO）；均达到本轮目标，目录页 SEO 分数沿用现有站点审计边界，未改 URL 或索引策略。
+- 运行时采样：`docs/page-runtime-sampling.md` 已基于最新本地生产构建 `http://localhost:3232` 重写，11 个页面、最低 96、低于 80 为 0；自动化采样阻断 GA4、Clarity 和 Vercel telemetry。
+- 发布边界：只提交 `codex/ui-curated-shelf-20260820` 的门户 UI 与验证记录；不合入 `main`、不部署生产、不修改 GA4/GSC/Clarity、数据库、搜索服务或外部环境配置。Preview 仅用于用户视觉复核。

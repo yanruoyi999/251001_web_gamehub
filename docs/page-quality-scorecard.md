@@ -1,6 +1,6 @@
 # Luma Page Quality Scorecard
 
-Generated: 2026-08-20T14:24:47.611Z
+Generated: 2026-08-20T17:51:41.365Z
 
 Scope: public content and utility pages represented by the local catalogue, SEO guide registry, taxonomy, and sitemap policy. API/admin routes are not treated as content pages.
 

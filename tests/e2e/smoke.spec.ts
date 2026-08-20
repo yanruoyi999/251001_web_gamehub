@@ -43,8 +43,15 @@ test.describe('Luma Game Hub smoke tests', () => {
     const layout = await page.evaluate(() => ({
       viewportWidth: window.innerWidth,
       documentWidth: document.documentElement.scrollWidth,
+      shelfOverflow: Array.from(
+        document.querySelectorAll<HTMLElement>('.game-shelf-scroll'),
+      ).map(node => ({
+        scrollWidth: node.scrollWidth,
+        clientWidth: node.clientWidth,
+      })),
     }));
     expect(layout.documentWidth).toBeLessThanOrEqual(layout.viewportWidth);
+    expect(layout.shelfOverflow.length).toBeGreaterThanOrEqual(3);
   });
 
   test('game and guide templates keep the primary action layer visible', async ({

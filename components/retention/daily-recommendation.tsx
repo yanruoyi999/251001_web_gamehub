@@ -138,7 +138,7 @@ export function DailyRecommendation({
         {recommendations.map(recommendation => (
           <article
             key={recommendation.id}
-            className="group overflow-hidden rounded-md border border-[#dce4df] bg-white transition hover:-translate-y-0.5 hover:border-emerald-700/60 hover:shadow-[0_8px_20px_-16px_rgba(16,58,38,0.65)] dark:border-border dark:bg-card"
+            className="group min-w-0 snap-start overflow-hidden rounded-md border border-[#dce4df] bg-white transition hover:-translate-y-0.5 hover:border-emerald-700/60 hover:shadow-[0_8px_20px_-16px_rgba(16,58,38,0.65)] dark:border-border dark:bg-card"
             data-recommendation-card={recommendation.slug}
           >
             <div className="relative aspect-[4/3] overflow-hidden bg-[#102033]">

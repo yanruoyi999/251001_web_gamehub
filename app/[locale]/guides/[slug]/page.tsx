@@ -452,7 +452,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
                 : 'This video comes from Playworks’ public activity page. If your browser blocks third-party players, the written rules above are complete.'}
             </p>
           </header>
-          <div className="aspect-video overflow-hidden rounded-2xl border border-border bg-black shadow-sm">
+          <div className="aspect-video overflow-hidden rounded-md border border-border bg-black shadow-sm">
             <iframe
               src={page.video.embedUrl}
               title={page.video.title}
@@ -494,7 +494,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
             {content.screenshots.map(screenshot => (
               <figure
                 key={screenshot.url}
-                className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm"
+                className="overflow-hidden rounded-md border border-border bg-card shadow-sm"
               >
                 <Image
                   src={screenshot.url}
@@ -710,7 +710,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
             {content.externalLinks.map(link => (
               <li
                 key={link.href}
-                className="rounded-xl border border-border bg-card p-4"
+                className="rounded-md border border-border bg-card p-4"
               >
                 <a
                   href={link.href}

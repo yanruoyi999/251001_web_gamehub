@@ -83,6 +83,31 @@
 @layer utilities {
   .game-shelf-scroll {
     contain: paint;
+    scrollbar-width: thin;
+  }
+
+  /* Keep portal shelves dense on phones and reveal the next card. */
+  @media (max-width: 639px) {
+    .game-shelf-scroll {
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(158px, 46vw);
+      grid-template-columns: none !important;
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
+      padding-bottom: 4px;
+      scroll-snap-type: x proximity;
+    }
+
+    .game-shelf-scroll > * {
+      min-width: 0;
+      scroll-snap-align: start;
+    }
+  }
+
+  @media (min-width: 640px) {
+    .game-shelf-scroll {
+      overflow-x: visible;
+    }
   }
 
   .text-balance {

@@ -94,7 +94,7 @@ function ShelfSection({
             key={entry.href}
             href={entry.href}
             data-shelf-card
-            className="group flex h-full flex-col overflow-hidden rounded-md border border-[#dce4df] bg-white text-left transition hover:-translate-y-0.5 hover:border-emerald-700/60 hover:shadow-[0_8px_20px_-16px_rgba(16,58,38,0.65)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 dark:border-border dark:bg-card"
+            className="group flex h-full min-w-0 snap-start flex-col overflow-hidden rounded-md border border-[#dce4df] bg-white text-left transition hover:-translate-y-0.5 hover:border-emerald-700/60 hover:shadow-[0_8px_20px_-16px_rgba(16,58,38,0.65)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 dark:border-border dark:bg-card"
           >
             <div className="relative aspect-[4/3] overflow-hidden bg-muted">
               <Image

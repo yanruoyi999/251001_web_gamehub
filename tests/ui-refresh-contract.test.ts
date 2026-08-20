@@ -17,6 +17,7 @@ describe('curated shelf UI refresh contracts', () => {
 
   it('puts discovery controls and horizontal shelves near the homepage entry point', async () => {
     const homepage = await read('app/[locale]/page.tsx');
+    const styles = await read('app/globals.css');
     expect(homepage).toContain(
       "aria-label={locale === 'zh' ? '快速分类' : 'Quick categories'}"
     );
@@ -27,6 +28,9 @@ describe('curated shelf UI refresh contracts', () => {
     expect(homepage).not.toContain('id="curated-starts"');
     expect(homepage).not.toContain('homepage-spend-bill-gates-money');
     expect(homepage).not.toContain('bg-gradient-to-br');
+    expect(styles).toContain('grid-auto-flow: column');
+    expect(styles).toContain('grid-auto-columns: minmax(158px, 46vw)');
+    expect(styles).toContain('scroll-snap-type: x proximity');
   });
 
   it('keeps the game grid ahead of the Luma Original banner', async () => {
@@ -35,6 +39,8 @@ describe('curated shelf UI refresh contracts', () => {
     expect(games.indexOf('{games.length === 0')).toBeLessThan(
       games.indexOf('lumaOriginalCopy.badge')
     );
+    expect(games).toContain('<h2 className="text-base font-black text-foreground sm:text-lg">');
+    expect(games).toContain('text-[#53645a]');
     expect(games).toContain('compact');
   });
 
@@ -47,6 +53,7 @@ describe('curated shelf UI refresh contracts', () => {
     expect(guide).toContain('id="guide-details"');
     expect(guide).toContain('Featured Picks');
     expect(guide).not.toContain('rounded-2xl border border-border bg-card p-6 shadow-sm');
+    expect(guide).not.toContain('rounded-2xl border border-border bg-card shadow-sm');
   });
 
   it('marks the consent surface so overlay regressions can be checked in the browser', async () => {

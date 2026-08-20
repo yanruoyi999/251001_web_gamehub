@@ -428,10 +428,10 @@ export default async function GamesPage({
 
       <section className="mb-2 border-b border-[#dce4df] py-2.5 dark:border-border">
         <CardHeader className="flex items-baseline justify-between gap-3 p-0 pb-2">
-          <CardTitle className="text-base font-black text-foreground sm:text-lg">
+          <h2 className="text-base font-black text-foreground sm:text-lg">
             {t('filters.title')}
-          </CardTitle>
-          <CardDescription className="text-xs text-muted-foreground">
+          </h2>
+          <CardDescription className="text-xs text-[#53645a] dark:text-muted-foreground">
             {t('resultSummary', { value: formatNumber(total) })}
           </CardDescription>
         </CardHeader>
@@ -769,7 +769,7 @@ export default async function GamesPage({
               ←
             </span>
           )}
-          <span className="rounded-md border border-border px-3 py-1.5 text-muted-foreground">
+            <span className="rounded-md border border-border px-3 py-1.5 text-[#53645a] dark:text-muted-foreground">
             {t('pagination.pageLabel', {
               current: formatNumber(currentPage),
               total: formatNumber(totalPages),
