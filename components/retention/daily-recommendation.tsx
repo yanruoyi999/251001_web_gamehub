@@ -29,7 +29,7 @@ export function DailyRecommendation({
   placement = 'default',
   surface,
 }: DailyRecommendationProps) {
-  const recommendationCount = surface === 'home' ? 5 : 1;
+  const recommendationCount = surface === 'home' ? 6 : 1;
   const isHome = surface === 'home';
   const [placementActive, setPlacementActive] = useState(
     placement === 'default'
@@ -112,8 +112,8 @@ export function DailyRecommendation({
           >
             {surface === 'home'
               ? locale === 'zh'
-                ? '今天先玩这 3 款'
-                : 'Three games to try today'
+                ? '今天热门'
+                : 'Popular games today'
               : locale === 'zh'
                 ? '换一款继续玩'
                 : 'Try another game'}

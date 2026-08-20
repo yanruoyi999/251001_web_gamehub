@@ -16,7 +16,7 @@ test.describe('Luma Game Hub smoke tests', () => {
 
     await expect(page.getByText("Today's picks", { exact: true })).toBeVisible();
     await expect(
-      page.getByRole('heading', { name: 'Three games to try today' }),
+      page.getByRole('heading', { name: 'Popular games today' }),
     ).toBeVisible();
     await expect(
       page.getByRole('heading', { name: 'Popular guides' }),

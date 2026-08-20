@@ -60,6 +60,13 @@ function ShelfSection({
   entries,
   priorityFirstImages = false,
 }: ShelfSectionProps) {
+  const desktopGridClass =
+    entries.length >= 6
+      ? 'lg:grid-cols-6'
+      : entries.length >= 4
+        ? 'lg:grid-cols-5'
+        : 'lg:grid-cols-3';
+
   return (
     <section aria-labelledby={id} className="mt-8" data-catalog-shelf>
       <div className="mb-2 flex flex-col gap-1 border-b border-[#cbdccf] pb-2 sm:flex-row sm:items-end sm:justify-between dark:border-border">
@@ -80,7 +87,7 @@ function ShelfSection({
         </Link>
       </div>
 
-      <div className="game-shelf-scroll grid grid-flow-col auto-cols-[38%] gap-2.5 overflow-x-auto pb-2 snap-x sm:auto-cols-[24%] lg:grid-flow-row lg:auto-cols-auto lg:grid-cols-6 lg:overflow-visible">
+      <div className={`game-shelf-scroll grid grid-flow-col auto-cols-[38%] gap-2.5 overflow-x-auto pb-2 snap-x sm:auto-cols-[24%] lg:grid-flow-row lg:auto-cols-auto ${desktopGridClass} lg:overflow-visible`}>
         {entries.map((entry, index) => (
           <Link
             key={entry.href}
@@ -319,33 +326,34 @@ export default async function HomePage({
 
   return (
     <>
-      <div className="bg-[#f1f7e9] px-3 pb-20 pt-2 sm:px-4 md:px-6 md:pt-4 dark:bg-background">
+      <div className="bg-[#f1f7e9] px-3 pb-20 pt-2 sm:px-4 md:px-6 md:pt-3 dark:bg-background">
         <div className="mx-auto w-full max-w-7xl">
-          <header className="flex flex-col gap-2 border-b border-[#cbdccf] pb-3 md:flex-row md:items-center md:justify-between dark:border-border">
+          <header className="flex flex-col gap-1 border-b border-[#cbdccf] pb-2 md:flex-row md:items-center md:justify-between dark:border-border">
             <div className="min-w-0 max-w-4xl">
               <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-emerald-800 dark:text-emerald-400">
                 {locale === 'zh' ? '精选浏览器游戏' : 'Curated browser games'}
               </p>
-              <h1 className="mt-0.5 max-w-4xl text-xl font-black tracking-tight text-[#152238] sm:text-2xl dark:text-foreground">
+              <h1 className="mt-0.5 max-w-4xl text-lg font-black tracking-tight text-[#152238] sm:text-xl dark:text-foreground">
                 {heroTitle}
               </h1>
-              <p className="mt-0.5 hidden max-w-2xl text-xs leading-5 text-[#61766a] sm:block sm:text-sm dark:text-muted-foreground">
+              <p className="mt-0.5 hidden max-w-3xl text-xs leading-4 text-[#61766a] sm:block dark:text-muted-foreground">
                 {t('description')}
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-2 md:flex-none md:justify-end">
               <Link
                 href={getLocalizedPath(locale, '/games')}
-                className="inline-flex min-h-8 items-center justify-center gap-1.5 rounded-md bg-emerald-700 px-2.5 py-1 text-xs font-bold text-white transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:min-h-9 sm:px-3 sm:py-1.5 sm:text-sm"
+                className="hidden min-h-8 items-center gap-1 text-xs font-bold text-emerald-800 transition hover:text-emerald-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-offset-2 sm:inline-flex dark:text-emerald-400 dark:hover:text-emerald-300"
               >
-                {t('playNow')}
+                {locale === 'zh' ? '热门游戏' : 'Popular games'}
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
               <Link
                 href={getLocalizedPath(locale, '/guides')}
-                className="hidden min-h-9 items-center justify-center rounded-md border border-[#b9cebf] bg-white px-3 py-1.5 text-xs font-bold text-emerald-800 transition hover:bg-[#e4f0e7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:inline-flex sm:text-sm dark:border-border dark:bg-card dark:text-emerald-400"
+                className="hidden min-h-8 items-center gap-1 text-xs font-bold text-emerald-800 transition hover:text-emerald-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-offset-2 sm:inline-flex dark:text-emerald-400 dark:hover:text-emerald-300"
               >
-                {t('browseArchive')}
+                {locale === 'zh' ? '攻略' : 'Guides'}
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </div>
           </header>
@@ -356,7 +364,7 @@ export default async function HomePage({
 
           <nav
             aria-label={locale === 'zh' ? '快速分类' : 'Quick categories'}
-            className="mt-2 flex gap-4 overflow-x-auto border-b border-[#cbdccf] pb-2 dark:border-border"
+            className="mt-1 flex gap-4 overflow-x-auto border-b border-[#cbdccf] pb-2 dark:border-border"
           >
             {[
               { href: '/games/category/action', zh: '动作', en: 'Action' },
@@ -372,7 +380,7 @@ export default async function HomePage({
               <Link
                 key={item.href}
                 href={getLocalizedPath(locale, item.href)}
-                className="inline-flex min-h-8 shrink-0 items-center border-b-2 border-transparent px-0.5 text-xs font-bold text-[#30483a] transition hover:border-emerald-700/60 hover:text-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:text-foreground"
+                className="inline-flex min-h-8 shrink-0 items-center border-b-2 border-transparent px-0.5 text-[11px] font-bold text-[#30483a] transition hover:border-emerald-700/60 hover:text-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:text-foreground"
               >
                 {locale === 'zh' ? item.zh : item.en}
               </Link>

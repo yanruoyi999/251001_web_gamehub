@@ -2164,3 +2164,11 @@
 - 修复文件：`app/[locale]/guides/[slug]/page.tsx` 将推荐图片显式包在对应游戏详情 `Link` 中并保留键盘 focus；`app/[locale]/page.tsx`、`components/retention/daily-recommendation.tsx` 为首页横向货架加入 `game-shelf-scroll`；`app/globals.css` 对该局部容器使用 `contain: paint`，不影响货架自身横向滚动；`tests/e2e/game-browsing.spec.ts` 改为验证图片链接并等待真实路由，`tests/ui-refresh-contract.test.ts` 和 `tests/retention-contract.test.ts` 同步语义断言。
 - 验证：iPhone 13 WebKit 文档宽度从 638px 修复为 390px，三个货架仍可滚动；攻略图片详情点击在 Chromium、Firefox、WebKit、Pixel 7、iPhone 13 为 5/5；生产构建生成 145/145 静态页；串行 `CI=1 pnpm exec playwright test --workers=2` 为 107/107 通过。此前一次本地 CI 未启动是因为定向 dev 测试覆盖了 `.next`，重建后复跑通过。
 - 发布边界：修复尚未合入 `main`、尚未部署生产；当前只推送功能分支，等待远端 CI 与新 Preview。URL、canonical、hreflang、robots/noindex、sitemap、GA4/Clarity 事件、数据库、搜索服务和来源边界未改变。
+
+### T-172 游戏门户视觉第三轮压缩（2026-08-21）
+
+- 反馈信号：对照历史截图和 Coolmath Games、Playhop、1001Games 的实际页面后，第二版仍偏“落地页”，首屏 Hero、按钮和货架留白过多；门户类参考更强调紧凑导航、图片优先、热门货架直接进入浏览。
+- 本地修改：`app/[locale]/page.tsx` 将首页标题区压缩为目录式标题行，桌面端导航链接改为轻量文字入口，移动端不再显示重复的“热门游戏”按钮；分类条间距和字号收紧；货架按条目数量在桌面端使用 6/5/3 列自适应铺满，避免 5 张或 3 张卡留下大块空白。`components/retention/daily-recommendation.tsx` 将首页推荐从 5 张扩为现有安全池的 6 张，并把标题改为与实际内容一致的 `Popular games today` / `今天热门`。
+- 兼容边界：没有新增游戏、来源、iframe 或页面 URL；没有改 canonical、hreflang、robots/noindex、sitemap、FAQ/JSON-LD、GA4/Clarity ID 和事件名；收藏仍使用本地存储并链接到 `/games/saved`，Preview 不加载生产遥测。
+- 验证：`pnpm lint`、`pnpm type-check`、相关 Vitest 17/17、`git diff --check` 和 Next.js 15.5.21 production build 145/145 通过。390px 浏览器验证 `documentWidth=390`、`bodyWidth=390`、首页推荐卡 6 张、收藏入口存在、两个内容货架存在；此前远端重跑 CI `32391279699`（build `96500286516`）107/107 E2E、runtime gate 和构建均通过。
+- 发布边界：本次第三轮修改尚未 commit、push、合入 `main` 或部署生产；将先推送当前 UI 分支生成新 Preview，供用户对照历史参考站复核。生产流量下降/恢复仍需真实 GA4、GSC、Clarity 数据，不能由本地或 Preview 自动化代替。
