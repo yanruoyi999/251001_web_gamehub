@@ -93,9 +93,34 @@ describe('original sorting games hub', () => {
     expect(source).not.toMatch(/searchParams\.set\(['"](?:answer|score|move|tile|time|player)/i);
   });
 
-  it('keeps the future page free from copied third-party game brands', () => {
-    if (!existsSync(sortingPagePath)) return;
+  it('publishes one indexable sorting hub with original-game schemas and focused keyword intent', () => {
+    expect(existsSync(sortingPagePath)).toBe(true);
     const source = readFileSync(sortingPagePath, 'utf8');
+
+    expect(source).toContain('Sorting Games Online');
+    expect(source).toContain('sorting games');
+    expect(source).toContain('sort games');
+    expect(source).toContain('sorting games online');
+    expect(source).toContain('color sorting game');
+    expect(source).toContain('number sorting game');
+    expect(source).toContain('Luma Original');
+    expect(source).toContain('SortingGamesPlayer');
+    expect(source).toContain("'CollectionPage'");
+    expect(source).toContain("'ItemList'");
+    expect(source).toContain("'VideoGame'");
+    expect(source).toContain("'FAQPage'");
+    expect(source).toContain("'BreadcrumbList'");
+    expect(source).toContain("'x-default'");
+    expect(source).toContain('index: true');
+    expect(source).toContain('follow: true');
+    expect(source).toContain("getLocalizedPath(locale, '/games')");
+    expect(source).toContain("'/games/online-games-for-couples'");
+    expect(source).toContain("'/games/2-player-unblocked'");
     expect(source).not.toMatch(/water sort puzzle|ball sort puzzle|sort it 3d|happy glass/i);
+
+    const playerIndex = source.indexOf('<SortingGamesPlayer');
+    const guideIndex = source.indexOf('data-sorting-guide-content');
+    expect(playerIndex).toBeGreaterThan(0);
+    expect(guideIndex).toBeGreaterThan(playerIndex);
   });
 });
