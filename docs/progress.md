@@ -2222,3 +2222,4 @@
 - 收藏说明与实际 Lucide `Bookmark` 控件对齐：每日推荐和已收藏空状态统一使用“书签 / bookmark”，不再误称为心形。
 - 未改路由、canonical、robots、noindex、sitemap、GA4/Clarity 事件名或收藏存储逻辑。
 - 验证：针对性 Vitest 17/17、type-check、lint、Next.js 15.5.21 生产构建（145 static pages）和 Chromium smoke 3/3 通过；英文/中文首页与收藏页均无旧 heart/心形文案，390px 移动端文档宽度无溢出。
+- 复查补充：推荐卡片角标与描述也不再暴露“Keyword test / 关键词测试”，改为平台跳跃、重力跑酷等玩家导向语义。

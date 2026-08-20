@@ -258,10 +258,10 @@ export default async function HomePage({
           {
             href: getLocalizedPath(locale, '/games/big-tower-tiny-square'),
             image: '/game-screenshots/big-tower-tiny-square.png',
-            eyebrow: '重力跑酷',
+            eyebrow: '平台跳跃',
             title: 'Big Tower Tiny Square',
             description:
-              '挑战带检查点的垂直平台，控制小角色穿过高塔中的连续障碍。',
+              '沿着检查点登上高塔，掌握跳跃时机，避开每一段危险平台。',
             action: '开始爬塔',
           },
           {
@@ -270,7 +270,7 @@ export default async function HomePage({
             eyebrow: '重力跑酷',
             title: 'G-Switch 2',
             description:
-              '反转重力、读障碍并保持跑线，适合喜欢短局跑酷的玩家。',
+              '在地面和天花板之间翻转重力，读懂障碍，保持节奏一路前进。',
             action: '开始跑酷',
           },
           {
@@ -289,7 +289,7 @@ export default async function HomePage({
             eyebrow: 'Platform challenge',
             title: 'Big Tower Tiny Square',
             description:
-              'Climb a checkpoint-based vertical platform challenge with precise short runs.',
+              'Climb through checkpoint-filled tower rooms with careful jumps and well-timed retries.',
             action: 'Climb the tower',
           },
           {
@@ -298,7 +298,7 @@ export default async function HomePage({
             eyebrow: 'Gravity runner',
             title: 'G-Switch 2',
             description:
-              'Practice gravity flips, obstacle reading, and clean lines in a short browser run.',
+              'Flip between floor and ceiling, read each obstacle, and keep the run moving.',
             action: 'Start the run',
           },
           {
