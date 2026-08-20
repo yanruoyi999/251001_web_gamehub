@@ -1,6 +1,6 @@
 # Luma Page Quality Scorecard
 
-Generated: 2026-08-15T04:32:46.357Z
+Generated: 2026-08-20T17:51:41.365Z
 
 Scope: public content and utility pages represented by the local catalogue, SEO guide registry, taxonomy, and sitemap policy. API/admin routes are not treated as content pages.
 
@@ -16,11 +16,11 @@ Scope: public content and utility pages represented by the local catalogue, SEO 
 
 ## Summary
 
-- Total scored rows: 254
-- Indexable rows: 95
-- Under-80 rows: 157
+- Total scored rows: 257
+- Indexable rows: 92
+- Under-80 rows: 161
 - Under-80 rows still indexable: 0
-- Actions: keep=95, noindex=5, redirect=10, remove-from-index=144
+- Actions: keep=92, noindex=10, redirect=10, remove-from-index=145
 
 ## Under-80 Handling
 
@@ -32,26 +32,30 @@ Scope: public content and utility pages represented by the local catalogue, SEO 
 
 | Path | Type | Score | Indexable | Action | Reason | Next step |
 | --- | --- | ---: | --- | --- | --- | --- |
+| /guides/adam-and-eve-walkthrough | guide | 85 | yes | keep | needs stronger related game recommendations; needs at least 2 related guide links | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
 | /games | static | 86 | yes | keep | Browse page now draws from the reduced core catalogue and avoids fake metrics in local mode. | Keep indexed; improve only if Clarity shows poor navigation or search friction. |
 | /about | static | 88 | yes | keep | Trust page required for AdSense review and site identity. | Keep current; update only when editorial/source policy changes. |
 | /contact | static | 88 | yes | keep | Trust/contact page required for user feedback and takedown requests. | Keep current; verify form/email path during final AdSense gate. |
 | /guides/best-browser-games-5-minute-break | guide | 89 | yes | keep | medium guide body (485 en words / 1059 zh chars); needs playable embed or source citation | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
-| /guides/fireboy-and-watergirl-walkthrough | guide | 89 | yes | keep | medium guide body (542 en words / 1158 zh chars); needs at least 2 related guide links | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
 | /guides/free-games-no-ads | guide | 89 | yes | keep | medium guide body (467 en words / 1020 zh chars); needs playable embed or source citation | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
-| /guides/g-switch-3 | guide | 89 | yes | keep | medium guide body (515 en words / 1037 zh chars); needs at least 2 related guide links | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
 | /guides/games-to-play-when-bored | guide | 89 | yes | keep | medium guide body (350 en words / 820 zh chars); needs playable embed or source citation | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
 | /games/tag/collection | tag | 90 | yes | keep | Collectibles tag has enough core games to work as a browsing collection. | Keep indexed; add editorial copy only if it earns search impressions. |
 | /games/tag/high-score | tag | 90 | yes | keep | High Score Hunt tag has enough core games to work as a browsing collection. | Keep indexed; add editorial copy only if it earns search impressions. |
 | /games/tag/precision | tag | 90 | yes | keep | Precision tag has enough core games to work as a browsing collection. | Keep indexed; add editorial copy only if it earns search impressions. |
 | /guides | static | 90 | yes | keep | Guide index links to original SEO/GEO pages and no-download helper guides. | Keep indexed and order cards by live GSC demand when enough data accumulates. |
+| /guides/apple-knight-mini-dungeons-guide | guide | 90 | yes | keep | needs stronger related game recommendations | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
+| /guides/big-tower-tiny-square-walkthrough | guide | 90 | yes | keep | needs stronger related game recommendations | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
+| /guides/drive-mad-level-tips | guide | 90 | yes | keep | needs stronger related game recommendations | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
+| /guides/drive-mad-walkthrough | guide | 90 | yes | keep | needs stronger related game recommendations | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
+| /guides/google-snake-mods | guide | 90 | yes | keep | needs stronger related game recommendations | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
+| /guides/hide-and-paint-guide | guide | 90 | yes | keep | needs stronger related game recommendations | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
+| /guides/monkey-tag-io-guide | guide | 90 | yes | keep | needs stronger related game recommendations | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
 | /privacy | static | 90 | yes | keep | Privacy page covers analytics, cookies, third-party services, and advertising disclosure. | Update when AdSense publisher ID and CMP flow are actually added. |
 | / | static | 92 | yes | keep | Primary entry point with curated navigation and current core game surfaces. | Continue rotating high-signal guide/game links from GSC. |
 | /guides/string-theory-2-remastered-guide | guide | 94 | yes | keep | medium guide body (549 en words / 1250 zh chars) | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
-| /guides/adam-and-eve-walkthrough | guide | 95 | yes | keep | needs at least 2 related guide links | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
 | /guides/best-free-iphone-games | guide | 95 | yes | keep | needs playable embed or source citation | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
 | /guides/browser-games-for-low-end-pc | guide | 95 | yes | keep | needs playable embed or source citation | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
-| /guides/monkey-mart-guide | guide | 95 | yes | keep | needs at least 2 related guide links | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
-| /guides/tunnel-rush-unblocked | guide | 95 | yes | keep | needs at least 2 related guide links | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
+| /games/2-player-unblocked | static | 96 | yes | keep | Dedicated bilingual collection has three provenance-approved self-hosted games, click-to-load runtimes, P1/P2 controls, device limitations, license/source notes, FAQ, CollectionPage/ItemList schema, canonical locale metadata, and relevant inbound links without fake metrics. | Keep indexed as the single two-player query hub; expand only after 2-6 weeks of real GSC and play-funnel evidence. |
 | /games/adam-and-eve-4 | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
 | /games/adam-and-eve-5-part-1 | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
 | /games/adam-and-eve-5-part-2 | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
@@ -94,7 +98,6 @@ Scope: public content and utility pages represented by the local catalogue, SEO 
 | /games/google-snake | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
 | /games/monkey-mart | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
 | /games/monster-tracks | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
-| /games/ovo | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
 | /games/rolling-ball | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
 | /games/string-theory-2-remastered | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
 | /games/tunnel-rush | game | 99 | yes | keep | Core-indexed page has complete editorial coverage under current static audit. | Keep indexed; optimize only when monitoring shows demand or playability friction. |
@@ -109,19 +112,13 @@ Scope: public content and utility pages represented by the local catalogue, SEO 
 | /games/tag/short-session | tag | 100 | yes | keep | Short Sessions tag has enough core games to work as a browsing collection. | Keep indexed; add editorial copy only if it earns search impressions. |
 | /games/tag/singleplayer | tag | 100 | yes | keep | Single Player tag has enough core games to work as a browsing collection. | Keep indexed; add editorial copy only if it earns search impressions. |
 | /guides/0h-h1-binary-puzzle-guide | guide | 100 | yes | keep | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
-| /guides/apple-knight-mini-dungeons-guide | guide | 100 | yes | keep | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
 | /guides/best-new-browser-games-july-2026 | guide | 100 | yes | keep | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
 | /guides/big-tower-tiny-square-2-walkthrough | guide | 100 | yes | keep | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
-| /guides/big-tower-tiny-square-walkthrough | guide | 100 | yes | keep | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
 | /guides/brainrot-games | guide | 100 | yes | keep | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
 | /guides/car-circle-guide | guide | 100 | yes | keep | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
-| /guides/drive-mad-level-tips | guide | 100 | yes | keep | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
-| /guides/drive-mad-walkthrough | guide | 100 | yes | keep | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
 | /guides/games-like-ovo | guide | 100 | yes | keep | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
-| /guides/google-snake-mods | guide | 100 | yes | keep | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
-| /guides/hide-and-paint-guide | guide | 100 | yes | keep | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
+| /guides/google-snake-level-editor | guide | 100 | yes | keep | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
 | /guides/how-to-play-popcorn-game | guide | 100 | yes | keep | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
-| /guides/monkey-tag-io-guide | guide | 100 | yes | keep | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
 | /guides/obby-parkour-with-ragdoll-guide | guide | 100 | yes | keep | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
 | /guides/ovo-walkthrough | guide | 100 | yes | keep | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
 | /guides/rail-cart-buddies-guide | guide | 100 | yes | keep | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep indexed; revisit only when GSC exposes a sharper long-tail query. |
@@ -284,5 +281,11 @@ Scope: public content and utility pages represented by the local catalogue, SEO 
 | /search | utility | 72 | no | noindex | Utility search results page is useful for users but not a stable landing page. | Keep noindex,follow and exclude from sitemap. |
 | /games/tag/progression | tag | 78 | no | noindex | too few core games (2) | Removed from sitemap and marked noindex until it has at least 3 strong core games. |
 | /games/tag/timed-challenge | tag | 78 | no | noindex | too few core games (1) | Removed from sitemap and marked noindex until it has at least 3 strong core games. |
-| /guides/friday-night-funkin-loading-guide | guide | 100 | no | noindex | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep noindex,follow and exclude from sitemap while the experiment is being evaluated. |
-| /guides/google-snake-level-editor | guide | 100 | no | noindex | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep noindex,follow and exclude from sitemap while the experiment is being evaluated. |
+| /guides/fireboy-and-watergirl-walkthrough | guide | 79 | no | noindex | medium guide body (529 en words / 1129 zh chars); needs stronger related game recommendations; needs at least 2 related guide links | Keep noindex,follow and exclude from sitemap while the experiment is being evaluated. |
+| /guides/g-switch-3 | guide | 79 | no | noindex | medium guide body (502 en words / 1006 zh chars); needs stronger related game recommendations; needs at least 2 related guide links | Keep noindex,follow and exclude from sitemap while the experiment is being evaluated. |
+| /guides/monkey-mart-guide | guide | 79 | no | noindex | medium guide body (536 en words / 1114 zh chars); needs stronger related game recommendations; needs at least 2 related guide links | Keep noindex,follow and exclude from sitemap while the experiment is being evaluated. |
+| /guides/tunnel-rush-unblocked | guide | 79 | no | noindex | medium guide body (532 en words / 1054 zh chars); needs stronger related game recommendations; needs at least 2 related guide links | Keep noindex,follow and exclude from sitemap while the experiment is being evaluated. |
+| /games/ovo | game | 81 | no | remove-from-index | The creator source describes OvO as exclusive to Coolmath Games; the current 4399 mirror has no verified embed permission. Keep noindex and withhold the iframe until source rights are confirmed. | Keep noindex and withhold iframe until source, IP, theme, and AdSense suitability are reviewed. |
+| /guides/friday-night-funkin-loading-guide | guide | 90 | no | noindex | needs stronger related game recommendations | Keep noindex,follow and exclude from sitemap while the experiment is being evaluated. |
+| /games/snake-3d | game | 94 | no | noindex | Original game page has bilingual play instructions, daily-challenge explanation, mobile controls, FAQ, structured data, and related internal links. | Keep noindex until desktop/mobile runtime checks, first-death duration evidence, and the 80+ release gate are complete; then add it to the sitemap in a separate indexability change. |
+| /guides/how-to-play-dominoes | guide | 100 | no | noindex | Original guide has metadata, sections, FAQ, related links, and source/play context. | Keep noindex,follow and exclude from sitemap while the experiment is being evaluated. |

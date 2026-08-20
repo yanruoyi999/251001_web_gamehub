@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useEffect, useState } from 'react';
 
@@ -61,10 +61,13 @@ function loadClarity(projectId: string) {
 }
 
 export function ClarityConsent({ locale = 'en' }: ClarityConsentProps = {}) {
-  const [consent, setConsent] = useState<AnalyticsConsent | 'prompt' | 'unknown'>('unknown');
+  const [consent, setConsent] = useState<
+    AnalyticsConsent | 'prompt' | 'unknown'
+  >('unknown');
 
   useEffect(() => {
-    if (!clarityProjectId || !isFormalProductionHost(window.location.hostname)) return;
+    if (!clarityProjectId || !isFormalProductionHost(window.location.hostname))
+      return;
 
     const saved = window.localStorage.getItem(storageKey);
     if (saved === 'granted') {
@@ -97,20 +100,23 @@ export function ClarityConsent({ locale = 'en' }: ClarityConsentProps = {}) {
   return (
     <aside
       aria-label={isChinese ? '分析同意' : 'Analytics consent'}
-      className="fixed inset-x-4 bottom-4 z-50 flex max-w-xl flex-col gap-3 rounded-lg border border-border bg-background/95 p-4 shadow-lg backdrop-blur sm:left-6 sm:right-auto"
+      data-consent-overlay
+      className="fixed inset-x-3 bottom-[calc(0.75rem+env(safe-area-inset-bottom))] z-50 flex w-[calc(100vw-1.5rem)] max-w-md items-center gap-3 rounded-lg border border-border bg-background/95 p-3 shadow-lg backdrop-blur sm:left-6 sm:right-auto sm:gap-4 sm:p-4"
     >
-      <p className="text-sm text-foreground">{copy}</p>
-      <div className="flex flex-wrap gap-2">
+      <p className="min-w-0 flex-1 text-xs leading-5 text-foreground sm:text-sm">
+        {copy}
+      </p>
+      <div className="flex shrink-0 gap-1.5 sm:gap-2">
         <button
           type="button"
-          className="rounded-md bg-primary px-3 py-2 text-sm font-medium text-primary-foreground"
+          className="min-h-10 rounded-md bg-primary px-2.5 py-2 text-xs font-semibold text-primary-foreground transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:px-3 sm:text-sm"
           onClick={grant}
         >
           {isChinese ? '允许分析' : 'Allow analytics'}
         </button>
         <button
           type="button"
-          className="rounded-md border border-border px-3 py-2 text-sm font-medium text-foreground"
+          className="min-h-10 rounded-md border border-border px-2.5 py-2 text-xs font-semibold text-foreground transition hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:px-3 sm:text-sm"
           onClick={deny}
         >
           {isChinese ? '拒绝' : 'Decline'}

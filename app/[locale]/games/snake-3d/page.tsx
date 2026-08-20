@@ -259,7 +259,7 @@ export default async function Snake3DPage({ params }: Snake3DPageProps) {
   };
 
   return (
-    <main className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
+    <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(gameJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbJsonLd) }} />
@@ -319,6 +319,6 @@ export default async function Snake3DPage({ params }: Snake3DPageProps) {
           </div>
         </section>
       </article>
-    </main>
+    </div>
   );
 }

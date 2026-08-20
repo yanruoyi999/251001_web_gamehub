@@ -2110,3 +2110,99 @@
 - 修改文件：`app/layout.tsx`、`components/analytics/ProductionTelemetry.tsx`、`tests/ga4-bootstrap.test.ts`。遥测改为 hydration 后根据浏览器真实 hostname 加载，Preview/localhost 仍不加载。
 - 验证：回归测试先 RED 2/2 后转为 GREEN；全量 Vitest 85 files / 267 tests、type-check、internal-link audit、production audit、显式全量 ESLint、diff-check 和 Next.js 15.5.21 生产构建（145 路由）通过。浏览器中正式域只有 1 个 GA 脚本和 1 次 `page_view`，Preview 无遥测请求，两者均无 page error。
 - 数据边界：当前只能证明本地代码与生产构建候选正确；真实 GA4 恢复需部署后等待后台处理，历史漏采不可回填。UI 改版继续暂停，等待 3 个完整自然日 GA4/GSC 基线。
+
+### T-172 精选游戏货架 UI 改版 Preview 验证（2026-08-20）
+
+- 发布范围：在独立分支 `codex/ui-curated-shelf-20260820` 完成共享 Header/Footer、首页精选货架与今日推荐、游戏目录网格、游戏详情与攻略模板的紧凑布局和移动端适配；保留 URL、canonical、hreflang、robots/noindex、sitemap、FAQ/JSON-LD、既有 GA4/Clarity 事件名与第三方来源边界。未修改生产数据库、搜索服务、后台配置或索引策略。
+- 本地验证：`pnpm test --run` 通过 86 files / 271 tests；`pnpm type-check`、`pnpm lint`、`pnpm build`、`pnpm check:internal-links` 和页面质量/运行时质量审计通过。Next.js 15.5.21 生产构建生成 145 个静态页；本地移动 Lighthouse 为首页 90/100、游戏目录 92/98、Google Snake Mods 指南 92/100、Spend 96/100（Performance/Accessibility）。
+- Preview：部署 `dpl_3KZPFdoMWRNJRdE174g5iXZ83C2A` 已 `Ready`，Preview 受 Vercel 保护层约束。受保护读取确认首页、游戏目录、Google Snake Mods、Spend 与 Snake 3D 均为单一 `<main>`；canonical 保持正确，Snake 3D 为 `noindex, follow` 且不在 sitemap；robots、health、search 均正常，sitemap 200 URLs；浏览器网络未观察到 GA4/Clarity 请求。Preview Lighthouse 的 SEO 低分来自保护层 `x-robots-tag: noindex` 与 Vercel feedback 脚本 CSP 报错，不代表生产页面 SEO 结果。
+- 根因修复：Preview 首轮发现独立 Snake 3D 路由仍嵌套 `<main>`；已在 `app/[locale]/games/snake-3d/page.tsx` 改为普通容器，并在 `tests/ui-refresh-contract.test.ts` 增加回归断言，提交 `d674f94`。
+- 当前状态：分支已推送，Preview 已验证；尚未合入 `main`、部署生产或用 GA4 判断 UI 结果。由于此前 UI 变更与访客下降存在时间相关性，正式发布前需由用户确认 main/生产发布范围；生产后观察 GA4 page_view/session_start、GSC 展现/点击/排名、Clarity dead/rage/quick back、recommendation_view/click 和 favorite_add/remove。
+
+### T-172 UI 改版 CI 复核（2026-08-20）
+
+- 本地 CI 模式回归：生产构建完成后，`CI=1 pnpm exec playwright test --workers=2` 全量 97/97 通过；此前远端失败的移动披露/游戏目录 30 项和 Pong WebKit 3 项也分别通过。Spend Firefox 交互重复测试 6 次出现 1 次时序失败，页面实际组件与本次 UI 分支均未修改，不能归因于本次 UI 改版。
+- GitHub CI：PR #24 早期运行曾出现 Firefox 时序失败和设备首屏导航超时；随后最新运行 `32378098459` 已全绿，静态检查、type-check、内链检查、单测、生产依赖审计、Next.js 生产构建、97 项 E2E 和 runtime quality gate 全部通过。未绕过门禁、未修改测试以隐藏失败。
+- 发布边界：当前分支 `codex/ui-curated-shelf-20260820` 与 `origin/codex/ui-curated-shelf-20260820` 同为 `b07b606`，工作树干净；`origin/main` 仍为 `80abea6`。Preview 仍可用于人工复核，未合入 `main`、未部署生产、未修改 GA4/GSC/Clarity、数据库、搜索服务或索引配置。
+- 下一步：先由用户确认是否接受这个独立的 CI 时序风险并发布；若不接受，则单独治理 Spend Firefox 测试稳定性，不把该测试修复混入 UI 改版。
+
+### T-172 首页货架语义修正与本地复验（2026-08-20）
+
+- 复核发现：首版首页仍把攻略、测试游戏和 Spend 入口混在“Start with”语义下，未严格满足“今日推荐 / 热门攻略 / 正在测试的新游戏”三类独立货架。该问题属于信息架构和重复入口问题，不是 GA4 数据缺失。
+- 本地修正：`app/[locale]/page.tsx` 新增独立的 `热门攻略` 与 `正在测试的新游戏` 服务端货架；`今日推荐` 继续使用既有 `DailyRecommendation`、`recommendation_view/click`、无账号收藏和 `/games/saved` 入口；移除首页独立 Spend CTA，Spend 仍保留在每日推荐池及既有游戏目录/上下文内链中。未改 URL、canonical、hreflang、robots、noindex、sitemap、来源策略或事件名。
+- 回归覆盖：更新 `tests/home-curation.test.ts`、`tests/ui-refresh-contract.test.ts`、`tests/retention-contract.test.ts`、`tests/spend-bill-gates-money-seo-v1-2.test.ts`，新增 `tests/e2e/smoke.spec.ts` 的三货架、收藏入口和移动无横向溢出检查。
+- 验证结果：目标契约 21/21；完整 Vitest 86 files / 271 tests；type-check、lint（0 errors，98 个既有 warnings）、Next.js 15.5.21 production build（145 static pages）、internal-link audit 均通过。页面质量审计 257 rows / 92 indexable / 0 indexable under-80；移动运行时 11/11、最低 96、under-80 为 0。
+- 浏览器与性能：Chromium 与 Pixel 7 首页货架专项 4/4；本地移动 Lighthouse（临时 CLI 13.4.1，Node 20 出现其要求 Node >=22.19 的工具警告，不影响页面构建）首页 Performance/Accessibility/Best Practices/SEO 为 90/100/100/100，游戏目录 93/98/96/100，Google Snake Mods 指南 87/100/100/100，Spend 93/100/100/100；四页 CLS 为 0。完整本地 E2E 当前 96/97，唯一失败仍是 Spend Firefox 分享对话框在点击后 5 秒内未出现，连续复跑可复现；该组件不在本轮 UI 改动范围，且此前远端 CI `32378098459` 已全绿，作为独立残余风险记录，不用 UI 改版掩盖。
+- 发布边界：代码提交 `9157ab0` 已推送到 `codex/ui-curated-shelf-20260820`；PR #24 的 CI `32380843003` 已全绿（包含 97 项远端 E2E 和 runtime quality gate）。新 Preview `https://251001-web-gamehub-rdg6-git-codex-8f1c09-yanruoyi999s-projects.vercel.app/en` 已 Ready，但仍受 Vercel 保护层约束，未合入 `main` 或部署生产。GA4、GSC、Clarity、数据库、搜索服务、Vercel 设置和索引策略未修改；真实流量下降/恢复不能由本地测试或 Preview 自动化证明。
+- Preview 复核：受保护 Chrome 的桌面/390px 移动检查确认三个货架和收藏入口均可见，热门攻略与测试游戏各 3 张卡，`main` 数量为 1、document width 等于 viewport width；canonical 仍指向正式域，robots/sitemap 返回 200，sitemap 为 200 个 URL。Preview 网络仅见 Vercel feedback 脚本和站内资源，未见 GA4/Clarity 请求；Preview Lighthouse SEO 69 受保护层 noindex 影响，不作为生产 SEO 结论。
+- 下一步：发布前仍需用户确认是否合入 `main` 和生产部署。生产后观察 GA4 page_view/session_start、GSC 展现/点击/排名、Clarity dead/rage/quick back、`recommendation_view/click` 和 `favorite_add/remove`，不把自动化访问计作真实用户行为。
+
+### T-172 游戏门户视觉二次修订（2026-08-20）
+
+- 复核信号：用户反馈首版 UI 仍像通用落地页，要求参考 Coolmath Games、Playhop、1001Games 和 itch.io 的图像优先货架、紧凑导航与移动端快速浏览；由于此前 UI 变更与访客下降存在时间相关性，本次继续保持功能分支和 Preview 边界，不直接动生产。
+- 本地修改：共享 Header 改为深色紧凑顶栏，首页改为浅绿色目录画布、快速分类、图像优先的今日推荐/攻略/测试游戏货架；首页推荐卡在移动端使用窄列横向浏览，在桌面端使用三列货架；游戏目录增加紧凑分类快捷入口并压缩筛选与卡片密度。Spend 宽幅 OG 素材使用完整显示，避免裁切标题。
+- 兼容边界：未修改 URL、canonical、hreflang、robots/noindex、sitemap、FAQ/JSON-LD、游戏来源、iframe 边界、GA4/Clarity 事件名、数据库、搜索服务或环境变量；收藏仍走既有本地存储和 `/games/saved`，推荐事件仍为 `recommendation_view`、`recommendation_click`、`favorite_add/remove`。
+- 验证：`pnpm type-check`、定向 ESLint、`git diff --check`、全量 Vitest 86 files / 271 tests、`pnpm build`（145 个静态页）、`pnpm check:internal-links`、`pnpm audit:prod` 全部通过。重启本地服务后 Playwright Chromium、Pixel 7、Pixel 7 touch 首页/目录/Snake 3D专项 5/5 通过；移动 Lighthouse Accessibility 96、Best Practices 100、SEO 92，性能 trace LCP 约 1.63 秒、CLS 0。
+- 验证说明：第一次 Playwright 运行发生在 `next dev` 与 `next build` 并行读写同一 `.next` 目录期间，出现 vendor chunk 缺失并返回 500；停止并重启开发服务后复跑 5/5 通过。该失败归类为本地验证环境竞争，不是产品回归。
+- 当前状态：未合入 `main`、未部署生产、未修改 GA4/GSC/Clarity 或外部后台；本轮代码仍待提交到 `codex/ui-curated-shelf-20260820` 并生成新的 Preview，生产访客恢复不能由本地或 Preview 自动化证明。
+- 下一步：用户先在新 Preview 复核门户视觉和移动端首屏；确认后再决定是否合入 `main`、部署生产。生产后继续观察 GA4 page_view/session_start、GSC 展现/点击/排名、Clarity dead/rage/quick back、`recommendation_view/click` 与 `favorite_add/remove`。
+
+### T-172 游戏门户视觉二次修订实现记录（2026-08-20）
+
+- 新增问题信号：用户复核历史截图后认为首版仍不像 Coolmath Games、Playhop、1001Games 和 itch.io 的游戏门户，主要问题是营销式英雄区偏大、卡片说明过长、货架密度不足，以及详情/攻略页仍有过多嵌套卡片。
+- 直接根因：共享布局虽然已具备货架语义，但视觉层级仍按落地页而非游戏目录设计；首页、目录、游戏详情和攻略模板的图片优先、快速扫描关系不一致。
+- 本地修改：`app/[locale]/page.tsx` 压缩英雄区并改为浅绿色目录画布、文字分类标签和图像优先货架；今日推荐、热门攻略、测试游戏扩展为桌面密集网格和移动横向窄列，并补入既有 Level Editor 与 Big Tower 指南。`app/[locale]/games/page.tsx` 改为紧凑筛选和 6/7 列桌面网格、移动 2 列；`app/[locale]/games/[slug]/page.tsx` 增加播放器下方操作栏和 controls 锚点，移除无必要的顶部重复收藏操作；`app/[locale]/guides/[slug]/page.tsx` 将攻略内容和 Featured Picks 改为扁平、图像优先层级；`components/layout/Header.tsx` 保留紧凑深色顶栏并在移动端显示完整 Luma Game Hub；`components/retention/daily-recommendation.tsx` 将首页推荐扩为 5 个安全候选，继续复用既有推荐、收藏和 `/games/saved` 逻辑。
+- 兼容边界：未修改 URL、canonical、hreflang、robots/noindex、sitemap、FAQ/JSON-LD、游戏来源和 iframe 边界；未修改 GA4/Clarity ID、事件名称、page_view 逻辑、数据库、搜索服务或环境变量。Snake 3D 仍保持 noindex，Spend 与 OvO 的既有版权边界未扩大。
+- 测试与构建：`pnpm test -- --run` 通过 86 files / 272 tests；`pnpm type-check`、定向 ESLint、`git diff --check`、`pnpm build`（Next.js 15.5.21，145 个静态页）、`pnpm check:internal-links` 和 `pnpm audit:prod` 通过。Playwright Chromium、Pixel 7、Pixel 7 touch 首页/目录/Snake 3D专项 7/7 通过。首轮 E2E 仅因首页攻略货架由 3 张扩为 5 张而触发旧断言，更新测试契约后复跑通过，不是产品回归。
+- 未验证与发布边界：本轮改动尚未合入 `main` 或部署生产；当前分支将先生成新 Preview 供视觉复核。Preview 的保护层可能使 Lighthouse SEO 显示 noindex，不作为生产索引结论。真实访客下降/恢复、GA4、GSC 和 Clarity 变化必须等生产部署后按自然流量观察，不能用本地或 Preview 自动化替代。
+- 下一步：核对新 Preview 的桌面/360/390/412 移动首屏、收藏入口、货架点击和模板操作栏；用户确认前不合入 `main`，不部署生产。
+
+### T-172 UI 二次修订移动端与卡片交互修复（2026-08-21）
+
+- 远端首轮 CI `32388559848` 原始信号：静态检查、类型检查、内链审计、单测、依赖审计和生产构建通过；E2E 107 项中 101 通过，6 项失败。失败集中在所有浏览器的攻略推荐图片点击断链，以及 iPhone 13 首页文档宽度 638px。
+- 根因：攻略模板从旧 `Card` 改成扁平 `<article>` 时去掉了旧 CSS 覆盖层，图片本身不再是可点击详情链接；首页货架从 3 张扩为 5 张后，WebKit 将横向 CSS Grid 滚动容器的绘制区域计入根文档宽度，造成移动端横向溢出断言失败。
+- 修复文件：`app/[locale]/guides/[slug]/page.tsx` 将推荐图片显式包在对应游戏详情 `Link` 中并保留键盘 focus；`app/[locale]/page.tsx`、`components/retention/daily-recommendation.tsx` 为首页横向货架加入 `game-shelf-scroll`；`app/globals.css` 对该局部容器使用 `contain: paint`，不影响货架自身横向滚动；`tests/e2e/game-browsing.spec.ts` 改为验证图片链接并等待真实路由，`tests/ui-refresh-contract.test.ts` 和 `tests/retention-contract.test.ts` 同步语义断言。
+- 验证：iPhone 13 WebKit 文档宽度从 638px 修复为 390px，三个货架仍可滚动；攻略图片详情点击在 Chromium、Firefox、WebKit、Pixel 7、iPhone 13 为 5/5；生产构建生成 145/145 静态页；串行 `CI=1 pnpm exec playwright test --workers=2` 为 107/107 通过。此前一次本地 CI 未启动是因为定向 dev 测试覆盖了 `.next`，重建后复跑通过。
+- 发布边界：修复尚未合入 `main`、尚未部署生产；当前只推送功能分支，等待远端 CI 与新 Preview。URL、canonical、hreflang、robots/noindex、sitemap、GA4/Clarity 事件、数据库、搜索服务和来源边界未改变。
+
+### T-172 游戏门户视觉第三轮压缩（2026-08-21）
+
+- 反馈信号：对照历史截图和 Coolmath Games、Playhop、1001Games 的实际页面后，第二版仍偏“落地页”，首屏 Hero、按钮和货架留白过多；门户类参考更强调紧凑导航、图片优先、热门货架直接进入浏览。
+- 本地修改：`app/[locale]/page.tsx` 将首页标题区压缩为目录式标题行，桌面端导航链接改为轻量文字入口，移动端不再显示重复的“热门游戏”按钮；分类条间距和字号收紧；货架按条目数量在桌面端使用 6/5/3 列自适应铺满，避免 5 张或 3 张卡留下大块空白。`components/retention/daily-recommendation.tsx` 将首页推荐从 5 张扩为现有安全池的 6 张，并把标题改为与实际内容一致的 `Popular games today` / `今天热门`。
+- 兼容边界：没有新增游戏、来源、iframe 或页面 URL；没有改 canonical、hreflang、robots/noindex、sitemap、FAQ/JSON-LD、GA4/Clarity ID 和事件名；收藏仍使用本地存储并链接到 `/games/saved`，Preview 不加载生产遥测。
+- 验证：`pnpm lint`、`pnpm type-check`、相关 Vitest 17/17、`git diff --check` 和 Next.js 15.5.21 production build 145/145 通过。390px 浏览器验证 `documentWidth=390`、`bodyWidth=390`、首页推荐卡 6 张、收藏入口存在、两个内容货架存在；此前远端重跑 CI `32391279699`（build `96500286516`）107/107 E2E、runtime gate 和构建均通过。
+- 发布边界：本次第三轮修改尚未 commit、push、合入 `main` 或部署生产；将先推送当前 UI 分支生成新 Preview，供用户对照历史参考站复核。生产流量下降/恢复仍需真实 GA4、GSC、Clarity 数据，不能由本地或 Preview 自动化代替。
+
+### T-172 游戏门户视觉第四轮门户化修正（2026-08-21）
+
+- 反馈信号：用户对第三轮 Preview 仍不满意，要求回看历史截图并更贴近 Coolmath Games、Playhop、1001Games 和 itch.io 的门户结构；第三轮仍有“内容落地页”观感，移动横向卡片会截断标题，浅绿色大画布和重复说明降低了首屏扫描效率。
+- 本地修改：`app/[locale]/page.tsx` 与 `components/retention/daily-recommendation.tsx` 改为中性门户底色、图像优先双列/多列货架、紧凑胶囊分类和 16:10 卡片；`app/[locale]/games/page.tsx` 将目录筛选压缩为搜索优先、分类快捷入口和密集游戏网格。收藏、`/games/saved`、推荐曝光/点击事件和现有内容入口保持不变。
+- 兼容边界：未修改 URL、canonical、hreflang、robots/noindex、sitemap、FAQ/JSON-LD、游戏来源、iframe 边界、GA4/Clarity ID、事件名、数据库、搜索服务或环境变量。
+- 验证：`pnpm lint`、`pnpm type-check`、定向 Vitest 17/17、Next.js 15.5.21 production build 145/145、`git diff --check` 通过；Chromium/Pixel 7/iPhone 13 首页与模板 smoke 9/9，Pixel 7 touch/iPhone 13 touch Snake 3D 2/2。全量 E2E 106/107；唯一失败为既有 Firefox Spend 数量/分享弹窗时序用例，单独 3 次复跑 3/6 通过，未触及本轮样式文件。
+- CI 修正：远端首轮单测失败仅来自 `tests/games-filter-mobile.test.ts` 对旧 `space-y-4` class 的脆弱字符串断言；已改为检查新的紧凑桌面/移动布局前缀，未改变运行时代码。修正后本地全量 Vitest 为 86 files / 272 tests 通过。
+- 发布边界：本轮尚未 commit、push、合入 `main` 或部署生产；下一步先推送分支生成新的受保护 Preview，供用户再次确认视觉。生产 GA4、GSC、Clarity 与访客变化仍须部署后观察，不能由 Preview 或自动化访问代替。
+
+### T-172 游戏门户视觉第五轮门户化修正（2026-08-21）
+
+- 反馈信号：用户对第四轮页面仍不满意，要求回看历史聊天截图并参考 Coolmath Games、Playhop、1001Games 与 itch.io 的真实门户结构。当前目标是让首屏更像“浏览游戏目录”，而不是营销式落地页。
+- 本地修改：新增 `components/layout/PortalRail.tsx`，在首页和游戏目录桌面端增加图标快捷侧栏；`app/[locale]/page.tsx` 与 `components/retention/daily-recommendation.tsx` 将货架图片恢复为 4:3、把分类标签移到图片上、把本地收藏按钮放到推荐图片右下角；`app/[locale]/games/page.tsx` 接入同一侧栏。移动端保持现有两列图片优先布局，不显示重复侧栏。
+- 交互边界：收藏按钮已从游戏详情链接内部移出，避免嵌套交互元素；收藏仍写入既有本地存储并进入 `/games/saved`，推荐仍只使用既有安全池和 `recommendation_view`、`recommendation_click`、`favorite_add/remove` 事件。未修改 URL、canonical、hreflang、robots/noindex、sitemap、FAQ/JSON-LD、GA4/Clarity ID、游戏来源、iframe 边界、数据库或搜索服务。
+- 验证：`pnpm lint`、`pnpm type-check`、`git diff --check`、`pnpm build`（Next.js 15.5.21，145/145 静态页）通过；本地 390px 首页与目录检查 `documentWidth=390`、`bodyWidth=390`、`main=1`，360/390/412 三个宽度均无横向溢出；Chromium/Pixel 7/iPhone 13 smoke 9/9，移动无 hydration 披露用例 15/15 通过。
+- 远端状态：GitHub CI `32396306999` 的静态检查、单测、构建通过，但 E2E 在 10 分钟超时，11 项失败集中在跨浏览器页面导航超时和 WebKit Pong 动画断言；同一批移动披露用例在本地当前生产构建 15/15 通过，不能把该远端运行记为全绿，也不能据此归因于本轮 CSS。Vercel 最新推送仍受平台 `Deployment rate limited — retry in 24 hours` 限制，尚无本轮最新公开 Preview。
+- 发布边界：本轮代码尚未合入 `main`、尚未部署生产、未修改 GA4/GSC/Clarity 或外部后台；待 Vercel 限流解除后生成最新 Preview，由用户复核视觉，再决定是否发布。生产流量恢复仍需真实 GA4、GSC、Clarity 数据，不能由本地或旧 Preview 替代。
+
+### T-172 游戏门户移动货架与攻略模板收口（2026-08-21）
+
+- 根因：第五轮桌面门户结构已接近参考站，但移动端货架仍由固定双列网格承载，卡片过宽、下一项不可见；攻略模板还有少量 `rounded-2xl` 视觉残留，与编辑式内容布局不一致。
+- 修改：`app/globals.css` 为既有 `.game-shelf-scroll` 增加手机端横向滚动、固定自动列宽、滚动吸附和局部绘制隔离；首页货架与 `DailyRecommendation` 卡片标记 `snap-start`；攻略视频、精选游戏和外部链接卡统一压缩为 `rounded-md`。没有改变 URL、canonical、hreflang、robots/noindex、sitemap、FAQ/JSON-LD、GA4/Clarity ID 或事件名。
+- 验证范围：新增 UI 契约检查移动端自动列与滚动吸附；Smoke 继续检查首页三个货架、收藏入口、无根文档横向溢出。待本轮本地测试、构建、Playwright 和新 Preview 完成后再记录结果。
+- 发布边界：只在 `codex/ui-curated-shelf-20260820` 分支推进；不合入 `main`、不部署生产、不改外部监测或数据库/搜索服务。
+- Lighthouse 复核补丁：移动采样初始 `/en/games` Accessibility 为 94，直接根因为 Filters 使用 `h3` 跳过 `h2`，以及两个次要文字节点对比度为 4.46；已改为 `h2` 并使用更深的中性文字色，首页 95、Snake 指南 96、Spend 99 未改动。
+
+### T-172 游戏门户 Preview 前最终回归（2026-08-21）
+
+- 本地验证：`pnpm test -- --run` 为 86 files / 272 tests 通过；`pnpm lint`、`pnpm type-check`、`pnpm audit:prod`、`pnpm check:internal-links`、`git diff --check` 和 Next.js 15.5.21 production build（145/145 静态页）通过。
+- 浏览器验证：全量 Playwright 为 105 passed / 2 failed；失败均为既有 `Spend Bill Gates Money` 分享弹窗在 Firefox 与 WebKit 的时序问题，未触及本轮文件。Chromium、Pixel 7、iPhone 13 smoke 与移动披露用例通过；360/390/412px 首页均保持 `documentWidth=viewport`，三个货架均为横向可滚动列。
+- Lighthouse 移动复核：`/en` 96/96/100/100、`/en/games` 92/100/100/92、`/en/guides/google-snake-mods` 98/96/100/100、`/en/games/spend-bill-gates-money` 97/96/100/100（依次为 Performance/Accessibility/Best Practices/SEO）；均达到本轮目标，目录页 SEO 分数沿用现有站点审计边界，未改 URL 或索引策略。
+- 运行时采样：`docs/page-runtime-sampling.md` 已基于最新本地生产构建 `http://localhost:3232` 重写，11 个页面、最低 96、低于 80 为 0；自动化采样阻断 GA4、Clarity 和 Vercel telemetry。
+- 发布边界：只提交 `codex/ui-curated-shelf-20260820` 的门户 UI 与验证记录；不合入 `main`、不部署生产、不修改 GA4/GSC/Clarity、数据库、搜索服务或外部环境配置。Preview 仅用于用户视觉复核。
