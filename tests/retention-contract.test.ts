@@ -28,10 +28,10 @@ const savedGamesSource = await readFile(
 );
 
 describe('retention experiment wiring', () => {
-  it('places the homepage recommendation before the existing curated cards', () => {
+  it('places the homepage recommendation before the guide and game shelves', () => {
     expect(homeSource).toContain('<DailyRecommendation');
     expect(homeSource.indexOf('<DailyRecommendation')).toBeLessThan(
-      homeSource.indexOf('<section aria-labelledby="curated-starts"')
+      homeSource.indexOf('<ShelfSection')
     );
   });
 
@@ -55,7 +55,7 @@ describe('retention experiment wiring', () => {
     );
   });
 
-  it('renders three visible recommendation cards with local favorite actions', () => {
+  it('renders visible recommendation cards with local favorite actions', () => {
     expect(recommendationSource).toContain('getDailyRecommendations');
     expect(recommendationSource).toContain('data-recommendation-card');
     expect(recommendationSource).toContain('<FavoriteToggleButton');
