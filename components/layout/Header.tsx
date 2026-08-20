@@ -47,8 +47,8 @@ function LanguageSwitcher() {
           className={clsx(
             'inline-flex min-h-11 items-center rounded-md px-2.5 py-1 text-sm font-medium transition-colors',
             item.code === activeLocale
-              ? 'bg-primary text-primary-foreground'
-              : 'text-muted-foreground hover:bg-accent'
+              ? 'bg-emerald-500 text-[#102033]'
+              : 'text-white/70 hover:bg-white/10 hover:text-white'
           )}
           onClick={() =>
             trackEvent('language_switch', {
@@ -87,7 +87,7 @@ export function Header() {
   return (
     <header
       data-print-hide
-      className="relative sticky top-0 z-50 border-b border-border/80 bg-background/90 backdrop-blur-lg"
+      className="relative sticky top-0 z-50 border-b border-emerald-300/15 bg-[#162033] text-white shadow-[0_8px_24px_-20px_rgba(7,18,34,0.9)]"
     >
       <div className="mx-auto flex h-14 w-full max-w-7xl items-center justify-between gap-4 px-4 md:h-16 md:px-6">
         {/* Logo */}
@@ -101,11 +101,11 @@ export function Header() {
             })
           }
         >
-          <div className="flex size-8 items-center justify-center rounded-md bg-primary text-primary-foreground shadow-sm shadow-primary/20">
+          <div className="flex size-8 items-center justify-center rounded-md bg-emerald-500 text-[#102033] shadow-[0_0_0_3px_rgba(52,211,153,0.12)]">
             <Gamepad2 className="size-4" aria-hidden="true" />
           </div>
-          <span className="truncate text-lg font-bold text-foreground sm:text-xl">
-            Luma <span className="hidden text-primary sm:inline">Game Hub</span>
+          <span className="truncate text-lg font-bold text-white sm:text-xl">
+            Luma <span className="hidden text-emerald-300 sm:inline">Game Hub</span>
           </span>
         </Link>
 
@@ -124,10 +124,10 @@ export function Header() {
                 key={item.href}
                 href={itemHref}
                 className={clsx(
-                  'relative min-h-11 inline-flex items-center text-sm font-medium transition-colors',
+                  'relative inline-flex min-h-11 items-center text-sm font-semibold transition-colors',
                   isActive
-                    ? 'text-primary'
-                    : 'text-muted-foreground hover:text-foreground'
+                    ? 'text-emerald-300'
+                    : 'text-white/65 hover:text-white'
                 )}
                 aria-current={isActive ? 'page' : undefined}
                 onClick={() =>
@@ -140,7 +140,7 @@ export function Header() {
               >
                 {t(item.labelKey)}
                 {isActive && (
-                  <span className="absolute -bottom-[17px] left-0 right-0 h-0.5 bg-primary"></span>
+                  <span className="absolute -bottom-[17px] left-0 right-0 h-0.5 bg-emerald-400"></span>
                 )}
               </Link>
             );
@@ -149,7 +149,7 @@ export function Header() {
 
         {/* Right Side Actions */}
         <div className="hidden items-center gap-3 md:flex">
-          <SearchInput locale={currentLocaleSegment} className="w-64" />
+          <SearchInput locale={currentLocaleSegment} className="w-64" variant="header" />
           <ThemeToggle />
           <LanguageSwitcher />
         </div>
@@ -157,7 +157,7 @@ export function Header() {
         <div className="flex items-center gap-1.5 md:hidden">
           <Link
             href={getLocalizedPath(currentLocaleSegment, '/games/saved')}
-            className="inline-flex size-11 items-center justify-center rounded-md text-foreground transition hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="inline-flex size-11 items-center justify-center rounded-md text-white transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300"
             aria-label={
               currentLocaleSegment === 'zh'
                 ? '打开我的收藏'
@@ -184,7 +184,7 @@ export function Header() {
           />
           <label
             htmlFor="mobile-navigation-toggle"
-            className="inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center rounded-lg border border-border bg-background text-foreground transition hover:bg-accent peer-checked:hidden peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-ring"
+            className="inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center rounded-md border border-white/15 bg-white/5 text-white transition hover:bg-white/10 peer-checked:hidden peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-emerald-300"
           >
             <span className="sr-only">
               {currentLocaleSegment === 'zh'
@@ -195,7 +195,7 @@ export function Header() {
           </label>
           <label
             htmlFor="mobile-navigation-toggle"
-            className="hidden min-h-11 min-w-11 cursor-pointer items-center justify-center rounded-lg border border-border bg-background text-foreground transition hover:bg-accent peer-checked:inline-flex peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-ring"
+            className="hidden min-h-11 min-w-11 cursor-pointer items-center justify-center rounded-md border border-white/15 bg-white/5 text-white transition hover:bg-white/10 peer-checked:inline-flex peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-emerald-300"
           >
             <span className="sr-only">
               {currentLocaleSegment === 'zh'
@@ -207,7 +207,7 @@ export function Header() {
 
           <div
             id="mobile-navigation"
-            className="absolute left-0 right-0 top-full hidden border-t border-border bg-background px-4 pb-5 pt-4 shadow-lg peer-checked:block md:hidden"
+            className="absolute left-0 right-0 top-full hidden border-t border-white/10 bg-[#162033] px-4 pb-5 pt-4 shadow-xl peer-checked:block md:hidden"
           >
             <div className="mx-auto w-full max-w-7xl space-y-4">
               <SearchInput
@@ -234,10 +234,10 @@ export function Header() {
                       key={item.href}
                       href={itemHref}
                       className={clsx(
-                        'flex min-h-11 items-center rounded-lg px-3 text-base font-medium transition-colors',
+                        'flex min-h-11 items-center rounded-md px-3 text-base font-medium transition-colors',
                         isActive
-                          ? 'bg-primary/10 text-primary'
-                          : 'text-foreground hover:bg-accent'
+                          ? 'bg-emerald-400/15 text-emerald-300'
+                          : 'text-white/80 hover:bg-white/10 hover:text-white'
                       )}
                       onClick={() =>
                         trackEvent('nav_link_click', {
@@ -254,8 +254,8 @@ export function Header() {
                   );
                 })}
               </nav>
-              <div className="flex items-center justify-between border-t border-border pt-4">
-                <span className="text-sm text-muted-foreground">
+              <div className="flex items-center justify-between border-t border-white/10 pt-4">
+                <span className="text-sm text-white/55">
                   {currentLocaleSegment === 'zh' ? '语言' : 'Language'}
                 </span>
                 <LanguageSwitcher />

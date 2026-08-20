@@ -5,7 +5,7 @@
 @layer base {
   /* 亮色：清新绿（白底 + 翠绿点睛） */
   :root {
-    --background: 210 24% 98%;
+    --background: 145 24% 96%;
     --foreground: 222 47% 11%;
     --card: 0 0% 100%;
     --card-foreground: 222 47% 11%;
@@ -30,8 +30,8 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 214 22% 91%;
-    --input: 214 22% 91%;
+    --border: 143 20% 86%;
+    --input: 143 20% 82%;
     --ring: 160 94% 24%;
 
     --radius: 0.625rem;
@@ -76,7 +76,7 @@
     scroll-behavior: smooth;
   }
   body {
-    @apply min-w-0 bg-background text-foreground;
+    @apply min-w-0 bg-background text-foreground antialiased;
   }
 }
 

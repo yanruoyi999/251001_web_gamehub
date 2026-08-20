@@ -8,6 +8,7 @@ import { getLocalizedPath, locales, type Locale } from '@/i18n/config';
 import { getShanghaiDateKey } from '@/lib/retention/daily-recommendation';
 import { serializeJsonLd } from '@/lib/utils/json-ld';
 import { DailyRecommendation } from '@/components/retention/daily-recommendation';
+import { SearchInput } from '@/components/game/search-input';
 
 type FaqItem = { question: string; answer: string };
 
@@ -60,51 +61,51 @@ function ShelfSection({
   priorityFirstImages = false,
 }: ShelfSectionProps) {
   return (
-    <section aria-labelledby={id} className="mt-10">
-      <div className="mb-5 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+    <section aria-labelledby={id} className="mt-10" data-catalog-shelf>
+      <div className="mb-3 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h2 id={id} className="text-xl font-semibold text-foreground sm:text-2xl">
+          <h2 id={id} className="text-lg font-bold tracking-tight text-foreground sm:text-xl">
             {title}
           </h2>
-          <p className="mt-1 text-sm text-muted-foreground">{description}</p>
+          <p className="mt-0.5 text-xs text-muted-foreground sm:text-sm">{description}</p>
         </div>
         <Link
           href={browseHref}
-          className="mt-2 inline-flex items-center gap-1 text-sm font-medium text-emerald-700 hover:text-emerald-800 sm:mt-0 dark:text-emerald-400 dark:hover:text-emerald-300"
+          className="mt-2 inline-flex min-h-9 items-center gap-1 text-xs font-bold text-emerald-800 hover:text-emerald-950 sm:mt-0 sm:text-sm dark:text-emerald-400 dark:hover:text-emerald-300"
         >
           {browseLabel}
           <ArrowRight className="h-4 w-4" aria-hidden="true" />
         </Link>
       </div>
 
-      <div className="grid grid-flow-col auto-cols-[82%] gap-3 overflow-x-auto pb-3 snap-x sm:auto-cols-[46%] lg:grid-flow-row lg:auto-cols-auto lg:grid-cols-3 lg:overflow-visible">
+      <div className="grid grid-flow-col auto-cols-[58%] gap-3 overflow-x-auto pb-2 snap-x sm:auto-cols-[40%] lg:grid-flow-row lg:auto-cols-auto lg:grid-cols-3 lg:overflow-visible">
         {entries.map((entry, index) => (
           <Link
             key={entry.href}
             href={entry.href}
-            className="group flex h-full snap-start flex-col overflow-hidden rounded-xl border border-border bg-card text-left shadow-none transition hover:-translate-y-0.5 hover:border-emerald-700/50 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            className="group flex h-full snap-start flex-col overflow-hidden rounded-[10px] border border-[#d6e2d8] bg-white text-left shadow-[0_8px_24px_-20px_rgba(16,58,38,0.6)] transition hover:-translate-y-0.5 hover:border-emerald-700/50 hover:shadow-[0_14px_28px_-20px_rgba(16,58,38,0.7)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 dark:border-border dark:bg-card"
           >
             <div className="relative aspect-[4/3] overflow-hidden bg-muted">
               <Image
                 src={entry.image}
                 alt={`${entry.title} gameplay`}
                 fill
-                sizes="(max-width: 640px) 82vw, (max-width: 1024px) 46vw, 33vw"
+                sizes="(max-width: 640px) 58vw, (max-width: 1024px) 40vw, 33vw"
                 className="object-cover transition duration-300 group-hover:scale-[1.03]"
                 priority={priorityFirstImages && index < 2}
               />
             </div>
-            <div className="flex flex-1 flex-col p-4">
-              <p className="text-xs font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-400">
+            <div className="flex flex-1 flex-col p-2.5 sm:p-3">
+              <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-emerald-700 dark:text-emerald-400">
                 {entry.eyebrow}
               </p>
-              <h3 className="mt-1 text-lg font-semibold text-foreground">
+              <h3 className="mt-1 line-clamp-1 text-base font-bold text-foreground sm:text-lg">
                 {entry.title}
               </h3>
-              <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+              <p className="mt-0.5 line-clamp-1 flex-1 text-[11px] leading-4 text-muted-foreground sm:text-xs">
                 {entry.description}
               </p>
-              <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-emerald-700 dark:text-emerald-400">
+              <span className="mt-2 inline-flex items-center gap-1 text-xs font-bold text-emerald-800 sm:text-sm dark:text-emerald-400">
                 {entry.action}
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </span>
@@ -284,40 +285,44 @@ export default async function HomePage({
 
   return (
     <>
-      <div className="bg-background px-4 pb-20 pt-5 md:px-6 md:pt-8">
+      <div className="bg-[#edf4ef] px-4 pb-20 pt-3 md:px-6 md:pt-5 dark:bg-background">
         <div className="mx-auto w-full max-w-7xl">
-          <header className="grid gap-5 border-b border-border pb-7 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:gap-10">
+          <header className="grid gap-3 border-b border-[#cbdccf] pb-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-8 dark:border-border">
             <div className="max-w-4xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700 dark:text-emerald-400">
-                {locale === 'zh' ? '打开浏览器就能玩' : 'Open. Choose. Play.'}
+              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-emerald-800 dark:text-emerald-400">
+                {locale === 'zh' ? '精选浏览器游戏' : 'Curated browser games'}
               </p>
-              <h1 className="mt-2 max-w-4xl text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl">
+              <h1 className="mt-1 max-w-4xl text-2xl font-black tracking-tight text-[#152238] sm:text-3xl dark:text-foreground">
                 {heroTitle}
               </h1>
-              <p className="mt-3 max-w-2xl text-base leading-7 text-muted-foreground md:text-lg">
+              <p className="mt-1 max-w-2xl text-sm leading-6 text-[#61766a] dark:text-muted-foreground">
                 {t('description')}
               </p>
             </div>
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2 md:justify-end">
               <Link
                 href={getLocalizedPath(locale, '/games')}
-                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-emerald-700 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-md bg-emerald-700 px-4 py-2 text-sm font-bold text-white shadow-sm transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 {t('playNow')}
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
               <Link
                 href={getLocalizedPath(locale, '/guides')}
-                className="inline-flex min-h-11 items-center justify-center rounded-md border border-border bg-background px-5 py-2.5 text-sm font-semibold text-emerald-700 transition hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 dark:text-emerald-400"
+                className="inline-flex min-h-10 items-center justify-center rounded-md border border-[#b9cebf] bg-white px-4 py-2 text-sm font-bold text-emerald-800 transition hover:bg-[#e4f0e7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 dark:border-border dark:bg-card dark:text-emerald-400"
               >
                 {t('browseArchive')}
               </Link>
             </div>
           </header>
 
+          <div className="mt-3 md:hidden">
+            <SearchInput locale={locale} className="w-full" />
+          </div>
+
           <nav
             aria-label={locale === 'zh' ? '快速分类' : 'Quick categories'}
-            className="mt-5 flex gap-2 overflow-x-auto pb-1"
+            className="mt-3 flex gap-2 overflow-x-auto border-b border-[#cbdccf] pb-3 dark:border-border"
           >
             {[
               { href: '/games/category/action', zh: '动作', en: 'Action' },
@@ -333,7 +338,7 @@ export default async function HomePage({
               <Link
                 key={item.href}
                 href={getLocalizedPath(locale, item.href)}
-                className="inline-flex min-h-10 shrink-0 items-center rounded-md border border-border bg-card px-3.5 text-sm font-medium text-foreground transition hover:border-primary/40 hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="inline-flex min-h-9 shrink-0 items-center rounded-md border border-[#c3d5c8] bg-white px-3 text-xs font-bold text-[#30483a] transition hover:border-emerald-700/50 hover:bg-[#e4f0e7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:border-border dark:bg-card dark:text-foreground"
               >
                 {locale === 'zh' ? item.zh : item.en}
               </Link>

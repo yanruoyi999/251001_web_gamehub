@@ -2136,3 +2136,13 @@
 - 发布边界：代码提交 `9157ab0` 已推送到 `codex/ui-curated-shelf-20260820`；PR #24 的 CI `32380843003` 已全绿（包含 97 项远端 E2E 和 runtime quality gate）。新 Preview `https://251001-web-gamehub-rdg6-git-codex-8f1c09-yanruoyi999s-projects.vercel.app/en` 已 Ready，但仍受 Vercel 保护层约束，未合入 `main` 或部署生产。GA4、GSC、Clarity、数据库、搜索服务、Vercel 设置和索引策略未修改；真实流量下降/恢复不能由本地测试或 Preview 自动化证明。
 - Preview 复核：受保护 Chrome 的桌面/390px 移动检查确认三个货架和收藏入口均可见，热门攻略与测试游戏各 3 张卡，`main` 数量为 1、document width 等于 viewport width；canonical 仍指向正式域，robots/sitemap 返回 200，sitemap 为 200 个 URL。Preview 网络仅见 Vercel feedback 脚本和站内资源，未见 GA4/Clarity 请求；Preview Lighthouse SEO 69 受保护层 noindex 影响，不作为生产 SEO 结论。
 - 下一步：发布前仍需用户确认是否合入 `main` 和生产部署。生产后观察 GA4 page_view/session_start、GSC 展现/点击/排名、Clarity dead/rage/quick back、`recommendation_view/click` 和 `favorite_add/remove`，不把自动化访问计作真实用户行为。
+
+### T-172 游戏门户视觉二次修订（2026-08-20）
+
+- 复核信号：用户反馈首版 UI 仍像通用落地页，要求参考 Coolmath Games、Playhop、1001Games 和 itch.io 的图像优先货架、紧凑导航与移动端快速浏览；由于此前 UI 变更与访客下降存在时间相关性，本次继续保持功能分支和 Preview 边界，不直接动生产。
+- 本地修改：共享 Header 改为深色紧凑顶栏，首页改为浅绿色目录画布、快速分类、图像优先的今日推荐/攻略/测试游戏货架；首页推荐卡在移动端使用窄列横向浏览，在桌面端使用三列货架；游戏目录增加紧凑分类快捷入口并压缩筛选与卡片密度。Spend 宽幅 OG 素材使用完整显示，避免裁切标题。
+- 兼容边界：未修改 URL、canonical、hreflang、robots/noindex、sitemap、FAQ/JSON-LD、游戏来源、iframe 边界、GA4/Clarity 事件名、数据库、搜索服务或环境变量；收藏仍走既有本地存储和 `/games/saved`，推荐事件仍为 `recommendation_view`、`recommendation_click`、`favorite_add/remove`。
+- 验证：`pnpm type-check`、定向 ESLint、`git diff --check`、全量 Vitest 86 files / 271 tests、`pnpm build`（145 个静态页）、`pnpm check:internal-links`、`pnpm audit:prod` 全部通过。重启本地服务后 Playwright Chromium、Pixel 7、Pixel 7 touch 首页/目录/Snake 3D专项 5/5 通过；移动 Lighthouse Accessibility 96、Best Practices 100、SEO 92，性能 trace LCP 约 1.63 秒、CLS 0。
+- 验证说明：第一次 Playwright 运行发生在 `next dev` 与 `next build` 并行读写同一 `.next` 目录期间，出现 vendor chunk 缺失并返回 500；停止并重启开发服务后复跑 5/5 通过。该失败归类为本地验证环境竞争，不是产品回归。
+- 当前状态：未合入 `main`、未部署生产、未修改 GA4/GSC/Clarity 或外部后台；本轮代码仍待提交到 `codex/ui-curated-shelf-20260820` 并生成新的 Preview，生产访客恢复不能由本地或 Preview 自动化证明。
+- 下一步：用户先在新 Preview 复核门户视觉和移动端首屏；确认后再决定是否合入 `main`、部署生产。生产后继续观察 GA4 page_view/session_start、GSC 展现/点击/排名、Clarity dead/rage/quick back、`recommendation_view/click` 与 `favorite_add/remove`。

@@ -30,6 +30,7 @@ export function DailyRecommendation({
   surface,
 }: DailyRecommendationProps) {
   const recommendationCount = surface === 'home' ? 3 : 1;
+  const isHome = surface === 'home';
   const [placementActive, setPlacementActive] = useState(
     placement === 'default'
   );
@@ -85,20 +86,20 @@ export function DailyRecommendation({
   return (
     <section
       aria-labelledby={`daily-recommendation-${surface}-${placement}`}
-      className={surface === 'home' ? 'mt-8 md:mt-10' : ''}
+      className={surface === 'home' ? 'mt-6 md:mt-8' : ''}
       data-recommendation-surface={surface}
     >
-      <div className="mb-4 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+      <div className="mb-3 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-            <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-emerald-700 dark:text-emerald-400">
+            <p className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.16em] text-emerald-800 dark:text-emerald-400">
               <CalendarDays className="h-4 w-4" aria-hidden="true" />
               {locale === 'zh' ? '今日推荐' : "Today's picks"}
             </p>
             {surface === 'home' ? (
               <Link
                 href={getLocalizedPath(locale, '/games/saved')}
-                className="inline-flex items-center gap-1 text-sm font-semibold text-emerald-700 hover:text-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-offset-2 dark:text-emerald-400 dark:hover:text-emerald-300"
+                className="inline-flex min-h-8 items-center gap-1 text-xs font-bold text-emerald-800 hover:text-emerald-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-offset-2 dark:text-emerald-400 dark:hover:text-emerald-300"
               >
                 <Bookmark className="h-4 w-4" aria-hidden="true" />
                 {locale === 'zh' ? '查看我的收藏' : 'View saved games'}
@@ -107,7 +108,7 @@ export function DailyRecommendation({
           </div>
           <h2
             id={`daily-recommendation-${surface}-${placement}`}
-            className="mt-1 text-xl font-semibold text-foreground sm:text-2xl"
+            className="mt-1 text-lg font-black tracking-tight text-foreground sm:text-xl"
           >
             {surface === 'home'
               ? locale === 'zh'
@@ -119,7 +120,7 @@ export function DailyRecommendation({
           </h2>
         </div>
         {surface === 'home' ? (
-          <p className="hidden max-w-md text-sm text-muted-foreground sm:block sm:text-right">
+          <p className="hidden max-w-md text-xs text-muted-foreground sm:block sm:text-right">
             {locale === 'zh'
               ? '点击心形即可收藏到当前浏览器，下次回来继续。'
               : 'Use the heart to save a game in this browser and return to it later.'}
@@ -130,14 +131,14 @@ export function DailyRecommendation({
       <div
         className={
           surface === 'home'
-            ? 'grid grid-flow-col auto-cols-[82%] gap-3 overflow-x-auto pb-3 snap-x sm:auto-cols-[46%] lg:grid-flow-row lg:auto-cols-auto lg:grid-cols-3 lg:overflow-visible'
+            ? 'grid grid-flow-col auto-cols-[64%] gap-3 overflow-x-auto pb-2 snap-x sm:auto-cols-[40%] lg:grid-flow-row lg:auto-cols-auto lg:grid-cols-3 lg:overflow-visible'
             : 'grid gap-4'
         }
       >
         {recommendations.map(recommendation => (
           <article
             key={recommendation.id}
-            className="snap-start overflow-hidden rounded-xl border border-border bg-card shadow-none transition hover:border-primary/40 hover:shadow-sm"
+            className="group snap-start overflow-hidden rounded-[10px] border border-[#d6e2d8] bg-white shadow-[0_8px_24px_-20px_rgba(16,58,38,0.6)] transition hover:-translate-y-0.5 hover:border-emerald-700/50 hover:shadow-[0_14px_28px_-20px_rgba(16,58,38,0.7)] dark:border-border dark:bg-card"
             data-recommendation-card={recommendation.slug}
           >
             <Link
@@ -145,26 +146,45 @@ export function DailyRecommendation({
               onClick={() => handleClick(recommendation)}
               className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-inset"
             >
-              <div className="relative aspect-[16/9] overflow-hidden bg-emerald-950">
+              <div
+                className={
+                  isHome
+                    ? 'relative aspect-[4/3] overflow-hidden bg-[#102033]'
+                    : 'relative aspect-[16/10] overflow-hidden bg-[#102033]'
+                }
+              >
                 <Image
                   src={recommendation.image}
                   alt={`${recommendation.title[locale]} gameplay`}
                   fill
                   sizes={
-                    surface === 'home'
-                      ? '(max-width: 640px) 82vw, (max-width: 1024px) 46vw, 33vw'
+                    isHome
+                      ? '(max-width: 640px) 58vw, (max-width: 1024px) 40vw, 33vw'
                       : '33vw'
                   }
-                  className="object-cover transition duration-300 group-hover:scale-[1.03]"
+                  className={`${recommendation.slug === 'spend-bill-gates-money' ? 'object-contain' : 'object-cover'} transition duration-300 group-hover:scale-[1.03]`}
                 />
+                {isHome ? (
+                  <span className="absolute left-2 top-2 rounded-sm bg-[#102033]/90 px-1.5 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-white">
+                    {recommendation.eyebrow[locale]}
+                  </span>
+                ) : null}
               </div>
             </Link>
 
-            <div className="p-4 sm:p-5">
-              <p className="text-xs font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-400">
-                {recommendation.eyebrow[locale]}
-              </p>
-              <h3 className="mt-1 text-xl font-semibold text-foreground">
+            <div className={isHome ? 'p-2.5 sm:p-3' : 'p-3 sm:p-4'}>
+              {!isHome ? (
+                <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-emerald-800 dark:text-emerald-400">
+                  {recommendation.eyebrow[locale]}
+                </p>
+              ) : null}
+              <h3
+                className={
+                  isHome
+                    ? 'mt-0.5 line-clamp-1 text-sm font-black text-foreground sm:text-base'
+                    : 'mt-1 line-clamp-1 text-base font-black text-foreground sm:text-lg'
+                }
+              >
                 <Link
                   href={getLocalizedPath(
                     locale,
@@ -176,17 +196,23 @@ export function DailyRecommendation({
                   {recommendation.title[locale]}
                 </Link>
               </h3>
-              <p className="mt-2 min-h-10 text-sm leading-relaxed text-muted-foreground">
+              <p
+                className={
+                  isHome
+                    ? 'mt-0.5 line-clamp-1 text-[11px] leading-4 text-muted-foreground sm:text-xs'
+                    : 'mt-1 line-clamp-2 min-h-10 text-xs leading-5 text-muted-foreground sm:text-sm'
+                }
+              >
                 {recommendation.description[locale]}
               </p>
-              <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+              <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
                 <Link
                   href={getLocalizedPath(
                     locale,
                     `/games/${recommendation.slug}`
                   )}
                   onClick={() => handleClick(recommendation)}
-                  className="inline-flex min-h-10 items-center gap-1 rounded-md bg-emerald-700 px-3 py-2 text-sm font-semibold text-white transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-offset-2"
+                  className="inline-flex min-h-8 items-center gap-1 rounded-md bg-emerald-700 px-2 py-1 text-[11px] font-bold text-white transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-offset-2 sm:min-h-9 sm:px-2.5 sm:text-xs"
                 >
                   {recommendation.action[locale]}
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -202,6 +228,7 @@ export function DailyRecommendation({
                   gameSlug={recommendation.slug}
                   surface="daily_recommendation"
                   storageMode="local"
+                  compact
                 />
               </div>
             </div>

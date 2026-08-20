@@ -401,34 +401,37 @@ export default async function GamesPage({
   );
 
   return (
-    <div className="mx-auto w-full max-w-7xl px-4 py-6 md:px-6 md:py-8">
-      <header className="mb-6 flex flex-col gap-2 border-b border-border pb-5 md:flex-row md:items-end md:justify-between">
+    <div className="mx-auto w-full max-w-7xl px-4 py-4 md:px-6 md:py-6">
+      <header className="mb-4 flex flex-col gap-1 border-b border-[#cbdccf] pb-4 md:flex-row md:items-end md:justify-between dark:border-border">
         <div>
-          <h1 className="text-2xl font-bold text-foreground sm:text-3xl">
+          <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-emerald-800 dark:text-emerald-400">
+            {locale === 'zh' ? '打开、选择、开始' : 'Open, choose, play'}
+          </p>
+          <h1 className="mt-1 text-2xl font-black tracking-tight text-[#152238] sm:text-3xl dark:text-foreground">
             {t('title')}
           </h1>
-          <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
+          <p className="mt-1 max-w-2xl text-sm text-[#61766a] dark:text-muted-foreground">
             {t('desc')}
           </p>
         </div>
         <Link
           href={getLocalizedPath(locale)}
-          className="text-sm font-medium text-primary hover:text-primary/80"
+          className="inline-flex min-h-9 items-center text-sm font-bold text-emerald-800 hover:text-emerald-950 dark:text-emerald-400"
         >
           {t('backToHome')}
         </Link>
       </header>
 
-      <Card className="mb-5 rounded-xl shadow-none">
-        <CardHeader className="p-4 pb-3">
-          <CardTitle className="text-lg font-semibold text-foreground">
+      <section className="mb-4 border-b border-[#cbdccf] py-3 dark:border-border">
+        <CardHeader className="p-0 pb-3">
+          <CardTitle className="text-base font-black text-foreground sm:text-lg">
             {t('filters.title')}
           </CardTitle>
-          <CardDescription className="text-sm text-muted-foreground">
+          <CardDescription className="text-xs text-muted-foreground">
             {t('resultSummary', { value: formatNumber(total) })}
           </CardDescription>
         </CardHeader>
-        <CardContent className="p-4 pt-0">
+        <CardContent className="p-0">
           <form className="space-y-4" method="get">
             <div>
               <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
@@ -438,7 +441,7 @@ export default async function GamesPage({
                   name="search"
                   defaultValue={search}
                   placeholder={t('filters.searchPlaceholder')}
-                  className="min-h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring"
+                  className="min-h-11 w-full rounded-md border border-[#b9cebf] bg-white px-3 py-2 text-sm text-foreground shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring dark:border-input dark:bg-background"
                 />
               </label>
             </div>
@@ -552,20 +555,48 @@ export default async function GamesPage({
               </div>
             </CollapsibleGameFilters>
 
-            <div className="flex gap-3">
-              <Button type="submit" className="min-h-11">
+            <div className="flex gap-2">
+              <Button type="submit" className="min-h-10 rounded-md bg-emerald-700 px-4 text-sm font-bold hover:bg-emerald-800">
                 {t('filters.submit')}
               </Button>
               <Link
                 href={gamesPath}
-                className="inline-flex min-h-11 items-center rounded-md border border-input px-4 py-2 text-sm font-medium text-foreground shadow-sm transition hover:bg-accent"
+                className="inline-flex min-h-10 items-center rounded-md border border-[#b9cebf] bg-white px-4 py-2 text-sm font-bold text-emerald-800 shadow-sm transition hover:bg-[#e4f0e7] dark:border-input dark:bg-background dark:text-foreground"
               >
                 {t('filters.reset')}
               </Link>
             </div>
           </form>
         </CardContent>
-      </Card>
+      </section>
+
+      <nav
+        aria-label={locale === 'zh' ? '游戏分类快捷入口' : 'Game category shortcuts'}
+        className="mb-4 flex gap-2 overflow-x-auto pb-1"
+      >
+        {[
+          ...categoryOptions.slice(0, 7).map(category => ({
+            href: `${gamesPath}?categoryId=${category.id}`,
+            label: resolveLabel(category.name, category.nameEn),
+          })),
+          {
+            href: `${gamesPath}?isNew=1`,
+            label: locale === 'zh' ? '新游戏' : 'New',
+          },
+          {
+            href: `${gamesPath}?isHot=1`,
+            label: locale === 'zh' ? '热门' : 'Hot',
+          },
+        ].map(item => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className="inline-flex min-h-9 shrink-0 items-center rounded-md border border-[#c3d5c8] bg-white px-3 text-xs font-bold text-[#30483a] transition hover:border-emerald-700/50 hover:bg-[#e4f0e7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:border-border dark:bg-card dark:text-foreground"
+          >
+            {item.label}
+          </Link>
+        ))}
+      </nav>
 
       {games.length === 0 ? (
         <div className="rounded-lg border border-dashed border-border bg-card px-6 py-12 text-center text-muted-foreground">
@@ -590,11 +621,11 @@ export default async function GamesPage({
             return (
               <Card
                 key={game.id}
-                className="group flex h-full flex-col justify-between overflow-hidden rounded-xl shadow-none transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md"
+                className="group flex h-full flex-col justify-between overflow-hidden rounded-[10px] border-[#d6e2d8] bg-white shadow-[0_8px_24px_-20px_rgba(16,58,38,0.6)] transition hover:-translate-y-0.5 hover:border-emerald-700/50 hover:shadow-[0_14px_28px_-20px_rgba(16,58,38,0.7)] dark:border-border dark:bg-card"
               >
                 <Link
                   href={getLocalizedPath(locale, `/games/${game.slug}`)}
-                  className="relative block aspect-[4/3] overflow-hidden bg-slate-900"
+                  className="relative block aspect-[4/3] overflow-hidden bg-[#102033]"
                   aria-label={displayTitle}
                 >
                   {thumbnailUrl ? (
@@ -604,7 +635,7 @@ export default async function GamesPage({
                         alt={displayTitle}
                         fill
                         sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                        className="object-cover transition-transform duration-300 hover:scale-105"
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
                       />
                     ) : (
                       // eslint-disable-next-line @next/next/no-img-element
@@ -612,7 +643,7 @@ export default async function GamesPage({
                         src={thumbnailUrl}
                         alt={displayTitle}
                         loading="lazy"
-                        className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                       />
                     )
                   ) : (
@@ -621,28 +652,28 @@ export default async function GamesPage({
                     </div>
                   )}
                 </Link>
-                <CardHeader className="p-3 sm:p-4">
+                <CardHeader className="p-3 sm:p-3.5">
                   {(game.featured || game.isHot || game.isNew) && (
                     <div className="mb-2 flex flex-wrap gap-2">
                       {game.featured ? (
-                        <span className="inline-flex items-center rounded-md bg-amber-100 px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-amber-700">
+                        <span className="inline-flex items-center rounded-sm bg-amber-100 px-1.5 py-1 text-[9px] font-bold uppercase tracking-wide text-amber-800">
                           {t('badges.featured')}
                         </span>
                       ) : null}
                       {game.isHot ? (
-                        <span className="inline-flex items-center rounded-md bg-rose-100 px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-rose-700">
+                        <span className="inline-flex items-center rounded-sm bg-rose-100 px-1.5 py-1 text-[9px] font-bold uppercase tracking-wide text-rose-800">
                           {t('badges.hot')}
                         </span>
                       ) : null}
                       {game.isNew ? (
-                        <span className="inline-flex items-center rounded-md bg-emerald-100 px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-emerald-700">
+                        <span className="inline-flex items-center rounded-sm bg-emerald-100 px-1.5 py-1 text-[9px] font-bold uppercase tracking-wide text-emerald-800">
                           {t('badges.new')}
                         </span>
                       ) : null}
                     </div>
                   )}
                   <div className="flex items-start justify-between gap-3">
-                    <CardTitle className="text-sm font-semibold leading-snug text-foreground sm:text-base">
+                    <CardTitle className="line-clamp-1 text-sm font-black leading-snug text-foreground sm:text-base">
                       <Link
                         href={getLocalizedPath(locale, `/games/${game.slug}`)}
                         className="hover:text-primary"
@@ -673,7 +704,7 @@ export default async function GamesPage({
                     </CardDescription>
                   ) : null}
                 </CardHeader>
-                <CardContent className="space-y-1 p-3 pt-0 text-xs text-muted-foreground sm:p-4 sm:pt-0 sm:text-sm">
+                <CardContent className="flex items-center justify-between gap-2 p-3 pt-0 text-[11px] text-muted-foreground sm:p-3.5 sm:pt-0 sm:text-xs">
                   <p className="truncate">{statusLabel}</p>
                   {catalogueUi.showCommunityMetrics ? (
                     <>
