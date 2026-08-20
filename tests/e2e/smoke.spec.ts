@@ -33,7 +33,7 @@ test.describe('Luma Game Hub smoke tests', () => {
       page.locator(
         'section[aria-labelledby="popular-guides"] a[href^="/en/guides/"]',
       ),
-    ).toHaveCount(3);
+    ).toHaveCount(5);
     await expect(
       page.locator(
         'section[aria-labelledby="testing-games"] a[href^="/en/games/"]',
@@ -45,5 +45,18 @@ test.describe('Luma Game Hub smoke tests', () => {
       documentWidth: document.documentElement.scrollWidth,
     }));
     expect(layout.documentWidth).toBeLessThanOrEqual(layout.viewportWidth);
+  });
+
+  test('game and guide templates keep the primary action layer visible', async ({
+    page,
+  }) => {
+    await page.goto('/en/games/drive-mad');
+    await expect(page.locator('[data-game-player-shell]')).toBeVisible();
+    await expect(page.locator('[data-game-action-bar]')).toBeVisible();
+    await expect(page.getByRole('link', { name: 'View controls' })).toBeVisible();
+
+    await page.goto('/en/guides/google-snake-mods');
+    await expect(page.locator('#guide-details')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Featured Picks' })).toBeVisible();
   });
 });

@@ -3,13 +3,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getLocalizedPath, locales, type Locale } from '@/i18n/config';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { GamePlayerFacade } from '@/components/game/game-player-facade';
 import { DominoesTraining } from '@/components/game/dominoes-training';
@@ -224,7 +217,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
 
   return (
     <article
-      className="mx-auto w-full max-w-6xl px-4 py-6 md:px-6 md:py-8"
+      className="mx-auto w-full max-w-7xl bg-[#f1f7e9] px-3 py-5 sm:px-4 md:px-6 md:py-7 dark:bg-background"
       data-printable-guide={page.printablePath ? 'true' : undefined}
     >
       {structuredData.map((schema, index) => (
@@ -234,7 +227,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
           dangerouslySetInnerHTML={{ __html: serializeJsonLd(schema) }}
         />
       ))}
-      <nav className="mb-5 text-sm text-muted-foreground" data-print-hide>
+      <nav className="mb-4 text-xs text-muted-foreground" data-print-hide>
         <Link
           href={getLocalizedPath(locale, '/guides')}
           className="hover:text-primary"
@@ -243,17 +236,17 @@ export default async function GuidePage({ params }: GuidePageProps) {
         </Link>
       </nav>
 
-      <header className="mb-7 max-w-4xl">
-        <p className="text-xs font-semibold uppercase tracking-wide text-primary">
+      <header className="mb-5 max-w-5xl border-b border-[#cbdccf] pb-4 dark:border-border">
+        <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-primary">
           {page.primaryKeyword}
         </p>
-        <h1 className="mt-2 max-w-4xl text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl">
+        <h1 className="mt-1 max-w-5xl text-2xl font-black tracking-tight text-[#152238] sm:text-3xl md:text-4xl dark:text-foreground">
           {content.heading}
         </h1>
-        <p className="mt-3 max-w-3xl text-base leading-7 text-muted-foreground sm:text-lg">
+        <p className="mt-2 max-w-4xl text-sm leading-6 text-muted-foreground sm:text-base">
           {content.subheading}
         </p>
-        <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground sm:text-sm">
+        <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-muted-foreground sm:text-xs">
           <span>
             {locale === 'zh'
               ? '作者：Luma Game Hub 编辑团队'
@@ -273,11 +266,11 @@ export default async function GuidePage({ params }: GuidePageProps) {
       </header>
 
       {page.printablePath ? (
-        <div className="mb-7 flex flex-wrap gap-3" data-print-hide>
+        <div className="mb-5 flex flex-wrap gap-2" data-print-hide>
           <a
             href={page.printablePath}
             download
-            className="inline-flex min-h-11 items-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="inline-flex min-h-10 items-center rounded-md bg-primary px-3 py-2 text-xs font-bold text-primary-foreground transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary sm:text-sm"
           >
             {locale === 'zh'
               ? '下载一页打印规则 PDF'
@@ -285,21 +278,21 @@ export default async function GuidePage({ params }: GuidePageProps) {
           </a>
           <a
             href="#guide-details"
-            className="inline-flex min-h-11 items-center rounded-md border border-border bg-background px-4 py-2 text-sm font-semibold text-foreground transition hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="inline-flex min-h-10 items-center rounded-md border border-border bg-background px-3 py-2 text-xs font-bold text-foreground transition hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary sm:text-sm"
           >
             {locale === 'zh' ? '查看完整规则' : 'Read the full rules'}
           </a>
         </div>
       ) : null}
 
-      <section className="mb-9 max-w-4xl border-y border-primary/20 bg-primary/5 px-4 py-5 sm:px-6">
+      <section className="mb-7 max-w-5xl border-y border-primary/25 bg-primary/5 px-3 py-4 sm:px-5">
         <p className="text-xs font-semibold uppercase tracking-wide text-primary">
           {locale === 'zh' ? '快速答案' : 'Quick answer'}
         </p>
-        <h2 className="mt-2 text-xl font-semibold text-foreground sm:text-2xl">
+        <h2 className="mt-1 text-lg font-black text-foreground sm:text-xl">
           {quickAnswer.title}
         </h2>
-        <p className="mt-3 text-base leading-relaxed text-foreground/90">
+        <p className="mt-2 text-sm leading-6 text-foreground/90 sm:text-base">
           {quickAnswer.body}
         </p>
         {quickAnswerBullets.length > 0 ? (
@@ -307,7 +300,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
             {quickAnswerBullets.map(item => (
               <li
                 key={item}
-                className="border-l-2 border-primary/30 bg-background/80 p-3"
+                className="border-l-2 border-primary/30 px-3 py-2 text-xs sm:text-sm"
               >
                 {item}
               </li>
@@ -319,7 +312,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
             href={content.quickAnswerLink.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-5 flex max-w-xl items-center justify-between gap-4 rounded-md border border-primary/30 bg-background px-4 py-3 text-left transition hover:border-primary hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="mt-4 flex max-w-xl items-center justify-between gap-4 rounded-md border border-primary/30 bg-background px-3 py-2.5 text-left transition hover:border-primary hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             <span>
               <span className="block font-semibold text-primary">
@@ -533,19 +526,21 @@ export default async function GuidePage({ params }: GuidePageProps) {
       <section
         id="guide-details"
         tabIndex={-1}
-        className="mt-12 space-y-10 scroll-mt-24 focus:outline-none"
+        className="mt-10 max-w-5xl scroll-mt-24 border-t border-[#cbdccf] focus:outline-none dark:border-border"
       >
         {detailSections.map(section => (
           <div
             key={section.title}
-            className="rounded-2xl border border-border bg-card p-6 shadow-sm"
+            className="border-b border-[#cbdccf] py-5 dark:border-border"
           >
-            <h2 className="text-2xl font-semibold text-foreground">
+            <h2 className="text-xl font-black text-foreground sm:text-2xl">
               {section.title}
             </h2>
-            <p className="mt-3 text-base text-foreground/90">{section.body}</p>
+            <p className="mt-2 text-sm leading-6 text-foreground/90 sm:text-base">
+              {section.body}
+            </p>
             {section.bullets ? (
-              <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-muted-foreground">
+              <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm text-muted-foreground">
                 {section.bullets.map((item, bulletIndex) => (
                   <li key={bulletIndex}>{item}</li>
                 ))}
@@ -560,18 +555,18 @@ export default async function GuidePage({ params }: GuidePageProps) {
         tabIndex={-1}
         className="mt-16 scroll-mt-24 focus:outline-none"
       >
-        <header className="mb-6 text-center">
-          <h2 className="text-3xl font-semibold text-foreground">
+        <header className="mb-4 border-b border-[#cbdccf] pb-3 dark:border-border">
+          <h2 className="text-xl font-black text-foreground sm:text-2xl">
             {locale === 'zh' ? '精选推荐' : 'Featured Picks'}
           </h2>
-          <p className="mt-2 text-sm text-muted-foreground">
+          <p className="mt-1 text-xs text-muted-foreground sm:text-sm">
             {locale === 'zh'
               ? '以下游戏可从详情页直接打开浏览器播放器，无需下载安装。'
               : 'Each recommendation opens a browser player from its detail page with no download required.'}
           </p>
         </header>
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {content.recommendations.map(item => {
             const game = gameIndex.get(item.slug);
             const gameTitle =
@@ -584,12 +579,12 @@ export default async function GuidePage({ params }: GuidePageProps) {
                 : (game?.descriptionEn ?? game?.description ?? '');
 
             return (
-              <Card
+              <article
                 key={item.slug}
-                className="flex h-full flex-col justify-between border border-border"
+                className="group flex h-full flex-col justify-between overflow-hidden rounded-[8px] border border-[#cbdccf] bg-white transition hover:-translate-y-0.5 hover:border-primary/50 dark:border-border dark:bg-card"
               >
                 {game?.thumbnailUrl?.startsWith('/game-screenshots/') ? (
-                  <div className="relative aspect-video overflow-hidden border-b border-border bg-muted">
+                    <div className="relative aspect-[4/3] overflow-hidden border-b border-border bg-muted">
                     <Image
                       src={game.thumbnailUrl}
                       alt={`${gameTitle} gameplay screenshot`}
@@ -599,19 +594,17 @@ export default async function GuidePage({ params }: GuidePageProps) {
                     />
                   </div>
                 ) : null}
-                <CardHeader>
-                  <CardTitle className="text-xl font-semibold text-foreground">
+                <div className="p-3">
+                  <h3 className="text-base font-black text-foreground">
                     {gameTitle}
-                  </CardTitle>
+                  </h3>
                   {gameDescription ? (
-                    <CardDescription className="text-sm text-muted-foreground">
+                    <p className="mt-1 line-clamp-2 text-xs leading-5 text-muted-foreground">
                       {gameDescription}
-                    </CardDescription>
+                    </p>
                   ) : null}
-                </CardHeader>
-                <CardContent className="flex flex-1 flex-col justify-between gap-4 text-sm text-foreground/90">
-                  <p>{item.pitch}</p>
-                  <div className="mt-auto">
+                  <p className="sr-only">{item.pitch}</p>
+                  <div className="mt-2">
                     <Link
                       href={getLocalizedPath(locale, `/games/${item.slug}`)}
                       className="inline-flex items-center text-primary transition hover:text-primary/80"
@@ -622,8 +615,8 @@ export default async function GuidePage({ params }: GuidePageProps) {
                       →
                     </Link>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </article>
             );
           })}
         </div>

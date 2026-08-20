@@ -29,7 +29,7 @@ export function DailyRecommendation({
   placement = 'default',
   surface,
 }: DailyRecommendationProps) {
-  const recommendationCount = surface === 'home' ? 3 : 1;
+  const recommendationCount = surface === 'home' ? 5 : 1;
   const isHome = surface === 'home';
   const [placementActive, setPlacementActive] = useState(
     placement === 'default'
@@ -86,10 +86,10 @@ export function DailyRecommendation({
   return (
     <section
       aria-labelledby={`daily-recommendation-${surface}-${placement}`}
-      className={surface === 'home' ? 'mt-6 md:mt-8' : ''}
+      className={surface === 'home' ? 'mt-5 md:mt-7' : ''}
       data-recommendation-surface={surface}
     >
-      <div className="mb-3 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+      <div className="mb-2 flex flex-col gap-1 border-b border-[#cbdccf] pb-2 sm:flex-row sm:items-end sm:justify-between dark:border-border">
         <div>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
             <p className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.16em] text-emerald-800 dark:text-emerald-400">
@@ -108,7 +108,7 @@ export function DailyRecommendation({
           </div>
           <h2
             id={`daily-recommendation-${surface}-${placement}`}
-            className="mt-1 text-lg font-black tracking-tight text-foreground sm:text-xl"
+            className="mt-1 text-lg font-black tracking-tight text-[#163b2b] sm:text-xl dark:text-foreground"
           >
             {surface === 'home'
               ? locale === 'zh'
@@ -131,14 +131,14 @@ export function DailyRecommendation({
       <div
         className={
           surface === 'home'
-            ? 'grid grid-flow-col auto-cols-[64%] gap-3 overflow-x-auto pb-2 snap-x sm:auto-cols-[40%] lg:grid-flow-row lg:auto-cols-auto lg:grid-cols-3 lg:overflow-visible'
+            ? 'grid grid-flow-col auto-cols-[38%] gap-2.5 overflow-x-auto pb-2 snap-x sm:auto-cols-[24%] lg:grid-flow-row lg:auto-cols-auto lg:grid-cols-6 lg:overflow-visible'
             : 'grid gap-4'
         }
       >
         {recommendations.map(recommendation => (
           <article
             key={recommendation.id}
-            className="group snap-start overflow-hidden rounded-[10px] border border-[#d6e2d8] bg-white shadow-[0_8px_24px_-20px_rgba(16,58,38,0.6)] transition hover:-translate-y-0.5 hover:border-emerald-700/50 hover:shadow-[0_14px_28px_-20px_rgba(16,58,38,0.7)] dark:border-border dark:bg-card"
+            className="group snap-start overflow-hidden rounded-[8px] border border-[#cbdccf] bg-white transition hover:-translate-y-0.5 hover:border-emerald-700/60 hover:shadow-[0_8px_20px_-16px_rgba(16,58,38,0.65)] dark:border-border dark:bg-card"
             data-recommendation-card={recommendation.slug}
           >
             <Link
@@ -172,7 +172,7 @@ export function DailyRecommendation({
               </div>
             </Link>
 
-            <div className={isHome ? 'p-2.5 sm:p-3' : 'p-3 sm:p-4'}>
+            <div className={isHome ? 'p-2 sm:p-2.5' : 'p-3 sm:p-4'}>
               {!isHome ? (
                 <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-emerald-800 dark:text-emerald-400">
                   {recommendation.eyebrow[locale]}
@@ -181,7 +181,7 @@ export function DailyRecommendation({
               <h3
                 className={
                   isHome
-                    ? 'mt-0.5 line-clamp-1 text-sm font-black text-foreground sm:text-base'
+                    ? 'mt-0.5 line-clamp-1 text-sm font-black leading-5 text-foreground sm:text-base'
                     : 'mt-1 line-clamp-1 text-base font-black text-foreground sm:text-lg'
                 }
               >
@@ -199,7 +199,7 @@ export function DailyRecommendation({
               <p
                 className={
                   isHome
-                    ? 'mt-0.5 line-clamp-1 text-[11px] leading-4 text-muted-foreground sm:text-xs'
+                    ? 'sr-only'
                     : 'mt-1 line-clamp-2 min-h-10 text-xs leading-5 text-muted-foreground sm:text-sm'
                 }
               >
@@ -212,7 +212,11 @@ export function DailyRecommendation({
                     `/games/${recommendation.slug}`
                   )}
                   onClick={() => handleClick(recommendation)}
-                  className="inline-flex min-h-8 items-center gap-1 rounded-md bg-emerald-700 px-2 py-1 text-[11px] font-bold text-white transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-offset-2 sm:min-h-9 sm:px-2.5 sm:text-xs"
+                  className={
+                    isHome
+                      ? 'sr-only'
+                      : 'inline-flex min-h-7 items-center gap-1 px-0 py-1 text-[10px] font-bold text-emerald-800 transition hover:text-emerald-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-offset-2 sm:min-h-8 sm:text-xs dark:text-emerald-400 dark:hover:text-emerald-300'
+                  }
                 >
                   {recommendation.action[locale]}
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />

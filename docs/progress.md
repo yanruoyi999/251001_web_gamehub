@@ -2146,3 +2146,13 @@
 - 验证说明：第一次 Playwright 运行发生在 `next dev` 与 `next build` 并行读写同一 `.next` 目录期间，出现 vendor chunk 缺失并返回 500；停止并重启开发服务后复跑 5/5 通过。该失败归类为本地验证环境竞争，不是产品回归。
 - 当前状态：未合入 `main`、未部署生产、未修改 GA4/GSC/Clarity 或外部后台；本轮代码仍待提交到 `codex/ui-curated-shelf-20260820` 并生成新的 Preview，生产访客恢复不能由本地或 Preview 自动化证明。
 - 下一步：用户先在新 Preview 复核门户视觉和移动端首屏；确认后再决定是否合入 `main`、部署生产。生产后继续观察 GA4 page_view/session_start、GSC 展现/点击/排名、Clarity dead/rage/quick back、`recommendation_view/click` 与 `favorite_add/remove`。
+
+### T-172 游戏门户视觉二次修订实现记录（2026-08-20）
+
+- 新增问题信号：用户复核历史截图后认为首版仍不像 Coolmath Games、Playhop、1001Games 和 itch.io 的游戏门户，主要问题是营销式英雄区偏大、卡片说明过长、货架密度不足，以及详情/攻略页仍有过多嵌套卡片。
+- 直接根因：共享布局虽然已具备货架语义，但视觉层级仍按落地页而非游戏目录设计；首页、目录、游戏详情和攻略模板的图片优先、快速扫描关系不一致。
+- 本地修改：`app/[locale]/page.tsx` 压缩英雄区并改为浅绿色目录画布、文字分类标签和图像优先货架；今日推荐、热门攻略、测试游戏扩展为桌面密集网格和移动横向窄列，并补入既有 Level Editor 与 Big Tower 指南。`app/[locale]/games/page.tsx` 改为紧凑筛选和 6/7 列桌面网格、移动 2 列；`app/[locale]/games/[slug]/page.tsx` 增加播放器下方操作栏和 controls 锚点，移除无必要的顶部重复收藏操作；`app/[locale]/guides/[slug]/page.tsx` 将攻略内容和 Featured Picks 改为扁平、图像优先层级；`components/layout/Header.tsx` 保留紧凑深色顶栏并在移动端显示完整 Luma Game Hub；`components/retention/daily-recommendation.tsx` 将首页推荐扩为 5 个安全候选，继续复用既有推荐、收藏和 `/games/saved` 逻辑。
+- 兼容边界：未修改 URL、canonical、hreflang、robots/noindex、sitemap、FAQ/JSON-LD、游戏来源和 iframe 边界；未修改 GA4/Clarity ID、事件名称、page_view 逻辑、数据库、搜索服务或环境变量。Snake 3D 仍保持 noindex，Spend 与 OvO 的既有版权边界未扩大。
+- 测试与构建：`pnpm test -- --run` 通过 86 files / 272 tests；`pnpm type-check`、定向 ESLint、`git diff --check`、`pnpm build`（Next.js 15.5.21，145 个静态页）、`pnpm check:internal-links` 和 `pnpm audit:prod` 通过。Playwright Chromium、Pixel 7、Pixel 7 touch 首页/目录/Snake 3D专项 7/7 通过。首轮 E2E 仅因首页攻略货架由 3 张扩为 5 张而触发旧断言，更新测试契约后复跑通过，不是产品回归。
+- 未验证与发布边界：本轮改动尚未合入 `main` 或部署生产；当前分支将先生成新 Preview 供视觉复核。Preview 的保护层可能使 Lighthouse SEO 显示 noindex，不作为生产索引结论。真实访客下降/恢复、GA4、GSC 和 Clarity 变化必须等生产部署后按自然流量观察，不能用本地或 Preview 自动化替代。
+- 下一步：核对新 Preview 的桌面/360/390/412 移动首屏、收藏入口、货架点击和模板操作栏；用户确认前不合入 `main`，不部署生产。

@@ -401,16 +401,17 @@ export default async function GamesPage({
   );
 
   return (
-    <div className="mx-auto w-full max-w-7xl px-4 py-4 md:px-6 md:py-6">
-      <header className="mb-4 flex flex-col gap-1 border-b border-[#cbdccf] pb-4 md:flex-row md:items-end md:justify-between dark:border-border">
+    <div className="min-h-full bg-[#f1f7e9] px-3 py-3 sm:px-4 md:px-6 md:py-5 dark:bg-background">
+      <div className="mx-auto w-full max-w-[1480px]">
+      <header className="mb-3 flex flex-col gap-1 border-b border-[#cbdccf] pb-3 md:flex-row md:items-end md:justify-between dark:border-border">
         <div>
           <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-emerald-800 dark:text-emerald-400">
             {locale === 'zh' ? '打开、选择、开始' : 'Open, choose, play'}
           </p>
-          <h1 className="mt-1 text-2xl font-black tracking-tight text-[#152238] sm:text-3xl dark:text-foreground">
+          <h1 className="mt-0.5 text-xl font-black tracking-tight text-[#152238] sm:text-2xl dark:text-foreground">
             {t('title')}
           </h1>
-          <p className="mt-1 max-w-2xl text-sm text-[#61766a] dark:text-muted-foreground">
+          <p className="mt-0.5 max-w-2xl text-xs leading-5 text-[#61766a] sm:text-sm dark:text-muted-foreground">
             {t('desc')}
           </p>
         </div>
@@ -422,7 +423,7 @@ export default async function GamesPage({
         </Link>
       </header>
 
-      <section className="mb-4 border-b border-[#cbdccf] py-3 dark:border-border">
+      <section className="mb-3 border-b border-[#cbdccf] py-2.5 dark:border-border">
         <CardHeader className="p-0 pb-3">
           <CardTitle className="text-base font-black text-foreground sm:text-lg">
             {t('filters.title')}
@@ -603,7 +604,7 @@ export default async function GamesPage({
           {t('empty')}
         </div>
       ) : (
-        <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-2.5 sm:gap-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7">
           {games.map(game => {
             const displayTitle =
               locale === 'en' ? (game.titleEn ?? game.title) : game.title;
@@ -621,7 +622,7 @@ export default async function GamesPage({
             return (
               <Card
                 key={game.id}
-                className="group flex h-full flex-col justify-between overflow-hidden rounded-[10px] border-[#d6e2d8] bg-white shadow-[0_8px_24px_-20px_rgba(16,58,38,0.6)] transition hover:-translate-y-0.5 hover:border-emerald-700/50 hover:shadow-[0_14px_28px_-20px_rgba(16,58,38,0.7)] dark:border-border dark:bg-card"
+                className="group flex h-full flex-col justify-between overflow-hidden rounded-[8px] border-[#cbdccf] bg-white transition hover:-translate-y-0.5 hover:border-emerald-700/60 hover:shadow-[0_8px_20px_-16px_rgba(16,58,38,0.65)] dark:border-border dark:bg-card"
               >
                 <Link
                   href={getLocalizedPath(locale, `/games/${game.slug}`)}
@@ -652,7 +653,7 @@ export default async function GamesPage({
                     </div>
                   )}
                 </Link>
-                <CardHeader className="p-3 sm:p-3.5">
+                <CardHeader className="p-2 sm:p-2.5">
                   {(game.featured || game.isHot || game.isNew) && (
                     <div className="mb-2 flex flex-wrap gap-2">
                       {game.featured ? (
@@ -672,8 +673,8 @@ export default async function GamesPage({
                       ) : null}
                     </div>
                   )}
-                  <div className="flex items-start justify-between gap-3">
-                    <CardTitle className="line-clamp-1 text-sm font-black leading-snug text-foreground sm:text-base">
+                  <div className="flex items-start justify-between gap-2">
+                    <CardTitle className="line-clamp-1 text-xs font-black leading-4 text-foreground sm:text-sm">
                       <Link
                         href={getLocalizedPath(locale, `/games/${game.slug}`)}
                         className="hover:text-primary"
@@ -704,7 +705,7 @@ export default async function GamesPage({
                     </CardDescription>
                   ) : null}
                 </CardHeader>
-                <CardContent className="flex items-center justify-between gap-2 p-3 pt-0 text-[11px] text-muted-foreground sm:p-3.5 sm:pt-0 sm:text-xs">
+                <CardContent className="flex items-center justify-between gap-2 p-2 pt-0 text-[10px] text-muted-foreground sm:p-2.5 sm:pt-0 sm:text-[11px]">
                   <p className="truncate">{statusLabel}</p>
                   {catalogueUi.showCommunityMetrics ? (
                     <>
@@ -729,22 +730,22 @@ export default async function GamesPage({
         </div>
       )}
 
-      <Card className="mt-8 overflow-hidden rounded-xl border-primary/30 bg-slate-950 text-white shadow-none">
-        <CardContent className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+      <Card className="mt-6 overflow-hidden rounded-[8px] border-primary/30 bg-slate-950 text-white shadow-none">
+        <CardContent className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-4">
           <div className="max-w-3xl">
             <span className="inline-flex rounded-md border border-amber-300/40 bg-amber-300/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-amber-200">
               {lumaOriginalCopy.badge}
             </span>
-            <h2 className="mt-2 text-xl font-black sm:text-2xl">
+            <h2 className="mt-1 text-lg font-black sm:text-xl">
               {lumaOriginalCopy.title}
             </h2>
-            <p className="mt-2 text-sm leading-6 text-slate-300">
+            <p className="mt-1 text-xs leading-5 text-slate-300 sm:text-sm">
               {lumaOriginalCopy.description}
             </p>
           </div>
           <Link
             href={getLocalizedPath(locale, '/games/spend-bill-gates-money')}
-            className="inline-flex min-h-11 flex-shrink-0 items-center justify-center rounded-md bg-amber-300 px-4 py-2.5 text-sm font-black text-slate-950 transition hover:bg-amber-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-100"
+            className="inline-flex min-h-10 flex-shrink-0 items-center justify-center rounded-md bg-amber-300 px-3 py-2 text-xs font-black text-slate-950 transition hover:bg-amber-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-100 sm:text-sm"
           >
             {lumaOriginalCopy.action} →
           </Link>
@@ -785,6 +786,7 @@ export default async function GamesPage({
           )}
         </nav>
       ) : null}
+      </div>
     </div>
   );
 }

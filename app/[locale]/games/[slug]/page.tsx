@@ -659,8 +659,8 @@ export default async function GamePage({ params }: GamePageProps) {
   const canRenderIframe = canRenderGameIframe(game.slug);
 
   return (
-    <div className="w-full bg-background">
-      <div className="mx-auto w-full max-w-7xl px-4 py-5 md:px-6 md:py-7">
+    <div className="w-full bg-[#f1f7e9] dark:bg-background">
+      <div className="mx-auto w-full max-w-[1480px] px-3 py-4 sm:px-4 md:px-6 md:py-6">
         {structuredData.map((schema, index) => (
           <script
             key={index}
@@ -669,7 +669,7 @@ export default async function GamePage({ params }: GamePageProps) {
           />
         ))}
         {/* Breadcrumb */}
-        <div className="mb-4 flex items-center gap-2 overflow-x-auto text-xs text-muted-foreground sm:text-sm">
+        <div className="mb-3 flex items-center gap-2 overflow-x-auto text-[11px] text-muted-foreground sm:text-xs">
           <Link href={getLocalizedPath(locale)} className="hover:text-primary">
             {locale === 'zh' ? '首页' : 'Home'}
           </Link>
@@ -685,32 +685,32 @@ export default async function GamePage({ params }: GamePageProps) {
         </div>
 
         {/* Game Header */}
-        <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+        <div className="mb-4 flex flex-col gap-2 border-b border-[#cbdccf] pb-4 md:flex-row md:items-start md:justify-between dark:border-border">
           <div className="flex-1">
-            <div className="mb-3 flex flex-wrap items-center gap-2">
-              <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+            <div className="mb-2 flex flex-wrap items-center gap-2">
+              <h1 className="text-2xl font-black tracking-tight text-[#152238] sm:text-3xl dark:text-foreground">
                 {title}
               </h1>
               {game.isNew && (
-                <span className="rounded-full bg-green-500 px-3 py-1 text-xs font-semibold text-white">
+                <span className="rounded-sm bg-green-500 px-2 py-0.5 text-[10px] font-bold text-white">
                   {locale === 'zh' ? '新品' : 'NEW'}
                 </span>
               )}
               {game.isHot && (
-                <span className="rounded-full bg-red-500 px-3 py-1 text-xs font-semibold text-white">
+                <span className="rounded-sm bg-red-500 px-2 py-0.5 text-[10px] font-bold text-white">
                   {locale === 'zh' ? '热门' : 'HOT'}
                 </span>
               )}
             </div>
-            <p className="mb-4 max-w-3xl text-base leading-7 text-muted-foreground sm:text-lg">
+            <p className="mb-3 max-w-3xl text-sm leading-6 text-muted-foreground sm:text-base">
               {description}
             </p>
 
             {/* Quick Stats */}
-            <div className="flex flex-wrap gap-6 text-sm">
+            <div className="flex flex-wrap gap-4 text-xs sm:gap-6 sm:text-sm">
               {catalogueUi.showCommunityMetrics ? (
                 <div className="flex items-center gap-2">
-                  <span className="text-2xl">⭐</span>
+                  <span className="text-lg">⭐</span>
                   <div>
                     <div className="font-semibold text-foreground">
                       {averageRatingDisplay !== '—'
@@ -727,7 +727,7 @@ export default async function GamePage({ params }: GamePageProps) {
               ) : null}
               {catalogueUi.showCommunityMetrics ? (
                 <div className="flex items-center gap-2">
-                  <span className="text-2xl">🎮</span>
+                  <span className="text-lg">🎮</span>
                   <div>
                     <div className="font-semibold text-foreground">
                       {formatNumber(playCount)}
@@ -740,7 +740,7 @@ export default async function GamePage({ params }: GamePageProps) {
               ) : null}
               {catalogueUi.showPublishedDates && game.publishedAt ? (
                 <div className="flex items-center gap-2">
-                  <span className="text-2xl">📅</span>
+                  <span className="text-lg">📅</span>
                   <div>
                     <div className="font-semibold text-foreground">
                       {publishedLabel}
@@ -754,24 +754,6 @@ export default async function GamePage({ params }: GamePageProps) {
             </div>
           </div>
 
-          {/* Actions */}
-          <div className="flex gap-3">
-            {canFavorite ? (
-              <FavoriteToggleButton
-                gameId={game.id}
-                initialFavorite={isFavorite}
-                labels={favoriteLabels}
-                fallbackKey={favoriteFallbackKey}
-                gameSlug={game.slug}
-                surface="game_detail"
-                storageMode={catalogueUi.favoriteStorage}
-              />
-            ) : (
-              <span className="text-sm text-muted-foreground">
-                {locale === 'zh' ? '收藏不可用' : 'Favorites unavailable'}
-              </span>
-            )}
-          </div>
         </div>
 
         {qualityTier === 'review' ? (
@@ -792,11 +774,11 @@ export default async function GamePage({ params }: GamePageProps) {
           </div>
         ) : null}
 
-        <div className="grid gap-6 lg:grid-cols-3">
+        <div className="grid gap-5 lg:grid-cols-3">
           {/* Main Content */}
           <div className="lg:col-span-2">
             {/* Game Player */}
-            <Card className="mb-6 overflow-hidden rounded-xl border border-primary/30 shadow-none">
+            <Card data-game-player-shell className="mb-4 overflow-hidden rounded-[8px] border border-primary/30 shadow-none">
               <CardContent className="p-0">
                 {canRenderIframe ? (
                   <>
@@ -812,14 +794,32 @@ export default async function GamePage({ params }: GamePageProps) {
                         />
                       </div>
                     </div>
-                    <div className="bg-muted p-4">
-                      <div className="flex items-center justify-center">
-                        <p className="text-sm text-muted-foreground">
-                          <span className="mr-2">💡</span>
-                          {locale === 'zh'
-                            ? '点击游戏内全屏按钮获得最佳体验'
-                            : 'Click fullscreen button for best experience'}
-                        </p>
+                    <div data-game-action-bar className="flex flex-wrap items-center justify-between gap-2 border-t border-border bg-white px-3 py-2.5 dark:bg-card">
+                      <p className="text-xs text-muted-foreground">
+                        <span className="mr-1.5">💡</span>
+                        {locale === 'zh'
+                          ? '游戏内可全屏；控制方式见下方。'
+                          : 'Use in-game fullscreen; controls are listed below.'}
+                      </p>
+                      <div className="flex items-center gap-2">
+                        {canFavorite ? (
+                          <FavoriteToggleButton
+                            gameId={game.id}
+                            initialFavorite={isFavorite}
+                            labels={favoriteLabels}
+                            fallbackKey={favoriteFallbackKey}
+                            gameSlug={game.slug}
+                            surface="game_detail"
+                            storageMode={catalogueUi.favoriteStorage}
+                            compact
+                          />
+                        ) : null}
+                        <a
+                          href="#game-controls"
+                          className="inline-flex min-h-9 items-center rounded-md border border-border px-2.5 text-xs font-semibold text-foreground transition hover:border-primary hover:text-primary"
+                        >
+                          {locale === 'zh' ? '查看控制' : 'View controls'}
+                        </a>
                       </div>
                     </div>
                   </>
@@ -851,17 +851,17 @@ export default async function GamePage({ params }: GamePageProps) {
             </div>
 
             {editorialContent ? (
-              <Card className="mb-6 rounded-xl shadow-none">
-                <CardHeader className="p-5 pb-3 sm:p-6 sm:pb-3">
-                  <CardTitle className="text-xl sm:text-2xl">
+              <section className="mb-6 border-t border-[#cbdccf] pt-5 dark:border-border">
+                <div className="pb-3">
+                  <h2 className="text-xl font-black text-foreground sm:text-2xl">
                     {editorialContent.title}
-                  </CardTitle>
-                  <CardDescription className="text-base">
+                  </h2>
+                  <p className="mt-1 text-sm text-muted-foreground sm:text-base">
                     {editorialContent.summary}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-7 p-5 pt-2 text-sm leading-7 text-foreground/90 sm:p-6 sm:pt-2">
-                  <section className="space-y-3">
+                  </p>
+                </div>
+                <div className="space-y-7 text-sm leading-7 text-foreground/90">
+                  <section id="game-controls" className="scroll-mt-24 space-y-3">
                     <h2 className="text-xl font-semibold text-foreground">
                       {locale === 'zh'
                         ? '这款游戏适合怎么玩'
@@ -898,7 +898,7 @@ export default async function GamePage({ params }: GamePageProps) {
                       {editorialContent.controls.map(control => (
                         <div
                           key={control.label}
-                          className="rounded-lg border border-border bg-muted/40 p-3"
+                          className="rounded-[6px] border border-border bg-muted/40 p-3"
                         >
                           <p className="font-semibold text-foreground">
                             {control.label}
@@ -969,8 +969,8 @@ export default async function GamePage({ params }: GamePageProps) {
                       </div>
                     </section>
                   ) : null}
-                </CardContent>
-              </Card>
+                </div>
+              </section>
             ) : null}
 
             {catalogueUi.showReviews ? (

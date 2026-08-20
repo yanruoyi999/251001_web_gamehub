@@ -104,8 +104,8 @@ export function Header() {
           <div className="flex size-8 items-center justify-center rounded-md bg-emerald-500 text-[#102033] shadow-[0_0_0_3px_rgba(52,211,153,0.12)]">
             <Gamepad2 className="size-4" aria-hidden="true" />
           </div>
-          <span className="truncate text-lg font-bold text-white sm:text-xl">
-            Luma <span className="hidden text-emerald-300 sm:inline">Game Hub</span>
+          <span className="truncate text-base font-bold text-white sm:text-xl">
+            Luma <span className="text-emerald-300">Game Hub</span>
           </span>
         </Link>
 

@@ -20,7 +20,7 @@ describe('curated shelf UI refresh contracts', () => {
     expect(homepage).toContain(
       "aria-label={locale === 'zh' ? '快速分类' : 'Quick categories'}"
     );
-    expect(homepage).toContain('auto-cols-[58%]');
+    expect(homepage).toContain('auto-cols-[38%]');
     expect(homepage).toContain('id="popular-guides"');
     expect(homepage).toContain('id="testing-games"');
     expect(homepage).not.toContain('id="curated-starts"');
@@ -35,6 +35,17 @@ describe('curated shelf UI refresh contracts', () => {
       games.indexOf('lumaOriginalCopy.badge')
     );
     expect(games).toContain('compact');
+  });
+
+  it('keeps player actions visible before long game content', async () => {
+    const game = await read('app/[locale]/games/[slug]/page.tsx');
+    const guide = await read('app/[locale]/guides/[slug]/page.tsx');
+    expect(game).toContain('data-game-player-shell');
+    expect(game).toContain('data-game-action-bar');
+    expect(game).toContain('href="#game-controls"');
+    expect(guide).toContain('id="guide-details"');
+    expect(guide).toContain('Featured Picks');
+    expect(guide).not.toContain('rounded-2xl border border-border bg-card p-6 shadow-sm');
   });
 
   it('marks the consent surface so overlay regressions can be checked in the browser', async () => {
