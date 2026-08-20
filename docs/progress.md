@@ -2102,3 +2102,11 @@
 - Git 状态：发布分支基于本地 `main`、`origin/main` 和 GitHub `main` 同一 SHA `fc8877c`；候选提交为 `7292124`（依赖）和 `aa70029`（Big Tower），本记录随发布分支合入 `main`。
 - 验证：依赖生产审计无已知漏洞；Vitest 76 files / 247 tests、type-check、内链检查、lint（0 errors、98 个既有 warnings）、Next.js 15.5.21 build 143/143、Playwright 20 tests 中 17 passed / 3 个既有能力 skip、`git diff --check` 均通过。
 - 发布后观察：继续观察 Big Tower 相关 query 的 impressions、clicks、position；不新增 URL，不修改 canonical、robots、noindex 或 sitemap 规则。
+
+### 2026-08-20 GA4 静态预渲染门禁修复
+
+- 原始信号：GA4 sessions 在 2026-08-16 遥测硬化发布后从 32 骤降至 6，之后为 8/6/4；同期 GSC 展现未同比例下降。正式域 HTML 没有 GA bootstrap，但 Vercel 生产 `NEXT_PUBLIC_GA_ID` 仍存在。
+- 直接根因：根布局在服务端根据请求 Host 输出遥测，而 Luma 页面是静态预渲染（生产响应 `x-nextjs-prerender: 1`）；构建时无正式域 Host，因此 GA4、Vercel Analytics 和 Speed Insights 都被排除。
+- 修改文件：`app/layout.tsx`、`components/analytics/ProductionTelemetry.tsx`、`tests/ga4-bootstrap.test.ts`。遥测改为 hydration 后根据浏览器真实 hostname 加载，Preview/localhost 仍不加载。
+- 验证：回归测试先 RED 2/2 后转为 GREEN；全量 Vitest 85 files / 267 tests、type-check、internal-link audit、production audit、显式全量 ESLint、diff-check 和 Next.js 15.5.21 生产构建（145 路由）通过。浏览器中正式域只有 1 个 GA 脚本和 1 次 `page_view`，Preview 无遥测请求，两者均无 page error。
+- 数据边界：当前只能证明本地代码与生产构建候选正确；真实 GA4 恢复需部署后等待后台处理，历史漏采不可回填。UI 改版继续暂停，等待 3 个完整自然日 GA4/GSC 基线。

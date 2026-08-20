@@ -1,15 +1,10 @@
 import type { Metadata, Viewport } from 'next';
 import { Suspense } from 'react';
-import Script from 'next/script';
 import { headers } from 'next/headers';
-import { Analytics } from '@vercel/analytics/next';
-import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 import { defaultLocale, getLocalizedPath, isLocale, locales } from '@/i18n/config';
-import AnalyticsListener from '@/components/layout/AnalyticsListener';
+import { ProductionTelemetry } from '@/components/analytics/ProductionTelemetry';
 import LocaleDocumentSync from '@/components/layout/LocaleDocumentSync';
-import { GA_TRACKING_ID } from '@/lib/gtag';
-import { shouldLoadProductionTelemetry } from '@/lib/analytics/runtime';
 import { getSiteBaseUrl } from '@/lib/seo';
 import { serializeJsonLd } from '@/lib/utils/json-ld';
 
@@ -110,21 +105,10 @@ export default async function RootLayout({
   const requestHeaders = await headers();
   const requestLocale = requestHeaders.get('x-next-intl-locale');
   const documentLocale = isLocale(requestLocale) ? requestLocale : defaultLocale;
-  const requestHost = (requestHeaders.get('x-forwarded-host') ?? requestHeaders.get('host') ?? '')
-    .split(',')[0]
-    .trim()
-    .split(':')[0];
-  const telemetryEnabled = shouldLoadProductionTelemetry(requestHost);
 
   return (
     <html lang={documentLocale} data-locale={documentLocale} suppressHydrationWarning>
       <head>
-        {telemetryEnabled ? (
-          <>
-            <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
-            <link rel="preconnect" href="https://www.google-analytics.com" crossOrigin="anonymous" />
-          </>
-        ) : null}
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -149,32 +133,8 @@ export default async function RootLayout({
         <Suspense fallback={null}>
           <LocaleDocumentSync />
         </Suspense>
-        {telemetryEnabled && GA_TRACKING_ID ? (
-          <>
-            <Script id="ga-init" strategy="beforeInteractive">
-              {`
-                window.dataLayer = window.dataLayer || [];
-                window.gtag = window.gtag || function(){window.dataLayer.push(arguments);};
-                window.gtag('js', new Date());
-                window.gtag('config', '${GA_TRACKING_ID}', { send_page_view: false });
-              `}
-            </Script>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
-              strategy="afterInteractive"
-            />
-            <Suspense fallback={null}>
-              <AnalyticsListener />
-            </Suspense>
-          </>
-        ) : null}
+        <ProductionTelemetry />
         {children}
-        {telemetryEnabled ? (
-          <>
-            <Analytics />
-            <SpeedInsights />
-          </>
-        ) : null}
       </body>
     </html>
   );

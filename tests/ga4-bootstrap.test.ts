@@ -2,14 +2,33 @@ import { readFile } from 'node:fs/promises';
 
 import { describe, expect, it } from 'vitest';
 
-const layoutSource = await readFile(new URL('../app/layout.tsx', import.meta.url), 'utf8');
+const layoutSource = await readFile(
+  new URL('../app/layout.tsx', import.meta.url),
+  'utf8'
+);
+const productionTelemetrySource = await readFile(
+  new URL('../components/analytics/ProductionTelemetry.tsx', import.meta.url),
+  'utf8'
+).catch(() => '');
 
 describe('GA4 bootstrap', () => {
-  it('exposes gtag before the SPA listener starts sending page views', () => {
-    expect(layoutSource).toContain('strategy="beforeInteractive"');
-    expect(layoutSource).toContain(
-      'window.gtag = window.gtag || function(){window.dataLayer.push(arguments);};',
+  it('hydrates telemetry on the browser production host instead of gating static HTML by headers', () => {
+    expect(layoutSource).toContain('<ProductionTelemetry />');
+    expect(layoutSource).not.toContain(
+      "requestHeaders.get('x-forwarded-host')"
     );
-    expect(layoutSource).toContain("window.gtag('config', '${GA_TRACKING_ID}', { send_page_view: false });");
+    expect(productionTelemetrySource).toContain(
+      'shouldLoadProductionTelemetry'
+    );
+  });
+
+  it('exposes gtag before the SPA listener starts sending page views', () => {
+    expect(productionTelemetrySource).toContain('strategy="afterInteractive"');
+    expect(productionTelemetrySource).toContain(
+      'window.gtag = window.gtag || function(){window.dataLayer.push(arguments);};'
+    );
+    expect(productionTelemetrySource).toContain(
+      "window.gtag('config', '${GA_TRACKING_ID}', { send_page_view: false });"
+    );
   });
 });
