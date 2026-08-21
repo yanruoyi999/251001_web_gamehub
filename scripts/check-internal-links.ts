@@ -47,6 +47,7 @@ const errors: string[] = [];
 const guides = getSeoLandingPages();
 const guideSlugs = new Set(guides.map((guide) => guide.slug));
 const gameSlugs = new Set(mockGames.map((game) => game.slug));
+const gamesBySlug = new Map(mockGames.map((game) => [game.slug, game]));
 const pageFiles = walkPages(path.join(process.cwd(), 'app'));
 
 for (const guide of guides) {
@@ -73,7 +74,7 @@ for (const guide of guides) {
         errors.push(
           `Guide ${guide.slug} (${locale}) links to missing game ${recommendation.slug}.`,
         );
-      } else if (!shouldPromoteGameInCollections(recommendation.slug)) {
+      } else if (!shouldPromoteGameInCollections(gamesBySlug.get(recommendation.slug))) {
         errors.push(
           `Guide ${guide.slug} (${locale}) recommends non-indexable game ${recommendation.slug}.`,
         );
@@ -84,7 +85,9 @@ for (const guide of guides) {
   if (guide.embedGame?.playSlug) {
     if (!gameSlugs.has(guide.embedGame.playSlug)) {
       errors.push(`Guide ${guide.slug} embeds a missing game slug ${guide.embedGame.playSlug}.`);
-    } else if (!shouldPromoteGameInCollections(guide.embedGame.playSlug)) {
+    } else if (
+      !shouldPromoteGameInCollections(gamesBySlug.get(guide.embedGame.playSlug))
+    ) {
       errors.push(`Guide ${guide.slug} embeds non-indexable game ${guide.embedGame.playSlug}.`);
     }
   }

@@ -64,7 +64,7 @@ interface SitemapGameEntry {
 
 function getFallbackSitemapGames(): SitemapGameEntry[] {
   return mockGames
-    .filter((game) => shouldIncludeGameInSitemap(game.slug))
+    .filter((game) => shouldIncludeGameInSitemap(game))
     .map((game) => ({
       slug: game.slug,
       isNew: game.isNew,
@@ -114,7 +114,13 @@ async function getSitemapGames(): Promise<SitemapGameEntry[]> {
 
     if (rows.length > 0) {
       return rows
-        .filter((game) => shouldIncludeGameInSitemap(game.slug))
+        .filter((game) =>
+          shouldIncludeGameInSitemap({
+            slug: game.slug,
+            // Remote catalogue records do not yet carry an auditable embed permission.
+            embedPermissionStatus: null,
+          }),
+        )
         .map((game) => ({
           slug: game.slug,
           isNew: game.isNew,
@@ -157,11 +163,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       path: '/guides',
       changeFrequency: 'weekly',
       priority: 0.75,
-    },
-    {
-      path: '/guides/game-opportunity-radar',
-      changeFrequency: 'weekly',
-      priority: 0.78,
     },
     {
       path: '/guides/keyboard-only-browser-games',

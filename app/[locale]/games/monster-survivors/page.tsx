@@ -154,7 +154,7 @@ export default async function MonsterSurvivorsPage({ params }: MonsterSurvivorsP
                 title="Monster Survivors"
                 loading="lazy"
                 allowFullScreen
-                sandbox="allow-scripts allow-fullscreen"
+                sandbox="allow-scripts"
                 className="h-full w-full"
               />
             </div>

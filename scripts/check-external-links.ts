@@ -203,7 +203,7 @@ async function loadGameLinkSample(sampleSize: number): Promise<GameLinkSample[]>
 /**
  * 检查页脚友情链接
  */
-async function checkFooterLinks(): Promise<void> {
+async function checkFooterLinks(): Promise<number> {
   console.log(`\n📋 检查页脚友情链接 (共 ${FOOTER_LINKS.length} 个)\n`);
   console.log('─'.repeat(80));
 
@@ -243,12 +243,14 @@ async function checkFooterLinks(): Promise<void> {
       });
     console.log();
   }
+
+  return failedCount;
 }
 
 /**
  * 抽查游戏详情页外链
  */
-async function checkGameLinks(sampleSize: number = 10): Promise<void> {
+async function checkGameLinks(sampleSize: number = 10): Promise<number> {
   console.log(`\n🎮 抽查游戏详情页外链 (抽样 ${sampleSize} 个)\n`);
   console.log('─'.repeat(80));
 
@@ -257,7 +259,7 @@ async function checkGameLinks(sampleSize: number = 10): Promise<void> {
   if (gamesWithLinks.length === 0) {
     console.log('⚠️  没有找到配置了外链的游戏\n');
     console.log('💡 建议：通过管理后台为游戏添加开发者链接和官方链接\n');
-    return;
+    return 0;
   }
 
   let totalChecked = 0;
@@ -293,6 +295,8 @@ async function checkGameLinks(sampleSize: number = 10): Promise<void> {
       : `⚠️  发现 ${totalFailed} 个异常链接，请及时更新`
   );
   console.log();
+
+  return totalFailed;
 }
 
 /**
@@ -305,12 +309,18 @@ async function main() {
 
   try {
     // 1. 检查页脚友情链接
-    await checkFooterLinks();
+    const footerFailures = await checkFooterLinks();
 
     // 2. 抽查游戏详情页外链
-    await checkGameLinks(10);
+    const gameLinkFailures = await checkGameLinks(10);
+    const failedCount = footerFailures + gameLinkFailures;
 
     console.log('═'.repeat(80));
+    if (failedCount > 0) {
+      console.error('❌ 检查完成，但发现 ' + failedCount + ' 个异常外链。');
+      process.exit(1);
+    }
+
     console.log('✅ 检查完成！');
     console.log('\n💡 建议：');
     console.log('   1. 将此脚本加入月度运维计划');

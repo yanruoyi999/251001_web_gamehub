@@ -54,9 +54,9 @@ function scoreGame(game: MockGame, normalizedQuery: string, tokens: string[]) {
     if (corpus.developer.includes(token)) score += 2;
   }
 
-  if (shouldPromoteGameInCollections(game.slug) && game.featured) score += 4;
-  if (shouldPromoteGameInCollections(game.slug) && game.isHot) score += 3;
-  if (shouldPromoteGameInCollections(game.slug) && game.isNew) score += 1;
+  if (shouldPromoteGameInCollections(game) && game.featured) score += 4;
+  if (shouldPromoteGameInCollections(game) && game.isHot) score += 3;
+  if (shouldPromoteGameInCollections(game) && game.isNew) score += 1;
 
   return score;
 }
@@ -71,7 +71,7 @@ export function searchFallbackGames({ query, page = 1, limit = 20 }: FallbackSea
   }
 
   const rows = mockGames
-    .filter((game) => shouldPromoteGameInCollections(game.slug))
+    .filter((game) => shouldPromoteGameInCollections(game))
     .map((game) => ({ game, score: scoreGame(game, normalizedQuery, tokens) }))
     .filter(({ score }) => score > 0)
     .sort((a, b) =>
@@ -87,8 +87,8 @@ export function searchFallbackGames({ query, page = 1, limit = 20 }: FallbackSea
       slug: game.slug,
       status: 'active',
       thumbnailUrl: game.thumbnailUrl,
-      isNew: shouldPromoteGameInCollections(game.slug) && game.isNew,
-      isHot: shouldPromoteGameInCollections(game.slug) && game.isHot,
+      isNew: shouldPromoteGameInCollections(game) && game.isNew,
+      isHot: shouldPromoteGameInCollections(game) && game.isHot,
     }));
 
   const total = rows.length;

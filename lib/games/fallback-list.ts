@@ -59,7 +59,7 @@ export function listFallbackGames(options: FallbackGameListOptions = {}) {
 
   const rows = mockGames
     .filter((game) => {
-      const promoted = shouldPromoteGameInCollections(game.slug);
+      const promoted = shouldPromoteGameInCollections(game);
       if (!promoted) return false;
       if (typeof options.featured === 'boolean' && promoted && game.featured !== options.featured) return false;
       if (typeof options.isNew === 'boolean' && promoted && game.isNew !== options.isNew) return false;
@@ -76,7 +76,7 @@ export function listFallbackGames(options: FallbackGameListOptions = {}) {
       return true;
     })
     .map((game, index) => {
-      const promoted = shouldPromoteGameInCollections(game.slug);
+      const promoted = shouldPromoteGameInCollections(game);
       return {
         id: game.id,
         title: game.title,

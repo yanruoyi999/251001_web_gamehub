@@ -60,13 +60,6 @@ export interface SeoLandingVideo {
   sourceUrl: string;
 }
 
-export interface SeoLandingIntentCta {
-  hookId: string;
-  viewEvent: string;
-  clickEvent: string;
-  anchorId: string;
-}
-
 export interface SeoLandingPage {
   slug: string;
   primaryKeyword: string;
@@ -77,7 +70,6 @@ export interface SeoLandingPage {
   embedGame?: SeoLandingEmbedGame;
   printablePath?: string;
   video?: SeoLandingVideo;
-  intentCta?: SeoLandingIntentCta;
   interactiveWidget?: 'dominoes-training';
   locales: Record<Locale, SeoLandingLocaleContent>;
 }
@@ -1212,7 +1204,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           'Learn how to blend in as a painted chameleon, pick safer hiding spots, and avoid the mistakes that make you easy to catch.',
         overview: [
           'Hide and Paint is a multiplayer hide-and-seek browser game where the main trick is not running faster. You start as a plain chameleon, move around the map, paint yourself to match a nearby surface, and freeze in a pose that looks natural enough to fool the hunters. The fun comes from a small decision loop: find a texture, copy its color, angle the camera, then decide whether to stay still or move before someone notices.',
-          'This page is built as a player guide rather than a mirror of the game page. Luma has not embedded the game here because a separate embed permission has not been verified. Use the official source link to play, then use the sections below to improve your hiding choices, mobile controls, and safety checks without downloading APKs or browser extensions.',
+          'Use the linked public source to play, then return to the sections below for hiding choices, mobile controls, and safety checks. You do not need an APK, browser extension, or unofficial client.',
         ],
         sections: [
           {
@@ -1491,8 +1483,8 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             ],
           },
           {
-            title: 'Mobile and Short-Session Fit',
-            body: 'Car Circle is a strong mobile candidate because it has one clear action, quick rounds, and no need for keyboard controls. It is also AdSense-friendly as a guide topic: no adult content, gambling loop, ROM download, or branded IP clone is involved. Still, players should use the browser source and avoid pages that repackage it as an installable mod.',
+            title: 'Mobile and Short-Session Play',
+            body: 'Car Circle works well on mobile because it has one clear action, quick rounds, and no need for keyboard controls. Use the linked browser source and avoid pages that repackage the game as an APK, installer, extension, or mod.',
           },
         ],
         recommendations: [
@@ -1598,7 +1590,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           },
           {
             title: '手机体验与短局适配',
-            body: 'Car Circle 很适合手机，因为它只有一个清晰动作、单局短、不需要键盘。作为 AdSense 审核期内容，它也比较干净：没有成人、赌博、ROM 下载或明显知名 IP 山寨风险。仍建议只玩公开网页版，避免把它重新包装成安装包或所谓 mod 的页面。',
+            body: 'Car Circle 很适合手机，因为它只有一个清晰动作、单局短、不需要键盘。建议使用页面提供的公开网页版，避开要求安装 APK、桌面客户端、浏览器扩展或所谓 mod 的页面。',
           },
         ],
         recommendations: [
@@ -1679,7 +1671,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           'Run, climb, jump, and survive longer in the browser tag game while avoiding unofficial download traps.',
         overview: [
           'Monkey Tag IO is a multiplayer browser tag game built around movement. You run, jump, climb, and look around while chasing other players or escaping infection-style pressure. The theme makes it easy for search results to overlap with VR gorilla-tag content, fan pages, and “unblocked” mirrors, so a clean source and a clear guide matter.',
-          'Luma currently treats Monkey Tag IO as a guide opportunity, not a hosted game page. The official public listing identifies Petit Kyanpu as the developer and supports desktop, phone, and tablet play. Until a stable authorized embed is verified, this page focuses on practical controls, movement habits, mobile limitations, and safe source notes.',
+          'The linked public listing identifies Petit Kyanpu as the developer and supports desktop, phone, and tablet play. Use that browser page to start a game, then use this guide for practical controls, movement habits, mobile limitations, and source-safety notes.',
         ],
         sections: [
           {
@@ -1786,7 +1778,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         subheading: '学习奔跑、跳跃、攀爬和视角判断，在多人追逐里活得更久，并避开非官方下载陷阱。',
         overview: [
           'Monkey Tag IO 是一款多人浏览器追逐游戏，核心是移动。你需要奔跑、跳跃、攀爬和转动视角，既可能追别人，也可能要在感染式压力下逃跑。因为名字容易和 VR 猴子追逐游戏、粉丝站、unblocked 镜像混在一起，清晰的来源说明和安全指南很重要。',
-          'Luma 目前把 Monkey Tag IO 作为攻略机会，而不是托管游戏页。公开页面标注开发者为 Petit Kyanpu，并显示支持电脑、手机和平板。在确认稳定授权嵌入来源之前，本页重点提供操作、跑图习惯、手机限制和安全来源说明。',
+          '页面提供的公开游玩来源标注开发者为 Petit Kyanpu，并显示支持电脑、手机和平板。先从该浏览器页面开始游戏，再用本攻略查看操作、跑图习惯、手机限制和安全来源说明。',
         ],
         sections: [
           {
@@ -1907,60 +1899,60 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     ],
     locales: {
       en: {
-        metaTitle: 'Best New Browser Games July 2026: Low-Competition Picks',
+        metaTitle: 'Best New Browser Games July 2026: Fresh Games to Try',
         metaDescription:
-          'A July 2026 shortlist of new browser game opportunities with player intent, mobile fit, source checks, safety notes, and related Luma guides.',
-        heading: 'Best New Browser Games to Watch in July 2026',
+          'A July 2026 selection of fresh browser games with controls, mobile notes, safe play links, and practical tips for choosing what to try next.',
+        heading: 'Best New Browser Games to Try in July 2026',
         subheading:
-          'A curated low-competition watchlist for players and searchers who want fresh HTML5 games, clear controls, and safe no-download sources.',
+          'Fresh HTML5 games for quick browser sessions, with clear controls, mobile notes, and no-download play links.',
         overview: [
-          'New browser games are easier to cover well when the page solves a real player problem early: controls, mobile fit, official source, safety, and what to play next. That is why this July 2026 watchlist avoids giant red-ocean keywords and focuses on fresh titles with specific guide intent.',
-          'The three strongest Luma opportunities today are Hide and Paint, Car Circle, and Monkey Tag IO. Each has a public playable source, recent update signals, and search angles that are still guide-friendly. Luma is publishing guide pages first, not game embeds, because independent embed permission and long-term source stability need to be confirmed before adding iframes.',
+          'The best new browser games are easy to start, clear about their controls, and fun within the first few minutes. This July selection covers stealth, traffic timing, movement tag, and other short-session formats without asking you to install a client.',
+          'Hide and Paint, Car Circle, and Monkey Tag IO are the three featured picks. Open each linked play source in a modern browser, then use the Luma guide for controls, mobile limitations, safety notes, and practical ways to improve.',
         ],
         sections: [
           {
-            title: 'Quick Answer: The 3 Pages Worth Building First',
-            body: 'Start with Hide and Paint, Car Circle, and Monkey Tag IO. They cover three different intents: multiplayer stealth, traffic timing puzzle, and movement tag. That gives Luma a broader internal link network than building three nearly identical arcade pages.',
+            title: 'Quick Answer: Three Games to Try First',
+            body: 'Start with Hide and Paint for multiplayer stealth, Car Circle for a one-tap traffic puzzle, or Monkey Tag IO for movement and chase play. The controls and pace are different enough that one of the three should fit your preferred session.',
             bullets: [
-              'Hide and Paint: best for “Meccha Chameleon” and paint hide-and-seek searches.',
-              'Car Circle: best for roundabout puzzle, traffic timing, and mobile tap intent.',
-              'Monkey Tag IO: best for controls, mobile play, and official-source clarification.',
+              'Hide and Paint: match a surface, hold your pose, and avoid the hunters.',
+              'Car Circle: tap at the right moment and keep the roundabout from crashing.',
+              'Monkey Tag IO: run, jump, climb, and break the tagger\'s line of sight.',
             ],
           },
           {
-            title: 'Why These Are Lower-Competition Than Mature Game Terms',
-            body: 'Mature terms like “snake game” or “car games” are dominated by large portals. Fresh game names and specific player problems are easier to satisfy with original guide content because many early ranking pages are thin listings, auto-generated descriptions, or fan pages without source checks.',
+            title: 'How the Three Games Feel Different',
+            body: 'Hide and Paint rewards patience and visual camouflage. Car Circle is a quick timing challenge that works well with one-thumb input. Monkey Tag IO is more active and asks you to combine camera movement, jumps, and route changes.',
             bullets: [
-              'New-title queries often lack strong FAQ, controls, and mobile sections.',
-              'Early pages usually link to play but do not explain how to improve.',
-              'Safety and official-source notes are especially useful around “unblocked” and clone-heavy searches.',
+              'Choose Hide and Paint when you want social stealth instead of fast reflexes.',
+              'Choose Car Circle when you want rounds that finish in a few minutes.',
+              'Choose Monkey Tag IO when you want movement practice and multiplayer pressure.',
             ],
           },
           {
-            title: 'Selection Rules for Luma During AdSense Review',
-            body: 'A new game is not automatically worth adding. Luma should prefer public web play, clear developer/source attribution, short-session value, mobile viability, and low policy risk. Do not add ROMs, download clients, adult/gambling content, branded IP clones, or pages that need suspicious plugins.',
+            title: 'Play Safely in the Browser',
+            body: 'Use the linked browser pages and check the developer or platform name before starting. None of these games should require an APK, desktop installer, browser extension, ROM, or “mod menu” download.',
             bullets: [
-              'Guide first when embed permission is unclear.',
-              'Game detail page only after iframe stability, source attribution, and mobile play are verified.',
-              'Collection pages should link to tested Luma pages, not scrape other portals.',
+              'Close pages that ask you to install an unknown extension before play.',
+              'Treat “all items unlocked” and unofficial download claims with caution.',
+              'On mobile, rotate once and confirm that the controls remain visible before a longer session.',
             ],
           },
           {
-            title: 'How to Extend This Into GEO and SEO Content',
-            body: 'For generative search and classic SEO, the page needs direct answers, not keyword stuffing. Each new guide should answer “what is it,” “how do I play,” “what are the controls,” “can I play on mobile,” “is it official,” and “what should I play next.” Those blocks give search systems clean passages to cite and give players reasons to stay.',
+            title: 'Desktop and Mobile Setup',
+            body: 'Desktop controls are usually more precise for camera-heavy movement, while one-action games such as Car Circle adapt more naturally to touch. Before playing, close heavy background tabs, keep browser zoom at 100%, and tap the game area once if keyboard input is not captured.',
             bullets: [
-              'Add a quick-answer block near the top of every new guide.',
-              'Use FAQ language that mirrors real troubleshooting and source questions.',
-              'Connect every new guide to at least two existing Luma game pages and one related guide.',
+              'Use fullscreen only after the game has loaded and the controls respond.',
+              'If audio drifts, reload the page and avoid switching tabs during the first load.',
+              'If touch controls are cropped, return to portrait and reopen the game before rotating again.',
             ],
           },
           {
-            title: 'Next Watchlist Beyond the First Three',
-            body: 'Keep watching fresh HTML5 listings on Poki, CrazyGames, GamePix, Y8, and itch.io, but only promote a candidate after checking source clarity and player intent. Good next formats include “safe source” pages, mobile-controls guides, and “games like X” alternatives when a new title starts picking up fan mirrors.',
+            title: 'More July Browser Games to Explore',
+            body: 'If the first three are not your style, look for a merge or idle game when you want relaxed progression, a strategy game when you want longer decisions, or a short reflex game when you only have a few minutes.',
             bullets: [
-              'Farm Merge Valley: possible merge/idle guide if source and embed rules are clear.',
-              'God Simulator: strategy guide angle, but review theme and policy fit first.',
-              'Y8/GamePix new listings: useful for discovery, but every iframe needs separate verification.',
+              'Farm Merge Valley: a calmer merge and upgrade loop.',
+              'God Simulator: a strategy-focused option for longer sessions.',
+              'GamePix, Y8, and itch.io: broad catalogues where you can compare current browser releases.',
             ],
           },
         ],
@@ -1968,12 +1960,12 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           {
             slug: 'drive-mad',
             pitch:
-              'Drive Mad already has search signal on Luma and anchors the car/physics side of the new-game cluster.',
+              'Drive Mad turns vehicle balance and physics into quick levels with immediate retries.',
           },
           {
-            slug: 'ovo',
+            slug: 'google-snake',
             pitch:
-              'OvO connects movement-skill searches with Monkey Tag IO and broader precision platforming content.',
+              'Google Snake offers familiar route planning, instant retries, and clear keyboard controls.',
           },
           {
             slug: 'tunnel-rush',
@@ -1988,29 +1980,29 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ],
         faqs: [
           {
-            question: 'Why publish guides before embedding these new games?',
+            question: 'Where can I play these games?',
             answer:
-              'Guides can add original value immediately while avoiding unauthorized iframe risk. Embeds should wait until source stability, permission, and mobile play are verified.',
+              'Use the source links on this page or each dedicated guide. They open the public browser listing without requiring a Luma-hosted copy.',
           },
           {
-            question: 'What makes a new browser game good for Luma?',
+            question: 'What makes a browser game good for a short session?',
             answer:
-              'The best candidates have public web play, clear source attribution, low IP risk, simple controls, short-session value, and enough player questions to support an original guide.',
+              'A clear goal, controls you can learn quickly, fast loading, and a round that reaches a meaningful result within a few minutes.',
           },
           {
-            question: 'Are “unblocked” keywords safe to target?',
+            question: 'Do these games need an “unblocked” download?',
             answer:
-              'They can be handled carefully, but the content should avoid bypass instructions. Focus on browser play, no-download safety, and source clarity instead.',
+              'No. Use a normal browser play page. Luma does not provide network-bypass instructions, APK files, extensions, or unofficial clients.',
           },
           {
             question: 'How often should this list be updated?',
             answer:
-              'Weekly is enough while the site is in AdSense preparation. Daily discovery is useful, but publishing should stay selective so pages remain high quality.',
+              'The month label records when the selection was reviewed. Individual guides carry their own update notes when controls or source information changes.',
           },
           {
-            question: 'What is the next publishing step after these guides?',
+            question: 'What should I play after these three?',
             answer:
-              'After 7-14 days, check GSC and behavior data. If a guide gets impressions or clicks, deepen that page first before adding another thin candidate.',
+              'Try Drive Mad for physics, Tunnel Rush for reflex play, Apple Knight for platform action, or Google Snake for familiar route planning.',
           },
         ],
         externalLinks: [
@@ -2032,88 +2024,88 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           {
             href: 'https://www.gamepix.com/new',
             label: 'GamePix new games',
-            description: 'Discovery source for new instant browser games; every candidate still needs separate Luma review.',
+            description: 'A public catalogue for comparing recently listed instant browser games.',
           },
           {
             href: 'https://www.y8.com/games_for_your_website',
             label: 'Y8 games for websites',
-            description: 'Discovery and embed-reference source, not an automatic approval for every game.',
+            description: 'A public browser-game catalogue with source and play information for listed titles.',
           },
           {
             href: 'https://itch.io/games/html5',
             label: 'itch.io HTML5 games',
-            description: 'Discovery source for web-playable indie games, with license/source checks required per title.',
+            description: 'A public directory of web-playable indie games with creator pages and title-specific details.',
           },
         ],
         ctaLabel: 'Browse current Luma game picks',
         ctaDescription:
-          'Use this monthly watchlist as a discovery layer, then play verified Luma picks from the main catalogue.',
+          'Pick a play style above, then continue with more browser games from the Luma catalogue.',
       },
       zh: {
-        metaTitle: '2026 年 7 月新浏览器游戏推荐：低竞争机会清单',
+        metaTitle: '2026 年 7 月新浏览器游戏推荐：本月值得试玩的游戏',
         metaDescription:
-          '2026 年 7 月新浏览器小游戏机会清单：低竞争关键词、玩家意图、手机体验、来源核查、安全风险和 Luma 站内延展建议。',
-        heading: '2026 年 7 月值得关注的新浏览器游戏',
-        subheading: '面向新词和低竞争机会的精选清单，优先覆盖 HTML5、免下载、操作清晰、可写原创攻略的游戏。',
+          '2026 年 7 月新浏览器游戏推荐，包含玩法差异、手机体验、安全游玩入口和下一款游戏选择。',
+        heading: '2026 年 7 月值得试玩的新浏览器游戏',
+        subheading: '精选免下载 HTML5 游戏，说明操作、手机适配和适合的游玩节奏。',
         overview: [
-          '新浏览器小游戏更适合从“真实玩家问题”切入：怎么操作、手机能不能玩、官方来源在哪、是否需要下载、玩完还能玩什么。相比直接抢 “snake game” 或 “car games” 这种红海词，新游戏名和具体问题更容易形成原创价值。',
-          '今天最值得 Luma 做的 3 个机会是 Hide and Paint、Car Circle 和 Monkey Tag IO。它们都有公开可玩来源、近期更新信号和明确攻略意图。由于独立嵌入授权和长期稳定性还没确认，本轮先发布 guide 页面，不直接加 iframe。',
+          '好玩的新浏览器游戏应该容易开始、操作说明清楚，并且在前几分钟就能进入核心玩法。本页覆盖隐藏、交通时机、移动追逐等不同类型，不需要安装客户端。',
+          '本月先推荐 Hide and Paint、Car Circle 和 Monkey Tag IO。通过页面里的公开游玩入口开始，再用 Luma 攻略查看操作、手机限制、安全提示和实用技巧。',
         ],
         sections: [
           {
-            title: '快速答案：最值得先做的 3 个页面',
-            body: '先做 Hide and Paint、Car Circle 和 Monkey Tag IO。它们分别覆盖多人隐藏、交通时机谜题和移动追逐三种不同意图，比连续做三个同质街机词更容易形成站内链接网络。',
+            title: '快速答案：先试玩这 3 款',
+            body: '喜欢多人隐藏就选 Hide and Paint，喜欢一键时机挑战就选 Car Circle，喜欢跑跳追逐就选 Monkey Tag IO。三款节奏不同，可以直接按自己想玩的类型选择。',
             bullets: [
-              'Hide and Paint：适合 Meccha Chameleon、paint hide and seek 相关搜索。',
-              'Car Circle：适合 roundabout puzzle、traffic timing、mobile tap 意图。',
-              'Monkey Tag IO：适合 controls、mobile play、official source 澄清意图。',
+              'Hide and Paint：给自己上色、贴合场景并躲开猎人。',
+              'Car Circle：找准空隙入场，避免环岛车辆相撞。',
+              'Monkey Tag IO：跑、跳、攀爬并甩开追逐者。',
             ],
           },
           {
-            title: '为什么这些词比成熟大词更好做',
-            body: '“snake game”“car games” 这类成熟词被大站长期占据。新游戏名和具体玩法问题更容易用原创内容满足，因为早期页面常见问题是只有一句介绍、自动生成文案、没有操作/手机/来源说明，或者是来源不明的粉丝站。',
+            title: '三款游戏的体验有什么不同',
+            body: 'Hide and Paint 更看耐心和伪装，Car Circle 是适合单手操作的短局时机挑战，Monkey Tag IO 则需要持续移动视角、跳跃和改变路线。',
             bullets: [
-              '新词通常缺少完整 FAQ、controls 和 mobile sections。',
-              '早期竞争页多半只给游玩入口，不教玩家怎么提高。',
-              '“unblocked” 和克隆页面多的词，更需要安全来源说明。',
+              '想玩社交隐藏：选择 Hide and Paint。',
+              '只想玩几分钟：选择 Car Circle。',
+              '想练跑图和追逐：选择 Monkey Tag IO。',
             ],
           },
           {
-            title: 'AdSense 审核期的选择规则',
-            body: '新游戏不等于可以直接收录。Luma 应优先选择公开网页可玩、开发者/来源清晰、短局有价值、移动端可接受、政策风险低的游戏。不要收 ROM、下载客户端、成人/赌博内容、知名 IP 山寨或需要可疑插件的页面。',
+            title: '怎样安全地开始游玩',
+            body: '使用本页提供的浏览器入口，并在开始前确认平台或开发者名称。正常游玩不需要 APK、桌面安装器、浏览器扩展、ROM 或所谓 mod menu。',
             bullets: [
-              '嵌入许可不清楚时，先做 guide 页面。',
-              '只有 iframe 稳定、来源归属清楚、手机可玩通过后，再考虑游戏详情页。',
-              '集合页要链接站内已测试内容，不抓取其他门户内容。',
+              '要求安装陌生扩展后才能玩的页面应直接关闭。',
+              '谨慎对待“全角色解锁”和非官方下载宣传。',
+              '手机端先旋转一次屏幕，确认按钮没有被裁切。',
             ],
           },
           {
-            title: '怎样延展成 SEO 和 GEO 内容',
-            body: '无论传统搜索还是生成式搜索，页面都需要直接回答问题，而不是堆关键词。每个新 guide 都应回答：这是什么、怎么玩、怎么操作、手机能不能玩、官方来源在哪里、还可以玩什么。这些模块既方便搜索系统引用，也能让玩家停留更久。',
+            title: '桌面端和手机端设置',
+            body: '需要移动视角的游戏通常更适合桌面键鼠，Car Circle 这类单操作游戏更适合触屏。开始前关闭占用资源较大的标签页，把浏览器缩放保持在 100%，键盘无响应时先点击一次游戏区域。',
             bullets: [
-              '每个新 guide 顶部放快速答案。',
-              'FAQ 使用真实搜索和排障语言。',
-              '每个新 guide 至少连接两个现有游戏页和一个相关 guide。',
+              '确认游戏加载完成后再切换全屏。',
+              '音画不同步时刷新页面，并避免加载阶段频繁切换标签。',
+              '触控按钮被裁切时，先回到竖屏重新打开，再切换横屏。',
             ],
           },
           {
-            title: '下一批观察方向',
-            body: '继续关注 Poki、CrazyGames、GamePix、Y8 和 itch.io 的新 HTML5 列表，但只有完成来源清晰度和玩家意图检查后才进入制作。更适合 Luma 的格式包括安全来源说明页、手机操作攻略，以及当某个新游戏出现大量镜像时做 “games like X” 替代页。',
+            title: '更多 7 月浏览器游戏',
+            body: '如果前三款不是你喜欢的类型，可以选择轻松的 merge/idle 游戏、需要较多思考的策略游戏，或适合几分钟休息时间的反应游戏。',
             bullets: [
-              'Farm Merge Valley：如果来源和嵌入规则清楚，可做 merge/idle 攻略。',
-              'God Simulator：有策略攻略角度，但需先复核题材和政策适配。',
-              'Y8/GamePix 新列表：适合发现候选，但每个 iframe 都要单独核查。',
+              'Farm Merge Valley：更轻松的合并和升级循环。',
+              'God Simulator：适合想玩较长策略局的玩家。',
+              'GamePix、Y8 和 itch.io：可以继续比较近期浏览器游戏。',
             ],
           },
         ],
         recommendations: [
           {
             slug: 'drive-mad',
-            pitch: 'Drive Mad 已经有站内搜索信号，可承接车辆/物理挑战相关内链。',
+            pitch: 'Drive Mad 把车辆平衡和物理挑战做成可以快速重试的短关卡。',
           },
           {
-            slug: 'ovo',
-            pitch: 'OvO 能把移动技巧类搜索和 Monkey Tag IO、精准平台内容连接起来。',
+            slug: 'google-snake',
+            pitch: 'Google Snake 操作熟悉、可以立即重试，适合练习路线规划。',
           },
           {
             slug: 'tunnel-rush',
@@ -2126,29 +2118,29 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ],
         faqs: [
           {
-            question: '为什么先发布攻略页，而不是直接嵌入游戏？',
+            question: '这些游戏在哪里玩？',
             answer:
-              '攻略页可以先提供原创价值，同时避免未授权 iframe 风险。嵌入应等待来源稳定性、授权和移动端可玩性确认。',
+              '使用本页或各个攻略页提供的公开游玩链接即可，不需要在 Luma 上复制第三方游戏。',
           },
           {
-            question: '什么样的新浏览器游戏适合 Luma？',
+            question: '什么样的浏览器游戏适合短时间玩？',
             answer:
-              '适合的候选应有公开网页可玩来源、清晰归属、低 IP 风险、简单操作、短局价值，并且有足够玩家问题支撑原创攻略。',
+              '目标明确、操作容易学、加载快，并且几分钟内就能完成一局或看到进展。',
           },
           {
-            question: '“unblocked” 关键词能做吗？',
+            question: '需要下载所谓 “unblocked” 客户端吗？',
             answer:
-              '可以谨慎处理，但不能提供绕过网络限制的教程。内容应聚焦浏览器游玩、免下载安全和来源清晰。',
+              '不需要。请选择正常浏览器游玩页面；Luma 不提供绕过网络限制、APK、扩展或非官方客户端。',
           },
           {
             question: '这个清单应该多久更新一次？',
             answer:
-              'AdSense 准备期每周更新一次即可。可以每天调研，但发布要克制，避免把站点变成薄内容列表。',
+              '月份表示本清单复核的时间；具体攻略会在操作或来源信息发生变化时单独更新。',
           },
           {
-            question: '这些页面发布后的下一步是什么？',
+            question: '玩完这三款后还能玩什么？',
             answer:
-              '7-14 天后看 GSC 和行为数据。如果某个 guide 获得曝光或点击，优先深挖该页，而不是继续铺薄候选。',
+              '喜欢物理挑战可玩 Drive Mad，喜欢反应可玩 Tunnel Rush，喜欢动作平台可玩 Apple Knight，想练路线规划可选 Google Snake。',
           },
         ],
         externalLinks: [
@@ -2170,21 +2162,21 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           {
             href: 'https://www.gamepix.com/new',
             label: 'GamePix 新游戏',
-            description: '新即时浏览器游戏发现来源；每个候选仍需单独经过 Luma 审核。',
+            description: '用于比较近期上架即时浏览器游戏的公开目录。',
           },
           {
             href: 'https://www.y8.com/games_for_your_website',
             label: 'Y8 网站可嵌入游戏',
-            description: '发现候选和参考嵌入信息的来源，不代表所有游戏自动适合收录。',
+            description: '提供游戏列表、来源和公开游玩信息的浏览器游戏目录。',
           },
           {
             href: 'https://itch.io/games/html5',
             label: 'itch.io HTML5 游戏',
-            description: '发现网页可玩独立游戏的来源，每个标题都需要单独核查授权和来源。',
+            description: '带创作者页面和标题详情的网页独立游戏目录。',
           },
         ],
         ctaLabel: '浏览 Luma 当前精选游戏',
-        ctaDescription: '把本月观察清单作为发现层，再从主游戏库打开已验证的 Luma 游戏。',
+        ctaDescription: '按上面的玩法选择一款，再从 Luma 主游戏库继续探索。',
       },
     },
   },
@@ -4895,8 +4887,8 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         subheading:
           'A practical discovery guide for craft, merge, clicker, obby and crossing-style Brainrot games without APKs, plugins or suspicious download mirrors.',
         overview: [
-          'Brainrot games are meme-driven browser games built around absurd characters, collecting, merging, crafting, clicking, or short obstacle runs. They are fresh enough to create low-competition search demand, but the topic also attracts clone pages, unverified mirrors, and exaggerated “unblocked” claims.',
-          'Luma is treating Brainrot as a guide-first topic. This page does not embed third-party Brainrot games or reuse portal artwork. It helps players understand the main formats, find official public sources, avoid unsafe downloads, and choose similar browser games already available on Luma.',
+          'Brainrot games are meme-driven browser games built around absurd characters, collecting, merging, crafting, clicking, or short obstacle runs. The topic also attracts clone pages, unverified mirrors, and exaggerated “unblocked” claims, so the play source matters.',
+          'This guide helps you compare the main formats, find public browser sources, avoid unsafe downloads, and choose similar quick-play games already available on Luma. It does not require an APK, extension, or copied portal artwork.',
         ],
         sections: [
           {
@@ -4910,13 +4902,13 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             ],
           },
           {
-            title: 'Why This Topic Is Easier Than Mature Game Keywords',
+            title: 'What the Main Brainrot Game Types Offer',
             body:
-              'Large portals already rank for “free games” and “car games,” but many Brainrot-specific searches are new and fragmented. Early results often have only a short play description, while players still need clear answers about controls, character collection, mobile browser play, and whether a mirror is safe.',
+              'Brainrot games reuse the same characters in very different loops. Craft games reward combinations, merge and clicker games focus on upgrades, and crossing or obby games test movement and survival. Choose the loop you enjoy instead of relying on the title alone.',
             bullets: [
-              'Low-tail terms include specific names such as Make Brainrots Online and Robby: Cross the Road for Brainrot.',
-              'Players search for recipes, upgrades, characters, mobile controls, and similar games.',
-              'Guide pages can add value without pretending to be the official developer or host.',
+              'Craft: experiment with recipes and unlock unusual characters.',
+              'Merge or clicker: build income, upgrades, and collections over repeated short runs.',
+              'Crossing or obby: dodge traffic, traps, or platforms while carrying collectibles.',
             ],
           },
           {
@@ -4930,21 +4922,21 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             ],
           },
           {
-            title: 'Best Page Types For SEO And GEO',
+            title: 'Choose a Brainrot Game by Play Style',
             body:
-              'A Brainrot topic cluster works best as a collection page plus focused guides. The collection answers “which one should I play,” while single-game guides answer “how do I collect, upgrade, survive, or play on mobile.” That structure gives both search engines and generative answers specific passages to cite.',
+              'Start with the goal you want from the session. Crafting rewards discovery, merge and clicker games reward steady upgrades, and crossing or obby games reward reflexes. Check the controls and mobile notes before opening a longer run.',
             bullets: [
-              'Collection page: compare craft, merge, clicker, obby, and crossing variants.',
-              'Single guide: explain controls, character collection, mobile notes, and similar games.',
-              'Safety note: disclose that Luma is independent and not affiliated with original platforms.',
+              'Want new characters: choose craft or collection games.',
+              'Want visible progression: choose merge, idle, or clicker games.',
+              'Want fast retries: choose crossing or obstacle games.',
             ],
           },
           {
-            title: 'Luma Alternatives While Brainrot Embeds Are Unverified',
+            title: 'Similar Quick-Play Games on Luma',
             body:
-              'If you want a lower-risk Luma session today, choose short browser games with clear controls and existing detail pages. They will not duplicate the meme theme, but they match the same quick-play intent: fast starts, simple goals, retries, and no downloads.',
+              'If you want a short browser session without the meme theme, choose a Luma game with a fast start, simple goal, quick retry loop, and no download.',
             bullets: [
-              'For obstacle timing, try Tunnel Rush or OvO.',
+              'For obstacle timing, try Tunnel Rush or Google Snake.',
               'For upgrade or farming loops, try Monkey Mart or Cow Bay.',
               'For quick physics and platform sessions, try Drive Mad, Dadish 3, or Big Tower Tiny Square.',
             ],
@@ -4957,9 +4949,9 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               'A fast reflex browser game for players who like short obstacle runs and quick restarts.',
           },
           {
-            slug: 'ovo',
+            slug: 'big-tower-tiny-square',
             pitch:
-              'A precise movement game that fits the same “try again quickly” intent as many obby-style meme games.',
+              'A checkpoint platform challenge with fast retries and a clear single-player goal.',
           },
           {
             slug: 'monkey-mart',
@@ -4989,14 +4981,14 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               'Yes, several Brainrot games have public browser listings. Use those first and avoid APK mirrors, installers, extension prompts, or “mod menu” downloads.',
           },
           {
-            question: 'Are Brainrot games safe for AdSense-style sites?',
+            question: 'Are Brainrot games suitable for younger players?',
             answer:
-              'Some are fine as light meme, craft, merge, or clicker topics, but each page needs review. Avoid adult, hateful, extreme violence, misleading downloads, or unlicensed branded assets.',
+              'Many are light meme, craft, merge, or clicker games, but themes vary. Check the game description first and avoid pages with adult, hateful, extreme-violence, or misleading-download content.',
           },
           {
-            question: 'Why does Luma link to sources instead of embedding these games?',
+            question: 'Why do some play links open another website?',
             answer:
-              'Embedding should wait until source stability and permission are clear. A guide can still add original controls, mobile, FAQ, and alternative-game value without copying another portal.',
+              'Those games run on their public platform listings. Luma provides independent controls, mobile notes, safety guidance, and alternatives without copying the hosted game.',
           },
           {
             question: 'What Brainrot game should I try first?',
@@ -5014,19 +5006,19 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             href: 'https://poki.com/en/brainrot',
             label: 'Poki Brainrot Games',
             description:
-              'Public category page used to verify current Brainrot game examples and mobile-friendly listings.',
+              'Public category page for comparing current Brainrot games and mobile-friendly listings.',
           },
           {
             href: 'https://poki.com/en/g/make-brainrots-online',
             label: 'Make Brainrots Online',
             description:
-              'Public source page for the crafting-game angle, developer attribution, and play format.',
+              'Public play page with developer attribution and the crafting format.',
           },
           {
             href: 'https://www.crazygames.com/game/robby-cross-the-road-for-brainrot',
             label: 'Robby on CrazyGames',
             description:
-              'Public source page used to verify July 2026 release context, platform support, and gameplay theme.',
+              'Public play page with platform support and gameplay details.',
           },
         ],
         ctaLabel: 'Browse safe Luma browser games',
@@ -5041,8 +5033,8 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         subheading:
           '面向 Brainrot craft、merge、clicker、obby 和过马路类新词的独立发现页，优先免下载、安全来源和站内替代玩法。',
         overview: [
-          'Brainrot games 通常是围绕荒诞 meme 角色展开的浏览器小游戏，常见玩法包括合成、收集、升级、点击、跑酷和过马路。它们足够新，适合低竞争长尾词，但也容易吸引来源不清的镜像站、下载诱导和夸张的 unblocked 页面。',
-          'Luma 目前把 Brainrot 当作 guide-first 主题处理。本页不嵌入第三方 Brainrot 游戏，也不使用门户站素材，而是帮助玩家理解主要玩法类型、核对公开来源、避开可疑下载，并找到 Luma 站内已有的相似浏览器游戏。',
+          'Brainrot games 通常围绕荒诞 meme 角色展开，常见玩法包括合成、收集、升级、点击、跑酷和过马路。这个题材也容易出现来源不清的镜像站、下载诱导和夸张的 unblocked 页面，因此游玩入口很重要。',
+          '本指南帮助玩家理解主要玩法类型、找到公开浏览器来源、避开可疑下载，并选择 Luma 站内已有的相似短局游戏，不需要 APK、扩展或复制门户素材。',
         ],
         sections: [
           {
@@ -5056,13 +5048,13 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             ],
           },
           {
-            title: '为什么这个主题比成熟大词更好切入',
+            title: '不同 Brainrot 玩法有什么区别',
             body:
-              '“free games”“car games” 这类词已经被大站长期占据，但 Brainrot 具体游戏名和玩法问题还很分散。早期结果常常只有一句介绍，而玩家实际需要的是 controls、角色收集、手机能否玩、镜像站是否安全等答案。',
+              '同一批 meme 角色可能出现在完全不同的玩法里。Craft 看组合发现，merge/clicker 看升级成长，crossing/obby 则考验移动和生存。不要只看标题，要先选自己喜欢的循环。',
             bullets: [
-              '低竞争长尾包括 Make Brainrots Online、Robby: Cross the Road for Brainrot 等具体名称。',
-              '玩家会搜 recipes、upgrades、characters、mobile controls、similar games。',
-              '攻略页能提供原创价值，而不需要冒充官方或盗用门户内容。',
+              'Craft：尝试配方并解锁不同角色。',
+              'Merge / Clicker：通过重复短局积累收益、升级和收藏。',
+              'Crossing / Obby：躲开交通、陷阱或平台障碍并携带收集物。',
             ],
           },
           {
@@ -5076,21 +5068,21 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             ],
           },
           {
-            title: '适合 SEO 和 GEO 的页面结构',
+            title: '按游玩目标选择 Brainrot 游戏',
             body:
-              'Brainrot 主题集群最好由一个集合页加多个单游攻略组成。集合页回答“该玩哪类”，单游攻略回答“怎么收集、怎么升级、怎么活更久、手机能不能玩”。这种结构更容易被搜索和生成式答案引用。',
+              '先确定这次想获得什么体验。Craft 强调发现，merge/clicker 强调持续升级，crossing/obby 强调反应。开始长局前先查看操作和手机说明。',
             bullets: [
-              '集合页：比较 craft、merge、clicker、obby、crossing 类型。',
-              '单游攻略：解释操作、角色收集、手机体验和相似游戏。',
-              '安全说明：明确 Luma 是独立 guide/game discovery site，不隶属原平台。',
+              '想解锁新角色：选择 craft 或 collection。',
+              '想看到成长：选择 merge、idle 或 clicker。',
+              '想快速失败重试：选择 crossing 或障碍类。',
             ],
           },
           {
-            title: '嵌入未验证前的 Luma 替代玩法',
+            title: 'Luma 上的相似短局游戏',
             body:
-              '如果今天只想在 Luma 玩一局，可以选择控制清晰、已上线详情页的短局游戏。它们不复制 Brainrot meme 主题，但满足类似的快速开始、简单目标、可反复尝试和免下载需求。',
+              '如果今天只想玩一局不带 meme 主题的游戏，可以选择快速开始、目标简单、能立即重试且免下载的 Luma 游戏。',
             bullets: [
-              '喜欢障碍反应：试试 Tunnel Rush 或 OvO。',
+              '喜欢障碍反应：试试 Tunnel Rush 或 Google Snake。',
               '喜欢升级经营：试试 Monkey Mart 或 Cow Bay。',
               '喜欢物理和平台短局：试试 Drive Mad、Dadish 3 或 Big Tower Tiny Square。',
             ],
@@ -5098,7 +5090,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ],
         recommendations: [
           { slug: 'tunnel-rush', pitch: '适合喜欢短局障碍、快速失败和重试的玩家。' },
-          { slug: 'ovo', pitch: '精准移动和 obby 类搜索意图接近，适合练操作。' },
+          { slug: 'big-tower-tiny-square', pitch: '带检查点的平台挑战，可以快速重试，单人目标清晰。' },
           { slug: 'monkey-mart', pitch: '轻松升级循环，适合不想安装客户端的玩家。' },
           { slug: 'cow-bay', pitch: '更轻量的农场和资源管理浏览器游戏。' },
           { slug: 'dadish-3', pitch: '带收集和检查点的紧凑平台游戏。' },
@@ -5111,14 +5103,14 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               '可以，部分 Brainrot 游戏有公开浏览器页面。优先使用这些来源，避开 APK 镜像、安装器、扩展提示和所谓 mod menu 下载。',
           },
           {
-            question: 'Brainrot 题材适合 AdSense 审核期网站吗？',
+            question: 'Brainrot 游戏适合年龄较小的玩家吗？',
             answer:
-              '轻量 meme、craft、merge、clicker 方向可以考虑，但每个页面都要单独复核。避免成人、仇恨、极端暴力、误导下载和未经授权的品牌素材。',
+              '不少游戏只是轻量 meme、craft、merge 或 clicker，但题材会变化。开始前先看介绍，避开成人、仇恨、极端暴力或误导下载内容。',
           },
           {
-            question: '为什么 Luma 暂时只做 guide，不直接嵌入？',
+            question: '为什么有些游玩链接会打开其他网站？',
             answer:
-              'iframe 嵌入需要确认来源稳定性和授权边界。guide 仍然可以提供操作、手机体验、FAQ 和相似游戏推荐，不需要复制门户内容。',
+              '这些游戏运行在公开平台页面。Luma 提供独立的操作、手机说明、安全提示和替代推荐，不复制平台托管的游戏。',
           },
           {
             question: '第一款 Brainrot 游戏应该选哪种？',
@@ -5135,7 +5127,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           {
             href: 'https://poki.com/en/brainrot',
             label: 'Poki Brainrot Games',
-            description: '用于核对当前 Brainrot 游戏示例和移动端友好列表的公开分类页。',
+            description: '用于比较当前 Brainrot 游戏和移动端友好条目的公开分类页。',
           },
           {
             href: 'https://poki.com/en/g/make-brainrots-online',
@@ -5426,7 +5418,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         subheading:
           'How to survive traffic, collect Brainrots, understand the mobile fit, and choose safe browser alternatives without using download mirrors.',
         overview: [
-          'Robby: Cross the Road for Brainrot mixes a road-crossing reflex loop with meme character collection. CrazyGames lists it as a July 2026 browser game from Eva Games with desktop, mobile, and tablet support, which makes the title a strong fresh long-tail opportunity.',
+          'Robby: Cross the Road for Brainrot mixes a road-crossing reflex loop with meme character collection. CrazyGames lists it as a July 2026 browser game from Eva Games with desktop, mobile, and tablet support.',
           'Luma is not embedding the game on this page. The guide is independent and player-facing: use the official public source to play, then use the sections below for traffic-reading habits, collection priorities, mobile notes, and related browser games already available on Luma.',
         ],
         sections: [
@@ -5713,7 +5705,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           'A map-by-map guide for Lava, Extreme and Ice World, plus PvP pushing, mobile controls, resource notes and safe browser-play boundaries.',
         overview: [
           'Obby: Parkour with Ragdoll is a July 2026 CrazyGames parkour racing game from DepGet. The public listing describes three maps, player pushing, ragdoll knockouts, crystals, coins, and desktop/mobile browser support.',
-          'This Luma page is guide-first. It does not embed the game or reuse platform artwork. Use the public source page to play, then use this guide to plan safer jumps, understand each map, avoid PvP traps, and decide whether the game fits your phone or keyboard setup.',
+          'Use the linked public source page to play, then return to this guide to plan safer jumps, understand each map, avoid PvP traps, and decide whether the controls fit your phone or keyboard setup.',
         ],
         sections: [
           {
@@ -5773,14 +5765,14 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             bullets: [
               'Use public platform listings for play access.',
               'Do not download “free crystals” tools, extensions, or modified clients.',
-              'If Luma later embeds this game, iframe stability and source permission should be checked first.',
+              'Avoid copied iframe pages when the developer or hosting source is not identified.',
             ],
           },
         ],
         recommendations: [
           {
-            slug: 'ovo',
-            pitch: 'A precise platformer for players who want tighter movement and fast retries.',
+            slug: 'google-snake',
+            pitch: 'A familiar route-planning game with fast retries and clear keyboard controls.',
           },
           {
             slug: 'big-tower-tiny-square',
@@ -5843,7 +5835,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           '按地图拆解 Lava、Extreme 和 Ice World 的跑法，并说明 PvP 推人、手机操作、资源和安全边界。',
         overview: [
           'Obby: Parkour with Ragdoll 是 CrazyGames 上 2026 年 7 月的跑酷竞速游戏，公开页面显示开发者为 DepGet，包含三张地图、推人、ragdoll 击倒、Crystals、Coins，以及桌面和手机浏览器支持。',
-          'Luma 本页采用 guide-first 策略，不嵌入游戏，也不复用平台素材。玩家可以去公开来源页面游玩，再用本攻略理解每张地图、避开 PvP 陷阱，并判断它是否适合当前手机或键盘环境。',
+          '先使用页面提供的公开来源开始游戏，再用本攻略理解每张地图、避开 PvP 陷阱，并判断操作是否适合当前手机或键盘环境。',
         ],
         sections: [
           {
@@ -5903,12 +5895,12 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             bullets: [
               '游玩入口优先使用公开平台页面。',
               '不要下载 “free crystals” 工具、扩展或修改客户端。',
-              '若未来要在 Luma 嵌入，必须先检查 iframe 稳定性和授权边界。',
+              '开发者或托管来源不清楚时，避开复制 iframe 的镜像页。',
             ],
           },
         ],
         recommendations: [
-          { slug: 'ovo', pitch: '更精准的平台动作，适合练习移动和快速重试。' },
+          { slug: 'google-snake', pitch: '熟悉的路线规划玩法，操作清晰，可以快速重试。' },
           { slug: 'big-tower-tiny-square', pitch: '带检查点的塔楼攀爬，更强调耐心和节奏。' },
           { slug: 'tunnel-rush', pitch: '适合喜欢高速读障碍的反应型玩家。' },
           { slug: 'dadish-3', pitch: '更安全的单人平台练习，关卡紧凑。' },
@@ -6036,7 +6028,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           {
             title: 'Community Tracks And Source Boundaries',
             body:
-              'Community tracks are valuable discovery content, but Luma should not host track files or imply unofficial mod support. Recommend tracks by qualities players can verify: readable start, fair checkpoints, clear camera moments, and difficulty that comes from timing instead of confusion.',
+              'Choose community tracks by qualities you can verify: a readable start, fair checkpoints, clear camera moments, and difficulty that comes from timing instead of confusion. Avoid unofficial track downloads or pages that present custom tracks as mods.',
             bullets: [
               'Good community tracks are replayable, readable, and fair after one or two attempts.',
               'Avoid calling custom tracks “mods” unless the platform itself uses that language.',
@@ -6156,7 +6148,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           {
             title: 'Track Editor 第一条赛道',
             body:
-              '内置编辑器是长期长尾价值，但第一目标应该是能通关。先做一段直线、一个缓弯、一个小落差和一个 checkpoint。等别人能合理跑完后，再加 loop 或陡 bank。',
+              '使用内置编辑器时，第一目标应该是能通关。先做一段直线、一个缓弯、一个小落差和一个 checkpoint。等别人能合理跑完后，再加 loop 或陡 bank。',
             bullets: [
               '先搭简单主线：start、checkpoint、finish。',
               '每个弯道都用新手速度和排行榜速度各测试一次。',
@@ -6632,12 +6624,6 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       'games-to-play-when-bored',
       'best-browser-games-5-minute-break',
     ],
-    intentCta: {
-      hookId: 'original_rhythm_avatar',
-      viewEvent: 'ai_hook_view',
-      clickEvent: 'ai_hook_click',
-      anchorId: 'original-rhythm-avatar',
-    },
     locales: {
       en: {
         metaTitle: "Friday Night Funkin' Unblocked: Fix Loading & Play Smoothly",
@@ -6793,9 +6779,9 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               'A public project source reference; repository code and game assets can have different usage terms.',
           },
         ],
-        ctaLabel: 'Try the Original Rhythm Battle Avatar',
+        ctaLabel: 'Browse more browser games',
         ctaDescription:
-          'This is an anonymous interest test for a future original concept. No sign-up, upload, or generated asset is available in this experiment.',
+          'After checking the source notes, choose another no-download browser game on Luma.',
       },
       zh: {
         metaTitle: "Friday Night Funkin' Unblocked：加载问题排查与流畅游玩",
@@ -6951,9 +6937,9 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               '公开项目来源参考；仓库代码和游戏素材可能适用不同的使用条款。',
           },
         ],
-        ctaLabel: '试试原创节奏对战头像',
+        ctaLabel: '浏览更多浏览器游戏',
         ctaDescription:
-          '这是对未来原创概念的匿名兴趣测试。本实验没有注册、上传或可生成的素材。',
+          '看完来源说明后，继续在 Luma 选择一款无需下载的浏览器游戏。',
       },
     },
   },

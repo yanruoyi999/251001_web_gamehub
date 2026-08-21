@@ -27,18 +27,15 @@ describe('Friday Night Funkin loading experiment', () => {
     expect(urls).not.toContain('https://251001.com/guides/' + slug);
   });
 
-  it('has source-backed troubleshooting content and anonymous CTA events', () => {
+  it('has source-backed troubleshooting content without owner-only experiment copy', () => {
     const page = getSeoLandingPage(slug);
     const english = page?.locales.en;
 
     expect(english?.sections.length).toBeGreaterThanOrEqual(7);
     expect(english?.quickAnswerLink?.href).toBe('https://ninja-muffin24.itch.io/funkin');
-    expect(page?.intentCta).toMatchObject({
-      hookId: 'original_rhythm_avatar',
-      viewEvent: 'ai_hook_view',
-      clickEvent: 'ai_hook_click',
-    });
-    expect(english?.ctaDescription).toContain('anonymous');
-    expect(english?.ctaDescription).toMatch(/No sign-up, upload/i);
+    expect(JSON.stringify(page)).not.toMatch(
+      /original_rhythm_avatar|ai_hook_view|ai_hook_click|anonymous interest|interest test|future original concept/i,
+    );
+    expect(english?.ctaLabel).toBe('Browse more browser games');
   });
 });

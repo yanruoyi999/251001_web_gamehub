@@ -13,14 +13,17 @@ const cardSource = readFileSync(
 const globalCss = readFileSync(path.join(process.cwd(), 'app/globals.css'), 'utf8');
 
 describe('search-session interaction resilience', () => {
-  it('stretches each recommendation game link across its full card', () => {
+  it('uses a real image link instead of a pseudo-element click overlay', () => {
     expect(cardSource).toContain('data-slot="card"');
-    expect(globalCss).toContain(
+    expect(globalCss).not.toContain(
       "#recommendations [data-slot='card'] a[href*='/games/']::after",
     );
     expect(globalCss).toContain(
       "#recommendations [data-slot='card']:has(a[href*='/games/']:focus-visible)",
     );
+    expect(
+      readFileSync(path.join(process.cwd(), 'app/[locale]/guides/[slug]/page.tsx'), 'utf8'),
+    ).toContain('className="relative block aspect-video');
   });
 
   it('updates play state before best-effort analytics', () => {

@@ -2110,3 +2110,12 @@
 - 修改文件：`app/layout.tsx`、`components/analytics/ProductionTelemetry.tsx`、`tests/ga4-bootstrap.test.ts`。遥测改为 hydration 后根据浏览器真实 hostname 加载，Preview/localhost 仍不加载。
 - 验证：回归测试先 RED 2/2 后转为 GREEN；全量 Vitest 85 files / 267 tests、type-check、internal-link audit、production audit、显式全量 ESLint、diff-check 和 Next.js 15.5.21 生产构建（145 路由）通过。浏览器中正式域只有 1 个 GA 脚本和 1 次 `page_view`，Preview 无遥测请求，两者均无 page error。
 - 数据边界：当前只能证明本地代码与生产构建候选正确；真实 GA4 恢复需部署后等待后台处理，历史漏采不可回填。UI 改版继续暂停，等待 3 个完整自然日 GA4/GSC 基线。
+
+### T-171 Luma 全量代码审计与公开面/遥测修复（2026-08-21）
+
+- 审计范围：基于干净 `main@80abea6` 的隔离工作树 `/private/tmp/luma-main-audit-20260821`；原工作树 `/Users/yanruoyi/ai-native/active/251001_web_游戏聚合网站` 已有未提交改动，未触碰、未暂存、未覆盖。
+- 已确认并修复：公开 Guides 暴露站长用的 Game Opportunity Radar、MVP/关键词测试/匿名兴趣 CTA；删除公开工具并将旧地址 308 到 `/guides`。继续扫描公开内容后，又清理了 July 2026、Brainrot、Car Circle、Monkey Tag IO、Obby 与 Rail Cart 页面中的低竞争、AdSense、SEO/GEO、GSC 观察、guide-first 和长尾策略文案，统一改为玩家玩法、安全来源和设备说明；新增公开面回归测试防止再次泄漏。导入目录的未知来源 URL 不再作为玩家-facing source link；质量审计现在对未核验 embed permission 明确扣分并标记，不再把未知权限当作来源证明。OvO 等 manual-review 页面继续 noindex、排除 sitemap、隐藏 iframe/推荐入口。
+- 已确认并修复：攻略推荐卡片图片区域在 Firefox 点击无导航，根因是 pseudo-element 覆盖方案与客户端 Link 行为不稳定；改为真实原生图片 `<a>`，保留文本内链。iframe sandbox 删除无效的 `allow-fullscreen` token，保留 `allowFullScreen`/`allow="fullscreen"`；CI workflow 与项目 engines 统一到 Node 22。
+- 遥测边界按当前要求调整：GA4 与 Clarity 仅正式域加载，localhost/Preview 不加载；正式域 Clarity 不再显示同意弹窗，设置 `analytics_Storage=granted`、`ad_Storage=denied`。GSC 是 Search Console 后台数据源，不是页面脚本，未向站内注入伪 GSC 代码。
+- 验证：Node 22 下 Vitest 82 files / 261 tests；type-check、lint、内链审计、外链检查（10/10 游戏链接正常）、`pnpm audit:prod` 均通过；页面质量 257 rows / 92 indexable / 0 indexable under-80；Next.js 15.5.21 production build 143/143；Playwright 97/97，覆盖 Chromium/Firefox/WebKit/Pixel 7/iPhone 13 及触控 Snake 3D；移动 runtime sampling 11/11、最低 100；本地 production smoke 的 health、robots、198 URL sitemap、旧雷达重定向、noindex/canonical 和 4399 sample 404 均符合预期。
+- 发布前边界：用户已确认通过 Git commit、push、合入 `main` 和生产部署流程；本节以上数据是提交前候选验证。未改 GSC/GA4/Clarity 后台、数据库/搜索服务、其他 worktree 或 GitHub 分支保护；真实 GA4/Clarity/GSC 后台数据仍需部署后观察，Clarity API HTTP 404 仍属于资源/token 映射覆盖缺口，不由页面代码验证为已修复。

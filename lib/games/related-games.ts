@@ -4,6 +4,7 @@ interface RelatedGameCandidate {
   slug: string;
   categories: Array<{ slug: string }>;
   tags: Array<{ slug: string }>;
+  embedPermissionStatus?: 'verified' | 'unknown' | 'blocked' | null;
 }
 
 const RELATED_GAME_OVERRIDES: Record<string, string[]> = {
@@ -22,7 +23,7 @@ export function getRelatedGames<T extends RelatedGameCandidate>(
       .map((slug) => bySlug.get(slug))
       .filter(
         (candidate): candidate is T =>
-          Boolean(candidate && shouldPromoteGameInCollections(candidate.slug)),
+          Boolean(candidate && shouldPromoteGameInCollections(candidate)),
       )
       .slice(0, limit);
   }
@@ -33,7 +34,7 @@ export function getRelatedGames<T extends RelatedGameCandidate>(
   return candidates
     .filter((candidate) => {
       if (candidate.slug === current.slug) return false;
-      if (!shouldPromoteGameInCollections(candidate.slug)) return false;
+      if (!shouldPromoteGameInCollections(candidate)) return false;
       return (
         candidate.categories.some((category) => categorySlugs.has(category.slug)) ||
         candidate.tags.some((tag) => tagSlugs.has(tag.slug))

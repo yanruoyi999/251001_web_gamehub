@@ -165,8 +165,10 @@ test.describe('游戏浏览流程', () => {
       .locator('[data-slot="card"]')
       .filter({ has: page.locator('a[href="/en/games/tunnel-rush"]') });
     const tunnelRushLink = tunnelRushCard.locator('a[href="/en/games/tunnel-rush"]');
-    await expect(tunnelRushLink).toHaveAttribute('href', '/en/games/tunnel-rush');
-    await tunnelRushCard.click({ position: { x: 24, y: 24 } });
+    await expect(tunnelRushLink).toHaveCount(2);
+    await expect(tunnelRushLink.first()).toHaveAttribute('href', '/en/games/tunnel-rush');
+    await tunnelRushLink.first().scrollIntoViewIfNeeded();
+    await tunnelRushLink.first().click({ position: { x: 24, y: 24 } });
 
     await expect(page).toHaveURL(/\/en\/games\/tunnel-rush$/);
   });

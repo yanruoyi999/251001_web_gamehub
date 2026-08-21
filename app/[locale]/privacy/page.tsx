@@ -142,8 +142,8 @@ export default async function PrivacyPage({ params }: PrivacyPageProps) {
             <li>
               <strong>Microsoft Clarity</strong>:{' '}
               {isZh
-                ? '用于热图、会话回放和体验问题分析。默认不使用广告存储，并以受限分析模式运行，避免弹窗打断用户。'
-                : 'For heatmaps, session recordings, and experience diagnostics. It runs by default with ad storage disabled and limited analytics mode, without interrupting visitors with a banner.'} -{' '}
+                ? '用于热图、会话回放和体验问题分析；默认不使用广告存储，并以受限分析模式运行。'
+                : 'For heatmaps, session recordings, and experience diagnostics. It runs with ad storage disabled and limited analytics mode.'} -{' '}
               <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener" className="text-indigo-600 hover:text-indigo-500">
                 {isZh ? 'Microsoft 隐私声明' : 'Microsoft Privacy Statement'}
               </a>

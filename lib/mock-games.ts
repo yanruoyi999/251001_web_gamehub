@@ -641,7 +641,9 @@ function buildMockGamesFromSample(entries: SampleGameEntry[]): MockGame[] {
     const instructions = buildInstructionsForGame(englishTitle, categories[0] ?? cloneCategory(MOCK_CATEGORY_PRESETS[0]));
     const developer = deriveDeveloperInfo(entry, iframeUrl);
     const sourceDisclosure = deriveSourceDisclosure(entry, iframeUrl);
-    const sourceUrl = sourceDisclosure.sourcePageUrl ?? iframeUrl ?? null;
+    // Keep unverified distribution references as audit metadata only. They are
+    // not player-facing source links until permission has been confirmed.
+    const sourceUrl: string | null = null;
     const screenshots = buildScreenshots(slug, englishTitle, index);
     const editorialDescription = getGameEditorialDescription(slug, 'zh');
     const editorialDescriptionEn = getGameEditorialDescription(slug, 'en');
@@ -802,5 +804,5 @@ export function getMockGameBySlug(slug: string): MockGame | undefined {
 }
 
 export function getFeaturedMockGames(): MockGame[] {
-  return mockGames.filter((game) => game.featured && shouldPromoteGameInCollections(game.slug));
+  return mockGames.filter((game) => game.featured && shouldPromoteGameInCollections(game));
 }

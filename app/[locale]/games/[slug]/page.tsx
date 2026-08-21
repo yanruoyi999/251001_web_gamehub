@@ -20,7 +20,6 @@ import {
   canRenderGameIframe,
   getGameRedirectTarget,
   getGameQualityTier,
-  getManualReviewReason,
   shouldNoIndexGame,
   shouldPromoteGameInCollections,
 } from '@/lib/games/quality-policy';
@@ -75,7 +74,7 @@ function buildGameDetailFromMock(mock: MockGame): GamePageDetail {
   const mockRecordTimestamp = new Date('2024-01-01T00:00:00.000Z');
   const instructionsZh = mock.instructions.zh.join('\n');
   const instructionsEn = mock.instructions.en.join('\n');
-  const promoted = shouldPromoteGameInCollections(mock.slug);
+  const promoted = shouldPromoteGameInCollections(mock);
   return {
     id: mock.id,
     slug: mock.slug,
@@ -233,7 +232,12 @@ export async function generateMetadata({ params }: GamePageProps): Promise<Metad
       ? `${title} - 免费在线小游戏`
       : `${title} - Free Browser Game`);
   const canonical = getLocalizedPath(locale, `/games/${game.slug}`);
-  const noIndex = shouldNoIndexGame(game.slug);
+  const sourceDisclosure = game as GamePageDetail & GameSourceDisclosure;
+  const sourcePolicy = {
+    slug: game.slug,
+    embedPermissionStatus: sourceDisclosure.embedPermissionStatus,
+  };
+  const noIndex = shouldNoIndexGame(sourcePolicy);
   const taxonomyKeywords = [
     ...game.categories.map((category) =>
       locale === 'en'
@@ -542,13 +546,12 @@ export default async function GamePage({ params }: GamePageProps) {
     ...(game.isHot ? [locale === 'zh' ? '热门' : 'Hot'] : []),
   ];
 
-  if (isMockGame && catalogueUi.showCommunityMetrics) {
-    statusChips.push(locale === 'zh' ? '演示数据' : 'Demo Data');
-  }
-
-  const qualityTier = getGameQualityTier(game.slug);
-  const reviewReason = getManualReviewReason(game.slug);
   const sourceDisclosure = game as GamePageDetail & GameSourceDisclosure;
+  const sourcePolicy = {
+    slug: game.slug,
+    embedPermissionStatus: sourceDisclosure.embedPermissionStatus,
+  };
+  const qualityTier = getGameQualityTier(sourcePolicy);
   const sourceType = sourceDisclosure.sourceType ?? 'unknown';
   const developerVerified = sourceDisclosure.developerVerified === true;
   const sourceHost = sourceDisclosure.sourceHost ?? sourceDisclosure.embedHost ?? null;
@@ -558,7 +561,7 @@ export default async function GamePage({ params }: GamePageProps) {
       : sourceType === 'distribution'
         ? locale === 'zh' ? '公开分发来源' : 'Public Distribution Source'
         : locale === 'zh' ? '来源信息' : 'Source Information';
-  const canRenderIframe = canRenderGameIframe(game.slug);
+  const canRenderIframe = canRenderGameIframe(sourcePolicy);
 
   return (
     <div className="w-full bg-background">
@@ -666,9 +669,6 @@ export default async function GamePage({ params }: GamePageProps) {
                 ? 'Luma 正在复查来源、题材和 iframe 表现，复查完成前不会在本站嵌入播放器或放入精选推荐。'
                 : 'Luma is rechecking source clarity, theme fit, and iframe behavior, so the playable iframe is not embedded here until review is complete.'}
             </p>
-            {reviewReason ? (
-              <p className="mt-2 text-xs text-amber-800">{reviewReason}</p>
-            ) : null}
           </div>
         ) : null}
 
@@ -1023,7 +1023,7 @@ export default async function GamePage({ params }: GamePageProps) {
                     </p>
                   </div>
                 )}
-                {game.sourceUrl && (
+                {game.sourceUrl && sourceDisclosure.embedPermissionStatus === 'verified' && (
                   <div className="rounded-lg border border-green-200 bg-green-50/70 p-3 dark:border-green-800 dark:bg-green-950/30">
                     <div className="mb-1 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-green-700 dark:text-green-300">
                       <span>🔗</span>
@@ -1050,19 +1050,21 @@ export default async function GamePage({ params }: GamePageProps) {
                     </p>
                   </div>
                 )}
-                <div>
-                  <div className="mb-1 font-medium text-foreground">
-                    {locale === 'zh' ? '游戏地址' : 'Game URL'}
+                {canRenderIframe ? (
+                  <div>
+                    <div className="mb-1 font-medium text-foreground">
+                      {locale === 'zh' ? '游戏地址' : 'Game URL'}
+                    </div>
+                    <a
+                      href={game.iframeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="break-all text-xs font-medium text-primary hover:text-primary/80"
+                    >
+                      {game.iframeUrl}
+                    </a>
                   </div>
-                  <a
-                    href={game.iframeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="break-all text-xs font-medium text-primary hover:text-primary/80"
-                  >
-                    {game.iframeUrl}
-                  </a>
-                </div>
+                ) : null}
               </CardContent>
             </Card>
 

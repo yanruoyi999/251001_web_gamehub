@@ -87,19 +87,19 @@ export default async function HomePage({
           {
             href: getLocalizedPath(locale, '/games/big-tower-tiny-square'),
             image: '/game-screenshots/big-tower-tiny-square.png',
-            eyebrow: '关键词测试',
+            eyebrow: '重力跑酷',
             title: 'Big Tower Tiny Square',
             description:
-              '围绕 big tall small 的搜索意图，直接体验带检查点的垂直平台挑战。',
+              '挑战带检查点的垂直平台，控制小角色穿过高塔中的连续障碍。',
             action: '开始爬塔',
           },
           {
             href: getLocalizedPath(locale, '/games/g-switch-2'),
             image: '/game-screenshots/g-switch-2.png',
-            eyebrow: '关键词测试',
+            eyebrow: '重力跑酷',
             title: 'G-Switch 2',
             description:
-              '测试 gravity run 相关需求，练习反转重力、读障碍和保持跑线。',
+              '反转重力、读障碍并保持跑线，适合喜欢短局跑酷的玩家。',
             action: '开始跑酷',
           },
           {
@@ -124,19 +124,19 @@ export default async function HomePage({
           {
             href: getLocalizedPath(locale, '/games/big-tower-tiny-square'),
             image: '/game-screenshots/big-tower-tiny-square.png',
-            eyebrow: 'Keyword test',
+            eyebrow: 'Platform challenge',
             title: 'Big Tower Tiny Square',
             description:
-              'Test the big tall small intent with a checkpoint-based vertical platform challenge.',
+              'Climb a checkpoint-based vertical platform challenge with precise short runs.',
             action: 'Climb the tower',
           },
           {
             href: getLocalizedPath(locale, '/games/g-switch-2'),
             image: '/game-screenshots/g-switch-2.png',
-            eyebrow: 'Keyword test',
+            eyebrow: 'Gravity runner',
             title: 'G-Switch 2',
             description:
-              'Test the gravity run intent with gravity flips, obstacle reading, and clean lines.',
+              'Practice gravity flips, obstacle reading, and clean lines in a short browser run.',
             action: 'Start the run',
           },
           {
@@ -213,8 +213,8 @@ export default async function HomePage({
                 </h2>
                 <p className="mt-1 text-sm text-muted-foreground">
                   {locale === 'zh'
-                    ? '基于当前搜索需求与可用玩法挑选，直接进入游戏或实用攻略。'
-                    : 'Current high-signal picks with a direct game or a practical guide behind every card.'}
+                    ? '从不同玩法中快速选择，每张卡片都会进入游戏或实用攻略。'
+                    : 'Choose across different play styles, with a direct game or practical guide behind every card.'}
                 </p>
               </div>
               <Link

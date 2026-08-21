@@ -51,8 +51,7 @@ export function GamePlayerFacade({
   const [isFullscreenTransitioning, setIsFullscreenTransitioning] = useState(false);
   const fullscreenTransitionRef = useRef(false);
   const playerRef = useRef<HTMLDivElement>(null);
-  const sandbox =
-    'allow-scripts allow-same-origin allow-fullscreen allow-pointer-lock allow-popups';
+  const sandbox = 'allow-scripts allow-same-origin allow-pointer-lock allow-popups';
 
   useEffect(() => {
     const fullscreenDocument = document as WebkitFullscreenDocument;

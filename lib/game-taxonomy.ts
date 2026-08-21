@@ -13,7 +13,7 @@ function buildTaxonomyEntries<TItem extends { slug: string }>(
 ): TaxonomyEntry<TItem>[] {
   const entries = new Map<string, TaxonomyEntry<TItem>>();
 
-  for (const game of mockGames.filter((item) => shouldPromoteGameInCollections(item.slug))) {
+  for (const game of mockGames.filter((item) => shouldPromoteGameInCollections(item))) {
     for (const item of pickItems(game)) {
       const existing = entries.get(item.slug);
       if (existing) {

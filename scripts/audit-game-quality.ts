@@ -9,6 +9,7 @@ import {
   getGameQualityTier,
   getManualReviewReason,
   getRetiredCatalogueRedirectTarget,
+  hasVerifiedEmbedPermission,
   isGameUnderManualReview,
   shouldNoIndexGame,
 } from '@/lib/games/quality-policy';
@@ -130,8 +131,15 @@ export function scoreGame(game: MockGame) {
   const zhChars = game.description.length;
   const editorialCoverage = getEditorialCoverage(game.slug);
 
-  if (game.sourcePageUrl && game.sourceHost && game.embedHost) {
+  if (
+    game.sourcePageUrl &&
+    game.sourceHost &&
+    game.embedHost &&
+    hasVerifiedEmbedPermission(game)
+  ) {
     score += game.developerVerified ? 18 : 13;
+  } else if (game.embedPermissionStatus !== 'verified') {
+    reasons.push('embed permission not verified');
   } else {
     score += 5;
     reasons.push('source metadata incomplete');
@@ -172,7 +180,7 @@ export function scoreGame(game: MockGame) {
     reasons.push('placeholder thumbnail');
   }
 
-  if (isGameUnderManualReview(game.slug)) {
+  if (isGameUnderManualReview(game)) {
     reasons.push(getManualReviewReason(game.slug) ?? 'manual review');
   } else {
     score += 18;
@@ -190,7 +198,7 @@ export function scoreGame(game: MockGame) {
 }
 
 function actionFor(game: MockGame) {
-  const tier = getGameQualityTier(game.slug);
+  const tier = getGameQualityTier(game);
   if (tier === 'review') {
     return 'Noindex; remove from sitemap/recommendations; manual source and content review';
   }
@@ -205,8 +213,8 @@ export function buildAuditRows(games = mockGames): GameAuditRow[] {
     const audit = scoreGame(game);
     return {
       game,
-      tier: getGameQualityTier(game.slug),
-      noindex: shouldNoIndexGame(game.slug),
+      tier: getGameQualityTier(game),
+      noindex: shouldNoIndexGame(game),
       sourceHost: sourceHost(game),
       embedHost: embedHost(game),
       score: audit.score,

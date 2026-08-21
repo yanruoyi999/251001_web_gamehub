@@ -13,7 +13,6 @@ import {
 import { Button } from '@/components/ui/button';
 import { GamePlayerFacade } from '@/components/game/game-player-facade';
 import { DominoesTraining } from '@/components/game/dominoes-training';
-import { IntentCta } from '@/components/seo/intent-cta';
 import {
   getSeoLandingPage,
   getSeoLandingPages,
@@ -236,7 +235,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
 
       <header className="mb-8 text-center">
         <p className="text-sm font-semibold uppercase tracking-wide text-primary">
-          {page.primaryKeyword}
+          {locale === 'zh' ? 'Luma 游戏指南' : 'Luma Game Guide'}
         </p>
         <h1 className="mt-2 text-4xl font-bold text-foreground">{content.heading}</h1>
         <p className="mt-4 text-lg text-muted-foreground">{content.subheading}</p>
@@ -534,7 +533,11 @@ export default async function GuidePage({ params }: GuidePageProps) {
             return (
               <Card key={item.slug} className="flex h-full flex-col justify-between border border-border">
                 {game?.thumbnailUrl?.startsWith('/game-screenshots/') ? (
-                  <div className="relative aspect-video overflow-hidden border-b border-border bg-muted">
+                  <a
+                    href={getLocalizedPath(locale, `/games/${item.slug}`)}
+                    aria-label={locale === 'zh' ? `打开 ${gameTitle}` : `Open ${gameTitle}`}
+                    className="relative block aspect-video overflow-hidden border-b border-border bg-muted"
+                  >
                     <Image
                       src={game.thumbnailUrl}
                       alt={`${gameTitle} gameplay screenshot`}
@@ -542,7 +545,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
                       sizes="(min-width: 768px) 50vw, 100vw"
                       className="object-cover"
                     />
-                  </div>
+                  </a>
                 ) : null}
                 <CardHeader>
                   <CardTitle className="text-xl font-semibold text-foreground">
@@ -589,31 +592,18 @@ export default async function GuidePage({ params }: GuidePageProps) {
         </dl>
       </section>
 
-      {page.intentCta ? (
-        <IntentCta
-          anchorId={page.intentCta.anchorId}
-          clickEvent={page.intentCta.clickEvent}
-          hookId={page.intentCta.hookId}
-          label={content.ctaLabel}
-          locale={locale}
-          pagePath={getLocalizedPath(locale, `/guides/${page.slug}`)}
-          viewEvent={page.intentCta.viewEvent}
-          description={content.ctaDescription}
-        />
-      ) : (
-        <section className="mt-12 text-center">
-          <Button
-            asChild
-            size="lg"
-            className="bg-primary text-primary-foreground shadow-md transition hover:bg-primary/90"
-          >
-            <Link href={getLocalizedPath(locale, '/games')}>
-              {content.ctaLabel}
-            </Link>
-          </Button>
-          <p className="mt-3 text-sm text-muted-foreground">{content.ctaDescription}</p>
-        </section>
-      )}
+      <section className="mt-12 text-center">
+        <Button
+          asChild
+          size="lg"
+          className="bg-primary text-primary-foreground shadow-md transition hover:bg-primary/90"
+        >
+          <Link href={getLocalizedPath(locale, '/games')}>
+            {content.ctaLabel}
+          </Link>
+        </Button>
+        <p className="mt-3 text-sm text-muted-foreground">{content.ctaDescription}</p>
+      </section>
 
       {relatedPages.length > 0 ? (
         <section className="mt-16 border-t border-border pt-10">

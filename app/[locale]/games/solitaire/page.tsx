@@ -169,7 +169,7 @@ export default async function SolitairePage({ params }: SolitairePageProps) {
                 title="Solitaire"
                 loading="lazy"
                 allowFullScreen
-                sandbox="allow-scripts allow-fullscreen"
+                sandbox="allow-scripts"
                 className="h-full w-full"
               />
             </div>

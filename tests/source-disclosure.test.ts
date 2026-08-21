@@ -7,6 +7,8 @@ import {
   getGameQualityTier,
   getRemovedGameRedirectTarget,
   getRetiredCatalogueRedirectTarget,
+  shouldIncludeGameInSitemap,
+  shouldNoIndexGame,
 } from '@/lib/games/quality-policy';
 
 describe('game source disclosure', () => {
@@ -19,6 +21,7 @@ describe('game source disclosure', () => {
     expect(game?.embedPermissionStatus).toBe('unknown');
     expect(game?.sourcePageUrl).toMatch(/^https:\/\/ad-freegames\.github\.io\//);
     expect(game?.embedHost).toBe('szhong.4399.com');
+    expect(game?.sourceUrl).toBeNull();
   });
 
   it('prevents manual-review games from rendering playable iframes', () => {
@@ -26,7 +29,17 @@ describe('game source disclosure', () => {
     expect(canRenderGameIframe('adam-and-eve-8')).toBe(false);
   });
 
-  it('allows core-indexed games to render playable iframes', () => {
+  it('keeps the manually curated core surface stable while exposing the audit gap', () => {
+    const game = getMockGameBySlug('google-snake');
+
+    expect(game).toBeDefined();
+    expect(getGameQualityTier(game)).toBe('core-indexed');
+    expect(canRenderGameIframe(game)).toBe(true);
+    expect(shouldNoIndexGame(game)).toBe(false);
+    expect(shouldIncludeGameInSitemap(game)).toBe(true);
+  });
+
+  it('keeps slug-only policy checks backward-compatible for reviewed callers', () => {
     expect(getGameQualityTier('google-snake')).toBe('core-indexed');
     expect(canRenderGameIframe('google-snake')).toBe(true);
   });

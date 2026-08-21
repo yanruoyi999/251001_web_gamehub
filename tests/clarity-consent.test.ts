@@ -37,7 +37,7 @@ describe('ClarityConsent', () => {
     expect(insertBefore).not.toHaveBeenCalled();
   });
 
-  it('does not load on the canonical production host without explicit consent', async () => {
+  it('loads on the canonical production host without an interactive prompt', async () => {
     vi.stubEnv('NEXT_PUBLIC_GAMEHUB_CLARITY_PROJECT_ID', 'test-project');
     vi.doMock('react', () => ({
       useEffect: (effect: () => void) => effect(),
@@ -48,10 +48,10 @@ describe('ClarityConsent', () => {
     const { ClarityConsent } = await import('@/components/analytics/ClarityConsent');
     ClarityConsent();
 
-    expect(insertBefore).not.toHaveBeenCalled();
+    expect(insertBefore).toHaveBeenCalledOnce();
   });
 
-  it('loads only after explicit granted consent on the canonical production host', async () => {
+  it('also loads when the legacy consent key is already granted', async () => {
     vi.stubEnv('NEXT_PUBLIC_GAMEHUB_CLARITY_PROJECT_ID', 'test-project');
     vi.doMock('react', () => ({
       useEffect: (effect: () => void) => effect(),

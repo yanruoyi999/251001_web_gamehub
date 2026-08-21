@@ -185,8 +185,8 @@ export default async function ContactPage({ params }: ContactPageProps) {
                 {isZh ? 'Google 游戏开发者文档' : 'Google Game Developers documentation'}
               </a>
               {isZh
-                ? ' —— 了解跨平台服务、AdSense 合规与盈利策略。'
-                : ' — Explore cross-platform services, AdSense compliance, and monetisation strategies.'}
+                ? ' —— 了解跨平台游戏服务、发布和玩家体验建议。'
+                : ' — Explore cross-platform game services, publishing, and player-experience guidance.'}
             </li>
             <li>
               <a

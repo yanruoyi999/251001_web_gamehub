@@ -83,13 +83,6 @@
     transition: transform 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
   }
 
-  #recommendations [data-slot='card'] a[href*='/games/']::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: var(--radius);
-  }
-
   #recommendations [data-slot='card']:has(a[href*='/games/']:focus-visible) {
     outline: 2px solid hsl(var(--ring));
     outline-offset: 2px;

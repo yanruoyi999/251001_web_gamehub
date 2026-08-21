@@ -143,6 +143,16 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/guides/game-opportunity-radar',
+        destination: '/guides',
+        permanent: true,
+      },
+      {
+        source: '/en/guides/game-opportunity-radar',
+        destination: '/en/guides',
+        permanent: true,
+      },
+      {
         source: '/:path*',
         has: [
           {
