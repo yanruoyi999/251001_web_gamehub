@@ -30,7 +30,6 @@ import {
   canRenderGameIframe,
   getGameRedirectTarget,
   getGameQualityTier,
-  getManualReviewReason,
   shouldNoIndexGame,
   shouldPromoteGameInCollections,
 } from '@/lib/games/quality-policy';
@@ -633,12 +632,7 @@ export default async function GamePage({ params }: GamePageProps) {
     ...(game.isHot ? [locale === 'zh' ? '热门' : 'Hot'] : []),
   ];
 
-  if (isMockGame && catalogueUi.showCommunityMetrics) {
-    statusChips.push(locale === 'zh' ? '演示数据' : 'Demo Data');
-  }
-
   const qualityTier = getGameQualityTier(game.slug);
-  const reviewReason = getManualReviewReason(game.slug);
   const sourceDisclosure = game as GamePageDetail & GameSourceDisclosure;
   const sourceType = sourceDisclosure.sourceType ?? 'unknown';
   const developerVerified = sourceDisclosure.developerVerified === true;
@@ -760,17 +754,14 @@ export default async function GamePage({ params }: GamePageProps) {
           <div className="mb-8 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
             <p className="font-semibold">
               {locale === 'zh'
-                ? '来源与内容复查中'
-                : 'Source and content review in progress'}
+                ? '当前页面不加载第三方播放器'
+                : 'Third-party player is not loaded here'}
             </p>
             <p className="mt-1">
               {locale === 'zh'
-                ? 'Luma 正在复查来源、题材和 iframe 表现，复查完成前不会在本站嵌入播放器或放入精选推荐。'
-                : 'Luma is rechecking source clarity, theme fit, and iframe behavior, so the playable iframe is not embedded here until review is complete.'}
+                ? '本页保留玩法、设备和来源说明；如需游玩，请使用页面标注的公开来源。'
+                : 'This page keeps the play, device, and source notes. Use the clearly labelled public source if you want to play.'}
             </p>
-            {reviewReason ? (
-              <p className="mt-2 text-xs text-amber-800">{reviewReason}</p>
-            ) : null}
           </div>
         ) : null}
 
@@ -832,8 +823,8 @@ export default async function GamePage({ params }: GamePageProps) {
                     </p>
                     <p>
                       {locale === 'zh'
-                        ? '这个条目仍在来源和内容复查中。为降低误导和版权风险，Luma 暂不在页面中加载第三方 iframe。'
-                        : 'This entry is still under source and content review. To reduce misleading-source and rights risk, Luma is not loading the third-party iframe on this page.'}
+                        ? '本页暂不加载第三方播放器。请先查看来源说明，再决定是否打开公开游戏页面。'
+                        : 'The third-party player is not loaded here. Check the source notes before opening the public game page.'}
                     </p>
                   </div>
                 )}

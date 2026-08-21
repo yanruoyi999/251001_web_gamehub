@@ -24,7 +24,7 @@ describe('curated shelf UI refresh contracts', () => {
     expect(homepage).toContain('grid-cols-2');
     expect(homepage).toContain('game-shelf-scroll');
     expect(homepage).toContain('id="popular-guides"');
-    expect(homepage).toContain('id="testing-games"');
+    expect(homepage).toContain('id="more-games"');
     expect(homepage).not.toContain('id="curated-starts"');
     expect(homepage).not.toContain('homepage-spend-bill-gates-money');
     expect(homepage).not.toContain('bg-gradient-to-br');

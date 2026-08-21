@@ -5,8 +5,8 @@ import sitemap from '@/app/sitemap';
 
 const slug = 'friday-night-funkin-loading-guide';
 
-describe('Friday Night Funkin loading experiment', () => {
-  it('keeps the experiment noindex with a canonical page URL', async () => {
+describe('Friday Night Funkin loading guide', () => {
+  it('keeps the guide noindex with a canonical page URL', async () => {
     const page = getSeoLandingPage(slug);
     const metadata = await generateMetadata({
       params: Promise.resolve({ locale: 'en', slug }),
@@ -27,18 +27,14 @@ describe('Friday Night Funkin loading experiment', () => {
     expect(urls).not.toContain('https://251001.com/guides/' + slug);
   });
 
-  it('has source-backed troubleshooting content and anonymous CTA events', () => {
+  it('has source-backed troubleshooting content without owner-only hooks', () => {
     const page = getSeoLandingPage(slug);
     const english = page?.locales.en;
 
     expect(english?.sections.length).toBeGreaterThanOrEqual(7);
     expect(english?.quickAnswerLink?.href).toBe('https://ninja-muffin24.itch.io/funkin');
-    expect(page?.intentCta).toMatchObject({
-      hookId: 'original_rhythm_avatar',
-      viewEvent: 'ai_hook_view',
-      clickEvent: 'ai_hook_click',
-    });
-    expect(english?.ctaDescription).toContain('anonymous');
-    expect(english?.ctaDescription).toMatch(/No sign-up, upload/i);
+    expect(JSON.stringify(page)).not.toMatch(
+      /original_rhythm_avatar|ai_hook_view|ai_hook_click|anonymous interest|interest test|experiment/i,
+    );
   });
 });

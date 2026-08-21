@@ -194,7 +194,7 @@ export default async function HomePage({
             image: '/game-screenshots/google-snake.png',
             eyebrow: '新攻略',
             title: 'Google Snake Level Editor',
-            description: '查看编辑器入口、测试路线和移动端限制。',
+            description: '查看编辑器入口、制作步骤和移动端限制。',
             action: '查看编辑器指南',
           },
           {
@@ -239,7 +239,7 @@ export default async function HomePage({
             image: '/game-screenshots/google-snake.png',
             eyebrow: 'New guide',
             title: 'Google Snake Level Editor',
-            description: 'Find the editor route, testing steps, and mobile limits.',
+            description: 'Find the editor route, build steps, and mobile limits.',
             action: 'Read the editor guide',
           },
           {
@@ -252,7 +252,7 @@ export default async function HomePage({
           },
         ];
 
-  const testingGameEntries: ShelfEntry[] =
+  const moreGameEntries: ShelfEntry[] =
     locale === 'zh'
       ? [
           {
@@ -410,7 +410,7 @@ export default async function HomePage({
           />
 
           <ShelfSection
-            id="testing-games"
+            id="more-games"
             title={locale === 'zh' ? '更多值得玩的游戏' : 'More games to play'}
             description={
               locale === 'zh'
@@ -419,7 +419,7 @@ export default async function HomePage({
             }
             browseHref={getLocalizedPath(locale, '/games')}
             browseLabel={locale === 'zh' ? '查看全部游戏' : 'Browse all games'}
-            entries={testingGameEntries}
+            entries={moreGameEntries}
             priorityFirstImages
           />
           <section className="mt-14 space-y-5 border-t border-border pt-10 text-left">

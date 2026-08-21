@@ -159,11 +159,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.75,
     },
     {
-      path: '/guides/game-opportunity-radar',
-      changeFrequency: 'weekly',
-      priority: 0.78,
-    },
-    {
       path: '/guides/keyboard-only-browser-games',
       changeFrequency: 'weekly',
       priority: 0.82,

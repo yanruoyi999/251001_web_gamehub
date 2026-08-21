@@ -6,7 +6,6 @@ import { getLocalizedPath, locales, type Locale } from '@/i18n/config';
 import { Button } from '@/components/ui/button';
 import { GamePlayerFacade } from '@/components/game/game-player-facade';
 import { DominoesTraining } from '@/components/game/dominoes-training';
-import { IntentCta } from '@/components/seo/intent-cta';
 import {
   getSeoLandingPage,
   getSeoLandingPages,
@@ -238,7 +237,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
 
       <header className="mb-5 max-w-5xl border-b border-[#cbdccf] pb-4 dark:border-border">
         <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-primary">
-          {page.primaryKeyword}
+          {locale === 'zh' ? 'Luma 游戏指南' : 'Luma Game Guide'}
         </p>
         <h1 className="mt-1 max-w-5xl text-2xl font-black tracking-tight text-[#152238] sm:text-3xl md:text-4xl dark:text-foreground">
           {content.heading}
@@ -647,19 +646,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
         </dl>
       </section>
 
-      {page.intentCta ? (
-        <IntentCta
-          anchorId={page.intentCta.anchorId}
-          clickEvent={page.intentCta.clickEvent}
-          hookId={page.intentCta.hookId}
-          label={content.ctaLabel}
-          locale={locale}
-          pagePath={getLocalizedPath(locale, `/guides/${page.slug}`)}
-          viewEvent={page.intentCta.viewEvent}
-          description={content.ctaDescription}
-        />
-      ) : (
-        <section className="mt-12 text-center">
+      <section className="mt-12 text-center">
           <Button
             asChild
             size="lg"
@@ -672,8 +659,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
           <p className="mt-3 text-sm text-muted-foreground">
             {content.ctaDescription}
           </p>
-        </section>
-      )}
+      </section>
 
       {relatedPages.length > 0 ? (
         <section className="mt-16 border-t border-border pt-10">

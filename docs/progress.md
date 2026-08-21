@@ -2213,3 +2213,13 @@
 - 未改路由、canonical、robots、noindex、sitemap、GA4/Clarity 事件名或收藏存储逻辑。
 - 验证：针对性 Vitest 17/17、type-check、lint、Next.js 15.5.21 生产构建（145 static pages）和 Chromium smoke 3/3 通过；英文/中文首页与收藏页均无旧 heart/心形文案，390px 移动端文档宽度无溢出。
 - 复查补充：推荐卡片角标与描述也不再暴露“Keyword test / 关键词测试”，改为平台跳跃、重力跑酷等玩家导向语义。
+
+### T-174 站长研究表面清理与公开路由收口（2026-08-21）
+
+- 原始信号：公开站点仍存在“游戏机会雷达：MVP 可行性初筛”页面；首页货架和卡片曾使用 `Games in testing`、`Keyword test` 等站长实验语义；攻略模板顶部直接渲染 `primaryKeyword`；本地导入用的 `4399-sample` 页面和 `Demo Data / 演示数据` 也可能出现在玩家页面。
+- 直接根因：站长研究元数据、质量复查状态和玩家内容共用公开路由/渲染层，缺少 owner-only surface 与 player-facing copy 的边界。
+- 本地修改：删除机会雷达实现、表单、评估器和相关测试；删除 `4399-sample` 公共样例路由；旧雷达 URL 在 `next.config.js` 保留 308 到指南入口；指南索引和 sitemap 只保留 `indexable !== false` 内容；攻略顶部改为 `Luma Game Guide / Luma 游戏指南`，不再渲染关键词字段；移除 `Demo Data / 演示数据` 状态标签；首页货架改用 `More games to play / 更多值得玩的游戏` 和 `more-games` 语义；FNF 内部 CTA/实验文案移除并补回普通官方来源 CTA；新游、Brainrot、Monkey Tag 和相关专题中的机会/筛选/研究语气改为玩家向来源、玩法和安全说明；保留 `/games` 的分类、标签和热门度筛选，因为它是玩家目录导航功能。
+- 回归保护：新增 `tests/public-surface-hygiene.test.ts`，检查 owner-only 词汇、已删除实现、旧路由配置、样例路由和公开专题内容；同步首页货架、移动 smoke、FNF 和 SEO 契约。
+- 验证结果：目标回归 36/36；全量 Vitest 82 files / 263 tests；`pnpm type-check`、`pnpm lint`、`pnpm check:internal-links`、页面质量审计和 `pnpm build` 均通过。生产构建生成 141 个静态页，静态语言补丁验证 41 个英文页面并分类 1 个配置重定向壳。
+- 浏览器/HTTP：Chromium、Pixel 7、iPhone 13 smoke 9/9；本地生产 HTTP 确认 `/guides/game-opportunity-radar` 和 `/en/guides/game-opportunity-radar` 返回 308 到指南入口，首页/指南索引不含旧内部标签，sitemap 不含雷达和 `4399-sample`，人工复查游戏页不暴露审核理由；首页 `more-games` 货架无移动端溢出。
+- 发布边界：改动目前只在 `codex/ui-curated-shelf-release-20260821`，尚未合入 `main` 或部署生产；生产 Google 索引缓存、旧 URL 重新抓取和自然流量变化需发布后再观察，不能用本地构建或 Preview 代替。

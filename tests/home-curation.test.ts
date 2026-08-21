@@ -17,12 +17,12 @@ const featuredScreenshots = [
 ];
 
 describe('homepage curation', () => {
-  it('separates popular guides from games in testing', () => {
+  it('separates popular guides from more games to play', () => {
     expect(homeSource).toContain('popularGuideEntries');
-    expect(homeSource).toContain('testingGameEntries');
+    expect(homeSource).toContain('moreGameEntries');
     expect(homeSource).toContain('<DailyRecommendation');
     expect(homeSource).toContain('id="popular-guides"');
-    expect(homeSource).toContain('id="testing-games"');
+    expect(homeSource).toContain('id="more-games"');
     expect(homeSource).toContain('More games to play');
     expect(homeSource).toContain('更多值得玩的游戏');
     expect(homeSource).toContain('Platform challenge');

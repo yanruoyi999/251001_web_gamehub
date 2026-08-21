@@ -130,21 +130,4 @@ describe('Bing meta description quality guard', () => {
     }
   });
 
-  it('keeps the custom Game Opportunity Radar descriptions above the same floor', () => {
-    const zh = buildContextualMetaDescription({
-      description: '根据平台、团队、预算、周期和玩法复杂度，免费初筛游戏 MVP 是否适合进入验证，并获得范围、变现测试和风险建议。',
-      fallback: '先判断什么值得做，再投入开发。',
-      context: '评估结果同时解释首版范围、第一轮变现实验、主要交付风险和下一步应收集的真实验证证据。',
-      locale: 'zh',
-    });
-    const en = buildContextualMetaDescription({
-      description: 'Screen a game MVP by platform, team, budget, timeline, and genre complexity, then get scope, monetization-test, and risk guidance.',
-      fallback: 'Decide what is worth testing before you fund development.',
-      context: 'The result also explains first-release scope, an initial monetization experiment, the main delivery risk, and the real evidence to collect next.',
-      locale: 'en',
-    });
-
-    expectUsefulDescription(zh, 'zh', 'radar zh');
-    expectUsefulDescription(en, 'en', 'radar en');
-  });
 });
