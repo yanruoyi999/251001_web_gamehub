@@ -13,7 +13,7 @@ export function Footer({ locale }: FooterProps) {
   const trustLinks = [
     {
       href: localizedPath('/about'),
-      label: isZh ? '我们如何筛选游戏' : 'How Luma reviews games',
+      label: isZh ? '关于我们的游戏库' : 'About our game library',
     },
     {
       href: localizedPath('/contact'),

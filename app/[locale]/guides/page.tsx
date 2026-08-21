@@ -62,12 +62,12 @@ interface GuidesPageProps {
 export default async function GuidesPage({ params }: GuidesPageProps) {
   const { locale: localeParam } = await params;
   const locale = (localeParam as Locale) ?? 'zh';
-  const pages = getSeoLandingPages();
+  const pages = getSeoLandingPages().filter((page) => page.indexable !== false);
   const heading = locale === 'zh' ? '专题合集' : 'Curated Guides';
   const intro =
     locale === 'zh'
       ? '从低干扰玩法到移动端体验，我们按不同场景整理并复核浏览器游戏。选择一个主题，查看适配说明后开始游玩。'
-      : 'From lower-interruption picks to mobile browser candidates, these guides organize games by real play scenarios. Check the device notes, choose a theme, and start playing.';
+      : 'From lower-interruption picks to mobile browser games, these guides organize games by real play scenarios. Check the device notes, choose a theme, and start playing.';
   const extraGuides = [
     {
       href: getLocalizedPath(locale, '/guides/keyboard-only-browser-games'),

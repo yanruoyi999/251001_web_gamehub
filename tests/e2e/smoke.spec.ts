@@ -36,7 +36,7 @@ test.describe('Luma Game Hub smoke tests', () => {
     ).toHaveCount(5);
     await expect(
       page.locator(
-        'section[aria-labelledby="testing-games"] a[href^="/en/games/"]',
+        'section[aria-labelledby="more-games"] a[href^="/en/games/"]',
       ),
     ).toHaveCount(3);
 

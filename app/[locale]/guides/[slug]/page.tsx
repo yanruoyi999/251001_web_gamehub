@@ -647,16 +647,18 @@ export default async function GuidePage({ params }: GuidePageProps) {
       </section>
 
       <section className="mt-12 text-center">
-        <Button
-          asChild
-          size="lg"
-          className="bg-primary text-primary-foreground shadow-md transition hover:bg-primary/90"
-        >
-          <Link href={getLocalizedPath(locale, '/games')}>
-            {content.ctaLabel}
-          </Link>
-        </Button>
-        <p className="mt-3 text-sm text-muted-foreground">{content.ctaDescription}</p>
+          <Button
+            asChild
+            size="lg"
+            className="bg-primary text-primary-foreground shadow-md transition hover:bg-primary/90"
+          >
+            <Link href={getLocalizedPath(locale, '/games')}>
+              {content.ctaLabel}
+            </Link>
+          </Button>
+          <p className="mt-3 text-sm text-muted-foreground">
+            {content.ctaDescription}
+          </p>
       </section>
 
       {relatedPages.length > 0 ? (
