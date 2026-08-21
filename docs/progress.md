@@ -2233,3 +2233,11 @@
 - 验证结果：目标回归 36/36；全量 Vitest 82 files / 263 tests；`pnpm type-check`、`pnpm lint`、`pnpm check:internal-links`、页面质量审计和 `pnpm build` 均通过。生产构建生成 141 个静态页，静态语言补丁验证 41 个英文页面并分类 1 个配置重定向壳。
 - 浏览器/HTTP：Chromium、Pixel 7、iPhone 13 smoke 9/9；本地生产 HTTP 确认 `/guides/game-opportunity-radar` 和 `/en/guides/game-opportunity-radar` 返回 308 到指南入口，首页/指南索引不含旧内部标签，sitemap 不含雷达和 `4399-sample`，人工复查游戏页不暴露审核理由；首页 `more-games` 货架无移动端溢出。
 - 发布边界：改动目前只在 `codex/ui-curated-shelf-release-20260821`，尚未合入 `main` 或部署生产；生产 Google 索引缓存、旧 URL 重新抓取和自然流量变化需发布后再观察，不能用本地构建或 Preview 代替。
+
+### T-175 UI 未上线根因与最新 main 整合（2026-08-21）
+
+- 复核信号：正式域名已指向 `main@7970a50`的 Ready 生产部署，但该发布只包含公开面、遥测与 CI 修复，没有包含 UI 分支的门户布局，所以刷新后仍是旧界面；这不是浏览器或 Cloudflare 缓存问题。
+- 整合范围：在隔离分支 `codex/ui-release-current-main-20260821` 中，将 `codex/ui-curated-shelf-release-20260821` 的共享 Header/Footer、PortalRail、首页图片货架、游戏目录、游戏详情和攻略模板重放到最新 `main`。保留最新 main 的 GA4/Clarity 正式域直载、Preview 隔离、来源权限门禁、OvO 隔离和玩家向公开文案。
+- 回归修复：更新两个过时测试契约，不再要求已取消的 Clarity 同意遮罩或旧 `aspect-video` 攻略卡；改为校验正式域遥测门禁、真实图片 Link 和 4:3 门户卡片。
+- 验证：Vitest 83 files / 265 tests、type-check、lint、internal-link audit、production audit、Next.js 15.5.21 build（141/141）和 diff-check 通过；Chromium/Pixel 7/iPhone 13 的首页、游戏浏览与攻略图片导航 30/30 通过。移动运行时采样 11 页最低 100，首页 Lighthouse Accessibility 96 / Best Practices 100 / SEO 100，412px 视口 `documentWidth=bodyWidth=412`、无根页面溢出或控制台错误。
+- 发布边界：本节记录最新 main 整合候选；推送、GitHub CI、main 快进和正式域生产验证仍以后续实际回执为准。

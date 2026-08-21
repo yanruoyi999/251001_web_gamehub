@@ -21,9 +21,15 @@ describe('search-session interaction resilience', () => {
     expect(globalCss).toContain(
       "#recommendations [data-slot='card']:has(a[href*='/games/']:focus-visible)",
     );
-    expect(
-      readFileSync(path.join(process.cwd(), 'app/[locale]/guides/[slug]/page.tsx'), 'utf8'),
-    ).toContain('className="relative block aspect-video');
+    const guideSource = readFileSync(
+      path.join(process.cwd(), 'app/[locale]/guides/[slug]/page.tsx'),
+      'utf8',
+    );
+    expect(guideSource).toContain(
+      'href={getLocalizedPath(locale, `/games/${item.slug}`)}',
+    );
+    expect(guideSource).toContain('className="group block focus-visible:outline-none');
+    expect(guideSource).toContain('className="relative aspect-[4/3]');
   });
 
   it('updates play state before best-effort analytics', () => {

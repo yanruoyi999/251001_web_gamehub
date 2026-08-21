@@ -56,9 +56,11 @@ describe('curated shelf UI refresh contracts', () => {
     expect(guide).not.toContain('rounded-2xl border border-border bg-card shadow-sm');
   });
 
-  it('marks the consent surface so overlay regressions can be checked in the browser', async () => {
+  it('keeps Clarity host-gated without restoring a blocking consent overlay', async () => {
     const consent = await read('components/analytics/ClarityConsent.tsx');
-    expect(consent).toContain('data-consent-overlay');
-    expect(consent).toContain('env(safe-area-inset-bottom)');
+    expect(consent).toContain('isFormalProductionHost(window.location.hostname)');
+    expect(consent).toContain('loadClarity(clarityProjectId)');
+    expect(consent).toContain("analytics_Storage: analyticsStorage");
+    expect(consent).not.toContain('data-consent-overlay');
   });
 });
