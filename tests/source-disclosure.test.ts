@@ -29,19 +29,33 @@ describe('game source disclosure', () => {
     expect(canRenderGameIframe('adam-and-eve-8')).toBe(false);
   });
 
-  it('keeps the manually curated core surface stable while exposing the audit gap', () => {
+  it('fails closed for imported core slugs until embed permission is verified', () => {
     const game = getMockGameBySlug('google-snake');
 
     expect(game).toBeDefined();
-    expect(getGameQualityTier(game)).toBe('core-indexed');
-    expect(canRenderGameIframe(game)).toBe(true);
-    expect(shouldNoIndexGame(game)).toBe(false);
-    expect(shouldIncludeGameInSitemap(game)).toBe(true);
+    expect(getGameQualityTier(game)).toBe('review');
+    expect(canRenderGameIframe(game)).toBe(false);
+    expect(shouldNoIndexGame(game)).toBe(true);
+    expect(shouldIncludeGameInSitemap(game)).toBe(false);
   });
 
-  it('keeps slug-only policy checks backward-compatible for reviewed callers', () => {
-    expect(getGameQualityTier('google-snake')).toBe('core-indexed');
-    expect(canRenderGameIframe('google-snake')).toBe(true);
+  it('does not treat slug-only policy checks as authorization evidence', () => {
+    expect(getGameQualityTier('google-snake')).toBe('review');
+    expect(canRenderGameIframe('google-snake')).toBe(false);
+    expect(shouldNoIndexGame('google-snake')).toBe(true);
+    expect(shouldIncludeGameInSitemap('google-snake')).toBe(false);
+  });
+
+  it('allows a core game only when embed permission is explicitly verified', () => {
+    const verified = {
+      slug: 'google-snake',
+      embedPermissionStatus: 'verified' as const,
+    };
+
+    expect(getGameQualityTier(verified)).toBe('core-indexed');
+    expect(canRenderGameIframe(verified)).toBe(true);
+    expect(shouldNoIndexGame(verified)).toBe(false);
+    expect(shouldIncludeGameInSitemap(verified)).toBe(true);
   });
 
   it('maps high-risk removed game slugs to safer relevant core pages', () => {
