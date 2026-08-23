@@ -11,6 +11,7 @@ import {
   RotateCcw,
 } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import type { PointerEvent as ReactPointerEvent } from 'react';
 
 import {
   createSnakeGameState,
@@ -18,6 +19,7 @@ import {
   getFirstDeathDurationBucket,
   getFirstDeathDurationMs,
   getSnakeStepMs,
+  getSwipeDirection,
   getUtcChallengeKey,
   queueSnakeDirection,
   stepSnakeGame,
@@ -59,7 +61,7 @@ const copy = {
     retryLoad: 'Try loading again',
     controls: 'Controls',
     keyboard: 'Arrow keys or WASD',
-    touch: 'Touch arrows on mobile',
+    touch: 'Swipe or use touch arrows on mobile',
     fullscreen: 'Fullscreen',
     pause: 'Pause',
     firstDeath: 'First run length',
@@ -94,7 +96,7 @@ const copy = {
     retryLoad: '重新加载',
     controls: '操作',
     keyboard: '方向键或 WASD',
-    touch: '手机使用触控方向键',
+    touch: '手机可滑动或使用触控方向键',
     fullscreen: '全屏',
     pause: '暂停',
     firstDeath: '首局时长',
@@ -366,6 +368,7 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
   const gameStateRef = useRef<SnakeGameState | null>(null);
   const directionRef = useRef<SnakeDirection>({ x: 1, z: 0 });
   const queuedDirectionRef = useRef<SnakeDirection | null>(null);
+  const swipeStartRef = useRef<{ x: number; y: number } | null>(null);
   const startedAtRef = useRef<number | null>(null);
   const firstDeathReportedRef = useRef(false);
   const attemptRef = useRef(0);
@@ -433,6 +436,55 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleDirection, phase]);
 
+  useEffect(() => {
+    function handleDocumentVisibility() {
+      if (!document.hidden || phase !== 'playing') return;
+
+      sceneRef.current?.setPaused(true);
+      setPhase('paused');
+      trackInteraction('snake_3d_auto_pause', {
+        game_slug: 'snake-3d',
+        reason: 'document_hidden',
+      });
+    }
+
+    document.addEventListener('visibilitychange', handleDocumentVisibility);
+    return () => document.removeEventListener('visibilitychange', handleDocumentVisibility);
+  }, [phase]);
+
+  const handlePointerDown = useCallback(
+    (event: ReactPointerEvent<HTMLCanvasElement>) => {
+      if (phase !== 'playing' || event.pointerType === 'mouse') return;
+
+      swipeStartRef.current = { x: event.clientX, y: event.clientY };
+      try {
+        event.currentTarget.setPointerCapture(event.pointerId);
+      } catch {
+        // Pointer capture is an enhancement; swipe calculation still works without it.
+      }
+    },
+    [phase]
+  );
+
+  const handlePointerUp = useCallback(
+    (event: ReactPointerEvent<HTMLCanvasElement>) => {
+      const start = swipeStartRef.current;
+      swipeStartRef.current = null;
+      if (!start || phase !== 'playing') return;
+
+      const next = getSwipeDirection(start, {
+        x: event.clientX,
+        y: event.clientY,
+      });
+      if (next) handleDirection(next);
+    },
+    [handleDirection, phase]
+  );
+
+  const handlePointerCancel = useCallback(() => {
+    swipeStartRef.current = null;
+  }, []);
+
   const startGame = useCallback(async () => {
     if (phase === 'loading') return;
 
@@ -443,6 +495,7 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
     attemptRef.current = nextAttempt;
     startedAtRef.current = startedAt;
     firstDeathReportedRef.current = false;
+    swipeStartRef.current = null;
     setChallengeKey(currentChallengeKey);
     setPhase('loading');
     setScore(0);
@@ -582,6 +635,9 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
           className="block aspect-[4/3] min-h-[420px] w-full touch-none sm:aspect-[16/9] sm:min-h-[520px]"
           aria-label={content.canvasLabel}
           data-snake-canvas="true"
+          onPointerDown={handlePointerDown}
+          onPointerUp={handlePointerUp}
+          onPointerCancel={handlePointerCancel}
         />
 
         <div className="pointer-events-none absolute inset-x-0 top-0 flex items-start justify-between gap-4 p-4 sm:p-6">
