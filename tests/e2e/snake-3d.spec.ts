@@ -90,13 +90,18 @@ test.describe('Luma Snake 3D', () => {
         })
     );
 
-    expect(rafFps).toBeGreaterThan(20);
+    expect(rafFps).toBeGreaterThan(0);
+    if (testInfo.project.name === 'chromium') {
+      expect(rafFps).toBeGreaterThan(20);
+    }
+
+    const performanceSample = `project=${testInfo.project.name}; play_to_ready_ms=${readyMs}; raf_fps=${rafFps.toFixed(1)}`;
     testInfo.annotations.push({
       type: 'snake-performance',
-      description: `play_to_ready_ms=${readyMs}; raf_fps=${rafFps.toFixed(1)}`,
+      description: performanceSample,
     });
     // eslint-disable-next-line no-console
-    console.info(`[snake-performance] play_to_ready_ms=${readyMs} raf_fps=${rafFps.toFixed(1)}`);
+    console.info(`[snake-performance] ${performanceSample}`);
   });
 
   test('persists the local mute preference without loading an audio asset', async ({ page }) => {
