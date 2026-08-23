@@ -9,15 +9,20 @@ import {
   Pause,
   Play,
   RotateCcw,
+  Volume2,
+  VolumeX,
 } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { PointerEvent as ReactPointerEvent } from 'react';
 
+import { trackInteraction } from '@/lib/analytics/events';
+import { getSnakeFeedbackTone, type SnakeFeedbackKind } from '@/lib/games/luma-snake-feedback';
 import {
   createSnakeGameState,
   getDailyChallengeId,
   getFirstDeathDurationBucket,
   getFirstDeathDurationMs,
+  getSnakeScoreMilestone,
   getSnakeStepMs,
   getSwipeDirection,
   getUtcChallengeKey,
@@ -27,12 +32,15 @@ import {
   type SnakeDirection,
   type SnakeGameState,
 } from '@/lib/games/luma-snake-3d';
-import { trackInteraction } from '@/lib/analytics/events';
 
 type GameLocale = 'zh' | 'en';
 type GamePhase = 'idle' | 'loading' | 'playing' | 'paused' | 'dead' | 'error';
+type SnakeControlType = 'keyboard' | 'touch-button' | 'swipe';
 type ThreeModule = typeof import('three');
 type ThreeMesh = import('three').Mesh;
+type AudioWindow = Window & {
+  webkitAudioContext?: typeof AudioContext;
+};
 
 type SnakeSceneController = {
   start: () => void;
@@ -42,6 +50,7 @@ type SnakeSceneController = {
 };
 
 const BEST_SCORE_STORAGE_KEY = 'luma-snake-3d-best-score';
+const SOUND_STORAGE_KEY = 'luma-snake-3d-muted';
 
 const copy = {
   en: {
@@ -64,6 +73,8 @@ const copy = {
     touch: 'Swipe or use touch arrows on mobile',
     fullscreen: 'Fullscreen',
     pause: 'Pause',
+    mute: 'Mute sound',
+    unmute: 'Turn sound on',
     firstDeath: 'First run length',
     firstDeathHint: 'Measured from Play to your first collision in this attempt.',
     duration: {
@@ -99,6 +110,8 @@ const copy = {
     touch: '手机可滑动或使用触控方向键',
     fullscreen: '全屏',
     pause: '暂停',
+    mute: '静音',
+    unmute: '打开声音',
     firstDeath: '首局时长',
     firstDeathHint: '从点击开始到本次首次碰撞的时间。',
     duration: {
@@ -143,7 +156,7 @@ async function createSnakeScene(
     canvas,
     antialias: true,
     alpha: false,
-    preserveDrawingBuffer: true,
+    preserveDrawingBuffer: false,
     powerPreference: 'high-performance',
   });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
@@ -371,12 +384,20 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
   const swipeStartRef = useRef<{ x: number; y: number } | null>(null);
   const startedAtRef = useRef<number | null>(null);
   const firstDeathReportedRef = useRef(false);
+  const firstMoveReportedRef = useRef(false);
   const attemptRef = useRef(0);
   const challengeIdRef = useRef('');
+  const controlTypeRef = useRef<SnakeControlType | null>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const reducedMotionRef = useRef(false);
+  const feedbackTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [challengeKey, setChallengeKey] = useState('');
   const [phase, setPhase] = useState<GamePhase>('idle');
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
+  const [muted, setMuted] = useState(false);
+  const [visualFeedback, setVisualFeedback] = useState<SnakeFeedbackKind | null>(null);
+  const [playToReadyMs, setPlayToReadyMs] = useState<number | null>(null);
   const [firstDeathBucket, setFirstDeathBucket] =
     useState<FirstDeathDurationBucket>('invalid');
 
@@ -384,20 +405,108 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
     setChallengeKey(getUtcChallengeKey());
     const storedBest = Number(window.localStorage.getItem(BEST_SCORE_STORAGE_KEY));
     if (Number.isFinite(storedBest) && storedBest > 0) setBestScore(storedBest);
+    setMuted(window.localStorage.getItem(SOUND_STORAGE_KEY) === 'true');
+
+    const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const syncReducedMotion = () => {
+      reducedMotionRef.current = reducedMotionQuery.matches;
+    };
+    syncReducedMotion();
+    reducedMotionQuery.addEventListener('change', syncReducedMotion);
 
     return () => {
+      reducedMotionQuery.removeEventListener('change', syncReducedMotion);
       sceneRef.current?.dispose();
       sceneRef.current = null;
+      if (feedbackTimeoutRef.current) clearTimeout(feedbackTimeoutRef.current);
+      if (audioContextRef.current) void audioContextRef.current.close();
+      audioContextRef.current = null;
     };
   }, []);
 
-  const handleDirection = useCallback((next: SnakeDirection) => {
-    queuedDirectionRef.current = queueSnakeDirection(
-      directionRef.current,
-      queuedDirectionRef.current,
-      next
-    );
+  const ensureAudioContext = useCallback(async () => {
+    const AudioContextConstructor =
+      window.AudioContext ?? (window as AudioWindow).webkitAudioContext;
+    if (!AudioContextConstructor) return null;
+
+    let context = audioContextRef.current;
+    if (!context || context.state === 'closed') {
+      context = new AudioContextConstructor();
+      audioContextRef.current = context;
+    }
+
+    if (context.state === 'suspended') {
+      try {
+        await context.resume();
+      } catch {
+        return null;
+      }
+    }
+    return context;
   }, []);
+
+  const playFeedback = useCallback(
+    (kind: SnakeFeedbackKind) => {
+      if (muted) return;
+      const context = audioContextRef.current;
+      if (!context || context.state !== 'running') return;
+
+      const tone = getSnakeFeedbackTone(kind);
+      const oscillator = context.createOscillator();
+      const gain = context.createGain();
+      const now = context.currentTime;
+      const end = now + tone.durationMs / 1_000;
+
+      oscillator.type = tone.type;
+      oscillator.frequency.setValueAtTime(tone.frequencyHz, now);
+      gain.gain.setValueAtTime(tone.gain, now);
+      gain.gain.exponentialRampToValueAtTime(0.0001, end);
+      oscillator.connect(gain);
+      gain.connect(context.destination);
+      oscillator.start(now);
+      oscillator.stop(end);
+    },
+    [muted]
+  );
+
+  const showVisualFeedback = useCallback((kind: SnakeFeedbackKind) => {
+    if (reducedMotionRef.current) return;
+    if (feedbackTimeoutRef.current) clearTimeout(feedbackTimeoutRef.current);
+    setVisualFeedback(kind);
+    feedbackTimeoutRef.current = setTimeout(() => {
+      setVisualFeedback(null);
+      feedbackTimeoutRef.current = null;
+    }, kind === 'game-over' ? 220 : 140);
+  }, []);
+
+  const handleDirection = useCallback(
+    (next: SnakeDirection, controlType: SnakeControlType) => {
+      if (phase !== 'playing' && phase !== 'paused') return;
+
+      const queuedBefore = queuedDirectionRef.current;
+      const queuedNext = queueSnakeDirection(
+        directionRef.current,
+        queuedBefore,
+        next
+      );
+      queuedDirectionRef.current = queuedNext;
+
+      const accepted = queuedBefore === null && queuedNext !== null;
+      if (!accepted) return;
+
+      controlTypeRef.current ??= controlType;
+      if (!firstMoveReportedRef.current) {
+        firstMoveReportedRef.current = true;
+        trackInteraction('snake_first_move', {
+          game_slug: 'snake-3d',
+          challenge_id: challengeIdRef.current,
+          attempt: attemptRef.current,
+          control_type: controlType,
+        });
+      }
+    },
+    [phase]
+  );
 
   const consumeDirection = useCallback(() => {
     if (queuedDirectionRef.current) {
@@ -429,7 +538,7 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
       if (!next) return;
 
       event.preventDefault();
-      handleDirection(next);
+      handleDirection(next, 'keyboard');
     }
 
     window.addEventListener('keydown', handleKeyDown, { passive: false });
@@ -476,7 +585,7 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
         x: event.clientX,
         y: event.clientY,
       });
-      if (next) handleDirection(next);
+      if (next) handleDirection(next, 'swipe');
     },
     [handleDirection, phase]
   );
@@ -495,14 +604,19 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
     attemptRef.current = nextAttempt;
     startedAtRef.current = startedAt;
     firstDeathReportedRef.current = false;
+    firstMoveReportedRef.current = false;
+    controlTypeRef.current = null;
     swipeStartRef.current = null;
     setChallengeKey(currentChallengeKey);
     setPhase('loading');
     setScore(0);
+    setPlayToReadyMs(null);
     setFirstDeathBucket('invalid');
 
+    if (!muted) void ensureAudioContext();
+
     if (isRetry) {
-      trackInteraction('snake_3d_retry', {
+      trackInteraction('snake_retry', {
         game_slug: 'snake-3d',
         attempt: nextAttempt,
       });
@@ -535,14 +649,34 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
         initialState,
         consumeDirection,
         (nextState) => {
+          const previousScore = gameStateRef.current?.score ?? 0;
           gameStateRef.current = nextState;
           setScore(nextState.score);
+
+          const nextBestScore = Math.max(bestScore, nextState.score);
           if (nextState.score > bestScore) {
             setBestScore(nextState.score);
             window.localStorage.setItem(
               BEST_SCORE_STORAGE_KEY,
               String(nextState.score)
             );
+          }
+
+          if (nextState.score > previousScore) {
+            const milestone = getSnakeScoreMilestone(nextState.score);
+            const feedbackKind: SnakeFeedbackKind = milestone ? 'milestone' : 'eat';
+            playFeedback(feedbackKind);
+            showVisualFeedback(feedbackKind);
+
+            if (milestone) {
+              trackInteraction('snake_score_milestone', {
+                game_slug: 'snake-3d',
+                challenge_id: challengeIdRef.current,
+                attempt: attemptRef.current,
+                score: milestone,
+                control_type: controlTypeRef.current ?? undefined,
+              });
+            }
           }
 
           if (nextState.status !== 'dead' || firstDeathReportedRef.current) {
@@ -558,6 +692,18 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
           setFirstDeathBucket(bucket);
           controller.stop();
           setPhase('dead');
+          playFeedback('game-over');
+          showVisualFeedback('game-over');
+
+          trackInteraction('snake_game_over', {
+            game_slug: 'snake-3d',
+            challenge_id: challengeIdRef.current,
+            attempt: attemptRef.current,
+            final_score: nextState.score,
+            best_score: nextBestScore,
+            duration_ms: durationMs === null ? undefined : Math.round(durationMs),
+            control_type: controlTypeRef.current ?? undefined,
+          });
           trackInteraction('snake_3d_first_death', {
             game_slug: 'snake-3d',
             challenge_id: challengeIdRef.current,
@@ -571,11 +717,14 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
       );
 
       sceneRef.current = controller;
+      const readyMs = Math.max(0, Math.round(performance.now() - startedAt));
+      setPlayToReadyMs(readyMs);
       trackInteraction('snake_3d_ready', {
         game_slug: 'snake-3d',
         challenge_id: challengeId,
         challenge_mode: 'daily',
         attempt: nextAttempt,
+        play_to_ready_ms: readyMs,
       });
       setPhase('playing');
       controller.start();
@@ -586,7 +735,7 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
         error_type: error instanceof Error ? error.name : 'unknown',
       });
     }
-  }, [bestScore, challengeKey, consumeDirection, phase]);
+  }, [bestScore, challengeKey, consumeDirection, ensureAudioContext, muted, phase, playFeedback, showVisualFeedback]);
 
   const togglePause = useCallback(() => {
     if (phase === 'playing') {
@@ -595,8 +744,20 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
     } else if (phase === 'paused') {
       sceneRef.current?.setPaused(false);
       setPhase('playing');
+      if (!muted) void ensureAudioContext();
     }
-  }, [phase]);
+  }, [ensureAudioContext, muted, phase]);
+
+  const toggleAudio = useCallback(async () => {
+    const nextMuted = !muted;
+    setMuted(nextMuted);
+    window.localStorage.setItem(SOUND_STORAGE_KEY, String(nextMuted));
+    if (!nextMuted) await ensureAudioContext();
+    trackInteraction('snake_audio_toggle', {
+      game_slug: 'snake-3d',
+      muted: nextMuted,
+    });
+  }, [ensureAudioContext, muted]);
 
   const toggleFullscreen = useCallback(async () => {
     if (!stageRef.current) return;
@@ -621,6 +782,12 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
   const challengeLabel = challengeKey
     ? `${content.daily} · ${challengeKey}`
     : content.daily;
+  const feedbackClass =
+    visualFeedback === 'game-over'
+      ? 'bg-rose-400/10 ring-2 ring-inset ring-rose-300/25'
+      : visualFeedback === 'milestone'
+        ? 'bg-amber-300/10 ring-2 ring-inset ring-amber-200/25'
+        : 'bg-emerald-300/10 ring-1 ring-inset ring-emerald-200/20';
 
   return (
     <section className="space-y-4" aria-labelledby="luma-snake-3d-title">
@@ -629,6 +796,7 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
         className="relative isolate overflow-hidden rounded-xl border border-slate-800 bg-[#07141a] shadow-2xl shadow-slate-950/20"
         data-snake-stage="true"
         data-snake-phase={phase}
+        data-snake-play-to-ready-ms={playToReadyMs ?? undefined}
       >
         <canvas
           ref={canvasRef}
@@ -639,6 +807,14 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
           onPointerUp={handlePointerUp}
           onPointerCancel={handlePointerCancel}
         />
+
+        {visualFeedback && (
+          <div
+            aria-hidden="true"
+            className={`pointer-events-none absolute inset-0 z-10 ${feedbackClass}`}
+            data-snake-feedback={visualFeedback}
+          />
+        )}
 
         <div className="pointer-events-none absolute inset-x-0 top-0 flex items-start justify-between gap-4 p-4 sm:p-6">
           <div className="rounded-md border border-white/10 bg-slate-950/55 px-3 py-2 text-white backdrop-blur-sm">
@@ -754,6 +930,18 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
         <div className="flex items-center gap-2">
           <button
             type="button"
+            className="inline-flex min-h-10 items-center gap-2 rounded-md border border-border px-3 py-2 text-sm font-semibold text-foreground transition hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            onClick={() => void toggleAudio()}
+            aria-pressed={muted}
+            aria-label={muted ? content.unmute : content.mute}
+            title={muted ? content.unmute : content.mute}
+            data-snake-audio-toggle="true"
+          >
+            {muted ? <VolumeX aria-hidden="true" size={16} /> : <Volume2 aria-hidden="true" size={16} />}
+            <span className="sr-only">{muted ? content.unmute : content.mute}</span>
+          </button>
+          <button
+            type="button"
             className="inline-flex min-h-10 items-center gap-2 rounded-md border border-border px-3 py-2 text-sm font-semibold text-foreground transition hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
             onClick={togglePause}
             disabled={phase !== 'playing' && phase !== 'paused'}
@@ -780,7 +968,7 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
         <button
           type="button"
           className="flex min-h-12 items-center justify-center rounded-md border border-border bg-card text-foreground shadow-sm active:translate-y-px"
-          onClick={() => handleDirection({ x: 0, z: -1 })}
+          onClick={() => handleDirection({ x: 0, z: -1 }, 'touch-button')}
           aria-label={locale === 'zh' ? '向上移动' : 'Move up'}
         >
           <ArrowUp aria-hidden="true" size={20} />
@@ -789,7 +977,7 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
         <button
           type="button"
           className="flex min-h-12 items-center justify-center rounded-md border border-border bg-card text-foreground shadow-sm active:translate-y-px"
-          onClick={() => handleDirection({ x: -1, z: 0 })}
+          onClick={() => handleDirection({ x: -1, z: 0 }, 'touch-button')}
           aria-label={locale === 'zh' ? '向左移动' : 'Move left'}
         >
           <ArrowLeft aria-hidden="true" size={20} />
@@ -797,7 +985,7 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
         <button
           type="button"
           className="flex min-h-12 items-center justify-center rounded-md border border-border bg-card text-foreground shadow-sm active:translate-y-px"
-          onClick={() => handleDirection({ x: 0, z: 1 })}
+          onClick={() => handleDirection({ x: 0, z: 1 }, 'touch-button')}
           aria-label={locale === 'zh' ? '向下移动' : 'Move down'}
         >
           <ArrowDown aria-hidden="true" size={20} />
@@ -805,7 +993,7 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
         <button
           type="button"
           className="flex min-h-12 items-center justify-center rounded-md border border-border bg-card text-foreground shadow-sm active:translate-y-px"
-          onClick={() => handleDirection({ x: 1, z: 0 })}
+          onClick={() => handleDirection({ x: 1, z: 0 }, 'touch-button')}
           aria-label={locale === 'zh' ? '向右移动' : 'Move right'}
         >
           <ArrowRight aria-hidden="true" size={20} />
