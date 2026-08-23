@@ -93,7 +93,7 @@ export class SearchService {
     const cacheKey = SearchCacheKeys.results(query, {
       page,
       limit,
-      rightsPolicy: 'verified-v1',
+      rightsPolicy: PUBLIC_SEARCH_RIGHTS_POLICY,
     });
 
     const cached = await getJson<SearchResult>(redis, cacheKey);
@@ -121,8 +121,6 @@ export class SearchService {
 
         const normalizedHits = result.hits
           .map((hit): SearchGameItem | null => {
-            // Keep a second application-side check even when the index filter is
-            // configured. Old or partially rebuilt indexes must fail closed.
             if (hit.embedPermissionStatus !== 'verified') {
               return null;
             }
