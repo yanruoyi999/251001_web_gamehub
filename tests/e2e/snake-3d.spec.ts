@@ -90,13 +90,39 @@ test.describe('Luma Snake 3D', () => {
 
     if ((await stage.getAttribute('data-snake-phase')) === 'error') return;
 
-    // Initial direction is right. The old implementation applied both inputs
-    // immediately, making the effective direction left before the first tick
-    // and colliding with the snake body.
     await page.keyboard.press('ArrowUp');
     await page.keyboard.press('ArrowLeft');
     await page.waitForTimeout(260);
 
     await expect(stage).toHaveAttribute('data-snake-phase', 'playing');
+  });
+
+  test('pauses when the document becomes hidden and does not auto-resume', async ({ page }) => {
+    await page.goto('/en/games/snake-3d', { waitUntil: 'networkidle' });
+    await page.locator('[data-snake-play="true"]').click();
+
+    const stage = page.locator('[data-snake-stage]');
+    await expect(stage).toHaveAttribute('data-snake-phase', /^(playing|error)$/, {
+      timeout: 30_000,
+    });
+    if ((await stage.getAttribute('data-snake-phase')) === 'error') return;
+
+    await page.evaluate(() => {
+      Object.defineProperty(document, 'hidden', {
+        configurable: true,
+        get: () => true,
+      });
+      document.dispatchEvent(new Event('visibilitychange'));
+    });
+    await expect(stage).toHaveAttribute('data-snake-phase', 'paused');
+
+    await page.evaluate(() => {
+      Object.defineProperty(document, 'hidden', {
+        configurable: true,
+        get: () => false,
+      });
+      document.dispatchEvent(new Event('visibilitychange'));
+    });
+    await expect(stage).toHaveAttribute('data-snake-phase', 'paused');
   });
 });
