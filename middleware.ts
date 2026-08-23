@@ -18,6 +18,19 @@ const intlMiddleware = createMiddleware({
 export default function middleware(request: NextRequest) {
   const url = new URL(request.url);
 
+  // Historical captures remain in the repository for audit provenance only.
+  // They are not a public asset surface unless screenshot rights are separately
+  // verified and a new approved delivery path is introduced.
+  if (url.pathname.startsWith('/game-screenshots/')) {
+    return new NextResponse(null, {
+      status: 404,
+      headers: {
+        'Cache-Control': 'private, no-store',
+        'X-Robots-Tag': 'noindex, nofollow, noimageindex',
+      },
+    });
+  }
+
   if (url.pathname.startsWith('/admin')) {
     return isLocalCatalogueMode()
       ? new NextResponse(null, { status: 404 })
@@ -38,5 +51,8 @@ export default function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|og/|.*\\.\\w+$).*)'],
+  matcher: [
+    '/game-screenshots/:path*',
+    '/((?!api|_next/static|_next/image|favicon.ico|og/|.*\\.\\w+$).*)',
+  ],
 };
