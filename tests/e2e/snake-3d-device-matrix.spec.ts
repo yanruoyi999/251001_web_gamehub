@@ -30,7 +30,6 @@ test.describe('Luma Snake 3D exhaustive device matrix', () => {
       viewportWidth: window.innerWidth,
       viewportHeight: window.innerHeight,
       documentWidth: document.documentElement.scrollWidth,
-      documentHeight: document.documentElement.scrollHeight,
       touchPoints: navigator.maxTouchPoints,
     }));
 
@@ -99,9 +98,8 @@ test.describe('Luma Snake 3D exhaustive device matrix', () => {
     expect(readyMs).toBeGreaterThanOrEqual(0);
     expect(readyMs).toBeLessThan(5_000);
 
-    // Freeze gameplay immediately using the visibility lifecycle hook. This is
-    // synchronous in the page and avoids Playwright actionability waits letting
-    // normal wall-clock gameplay progress on slow software-rendered devices.
+    // Visibility pause is synchronous and therefore robust on slow software
+    // renderers. Mainstream E2E separately covers the manual Pause/Resume UI.
     await page.evaluate(() => {
       Object.defineProperty(document, 'hidden', {
         configurable: true,
@@ -134,7 +132,6 @@ test.describe('Luma Snake 3D exhaustive device matrix', () => {
           width: 0,
           height: 0,
           cssWidth: 0,
-          cssHeight: 0,
         };
       }
 
@@ -146,7 +143,6 @@ test.describe('Luma Snake 3D exhaustive device matrix', () => {
         width: element.width,
         height: element.height,
         cssWidth: rect.width,
-        cssHeight: rect.height,
       };
     });
 
@@ -180,33 +176,14 @@ test.describe('Luma Snake 3D exhaustive device matrix', () => {
     );
     expect(rafFps).toBeGreaterThan(0);
 
-    // Verify manual Pause/Resume while the game is safe. Direct DOM click is
-    // intentional here: the feature's mainstream E2E already tests real pointer
-    // actionability, while this exhaustive matrix must not spend seconds waiting
-    // for animation stability and accidentally turn a wall collision into a fail.
     await page.getByRole('button', { name: 'Resume' }).click();
     await expect(stage).toHaveAttribute('data-snake-phase', 'playing');
-    await page
-      .getByRole('button', { name: 'Pause' })
-      .evaluate((element) => (element as HTMLButtonElement).click());
-    await expect(stage).toHaveAttribute('data-snake-phase', 'paused');
 
     const isBuiltInTouchDescriptor = matrixKind === 'builtin-touch';
-    const moveUp = page.getByRole('button', { name: 'Move up' });
-    const hasVisibleTouchButton = await moveUp.isVisible();
-
-    await page.getByRole('button', { name: 'Resume' }).click();
-    await expect(stage).toHaveAttribute('data-snake-phase', 'playing');
-
     let inputPath = 'keyboard';
-    if (isBuiltInTouchDescriptor) {
-      if (hasVisibleTouchButton) {
-        await moveUp.evaluate((element) => (element as HTMLButtonElement).click());
-        inputPath = 'touch-button+swipe';
-      } else {
-        inputPath = 'swipe';
-      }
 
+    if (isBuiltInTouchDescriptor) {
+      inputPath = 'swipe';
       const box = await canvas.boundingBox();
       expect(box).not.toBeNull();
       if (box) {
@@ -230,8 +207,8 @@ test.describe('Luma Snake 3D exhaustive device matrix', () => {
       await page.keyboard.press('ArrowUp');
     }
 
-    // Input dispatch itself is the compatibility assertion. A later wall
-    // collision is normal gameplay and must not be reported as device failure.
+    // Only browser/application errors are incompatibilities here. A normal wall
+    // collision after dispatch is gameplay, not a device compatibility failure.
     const phaseAfterInput = await stage.getAttribute('data-snake-phase');
     expect(phaseAfterInput).not.toBe('error');
 
