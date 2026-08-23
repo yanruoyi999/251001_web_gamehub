@@ -1,16 +1,17 @@
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 
-import { generateSlug, ensureUniqueSlug } from '../lib/utils/slug';
+import { generateSlug } from '../lib/utils/slug';
 
-interface RawRow {
+export interface RawRow {
   sourcePath: string;
   title: string;
   pageUrl: string;
   iframeUrl: string;
 }
 
-interface ImportedGame {
+export interface ImportedGame {
   slug: string;
   title: string;
   titleEn: string;
@@ -21,7 +22,7 @@ interface ImportedGame {
 }
 
 // 已确认为 Flash 的游戏（Flash 2020 已停用，现代浏览器无法运行），从目录中排除以免展示破损游戏。
-// 高需求作品（Bad Ice Cream、Fancy Pants 等）建议后续手动换成可嵌入的 HTML5 源再放回。
+// 高需求作品（Bad Ice Cream、Fancy Pants 等）建议后续手动换成有明确嵌入授权的 HTML5 源再放回。
 const DEAD_FLASH_SOURCE_PATHS = new Set<string>([
   '4399/animator-v-animation-se.html',
   '4399/avalanche.html',
@@ -47,7 +48,13 @@ const DEAD_FLASH_SOURCE_PATHS = new Set<string>([
   '4399/twin-shot-2.html',
 ]);
 
-async function readTsv(filePath: string): Promise<RawRow[]> {
+// Source rows with a known identity mismatch are quarantined instead of silently
+// generating a plausible-looking but wrong game record.
+export const QUARANTINED_SOURCE_PATHS = new Set<string>([
+  '4399/blumgi-slime.html',
+]);
+
+export async function readTsv(filePath: string): Promise<RawRow[]> {
   const raw = await fs.readFile(filePath, 'utf8');
   return raw
     .split(/\r?\n/)
@@ -60,24 +67,41 @@ async function readTsv(filePath: string): Promise<RawRow[]> {
       }
       return { sourcePath, title, pageUrl, iframeUrl };
     })
-    .filter((row) => !DEAD_FLASH_SOURCE_PATHS.has(row.sourcePath));
+    .filter(
+      (row) =>
+        !DEAD_FLASH_SOURCE_PATHS.has(row.sourcePath) &&
+        !QUARANTINED_SOURCE_PATHS.has(row.sourcePath),
+    );
 }
 
-function normalizeTitle(title: string): string {
+export function normalizeTitle(title: string): string {
   return title
     .replace(/\s+-\s+Play Free Online Games Without Ads/i, '')
     .replace(/\s+-\s+Free Online Games No Ads No Downloads/i, '')
     .trim();
 }
 
-function buildGames(rows: RawRow[], limit?: number): ImportedGame[] {
-  const uniqueSlugs: string[] = [];
+export function buildGames(rows: RawRow[], limit?: number): ImportedGame[] {
+  const seenSlugs = new Map<string, string>();
+
   return rows.slice(0, limit ?? rows.length).map((row) => {
     const normalizedTitle = normalizeTitle(row.title);
-    const baseSlug = generateSlug(normalizedTitle || row.title);
-    const slug = ensureUniqueSlug(baseSlug || 'game', uniqueSlugs);
-    uniqueSlugs.push(slug);
-    const iframeHost = new URL(row.iframeUrl).hostname;
+    const slug = generateSlug(normalizedTitle || row.title) || 'game';
+    const existingSourcePath = seenSlugs.get(slug);
+    if (existingSourcePath) {
+      throw new Error(
+        `导入 slug 冲突：${slug} 同时来自 ${existingSourcePath} 和 ${row.sourcePath}。请先核对源数据，不要自动追加序号。`,
+      );
+    }
+    seenSlugs.set(slug, row.sourcePath);
+
+    let iframeHost: string;
+    try {
+      iframeHost = new URL(row.iframeUrl).hostname;
+    } catch {
+      throw new Error(`无效 iframe URL：${row.sourcePath} -> ${row.iframeUrl}`);
+    }
+
     return {
       slug,
       title: normalizedTitle || row.title,
@@ -117,14 +141,18 @@ function parseArgs(cwd: string): Options {
       if (!outputValue) {
         throw new Error('请在 --output 后面提供输出文件路径');
       }
-      options.outputPath = path.isAbsolute(outputValue) ? outputValue : path.join(cwd, outputValue);
+      options.outputPath = path.isAbsolute(outputValue)
+        ? outputValue
+        : path.join(cwd, outputValue);
       i += 1;
     } else if (arg === '--input') {
       const inputValue = args[i + 1];
       if (!inputValue) {
         throw new Error('请在 --input 后面提供输入文件路径');
       }
-      options.inputPath = path.isAbsolute(inputValue) ? inputValue : path.join(cwd, inputValue);
+      options.inputPath = path.isAbsolute(inputValue)
+        ? inputValue
+        : path.join(cwd, inputValue);
       i += 1;
     }
   }
@@ -165,4 +193,6 @@ async function main() {
   }
 }
 
-void main();
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  void main();
+}
