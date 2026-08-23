@@ -8,6 +8,7 @@ import { buildAuditRows } from '@/scripts/audit-game-quality';
 const OUTPUT_DIR = path.join(process.cwd(), 'public', 'game-screenshots');
 const VIEWPORT = { width: 960, height: 720 };
 const CAPTURE_CONCURRENCY = 3;
+const VERIFIED_CAPTURE_FLAG = 'ALLOW_VERIFIED_GAME_SCREENSHOT_CAPTURE';
 
 interface CaptureTarget {
   slug: string;
@@ -22,7 +23,11 @@ interface CaptureOptions {
   clickY: number;
 }
 
-async function captureTarget(browser: Browser, target: CaptureTarget, options: CaptureOptions) {
+async function captureTarget(
+  browser: Browser,
+  target: CaptureTarget,
+  options: CaptureOptions,
+) {
   const page = await browser.newPage({
     viewport: VIEWPORT,
     colorScheme: 'dark',
@@ -30,7 +35,7 @@ async function captureTarget(browser: Browser, target: CaptureTarget, options: C
   });
 
   try {
-    page.on('dialog', (dialog) => void dialog.dismiss());
+    page.on('dialog', dialog => void dialog.dismiss());
     await page.goto(target.iframeUrl, {
       waitUntil: 'domcontentloaded',
       timeout: 30_000,
@@ -46,47 +51,75 @@ async function captureTarget(browser: Browser, target: CaptureTarget, options: C
       fullPage: false,
       animations: 'disabled',
     });
-    console.log(`captured ${target.slug} from ${new URL(target.iframeUrl).hostname}`);
+    console.log(
+      `captured ${target.slug} from ${new URL(target.iframeUrl).hostname}`,
+    );
   } finally {
     await page.close();
   }
 }
 
 async function run() {
-  const requestedSlugs = new Set(process.argv.slice(2).filter((value) => !value.startsWith('--')));
+  if (process.env[VERIFIED_CAPTURE_FLAG] !== 'true') {
+    throw new Error(
+      `Screenshot capture is fail-closed. Set ${VERIFIED_CAPTURE_FLAG}=true only after screenshot/media rights have been independently verified and recorded for every requested game. Embed permission alone is not screenshot permission.`,
+    );
+  }
+
+  const requestedSlugs = new Set(
+    process.argv.slice(2).filter(value => !value.startsWith('--')),
+  );
+  if (requestedSlugs.size === 0) {
+    throw new Error(
+      'Explicit game slugs are required for screenshot capture; bulk capture is disabled.',
+    );
+  }
+
   const force = process.argv.includes('--force');
-  const waitArgument = process.argv.find((value) => value.startsWith('--wait='));
+  const waitArgument = process.argv.find(value => value.startsWith('--wait='));
   const parsedWaitMs = Number(waitArgument?.split('=')[1]);
-  const waitMs = Number.isFinite(parsedWaitMs) && parsedWaitMs >= 3_000
-    ? parsedWaitMs
-    : 6_000;
-  const clicksArgument = process.argv.find((value) => value.startsWith('--clicks='));
+  const waitMs =
+    Number.isFinite(parsedWaitMs) && parsedWaitMs >= 3_000
+      ? parsedWaitMs
+      : 6_000;
+  const clicksArgument = process.argv.find(value =>
+    value.startsWith('--clicks='),
+  );
   const parsedClickCount = Number(clicksArgument?.split('=')[1]);
-  const clickCount = Number.isInteger(parsedClickCount) && parsedClickCount > 0
-    ? parsedClickCount
-    : 1;
-  const clickArgument = process.argv.find((value) => value.startsWith('--click='));
+  const clickCount =
+    Number.isInteger(parsedClickCount) && parsedClickCount > 0
+      ? parsedClickCount
+      : 1;
+  const clickArgument = process.argv.find(value => value.startsWith('--click='));
   const [parsedClickX, parsedClickY] = (clickArgument?.split('=')[1] ?? '')
     .split(',')
     .map(Number);
-  const clickX = Number.isFinite(parsedClickX) ? parsedClickX : VIEWPORT.width / 2;
-  const clickY = Number.isFinite(parsedClickY) ? parsedClickY : VIEWPORT.height / 2;
+  const clickX = Number.isFinite(parsedClickX)
+    ? parsedClickX
+    : VIEWPORT.width / 2;
+  const clickY = Number.isFinite(parsedClickY)
+    ? parsedClickY
+    : VIEWPORT.height / 2;
+
   const targets = buildAuditRows()
     .filter(
-      (row) =>
+      row =>
         row.tier === 'core-indexed' &&
         (force || row.reasons.includes('placeholder thumbnail')) &&
-        (requestedSlugs.size === 0 || requestedSlugs.has(row.game.slug)),
+        requestedSlugs.has(row.game.slug),
     )
-    .map((row) => ({
+    .map(row => ({
       slug: row.game.slug,
       title: row.game.titleEn || row.game.title,
       iframeUrl: row.game.iframeUrl,
     }));
 
-  if (targets.length === 0) {
-    console.log('No placeholder screenshots matched the requested core games.');
-    return;
+  if (targets.length !== requestedSlugs.size) {
+    const matched = new Set(targets.map(target => target.slug));
+    const missing = [...requestedSlugs].filter(slug => !matched.has(slug));
+    throw new Error(
+      `Screenshot capture refused for non-core/unverified targets: ${missing.join(', ') || 'unknown'}. Verify embed rights and separate screenshot permission first.`,
+    );
   }
 
   await mkdir(OUTPUT_DIR, { recursive: true });
