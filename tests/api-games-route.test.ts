@@ -90,20 +90,34 @@ describe('/api/games route fallback', () => {
     expect(listGamesMock).not.toHaveBeenCalled();
   });
 
-  it('requires verified embed rights for unauthenticated remote catalogue lists', async () => {
+  it('requires verified embed rights and suppresses unverified list media for public remote catalogue calls', async () => {
     process.env.GAME_CATALOG_MODE = 'remote';
     listGamesMock.mockResolvedValue({
-      games: [],
-      total: 0,
+      games: [
+        {
+          id: 1,
+          slug: 'verified-game',
+          title: 'Verified Game',
+          titleEn: 'Verified Game',
+          status: 'active',
+          thumbnailUrl: 'https://third-party.example/thumb.png',
+          featured: false,
+          isNew: false,
+          isHot: false,
+          isFavorite: false,
+        },
+      ],
+      total: 1,
       page: 1,
       limit: 5,
-      totalPages: 0,
+      totalPages: 1,
     });
 
     const { GET } = await import('@/app/api/games/route');
     const response = await GET(
       new Request('http://test.local/api/games?limit=5') as any,
     );
+    const payload = await response.json();
 
     expect(response.status).toBe(200);
     expect(listGamesMock).toHaveBeenCalledWith(
@@ -112,5 +126,6 @@ describe('/api/games route fallback', () => {
         embedPermissionStatus: 'verified',
       }),
     );
+    expect(payload.games[0].thumbnailUrl).toBeNull();
   });
 });
