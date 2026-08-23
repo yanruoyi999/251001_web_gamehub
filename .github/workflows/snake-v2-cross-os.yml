@@ -1,0 +1,65 @@
+name: Snake V2 cross-OS desktop
+
+on:
+  pull_request:
+    paths:
+      - playwright.config.ts
+      - tests/e2e/snake-3d-device-matrix.spec.ts
+      - .github/workflows/snake-v2-cross-os.yml
+
+permissions:
+  contents: read
+
+jobs:
+  desktop-cross-os:
+    if: github.head_ref == 'test/snake-v2-device-matrix-20260823'
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - windows-latest
+          - macos-latest
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.28.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Production build
+        run: pnpm build
+
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install chromium firefox webkit
+
+      - name: Run Snake desktop matrix
+        run: pnpm exec playwright test --project=desktop-chrome --project=desktop-firefox --project=desktop-safari --project=desktop-chromium-1024x768 --project=desktop-chromium-1366x768 --project=desktop-chromium-1920x1080 --project=desktop-chromium-hidpi
+        env:
+          CI: 'true'
+          GAME_CATALOG_MODE: local
+          NEXT_TELEMETRY_DISABLED: '1'
+
+      - name: Upload diagnostics on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: snake-v2-cross-os-${{ matrix.os }}
+          if-no-files-found: warn
+          retention-days: 3
+          path: |
+            playwright-report
+            test-results
