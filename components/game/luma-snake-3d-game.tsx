@@ -13,12 +13,13 @@ import {
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import {
-  changeSnakeDirection,
   createSnakeGameState,
   getDailyChallengeId,
   getFirstDeathDurationBucket,
   getFirstDeathDurationMs,
+  getSnakeStepMs,
   getUtcChallengeKey,
+  queueSnakeDirection,
   stepSnakeGame,
   type FirstDeathDurationBucket,
   type SnakeDirection,
@@ -29,6 +30,7 @@ import { trackInteraction } from '@/lib/analytics/events';
 type GameLocale = 'zh' | 'en';
 type GamePhase = 'idle' | 'loading' | 'playing' | 'paused' | 'dead' | 'error';
 type ThreeModule = typeof import('three');
+type ThreeMesh = import('three').Mesh;
 
 type SnakeSceneController = {
   start: () => void;
@@ -37,7 +39,6 @@ type SnakeSceneController = {
   dispose: () => void;
 };
 
-const STEP_MS = 175;
 const BEST_SCORE_STORAGE_KEY = 'luma-snake-3d-best-score';
 
 const copy = {
@@ -118,10 +119,14 @@ function pointToWorld(point: { x: number; z: number }, gridSize: number) {
   return { x: point.x - offset, z: point.z - offset };
 }
 
+function interpolate(from: number, to: number, alpha: number) {
+  return from + (to - from) * alpha;
+}
+
 async function createSnakeScene(
   canvas: HTMLCanvasElement,
   initialState: SnakeGameState,
-  getDirection: () => SnakeDirection,
+  consumeDirection: () => SnakeDirection,
   onState: (state: SnakeGameState) => void
 ): Promise<SnakeSceneController> {
   const THREE: ThreeModule = await import('three');
@@ -182,6 +187,22 @@ async function createSnakeScene(
     roughness: 0.32,
     metalness: 0.25,
   });
+  const snakeMeshes: ThreeMesh[] = [];
+
+  function ensureSnakeMesh(index: number) {
+    const existing = snakeMeshes[index];
+    if (existing) return existing;
+
+    const mesh = new THREE.Mesh(
+      bodyGeometry,
+      index === 0 ? headMaterial : bodyMaterial
+    );
+    mesh.castShadow = true;
+    snakeMeshes[index] = mesh;
+    snakeGroup.add(mesh);
+    return mesh;
+  }
+
   const foodGeometry = new THREE.SphereGeometry(0.36, 16, 16);
   const foodMaterial = new THREE.MeshStandardMaterial({
     color: 0xffc857,
@@ -194,6 +215,7 @@ async function createSnakeScene(
   food.castShadow = true;
   scene.add(food);
 
+  let previousState = initialState;
   let state = initialState;
   let frameId = 0;
   let lastTimestamp = performance.now();
@@ -210,18 +232,29 @@ async function createSnakeScene(
     camera.updateProjectionMatrix();
   }
 
-  function renderState(nextState: SnakeGameState, timestamp: number) {
-    snakeGroup.clear();
+  function renderState(
+    fromState: SnakeGameState,
+    nextState: SnakeGameState,
+    timestamp: number,
+    alpha: number
+  ) {
     nextState.snake.forEach((segment, index) => {
-      const mesh = new THREE.Mesh(
-        bodyGeometry,
-        index === 0 ? headMaterial : bodyMaterial
+      const mesh = ensureSnakeMesh(index);
+      const previousSegment =
+        fromState.snake[index] ?? fromState.snake[fromState.snake.length - 1] ?? segment;
+      const fromWorld = pointToWorld(previousSegment, nextState.gridSize);
+      const nextWorld = pointToWorld(segment, nextState.gridSize);
+      mesh.position.set(
+        interpolate(fromWorld.x, nextWorld.x, alpha),
+        index === 0 ? 0.57 : 0.48,
+        interpolate(fromWorld.z, nextWorld.z, alpha)
       );
-      const world = pointToWorld(segment, nextState.gridSize);
-      mesh.position.set(world.x, index === 0 ? 0.57 : 0.48, world.z);
-      mesh.castShadow = true;
-      snakeGroup.add(mesh);
+      mesh.visible = true;
     });
+
+    for (let index = nextState.snake.length; index < snakeMeshes.length; index += 1) {
+      snakeMeshes[index].visible = false;
+    }
 
     const foodWorld = pointToWorld(nextState.food, nextState.gridSize);
     food.position.set(
@@ -241,14 +274,23 @@ async function createSnakeScene(
 
     if (!manuallyPaused && !document.hidden) {
       accumulator += elapsed;
-      while (accumulator >= STEP_MS && state.status === 'playing') {
-        accumulator -= STEP_MS;
-        state = stepSnakeGame({ ...state, direction: getDirection() });
+      let stepMs = getSnakeStepMs(state.score);
+
+      while (accumulator >= stepMs && state.status === 'playing') {
+        accumulator -= stepMs;
+        previousState = state;
+        state = stepSnakeGame({
+          ...state,
+          direction: consumeDirection(),
+        });
         onState(state);
+        stepMs = getSnakeStepMs(state.score);
       }
     }
 
-    renderState(state, timestamp);
+    const renderStepMs = getSnakeStepMs(state.score);
+    const alpha = Math.min(1, accumulator / renderStepMs);
+    renderState(previousState, state, timestamp, alpha);
 
     if (state.status === 'playing') {
       frameId = requestAnimationFrame(animate);
@@ -260,13 +302,14 @@ async function createSnakeScene(
   function handleVisibilityChange() {
     lastTimestamp = performance.now();
     accumulator = 0;
+    previousState = state;
   }
 
   const resizeObserver = new ResizeObserver(resize);
   resizeObserver.observe(canvas);
   document.addEventListener('visibilitychange', handleVisibilityChange);
   resize();
-  renderState(state, performance.now());
+  renderState(state, state, performance.now(), 1);
 
   return {
     start() {
@@ -283,6 +326,7 @@ async function createSnakeScene(
       manuallyPaused = paused;
       lastTimestamp = performance.now();
       accumulator = 0;
+      previousState = state;
     },
     dispose() {
       running = false;
@@ -321,6 +365,7 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
   const sceneRef = useRef<SnakeSceneController | null>(null);
   const gameStateRef = useRef<SnakeGameState | null>(null);
   const directionRef = useRef<SnakeDirection>({ x: 1, z: 0 });
+  const queuedDirectionRef = useRef<SnakeDirection | null>(null);
   const startedAtRef = useRef<number | null>(null);
   const firstDeathReportedRef = useRef(false);
   const attemptRef = useRef(0);
@@ -344,7 +389,19 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
   }, []);
 
   const handleDirection = useCallback((next: SnakeDirection) => {
-    directionRef.current = changeSnakeDirection(directionRef.current, next);
+    queuedDirectionRef.current = queueSnakeDirection(
+      directionRef.current,
+      queuedDirectionRef.current,
+      next
+    );
+  }, []);
+
+  const consumeDirection = useCallback(() => {
+    if (queuedDirectionRef.current) {
+      directionRef.current = queuedDirectionRef.current;
+      queuedDirectionRef.current = null;
+    }
+    return directionRef.current;
   }, []);
 
   useEffect(() => {
@@ -404,6 +461,7 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
     const challengeId = getDailyChallengeId(currentChallengeKey);
     challengeIdRef.current = challengeId;
     directionRef.current = initialState.direction;
+    queuedDirectionRef.current = null;
     gameStateRef.current = initialState;
 
     trackInteraction('game_play_start', {
@@ -422,7 +480,7 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
       const controller = await createSnakeScene(
         canvasRef.current,
         initialState,
-        () => directionRef.current,
+        consumeDirection,
         (nextState) => {
           gameStateRef.current = nextState;
           setScore(nextState.score);
@@ -475,7 +533,7 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
         error_type: error instanceof Error ? error.name : 'unknown',
       });
     }
-  }, [bestScore, challengeKey, phase]);
+  }, [bestScore, challengeKey, consumeDirection, phase]);
 
   const togglePause = useCallback(() => {
     if (phase === 'playing') {
