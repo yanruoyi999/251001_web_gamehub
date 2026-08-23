@@ -24,18 +24,33 @@ export const games = pgTable('games', {
   thumbnailUrl: varchar('thumbnail_url', { length: 500 }),
   iframeUrl: varchar('iframe_url', { length: 500 }).notNull(),
 
-  // SEO 外链字段
-  developerName: varchar('developer_name', { length: 255 }), // 开发者名称
-  developerUrl: varchar('developer_url', { length: 500 }), // 开发者官网
-  sourceUrl: varchar('source_url', { length: 500 }), // 游戏原始链接/官方页面
+  // Legacy SEO/source fields kept for compatibility. They are not rights evidence.
+  developerName: varchar('developer_name', { length: 255 }),
+  developerUrl: varchar('developer_url', { length: 500 }),
+  sourceUrl: varchar('source_url', { length: 500 }),
+
+  // Auditable provenance and rights metadata. Missing values fail closed.
+  originalDeveloper: varchar('original_developer', { length: 255 }),
+  rightsHolder: varchar('rights_holder', { length: 255 }),
+  officialGameUrl: varchar('official_game_url', { length: 500 }),
+  distributionProvider: varchar('distribution_provider', { length: 255 }),
+  licenseType: varchar('license_type', { length: 100 }),
+  licenseUrl: varchar('license_url', { length: 500 }),
+  commercialUseAllowed: boolean('commercial_use_allowed'),
+  embedPermissionStatus: varchar('embed_permission_status', { length: 20 }).default('unknown'),
+  adsAllowed: boolean('ads_allowed'),
+  screenshotPermission: varchar('screenshot_permission', { length: 20 }).default('unknown'),
+  thumbnailPermission: varchar('thumbnail_permission', { length: 20 }).default('unknown'),
+  verificationEvidence: text('verification_evidence'),
+  rightsVerifiedAt: timestamp('rights_verified_at'),
 
   // 分类标记
-  featured: boolean('featured').default(false), // 精选游戏
-  isNew: boolean('is_new').default(true), // 新游戏（可通过定时任务自动更新）
-  isHot: boolean('is_hot').default(false), // 热门游戏（根据统计数据计算）
+  featured: boolean('featured').default(false),
+  isNew: boolean('is_new').default(true),
+  isHot: boolean('is_hot').default(false),
 
   // 状态
-  status: varchar('status', { length: 20 }).default('active'), // active, inactive, pending
+  status: varchar('status', { length: 20 }).default('active'),
 
   // 发布时间
   publishedAt: timestamp('published_at').defaultNow().notNull(),
