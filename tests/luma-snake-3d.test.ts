@@ -6,7 +6,9 @@ import {
   getDailyChallengeId,
   getFirstDeathDurationBucket,
   getFirstDeathDurationMs,
+  getSnakeStepMs,
   getUtcChallengeKey,
+  queueSnakeDirection,
   resetSnakeGameState,
   stepSnakeGame,
 } from '@/lib/games/luma-snake-3d';
@@ -53,6 +55,112 @@ describe('Luma Snake 3D challenge rules', () => {
       x: 0,
       z: 1,
     });
+  });
+
+  it('accepts at most one valid turn before the next game tick', () => {
+    const right = { x: 1, z: 0 } as const;
+    const up = { x: 0, z: -1 } as const;
+    const left = { x: -1, z: 0 } as const;
+
+    const queued = queueSnakeDirection(right, null, up);
+    expect(queued).toEqual(up);
+    expect(queueSnakeDirection(right, queued, left)).toEqual(up);
+    expect(queueSnakeDirection(right, null, left)).toBeNull();
+    expect(queueSnakeDirection(right, null, right)).toBeNull();
+  });
+
+  it('speeds up in explicit score bands without going below the floor', () => {
+    expect(getSnakeStepMs(0)).toBe(175);
+    expect(getSnakeStepMs(4)).toBe(175);
+    expect(getSnakeStepMs(5)).toBe(155);
+    expect(getSnakeStepMs(10)).toBe(135);
+    expect(getSnakeStepMs(15)).toBe(115);
+    expect(getSnakeStepMs(20)).toBe(100);
+    expect(getSnakeStepMs(30)).toBe(85);
+    expect(getSnakeStepMs(10_000)).toBeGreaterThanOrEqual(80);
+    expect(getSnakeStepMs(-1)).toBe(175);
+    expect(getSnakeStepMs(Number.NaN)).toBe(175);
+  });
+
+  it('dies when the next head position crosses the board boundary', () => {
+    const initial = createSnakeGameState({
+      challengeKey: '2026-08-16',
+      gridSize: 8,
+    });
+    const dead = stepSnakeGame({
+      ...initial,
+      snake: [
+        { x: 7, z: 4 },
+        { x: 6, z: 4 },
+        { x: 5, z: 4 },
+      ],
+      direction: { x: 1, z: 0 },
+      food: { x: 0, z: 0 },
+    });
+
+    expect(dead.status).toBe('dead');
+  });
+
+  it('dies when the head moves into the snake body', () => {
+    const initial = createSnakeGameState({
+      challengeKey: '2026-08-16',
+      gridSize: 8,
+    });
+    const dead = stepSnakeGame({
+      ...initial,
+      snake: [
+        { x: 3, z: 3 },
+        { x: 3, z: 4 },
+        { x: 2, z: 4 },
+        { x: 2, z: 3 },
+        { x: 2, z: 2 },
+      ],
+      direction: { x: -1, z: 0 },
+      food: { x: 7, z: 7 },
+    });
+
+    expect(dead.status).toBe('dead');
+  });
+
+  it('allows moving into the cell vacated by the tail when not eating', () => {
+    const initial = createSnakeGameState({
+      challengeKey: '2026-08-16',
+      gridSize: 8,
+    });
+    const moved = stepSnakeGame({
+      ...initial,
+      snake: [
+        { x: 2, z: 2 },
+        { x: 2, z: 3 },
+        { x: 1, z: 3 },
+        { x: 1, z: 2 },
+      ],
+      direction: { x: -1, z: 0 },
+      food: { x: 7, z: 7 },
+    });
+
+    expect(moved.status).toBe('playing');
+    expect(moved.snake[0]).toEqual({ x: 1, z: 2 });
+  });
+
+  it('never respawns food on the snake after eating', () => {
+    const initial = createSnakeGameState({
+      challengeKey: '2026-08-16',
+      gridSize: 8,
+    });
+    const moved = stepSnakeGame({
+      ...initial,
+      snake: [
+        { x: 3, z: 3 },
+        { x: 2, z: 3 },
+        { x: 1, z: 3 },
+      ],
+      direction: { x: 1, z: 0 },
+      food: { x: 4, z: 3 },
+    });
+
+    expect(moved.score).toBe(1);
+    expect(moved.snake).not.toContainEqual(moved.food);
   });
 
   it('reports the first-death duration and preserves the user-facing buckets', () => {
