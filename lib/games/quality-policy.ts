@@ -24,9 +24,16 @@ export const MANUAL_REVIEW_GAME_REASONS = {
 
 export type ManualReviewGameSlug = keyof typeof MANUAL_REVIEW_GAME_REASONS;
 
+export type EmbedPermissionStatus =
+  | 'verified'
+  | 'link-only'
+  | 'unknown'
+  | 'blocked'
+  | 'expired';
+
 export type GameSourcePolicyInput = {
   slug?: string | null;
-  embedPermissionStatus?: 'verified' | 'unknown' | 'blocked' | null;
+  embedPermissionStatus?: EmbedPermissionStatus | null;
 };
 
 type GamePolicyInput = string | GameSourcePolicyInput | null | undefined;
@@ -112,16 +119,23 @@ function getPolicySlug(input: GamePolicyInput) {
   return normalizeGameSlug(typeof input === 'string' ? input : input?.slug);
 }
 
-function hasSourceApproval(input: GamePolicyInput) {
-  if (typeof input === 'string' || input == null) return true;
-  // The core slug list is a manual public-surface approval. Unknown provenance
-  // remains an audit finding, but must not silently remove the existing core
-  // catalogue until each source record has been individually reviewed.
-  return input.embedPermissionStatus !== 'blocked';
+export function hasVerifiedEmbedPermission(
+  input: GamePolicyInput,
+): input is GameSourcePolicyInput & { embedPermissionStatus: 'verified' } {
+  return (
+    typeof input === 'object' &&
+    input !== null &&
+    input.embedPermissionStatus === 'verified'
+  );
 }
 
-export function hasVerifiedEmbedPermission(input: GameSourcePolicyInput | null | undefined) {
-  return input?.embedPermissionStatus === 'verified';
+export function canLinkToGameSource(input: GamePolicyInput) {
+  return (
+    typeof input === 'object' &&
+    input !== null &&
+    (input.embedPermissionStatus === 'verified' ||
+      input.embedPermissionStatus === 'link-only')
+  );
 }
 
 export function isGameUnderManualReview(input: GamePolicyInput) {
@@ -160,7 +174,7 @@ export function isCoreIndexableGame(input: GamePolicyInput) {
   return (
     CORE_INDEXABLE_GAME_SLUG_SET.has(normalized) &&
     !isGameUnderManualReview(normalized) &&
-    hasSourceApproval(input)
+    hasVerifiedEmbedPermission(input)
   );
 }
 
@@ -177,11 +191,13 @@ export function shouldPromoteGameInCollections(input: GamePolicyInput) {
 }
 
 export function canRenderGameIframe(input: GamePolicyInput) {
-  return !isGameUnderManualReview(input) && hasSourceApproval(input);
+  return !isGameUnderManualReview(input) && hasVerifiedEmbedPermission(input);
 }
 
 export function getGameQualityTier(input: GamePolicyInput) {
-  if (isGameUnderManualReview(input) || !hasSourceApproval(input)) return 'review' as const;
+  if (isGameUnderManualReview(input) || !hasVerifiedEmbedPermission(input)) {
+    return 'review' as const;
+  }
   if (isCoreIndexableGame(input)) return 'core-indexed' as const;
   return 'catalogue-only' as const;
 }
