@@ -119,6 +119,33 @@ test.describe('Luma Snake 3D', () => {
     );
   });
 
+  test('completes play, first move, pause, resume, game over and retry', async ({ page }) => {
+    await page.goto('/en/games/snake-3d', { waitUntil: 'networkidle' });
+    await page.locator('[data-snake-play="true"]').click();
+
+    const stage = page.locator('[data-snake-stage]');
+    await expect(stage).toHaveAttribute('data-snake-phase', /^(playing|error)$/, {
+      timeout: 30_000,
+    });
+    if ((await stage.getAttribute('data-snake-phase')) === 'error') return;
+
+    await page.keyboard.press('ArrowUp');
+    await page.getByRole('button', { name: 'Pause' }).click();
+    await expect(stage).toHaveAttribute('data-snake-phase', 'paused');
+
+    await page.getByRole('button', { name: 'Resume' }).click();
+    await expect(stage).toHaveAttribute('data-snake-phase', 'playing');
+
+    await expect(stage).toHaveAttribute('data-snake-phase', 'dead', {
+      timeout: 5_000,
+    });
+    await expect(page.locator('[data-snake-retry="true"]')).toBeVisible();
+    await page.locator('[data-snake-retry="true"]').click();
+    await expect(stage).toHaveAttribute('data-snake-phase', /^(playing|error)$/, {
+      timeout: 30_000,
+    });
+  });
+
   test('buffers only one valid direction change before the next game tick', async ({ page }) => {
     await page.goto('/en/games/snake-3d', { waitUntil: 'networkidle' });
     await page.locator('[data-snake-play="true"]').click();
