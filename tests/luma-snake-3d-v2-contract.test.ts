@@ -46,6 +46,12 @@ describe('Luma Snake 3D V2 feedback contract', () => {
     expect(snakeComponentSource).toContain("matchMedia('(prefers-reduced-motion: reduce)')");
     expect(snakeComponentSource).toContain("trackInteraction('snake_audio_toggle'");
   });
+
+  it('applies mute changes immediately during the active run', () => {
+    expect(snakeComponentSource).toContain('mutedRef.current');
+    expect(snakeComponentSource).toContain('mutedRef.current = nextMuted');
+    expect(snakeComponentSource).toContain('if (mutedRef.current) return;');
+  });
 });
 
 describe('Luma Snake 3D V2 analytics contract', () => {
