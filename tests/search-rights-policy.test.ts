@@ -13,7 +13,8 @@ describe('search rights policy', () => {
     expect(service).toContain('embedPermissionStatus = "verified"');
     expect(service).toContain("hit.embedPermissionStatus !== 'verified'");
     expect(service.match(/eq\(games\.embedPermissionStatus, 'verified'\)/g)?.length).toBeGreaterThanOrEqual(2);
-    expect(service).toContain("rightsPolicy: 'verified-v1'");
+    expect(service).toContain("const PUBLIC_SEARCH_RIGHTS_POLICY = 'verified-v1'");
+    expect(service).toContain('rightsPolicy: PUBLIC_SEARCH_RIGHTS_POLICY');
     expect(setup).toContain("'embedPermissionStatus'");
   });
 
