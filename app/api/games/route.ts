@@ -91,6 +91,20 @@ function positiveIntegerArray(value: unknown): number[] | undefined {
   );
 }
 
+function stripPublicListMedia<T extends { games: Array<{ thumbnailUrl: string | null }> }>(
+  result: T,
+  isAdmin: boolean,
+): T {
+  if (isAdmin) return result;
+
+  // The list DTO does not carry per-asset rights evidence. Until it does, the
+  // public endpoint must not infer thumbnail permission from embed permission.
+  return {
+    ...result,
+    games: result.games.map((game) => ({ ...game, thumbnailUrl: null })),
+  };
+}
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const { page, limit } = validatePagination(
@@ -153,7 +167,7 @@ export async function GET(request: NextRequest) {
       GameService.listGames(listOptions),
       'Game list lookup',
     );
-    return NextResponse.json(result);
+    return NextResponse.json(stripPublicListMedia(result, isAdmin));
   } catch (error) {
     console.warn('Game database list failed, using local fallback:', error);
     return NextResponse.json({
