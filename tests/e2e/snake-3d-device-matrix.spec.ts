@@ -39,10 +39,11 @@ test.describe('Luma Snake 3D exhaustive device matrix', () => {
       initialLayout.viewportWidth + 1
     );
 
-    const webglAvailable = await page.evaluate(() => {
+    // Three.js WebGLRenderer requires WebGL2 (WebGL1 support was removed in
+    // r163), so the environment probe must match the renderer's real contract.
+    const webgl2Available = await page.evaluate(() => {
       const probe = document.createElement('canvas');
-      const context = probe.getContext('webgl2') ?? probe.getContext('webgl');
-      return Boolean(context);
+      return Boolean(probe.getContext('webgl2'));
     });
 
     const playButton = page.locator('[data-snake-play="true"]');
@@ -61,9 +62,9 @@ test.describe('Luma Snake 3D exhaustive device matrix', () => {
     const phase = await stage.getAttribute('data-snake-phase');
 
     if (phase === 'error') {
-      const status = webglAvailable
-        ? 'product-start-error-with-webgl'
-        : 'blocked-no-webgl-in-ci-environment';
+      const status = webgl2Available
+        ? 'product-start-error-with-webgl2'
+        : 'blocked-no-webgl2-in-ci-environment';
       const summary = [
         `project=${testInfo.project.name}`,
         `device=${deviceName}`,
@@ -83,9 +84,9 @@ test.describe('Luma Snake 3D exhaustive device matrix', () => {
       expect(mediaRequests).toEqual([]);
       expect(pageErrors).toEqual([]);
 
-      if (webglAvailable) {
+      if (webgl2Available) {
         throw new Error(
-          `Snake entered its browser-error fallback even though a WebGL context is available: ${summary}; console_errors=${JSON.stringify(consoleErrors)}`
+          `Snake entered its browser-error fallback even though a WebGL2 context is available: ${summary}; console_errors=${JSON.stringify(consoleErrors)}`
         );
       }
       return;
@@ -135,7 +136,7 @@ test.describe('Luma Snake 3D exhaustive device matrix', () => {
         };
       }
 
-      const context = element.getContext('webgl2') ?? element.getContext('webgl');
+      const context = element.getContext('webgl2');
       const rect = element.getBoundingClientRect();
       return {
         hasContext: Boolean(context),
