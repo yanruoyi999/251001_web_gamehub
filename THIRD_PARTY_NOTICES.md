@@ -10,9 +10,11 @@ The repository-level MIT license applies only to original source code and docume
 
 Imported records default to `embedPermissionStatus = unknown`. Under the current publication policy, only records with explicit `verified` embed permission can load a third-party iframe or enter the indexed/recommended catalogue surface.
 
-## Historical game screenshots
+## Historical game and guide screenshots
 
-Files under `public/game-screenshots/` were historical captures used during prior QA. They are excluded from the Luma MIT license. The current application blocks `/game-screenshots/*` from the public production surface and database-backed game details suppress thumbnails/screenshots unless their separate media permission is `verified`.
+Files under `public/game-screenshots/` and `public/guide-screenshots/` were historical captures used during prior QA/editorial work. They are excluded from the Luma MIT license. The current application blocks both `/game-screenshots/*` and `/guide-screenshots/*` from the public production surface, and database-backed game details suppress thumbnails/screenshots unless their separate media permission is `verified`.
+
+The screenshot-capture scripts are also fail-closed: they require an explicit operator opt-in after media rights have been independently verified. Embed permission alone is not screenshot permission.
 
 Do not reuse, republish, regenerate, or treat these historical captures as promotional assets unless a rights record separately verifies screenshot/thumbnail permission.
 
