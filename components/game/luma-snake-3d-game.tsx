@@ -389,6 +389,7 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
   const challengeIdRef = useRef('');
   const controlTypeRef = useRef<SnakeControlType | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
+  const mutedRef = useRef(false);
   const reducedMotionRef = useRef(false);
   const feedbackTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [challengeKey, setChallengeKey] = useState('');
@@ -405,7 +406,9 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
     setChallengeKey(getUtcChallengeKey());
     const storedBest = Number(window.localStorage.getItem(BEST_SCORE_STORAGE_KEY));
     if (Number.isFinite(storedBest) && storedBest > 0) setBestScore(storedBest);
-    setMuted(window.localStorage.getItem(SOUND_STORAGE_KEY) === 'true');
+    const storedMuted = window.localStorage.getItem(SOUND_STORAGE_KEY) === 'true';
+    mutedRef.current = storedMuted;
+    setMuted(storedMuted);
 
     const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     const syncReducedMotion = () => {
@@ -445,29 +448,26 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
     return context;
   }, []);
 
-  const playFeedback = useCallback(
-    (kind: SnakeFeedbackKind) => {
-      if (muted) return;
-      const context = audioContextRef.current;
-      if (!context || context.state !== 'running') return;
+  const playFeedback = useCallback((kind: SnakeFeedbackKind) => {
+    if (mutedRef.current) return;
+    const context = audioContextRef.current;
+    if (!context || context.state !== 'running') return;
 
-      const tone = getSnakeFeedbackTone(kind);
-      const oscillator = context.createOscillator();
-      const gain = context.createGain();
-      const now = context.currentTime;
-      const end = now + tone.durationMs / 1_000;
+    const tone = getSnakeFeedbackTone(kind);
+    const oscillator = context.createOscillator();
+    const gain = context.createGain();
+    const now = context.currentTime;
+    const end = now + tone.durationMs / 1_000;
 
-      oscillator.type = tone.type;
-      oscillator.frequency.setValueAtTime(tone.frequencyHz, now);
-      gain.gain.setValueAtTime(tone.gain, now);
-      gain.gain.exponentialRampToValueAtTime(0.0001, end);
-      oscillator.connect(gain);
-      gain.connect(context.destination);
-      oscillator.start(now);
-      oscillator.stop(end);
-    },
-    [muted]
-  );
+    oscillator.type = tone.type;
+    oscillator.frequency.setValueAtTime(tone.frequencyHz, now);
+    gain.gain.setValueAtTime(tone.gain, now);
+    gain.gain.exponentialRampToValueAtTime(0.0001, end);
+    oscillator.connect(gain);
+    gain.connect(context.destination);
+    oscillator.start(now);
+    oscillator.stop(end);
+  }, []);
 
   const showVisualFeedback = useCallback((kind: SnakeFeedbackKind) => {
     if (reducedMotionRef.current) return;
@@ -613,7 +613,7 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
     setPlayToReadyMs(null);
     setFirstDeathBucket('invalid');
 
-    if (!muted) void ensureAudioContext();
+    if (!mutedRef.current) void ensureAudioContext();
 
     if (isRetry) {
       trackInteraction('snake_retry', {
@@ -735,7 +735,7 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
         error_type: error instanceof Error ? error.name : 'unknown',
       });
     }
-  }, [bestScore, challengeKey, consumeDirection, ensureAudioContext, muted, phase, playFeedback, showVisualFeedback]);
+  }, [bestScore, challengeKey, consumeDirection, ensureAudioContext, phase, playFeedback, showVisualFeedback]);
 
   const togglePause = useCallback(() => {
     if (phase === 'playing') {
@@ -744,12 +744,13 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
     } else if (phase === 'paused') {
       sceneRef.current?.setPaused(false);
       setPhase('playing');
-      if (!muted) void ensureAudioContext();
+      if (!mutedRef.current) void ensureAudioContext();
     }
-  }, [ensureAudioContext, muted, phase]);
+  }, [ensureAudioContext, phase]);
 
   const toggleAudio = useCallback(async () => {
-    const nextMuted = !muted;
+    const nextMuted = !mutedRef.current;
+    mutedRef.current = nextMuted;
     setMuted(nextMuted);
     window.localStorage.setItem(SOUND_STORAGE_KEY, String(nextMuted));
     if (!nextMuted) await ensureAudioContext();
@@ -757,7 +758,7 @@ export function LumaSnake3DGame({ locale }: { locale: GameLocale }) {
       game_slug: 'snake-3d',
       muted: nextMuted,
     });
-  }, [ensureAudioContext, muted]);
+  }, [ensureAudioContext]);
 
   const toggleFullscreen = useCallback(async () => {
     if (!stageRef.current) return;
