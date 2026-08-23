@@ -1,4 +1,5 @@
 import { pgTable, serial, varchar, text, integer, boolean, timestamp, uniqueIndex } from 'drizzle-orm/pg-core';
+import type { EmbedPermissionStatus } from '@/lib/games/quality-policy';
 
 /**
  * 游戏主表
@@ -37,7 +38,9 @@ export const games = pgTable('games', {
   licenseType: varchar('license_type', { length: 100 }),
   licenseUrl: varchar('license_url', { length: 500 }),
   commercialUseAllowed: boolean('commercial_use_allowed'),
-  embedPermissionStatus: varchar('embed_permission_status', { length: 20 }).default('unknown'),
+  embedPermissionStatus: varchar('embed_permission_status', { length: 20 })
+    .$type<EmbedPermissionStatus>()
+    .default('unknown'),
   adsAllowed: boolean('ads_allowed'),
   screenshotPermission: varchar('screenshot_permission', { length: 20 }).default('unknown'),
   thumbnailPermission: varchar('thumbnail_permission', { length: 20 }).default('unknown'),
