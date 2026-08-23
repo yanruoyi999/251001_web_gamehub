@@ -30,6 +30,8 @@ export type FirstDeathDurationBucket =
 
 const DEFAULT_GRID_SIZE = 14;
 const INITIAL_SNAKE_LENGTH = 3;
+const DEFAULT_STEP_MS = 175;
+const MIN_STEP_MS = 80;
 
 function hashString(value: string) {
   let hash = 2_166_136_261;
@@ -52,6 +54,10 @@ function seededRandom(seed: number) {
 }
 
 function samePoint(first: SnakePoint, second: SnakePoint) {
+  return first.x === second.x && first.z === second.z;
+}
+
+function sameDirection(first: SnakeDirection, second: SnakeDirection) {
   return first.x === second.x && first.z === second.z;
 }
 
@@ -101,6 +107,17 @@ export function getDailyChallengeId(challengeKey: string) {
   return `snake-3d-${challengeKey}-${hashString(challengeKey).toString(16)}`;
 }
 
+export function getSnakeStepMs(score: number) {
+  const normalizedScore = Number.isFinite(score) ? Math.max(0, Math.floor(score)) : 0;
+
+  if (normalizedScore >= 30) return Math.max(MIN_STEP_MS, 85);
+  if (normalizedScore >= 20) return 100;
+  if (normalizedScore >= 15) return 115;
+  if (normalizedScore >= 10) return 135;
+  if (normalizedScore >= 5) return 155;
+  return DEFAULT_STEP_MS;
+}
+
 export function createSnakeGameState(options: {
   challengeKey?: string;
   gridSize?: number;
@@ -140,6 +157,17 @@ export function changeSnakeDirection(
 
   const isImmediateReverse = current.x + next.x === 0 && current.z + next.z === 0;
   return isImmediateReverse ? current : next;
+}
+
+export function queueSnakeDirection(
+  current: SnakeDirection,
+  queued: SnakeDirection | null,
+  next: SnakeDirection
+): SnakeDirection | null {
+  if (queued) return queued;
+
+  const candidate = changeSnakeDirection(current, next);
+  return sameDirection(candidate, current) ? null : candidate;
 }
 
 export function stepSnakeGame(state: SnakeGameState): SnakeGameState {
