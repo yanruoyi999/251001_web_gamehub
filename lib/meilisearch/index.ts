@@ -9,6 +9,8 @@
 
 import { MeiliSearch, type Index } from 'meilisearch';
 import { isLocalCatalogueMode } from '@/lib/games/catalog-mode';
+import type { EmbedPermissionStatus } from '@/lib/games/quality-policy';
+import type { MediaPermissionStatus } from '@/lib/games/game-update';
 
 // 索引名称常量
 export const INDEXES = {
@@ -32,6 +34,8 @@ export interface GameSearchDocument {
   averageRating: number | null;
   playCount: number;
   publishedAt: number; // timestamp
+  embedPermissionStatus: EmbedPermissionStatus;
+  thumbnailPermission: MediaPermissionStatus | null;
 }
 
 // Meilisearch 客户端初始化
@@ -55,7 +59,6 @@ export function getMeilisearchClient(): MeiliSearch | null {
     return null;
   }
 
-  // 单例模式
   if (!meilisearchClient) {
     meilisearchClient = new MeiliSearch({
       host,
@@ -66,7 +69,6 @@ export function getMeilisearchClient(): MeiliSearch | null {
   return meilisearchClient;
 }
 
-// 获取游戏索引
 export function getGamesIndex(): Index<GameSearchDocument> | null {
   const client = getMeilisearchClient();
   if (!client) return null;
@@ -74,7 +76,6 @@ export function getGamesIndex(): Index<GameSearchDocument> | null {
   return client.index<GameSearchDocument>(INDEXES.GAMES);
 }
 
-// 验证 Meilisearch 连接
 export async function verifyMeilisearchConnection(): Promise<boolean> {
   try {
     const client = getMeilisearchClient();
@@ -82,7 +83,6 @@ export async function verifyMeilisearchConnection(): Promise<boolean> {
       throw new Error('Meilisearch not configured');
     }
 
-    // 测试健康检查
     const health = await client.health();
     return health.status === 'available';
   } catch (error) {
@@ -91,7 +91,6 @@ export async function verifyMeilisearchConnection(): Promise<boolean> {
   }
 }
 
-// 检查索引是否存在
 export async function checkIndexExists(indexName: string): Promise<boolean> {
   try {
     const client = getMeilisearchClient();
