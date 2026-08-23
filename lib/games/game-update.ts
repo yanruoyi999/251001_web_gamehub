@@ -303,10 +303,7 @@ export function normalizeGameUpdateInput(
       );
     }
     scalarUpdates.rightsVerifiedAt = new Date();
-  } else if (
-    scalarUpdates.embedPermissionStatus &&
-    scalarUpdates.embedPermissionStatus !== 'verified'
-  ) {
+  } else if (scalarUpdates.embedPermissionStatus) {
     scalarUpdates.rightsVerifiedAt = null;
   }
 
