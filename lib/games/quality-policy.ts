@@ -56,6 +56,9 @@ export const RETIRED_CATALOGUE_REDIRECT_TARGETS = {
   'fly-car-stunt': 'drive-mad',
   'fly-car-stunt-2': 'drive-mad',
   'fly-car-stunt-5': 'drive-mad',
+  // Legacy checked-in sample corruption: this synthetic slug was generated from
+  // a truck-loader source row mislabeled as G-Switch. Never expose that detail page.
+  'g-switch-5': 'g-switch-3',
 } as const;
 
 export type RetiredCatalogueGameSlug = keyof typeof RETIRED_CATALOGUE_REDIRECT_TARGETS;
