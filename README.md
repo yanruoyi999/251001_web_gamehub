@@ -1,6 +1,6 @@
 # Luma Game Hub
 
-Luma Game Hub is a bilingual browser-game catalogue and editorial guide site built with Next.js. It combines instant-play game pages, searchable categories and tags, original interactive experiences, practical walkthroughs, SEO landing pages, analytics, and a lightweight admin surface.
+Luma Game Hub is a bilingual browser-game catalogue and editorial guide site built with Next.js. It combines original interactive experiences, rights-gated game references, searchable categories and tags, practical walkthroughs, SEO landing pages, analytics, and a lightweight admin surface.
 
 ## Live site
 
@@ -11,6 +11,12 @@ Luma Game Hub is a bilingual browser-game catalogue and editorial guide site bui
 ## Luma Original
 
 - [Spend Bill Gates Money](https://www.lumagamehub.com/en/games/spend-bill-gates-money) — a bilingual, mobile-friendly $100 billion spending simulator with reversible purchases, a fixed fortune HUD, and shareable billionaire identities.
+
+## Game rights policy
+
+Third-party game availability is fail-closed. A reachable iframe, mirror URL, public distribution page, screenshot, or core slug is not treated as authorization evidence.
+
+Only records with explicit `embedPermissionStatus = verified` may load a third-party iframe or enter the indexed/recommended catalogue surface. Screenshot and thumbnail rights are tracked separately from embed rights. See [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) and the current rights-hardening design under [`docs/superpowers/specs/`](docs/superpowers/specs/).
 
 ## Current stack
 
@@ -52,16 +58,16 @@ pnpm build
 pnpm test:e2e
 ```
 
-The GitHub Actions CI workflow runs the repository gates for pull requests. Browser E2E covers Chromium, Firefox, WebKit, Pixel 7, and iPhone 13, followed by a mobile runtime-quality sampling gate.
+The GitHub Actions CI workflow runs the repository gates for pull requests. Browser E2E covers Chromium, Firefox, WebKit, Pixel 7, and iPhone 13, followed by a mobile runtime-quality sampling gate. Deterministic CI distinguishes the presence of the Luma iframe shell from real external game loading; external loading is only considered verified when an explicit network-enabled check runs.
 
-For safety, an unset or unknown `GAME_CATALOG_MODE` falls back to the checked-in local catalogue. Set it explicitly to `remote` only when the production database and write-path configuration have been reviewed. GA4, Vercel Analytics, Speed Insights, and Clarity are isolated from local/preview hosts; on the formal production domain GA4 and Clarity load automatically, with Clarity ad storage disabled and analytics storage enabled.
+For safety, an unset or unknown `GAME_CATALOG_MODE` falls back to the checked-in local catalogue. The local catalogue is still subject to the same rights gate, so unverified imported games are withheld from public catalogue/search/sitemap/iframe surfaces. Set catalogue mode to `remote` only when the production database, migration, rights metadata, and write-path configuration have been reviewed. GA4, Vercel Analytics, Speed Insights, and Clarity are isolated from local/preview hosts; on the formal production domain GA4 and Clarity load automatically, with Clarity ad storage disabled and analytics storage enabled.
 
 ## Main routes
 
 ```text
 /[locale]                         Localized homepage
-/[locale]/games                   Searchable game catalogue
-/[locale]/games/[slug]            Generic game detail route
+/[locale]/games                   Searchable rights-gated game catalogue
+/[locale]/games/[slug]            Generic game detail / review route
 /[locale]/games/spend-bill-gates-money
 /[locale]/guides                  Editorial guide archive
 /[locale]/guides/[slug]           SEO/editorial guide route
@@ -77,12 +83,12 @@ Chinese uses the unprefixed public route and English uses `/en`.
 ```text
 app/                 Next.js App Router pages, metadata routes, and APIs
 components/          Layout, game, analytics, feedback, SEO, and UI components
-lib/                 Catalogue, SEO, analytics, database, and utility modules
+lib/                 Catalogue, rights policy, SEO, analytics, database, and utilities
 services/            Application service layer
 tests/               Vitest and Playwright coverage
 docs/                Specifications, plans, setup, release, and audit records
 scripts/             Quality, import, monitoring, and SEO operations
-public/              Static images, icons, verification files, and manifests
+public/              Static first-party assets and historical restricted QA captures
 ```
 
 ## Documentation
@@ -92,11 +98,12 @@ public/              Static images, icons, verification files, and manifests
 - Current implementation specifications: [`docs/superpowers/specs/`](docs/superpowers/specs/)
 - Execution plans: [`docs/superpowers/plans/`](docs/superpowers/plans/)
 - Release records: [`docs/releases/`](docs/releases/)
+- Third-party rights boundary: [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)
 
 ## Contribution
 
-Use Conventional Commits and keep changes focused. New public pages should include localized metadata, canonical and hreflang handling, structured data where appropriate, sitemap discovery, contextual internal links, accessibility checks, and automated coverage.
+Use Conventional Commits and keep changes focused. New public game pages must include verified provenance/rights metadata before iframe/index/recommendation eligibility. Other public pages should include localized metadata, canonical and hreflang handling, structured data where appropriate, sitemap discovery, contextual internal links, accessibility checks, and automated coverage.
 
 ## License
 
-MIT — see [`LICENSE`](LICENSE).
+Original Luma Game Hub source code covered by this repository is available under the MIT License; see [`LICENSE`](LICENSE). Third-party games, game content, screenshots, names, trademarks, assets, and dependency licenses are excluded from that grant unless separately documented. See [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
