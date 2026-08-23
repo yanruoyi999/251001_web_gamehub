@@ -33,6 +33,7 @@ const INITIAL_SNAKE_LENGTH = 3;
 const DEFAULT_STEP_MS = 175;
 const MIN_STEP_MS = 80;
 const DEFAULT_SWIPE_DISTANCE = 32;
+const SCORE_MILESTONES = new Set([5, 10, 15, 20, 30, 50, 100]);
 
 function hashString(value: string) {
   let hash = 2_166_136_261;
@@ -106,6 +107,11 @@ export function getUtcChallengeKey(date = new Date()) {
 
 export function getDailyChallengeId(challengeKey: string) {
   return `snake-3d-${challengeKey}-${hashString(challengeKey).toString(16)}`;
+}
+
+export function getSnakeScoreMilestone(score: number) {
+  const normalizedScore = Number.isFinite(score) ? Math.floor(score) : -1;
+  return SCORE_MILESTONES.has(normalizedScore) ? normalizedScore : null;
 }
 
 export function getSnakeStepMs(score: number) {
