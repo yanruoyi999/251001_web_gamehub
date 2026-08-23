@@ -1,10 +1,13 @@
-import { shouldPromoteGameInCollections } from '@/lib/games/quality-policy';
+import {
+  shouldPromoteGameInCollections,
+  type EmbedPermissionStatus,
+} from '@/lib/games/quality-policy';
 
 interface RelatedGameCandidate {
   slug: string;
   categories: Array<{ slug: string }>;
   tags: Array<{ slug: string }>;
-  embedPermissionStatus?: 'verified' | 'unknown' | 'blocked' | null;
+  embedPermissionStatus?: EmbedPermissionStatus | null;
 }
 
 const RELATED_GAME_OVERRIDES: Record<string, string[]> = {
