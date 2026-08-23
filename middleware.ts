@@ -15,13 +15,15 @@ const intlMiddleware = createMiddleware({
   alternateLinks: false,
 });
 
+const RESTRICTED_CAPTURE_PREFIXES = ['/game-screenshots/', '/guide-screenshots/'];
+
 export default function middleware(request: NextRequest) {
   const url = new URL(request.url);
 
-  // Historical captures remain in the repository for audit provenance only.
-  // They are not a public asset surface unless screenshot rights are separately
+  // Historical third-party captures remain in Git only as audit provenance.
+  // They are not a public asset surface unless media rights are separately
   // verified and a new approved delivery path is introduced.
-  if (url.pathname.startsWith('/game-screenshots/')) {
+  if (RESTRICTED_CAPTURE_PREFIXES.some(prefix => url.pathname.startsWith(prefix))) {
     return new NextResponse(null, {
       status: 404,
       headers: {
@@ -53,6 +55,7 @@ export default function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     '/game-screenshots/:path*',
+    '/guide-screenshots/:path*',
     '/((?!api|_next/static|_next/image|favicon.ico|og/|.*\\.\\w+$).*)',
   ],
 };
