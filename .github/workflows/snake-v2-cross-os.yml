@@ -47,7 +47,7 @@ jobs:
         run: pnpm exec playwright install chromium firefox webkit
 
       - name: Run Snake desktop matrix
-        run: pnpm exec playwright test --project=desktop-chrome --project=desktop-firefox --project=desktop-safari --project=desktop-chromium-1024x768 --project=desktop-chromium-1366x768 --project=desktop-chromium-1920x1080 --project=desktop-chromium-hidpi
+        run: pnpm exec playwright test --workers=1 --project=desktop-chrome --project=desktop-firefox --project=desktop-safari --project=desktop-chromium-1024x768 --project=desktop-chromium-1366x768 --project=desktop-chromium-1920x1080 --project=desktop-chromium-hidpi
         env:
           CI: 'true'
           GAME_CATALOG_MODE: local
