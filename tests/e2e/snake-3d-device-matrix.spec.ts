@@ -51,9 +51,14 @@ test.describe('Luma Snake 3D exhaustive device matrix', () => {
     await playButton.click();
 
     const stage = page.locator('[data-snake-stage]');
-    await expect(stage).toHaveAttribute('data-snake-phase', /^(playing|error)$/, {
-      timeout: 30_000,
-    });
+    // Renderer readiness can be followed by a normal gameplay death before a
+    // slow CI runner observes the transient `playing` phase. The mainstream
+    // E2E suite uses the same playing|dead|error readiness contract.
+    await expect(stage).toHaveAttribute(
+      'data-snake-phase',
+      /^(playing|dead|error)$/,
+      { timeout: 30_000 }
+    );
 
     const deviceName = String(
       testInfo.project.metadata.deviceName ?? testInfo.project.name
@@ -99,13 +104,29 @@ test.describe('Luma Snake 3D exhaustive device matrix', () => {
     expect(readyMs).toBeGreaterThanOrEqual(0);
     expect(readyMs).toBeLessThan(5_000);
 
-    // Visibility pause is synchronous and therefore robust on slow software
-    // renderers. Mainstream E2E separately covers the manual Pause/Resume UI.
+    // Freeze logical stepping before the visibility pause assertion. If normal
+    // gameplay already reached Game Over while CI was scheduled elsewhere,
+    // Retry under the frozen document and continue the compatibility checks.
     await page.evaluate(() => {
       Object.defineProperty(document, 'hidden', {
         configurable: true,
         get: () => true,
       });
+    });
+
+    const frozenPhase = await stage.getAttribute('data-snake-phase');
+    if (frozenPhase === 'dead') {
+      const retryButton = page.locator('[data-snake-retry="true"]');
+      await expect(retryButton).toBeVisible();
+      await retryButton.click();
+      await expect(stage).toHaveAttribute('data-snake-phase', 'playing', {
+        timeout: 30_000,
+      });
+    }
+
+    // Visibility pause is synchronous and therefore robust on slow software
+    // renderers. Mainstream E2E separately covers the manual Pause/Resume UI.
+    await page.evaluate(() => {
       document.dispatchEvent(new Event('visibilitychange'));
     });
     await expect(stage).toHaveAttribute('data-snake-phase', 'paused');
