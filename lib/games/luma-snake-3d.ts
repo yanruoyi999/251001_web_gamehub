@@ -32,6 +32,7 @@ const DEFAULT_GRID_SIZE = 14;
 const INITIAL_SNAKE_LENGTH = 3;
 const DEFAULT_STEP_MS = 175;
 const MIN_STEP_MS = 80;
+const DEFAULT_SWIPE_DISTANCE = 32;
 
 function hashString(value: string) {
   let hash = 2_166_136_261;
@@ -116,6 +117,28 @@ export function getSnakeStepMs(score: number) {
   if (normalizedScore >= 10) return 135;
   if (normalizedScore >= 5) return 155;
   return DEFAULT_STEP_MS;
+}
+
+export function getSwipeDirection(
+  start: { x: number; y: number },
+  end: { x: number; y: number },
+  minDistance = DEFAULT_SWIPE_DISTANCE
+): SnakeDirection | null {
+  const dx = end.x - start.x;
+  const dy = end.y - start.y;
+  const threshold = Number.isFinite(minDistance)
+    ? Math.max(0, minDistance)
+    : DEFAULT_SWIPE_DISTANCE;
+
+  if (![dx, dy].every(Number.isFinite) || Math.hypot(dx, dy) < threshold) {
+    return null;
+  }
+
+  if (Math.abs(dx) >= Math.abs(dy)) {
+    return { x: dx > 0 ? 1 : -1, z: 0 };
+  }
+
+  return { x: 0, z: dy > 0 ? 1 : -1 };
 }
 
 export function createSnakeGameState(options: {
