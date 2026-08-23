@@ -5,6 +5,7 @@
 
 import sampleData from '@/public/data/4399-sample.json';
 import { shouldPromoteGameInCollections } from '@/lib/games/quality-policy';
+import type { EmbedPermissionStatus as RightsEmbedPermissionStatus } from '@/lib/games/quality-policy';
 import { getGameEditorialDescription } from '@/lib/games/editorial-content';
 
 const BASE_TIMESTAMP = new Date('2024-01-01T00:00:00Z');
@@ -41,7 +42,7 @@ export interface MockScreenshot {
 }
 
 export type GameSourceType = 'developer' | 'distribution' | 'self-hosted' | 'unknown';
-export type EmbedPermissionStatus = 'verified' | 'unknown' | 'blocked';
+export type EmbedPermissionStatus = RightsEmbedPermissionStatus;
 
 export interface MockGame {
   id: number;
@@ -545,17 +546,18 @@ function cloneTag(tag: MockTag): MockTag {
   };
 }
 
-function resolvePrimaryCategorySlug(slug: string, index: number): MockCategory['slug'] {
+function resolvePrimaryCategorySlug(slug: string): MockCategory['slug'] {
   const lower = slug.toLowerCase();
   for (const matcher of CATEGORY_KEYWORDS) {
     if (matcher.regex.test(lower)) {
       return matcher.slug;
     }
   }
-  return MOCK_CATEGORY_PRESETS[index % MOCK_CATEGORY_PRESETS.length].slug;
+  // Unknown semantics must not be converted into a random category by catalogue position.
+  return 'casual';
 }
 
-function buildCategoriesForGame(slug: string, index: number): MockCategory[] {
+function buildCategoriesForGame(slug: string, _index: number): MockCategory[] {
   const override = GAME_CATEGORY_OVERRIDES[slug];
   if (override) {
     return override
@@ -564,14 +566,8 @@ function buildCategoriesForGame(slug: string, index: number): MockCategory[] {
       .map((item) => cloneCategory(item));
   }
 
-  const firstSlug = resolvePrimaryCategorySlug(slug, index);
-  const secondarySlug =
-    MOCK_CATEGORY_PRESETS[(index + 2) % MOCK_CATEGORY_PRESETS.length].slug;
-  const selected = new Set<string>([firstSlug, secondarySlug]);
-  return Array.from(selected)
-    .map((slugKey) => CATEGORY_MAP.get(slugKey))
-    .filter((item): item is MockCategory => Boolean(item))
-    .map((item) => cloneCategory(item));
+  const category = CATEGORY_MAP.get(resolvePrimaryCategorySlug(slug));
+  return category ? [cloneCategory(category)] : [];
 }
 
 function buildTagsForGame(
