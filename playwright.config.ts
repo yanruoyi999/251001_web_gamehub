@@ -60,6 +60,22 @@ const desktopProjects = [
   },
 ];
 
+// Keep the repository's existing mobile project declarations intact for its
+// project-scope contract test. Global testMatch means these compatibility
+// projects intentionally discover zero tests in this test-only branch.
+const legacyScopeProjects = [
+  {
+    name: 'pixel-7-touch',
+    testDir: './tests/mobile-e2e',
+    use: { ...devices['Pixel 7'] },
+  },
+  {
+    name: 'iphone-13-touch',
+    testDir: './tests/mobile-e2e',
+    use: { ...devices['iPhone 13'] },
+  },
+];
+
 export default defineConfig({
   testDir: './tests/e2e',
   testMatch: /snake-3d-device-matrix\.spec\.ts/,
@@ -86,5 +102,5 @@ export default defineConfig({
     screenshot: 'only-on-failure',
     video: 'off',
   },
-  projects: [...desktopProjects, ...builtInTouchProjects],
+  projects: [...desktopProjects, ...builtInTouchProjects, ...legacyScopeProjects],
 });
