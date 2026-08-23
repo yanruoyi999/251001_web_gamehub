@@ -52,6 +52,9 @@ const DEAD_FLASH_SOURCE_PATHS = new Set<string>([
 // generating a plausible-looking but wrong game record.
 export const QUARANTINED_SOURCE_PATHS = new Set<string>([
   '4399/blumgi-slime.html',
+  '4399/fancy-pants-adventure-world-2.html',
+  '4399/truck-loader.html',
+  '4399/truck-loader-5.html',
 ]);
 
 export async function readTsv(filePath: string): Promise<RawRow[]> {
