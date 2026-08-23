@@ -95,6 +95,8 @@ test.describe('Luma Snake 3D', () => {
       type: 'snake-performance',
       description: `play_to_ready_ms=${readyMs}; raf_fps=${rafFps.toFixed(1)}`,
     });
+    // eslint-disable-next-line no-console
+    console.info(`[snake-performance] play_to_ready_ms=${readyMs} raf_fps=${rafFps.toFixed(1)}`);
   });
 
   test('persists the local mute preference without loading an audio asset', async ({ page }) => {
