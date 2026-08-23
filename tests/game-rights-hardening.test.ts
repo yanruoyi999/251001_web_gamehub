@@ -10,8 +10,10 @@ import {
 } from '@/lib/games/quality-policy';
 import { getMockGameBySlug } from '@/lib/mock-games';
 import { buildAuditRows, buildDecisionRows } from '@/scripts/audit-game-quality';
+import { buildGames, readTsv } from '@/scripts/import-4399-games';
 
-const read = (file: string) => readFileSync(path.join(process.cwd(), file), 'utf8');
+const read = (file: string) =>
+  readFileSync(path.join(process.cwd(), file), 'utf8');
 
 describe('game rights hardening regressions', () => {
   it('fails closed unless embed permission is explicitly verified', () => {
@@ -19,25 +21,24 @@ describe('game rights hardening regressions', () => {
       slug: 'google-snake',
       embedPermissionStatus: 'verified' as const,
     };
-    const unknown = {
-      slug: 'google-snake',
-      embedPermissionStatus: 'unknown' as const,
-    };
-    const missing = {
-      slug: 'google-snake',
-      embedPermissionStatus: null,
-    };
+    const unverified = [
+      { slug: 'google-snake', embedPermissionStatus: 'unknown' as const },
+      { slug: 'google-snake', embedPermissionStatus: 'link-only' as const },
+      { slug: 'google-snake', embedPermissionStatus: 'blocked' as const },
+      { slug: 'google-snake', embedPermissionStatus: 'expired' as const },
+      { slug: 'google-snake', embedPermissionStatus: null },
+    ];
 
     expect(canRenderGameIframe(verified)).toBe(true);
     expect(shouldIncludeGameInSitemap(verified)).toBe(true);
     expect(shouldPromoteGameInCollections(verified)).toBe(true);
     expect(shouldNoIndexGame(verified)).toBe(false);
 
-    for (const unverified of [unknown, missing]) {
-      expect(canRenderGameIframe(unverified)).toBe(false);
-      expect(shouldIncludeGameInSitemap(unverified)).toBe(false);
-      expect(shouldPromoteGameInCollections(unverified)).toBe(false);
-      expect(shouldNoIndexGame(unverified)).toBe(true);
+    for (const entry of unverified) {
+      expect(canRenderGameIframe(entry)).toBe(false);
+      expect(shouldIncludeGameInSitemap(entry)).toBe(false);
+      expect(shouldPromoteGameInCollections(entry)).toBe(false);
+      expect(shouldNoIndexGame(entry)).toBe(true);
     }
 
     // A slug allowlist is not evidence of commercial/embed permission.
@@ -59,14 +60,42 @@ describe('game rights hardening regressions', () => {
     const game = getMockGameBySlug('adam-and-eve-5-part-1');
 
     expect(game).toBeDefined();
-    expect(game?.categories.map((category) => category.slug)).not.toContain('racing');
+    expect(game?.categories.map((category) => category.slug)).not.toContain(
+      'racing',
+    );
   });
 
-  it('keeps the known bad blumgi-slime source row from regenerating Monkey Mart', () => {
-    const lines = read('game_iframes.tsv').split(/\r?\n/);
-    const badRow = lines.find((line) => line.startsWith('4399/blumgi-slime.html\t'));
+  it('replays the full TSV without known identity mismatches or duplicate slugs', async () => {
+    const rows = await readTsv(path.join(process.cwd(), 'game_iframes.tsv'));
+    const quarantinedPaths = [
+      '4399/blumgi-slime.html',
+      '4399/fancy-pants-adventure-world-2.html',
+      '4399/truck-loader.html',
+      '4399/truck-loader-5.html',
+    ];
 
-    expect(badRow).not.toMatch(/\tMonkey Mart(?:\s+-|\t)/i);
+    for (const sourcePath of quarantinedPaths) {
+      expect(rows.some((row) => row.sourcePath === sourcePath)).toBe(false);
+    }
+
+    const games = buildGames(rows);
+    expect(new Set(games.map((game) => game.slug)).size).toBe(games.length);
+
+    const monkeyMart = games.find((game) => game.slug === 'monkey-mart');
+    expect(monkeyMart?.sourcePath).toBe('4399/monkey-mart.html');
+    expect(monkeyMart?.iframeUrl).toContain(
+      '/ftp41/gamehwq/20221216/09/index.htm',
+    );
+  });
+
+  it('keeps the quarantined source records commented in the raw TSV', () => {
+    const raw = read('game_iframes.tsv');
+
+    expect(raw).toContain(
+      '# QUARANTINED identity mismatch: 4399/blumgi-slime.html',
+    );
+    expect(raw).not.toMatch(/^4399\/blumgi-slime\.html\t/m);
+    expect(raw).not.toMatch(/^4399\/truck-loader(?:-5)?\.html\t/m);
   });
 
   it('keeps remote catalogue rights metadata in the database schema', () => {
@@ -87,6 +116,16 @@ describe('game rights hardening regressions', () => {
     ]) {
       expect(schema).toContain(field);
     }
+  });
+
+  it('uses verified rights for remote sitemap and public API discovery', () => {
+    const sitemap = read('app/sitemap.ts');
+    const api = read('app/api/games/route.ts');
+
+    expect(sitemap).toContain("eq(games.embedPermissionStatus, 'verified')");
+    expect(api).toContain(
+      "embedPermissionStatus: isAdmin ? undefined : 'verified'",
+    );
   });
 
   it('reports iframe-shell rendering separately from real external loading', () => {
