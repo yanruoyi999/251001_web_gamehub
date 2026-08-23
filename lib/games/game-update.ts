@@ -1,7 +1,27 @@
 import { isValidHttpsUrl, isValidUrl } from '@/lib/utils/validation';
 import { isValidSlug } from '@/lib/utils/slug';
+import type { EmbedPermissionStatus } from '@/lib/games/quality-policy';
 
 const GAME_STATUSES = new Set(['active', 'inactive', 'pending']);
+const EMBED_PERMISSION_STATUSES = new Set<EmbedPermissionStatus>([
+  'verified',
+  'link-only',
+  'unknown',
+  'blocked',
+  'expired',
+]);
+const MEDIA_PERMISSION_STATUSES = new Set([
+  'verified',
+  'unknown',
+  'blocked',
+  'expired',
+] as const);
+
+export type MediaPermissionStatus =
+  | 'verified'
+  | 'unknown'
+  | 'blocked'
+  | 'expired';
 
 export interface UpdateGameInput {
   title?: string;
@@ -20,6 +40,19 @@ export interface UpdateGameInput {
   developerName?: string | null;
   developerUrl?: string | null;
   sourceUrl?: string | null;
+  originalDeveloper?: string | null;
+  rightsHolder?: string | null;
+  officialGameUrl?: string | null;
+  distributionProvider?: string | null;
+  licenseType?: string | null;
+  licenseUrl?: string | null;
+  commercialUseAllowed?: boolean | null;
+  embedPermissionStatus?: EmbedPermissionStatus;
+  adsAllowed?: boolean | null;
+  screenshotPermission?: MediaPermissionStatus;
+  thumbnailPermission?: MediaPermissionStatus;
+  verificationEvidence?: string | null;
+  rightsVerifiedAt?: Date | null;
   categoryIds?: number[];
   tagIds?: number[];
 }
@@ -42,7 +75,7 @@ function hasOwn(record: Record<string, unknown>, key: string) {
 function normalizeRequiredString(
   value: unknown,
   field: string,
-  maxLength?: number
+  maxLength?: number,
 ) {
   if (typeof value !== 'string' || !value.trim()) {
     throw new Error(`${field} must be a non-empty string`);
@@ -58,7 +91,7 @@ function normalizeRequiredString(
 function normalizeNullableString(
   value: unknown,
   field: string,
-  maxLength?: number
+  maxLength?: number,
 ) {
   if (value === null) return null;
   if (typeof value !== 'string') {
@@ -78,8 +111,8 @@ function normalizeRelationIds(value: unknown, field: string) {
     throw new Error(`${field} must be an array`);
   }
 
-  const ids = value.map(item => Number(item));
-  if (ids.some(id => !Number.isInteger(id) || id <= 0)) {
+  const ids = value.map((item) => Number(item));
+  if (ids.some((id) => !Number.isInteger(id) || id <= 0)) {
     throw new Error(`${field} must contain only positive integer IDs`);
   }
 
@@ -92,8 +125,27 @@ function isSafeAssetUrl(value: string) {
   );
 }
 
+function normalizeNullableBoolean(value: unknown, field: string) {
+  if (value === null) return null;
+  if (typeof value !== 'boolean') {
+    throw new Error(`${field} must be a boolean or null`);
+  }
+  return value;
+}
+
+function normalizeHttpsField(
+  record: Record<string, unknown>,
+  field: string,
+) {
+  const url = normalizeNullableString(record[field], field, 500);
+  if (url && !isValidHttpsUrl(url)) {
+    throw new Error(`${field} must be a valid HTTPS link`);
+  }
+  return url;
+}
+
 export function normalizeGameUpdateInput(
-  input: unknown
+  input: unknown,
 ): NormalizedGameUpdateInput {
   if (!input || typeof input !== 'object' || Array.isArray(input)) {
     throw new Error('Game update payload must be an object');
@@ -117,7 +169,7 @@ export function normalizeGameUpdateInput(
       scalarUpdates[field] = normalizeNullableString(
         record[field],
         field,
-        field === 'titleEn' ? 255 : undefined
+        field === 'titleEn' ? 255 : undefined,
       );
     }
   }
@@ -126,7 +178,7 @@ export function normalizeGameUpdateInput(
     const slug = normalizeRequiredString(
       record.slug,
       'slug',
-      255
+      255,
     ).toLowerCase();
     if (!isValidSlug(slug)) {
       throw new Error('Invalid slug format');
@@ -138,7 +190,7 @@ export function normalizeGameUpdateInput(
     const iframeUrl = normalizeRequiredString(
       record.iframeUrl,
       'iframeUrl',
-      500
+      500,
     );
     if (!isValidUrl(iframeUrl)) {
       throw new Error('Invalid iframe URL');
@@ -150,7 +202,7 @@ export function normalizeGameUpdateInput(
     const thumbnailUrl = normalizeNullableString(
       record.thumbnailUrl,
       'thumbnailUrl',
-      500
+      500,
     );
     if (thumbnailUrl && !isSafeAssetUrl(thumbnailUrl)) {
       throw new Error('Invalid thumbnail URL');
@@ -162,18 +214,100 @@ export function normalizeGameUpdateInput(
     scalarUpdates.developerName = normalizeNullableString(
       record.developerName,
       'developerName',
-      255
+      255,
     );
   }
 
   for (const field of ['developerUrl', 'sourceUrl'] as const) {
     if (hasOwn(record, field)) {
-      const url = normalizeNullableString(record[field], field, 500);
-      if (url && !isValidHttpsUrl(url)) {
-        throw new Error(`${field} must be a valid HTTPS link`);
-      }
-      scalarUpdates[field] = url;
+      scalarUpdates[field] = normalizeHttpsField(record, field);
     }
+  }
+
+  for (const field of [
+    'originalDeveloper',
+    'rightsHolder',
+    'distributionProvider',
+  ] as const) {
+    if (hasOwn(record, field)) {
+      scalarUpdates[field] = normalizeNullableString(
+        record[field],
+        field,
+        255,
+      );
+    }
+  }
+
+  if (hasOwn(record, 'licenseType')) {
+    scalarUpdates.licenseType = normalizeNullableString(
+      record.licenseType,
+      'licenseType',
+      100,
+    );
+  }
+
+  for (const field of ['officialGameUrl', 'licenseUrl'] as const) {
+    if (hasOwn(record, field)) {
+      scalarUpdates[field] = normalizeHttpsField(record, field);
+    }
+  }
+
+  for (const field of ['commercialUseAllowed', 'adsAllowed'] as const) {
+    if (hasOwn(record, field)) {
+      scalarUpdates[field] = normalizeNullableBoolean(record[field], field);
+    }
+  }
+
+  if (hasOwn(record, 'embedPermissionStatus')) {
+    if (
+      typeof record.embedPermissionStatus !== 'string' ||
+      !EMBED_PERMISSION_STATUSES.has(
+        record.embedPermissionStatus as EmbedPermissionStatus,
+      )
+    ) {
+      throw new Error('Invalid embed permission status');
+    }
+    scalarUpdates.embedPermissionStatus =
+      record.embedPermissionStatus as EmbedPermissionStatus;
+  }
+
+  for (const field of [
+    'screenshotPermission',
+    'thumbnailPermission',
+  ] as const) {
+    if (hasOwn(record, field)) {
+      if (
+        typeof record[field] !== 'string' ||
+        !MEDIA_PERMISSION_STATUSES.has(
+          record[field] as MediaPermissionStatus,
+        )
+      ) {
+        throw new Error(`Invalid ${field}`);
+      }
+      scalarUpdates[field] = record[field] as MediaPermissionStatus;
+    }
+  }
+
+  if (hasOwn(record, 'verificationEvidence')) {
+    scalarUpdates.verificationEvidence = normalizeNullableString(
+      record.verificationEvidence,
+      'verificationEvidence',
+    );
+  }
+
+  if (scalarUpdates.embedPermissionStatus === 'verified') {
+    const evidence = scalarUpdates.verificationEvidence;
+    if (!evidence) {
+      throw new Error(
+        'verificationEvidence is required when embedPermissionStatus is verified',
+      );
+    }
+    scalarUpdates.rightsVerifiedAt = new Date();
+  } else if (
+    scalarUpdates.embedPermissionStatus &&
+    scalarUpdates.embedPermissionStatus !== 'verified'
+  ) {
+    scalarUpdates.rightsVerifiedAt = null;
   }
 
   for (const field of ['featured', 'isNew', 'isHot'] as const) {
