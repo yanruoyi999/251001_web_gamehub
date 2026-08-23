@@ -15,6 +15,7 @@ import { getJson, setJson, delKey } from '@/lib/utils/redis-helper';
 import { getRedisClient } from '@/lib/redis';
 import { isValidId, validatePagination, isValidUrl, isValidHttpsUrl } from '@/lib/utils/validation';
 import { isNextProductionBuild } from '@/lib/utils/build-phase';
+import type { EmbedPermissionStatus } from '@/lib/games/quality-policy';
 import {
   normalizeGameUpdateInput,
   type UpdateGameInput,
@@ -39,6 +40,7 @@ export interface ListGamesOptions {
   page?: number;
   limit?: number;
   status?: 'active' | 'inactive' | 'pending' | 'all';
+  embedPermissionStatus?: EmbedPermissionStatus;
   categoryId?: number;
   tagId?: number;
   search?: string;
@@ -200,6 +202,10 @@ export class GameService {
       filters.push(eq(games.status, status));
     }
 
+    if (options.embedPermissionStatus) {
+      filters.push(eq(games.embedPermissionStatus, options.embedPermissionStatus));
+    }
+
     if (typeof options.featured === 'boolean') {
       filters.push(eq(games.featured, options.featured));
     }
@@ -220,6 +226,7 @@ export class GameService {
       page,
       limit,
       status,
+      embedPermissionStatus: options.embedPermissionStatus ?? null,
       categoryId: options.categoryId ?? null,
       tagId: options.tagId ?? null,
       search: options.search?.trim() || null,
