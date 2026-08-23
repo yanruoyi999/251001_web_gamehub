@@ -98,6 +98,21 @@ export interface CreateGameInput {
   tagIds?: number[];
 }
 
+function buildGameDetail(record: any): GameDetail {
+  return {
+    ...record,
+    // Embedding permission and media permission are independent. Do not expose
+    // a thumbnail or captured screenshot just because the game itself is verified.
+    thumbnailUrl:
+      record.thumbnailPermission === 'verified' ? record.thumbnailUrl : null,
+    stats: record.gameStats ?? null,
+    categories: record.gameCategories.map((item: any) => item.category),
+    tags: record.gameTags.map((item: any) => item.tag),
+    screenshots:
+      record.screenshotPermission === 'verified' ? record.screenshots : [],
+  } as GameDetail;
+}
+
 export class GameService {
   /**
    * 获取游戏详情
@@ -128,13 +143,7 @@ export class GameService {
 
     if (!record) return null;
 
-    const detail: GameDetail = {
-      ...record,
-      stats: record.gameStats ?? null,
-      categories: record.gameCategories.map((item) => item.category),
-      tags: record.gameTags.map((item) => item.tag),
-      screenshots: record.screenshots,
-    };
+    const detail = buildGameDetail(record);
 
     if (useCache) {
       await setJson(getRedisClient(), GameCacheKeys.byId(gameId), detail, CacheTTL.GAME_DETAILS);
@@ -169,13 +178,7 @@ export class GameService {
 
     if (!record) return null;
 
-    const detail: GameDetail = {
-      ...record,
-      stats: record.gameStats ?? null,
-      categories: record.gameCategories.map((item) => item.category),
-      tags: record.gameTags.map((item) => item.tag),
-      screenshots: record.screenshots,
-    };
+    const detail = buildGameDetail(record);
 
     if (useCache) {
       await setJson(getRedisClient(), GameCacheKeys.bySlug(slug), detail, CacheTTL.GAME_DETAILS);
