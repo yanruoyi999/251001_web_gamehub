@@ -42,10 +42,13 @@ export interface SearchResult {
 }
 
 const DEFAULT_SEARCH_BACKEND_TIMEOUT_MS = 2500;
+const PUBLIC_SEARCH_RIGHTS_POLICY = 'verified-v1';
 
 function searchBackendTimeoutMs() {
   const parsed = Number(process.env.SEARCH_BACKEND_TIMEOUT_MS);
-  return Number.isInteger(parsed) && parsed > 0 ? parsed : DEFAULT_SEARCH_BACKEND_TIMEOUT_MS;
+  return Number.isInteger(parsed) && parsed > 0
+    ? parsed
+    : DEFAULT_SEARCH_BACKEND_TIMEOUT_MS;
 }
 
 function withSearchTimeout<T>(promise: Promise<T>, label: string): Promise<T> {
@@ -83,8 +86,15 @@ export class SearchService {
       return { games: [], total: 0, page: 1, limit, source: 'empty' };
     }
 
-    const { page, limit, offset } = validatePagination(options.page, options.limit);
-    const cacheKey = SearchCacheKeys.results(query, { page, limit });
+    const { page, limit, offset } = validatePagination(
+      options.page,
+      options.limit,
+    );
+    const cacheKey = SearchCacheKeys.results(query, {
+      page,
+      limit,
+      rightsPolicy: 'verified-v1',
+    });
 
     const cached = await getJson<SearchResult>(redis, cacheKey);
     if (cached) {
@@ -101,13 +111,22 @@ export class SearchService {
           index.search(query, {
             limit,
             offset,
-            filter: ['status = "active"'],
+            filter: [
+              'isActive = true',
+              'embedPermissionStatus = "verified"',
+            ],
           }),
           'Meilisearch lookup',
         );
 
         const normalizedHits = result.hits
           .map((hit): SearchGameItem | null => {
+            // Keep a second application-side check even when the index filter is
+            // configured. Old or partially rebuilt indexes must fail closed.
+            if (hit.embedPermissionStatus !== 'verified') {
+              return null;
+            }
+
             const id = Number(hit.id ?? hit.gameId ?? hit.objectID);
             const title = toOptionalString(hit.title);
             const slug = toOptionalString(hit.slug);
@@ -120,8 +139,11 @@ export class SearchService {
               title,
               titleEn: toOptionalString(hit.titleEn ?? hit.title_en),
               slug,
-              status: toOptionalString(hit.status) ?? 'active',
-              thumbnailUrl: toOptionalString(hit.thumbnailUrl),
+              status: 'active',
+              thumbnailUrl:
+                hit.thumbnailPermission === 'verified'
+                  ? toOptionalString(hit.thumbnailUrl)
+                  : null,
               isNew: toOptionalBoolean(hit.isNew),
               isHot: toOptionalBoolean(hit.isHot),
               playCount: toOptionalNumber(hit.playCount),
@@ -136,7 +158,7 @@ export class SearchService {
 
         const payload: SearchResult = {
           games: normalizedHits,
-          total: result.estimatedTotalHits ?? 0,
+          total: result.estimatedTotalHits ?? normalizedHits.length,
           page,
           limit,
           source: 'meilisearch',
@@ -207,6 +229,7 @@ export class SearchService {
         slug: games.slug,
         status: games.status,
         thumbnailUrl: games.thumbnailUrl,
+        thumbnailPermission: games.thumbnailPermission,
         isNew: games.isNew,
         isHot: games.isHot,
         playCount: gameStats.playCount,
@@ -215,7 +238,13 @@ export class SearchService {
       })
       .from(games)
       .leftJoin(gameStats, eq(games.id, gameStats.gameId))
-      .where(and(eq(games.status, 'active'), whereClause))
+      .where(
+        and(
+          eq(games.status, 'active'),
+          eq(games.embedPermissionStatus, 'verified'),
+          whereClause,
+        ),
+      )
       .orderBy(desc(gameStats.playCount))
       .limit(options.limit)
       .offset(options.offset);
@@ -223,10 +252,20 @@ export class SearchService {
     const [{ count }] = await db
       .select({ count: sql<number>`COUNT(*)` })
       .from(games)
-      .where(and(eq(games.status, 'active'), whereClause));
+      .where(
+        and(
+          eq(games.status, 'active'),
+          eq(games.embedPermissionStatus, 'verified'),
+          whereClause,
+        ),
+      );
 
     return {
-      games: results,
+      games: results.map(({ thumbnailPermission, ...game }) => ({
+        ...game,
+        thumbnailUrl:
+          thumbnailPermission === 'verified' ? game.thumbnailUrl : null,
+      })),
       total: Number(count || 0),
       page: options.page,
       limit: options.limit,
