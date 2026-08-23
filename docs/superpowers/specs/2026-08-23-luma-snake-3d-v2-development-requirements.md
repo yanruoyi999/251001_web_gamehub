@@ -193,6 +193,15 @@ Three.js 为第三方 MIT 技术库，不等于游戏内容来源。
 - 中端移动设备 Play -> Ready：目标 < 1500ms
 - 未 Play 时不初始化完整 3D 场景
 
+### CI 性能采样口径
+
+GitHub Actions 的 Linux headless 浏览器尤其是 WebKit/iPhone 仿真可能使用软件渲染，FPS 不代表真实桌面或手机 GPU 性能，因此：
+
+- 所有 Playwright 浏览器都记录 `Play -> Ready` 与 rAF FPS 样本，作为回归诊断数据。
+- CI 只对稳定的 Desktop Chromium 样本设置 `>20 FPS` 的最低烟雾门槛，用于发现严重渲染阻塞；其他浏览器只要求 rAF 能持续推进、WebGL context 未丢失。
+- `55–60 FPS` 仍是正常真实设备目标，不能用 GitHub Actions headless 样本冒充真实设备达标证明。
+- Play -> Ready 的真实设备目标同样需要在实际设备或等价浏览器环境复验；CI 中统一保留宽松 `<5000ms` 回归门槛防止明显加载退化。
+
 ## 8. 验收门禁
 
 合并前至少运行：
