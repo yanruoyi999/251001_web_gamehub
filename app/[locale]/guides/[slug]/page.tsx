@@ -204,14 +204,14 @@ export default async function GuidePage({ params }: GuidePageProps) {
   };
   const structuredData = [jsonLdArticle, jsonLdFaq, jsonLdBreadcrumb];
   const relatedPages = getRelatedPages(page, locale);
-  const playGame = page.playSlug ? gameIndex.get(page.playSlug) : undefined;
+  const playGame = page.embedGame?.playSlug
+    ? gameIndex.get(page.embedGame.playSlug)
+    : undefined;
   const canonicalPlayHref =
     playGame && shouldPromoteGameInCollections(playGame)
       ? getLocalizedPath(locale, `/games/${playGame.slug}`)
       : null;
-  const embedPolicyGame = page.embedGame?.playSlug
-    ? gameIndex.get(page.embedGame.playSlug)
-    : undefined;
+  const embedPolicyGame = playGame;
   const embedGameAllowed = Boolean(
     page.embedGame && embedPolicyGame && canRenderGameIframe(embedPolicyGame)
   );
@@ -446,9 +446,6 @@ export default async function GuidePage({ params }: GuidePageProps) {
       {detailSections.length > 0 ? (
         <section id="guide-details" className="mt-10 max-w-3xl space-y-8">
           {detailSections.map((section, index) => {
-            const paragraphs = Array.isArray(section.paragraphs)
-              ? section.paragraphs
-              : [];
             const bullets = Array.isArray(section.bullets)
               ? section.bullets
               : [];
@@ -462,11 +459,9 @@ export default async function GuidePage({ params }: GuidePageProps) {
                 <h2 className="text-2xl font-semibold text-foreground">
                   {section.title}
                 </h2>
-                <div className="mt-3 space-y-3 text-base leading-relaxed text-foreground/90">
-                  {paragraphs.map((paragraph, paragraphIndex) => (
-                    <p key={`${sectionKey}-p-${paragraphIndex}`}>{paragraph}</p>
-                  ))}
-                </div>
+                <p className="mt-3 text-base leading-relaxed text-foreground/90">
+                  {section.body}
+                </p>
                 {bullets.length > 0 ? (
                   <ul className="mt-4 space-y-2 text-sm leading-relaxed text-foreground/85 sm:text-base">
                     {bullets.map((bullet, bulletIndex) => (
@@ -550,29 +545,36 @@ export default async function GuidePage({ params }: GuidePageProps) {
 
             return (
               <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-                {visibleRecommendations.map(({ recommendation, game }) => (
-                  <Link
-                    key={recommendation.slug}
-                    href={getLocalizedPath(locale, `/games/${game.slug}`)}
-                    className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                  >
-                    <div className="relative aspect-[4/3] overflow-hidden bg-muted">
-                      <Image
-                        src={LUMA_GUIDE_IMAGE}
-                        alt={recommendation.title}
-                        fill
-                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                        className="object-cover transition-transform group-hover:scale-[1.02]"
-                      />
-                    </div>
-                    <h3 className="mt-2 font-semibold text-foreground transition group-hover:text-primary">
-                      {recommendation.title}
-                    </h3>
-                    <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                      {recommendation.description}
-                    </p>
-                  </Link>
-                ))}
+                {visibleRecommendations.map(({ recommendation, game }) => {
+                  const gameTitle =
+                    locale === 'zh'
+                      ? game.title
+                      : game.titleEn || game.title;
+
+                  return (
+                    <Link
+                      key={recommendation.slug}
+                      href={getLocalizedPath(locale, `/games/${game.slug}`)}
+                      className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                    >
+                      <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+                        <Image
+                          src={LUMA_GUIDE_IMAGE}
+                          alt={gameTitle}
+                          fill
+                          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                          className="object-cover transition-transform group-hover:scale-[1.02]"
+                        />
+                      </div>
+                      <h3 className="mt-2 font-semibold text-foreground transition group-hover:text-primary">
+                        {gameTitle}
+                      </h3>
+                      <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                        {recommendation.pitch}
+                      </p>
+                    </Link>
+                  );
+                })}
               </div>
             );
           })()}
