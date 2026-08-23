@@ -78,4 +78,23 @@ test.describe('Luma Snake 3D', () => {
     expect(canvasState.height).toBeGreaterThan(0);
     expect(canvasState.pixel.some((value) => value > 0)).toBe(true);
   });
+
+  test('buffers only one valid direction change before the next game tick', async ({ page }) => {
+    await page.goto('/en/games/snake-3d', { waitUntil: 'networkidle' });
+    await page.locator('[data-snake-play="true"]').click();
+
+    const stage = page.locator('[data-snake-stage]');
+    await expect(stage).toHaveAttribute('data-snake-phase', 'playing', {
+      timeout: 30_000,
+    });
+
+    // Initial direction is right. The old implementation applied both inputs
+    // immediately, making the effective direction left before the first tick
+    // and colliding with the snake body.
+    await page.keyboard.press('ArrowUp');
+    await page.keyboard.press('ArrowLeft');
+    await page.waitForTimeout(260);
+
+    await expect(stage).toHaveAttribute('data-snake-phase', 'playing');
+  });
 });
