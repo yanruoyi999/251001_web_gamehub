@@ -47,6 +47,22 @@ function inheritedNavigationCredit(relativePath: string): number {
   return 0;
 }
 
+function guideTemplateNavigationCredit() {
+  const pageSource = readFileSync(
+    path.join(process.cwd(), 'app/[locale]/guides/[slug]/page.tsx'),
+    'utf8',
+  );
+  const layoutSource = readFileSync(
+    path.join(process.cwd(), 'app/[locale]/guides/[slug]/layout.tsx'),
+    'utf8',
+  );
+
+  let count = 0;
+  if (pageSource.includes("getLocalizedPath(locale, '/guides')")) count += 1;
+  if (layoutSource.includes("getLocalizedPath(locale, '/games')")) count += 1;
+  return count;
+}
+
 export function collectGuideInternalLinkErrors(
   guides = getSeoLandingPages(),
   games = mockGames,
@@ -55,6 +71,7 @@ export function collectGuideInternalLinkErrors(
   const guideSlugs = new Set(guides.map((guide) => guide.slug));
   const gameSlugs = new Set(games.map((game) => game.slug));
   const gamesBySlug = new Map(games.map((game) => [game.slug, game]));
+  const templateNavigationCount = guideTemplateNavigationCredit();
 
   for (const guide of guides) {
     let renderedRecommendationCount = 0;
@@ -99,6 +116,7 @@ export function collectGuideInternalLinkErrors(
     }
 
     const internalLinkCount =
+      templateNavigationCount +
       guide.relatedSlugs.length +
       renderedRecommendationCount +
       renderedEmbedCount;
