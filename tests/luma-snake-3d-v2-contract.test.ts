@@ -2,10 +2,8 @@ import { readFile } from 'node:fs/promises';
 
 import { describe, expect, it } from 'vitest';
 
-import {
-  getSnakeFeedbackTone,
-  getSnakeScoreMilestone,
-} from '@/lib/games/luma-snake-feedback';
+import { getSnakeFeedbackTone } from '@/lib/games/luma-snake-feedback';
+import { getSnakeScoreMilestone } from '@/lib/games/luma-snake-3d';
 
 const snakeComponentSource = await readFile(
   new URL('../components/game/luma-snake-3d-game.tsx', import.meta.url),
@@ -33,13 +31,13 @@ describe('Luma Snake 3D V2 feedback contract', () => {
     expect(getSnakeFeedbackTone('game-over').durationMs).toBeLessThanOrEqual(220);
   });
 
-  it('only emits meaningful score milestones instead of one analytics event per food', () => {
-    expect(getSnakeScoreMilestone(4, 5)).toBe(5);
-    expect(getSnakeScoreMilestone(9, 10)).toBe(10);
-    expect(getSnakeScoreMilestone(19, 20)).toBe(20);
-    expect(getSnakeScoreMilestone(29, 30)).toBe(30);
-    expect(getSnakeScoreMilestone(30, 31)).toBeNull();
-    expect(getSnakeScoreMilestone(4, 6)).toBe(5);
+  it('only emits deliberate score milestones instead of one analytics event per food', () => {
+    expect(getSnakeScoreMilestone(4)).toBeNull();
+    expect(getSnakeScoreMilestone(5)).toBe(5);
+    expect(getSnakeScoreMilestone(6)).toBeNull();
+    expect(getSnakeScoreMilestone(10)).toBe(10);
+    expect(getSnakeScoreMilestone(20)).toBe(20);
+    expect(getSnakeScoreMilestone(30)).toBe(30);
   });
 
   it('keeps sound local, user-controlled and motion-aware', () => {
