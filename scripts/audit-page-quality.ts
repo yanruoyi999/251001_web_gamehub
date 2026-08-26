@@ -9,6 +9,7 @@ import {
   shouldIndexTagEntry,
 } from '@/lib/game-taxonomy';
 import { getSeoLandingPages, type SeoLandingLocaleContent } from '@/lib/seo-landing-content';
+import { ORIGINAL_EXPERIMENT_PAGE_SUMMARIES } from '@/lib/games/luma-original-experiment-pages';
 import { LUMA_SNAKE_3D_PATH } from '@/lib/games/luma-snake-3d-seo';
 
 type PageType = 'static' | 'guide' | 'game' | 'category' | 'tag' | 'utility';
@@ -212,6 +213,18 @@ function scoreStaticPages(): PageQualityRow[] {
 }
 
 function scoreStandalonePages(): PageQualityRow[] {
+  const experimentRows: PageQualityRow[] = ORIGINAL_EXPERIMENT_PAGE_SUMMARIES.map((page) => ({
+    path: page.path,
+    type: 'game',
+    score: page.qualityScore,
+    indexable: false,
+    action: 'noindex',
+    reason:
+      'Original clean-room experiment has a self-hosted interaction, bilingual instructions, FAQ, structured data, related internal links, and an explicit noindex boundary.',
+    nextStep:
+      'Keep noindex,follow and exclude from sitemap until independent runtime, quality, and business evidence supports a separate indexability decision.',
+  }));
+
   return [
     {
       path: LUMA_SNAKE_3D_PATH,
@@ -224,6 +237,7 @@ function scoreStandalonePages(): PageQualityRow[] {
       nextStep:
         'Keep noindex until desktop/mobile runtime checks, first-death duration evidence, and the 80+ release gate are complete; then add it to the sitemap in a separate indexability change.',
     },
+    ...experimentRows,
   ];
 }
 
