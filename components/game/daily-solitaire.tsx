@@ -15,6 +15,7 @@ import { useEffect, useMemo, useRef, useState, type MouseEvent } from 'react';
 
 import type { Locale } from '@/i18n/config';
 import { trackInteraction } from '@/lib/analytics/events';
+import { useHydrated } from '@/lib/react/use-hydrated';
 import {
   canMoveToFoundation,
   createDailySolitaireDeal,
@@ -159,6 +160,7 @@ function cardTone(card: SolitaireCard) {
 
 export function DailySolitaire({ locale }: DailySolitaireProps) {
   const text = copy[locale];
+  const interactiveReady = useHydrated();
   const [dateKey, setDateKey] = useState(() => getDailySolitaireDateKey());
   const [drawCount, setDrawCount] = useState<1 | 3>(1);
   const [game, setGame] = useState<DailySolitaireGameState>(() =>
@@ -366,6 +368,9 @@ export function DailySolitaire({ locale }: DailySolitaireProps) {
   return (
     <section
       data-daily-solitaire
+      data-interactive-ready={interactiveReady}
+      aria-busy={!interactiveReady}
+      inert={interactiveReady ? undefined : true}
       aria-labelledby="daily-solitaire-game-title"
       className="overflow-hidden rounded-2xl border border-slate-800 bg-slate-950 text-white shadow-xl"
     >
@@ -378,7 +383,8 @@ export function DailySolitaire({ locale }: DailySolitaireProps) {
         <button
           type="button"
           onClick={begin}
-          className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-lg bg-emerald-300 px-4 py-3 font-bold text-slate-950 transition hover:bg-emerald-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-100"
+          disabled={!interactiveReady}
+          className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-lg bg-emerald-300 px-4 py-3 font-bold text-slate-950 transition hover:bg-emerald-200 disabled:cursor-wait disabled:opacity-60 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-100"
         >
           {game.completed ? <RotateCcw aria-hidden="true" className="h-4 w-4" /> : <Play aria-hidden="true" className="h-4 w-4" />}
           {game.completed ? text.replay : text.play}
