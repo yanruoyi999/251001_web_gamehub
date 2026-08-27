@@ -5,6 +5,7 @@ import { useMemo, useState } from 'react';
 
 import type { Locale } from '@/i18n/config';
 import { trackInteraction } from '@/lib/analytics/events';
+import { useHydrated } from '@/lib/react/use-hydrated';
 import {
   evaluateSortingAnswer,
   getSortingChallenge,
@@ -61,6 +62,7 @@ const copy = {
 
 export function SortingLab({ locale }: SortingLabProps) {
   const text = copy[locale];
+  const interactiveReady = useHydrated();
   const [mode, setMode] = useState<SortingMode>('color');
   const [level, setLevel] = useState(1);
   const [started, setStarted] = useState(false);
@@ -114,14 +116,14 @@ export function SortingLab({ locale }: SortingLabProps) {
   };
 
   return (
-    <section data-sorting-lab aria-labelledby="sorting-lab-title" className="overflow-hidden rounded-2xl border border-slate-800 bg-slate-950 text-white shadow-xl">
+    <section data-sorting-lab data-interactive-ready={interactiveReady} aria-busy={!interactiveReady} inert={interactiveReady ? undefined : true} aria-labelledby="sorting-lab-title" className="overflow-hidden rounded-2xl border border-slate-800 bg-slate-950 text-white shadow-xl">
       <header className="flex flex-col gap-5 border-b border-slate-800 p-5 sm:p-7 md:flex-row md:items-end md:justify-between">
         <div className="max-w-2xl">
           <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-amber-300"><Sparkles aria-hidden="true" className="h-4 w-4" />{text.eyebrow}</p>
           <h2 id="sorting-lab-title" className="mt-3 text-2xl font-black sm:text-3xl">{text.title}</h2>
           <p className="mt-3 text-sm leading-6 text-slate-300">{text.description}</p>
         </div>
-        <button type="button" onClick={startMode} className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-lg bg-amber-300 px-4 py-3 font-bold text-slate-950 transition hover:bg-amber-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-100">
+        <button type="button" onClick={startMode} disabled={!interactiveReady} className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-lg bg-amber-300 px-4 py-3 font-bold text-slate-950 transition hover:bg-amber-200 disabled:cursor-wait disabled:opacity-60 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-100">
           {started ? <RotateCcw aria-hidden="true" className="h-4 w-4" /> : <Play aria-hidden="true" className="h-4 w-4" />}
           {started ? text.restart : text.start}
         </button>

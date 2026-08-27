@@ -39,6 +39,10 @@ test.describe('Luma five-page batch', () => {
       await expect(page).toHaveTitle(pageDefinition.title);
       await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
       await expect(page.locator(pageDefinition.surface)).toBeVisible();
+      await expect(page.locator(pageDefinition.surface)).toHaveAttribute(
+        'data-interactive-ready',
+        'true',
+      );
       await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
         'content',
         /noindex.*follow/i,

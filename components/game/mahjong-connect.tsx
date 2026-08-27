@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import type { Locale } from '@/i18n/config';
 import { trackInteraction } from '@/lib/analytics/events';
+import { useHydrated } from '@/lib/react/use-hydrated';
 import {
   canConnectMahjongTiles,
   createMahjongBoard,
@@ -95,6 +96,7 @@ function tileColor(tile: MahjongTile) {
 
 export function MahjongConnect({ locale }: MahjongConnectProps) {
   const text = copy[locale];
+  const interactiveReady = useHydrated();
   const [level, setLevel] = useState(1);
   const [board, setBoard] = useState<MahjongBoard>(() => createMahjongBoard(1));
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -217,14 +219,14 @@ export function MahjongConnect({ locale }: MahjongConnectProps) {
   const completed = isMahjongBoardComplete(board);
 
   return (
-    <section data-mahjong-connect aria-labelledby="mahjong-connect-title" className="overflow-hidden rounded-2xl border border-slate-800 bg-slate-950 text-white shadow-xl">
+    <section data-mahjong-connect data-interactive-ready={interactiveReady} aria-busy={!interactiveReady} inert={interactiveReady ? undefined : true} aria-labelledby="mahjong-connect-title" className="overflow-hidden rounded-2xl border border-slate-800 bg-slate-950 text-white shadow-xl">
       <header className="flex flex-col gap-5 border-b border-slate-800 p-5 sm:p-7 md:flex-row md:items-end md:justify-between">
         <div className="max-w-2xl">
           <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-violet-300"><Sparkles aria-hidden="true" className="h-4 w-4" />{text.eyebrow}</p>
           <h2 id="mahjong-connect-title" className="mt-3 text-2xl font-black sm:text-3xl">{text.title}</h2>
           <p className="mt-3 text-sm leading-6 text-slate-300">{text.description}</p>
         </div>
-        <button type="button" onClick={() => begin(level)} className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-lg bg-violet-300 px-4 py-3 font-bold text-slate-950 transition hover:bg-violet-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-violet-100"><Play aria-hidden="true" className="h-4 w-4" />{started ? text.restart : text.play}</button>
+        <button type="button" onClick={() => begin(level)} disabled={!interactiveReady} className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-lg bg-violet-300 px-4 py-3 font-bold text-slate-950 transition hover:bg-violet-200 disabled:cursor-wait disabled:opacity-60 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-violet-100"><Play aria-hidden="true" className="h-4 w-4" />{started ? text.restart : text.play}</button>
       </header>
 
       <div className="grid grid-cols-2 divide-x divide-slate-800 border-b border-slate-800 bg-slate-900/80 sm:grid-cols-4">

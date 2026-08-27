@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import type { Locale } from '@/i18n/config';
 import { trackInteraction } from '@/lib/analytics/events';
+import { useHydrated } from '@/lib/react/use-hydrated';
 import {
   ASMR_EXPERIENCES,
   getAsmrExperienceCopy,
@@ -57,6 +58,7 @@ function emptyCounts(): Record<AsmrExperienceId, number> {
 
 export function AsmrExperiences({ locale }: AsmrExperiencesProps) {
   const text = copy[locale];
+  const interactiveReady = useHydrated();
   const [activeId, setActiveId] = useState<AsmrExperienceId>('soft-rain');
   const [counts, setCounts] = useState<Record<AsmrExperienceId, number>>(emptyCounts);
   const [soundEnabled, setSoundEnabled] = useState(false);
@@ -139,7 +141,7 @@ export function AsmrExperiences({ locale }: AsmrExperiencesProps) {
   const marks = Array.from({ length: currentCount }, (_, index) => index);
 
   return (
-    <section data-asmr-experiences aria-labelledby="asmr-experiences-title" className="overflow-hidden rounded-2xl border border-slate-800 bg-slate-950 text-white shadow-xl">
+    <section data-asmr-experiences data-interactive-ready={interactiveReady} aria-busy={!interactiveReady} inert={interactiveReady ? undefined : true} aria-labelledby="asmr-experiences-title" className="overflow-hidden rounded-2xl border border-slate-800 bg-slate-950 text-white shadow-xl">
       <header className="flex flex-col gap-5 border-b border-slate-800 p-5 sm:p-7 md:flex-row md:items-end md:justify-between">
         <div className="max-w-2xl">
           <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-cyan-300"><Sparkles aria-hidden="true" className="h-4 w-4" />{text.eyebrow}</p>
@@ -176,7 +178,7 @@ export function AsmrExperiences({ locale }: AsmrExperiencesProps) {
             <button type="button" onClick={resetScene} className="inline-flex min-h-10 items-center gap-2 rounded-lg border border-slate-700 px-3 py-2 text-sm font-bold text-slate-200 transition hover:border-cyan-300 hover:text-cyan-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"><RotateCcw aria-hidden="true" className="h-4 w-4" />{text.reset}</button>
           </div>
 
-          <button type="button" data-asmr-surface onClick={interact} aria-label={currentCopy.instruction} className="relative mt-5 block min-h-72 w-full overflow-hidden rounded-xl border border-cyan-200/20 bg-[radial-gradient(circle_at_50%_30%,rgba(103,232,249,.18),transparent_44%),linear-gradient(145deg,#0f172a,#172554)] transition hover:border-cyan-200/60 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-300 motion-reduce:transition-none">
+          <button type="button" data-asmr-surface onClick={interact} disabled={!interactiveReady} aria-label={currentCopy.instruction} className="relative mt-5 block min-h-72 w-full overflow-hidden rounded-xl border border-cyan-200/20 bg-[radial-gradient(circle_at_50%_30%,rgba(103,232,249,.18),transparent_44%),linear-gradient(145deg,#0f172a,#172554)] transition hover:border-cyan-200/60 disabled:cursor-wait disabled:opacity-80 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-cyan-300 motion-reduce:transition-none">
             {activeId === 'soft-rain' ? marks.map((index) => <span key={index} className="absolute h-3 w-3 rounded-full bg-cyan-200/80 shadow-[0_0_18px_rgba(165,243,252,.75)]" style={{ left: `${10 + ((index * 17) % 80)}%`, top: `${12 + ((index * 23) % 72)}%` }} aria-hidden="true" />) : null}
             {activeId === 'pebble-stack' ? <div className="absolute inset-x-0 bottom-8 flex items-end justify-center"><div className="flex items-end gap-1">{marks.map((index) => <span key={index} className="block h-10 w-10 rounded-full border border-amber-100/40 bg-amber-200/70 shadow-[inset_-5px_-5px_8px_rgba(120,53,15,.22),0_6px_12px_rgba(0,0,0,.2)]" style={{ transform: `translateY(${-(index % 4) * 15}px) rotate(${(index % 3) * 5 - 5}deg)` }} aria-hidden="true" />)}</div></div> : null}
             {activeId === 'line-garden' ? <div className="absolute inset-0">{marks.map((index) => <span key={index} className="absolute block h-1 rounded-full bg-emerald-200/75 shadow-[0_0_14px_rgba(167,243,208,.55)]" style={{ width: `${28 + ((index * 9) % 34)}%`, left: `${8 + ((index * 13) % 55)}%`, top: `${18 + ((index * 19) % 64)}%`, transform: `rotate(${(index % 5) * 9 - 18}deg)` }} aria-hidden="true" />)}</div> : null}
