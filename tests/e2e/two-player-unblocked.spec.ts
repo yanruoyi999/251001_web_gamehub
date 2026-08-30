@@ -24,7 +24,7 @@ test.describe('2 Player Unblocked collection', () => {
     await expect(page.locator('iframe[data-two-player-runtime]')).toHaveCount(1);
   });
 
-  test('classic pong accepts both player key sets during the same interval', async ({ page }) => {
+  test('classic pong accepts both player key sets during the same interval', async ({ page }, testInfo) => {
     await page.goto(COLLECTION_PATH);
     await page.locator('[data-two-player-start]').click();
     await expect(page.getByText('Game loaded. Click the game area, then use the keyboard controls.')).toBeVisible();
@@ -34,21 +34,105 @@ test.describe('2 Player Unblocked collection', () => {
     const paddleOne = frame.locator('#paddle-one');
     const paddleTwo = frame.locator('#paddle-two');
 
+    await page.evaluate(() => {
+      const diagnosticWindow = window as typeof window & {
+        __lumaPongKeyEvents?: Array<Record<string, unknown>>;
+      };
+      diagnosticWindow.__lumaPongKeyEvents = [];
+      const record = (event: KeyboardEvent) => {
+        diagnosticWindow.__lumaPongKeyEvents?.push({
+          type: event.type,
+          key: event.key,
+          code: event.code,
+          repeat: event.repeat,
+          target: event.target instanceof HTMLElement
+            ? `${event.target.tagName.toLowerCase()}#${event.target.id}`
+            : null,
+        });
+      };
+      window.addEventListener('keydown', record, true);
+      window.addEventListener('keyup', record, true);
+    });
+    await frame.locator('html').evaluate(() => {
+      const diagnosticWindow = window as typeof window & {
+        __lumaPongKeyEvents?: Array<Record<string, unknown>>;
+      };
+      diagnosticWindow.__lumaPongKeyEvents = [];
+      const record = (event: KeyboardEvent) => {
+        diagnosticWindow.__lumaPongKeyEvents?.push({
+          type: event.type,
+          key: event.key,
+          code: event.code,
+          repeat: event.repeat,
+          target: event.target instanceof HTMLElement
+            ? `${event.target.tagName.toLowerCase()}#${event.target.id}`
+            : null,
+        });
+      };
+      window.addEventListener('keydown', record, true);
+      window.addEventListener('keyup', record, true);
+    });
+
+    const routingDiagnostics: Array<Record<string, unknown>> = [];
+    const captureRoutingState = async (stage: string) => {
+      const parent = await page.evaluate(() => {
+        const diagnosticWindow = window as typeof window & {
+          __lumaPongKeyEvents?: Array<Record<string, unknown>>;
+        };
+        const active = document.activeElement;
+        return {
+          hasFocus: document.hasFocus(),
+          activeElement: active instanceof HTMLElement
+            ? `${active.tagName.toLowerCase()}#${active.id}`
+            : null,
+          events: diagnosticWindow.__lumaPongKeyEvents ?? [],
+        };
+      });
+      const runtime = await frame.locator('html').evaluate(() => {
+        const diagnosticWindow = window as typeof window & {
+          __lumaPongKeyEvents?: Array<Record<string, unknown>>;
+        };
+        const active = document.activeElement;
+        return {
+          hasFocus: document.hasFocus(),
+          activeElement: active instanceof HTMLElement
+            ? `${active.tagName.toLowerCase()}#${active.id}`
+            : null,
+          events: diagnosticWindow.__lumaPongKeyEvents ?? [],
+          statusHidden: (document.querySelector('#status') as HTMLElement | null)?.hidden ?? null,
+          ballStyle: document.querySelector('#ball')?.getAttribute('style') ?? null,
+          paddleOneStyle: document.querySelector('#paddle-one')?.getAttribute('style') ?? null,
+          paddleTwoStyle: document.querySelector('#paddle-two')?.getAttribute('style') ?? null,
+        };
+      });
+      routingDiagnostics.push({ stage, parent, runtime });
+    };
+
     // Match the real user flow. WebKit only routes subsequent hardware-keyboard
     // input into a sandboxed iframe after a user activation inside that frame.
     await board.click();
+    await captureRoutingState('after-board-click');
     await page.keyboard.press('Enter');
     await expect(paddleOne).toHaveAttribute('style', /top:/);
     await expect(paddleTwo).toHaveAttribute('style', /top:/);
+    await captureRoutingState('after-enter');
 
     const beforeOne = await paddleOne.getAttribute('style');
     const beforeTwo = await paddleTwo.getAttribute('style');
 
     await page.keyboard.down('w');
     await page.keyboard.down('ArrowDown');
+    await captureRoutingState('after-movement-keydown');
     await page.waitForTimeout(250);
+    await captureRoutingState('after-movement-interval');
     await page.keyboard.up('ArrowDown');
     await page.keyboard.up('w');
+    await captureRoutingState('after-movement-keyup');
+
+    await testInfo.attach('pong-keyboard-routing.json', {
+      body: Buffer.from(JSON.stringify(routingDiagnostics, null, 2)),
+      contentType: 'application/json',
+    });
 
     await expect.poll(() => paddleOne.getAttribute('style')).not.toBe(beforeOne);
     await expect.poll(() => paddleTwo.getAttribute('style')).not.toBe(beforeTwo);
