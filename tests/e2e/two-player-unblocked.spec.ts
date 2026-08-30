@@ -1,3 +1,5 @@
+import { writeFile } from 'node:fs/promises';
+
 import { expect, test } from './fixtures';
 
 const COLLECTION_PATH = '/en/games/2-player-unblocked';
@@ -129,8 +131,10 @@ test.describe('2 Player Unblocked collection', () => {
     await page.keyboard.up('w');
     await captureRoutingState('after-movement-keyup');
 
+    const diagnosticsPath = testInfo.outputPath('pong-keyboard-routing.json');
+    await writeFile(diagnosticsPath, `${JSON.stringify(routingDiagnostics, null, 2)}\n`, 'utf8');
     await testInfo.attach('pong-keyboard-routing.json', {
-      body: Buffer.from(JSON.stringify(routingDiagnostics, null, 2)),
+      path: diagnosticsPath,
       contentType: 'application/json',
     });
 
