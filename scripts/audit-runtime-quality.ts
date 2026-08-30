@@ -43,7 +43,7 @@ const DEFAULT_BASE_URL = 'http://localhost:3000';
 const DEFAULT_WRITE_TARGET = 'docs/page-runtime-sampling.md';
 const DEFAULT_FAIL_UNDER = 80;
 
-const DEFAULT_SAMPLES: RuntimeSample[] = [
+export const RUNTIME_QUALITY_DEFAULT_SAMPLES: RuntimeSample[] = [
   { path: '/en', type: 'static' },
   { path: '/en/games', type: 'static' },
   { path: '/en/games/2-player-unblocked', type: 'game', requiresPlayableIframe: true },
@@ -55,6 +55,10 @@ const DEFAULT_SAMPLES: RuntimeSample[] = [
   { path: '/en/guides/telemount-walkthrough', type: 'guide' },
   { path: '/en/games/drive-mad', type: 'game', requiresPlayableIframe: true },
   { path: '/en/games/duo-vikings', type: 'game', requiresPlayableIframe: true },
+  { path: '/en/games/draw-a-perfect-circle', type: 'game' },
+  { path: '/en/games/chinese-checkers', type: 'game' },
+  { path: '/en/games/stacker-game', type: 'game' },
+  { path: '/en/games/two-player-games', type: 'game' },
 ];
 
 function argValue(name: string) {
@@ -322,7 +326,7 @@ async function runCli() {
 
   try {
     const results: RuntimeResult[] = [];
-    for (const sample of DEFAULT_SAMPLES) {
+    for (const sample of RUNTIME_QUALITY_DEFAULT_SAMPLES) {
       console.log(`Sampling ${sample.path}`);
       results.push(await samplePage(browser, baseUrl, sample));
     }

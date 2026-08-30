@@ -38,6 +38,37 @@ const SORT_OPTIONS = [
   'title',
 ] as const;
 
+const GOVERNED_ORIGINAL_EXPERIMENTS = [
+  {
+    slug: 'draw-a-perfect-circle',
+    title: 'Draw a Perfect Circle',
+    titleZh: '画一个完美圆形',
+    description: 'Draw with mouse, pen, or touch and inspect each score component.',
+    descriptionZh: '用鼠标、手写笔或触控绘图，并查看每个评分分量。',
+  },
+  {
+    slug: 'chinese-checkers',
+    title: 'Chinese Checkers',
+    titleZh: '中国跳棋',
+    description: 'Play the two-side 121-hole board locally or against deterministic AI.',
+    descriptionZh: '在 121 孔双人棋盘上本地对弈或挑战确定性 AI。',
+  },
+  {
+    slug: 'stacker-game',
+    title: 'Stacker Game',
+    titleZh: 'Stacker 堆塔',
+    description: 'Drop, trim, and combo blocks in Classic or 60-second Sprint.',
+    descriptionZh: '在经典或 60 秒冲刺中落块、裁切并累积连击。',
+  },
+  {
+    slug: 'two-player-games',
+    title: 'Three Same-Screen Games',
+    titleZh: '三款同屏双人游戏',
+    description: 'Share one device for reaction, strategy, and cooperation.',
+    descriptionZh: '两个人共用一台设备挑战反应、策略与合作。',
+  },
+] as const;
+
 type SortOption = (typeof SORT_OPTIONS)[number];
 type CategoryOption = Awaited<
   ReturnType<typeof CategoryService.listAll>
@@ -601,6 +632,38 @@ export default async function GamesPage({
           </Link>
         ))}
       </nav>
+
+      <section className="mb-5 border-b border-[#dce4df] pb-5 dark:border-border" aria-labelledby="governed-original-experiments">
+        <div className="flex flex-wrap items-end justify-between gap-2">
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-cyan-700 dark:text-cyan-300">
+              {locale === 'zh' ? 'Luma 原创实验室' : 'Luma original labs'}
+            </p>
+            <h2 id="governed-original-experiments" className="mt-1 text-base font-black text-foreground sm:text-lg">
+              {locale === 'zh' ? '四款独立可玩的本地实验' : 'Four independently playable local experiments'}
+            </h2>
+          </div>
+          <p className="max-w-xl text-xs leading-5 text-muted-foreground">
+            {locale === 'zh' ? '这些页面仍处于 noindex 评估阶段，但游戏、规则与权利边界均可直接查看。' : 'These pages remain in noindex evaluation while their gameplay, rules, and rights boundaries are directly inspectable.'}
+          </p>
+        </div>
+        <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+          {GOVERNED_ORIGINAL_EXPERIMENTS.map((experiment) => (
+            <Link
+              key={experiment.slug}
+              href={getLocalizedPath(locale, `/games/${experiment.slug}`)}
+              className="rounded-lg border border-cyan-900/15 bg-cyan-50/70 p-3 transition hover:border-cyan-700/40 hover:bg-cyan-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-600 dark:border-cyan-200/15 dark:bg-cyan-950/20"
+            >
+              <span className="block text-sm font-black text-foreground">
+                {locale === 'zh' ? experiment.titleZh : experiment.title}
+              </span>
+              <span className="mt-1 block text-xs leading-5 text-muted-foreground">
+                {locale === 'zh' ? experiment.descriptionZh : experiment.description}
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
 
       {games.length === 0 ? (
         <div className="rounded-lg border border-dashed border-border bg-card px-6 py-12 text-center text-muted-foreground">

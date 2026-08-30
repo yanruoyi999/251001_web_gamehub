@@ -1,10 +1,15 @@
 import type { Metadata } from 'next';
 
 import { getLocalizedPath, type Locale } from '@/i18n/config';
+import {
+  NEW_EXPERIMENT_PAGE_DEFINITIONS,
+  NEW_EXPERIMENT_PAGE_SUMMARIES,
+  type NewExperimentSlug,
+} from '@/lib/games/luma-original-experiment-pages-20260830';
 import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES, buildAbsoluteUrl } from '@/lib/seo';
 
 export const ORIGINAL_EXPERIMENT_PUBLISHED_AT = '2026-08-26T00:00:00.000Z';
-export const ORIGINAL_EXPERIMENT_UPDATED_AT = '2026-08-26T00:00:00.000Z';
+export const ORIGINAL_EXPERIMENT_UPDATED_AT = '2026-08-30T00:00:00.000Z';
 
 export const ORIGINAL_EXPERIMENT_PAGE_SUMMARIES = [
   {
@@ -42,6 +47,7 @@ export const ORIGINAL_EXPERIMENT_PAGE_SUMMARIES = [
     pageType: 'game',
     qualityScore: 90,
   },
+  ...NEW_EXPERIMENT_PAGE_SUMMARIES,
 ] as const;
 
 export type OriginalExperimentSlug = (typeof ORIGINAL_EXPERIMENT_PAGE_SUMMARIES)[number]['slug'];
@@ -86,6 +92,8 @@ export interface OriginalExperimentPageDefinition {
   keyword: string;
   pageType: string;
   qualityScore: number;
+  playMode?: 'SinglePlayer' | 'MultiPlayer' | Array<'SinglePlayer' | 'MultiPlayer'>;
+  collectionItems?: Array<{ name: string; anchor: string }>;
   locales: Record<Locale, OriginalExperimentLocaleCopy>;
 }
 
@@ -926,6 +934,61 @@ const pageDefinitions: Record<OriginalExperimentSlug, OriginalExperimentPageDefi
       },
     },
   },
+  ...(NEW_EXPERIMENT_PAGE_DEFINITIONS as unknown as Record<
+    NewExperimentSlug,
+    OriginalExperimentPageDefinition
+  >),
+};
+
+const contextualInboundLinks: Partial<
+  Record<OriginalExperimentSlug, Record<Locale, OriginalExperimentRelatedLink[]>>
+> = {
+  'daily-solitaire': {
+    en: [
+      { href: '/games/chinese-checkers', title: 'Chinese Checkers', description: 'Move from cards to a local board strategy challenge.' },
+      { href: '/games/two-player-games', title: 'Two Player Games', description: 'Share one screen for three short original games.' },
+    ],
+    zh: [
+      { href: '/games/chinese-checkers', title: '中国跳棋', description: '从纸牌切换到本地棋盘策略挑战。' },
+      { href: '/games/two-player-games', title: '双人游戏', description: '两人共享屏幕玩三款原创短局。' },
+    ],
+  },
+  'connect-the-dots': {
+    en: [
+      { href: '/games/draw-a-perfect-circle', title: 'Draw a Perfect Circle', description: 'Test a continuous mouse, pen or touch stroke.' },
+      { href: '/games/two-player-games', title: 'Two Player Games', description: 'Turn precision into a same-device duel.' },
+    ],
+    zh: [
+      { href: '/games/draw-a-perfect-circle', title: '画一个完美圆形', description: '测试鼠标、手写笔或触控的一笔轨迹。' },
+      { href: '/games/two-player-games', title: '双人游戏', description: '把准确度练习切换为同设备对战。' },
+    ],
+  },
+  'sorting-games': {
+    en: [
+      { href: '/games/draw-a-perfect-circle', title: 'Draw a Perfect Circle', description: 'Swap sorting for a transparent geometry score.' },
+      { href: '/games/stacker-game', title: 'Stacker Game', description: 'Test timing with an original one-button tower.' },
+    ],
+    zh: [
+      { href: '/games/draw-a-perfect-circle', title: '画一个完美圆形', description: '从排序切换到透明几何评分。' },
+      { href: '/games/stacker-game', title: 'Stacker Game', description: '用原创一键堆塔测试节奏。' },
+    ],
+  },
+  'mahjong-connect': {
+    en: [
+      { href: '/games/chinese-checkers', title: 'Chinese Checkers', description: 'Try a traditional no-capture jump strategy.' },
+    ],
+    zh: [
+      { href: '/games/chinese-checkers', title: '中国跳棋', description: '尝试传统的无吃子跳跃策略。' },
+    ],
+  },
+  'asmr-games': {
+    en: [
+      { href: '/games/stacker-game', title: 'Stacker Game', description: 'Move from calm interaction to measured timing.' },
+    ],
+    zh: [
+      { href: '/games/stacker-game', title: 'Stacker Game', description: '从舒缓互动切换到节奏挑战。' },
+    ],
+  },
 };
 
 export function getOriginalExperimentPage(
@@ -933,7 +996,14 @@ export function getOriginalExperimentPage(
   locale: Locale,
 ): OriginalExperimentPageDefinition & { copy: OriginalExperimentLocaleCopy } {
   const page = pageDefinitions[slug];
-  return { ...page, copy: page.locales[locale] };
+  const copy = page.locales[locale];
+  return {
+    ...page,
+    copy: {
+      ...copy,
+      related: [...copy.related, ...(contextualInboundLinks[slug]?.[locale] ?? [])],
+    },
+  };
 }
 
 export function getOriginalExperimentPageByPath(path: string) {

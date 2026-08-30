@@ -96,6 +96,7 @@ const copy = {
     relatedTitle: 'Keep exploring',
     browseGames: 'Browse all games',
     keyboardGuide: 'Keyboard-only browser games guide',
+    touchPack: 'Three original touch-friendly same-screen games',
     breadcrumbHome: 'Home',
     breadcrumbGames: 'Games',
   },
@@ -182,6 +183,7 @@ const copy = {
     relatedTitle: '继续探索',
     browseGames: '浏览全部游戏',
     keyboardGuide: '只用键盘玩的浏览器小游戏指南',
+    touchPack: '三款原创触屏同屏双人游戏',
     breadcrumbHome: '首页',
     breadcrumbGames: '游戏',
   },
@@ -501,6 +503,12 @@ export default async function TwoPlayerUnblockedPage({ params }: TwoPlayerUnbloc
             className="inline-flex min-h-11 items-center rounded-xl border border-border bg-card px-4 py-2 text-sm font-medium text-foreground hover:border-primary"
           >
             {content.keyboardGuide}
+          </Link>
+          <Link
+            href={getLocalizedPath(locale, '/games/two-player-games')}
+            className="inline-flex min-h-11 items-center rounded-xl border border-border bg-card px-4 py-2 text-sm font-medium text-foreground hover:border-primary"
+          >
+            {content.touchPack}
           </Link>
         </div>
       </section>

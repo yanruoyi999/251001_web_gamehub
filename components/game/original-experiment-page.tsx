@@ -37,7 +37,7 @@ export function OriginalExperimentPage({
       applicationCategory: 'GameApplication',
       operatingSystem: 'Web Browser',
       gamePlatform: ['Desktop Browser', 'Mobile Browser'],
-      playMode: 'SinglePlayer',
+      playMode: page.playMode ?? 'SinglePlayer',
       isAccessibleForFree: true,
       author: {
         '@type': 'Organization',
@@ -45,6 +45,22 @@ export function OriginalExperimentPage({
         url: buildAbsoluteUrl('/about'),
       },
     },
+    ...(page.collectionItems
+      ? [
+          {
+            '@context': 'https://schema.org',
+            '@type': 'ItemList',
+            name: content.title,
+            numberOfItems: page.collectionItems.length,
+            itemListElement: page.collectionItems.map((item, index) => ({
+              '@type': 'ListItem',
+              position: index + 1,
+              name: item.name,
+              url: `${pageUrl}#${item.anchor}`,
+            })),
+          },
+        ]
+      : []),
     {
       '@context': 'https://schema.org',
       '@type': 'FAQPage',
