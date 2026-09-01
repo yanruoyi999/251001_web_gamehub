@@ -106,16 +106,34 @@ jobs:
           CONTROL_DIAGNOSTIC: ${{ steps.control_diagnostic.outcome }}
           CANDIDATE_DIAGNOSTIC: ${{ steps.candidate_diagnostic.outcome }}
         run: |
+          control_summary_path="$RUNNER_TEMP/luma-ci-e2e-load-boundary/control/summary.json"
+          candidate_summary_path="$RUNNER_TEMP/luma-ci-e2e-load-boundary/candidate/summary.json"
+          if test -s "$control_summary_path"; then
+            control_summary="$(cat "$control_summary_path")"
+          else
+            control_summary='{"status":"not-run","reason":"control diagnostic summary missing"}'
+          fi
+          if test -s "$candidate_summary_path"; then
+            candidate_summary="$(cat "$candidate_summary_path")"
+          else
+            candidate_summary='{"status":"not-run","reason":"candidate diagnostic summary missing"}'
+          fi
           jq -n \
             --arg control_checkout "$CONTROL_CHECKOUT" \
             --arg candidate_checkout "$CANDIDATE_CHECKOUT" \
             --arg control_diagnostic "$CONTROL_DIAGNOSTIC" \
             --arg candidate_diagnostic "$CANDIDATE_DIAGNOSTIC" \
+            --argjson control_summary "$control_summary" \
+            --argjson candidate_summary "$candidate_summary" \
             '{
               control_checkout: $control_checkout,
               candidate_checkout: $candidate_checkout,
               control_diagnostic: $control_diagnostic,
-              candidate_diagnostic: $candidate_diagnostic
+              candidate_diagnostic: $candidate_diagnostic,
+              revisions: {
+                control: $control_summary,
+                candidate: $candidate_summary
+              }
             }' > "$RUNNER_TEMP/luma-ci-e2e-load-boundary/summary.json"
 
       - name: Upload diagnostic evidence
@@ -139,3 +157,17 @@ jobs:
           test "$CANDIDATE_CHECKOUT" = success
           test "$CONTROL_DIAGNOSTIC" = success
           test "$CANDIDATE_DIAGNOSTIC" = success
+          jq -e '
+            .revisions.control.results.load_boundary.status == "pass" and
+            .revisions.control.results.load_boundary.collected_count == 6 and
+            .revisions.control.results.load_boundary.executed_count == 6 and
+            .revisions.control.results.webkit_pong.status == "pass" and
+            .revisions.control.results.webkit_pong.collected_count == 1 and
+            .revisions.control.results.webkit_pong.executed_count == 1 and
+            .revisions.candidate.results.load_boundary.status == "pass" and
+            .revisions.candidate.results.load_boundary.collected_count == 6 and
+            .revisions.candidate.results.load_boundary.executed_count == 6 and
+            .revisions.candidate.results.webkit_pong.status == "pass" and
+            .revisions.candidate.results.webkit_pong.collected_count == 1 and
+            .revisions.candidate.results.webkit_pong.executed_count == 1
+          ' "$RUNNER_TEMP/luma-ci-e2e-load-boundary/summary.json" > /dev/null

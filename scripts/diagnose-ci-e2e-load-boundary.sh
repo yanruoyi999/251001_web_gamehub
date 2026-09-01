@@ -9,7 +9,7 @@ readonly PONG_TITLE='classic pong accepts both player key sets during the same i
 readonly ROUTES=(/api/health /en /en/games /en/guides/google-snake-mods)
 
 usage() {
-  echo "usage: $0 --dry-run | --workspace PATH --output PATH --revision control|candidate --port PORT" >&2
+  echo "usage: $0 --dry-run | --validate-result --result PATH --expected-count N --summary PATH | --workspace PATH --output PATH --revision control|candidate --port PORT" >&2
 }
 
 write_dry_run() {
@@ -41,6 +41,110 @@ write_dry_run() {
 if [[ "${1:-}" == '--dry-run' && "$#" -eq 1 ]]; then
   write_dry_run
   exit 0
+fi
+
+validate_result_file() {
+  local result_path="$1"
+  local expected_count="$2"
+  local summary_path="$3"
+  local collected_count executed_count skipped_count stats_executed stats_total
+
+  if [[ ! -s "$result_path" ]]; then
+    jq -n --argjson expected_count "$expected_count" \
+      '{status: "missing-result", expected_count: $expected_count, collected_count: null, executed_count: null, skipped_count: null}' \
+      > "$summary_path"
+    return 1
+  fi
+
+  if ! jq -e '
+    type == "object" and
+    (.stats | type == "object") and
+    ((.stats.expected | type) == "number") and
+    ((.stats.unexpected | type) == "number") and
+    ((.stats.flaky | type) == "number") and
+    ((.stats.skipped | type) == "number")
+  ' "$result_path" > /dev/null 2>"$summary_path.error"; then
+    jq -n --argjson expected_count "$expected_count" \
+      '{status: "invalid-json", expected_count: $expected_count, collected_count: null, executed_count: null, skipped_count: null}' \
+      > "$summary_path"
+    return 1
+  fi
+
+  collected_count="$(jq -er '[.. | objects | select(has("projectName") and (.results | type == "array"))] | length' "$result_path")"
+  executed_count="$(jq -er '[.. | objects | select(has("projectName") and (.results | type == "array") and (.results | length > 0))] | length' "$result_path")"
+  stats_executed="$(jq -er '.stats.expected + .stats.unexpected + .stats.flaky' "$result_path")"
+  skipped_count="$(jq -er '.stats.skipped' "$result_path")"
+  stats_total=$((stats_executed + skipped_count))
+
+  if [[ "$stats_total" -ne "$collected_count" || "$stats_executed" -ne "$executed_count" ]]; then
+    jq -n \
+      --argjson expected_count "$expected_count" \
+      --argjson collected_count "$collected_count" \
+      --argjson executed_count "$executed_count" \
+      --argjson skipped_count "$skipped_count" \
+      --argjson stats_executed "$stats_executed" \
+      --argjson stats_total "$stats_total" \
+      '{status: "stats-mismatch", expected_count: $expected_count, collected_count: $collected_count, executed_count: $executed_count, skipped_count: $skipped_count, stats_executed_count: $stats_executed, stats_total_count: $stats_total}' \
+      > "$summary_path"
+    return 1
+  fi
+
+  if [[ "$collected_count" -eq "$expected_count" && "$executed_count" -eq "$expected_count" && "$skipped_count" -eq 0 ]]; then
+    jq -n \
+      --argjson expected_count "$expected_count" \
+      --argjson collected_count "$collected_count" \
+      --argjson executed_count "$executed_count" \
+      --argjson skipped_count "$skipped_count" \
+      --argjson stats_executed "$stats_executed" \
+      --argjson stats_total "$stats_total" \
+      '{status: "pass", expected_count: $expected_count, collected_count: $collected_count, executed_count: $executed_count, skipped_count: $skipped_count, stats_executed_count: $stats_executed, stats_total_count: $stats_total}' \
+      > "$summary_path"
+    return 0
+  fi
+
+  jq -n \
+    --argjson expected_count "$expected_count" \
+    --argjson collected_count "$collected_count" \
+    --argjson executed_count "$executed_count" \
+    --argjson skipped_count "$skipped_count" \
+    --argjson stats_executed "$stats_executed" \
+    --argjson stats_total "$stats_total" \
+    '{status: "count-mismatch", expected_count: $expected_count, collected_count: $collected_count, executed_count: $executed_count, skipped_count: $skipped_count, stats_executed_count: $stats_executed, stats_total_count: $stats_total}' \
+    > "$summary_path"
+  return 1
+}
+
+if [[ "${1:-}" == '--validate-result' ]]; then
+  result_path=''
+  expected_count=''
+  result_summary=''
+  shift
+  while [[ "$#" -gt 0 ]]; do
+    case "$1" in
+      --result)
+        result_path="${2:-}"
+        shift 2
+        ;;
+      --expected-count)
+        expected_count="${2:-}"
+        shift 2
+        ;;
+      --summary)
+        result_summary="${2:-}"
+        shift 2
+        ;;
+      *)
+        usage
+        exit 64
+        ;;
+    esac
+  done
+  if [[ -z "$result_path" || ! "$expected_count" =~ ^[0-9]+$ || -z "$result_summary" ]]; then
+    usage
+    exit 64
+  fi
+  validate_result_file "$result_path" "$expected_count" "$result_summary"
+  exit $?
 fi
 
 workspace=''
@@ -89,11 +193,16 @@ readonly logs_dir="$output/logs"
 readonly playwright_dir="$output/playwright"
 readonly base_url="http://127.0.0.1:$port"
 
+jq -n '{status: "not-run", expected_count: 6, collected_count: null, executed_count: null, skipped_count: null}' > "$playwright_dir/load-boundary-summary.json"
+jq -n '{status: "not-run", expected_count: 1, collected_count: null, executed_count: null, skipped_count: null}' > "$playwright_dir/webkit-pong-summary.json"
+
 install_exit=1
 build_exit=1
 server_exit=1
 load_boundary_exit=1
 webkit_pong_exit=1
+load_boundary_count_exit=1
+webkit_pong_count_exit=1
 server_pid=''
 sampler_pid=''
 
@@ -111,7 +220,7 @@ cleanup() {
 
 write_summary() {
   local overall_exit=0
-  if [[ "$install_exit" -ne 0 || "$build_exit" -ne 0 || "$server_exit" -ne 0 || "$load_boundary_exit" -ne 0 || "$webkit_pong_exit" -ne 0 ]]; then
+  if [[ "$install_exit" -ne 0 || "$build_exit" -ne 0 || "$server_exit" -ne 0 || "$load_boundary_exit" -ne 0 || "$webkit_pong_exit" -ne 0 || "$load_boundary_count_exit" -ne 0 || "$webkit_pong_count_exit" -ne 0 ]]; then
     overall_exit=1
   fi
 
@@ -128,7 +237,11 @@ write_summary() {
     --argjson server_exit "$server_exit" \
     --argjson load_boundary_exit "$load_boundary_exit" \
     --argjson webkit_pong_exit "$webkit_pong_exit" \
+    --argjson load_boundary_count_exit "$load_boundary_count_exit" \
+    --argjson webkit_pong_count_exit "$webkit_pong_count_exit" \
     --argjson overall_exit "$overall_exit" \
+    --slurpfile load_boundary_result "$playwright_dir/load-boundary-summary.json" \
+    --slurpfile webkit_pong_result "$playwright_dir/webkit-pong-summary.json" \
     '{
       revision: $revision,
       workspace: $workspace,
@@ -138,12 +251,18 @@ write_summary() {
       node_version: $node_version,
       pnpm_version: $pnpm_version,
       expected_cases: 7,
+      results: {
+        load_boundary: $load_boundary_result[0],
+        webkit_pong: $webkit_pong_result[0]
+      },
       exits: {
         install: $install_exit,
         build: $build_exit,
         server: $server_exit,
         load_boundary: $load_boundary_exit,
         webkit_pong: $webkit_pong_exit,
+        load_boundary_count: $load_boundary_count_exit,
+        webkit_pong_count: $webkit_pong_count_exit,
         overall: $overall_exit
       }
     }' > "$output/summary.json"
@@ -226,30 +345,40 @@ sampler_pid=$!
 
 if (
   cd "$workspace"
-  PLAYWRIGHT_BASE_URL="$base_url" DEBUG=pw:webserver pnpm exec playwright test \
+  PLAYWRIGHT_BASE_URL="$base_url" PLAYWRIGHT_JSON_OUTPUT_FILE="$playwright_dir/load-boundary.json" DEBUG=pw:webserver pnpm exec playwright test \
     tests/e2e/mobile-disclosure.spec.ts tests/e2e/game-browsing.spec.ts \
     --grep "$LOAD_TITLE_PATTERN" \
     --project=chromium --project=firefox --project=webkit \
-    --workers=1 --retries=0 --trace=on --video=on --screenshot=on \
+    --workers=1 --retries=0 --trace=on --reporter=line,json \
     --output "$playwright_dir/load-boundary-results"
 ) > "$logs_dir/load-boundary.log" 2>&1; then
   load_boundary_exit=0
 else
   load_boundary_exit=$?
 fi
+if validate_result_file "$playwright_dir/load-boundary.json" 6 "$playwright_dir/load-boundary-summary.json"; then
+  load_boundary_count_exit=0
+else
+  load_boundary_count_exit=$?
+fi
 
 if (
   cd "$workspace"
-  PLAYWRIGHT_BASE_URL="$base_url" DEBUG=pw:webserver pnpm exec playwright test \
+  PLAYWRIGHT_BASE_URL="$base_url" PLAYWRIGHT_JSON_OUTPUT_FILE="$playwright_dir/webkit-pong.json" DEBUG=pw:webserver pnpm exec playwright test \
     tests/e2e/two-player-unblocked.spec.ts \
     --grep "$PONG_TITLE" \
     --project=webkit \
-    --workers=1 --retries=0 --trace=on --video=on --screenshot=on \
+    --workers=1 --retries=0 --trace=on --reporter=line,json \
     --output "$playwright_dir/webkit-pong-results"
 ) > "$logs_dir/webkit-pong.log" 2>&1; then
   webkit_pong_exit=0
 else
   webkit_pong_exit=$?
+fi
+if validate_result_file "$playwright_dir/webkit-pong.json" 1 "$playwright_dir/webkit-pong-summary.json"; then
+  webkit_pong_count_exit=0
+else
+  webkit_pong_count_exit=$?
 fi
 
 write_summary
