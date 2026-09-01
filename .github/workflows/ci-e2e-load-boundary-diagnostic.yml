@@ -1,4 +1,4 @@
-name: CI E2E load-boundary diagnostic
+name: CI E2E endpoint A/B diagnostic
 
 on:
   push:
@@ -32,142 +32,129 @@ jobs:
         with:
           node-version: 22.22.0
 
-      - name: Install harness dependencies and browsers
-        working-directory: harness
-        run: |
-          pnpm install --frozen-lockfile
-          pnpm exec playwright install --with-deps chromium firefox webkit
-
       - name: Prepare diagnostic artifact directory
         run: mkdir -p "$RUNNER_TEMP/luma-ci-e2e-load-boundary"
 
-      - name: Prepare immutable control checkout
-        id: control_checkout
+      - name: Prepare immutable product checkout
+        id: immutable_checkout
         continue-on-error: true
         env:
-          BASE_SHA: fdd7ba59e3e9125582d92f1000842de02dfcbd14
+          IMMUTABLE_SHA: aa0acf80231f202c6529423db1e2dbaa87b3ee16
         run: |
           set -euo pipefail
-          target="$RUNNER_TEMP/luma-control"
+          target="$RUNNER_TEMP/luma-immutable-product"
           git clone --no-hardlinks --no-checkout "$GITHUB_WORKSPACE/harness" "$target"
-          git -C "$target" checkout --detach "$BASE_SHA"
+          git -C "$target" fetch --no-tags --depth=1 origin "$IMMUTABLE_SHA"
+          git -C "$target" checkout --detach "$IMMUTABLE_SHA"
           test -z "$(git -C "$target" status --porcelain)"
           actual_sha="$(git -C "$target" rev-parse HEAD)"
-          test "$actual_sha" = "$BASE_SHA"
-          jq -n --arg expected_sha "$BASE_SHA" --arg actual_sha "$actual_sha" \
-            '{revision: "control", expected_sha: $expected_sha, actual_sha: $actual_sha}' \
-            > "$RUNNER_TEMP/luma-ci-e2e-load-boundary/control-checkout.json"
+          test "$actual_sha" = "$IMMUTABLE_SHA"
+          jq -n --arg expected_sha "$IMMUTABLE_SHA" --arg actual_sha "$actual_sha" \
+            '{immutable_sha: $expected_sha, actual_sha: $actual_sha}' \
+            > "$RUNNER_TEMP/luma-ci-e2e-load-boundary/immutable-checkout.json"
 
-      - name: Prepare immutable candidate checkout
-        id: candidate_checkout
+      - name: Install immutable dependencies and browsers once
+        id: immutable_install
+        if: ${{ always() && steps.immutable_checkout.outcome == 'success' }}
         continue-on-error: true
-        env:
-          EXPECTED_CANDIDATE_SHA: 1dc4bff4d6110d5c1f4496436602956d915cd14a
         run: |
           set -euo pipefail
-          target="$RUNNER_TEMP/luma-candidate"
-          git clone --no-hardlinks --no-checkout "$GITHUB_WORKSPACE/harness" "$target"
-          git -C "$target" fetch --no-tags --depth=1 "https://github.com/$GITHUB_REPOSITORY.git" refs/pull/32/merge
-          git -C "$target" checkout --detach FETCH_HEAD
-          test -z "$(git -C "$target" status --porcelain)"
-          actual_sha="$(git -C "$target" rev-parse HEAD)"
-          jq -n --arg expected_sha "$EXPECTED_CANDIDATE_SHA" --arg actual_sha "$actual_sha" \
-            '{revision: "candidate", expected_sha: $expected_sha, actual_sha: $actual_sha}' \
-            > "$RUNNER_TEMP/luma-ci-e2e-load-boundary/candidate-checkout.json"
-          test "$actual_sha" = "$EXPECTED_CANDIDATE_SHA"
+          cd "$RUNNER_TEMP/luma-immutable-product"
+          pnpm install --frozen-lockfile 2>&1 | tee "$RUNNER_TEMP/luma-ci-e2e-load-boundary/install.log"
+          pnpm exec playwright install --with-deps chromium firefox webkit 2>&1 | tee "$RUNNER_TEMP/luma-ci-e2e-load-boundary/playwright-install.log"
 
-      - name: Run control diagnostic
-        id: control_diagnostic
-        if: ${{ always() && steps.control_checkout.outcome == 'success' }}
+      - name: Build immutable product once
+        id: immutable_build
+        if: ${{ always() && steps.immutable_install.outcome == 'success' }}
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/luma-immutable-product"
+          GAME_CATALOG_MODE=local CACHE_MODE=local NEXT_TELEMETRY_DISABLED=1 pnpm build \
+            2>&1 | tee "$RUNNER_TEMP/luma-ci-e2e-load-boundary/build.log"
+          shasum -a 256 package.json pnpm-lock.yaml playwright.config.ts \
+            > "$RUNNER_TEMP/luma-ci-e2e-load-boundary/immutable-build-config.sha256"
+
+      - name: Run endpoint arm A
+        id: arm_a
+        if: ${{ always() && steps.immutable_build.outcome == 'success' }}
         continue-on-error: true
         run: >-
           bash "$GITHUB_WORKSPACE/harness/scripts/diagnose-ci-e2e-load-boundary.sh"
-          --workspace "$RUNNER_TEMP/luma-control"
-          --output "$RUNNER_TEMP/luma-ci-e2e-load-boundary/control"
-          --revision control
+          --workspace "$RUNNER_TEMP/luma-immutable-product"
+          --output "$RUNNER_TEMP/luma-ci-e2e-load-boundary/arm-a"
+          --arm A
           --port 3217
 
-      - name: Run candidate diagnostic
-        id: candidate_diagnostic
-        if: ${{ always() && steps.candidate_checkout.outcome == 'success' }}
+      - name: Run endpoint arm B
+        id: arm_b
+        if: ${{ always() && steps.immutable_build.outcome == 'success' }}
         continue-on-error: true
         run: >-
           bash "$GITHUB_WORKSPACE/harness/scripts/diagnose-ci-e2e-load-boundary.sh"
-          --workspace "$RUNNER_TEMP/luma-candidate"
-          --output "$RUNNER_TEMP/luma-ci-e2e-load-boundary/candidate"
-          --revision candidate
-          --port 3218
+          --workspace "$RUNNER_TEMP/luma-immutable-product"
+          --output "$RUNNER_TEMP/luma-ci-e2e-load-boundary/arm-b"
+          --arm B
+          --port 3217
 
       - name: Write combined diagnostic summary
         if: ${{ always() }}
         env:
-          CONTROL_CHECKOUT: ${{ steps.control_checkout.outcome }}
-          CANDIDATE_CHECKOUT: ${{ steps.candidate_checkout.outcome }}
-          CONTROL_DIAGNOSTIC: ${{ steps.control_diagnostic.outcome }}
-          CANDIDATE_DIAGNOSTIC: ${{ steps.candidate_diagnostic.outcome }}
+          IMMUTABLE_CHECKOUT: ${{ steps.immutable_checkout.outcome }}
+          IMMUTABLE_INSTALL: ${{ steps.immutable_install.outcome }}
+          IMMUTABLE_BUILD: ${{ steps.immutable_build.outcome }}
+          ARM_A: ${{ steps.arm_a.outcome }}
+          ARM_B: ${{ steps.arm_b.outcome }}
         run: |
-          control_summary_path="$RUNNER_TEMP/luma-ci-e2e-load-boundary/control/summary.json"
-          candidate_summary_path="$RUNNER_TEMP/luma-ci-e2e-load-boundary/candidate/summary.json"
-          if test -s "$control_summary_path"; then
-            control_summary="$(cat "$control_summary_path")"
-          else
-            control_summary='{"status":"not-run","reason":"control diagnostic summary missing"}'
-          fi
-          if test -s "$candidate_summary_path"; then
-            candidate_summary="$(cat "$candidate_summary_path")"
-          else
-            candidate_summary='{"status":"not-run","reason":"candidate diagnostic summary missing"}'
-          fi
-          jq -n \
-            --arg control_checkout "$CONTROL_CHECKOUT" \
-            --arg candidate_checkout "$CANDIDATE_CHECKOUT" \
-            --arg control_diagnostic "$CONTROL_DIAGNOSTIC" \
-            --arg candidate_diagnostic "$CANDIDATE_DIAGNOSTIC" \
-            --argjson control_summary "$control_summary" \
-            --argjson candidate_summary "$candidate_summary" \
-            '{
-              control_checkout: $control_checkout,
-              candidate_checkout: $candidate_checkout,
-              control_diagnostic: $control_diagnostic,
-              candidate_diagnostic: $candidate_diagnostic,
-              revisions: {
-                control: $control_summary,
-                candidate: $candidate_summary
-              }
-            }' > "$RUNNER_TEMP/luma-ci-e2e-load-boundary/summary.json"
+          arm_a_path="$RUNNER_TEMP/luma-ci-e2e-load-boundary/arm-a/summary.json"
+          arm_b_path="$RUNNER_TEMP/luma-ci-e2e-load-boundary/arm-b/summary.json"
+          if test -s "$arm_a_path" && jq -e 'type == "object"' "$arm_a_path" > /dev/null; then arm_a_summary="$(cat "$arm_a_path")"; else arm_a_summary='{"status":"not-run","reason":"arm A summary missing or invalid"}'; fi
+          if test -s "$arm_b_path" && jq -e 'type == "object"' "$arm_b_path" > /dev/null; then arm_b_summary="$(cat "$arm_b_path")"; else arm_b_summary='{"status":"not-run","reason":"arm B summary missing or invalid"}'; fi
+          jq -n --arg immutable_checkout "$IMMUTABLE_CHECKOUT" --arg immutable_install "$IMMUTABLE_INSTALL" --arg immutable_build "$IMMUTABLE_BUILD" --arg arm_a "$ARM_A" --arg arm_b "$ARM_B" --argjson arm_a_summary "$arm_a_summary" --argjson arm_b_summary "$arm_b_summary" '{immutable_checkout: $immutable_checkout, immutable_install: $immutable_install, immutable_build: $immutable_build, arm_a: $arm_a, arm_b: $arm_b, arms: {A: $arm_a_summary, B: $arm_b_summary}}' > "$RUNNER_TEMP/luma-ci-e2e-load-boundary/summary.json"
 
       - name: Upload diagnostic evidence
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
-          name: luma-ci-e2e-load-boundary-${{ github.run_id }}-${{ github.run_attempt }}
+          name: luma-ci-e2e-endpoint-ab-${{ github.run_id }}-${{ github.run_attempt }}
           if-no-files-found: error
           retention-days: 3
           path: ${{ runner.temp }}/luma-ci-e2e-load-boundary
 
-      - name: Fail after evidence upload when either revision is not green
+      - name: Fail after evidence upload when any endpoint contract is incomplete
         if: ${{ always() }}
         env:
-          CONTROL_CHECKOUT: ${{ steps.control_checkout.outcome }}
-          CANDIDATE_CHECKOUT: ${{ steps.candidate_checkout.outcome }}
-          CONTROL_DIAGNOSTIC: ${{ steps.control_diagnostic.outcome }}
-          CANDIDATE_DIAGNOSTIC: ${{ steps.candidate_diagnostic.outcome }}
+          IMMUTABLE_CHECKOUT: ${{ steps.immutable_checkout.outcome }}
+          IMMUTABLE_INSTALL: ${{ steps.immutable_install.outcome }}
+          IMMUTABLE_BUILD: ${{ steps.immutable_build.outcome }}
+          ARM_A: ${{ steps.arm_a.outcome }}
+          ARM_B: ${{ steps.arm_b.outcome }}
         run: |
-          test "$CONTROL_CHECKOUT" = success
-          test "$CANDIDATE_CHECKOUT" = success
-          test "$CONTROL_DIAGNOSTIC" = success
-          test "$CANDIDATE_DIAGNOSTIC" = success
+          test "$IMMUTABLE_CHECKOUT" = success
+          test "$IMMUTABLE_INSTALL" = success
+          test "$IMMUTABLE_BUILD" = success
+          test "$ARM_A" = success
+          test "$ARM_B" = success
           jq -e '
-            .revisions.control.results.load_boundary.status == "pass" and
-            .revisions.control.results.load_boundary.collected_count == 6 and
-            .revisions.control.results.load_boundary.executed_count == 6 and
-            .revisions.control.results.webkit_pong.status == "pass" and
-            .revisions.control.results.webkit_pong.collected_count == 1 and
-            .revisions.control.results.webkit_pong.executed_count == 1 and
-            .revisions.candidate.results.load_boundary.status == "pass" and
-            .revisions.candidate.results.load_boundary.collected_count == 6 and
-            .revisions.candidate.results.load_boundary.executed_count == 6 and
-            .revisions.candidate.results.webkit_pong.status == "pass" and
-            .revisions.candidate.results.webkit_pong.collected_count == 1 and
-            .revisions.candidate.results.webkit_pong.executed_count == 1
+            .arms.A.arm == "A" and
+            .arms.A.endpoint == "http://localhost:3217" and
+            .arms.A.immutable_sha == "aa0acf80231f202c6529423db1e2dbaa87b3ee16" and
+            .arms.A.expected_count == 14 and
+            .arms.A.counts.selected == 14 and
+            .arms.A.counts.collected == 14 and
+            .arms.A.counts.executed == 14 and
+            .arms.A.counts.skipped == 0 and
+            (.arms.A.results | length) == 14 and
+            (.arms.A.results | all(.[]; .result.status == "pass" and .result.collected_count == 1 and .result.executed_count == 1 and .result.skipped_count == 0)) and
+            .arms.B.arm == "B" and
+            .arms.B.endpoint == "http://127.0.0.1:3217" and
+            .arms.B.server_host == "127.0.0.1" and
+            .arms.B.immutable_sha == "aa0acf80231f202c6529423db1e2dbaa87b3ee16" and
+            .arms.B.expected_count == 14 and
+            .arms.B.counts.selected == 14 and
+            .arms.B.counts.collected == 14 and
+            .arms.B.counts.executed == 14 and
+            .arms.B.counts.skipped == 0 and
+            (.arms.B.results | length) == 14 and
+            (.arms.B.results | all(.[]; .result.status == "pass" and .result.collected_count == 1 and .result.executed_count == 1 and .result.skipped_count == 0))
           ' "$RUNNER_TEMP/luma-ci-e2e-load-boundary/summary.json" > /dev/null

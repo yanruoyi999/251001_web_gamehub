@@ -1,0 +1,18 @@
+{
+  "cases": [
+    {"spec":"tests/e2e/mobile-disclosure.spec.ts","project":"chromium","title":"keeps guide play intent actionable before hydration"},
+    {"spec":"tests/e2e/mobile-disclosure.spec.ts","project":"chromium","title":"moves focus to guide jump targets before hydration"},
+    {"spec":"tests/e2e/mobile-disclosure.spec.ts","project":"firefox","title":"keeps guide play intent actionable before hydration"},
+    {"spec":"tests/e2e/mobile-disclosure.spec.ts","project":"firefox","title":"moves focus to guide jump targets before hydration"},
+    {"spec":"tests/e2e/game-browsing.spec.ts","project":"webkit","title":"支持切换到英文站点"},
+    {"spec":"tests/e2e/game-browsing.spec.ts","project":"webkit","title":"默认语言前缀只重定向一次到根路径且可从英文软导航返回"},
+    {"spec":"tests/e2e/game-browsing.spec.ts","project":"webkit","title":"英文游戏目录的首方图片资源不返回 4xx"},
+    {"spec":"tests/e2e/mobile-disclosure.spec.ts","project":"webkit","title":"opens navigation and advanced filters on the first click"},
+    {"spec":"tests/e2e/saved-games.spec.ts","project":"webkit","title":"desktop exposes the saved entry and renders a saved Luma original"},
+    {"spec":"tests/e2e/smoke.spec.ts","project":"webkit","title":"homepage renders title"},
+    {"spec":"tests/e2e/smoke.spec.ts","project":"webkit","title":"homepage exposes distinct recommendation shelves without mobile overflow"},
+    {"spec":"tests/e2e/mobile-disclosure.spec.ts","project":"pixel-7","title":"opens navigation and advanced filters on the first click"},
+    {"spec":"tests/e2e/game-browsing.spec.ts","project":"iphone-13","title":"英文游戏目录的首方图片资源不返回 4xx"},
+    {"spec":"tests/e2e/mobile-disclosure.spec.ts","project":"iphone-13","title":"opens navigation and advanced filters on the first click"}
+  ]
+}
