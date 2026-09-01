@@ -74,13 +74,29 @@ jobs:
             2>&1 | tee "$RUNNER_TEMP/luma-ci-e2e-load-boundary/build.log"
           shasum -a 256 package.json pnpm-lock.yaml playwright.config.ts \
             > "$RUNNER_TEMP/luma-ci-e2e-load-boundary/immutable-build-config.sha256"
-          find .next -type f -print0 | sort -z | xargs -0 shasum -a 256 \
+          (cd .next && find . -type f -print0 | sort -z | xargs -0 shasum -a 256) \
             > "$RUNNER_TEMP/luma-ci-e2e-load-boundary/immutable-build-output.sha256"
           test -s "$RUNNER_TEMP/luma-ci-e2e-load-boundary/immutable-build-output.sha256"
+          rsync -a --delete .next/ "$RUNNER_TEMP/luma-immutable-next-snapshot/"
+          cmp -s "$RUNNER_TEMP/luma-ci-e2e-load-boundary/immutable-build-output.sha256" \
+            <(cd "$RUNNER_TEMP/luma-immutable-next-snapshot" && find . -type f -print0 | sort -z | xargs -0 shasum -a 256)
+
+      - name: Restore pristine build state for arm A
+        id: arm_a_start_state
+        if: ${{ always() && steps.immutable_build.outcome == 'success' }}
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          target="$RUNNER_TEMP/luma-immutable-product"
+          rsync -a --delete "$RUNNER_TEMP/luma-immutable-next-snapshot/" "$target/.next/"
+          (cd "$target/.next" && find . -type f -print0 | sort -z | xargs -0 shasum -a 256) \
+            > "$RUNNER_TEMP/luma-ci-e2e-load-boundary/arm-a-start-output.sha256"
+          cmp -s "$RUNNER_TEMP/luma-ci-e2e-load-boundary/immutable-build-output.sha256" \
+            "$RUNNER_TEMP/luma-ci-e2e-load-boundary/arm-a-start-output.sha256"
 
       - name: Run endpoint arm A
         id: arm_a
-        if: ${{ always() && steps.immutable_build.outcome == 'success' }}
+        if: ${{ always() && steps.arm_a_start_state.outcome == 'success' }}
         continue-on-error: true
         run: >-
           bash "$GITHUB_WORKSPACE/harness/scripts/diagnose-ci-e2e-load-boundary.sh"
@@ -88,11 +104,24 @@ jobs:
           --output "$RUNNER_TEMP/luma-ci-e2e-load-boundary/arm-a"
           --arm A
           --port 3217
-          --build-identity "$RUNNER_TEMP/luma-ci-e2e-load-boundary/immutable-build-output.sha256"
+          --build-identity "$RUNNER_TEMP/luma-ci-e2e-load-boundary/arm-a-start-output.sha256"
+
+      - name: Restore pristine build state for arm B
+        id: arm_b_start_state
+        if: ${{ always() && steps.immutable_build.outcome == 'success' }}
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          target="$RUNNER_TEMP/luma-immutable-product"
+          rsync -a --delete "$RUNNER_TEMP/luma-immutable-next-snapshot/" "$target/.next/"
+          (cd "$target/.next" && find . -type f -print0 | sort -z | xargs -0 shasum -a 256) \
+            > "$RUNNER_TEMP/luma-ci-e2e-load-boundary/arm-b-start-output.sha256"
+          cmp -s "$RUNNER_TEMP/luma-ci-e2e-load-boundary/immutable-build-output.sha256" \
+            "$RUNNER_TEMP/luma-ci-e2e-load-boundary/arm-b-start-output.sha256"
 
       - name: Run endpoint arm B
         id: arm_b
-        if: ${{ always() && steps.immutable_build.outcome == 'success' }}
+        if: ${{ always() && steps.arm_b_start_state.outcome == 'success' }}
         continue-on-error: true
         run: >-
           bash "$GITHUB_WORKSPACE/harness/scripts/diagnose-ci-e2e-load-boundary.sh"
@@ -100,7 +129,7 @@ jobs:
           --output "$RUNNER_TEMP/luma-ci-e2e-load-boundary/arm-b"
           --arm B
           --port 3217
-          --build-identity "$RUNNER_TEMP/luma-ci-e2e-load-boundary/immutable-build-output.sha256"
+          --build-identity "$RUNNER_TEMP/luma-ci-e2e-load-boundary/arm-b-start-output.sha256"
 
       - name: Write combined diagnostic summary
         if: ${{ always() }}
@@ -108,6 +137,8 @@ jobs:
           IMMUTABLE_CHECKOUT: ${{ steps.immutable_checkout.outcome }}
           IMMUTABLE_INSTALL: ${{ steps.immutable_install.outcome }}
           IMMUTABLE_BUILD: ${{ steps.immutable_build.outcome }}
+          ARM_A_START_STATE: ${{ steps.arm_a_start_state.outcome }}
+          ARM_B_START_STATE: ${{ steps.arm_b_start_state.outcome }}
           ARM_A: ${{ steps.arm_a.outcome }}
           ARM_B: ${{ steps.arm_b.outcome }}
         run: |
@@ -115,7 +146,7 @@ jobs:
           arm_b_path="$RUNNER_TEMP/luma-ci-e2e-load-boundary/arm-b/summary.json"
           if test -s "$arm_a_path" && jq -e 'type == "object"' "$arm_a_path" > /dev/null; then arm_a_summary="$(cat "$arm_a_path")"; else arm_a_summary='{"status":"not-run","reason":"arm A summary missing or invalid"}'; fi
           if test -s "$arm_b_path" && jq -e 'type == "object"' "$arm_b_path" > /dev/null; then arm_b_summary="$(cat "$arm_b_path")"; else arm_b_summary='{"status":"not-run","reason":"arm B summary missing or invalid"}'; fi
-          jq -n --arg immutable_checkout "$IMMUTABLE_CHECKOUT" --arg immutable_install "$IMMUTABLE_INSTALL" --arg immutable_build "$IMMUTABLE_BUILD" --arg arm_a "$ARM_A" --arg arm_b "$ARM_B" --argjson arm_a_summary "$arm_a_summary" --argjson arm_b_summary "$arm_b_summary" '{immutable_checkout: $immutable_checkout, immutable_install: $immutable_install, immutable_build: $immutable_build, arm_a: $arm_a, arm_b: $arm_b, arms: {A: $arm_a_summary, B: $arm_b_summary}}' > "$RUNNER_TEMP/luma-ci-e2e-load-boundary/summary.json"
+          jq -n --arg immutable_checkout "$IMMUTABLE_CHECKOUT" --arg immutable_install "$IMMUTABLE_INSTALL" --arg immutable_build "$IMMUTABLE_BUILD" --arg arm_a_start_state "$ARM_A_START_STATE" --arg arm_b_start_state "$ARM_B_START_STATE" --arg arm_a "$ARM_A" --arg arm_b "$ARM_B" --argjson arm_a_summary "$arm_a_summary" --argjson arm_b_summary "$arm_b_summary" '{immutable_checkout: $immutable_checkout, immutable_install: $immutable_install, immutable_build: $immutable_build, arm_a_start_state: $arm_a_start_state, arm_b_start_state: $arm_b_start_state, arm_a: $arm_a, arm_b: $arm_b, arms: {A: $arm_a_summary, B: $arm_b_summary}}' > "$RUNNER_TEMP/luma-ci-e2e-load-boundary/summary.json"
 
       - name: Upload diagnostic evidence
         if: ${{ always() }}
@@ -132,12 +163,16 @@ jobs:
           IMMUTABLE_CHECKOUT: ${{ steps.immutable_checkout.outcome }}
           IMMUTABLE_INSTALL: ${{ steps.immutable_install.outcome }}
           IMMUTABLE_BUILD: ${{ steps.immutable_build.outcome }}
+          ARM_A_START_STATE: ${{ steps.arm_a_start_state.outcome }}
+          ARM_B_START_STATE: ${{ steps.arm_b_start_state.outcome }}
           ARM_A: ${{ steps.arm_a.outcome }}
           ARM_B: ${{ steps.arm_b.outcome }}
         run: |
           test "$IMMUTABLE_CHECKOUT" = success
           test "$IMMUTABLE_INSTALL" = success
           test "$IMMUTABLE_BUILD" = success
+          test "$ARM_A_START_STATE" = success
+          test "$ARM_B_START_STATE" = success
           test "$ARM_A" = success
           test "$ARM_B" = success
           jq -e '

@@ -49,6 +49,7 @@ function writeCompleteEvidenceFixture(output: string, arm: 'A' | 'B') {
   writeFileSync(join(logs, 'server.pid'), '4242\n');
   writeFileSync(join(logs, 'server-rss.tsv'), '2026-09-01T00:00:00Z\t4242  12345 next start\n');
   writeFileSync(join(logs, 'readiness-probes.tsv'), ['/api/health', '/en', '/en/games', '/en/guides/google-snake-mods'].map((route) => `2026-09-01T00:00:00Z\t${route}\t200\t0.01`).join('\n') + '\n');
+  writeFileSync(join(logs, 'readiness-probes.err'), '');
   writeFileSync(join(logs, 'listener-receipt.json'), JSON.stringify({ arm, endpoint: arm === 'A' ? 'http://localhost:3217' : 'http://127.0.0.1:3217', server_host: arm === 'A' ? 'localhost' : '127.0.0.1', resolved_addresses: arm === 'A' ? ['127.0.0.1'] : ['127.0.0.1'], listener: arm === 'A' ? '127.0.0.1:3217 (LISTEN)' : '127.0.0.1:3217 (LISTEN)', bind_verified: true }));
   writeFileSync(join(logs, 'post-arm-isolation.json'), JSON.stringify({ port: 3217, server_pid: 4242, sampler_pid: 4243, port_listener_absent: true, server_pid_alive: false, sampler_pid_alive: false }));
   const results = failureCluster.map(([spec, project, title], index) => {
@@ -58,10 +59,11 @@ function writeCompleteEvidenceFixture(output: string, arm: 'A' | 'B') {
     writeFileSync(join(caseDirectory, 'result.json'), JSON.stringify({ stats: { expected: 1, unexpected: 0, flaky: 0, skipped: 0 }, suites: [] }));
     writeFileSync(join(caseDirectory, 'summary.json'), JSON.stringify(result));
     writeFileSync(join(caseDirectory, 'case.json'), JSON.stringify({ index: index + 1, spec, project, title, result }));
-    writeFileSync(join(caseDirectory, 'results', 'trace.zip'), 'trace');
-    writeFileSync(join(caseDirectory, 'results', 'video.webm'), 'video');
-    writeFileSync(join(caseDirectory, 'results', 'screenshot.png'), 'screenshot');
-    writeFileSync(join(logs, `case-${index + 1}.log`), 'pw:api request /_next/image and RSC\n');
+    writeFileSync(join(caseDirectory, 'results', 'trace.network'), '{"url":"/_next/image?url=x"}\n');
+    execFileSync('zip', ['-q', 'trace.zip', 'trace.network'], { cwd: join(caseDirectory, 'results') });
+    writeFileSync(join(caseDirectory, 'results', 'video.webm'), Buffer.from([0x1a, 0x45, 0xdf, 0xa3, 0x93]));
+    writeFileSync(join(caseDirectory, 'results', 'screenshot.png'), Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]));
+    writeFileSync(join(logs, `case-${index + 1}.log`), 'request /_next/image and RSC\n');
     return { index: index + 1, spec, project, title, result };
   });
   writeFileSync(join(playwright, 'cases.json'), JSON.stringify(results));
@@ -176,6 +178,27 @@ describe('CI E2E endpoint A/B diagnostic harness', () => {
       rmSync(join(output, 'playwright', 'case-14', 'results', 'screenshot.png'));
       const missingScreenshot = spawnSync('bash', [scriptPath, '--validate-evidence', '--output', output, '--arm', 'B', '--port', '3217'], { cwd: repositoryRoot, encoding: 'utf8' });
       expect(missingScreenshot.status).not.toBe(0);
+    } finally {
+      rmSync(directory, { force: true, recursive: true });
+    }
+  });
+
+  it('rejects misbound case rows, failed readiness, and fake trace or media containers', () => {
+    const directory = mkdtempSync(join(tmpdir(), 'luma-ci-e2e-evidence-negative-'));
+    const output = join(directory, 'output');
+    try {
+      writeCompleteEvidenceFixture(output, 'A');
+      const casesPath = join(output, 'playwright', 'cases.json');
+      const cases = JSON.parse(readFileSync(casesPath, 'utf8'));
+      cases[1] = cases[0];
+      writeFileSync(casesPath, JSON.stringify(cases));
+      expect(spawnSync('bash', [scriptPath, '--validate-evidence', '--output', output, '--arm', 'A', '--port', '3217'], { cwd: repositoryRoot }).status).not.toBe(0);
+      writeCompleteEvidenceFixture(output, 'A');
+      writeFileSync(join(output, 'logs', 'readiness-probes.tsv'), '2026\t/api/health\t500\t0.1\n');
+      expect(spawnSync('bash', [scriptPath, '--validate-evidence', '--output', output, '--arm', 'A', '--port', '3217'], { cwd: repositoryRoot }).status).not.toBe(0);
+      writeCompleteEvidenceFixture(output, 'A');
+      writeFileSync(join(output, 'playwright', 'case-1', 'results', 'trace.zip'), 'fake');
+      expect(spawnSync('bash', [scriptPath, '--validate-evidence', '--output', output, '--arm', 'A', '--port', '3217'], { cwd: repositoryRoot }).status).not.toBe(0);
     } finally {
       rmSync(directory, { force: true, recursive: true });
     }
