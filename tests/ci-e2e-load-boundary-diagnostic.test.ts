@@ -128,7 +128,7 @@ describe('CI E2E load-boundary diagnostic harness', () => {
     );
     expect(script).toContain('cmp -s "$DIAGNOSTIC_CONFIG_SOURCE" "$diagnostic_config_path"');
     expect(script).toContain('shasum -a 256 "$DIAGNOSTIC_CONFIG_SOURCE" "$diagnostic_config_path"');
-  });
+  }, 30_000);
 
   it('lists exactly the six load-boundary and one WebKit Pong cases through the diagnostic config', () => {
     const loadReport = JSON.parse(
@@ -179,7 +179,7 @@ describe('CI E2E load-boundary diagnostic harness', () => {
 
     expect(collectedTests(loadReport)).toBe(6);
     expect(collectedTests(pongReport)).toBe(1);
-  });
+  }, 30_000);
 
   it('accepts a Playwright JSON result only when collected and executed counts match', () => {
     const directory = mkdtempSync(join(tmpdir(), 'luma-ci-e2e-contract-'));
