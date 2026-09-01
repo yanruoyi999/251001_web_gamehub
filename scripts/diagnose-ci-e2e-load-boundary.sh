@@ -7,6 +7,9 @@ readonly CANDIDATE_REF='refs/pull/32/merge'
 readonly LOAD_TITLE_PATTERN='keeps guide play intent actionable before hydration|英文游戏目录的首方图片资源不返回 4xx'
 readonly PONG_TITLE='classic pong accepts both player key sets during the same interval'
 readonly ROUTES=(/api/health /en /en/games /en/guides/google-snake-mods)
+readonly HARNESS_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+readonly DIAGNOSTIC_CONFIG_NAME='playwright.ci-diagnostic.config.ts'
+readonly DIAGNOSTIC_CONFIG_SOURCE="$HARNESS_ROOT/$DIAGNOSTIC_CONFIG_NAME"
 
 usage() {
   echo "usage: $0 --dry-run | --validate-result --result PATH --expected-count N --summary PATH | --workspace PATH --output PATH --revision control|candidate --port PORT" >&2
@@ -192,6 +195,7 @@ mkdir -p "$output/logs" "$output/playwright"
 readonly logs_dir="$output/logs"
 readonly playwright_dir="$output/playwright"
 readonly base_url="http://127.0.0.1:$port"
+readonly diagnostic_config_path="$workspace/$DIAGNOSTIC_CONFIG_NAME"
 
 jq -n '{status: "not-run", expected_count: 6, collected_count: null, executed_count: null, skipped_count: null}' > "$playwright_dir/load-boundary-summary.json"
 jq -n '{status: "not-run", expected_count: 1, collected_count: null, executed_count: null, skipped_count: null}' > "$playwright_dir/webkit-pong-summary.json"
@@ -203,6 +207,7 @@ load_boundary_exit=1
 webkit_pong_exit=1
 load_boundary_count_exit=1
 webkit_pong_count_exit=1
+diagnostic_config_exit=1
 server_pid=''
 sampler_pid=''
 
@@ -220,7 +225,7 @@ cleanup() {
 
 write_summary() {
   local overall_exit=0
-  if [[ "$install_exit" -ne 0 || "$build_exit" -ne 0 || "$server_exit" -ne 0 || "$load_boundary_exit" -ne 0 || "$webkit_pong_exit" -ne 0 || "$load_boundary_count_exit" -ne 0 || "$webkit_pong_count_exit" -ne 0 ]]; then
+  if [[ "$install_exit" -ne 0 || "$build_exit" -ne 0 || "$server_exit" -ne 0 || "$load_boundary_exit" -ne 0 || "$webkit_pong_exit" -ne 0 || "$load_boundary_count_exit" -ne 0 || "$webkit_pong_count_exit" -ne 0 || "$diagnostic_config_exit" -ne 0 ]]; then
     overall_exit=1
   fi
 
@@ -239,6 +244,7 @@ write_summary() {
     --argjson webkit_pong_exit "$webkit_pong_exit" \
     --argjson load_boundary_count_exit "$load_boundary_count_exit" \
     --argjson webkit_pong_count_exit "$webkit_pong_count_exit" \
+    --argjson diagnostic_config_exit "$diagnostic_config_exit" \
     --argjson overall_exit "$overall_exit" \
     --slurpfile load_boundary_result "$playwright_dir/load-boundary-summary.json" \
     --slurpfile webkit_pong_result "$playwright_dir/webkit-pong-summary.json" \
@@ -251,6 +257,7 @@ write_summary() {
       node_version: $node_version,
       pnpm_version: $pnpm_version,
       expected_cases: 7,
+      diagnostic_config: $diagnostic_config_path,
       results: {
         load_boundary: $load_boundary_result[0],
         webkit_pong: $webkit_pong_result[0]
@@ -263,6 +270,7 @@ write_summary() {
         webkit_pong: $webkit_pong_exit,
         load_boundary_count: $load_boundary_count_exit,
         webkit_pong_count: $webkit_pong_count_exit,
+        diagnostic_config: $diagnostic_config_exit,
         overall: $overall_exit
       }
     }' > "$output/summary.json"
@@ -293,6 +301,19 @@ else
   build_exit=$?
   write_summary
   exit "$build_exit"
+fi
+
+if cp "$DIAGNOSTIC_CONFIG_SOURCE" "$diagnostic_config_path" && cmp -s "$DIAGNOSTIC_CONFIG_SOURCE" "$diagnostic_config_path"; then
+  if shasum -a 256 "$DIAGNOSTIC_CONFIG_SOURCE" "$diagnostic_config_path" > "$logs_dir/diagnostic-config.sha256"; then
+    diagnostic_config_exit=0
+    printf 'source=%s\ntarget=%s\n' "$DIAGNOSTIC_CONFIG_SOURCE" "$diagnostic_config_path" > "$logs_dir/diagnostic-config.txt"
+  else
+    write_summary
+    exit $?
+  fi
+else
+  write_summary
+  exit $?
 fi
 
 (
@@ -346,6 +367,7 @@ sampler_pid=$!
 if (
   cd "$workspace"
   PLAYWRIGHT_BASE_URL="$base_url" PLAYWRIGHT_JSON_OUTPUT_FILE="$playwright_dir/load-boundary.json" DEBUG=pw:webserver pnpm exec playwright test \
+    --config "$diagnostic_config_path" \
     tests/e2e/mobile-disclosure.spec.ts tests/e2e/game-browsing.spec.ts \
     --grep "$LOAD_TITLE_PATTERN" \
     --project=chromium --project=firefox --project=webkit \
@@ -365,6 +387,7 @@ fi
 if (
   cd "$workspace"
   PLAYWRIGHT_BASE_URL="$base_url" PLAYWRIGHT_JSON_OUTPUT_FILE="$playwright_dir/webkit-pong.json" DEBUG=pw:webserver pnpm exec playwright test \
+    --config "$diagnostic_config_path" \
     tests/e2e/two-player-unblocked.spec.ts \
     --grep "$PONG_TITLE" \
     --project=webkit \

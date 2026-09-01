@@ -7,10 +7,27 @@ import { describe, expect, it } from 'vitest';
 
 const repositoryRoot = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const scriptPath = resolve(repositoryRoot, 'scripts/diagnose-ci-e2e-load-boundary.sh');
+const diagnosticConfigPath = resolve(repositoryRoot, 'playwright.ci-diagnostic.config.ts');
 const workflowPath = resolve(
   repositoryRoot,
   '.github/workflows/ci-e2e-load-boundary-diagnostic.yml',
 );
+
+function collectedTests(report: unknown): number {
+  if (typeof report !== 'object' || report === null) {
+    return 0;
+  }
+
+  const node = report as { specs?: unknown; suites?: unknown; tests?: unknown };
+  const directTests = Array.isArray(node.tests) ? node.tests.length : 0;
+  const specTests = Array.isArray(node.specs)
+    ? node.specs.reduce<number>((total, spec) => total + collectedTests(spec), 0)
+    : 0;
+  const nestedTests = Array.isArray(node.suites)
+    ? node.suites.reduce<number>((total, suite) => total + collectedTests(suite), 0)
+    : 0;
+  return directTests + specTests + nestedTests;
+}
 
 describe('CI E2E load-boundary diagnostic harness', () => {
   it('dry-runs the bounded seven-case A/B plan without starting a server', () => {
@@ -62,6 +79,8 @@ describe('CI E2E load-boundary diagnostic harness', () => {
     );
 
     expect(options.sort()).toEqual([
+      'config',
+      'config',
       'grep',
       'grep',
       'output',
@@ -80,8 +99,86 @@ describe('CI E2E load-boundary diagnostic harness', () => {
       'workers',
     ]);
     for (const option of new Set(options)) {
-      expect(help).toMatch(new RegExp(`^\\s*--${option}\\b`, 'm'));
+      expect(help).toMatch(new RegExp(`(?:^\\s*|,\\s*)--${option}\\b`, 'm'));
     }
+  });
+
+  it('enables diagnostic trace, video, and screenshots in a config used by both runs', () => {
+    expect(existsSync(diagnosticConfigPath)).toBe(true);
+
+    const use = JSON.parse(
+      execFileSync(
+        'pnpm',
+        [
+          'exec',
+          'tsx',
+          '-e',
+          "import config from './playwright.ci-diagnostic.config'; process.stdout.write(JSON.stringify(config.use));",
+        ],
+        { cwd: repositoryRoot, encoding: 'utf8' },
+      ),
+    );
+    expect(use).toMatchObject({ trace: 'on', video: 'on', screenshot: 'on' });
+
+    const script = readFileSync(scriptPath, 'utf8');
+    expect(script.match(/--config "\$diagnostic_config_path"/g)).toHaveLength(2);
+    expect(script).toContain('playwright.ci-diagnostic.config.ts');
+    expect(script.indexOf('GAME_CATALOG_MODE=local CACHE_MODE=local NEXT_TELEMETRY_DISABLED=1 pnpm build')).toBeLessThan(
+      script.indexOf('if cp "$DIAGNOSTIC_CONFIG_SOURCE" "$diagnostic_config_path" && cmp -s'),
+    );
+    expect(script).toContain('cmp -s "$DIAGNOSTIC_CONFIG_SOURCE" "$diagnostic_config_path"');
+    expect(script).toContain('shasum -a 256 "$DIAGNOSTIC_CONFIG_SOURCE" "$diagnostic_config_path"');
+  });
+
+  it('lists exactly the six load-boundary and one WebKit Pong cases through the diagnostic config', () => {
+    const loadReport = JSON.parse(
+      execFileSync(
+        'pnpm',
+        [
+          'exec',
+          'playwright',
+          'test',
+          '--config',
+          diagnosticConfigPath,
+          'tests/e2e/mobile-disclosure.spec.ts',
+          'tests/e2e/game-browsing.spec.ts',
+          '--grep',
+          'keeps guide play intent actionable before hydration|英文游戏目录的首方图片资源不返回 4xx',
+          '--project=chromium',
+          '--project=firefox',
+          '--project=webkit',
+          '--workers=1',
+          '--retries=0',
+          '--list',
+          '--reporter=json',
+        ],
+        { cwd: repositoryRoot, encoding: 'utf8' },
+      ),
+    );
+    const pongReport = JSON.parse(
+      execFileSync(
+        'pnpm',
+        [
+          'exec',
+          'playwright',
+          'test',
+          '--config',
+          diagnosticConfigPath,
+          'tests/e2e/two-player-unblocked.spec.ts',
+          '--grep',
+          'classic pong accepts both player key sets during the same interval',
+          '--project=webkit',
+          '--workers=1',
+          '--retries=0',
+          '--list',
+          '--reporter=json',
+        ],
+        { cwd: repositoryRoot, encoding: 'utf8' },
+      ),
+    );
+
+    expect(collectedTests(loadReport)).toBe(6);
+    expect(collectedTests(pongReport)).toBe(1);
   });
 
   it('accepts a Playwright JSON result only when collected and executed counts match', () => {
