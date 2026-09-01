@@ -71,7 +71,20 @@ validate_evidence() {
     for path in "$playwright/case-$index/result.json" "$playwright/case-$index/summary.json" "$playwright/case-$index/case.json" "$logs/case-$index.log"; do [[ -s "$path" ]] || { echo "missing per-case JSON/log evidence: $index" >&2; failed=1; }; done
     if ! jq -e --argjson index "$index" --slurpfile manifest "$CASE_MANIFEST" --slurpfile aggregate "$playwright/cases.json" '. as $case | $manifest[0].cases[$index-1] as $expected | $aggregate[0][$index-1] as $actual | $case.index==$index and $case.spec==$expected.spec and $case.project==$expected.project and $case.title==$expected.title and $actual.index==$case.index and $actual.spec==$case.spec and $actual.project==$case.project and $actual.title==$case.title' "$playwright/case-$index/case.json" >/dev/null 2>&1; then echo "case binding failed: $index" >&2; failed=1; fi
     if ! jq -e '.expected_count==1 and .collected_count==1 and .executed_count==1 and .skipped_count==0 and ((.passed_count+.failed_count)==1)' "$playwright/case-$index/summary.json" >/dev/null 2>&1 || ! jq -e '(.stats.expected+.stats.unexpected+.stats.flaky+.stats.skipped)==1' "$playwright/case-$index/result.json" >/dev/null 2>&1; then echo "case count binding failed: $index" >&2; failed=1; fi
-    trace="$(find "$playwright/case-$index/results" -type f -name '*.zip' -size +0c -print -quit 2>/dev/null)"; [[ -n "$trace" ]] && unzip -t "$trace" >/dev/null 2>&1 && unzip -p "$trace" trace.network 2>/dev/null | grep -Eq '/_next/image|RSC|_rsc' || { echo "missing usable network trace: $index" >&2; failed=1; }
+    trace="$(find "$playwright/case-$index/results" -type f -name '*.zip' -size +0c -print -quit 2>/dev/null)"
+    trace_extract="$playwright/case-$index/trace-network.bin"
+    trace_entries=''
+    trace_extract_exit=0
+    if [[ -n "$trace" ]] && unzip -t "$trace" >/dev/null 2>&1; then
+      trace_entries="$(unzip -Z1 "$trace" 2>/dev/null | grep -E '(^|/)[0-9]+-trace\.network$')"
+      : > "$trace_extract"
+      if [[ -z "$trace_entries" ]]; then trace_extract_exit=1; else
+        while IFS= read -r trace_entry; do unzip -p "$trace" "$trace_entry" >> "$trace_extract" || trace_extract_exit=1; done <<< "$trace_entries"
+      fi
+    else
+      trace_extract_exit=1
+    fi
+    [[ "$trace_extract_exit" -eq 0 ]] && grep -aEq '/_next/image|RSC|_rsc' "$trace_extract" || { echo "missing usable network trace: $index" >&2; failed=1; }
     png="$(find "$playwright/case-$index/results" -type f -name '*.png' -size +7c -print -quit 2>/dev/null)"; [[ -n "$png" ]] && [[ "$(xxd -p -l 8 "$png")" == 89504e470d0a1a0a ]] || { echo "invalid PNG evidence: $index" >&2; failed=1; }
     webm="$(find "$playwright/case-$index/results" -type f -name '*.webm' -size +4c -print -quit 2>/dev/null)"; [[ -n "$webm" ]] && [[ "$(xxd -p -l 4 "$webm")" == 1a45dfa3 ]] || { echo "invalid WebM evidence: $index" >&2; failed=1; }
   done

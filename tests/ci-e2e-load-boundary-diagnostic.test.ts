@@ -59,8 +59,10 @@ function writeCompleteEvidenceFixture(output: string, arm: 'A' | 'B') {
     writeFileSync(join(caseDirectory, 'result.json'), JSON.stringify({ stats: { expected: 1, unexpected: 0, flaky: 0, skipped: 0 }, suites: [] }));
     writeFileSync(join(caseDirectory, 'summary.json'), JSON.stringify(result));
     writeFileSync(join(caseDirectory, 'case.json'), JSON.stringify({ index: index + 1, spec, project, title, result }));
-    writeFileSync(join(caseDirectory, 'results', 'trace.network'), '{"url":"/_next/image?url=x"}\n');
-    execFileSync('zip', ['-q', 'trace.zip', 'trace.network'], { cwd: join(caseDirectory, 'results') });
+    writeFileSync(join(caseDirectory, 'results', '0-trace.network'), '{"url":"/_next/image?url=x"}\n');
+    writeFileSync(join(caseDirectory, 'results', '1-trace.network'), '{"url":"/_rsc=x"}\n');
+    rmSync(join(caseDirectory, 'results', 'trace.zip'), { force: true });
+    execFileSync('zip', ['-q', 'trace.zip', '0-trace.network', '1-trace.network'], { cwd: join(caseDirectory, 'results') });
     writeFileSync(join(caseDirectory, 'results', 'video.webm'), Buffer.from([0x1a, 0x45, 0xdf, 0xa3, 0x93]));
     writeFileSync(join(caseDirectory, 'results', 'screenshot.png'), Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]));
     writeFileSync(join(logs, `case-${index + 1}.log`), 'request /_next/image and RSC\n');
@@ -198,6 +200,12 @@ describe('CI E2E endpoint A/B diagnostic harness', () => {
       expect(spawnSync('bash', [scriptPath, '--validate-evidence', '--output', output, '--arm', 'A', '--port', '3217'], { cwd: repositoryRoot }).status).not.toBe(0);
       writeCompleteEvidenceFixture(output, 'A');
       writeFileSync(join(output, 'playwright', 'case-1', 'results', 'trace.zip'), 'fake');
+      expect(spawnSync('bash', [scriptPath, '--validate-evidence', '--output', output, '--arm', 'A', '--port', '3217'], { cwd: repositoryRoot }).status).not.toBe(0);
+      writeCompleteEvidenceFixture(output, 'A');
+      writeFileSync(join(output, 'playwright', 'case-1', 'results', 'screenshot.png'), Buffer.from([1, 2, 3, 4, 5, 6, 7, 8]));
+      expect(spawnSync('bash', [scriptPath, '--validate-evidence', '--output', output, '--arm', 'A', '--port', '3217'], { cwd: repositoryRoot }).status).not.toBe(0);
+      writeCompleteEvidenceFixture(output, 'A');
+      writeFileSync(join(output, 'playwright', 'case-1', 'results', 'video.webm'), Buffer.from([1, 2, 3, 4, 5]));
       expect(spawnSync('bash', [scriptPath, '--validate-evidence', '--output', output, '--arm', 'A', '--port', '3217'], { cwd: repositoryRoot }).status).not.toBe(0);
     } finally {
       rmSync(directory, { force: true, recursive: true });
