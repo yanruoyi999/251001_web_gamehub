@@ -8,6 +8,7 @@ export default defineConfig({
   testDir: './tests/e2e',
   timeout: 60_000,
   retries: 0,
+  workers: isCi ? 1 : undefined,
   webServer: externalBaseURL
     ? undefined
     : {
@@ -24,7 +25,7 @@ export default defineConfig({
       },
   use: {
     baseURL: externalBaseURL ?? defaultBaseURL,
-    trace: 'on-first-retry',
+    trace: isCi ? 'retain-on-failure' : 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
   },
