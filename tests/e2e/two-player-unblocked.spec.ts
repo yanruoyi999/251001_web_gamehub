@@ -46,12 +46,18 @@ test.describe('2 Player Unblocked collection', () => {
 
     await page.keyboard.down('w');
     await page.keyboard.down('ArrowDown');
-    await page.waitForTimeout(250);
-    await page.keyboard.up('ArrowDown');
-    await page.keyboard.up('w');
-
-    await expect.poll(() => paddleOne.getAttribute('style')).not.toBe(beforeOne);
-    await expect.poll(() => paddleTwo.getAttribute('style')).not.toBe(beforeTwo);
+    try {
+      await expect.poll(async () => {
+        const [afterOne, afterTwo] = await Promise.all([
+          paddleOne.getAttribute('style'),
+          paddleTwo.getAttribute('style'),
+        ]);
+        return afterOne !== beforeOne && afterTwo !== beforeTwo;
+      }).toBe(true);
+    } finally {
+      await page.keyboard.up('ArrowDown');
+      await page.keyboard.up('w');
+    }
   });
 
   test('fullscreen control is reversible and mobile limitation is explicit', async ({ page }) => {
