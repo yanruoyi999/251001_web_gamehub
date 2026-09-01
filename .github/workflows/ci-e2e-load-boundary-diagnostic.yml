@@ -1,0 +1,141 @@
+name: CI E2E load-boundary diagnostic
+
+on:
+  push:
+    branches:
+      - diag/ci-e2e-load-boundary-20260901
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout diagnostic harness
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.ref }}
+          path: harness
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.28.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22.22.0
+
+      - name: Install harness dependencies and browsers
+        working-directory: harness
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm exec playwright install --with-deps chromium firefox webkit
+
+      - name: Prepare diagnostic artifact directory
+        run: mkdir -p "$RUNNER_TEMP/luma-ci-e2e-load-boundary"
+
+      - name: Prepare immutable control checkout
+        id: control_checkout
+        continue-on-error: true
+        env:
+          BASE_SHA: fdd7ba59e3e9125582d92f1000842de02dfcbd14
+        run: |
+          set -euo pipefail
+          target="$RUNNER_TEMP/luma-control"
+          git clone --no-hardlinks --no-checkout "$GITHUB_WORKSPACE/harness" "$target"
+          git -C "$target" checkout --detach "$BASE_SHA"
+          test -z "$(git -C "$target" status --porcelain)"
+          actual_sha="$(git -C "$target" rev-parse HEAD)"
+          test "$actual_sha" = "$BASE_SHA"
+          jq -n --arg expected_sha "$BASE_SHA" --arg actual_sha "$actual_sha" \
+            '{revision: "control", expected_sha: $expected_sha, actual_sha: $actual_sha}' \
+            > "$RUNNER_TEMP/luma-ci-e2e-load-boundary/control-checkout.json"
+
+      - name: Prepare immutable candidate checkout
+        id: candidate_checkout
+        continue-on-error: true
+        env:
+          EXPECTED_CANDIDATE_SHA: 1dc4bff4d6110d5c1f4496436602956d915cd14a
+        run: |
+          set -euo pipefail
+          target="$RUNNER_TEMP/luma-candidate"
+          git clone --no-hardlinks --no-checkout "$GITHUB_WORKSPACE/harness" "$target"
+          git -C "$target" fetch --no-tags --depth=1 "https://github.com/$GITHUB_REPOSITORY.git" refs/pull/32/merge
+          git -C "$target" checkout --detach FETCH_HEAD
+          test -z "$(git -C "$target" status --porcelain)"
+          actual_sha="$(git -C "$target" rev-parse HEAD)"
+          jq -n --arg expected_sha "$EXPECTED_CANDIDATE_SHA" --arg actual_sha "$actual_sha" \
+            '{revision: "candidate", expected_sha: $expected_sha, actual_sha: $actual_sha}' \
+            > "$RUNNER_TEMP/luma-ci-e2e-load-boundary/candidate-checkout.json"
+          test "$actual_sha" = "$EXPECTED_CANDIDATE_SHA"
+
+      - name: Run control diagnostic
+        id: control_diagnostic
+        if: ${{ always() && steps.control_checkout.outcome == 'success' }}
+        continue-on-error: true
+        run: >-
+          bash "$GITHUB_WORKSPACE/harness/scripts/diagnose-ci-e2e-load-boundary.sh"
+          --workspace "$RUNNER_TEMP/luma-control"
+          --output "$RUNNER_TEMP/luma-ci-e2e-load-boundary/control"
+          --revision control
+          --port 3217
+
+      - name: Run candidate diagnostic
+        id: candidate_diagnostic
+        if: ${{ always() && steps.candidate_checkout.outcome == 'success' }}
+        continue-on-error: true
+        run: >-
+          bash "$GITHUB_WORKSPACE/harness/scripts/diagnose-ci-e2e-load-boundary.sh"
+          --workspace "$RUNNER_TEMP/luma-candidate"
+          --output "$RUNNER_TEMP/luma-ci-e2e-load-boundary/candidate"
+          --revision candidate
+          --port 3218
+
+      - name: Write combined diagnostic summary
+        if: ${{ always() }}
+        env:
+          CONTROL_CHECKOUT: ${{ steps.control_checkout.outcome }}
+          CANDIDATE_CHECKOUT: ${{ steps.candidate_checkout.outcome }}
+          CONTROL_DIAGNOSTIC: ${{ steps.control_diagnostic.outcome }}
+          CANDIDATE_DIAGNOSTIC: ${{ steps.candidate_diagnostic.outcome }}
+        run: |
+          jq -n \
+            --arg control_checkout "$CONTROL_CHECKOUT" \
+            --arg candidate_checkout "$CANDIDATE_CHECKOUT" \
+            --arg control_diagnostic "$CONTROL_DIAGNOSTIC" \
+            --arg candidate_diagnostic "$CANDIDATE_DIAGNOSTIC" \
+            '{
+              control_checkout: $control_checkout,
+              candidate_checkout: $candidate_checkout,
+              control_diagnostic: $control_diagnostic,
+              candidate_diagnostic: $candidate_diagnostic
+            }' > "$RUNNER_TEMP/luma-ci-e2e-load-boundary/summary.json"
+
+      - name: Upload diagnostic evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: luma-ci-e2e-load-boundary-${{ github.run_id }}-${{ github.run_attempt }}
+          if-no-files-found: error
+          retention-days: 3
+          path: ${{ runner.temp }}/luma-ci-e2e-load-boundary
+
+      - name: Fail after evidence upload when either revision is not green
+        if: ${{ always() }}
+        env:
+          CONTROL_CHECKOUT: ${{ steps.control_checkout.outcome }}
+          CANDIDATE_CHECKOUT: ${{ steps.candidate_checkout.outcome }}
+          CONTROL_DIAGNOSTIC: ${{ steps.control_diagnostic.outcome }}
+          CANDIDATE_DIAGNOSTIC: ${{ steps.candidate_diagnostic.outcome }}
+        run: |
+          test "$CONTROL_CHECKOUT" = success
+          test "$CANDIDATE_CHECKOUT" = success
+          test "$CONTROL_DIAGNOSTIC" = success
+          test "$CANDIDATE_DIAGNOSTIC" = success
