@@ -307,4 +307,57 @@ describe('CI E2E load-boundary diagnostic harness', () => {
       rmSync(directory, { force: true, recursive: true });
     }
   });
+
+  it('writes a nonempty summary and propagates jq summary failures', () => {
+    const directory = mkdtempSync(join(tmpdir(), 'luma-ci-e2e-summary-contract-'));
+    const output = join(directory, 'output');
+    const invalidOutput = join(directory, 'invalid-output');
+
+    try {
+      const completed = spawnSync(
+        'bash',
+        [
+          scriptPath,
+          '--summary-fixture',
+          '--workspace',
+          '/fixture-control',
+          '--output',
+          output,
+          '--revision',
+          'control',
+          '--port',
+          '3217',
+        ],
+        { cwd: repositoryRoot, encoding: 'utf8' },
+      );
+
+      expect(completed.status).toBe(0);
+      expect(JSON.parse(readFileSync(join(output, 'summary.json'), 'utf8'))).toMatchObject({
+        revision: 'control',
+        diagnostic_config: '/fixture-control/playwright.ci-diagnostic.config.ts',
+        exits: { overall: 0 },
+      });
+
+      const invalid = spawnSync(
+        'bash',
+        [
+          scriptPath,
+          '--summary-fixture-invalid-jq',
+          '--workspace',
+          '/fixture-candidate',
+          '--output',
+          invalidOutput,
+          '--revision',
+          'candidate',
+          '--port',
+          '3218',
+        ],
+        { cwd: repositoryRoot, encoding: 'utf8' },
+      );
+
+      expect(invalid.status).not.toBe(0);
+    } finally {
+      rmSync(directory, { force: true, recursive: true });
+    }
+  });
 });

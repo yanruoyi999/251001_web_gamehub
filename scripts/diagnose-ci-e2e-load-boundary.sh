@@ -12,7 +12,7 @@ readonly DIAGNOSTIC_CONFIG_NAME='playwright.ci-diagnostic.config.ts'
 readonly DIAGNOSTIC_CONFIG_SOURCE="$HARNESS_ROOT/$DIAGNOSTIC_CONFIG_NAME"
 
 usage() {
-  echo "usage: $0 --dry-run | --validate-result --result PATH --expected-count N --summary PATH | --workspace PATH --output PATH --revision control|candidate --port PORT" >&2
+  echo "usage: $0 --dry-run | --validate-result --result PATH --expected-count N --summary PATH | [--summary-fixture|--summary-fixture-invalid-jq] --workspace PATH --output PATH --revision control|candidate --port PORT" >&2
 }
 
 write_dry_run() {
@@ -154,6 +154,7 @@ workspace=''
 output=''
 revision=''
 port=''
+summary_fixture=''
 
 while [[ "$#" -gt 0 ]]; do
   case "$1" in
@@ -172,6 +173,14 @@ while [[ "$#" -gt 0 ]]; do
     --port)
       port="${2:-}"
       shift 2
+      ;;
+    --summary-fixture)
+      summary_fixture='valid'
+      shift
+      ;;
+    --summary-fixture-invalid-jq)
+      summary_fixture='invalid-jq'
+      shift
       ;;
     *)
       usage
@@ -229,12 +238,13 @@ write_summary() {
     overall_exit=1
   fi
 
-  jq -n \
+  if ! jq -n \
     --arg revision "$revision" \
     --arg workspace "$workspace" \
     --arg base_sha "$BASE_SHA" \
     --arg candidate_ref "$CANDIDATE_REF" \
     --arg base_url "$base_url" \
+    --arg diagnostic_config_path "$diagnostic_config_path" \
     --arg node_version "$(node --version 2>/dev/null || true)" \
     --arg pnpm_version "$(pnpm --version 2>/dev/null || true)" \
     --argjson install_exit "$install_exit" \
@@ -273,12 +283,32 @@ write_summary() {
         diagnostic_config: $diagnostic_config_exit,
         overall: $overall_exit
       }
-    }' > "$output/summary.json"
+    }' > "$output/summary.json"; then
+    return 1
+  fi
 
   return "$overall_exit"
 }
 
 trap cleanup EXIT
+
+if [[ "$summary_fixture" != '' ]]; then
+  install_exit=0
+  build_exit=0
+  server_exit=0
+  load_boundary_exit=0
+  webkit_pong_exit=0
+  load_boundary_count_exit=0
+  webkit_pong_count_exit=0
+  diagnostic_config_exit=0
+
+  if [[ "$summary_fixture" == 'invalid-jq' ]]; then
+    printf 'not-json\n' > "$playwright_dir/load-boundary-summary.json"
+  fi
+
+  write_summary
+  exit $?
+fi
 
 {
   echo "revision=$revision"
