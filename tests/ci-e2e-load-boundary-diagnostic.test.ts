@@ -1,5 +1,5 @@
 import { execFileSync, spawnSync } from 'node:child_process';
-import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -34,6 +34,38 @@ const failureCluster = [
   ['tests/e2e/game-browsing.spec.ts', 'iphone-13', '英文游戏目录的首方图片资源不返回 4xx'],
   ['tests/e2e/mobile-disclosure.spec.ts', 'iphone-13', 'opens navigation and advanced filters on the first click'],
 ] as const;
+
+function writeCompleteEvidenceFixture(output: string, arm: 'A' | 'B') {
+  const logs = join(output, 'logs');
+  const playwright = join(output, 'playwright');
+  mkdirSync(logs, { recursive: true });
+  mkdirSync(playwright, { recursive: true });
+  writeFileSync(join(logs, 'build-config.sha256'), 'config  build\n');
+  writeFileSync(join(logs, 'build-output-identity.sha256'), 'output  .next\n');
+  writeFileSync(join(logs, 'server.stdout.log'), 'ready\n');
+  writeFileSync(join(logs, 'server.stderr.log'), '');
+  writeFileSync(join(logs, 'health.json'), '{"ok":true}\n');
+  writeFileSync(join(logs, 'health.err'), '');
+  writeFileSync(join(logs, 'server.pid'), '4242\n');
+  writeFileSync(join(logs, 'server-rss.tsv'), '2026-09-01T00:00:00Z\t4242  12345 next start\n');
+  writeFileSync(join(logs, 'readiness-probes.tsv'), ['/api/health', '/en', '/en/games', '/en/guides/google-snake-mods'].map((route) => `2026-09-01T00:00:00Z\t${route}\t200\t0.01`).join('\n') + '\n');
+  writeFileSync(join(logs, 'listener-receipt.json'), JSON.stringify({ arm, endpoint: arm === 'A' ? 'http://localhost:3217' : 'http://127.0.0.1:3217', server_host: arm === 'A' ? 'localhost' : '127.0.0.1', resolved_addresses: arm === 'A' ? ['127.0.0.1'] : ['127.0.0.1'], listener: arm === 'A' ? '127.0.0.1:3217 (LISTEN)' : '127.0.0.1:3217 (LISTEN)', bind_verified: true }));
+  writeFileSync(join(logs, 'post-arm-isolation.json'), JSON.stringify({ port: 3217, server_pid: 4242, sampler_pid: 4243, port_listener_absent: true, server_pid_alive: false, sampler_pid_alive: false }));
+  const results = failureCluster.map(([spec, project, title], index) => {
+    const caseDirectory = join(playwright, `case-${index + 1}`);
+    mkdirSync(join(caseDirectory, 'results'), { recursive: true });
+    const result = { status: 'pass', expected_count: 1, collected_count: 1, executed_count: 1, skipped_count: 0, passed_count: 1, failed_count: 0 };
+    writeFileSync(join(caseDirectory, 'result.json'), JSON.stringify({ stats: { expected: 1, unexpected: 0, flaky: 0, skipped: 0 }, suites: [] }));
+    writeFileSync(join(caseDirectory, 'summary.json'), JSON.stringify(result));
+    writeFileSync(join(caseDirectory, 'case.json'), JSON.stringify({ index: index + 1, spec, project, title, result }));
+    writeFileSync(join(caseDirectory, 'results', 'trace.zip'), 'trace');
+    writeFileSync(join(caseDirectory, 'results', 'video.webm'), 'video');
+    writeFileSync(join(caseDirectory, 'results', 'screenshot.png'), 'screenshot');
+    writeFileSync(join(logs, `case-${index + 1}.log`), 'pw:api request /_next/image and RSC\n');
+    return { index: index + 1, spec, project, title, result };
+  });
+  writeFileSync(join(playwright, 'cases.json'), JSON.stringify(results));
+}
 
 describe('CI E2E endpoint A/B diagnostic harness', () => {
   it('dry-runs the same-immutable 14-case endpoint experiment', () => {
@@ -114,9 +146,36 @@ describe('CI E2E endpoint A/B diagnostic harness', () => {
     try {
       const completed = spawnSync('bash', [scriptPath, '--summary-fixture', '--workspace', '/fixture-a', '--output', output, '--arm', 'A', '--port', '3217'], { cwd: repositoryRoot, encoding: 'utf8' });
       expect(completed.status).toBe(0);
-      expect(JSON.parse(readFileSync(join(output, 'summary.json'), 'utf8'))).toMatchObject({ arm: 'A', endpoint: 'http://localhost:3217', immutable_sha: 'aa0acf80231f202c6529423db1e2dbaa87b3ee16', expected_count: 14, counts: { selected: 14, collected: 0, executed: 0, skipped: 0, passed: 0, failed: 0 }, exits: { overall: 0 } });
+      expect(JSON.parse(readFileSync(join(output, 'summary.json'), 'utf8'))).toMatchObject({ arm: 'A', endpoint: 'http://localhost:3217', immutable_sha: 'aa0acf80231f202c6529423db1e2dbaa87b3ee16', expected_count: 14, counts: { selected: 0, collected: 0, executed: 0, skipped: 0, passed: 0, failed: 0 }, exits: { overall: 0 } });
       const invalid = spawnSync('bash', [scriptPath, '--summary-fixture-invalid-jq', '--workspace', '/fixture-b', '--output', invalidOutput, '--arm', 'B', '--port', '3217'], { cwd: repositoryRoot, encoding: 'utf8' });
       expect(invalid.status).not.toBe(0);
+    } finally {
+      rmSync(directory, { force: true, recursive: true });
+    }
+  });
+
+  it('propagates a final summary jq write failure even when every other arm exit is green', () => {
+    const directory = mkdtempSync(join(tmpdir(), 'luma-ci-e2e-summary-write-'));
+    const output = join(directory, 'output');
+    try {
+      const completed = spawnSync('bash', [scriptPath, '--summary-fixture-jq-write-failure', '--workspace', '/fixture-a', '--output', output, '--arm', 'A', '--port', '3217'], { cwd: repositoryRoot, encoding: 'utf8' });
+      expect(completed.status).not.toBe(0);
+      expect(completed.stderr).toMatch(/summary\.json.*(directory|Is a directory)/i);
+    } finally {
+      rmSync(directory, { force: true, recursive: true });
+    }
+  });
+
+  it('accepts complete evidence and rejects a missing per-case screenshot without relying on execution success', () => {
+    const directory = mkdtempSync(join(tmpdir(), 'luma-ci-e2e-evidence-'));
+    const output = join(directory, 'output');
+    try {
+      writeCompleteEvidenceFixture(output, 'B');
+      const complete = spawnSync('bash', [scriptPath, '--validate-evidence', '--output', output, '--arm', 'B', '--port', '3217'], { cwd: repositoryRoot, encoding: 'utf8' });
+      expect(complete.status, complete.stderr).toBe(0);
+      rmSync(join(output, 'playwright', 'case-14', 'results', 'screenshot.png'));
+      const missingScreenshot = spawnSync('bash', [scriptPath, '--validate-evidence', '--output', output, '--arm', 'B', '--port', '3217'], { cwd: repositoryRoot, encoding: 'utf8' });
+      expect(missingScreenshot.status).not.toBe(0);
     } finally {
       rmSync(directory, { force: true, recursive: true });
     }

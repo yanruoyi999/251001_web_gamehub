@@ -74,6 +74,9 @@ jobs:
             2>&1 | tee "$RUNNER_TEMP/luma-ci-e2e-load-boundary/build.log"
           shasum -a 256 package.json pnpm-lock.yaml playwright.config.ts \
             > "$RUNNER_TEMP/luma-ci-e2e-load-boundary/immutable-build-config.sha256"
+          find .next -type f -print0 | sort -z | xargs -0 shasum -a 256 \
+            > "$RUNNER_TEMP/luma-ci-e2e-load-boundary/immutable-build-output.sha256"
+          test -s "$RUNNER_TEMP/luma-ci-e2e-load-boundary/immutable-build-output.sha256"
 
       - name: Run endpoint arm A
         id: arm_a
@@ -85,6 +88,7 @@ jobs:
           --output "$RUNNER_TEMP/luma-ci-e2e-load-boundary/arm-a"
           --arm A
           --port 3217
+          --build-identity "$RUNNER_TEMP/luma-ci-e2e-load-boundary/immutable-build-output.sha256"
 
       - name: Run endpoint arm B
         id: arm_b
@@ -96,6 +100,7 @@ jobs:
           --output "$RUNNER_TEMP/luma-ci-e2e-load-boundary/arm-b"
           --arm B
           --port 3217
+          --build-identity "$RUNNER_TEMP/luma-ci-e2e-load-boundary/immutable-build-output.sha256"
 
       - name: Write combined diagnostic summary
         if: ${{ always() }}
@@ -144,6 +149,9 @@ jobs:
             .arms.A.counts.collected == 14 and
             .arms.A.counts.executed == 14 and
             .arms.A.counts.skipped == 0 and
+            .arms.A.build_identity.content_sha256 != "" and
+            .arms.A.exits.evidence == 0 and
+            .arms.A.exits.server_lifecycle == 0 and
             (.arms.A.results | length) == 14 and
             (.arms.A.results | all(.[]; .result.status == "pass" and .result.collected_count == 1 and .result.executed_count == 1 and .result.skipped_count == 0)) and
             .arms.B.arm == "B" and
@@ -155,6 +163,9 @@ jobs:
             .arms.B.counts.collected == 14 and
             .arms.B.counts.executed == 14 and
             .arms.B.counts.skipped == 0 and
+            .arms.B.build_identity.content_sha256 == .arms.A.build_identity.content_sha256 and
+            .arms.B.exits.evidence == 0 and
+            .arms.B.exits.server_lifecycle == 0 and
             (.arms.B.results | length) == 14 and
             (.arms.B.results | all(.[]; .result.status == "pass" and .result.collected_count == 1 and .result.executed_count == 1 and .result.skipped_count == 0))
           ' "$RUNNER_TEMP/luma-ci-e2e-load-boundary/summary.json" > /dev/null
