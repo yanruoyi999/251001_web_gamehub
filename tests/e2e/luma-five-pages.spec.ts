@@ -52,15 +52,6 @@ const pages = [
 test.describe('Luma five-page batch', () => {
   for (const pageDefinition of pages) {
     test(`${pageDefinition.slug} renders its noindex contract and first interaction`, async ({ page }) => {
-      if ('query' in pageDefinition || [
-        'draw-a-perfect-circle',
-        'chinese-checkers',
-        'stacker-game',
-        'two-player-games',
-      ].includes(pageDefinition.slug)) {
-        await page.setViewportSize({ width: 360, height: 800 });
-      }
-
       const response = await page.goto(
         `/en/games/${pageDefinition.slug}${'query' in pageDefinition ? pageDefinition.query : ''}`,
         {

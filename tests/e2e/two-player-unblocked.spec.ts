@@ -47,14 +47,12 @@ test.describe('2 Player Unblocked collection', () => {
     await page.keyboard.down('w');
     await page.keyboard.down('ArrowDown');
     try {
-      // Keep both keys down while polling. Headless WebKit may not advance a
-      // sandboxed iframe's animation frame during a driver-side fixed timeout.
       await expect.poll(async () => {
-        const [currentOne, currentTwo] = await Promise.all([
+        const [afterOne, afterTwo] = await Promise.all([
           paddleOne.getAttribute('style'),
           paddleTwo.getAttribute('style'),
         ]);
-        return currentOne !== beforeOne && currentTwo !== beforeTwo;
+        return afterOne !== beforeOne && afterTwo !== beforeTwo;
       }).toBe(true);
     } finally {
       await page.keyboard.up('ArrowDown');
