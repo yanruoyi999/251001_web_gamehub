@@ -95,7 +95,7 @@ async function getSitemapGames(): Promise<SitemapGameEntry[]> {
   }
 
   try {
-    const [{ db }, { games }, { eq }] = await Promise.all([
+    const [{ db }, { games }, { and, eq }] = await Promise.all([
       import('@/lib/db'),
       import('@/db/schema'),
       import('drizzle-orm'),
@@ -108,7 +108,12 @@ async function getSitemapGames(): Promise<SitemapGameEntry[]> {
         updatedAt: games.updatedAt,
       })
       .from(games)
-      .where(eq(games.status, 'active'));
+      .where(
+        and(
+          eq(games.status, 'active'),
+          eq(games.embedPermissionStatus, 'verified'),
+        ),
+      );
 
     const rows = await withSitemapTimeout(queryPromise);
 
@@ -117,8 +122,7 @@ async function getSitemapGames(): Promise<SitemapGameEntry[]> {
         .filter((game) =>
           shouldIncludeGameInSitemap({
             slug: game.slug,
-            // Remote catalogue records do not yet carry an auditable embed permission.
-            embedPermissionStatus: null,
+            embedPermissionStatus: 'verified',
           }),
         )
         .map((game) => ({

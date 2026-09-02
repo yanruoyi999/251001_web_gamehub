@@ -34,7 +34,8 @@ export interface RuntimeResult extends RuntimeSample {
   robotsMeta: string;
   hasHorizontalOverflow: boolean;
   playButtonVisible: boolean;
-  iframeVisibleAfterPlay: boolean | null;
+  iframeElementVisibleAfterPlay: boolean | null;
+  externalFrameLoaded: boolean | null;
   fullscreenButtonVisible: boolean | null;
   reason: string;
 }
@@ -53,8 +54,6 @@ const DEFAULT_SAMPLES: RuntimeSample[] = [
   { path: '/en/guides/obby-parkour-with-ragdoll-guide', type: 'guide' },
   { path: '/en/guides/rail-cart-buddies-guide', type: 'guide' },
   { path: '/en/guides/telemount-walkthrough', type: 'guide' },
-  { path: '/en/games/drive-mad', type: 'game', requiresPlayableIframe: true },
-  { path: '/en/games/duo-vikings', type: 'game', requiresPlayableIframe: true },
 ];
 
 function argValue(name: string) {
@@ -73,6 +72,11 @@ function buildUrl(baseUrl: string, samplePath: string) {
 function formatMs(value: number | null) {
   if (value === null) return 'n/a';
   return `${Math.round(value)}ms`;
+}
+
+function formatVerification(value: boolean | null) {
+  if (value === null) return 'not-verified';
+  return value ? 'yes' : 'no';
 }
 
 function markdownEscape(value: string) {
@@ -123,9 +127,16 @@ function scoreRuntime(result: Omit<RuntimeResult, 'score' | 'reason'>) {
     score -= 15;
     reasons.push('play button not visible on mobile');
   }
-  if (result.requiresPlayableIframe && result.iframeVisibleAfterPlay === false) {
+  if (
+    result.requiresPlayableIframe &&
+    result.iframeElementVisibleAfterPlay === false
+  ) {
     score -= 18;
-    reasons.push('iframe not visible after Play now');
+    reasons.push('iframe shell not visible after Play now');
+  }
+  if (result.requiresPlayableIframe && result.externalFrameLoaded === false) {
+    score -= 18;
+    reasons.push('external frame did not load during explicit verification');
   }
   if (result.requiresPlayableIframe && result.fullscreenButtonVisible === false) {
     score -= 8;
@@ -134,17 +145,23 @@ function scoreRuntime(result: Omit<RuntimeResult, 'score' | 'reason'>) {
 
   return {
     score: Math.max(0, score),
-    reason: reasons.join('; ') || 'Mobile runtime sample passed the current performance and playability thresholds.',
+    reason:
+      reasons.join('; ') ||
+      'Mobile runtime sample passed the current performance and UI-shell thresholds.',
   };
 }
 
 async function collectPerformance(page: Page) {
   return page.evaluate(() => {
-    const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined;
+    const navigation = performance.getEntriesByType('navigation')[0] as
+      | PerformanceNavigationTiming
+      | undefined;
     const fcp = performance
       .getEntriesByType('paint')
       .find((entry) => entry.name === 'first-contentful-paint');
-    const resources = performance.getEntriesByType('resource') as PerformanceResourceTiming[];
+    const resources = performance.getEntriesByType(
+      'resource',
+    ) as PerformanceResourceTiming[];
     const responseStartMs = navigation?.responseStart ?? 0;
     const loadEventEnd = navigation?.loadEventEnd ?? 0;
     const domContentLoadedEventEnd = navigation?.domContentLoadedEventEnd ?? 0;
@@ -152,18 +169,56 @@ async function collectPerformance(page: Page) {
 
     return {
       responseStartMs,
-      loadMs: navigation && loadEventEnd > 0 ? Math.max(0, loadEventEnd - responseStartMs) : 0,
-      domContentLoadedMs: navigation && domContentLoadedEventEnd > 0
-        ? Math.max(0, domContentLoadedEventEnd - responseStartMs)
-        : 0,
-      firstContentfulPaintMs: fcpStart === null ? null : Math.max(0, fcpStart - responseStartMs),
-      totalTransferKb: resources.reduce((sum, entry) => sum + (entry.transferSize || 0), 0) / 1024,
+      loadMs:
+        navigation && loadEventEnd > 0
+          ? Math.max(0, loadEventEnd - responseStartMs)
+          : 0,
+      domContentLoadedMs:
+        navigation && domContentLoadedEventEnd > 0
+          ? Math.max(0, domContentLoadedEventEnd - responseStartMs)
+          : 0,
+      firstContentfulPaintMs:
+        fcpStart === null ? null : Math.max(0, fcpStart - responseStartMs),
+      totalTransferKb:
+        resources.reduce((sum, entry) => sum + (entry.transferSize || 0), 0) /
+        1024,
       requestCount: resources.length,
     };
   });
 }
 
-async function samplePage(browser: Browser, baseUrl: string, sample: RuntimeSample): Promise<RuntimeResult> {
+function hasLoadedExternalFrame(page: Page, baseOrigin: string) {
+  return page.frames().some((frame) => {
+    if (frame === page.mainFrame()) return false;
+    const frameUrl = frame.url();
+    if (!frameUrl || frameUrl === 'about:blank') return false;
+    try {
+      return new URL(frameUrl).origin !== baseOrigin;
+    } catch {
+      return false;
+    }
+  });
+}
+
+async function waitForExternalFrame(
+  page: Page,
+  baseOrigin: string,
+  timeoutMs = 4_000,
+) {
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    if (hasLoadedExternalFrame(page, baseOrigin)) return true;
+    await page.waitForTimeout(250);
+  }
+  return hasLoadedExternalFrame(page, baseOrigin);
+}
+
+async function samplePage(
+  browser: Browser,
+  baseUrl: string,
+  sample: RuntimeSample,
+  verifyExternalFrames: boolean,
+): Promise<RuntimeResult> {
   const context = await browser.newContext({
     ...devices['iPhone 12'],
     locale: 'en-US',
@@ -177,8 +232,9 @@ async function samplePage(browser: Browser, baseUrl: string, sample: RuntimeSamp
 
     if (
       sample.requiresPlayableIframe &&
+      !verifyExternalFrames &&
       requestOrigin !== baseOrigin &&
-      ['document', 'iframe'].includes(resourceType)
+      resourceType === 'document'
     ) {
       await route.abort();
       return;
@@ -197,11 +253,20 @@ async function samplePage(browser: Browser, baseUrl: string, sample: RuntimeSamp
   });
 
   const url = buildUrl(baseUrl, sample.path);
-  const response = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 15_000 });
+  const response = await page.goto(url, {
+    waitUntil: 'domcontentloaded',
+    timeout: 15_000,
+  });
   await page.waitForTimeout(sample.requiresPlayableIframe ? 2_000 : 600);
   const twoPlayerPlayButton = page.locator('[data-two-player-start]').first();
-  const genericPlayButton = page.locator('button').filter({ hasText: /play now|开始游戏/i }).first();
-  const playButton = (await twoPlayerPlayButton.count()) > 0 ? twoPlayerPlayButton : genericPlayButton;
+  const genericPlayButton = page
+    .locator('button')
+    .filter({ hasText: /play now|开始游戏/i })
+    .first();
+  const playButton =
+    (await twoPlayerPlayButton.count()) > 0
+      ? twoPlayerPlayButton
+      : genericPlayButton;
 
   const [
     performanceData,
@@ -212,30 +277,58 @@ async function samplePage(browser: Browser, baseUrl: string, sample: RuntimeSamp
   ] = await Promise.all([
     collectPerformance(page),
     page.evaluate(() => Boolean(document.querySelector('link[rel="canonical"]'))),
-    page.evaluate(() => document.querySelector('meta[name="robots"]')?.getAttribute('content') ?? ''),
-    page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1),
+    page.evaluate(
+      () =>
+        document.querySelector('meta[name="robots"]')?.getAttribute('content') ??
+        '',
+    ),
+    page.evaluate(
+      () =>
+        document.documentElement.scrollWidth >
+        document.documentElement.clientWidth + 1,
+    ),
     playButton.isVisible().catch(() => false),
   ]);
 
-  let iframeVisibleAfterPlay: boolean | null = null;
+  let iframeElementVisibleAfterPlay: boolean | null = null;
+  let externalFrameLoaded: boolean | null = null;
   let fullscreenButtonVisible: boolean | null = null;
 
   if (sample.requiresPlayableIframe) {
     if (playButtonVisible) {
       await playButton.click();
-      await page.locator('iframe').first().waitFor({ state: 'visible', timeout: 4_000 }).catch(() => undefined);
+      await page
+        .locator('iframe')
+        .first()
+        .waitFor({ state: 'visible', timeout: 4_000 })
+        .catch(() => undefined);
       await page.waitForTimeout(400);
     }
 
-    iframeVisibleAfterPlay = await page.locator('iframe').first().isVisible().catch(() => false);
-    const twoPlayerFullscreenButton = page.locator('[data-two-player-fullscreen]').first();
-    const genericFullscreenButton = page
-      .getByRole('button', { name: /play fullscreen|全屏游玩|exit fullscreen|退出全屏/i })
+    iframeElementVisibleAfterPlay = await page
+      .locator('iframe')
+      .first()
+      .isVisible()
+      .catch(() => false);
+    externalFrameLoaded = verifyExternalFrames
+      ? await waitForExternalFrame(page, baseOrigin)
+      : null;
+
+    const twoPlayerFullscreenButton = page
+      .locator('[data-two-player-fullscreen]')
       .first();
-    const fullscreenButton = (await twoPlayerFullscreenButton.count()) > 0
-      ? twoPlayerFullscreenButton
-      : genericFullscreenButton;
-    fullscreenButtonVisible = await fullscreenButton.isVisible().catch(() => false);
+    const genericFullscreenButton = page
+      .getByRole('button', {
+        name: /play fullscreen|全屏游玩|exit fullscreen|退出全屏/i,
+      })
+      .first();
+    const fullscreenButton =
+      (await twoPlayerFullscreenButton.count()) > 0
+        ? twoPlayerFullscreenButton
+        : genericFullscreenButton;
+    fullscreenButtonVisible = await fullscreenButton
+      .isVisible()
+      .catch(() => false);
   }
 
   const resultWithoutScore = {
@@ -253,10 +346,13 @@ async function samplePage(browser: Browser, baseUrl: string, sample: RuntimeSamp
     robotsMeta,
     hasHorizontalOverflow,
     playButtonVisible,
-    iframeVisibleAfterPlay,
+    iframeElementVisibleAfterPlay,
+    externalFrameLoaded,
     fullscreenButtonVisible,
   };
   const { score, reason } = scoreRuntime(resultWithoutScore);
+
+  await context.close();
 
   return {
     ...resultWithoutScore,
@@ -265,20 +361,27 @@ async function samplePage(browser: Browser, baseUrl: string, sample: RuntimeSamp
   };
 }
 
-export function buildReport(results: RuntimeResult[], baseUrl: string, generatedAt = new Date().toISOString()) {
-  const underThreshold = results.filter((result) => result.score < DEFAULT_FAIL_UNDER);
+export function buildReport(
+  results: RuntimeResult[],
+  baseUrl: string,
+  generatedAt = new Date().toISOString(),
+) {
+  const underThreshold = results.filter(
+    (result) => result.score < DEFAULT_FAIL_UNDER,
+  );
   const lines = [
     '# Luma Runtime Quality Sampling',
     '',
     `Generated: ${generatedAt}`,
     `Base URL: ${baseUrl}`,
     '',
-    'Scope: mobile Playwright sampling for high-value indexable pages. This is a companion gate for `docs/page-quality-scorecard.md`, adding runtime performance, mobile layout, and actual playable-iframe checks that static scoring cannot prove. Analytics collection is blocked during sampling so automated visits do not contaminate GA4, Clarity, or Vercel telemetry. TTFB/transport is reported separately; page timing scores use response-relative DCL/FCP/load so one noisy network route does not downgrade every page equally.',
+    'Scope: mobile Playwright sampling for high-value indexable pages. Deterministic CI verifies the Luma player shell while intentionally blocking third-party document navigation. Real external frame loading is reported only when `--verify-external-frames` is explicitly enabled; otherwise it is `not-verified` and must never be presented as successful playability. Analytics collection is blocked during sampling so automated visits do not contaminate GA4, Clarity, or Vercel telemetry.',
     '',
     '## Thresholds',
     '',
     '- Sampled pages must score 80 or higher before being treated as hardened index targets.',
-    '- Game pages must expose the Play button on mobile, load an iframe after the click, and keep the Luma fullscreen control visible.',
+    '- Iframe game pages must expose the Play button, render the iframe shell after the click, and keep the Luma fullscreen control visible.',
+    '- External game loading is a separate verification signal; CI does not infer it from iframe DOM visibility.',
     '- Pages are penalized for missing canonical tags, mobile horizontal overflow, slow load/FCP, excessive transfer size, many requests, and console/page errors.',
     '',
     '## Summary',
@@ -289,26 +392,30 @@ export function buildReport(results: RuntimeResult[], baseUrl: string, generated
     '',
     '## Samples',
     '',
-    '| Path | Type | Score | Status | TTFB | DCL after response | Load after response | FCP after response | Transfer | Requests | Canonical | Robots | Mobile overflow | Playable | Fullscreen | Reason |',
-    '| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- | --- | --- | --- | --- | --- |',
-    ...results.map((result) => `| ${[
-      markdownEscape(result.path),
-      result.type,
-      result.score,
-      result.status ?? 'n/a',
-      formatMs(result.responseStartMs),
-      formatMs(result.domContentLoadedMs),
-      formatMs(result.loadMs),
-      formatMs(result.firstContentfulPaintMs),
-      `${Math.round(result.totalTransferKb)}KB`,
-      result.requestCount,
-      result.hasCanonical ? 'yes' : 'no',
-      result.robotsMeta || 'index',
-      result.hasHorizontalOverflow ? 'yes' : 'no',
-      result.iframeVisibleAfterPlay === null ? 'n/a' : result.iframeVisibleAfterPlay ? 'yes' : 'no',
-      result.fullscreenButtonVisible === null ? 'n/a' : result.fullscreenButtonVisible ? 'yes' : 'no',
-      markdownEscape(result.reason),
-    ].join(' | ')} |`),
+    '| Path | Type | Score | Status | TTFB | DCL after response | Load after response | FCP after response | Transfer | Requests | Canonical | Robots | Mobile overflow | Iframe shell | External load | Fullscreen | Reason |',
+    '| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- | --- | --- | --- | --- | --- | --- |',
+    ...results.map(
+      (result) =>
+        `| ${[
+          markdownEscape(result.path),
+          result.type,
+          result.score,
+          result.status ?? 'n/a',
+          formatMs(result.responseStartMs),
+          formatMs(result.domContentLoadedMs),
+          formatMs(result.loadMs),
+          formatMs(result.firstContentfulPaintMs),
+          `${Math.round(result.totalTransferKb)}KB`,
+          result.requestCount,
+          result.hasCanonical ? 'yes' : 'no',
+          result.robotsMeta || 'index',
+          result.hasHorizontalOverflow ? 'yes' : 'no',
+          formatVerification(result.iframeElementVisibleAfterPlay),
+          formatVerification(result.externalFrameLoaded),
+          formatVerification(result.fullscreenButtonVisible),
+          markdownEscape(result.reason),
+        ].join(' | ')} |`,
+    ),
   ];
 
   return `${lines.join('\n')}\n`;
@@ -318,13 +425,16 @@ async function runCli() {
   const baseUrl = normalizeBaseUrl(argValue('--base-url') ?? DEFAULT_BASE_URL);
   const writeTarget = argValue('--write') ?? DEFAULT_WRITE_TARGET;
   const failUnder = Number(argValue('--fail-under') ?? DEFAULT_FAIL_UNDER);
+  const verifyExternalFrames = process.argv.includes('--verify-external-frames');
   const browser = await chromium.launch({ headless: true });
 
   try {
     const results: RuntimeResult[] = [];
     for (const sample of DEFAULT_SAMPLES) {
       console.log(`Sampling ${sample.path}`);
-      results.push(await samplePage(browser, baseUrl, sample));
+      results.push(
+        await samplePage(browser, baseUrl, sample, verifyExternalFrames),
+      );
     }
 
     const report = buildReport(results, baseUrl);
@@ -334,7 +444,9 @@ async function runCli() {
 
     const failures = results.filter((result) => result.score < failUnder);
     if (failures.length > 0) {
-      console.error(`Runtime quality failed for ${failures.length} sample(s): ${failures.map((failure) => `${failure.path}=${failure.score}`).join(', ')}`);
+      console.error(
+        `Runtime quality failed for ${failures.length} sample(s): ${failures.map((failure) => `${failure.path}=${failure.score}`).join(', ')}`,
+      );
       process.exitCode = 1;
     }
   } finally {
@@ -342,9 +454,11 @@ async function runCli() {
       browser.close(),
       new Promise<void>((resolve) => setTimeout(resolve, 3_000)),
     ]).catch(() => undefined);
-    const browserProcess = (browser as Browser & {
-      process?: () => { kill: (signal?: NodeJS.Signals) => boolean } | null;
-    }).process?.();
+    const browserProcess = (
+      browser as Browser & {
+        process?: () => { kill: (signal?: NodeJS.Signals) => boolean } | null;
+      }
+    ).process?.();
     browserProcess?.kill('SIGTERM');
   }
 }

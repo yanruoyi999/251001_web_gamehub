@@ -12,6 +12,10 @@ import {
   type SeoLandingPage,
 } from '@/lib/seo-landing-content';
 import { mockGames } from '@/lib/mock-games';
+import {
+  canRenderGameIframe,
+  shouldPromoteGameInCollections,
+} from '@/lib/games/quality-policy';
 import { getGuidePresentation } from '@/lib/guide-presentation';
 import {
   DEFAULT_OPEN_GRAPH_IMAGES,
@@ -104,6 +108,7 @@ interface GuidePageProps {
 }
 
 const gameIndex = new Map(mockGames.map(game => [game.slug, game]));
+const LUMA_GUIDE_IMAGE = '/og-gamehub.svg';
 
 function getRelatedPages(current: SeoLandingPage, locale: Locale) {
   return current.relatedSlugs
@@ -199,11 +204,18 @@ export default async function GuidePage({ params }: GuidePageProps) {
   };
   const structuredData = [jsonLdArticle, jsonLdFaq, jsonLdBreadcrumb];
   const relatedPages = getRelatedPages(page, locale);
-  const embedGameThumbnail =
-    page.embedGame?.thumbnailUrl ??
-    (page.embedGame?.playSlug
-      ? gameIndex.get(page.embedGame.playSlug)?.thumbnailUrl
-      : undefined);
+  const playGame = page.embedGame?.playSlug
+    ? gameIndex.get(page.embedGame.playSlug)
+    : undefined;
+  const canonicalPlayHref =
+    playGame && shouldPromoteGameInCollections(playGame)
+      ? getLocalizedPath(locale, `/games/${playGame.slug}`)
+      : null;
+  const embedPolicyGame = playGame;
+  const embedGameAllowed = Boolean(
+    page.embedGame && embedPolicyGame && canRenderGameIframe(embedPolicyGame)
+  );
+  const embedGameThumbnail = embedGameAllowed ? LUMA_GUIDE_IMAGE : undefined;
   const { quickAnswer, detailSections } = getGuidePresentation(content);
   const quickAnswerBullets = quickAnswer.bullets?.slice(0, 3) ?? [];
   const formattedUpdatedAt = new Intl.DateTimeFormat(
@@ -333,12 +345,12 @@ export default async function GuidePage({ params }: GuidePageProps) {
           >
             {locale === 'zh' ? '继续看指南' : 'Read the guide'}
           </a>
-          {page.embedGame ? (
+          {embedGameAllowed ? (
             <a
               href="#play"
               className="rounded-md border border-primary/30 bg-background px-4 py-2 text-primary transition hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
-              {page.embedGame.playLabel?.[locale] ??
+              {page.embedGame?.playLabel?.[locale] ??
                 (locale === 'zh' ? '先试玩游戏' : 'Play first')}
             </a>
           ) : null}
@@ -355,7 +367,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
         <DominoesTraining locale={locale} />
       ) : null}
 
-      {page.embedGame ? (
+      {embedGameAllowed && page.embedGame ? (
         <section
           id="play"
           tabIndex={-1}
@@ -371,24 +383,14 @@ export default async function GuidePage({ params }: GuidePageProps) {
                 gameSlug={page.embedGame.playSlug ?? page.slug}
                 source="guide_embed"
                 playLabel={page.embedGame.playLabel?.[locale]}
-                fallbackHref={
-                  page.embedGame.playSlug
-                    ? getLocalizedPath(
-                        locale,
-                        `/games/${page.embedGame.playSlug}`
-                      )
-                    : undefined
-                }
+                fallbackHref={canonicalPlayHref ?? undefined}
               />
             </div>
           </div>
-          {page.embedGame.playSlug ? (
+          {canonicalPlayHref ? (
             <p className="mt-3 text-center text-sm text-muted-foreground">
               <Link
-                href={getLocalizedPath(
-                  locale,
-                  `/games/${page.embedGame.playSlug}`
-                )}
+                href={canonicalPlayHref}
                 className="font-medium text-primary transition hover:text-primary/80"
               >
                 {locale === 'zh'
@@ -419,297 +421,213 @@ export default async function GuidePage({ params }: GuidePageProps) {
             className="mt-2 text-2xl font-semibold text-foreground"
           >
             {locale === 'zh'
-              ? '想换个挑战？试试花光1000亿美元'
-              : 'Try a different challenge: spend $100 billion'}
+              ? '想换一种轻松的浏览器挑战？'
+              : 'Want a different kind of quick browser challenge?'}
           </h2>
-          <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+          <p className="mt-2 text-sm leading-7 text-muted-foreground sm:text-base">
             {locale === 'zh'
-              ? '如果你喜欢快速打开的浏览器挑战，可以试试无需下载、支持撤销购买并生成分享结果的亿万富翁消费模拟器。'
-              : 'If you like quick browser challenges, try a no-download billionaire spending simulator with reversible purchases and a shareable result.'}
+              ? '如果你喜欢 Google Snake 这种打开就能玩、规则简单但适合反复挑战的节奏，可以试试 Luma 的 Spend Bill Gates Money。它把操作压力换成取舍和节奏判断，适合休息时快速玩一轮。'
+              : 'If you like Google Snake because it launches quickly, has simple rules, and still rewards repeat runs, try Luma’s Spend Bill Gates Money. It swaps reflex pressure for tradeoffs and pacing, making it an easy short-session change of pace.'}
           </p>
           <Link
-            href={getLocalizedPath(locale, '/games/spend-bill-gates-money')}
-            className="mt-4 inline-flex min-h-11 items-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            href={getLocalizedPath(
+              locale,
+              '/games/spend-bill-gates-money'
+            )}
+            className="mt-4 inline-flex min-h-11 items-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             {locale === 'zh'
-              ? '试玩花钱模拟游戏'
-              : 'Try the money spending simulator'}{' '}
-            →
+              ? '玩 Spend Bill Gates Money →'
+              : 'Play Spend Bill Gates Money →'}
           </Link>
         </section>
       ) : null}
 
-      {page.video ? (
-        <section className="mx-auto mt-12 max-w-3xl" data-print-hide>
-          <header className="mb-4">
-            <h2 className="text-2xl font-semibold text-foreground">
-              {locale === 'zh' ? '官方玩法视频' : 'Official play video'}
-            </h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {locale === 'zh'
-                ? '视频来自 Playworks 的公开活动页面；如果你的浏览器阻止第三方播放器，仍可直接按文字规则进行。'
-                : 'This video comes from Playworks’ public activity page. If your browser blocks third-party players, the written rules above are complete.'}
-            </p>
-          </header>
-          <div className="aspect-video overflow-hidden rounded-md border border-border bg-black shadow-sm">
-            <iframe
-              src={page.video.embedUrl}
-              title={page.video.title}
-              loading="lazy"
-              className="h-full w-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            />
-          </div>
-          <a
-            href={page.video.sourceUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-3 inline-flex text-sm font-medium text-primary transition hover:text-primary/80"
-          >
-            {locale === 'zh'
-              ? '在 YouTube 核对视频来源 ↗'
-              : 'Verify the video source on YouTube ↗'}
-          </a>
-        </section>
-      ) : null}
-
-      {content.screenshots?.length ? (
-        <section aria-labelledby="verified-game-views" className="mt-12">
-          <header className="mx-auto max-w-3xl text-center">
-            <h2
-              id="verified-game-views"
-              className="text-2xl font-semibold text-foreground"
-            >
-              {locale === 'zh' ? '实测画面' : 'Verified game views'}
-            </h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {locale === 'zh'
-                ? '以下画面来自创作者官方 itch.io 页面中的 HTML5 版本，采集于 2026 年 7 月 21 日。'
-                : 'These views come from the HTML5 build on the creator’s official itch.io page, captured July 21, 2026.'}
-            </p>
-          </header>
-          <div className="mt-6 grid gap-5 md:grid-cols-3">
-            {content.screenshots.map(screenshot => (
-              <figure
-                key={screenshot.url}
-                className="overflow-hidden rounded-md border border-border bg-card shadow-sm"
-              >
-                <Image
-                  src={screenshot.url}
-                  alt={screenshot.alt}
-                  width={960}
-                  height={960}
-                  sizes="(min-width: 768px) 33vw, 100vw"
-                  className="aspect-square w-full bg-black object-contain"
-                />
-                <figcaption className="space-y-2 p-4 text-sm text-muted-foreground">
-                  <p>{screenshot.caption}</p>
-                  <a
-                    href={screenshot.sourceUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex font-medium text-primary transition hover:text-primary/80"
-                  >
-                    {locale === 'zh'
-                      ? '核对官方来源 ↗'
-                      : 'Verify official source ↗'}
-                  </a>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-        </section>
-      ) : null}
-
-      <section
-        id="guide-details"
-        tabIndex={-1}
-        className="mt-10 max-w-5xl scroll-mt-24 border-t border-[#cbdccf] focus:outline-none dark:border-border"
-      >
-        {detailSections.map(section => (
-          <div
-            key={section.title}
-            className="border-b border-[#cbdccf] py-5 dark:border-border"
-          >
-            <h2 className="text-xl font-black text-foreground sm:text-2xl">
-              {section.title}
-            </h2>
-            <p className="mt-2 text-sm leading-6 text-foreground/90 sm:text-base">
-              {section.body}
-            </p>
-            {section.bullets ? (
-              <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm text-muted-foreground">
-                {section.bullets.map((item, bulletIndex) => (
-                  <li key={bulletIndex}>{item}</li>
-                ))}
-              </ul>
-            ) : null}
-          </div>
-        ))}
-      </section>
-
-      <section
-        id="recommendations"
-        tabIndex={-1}
-        className="mt-16 scroll-mt-24 focus:outline-none"
-      >
-        <header className="mb-4 border-b border-[#cbdccf] pb-3 dark:border-border">
-          <h2 className="text-xl font-black text-foreground sm:text-2xl">
-            {locale === 'zh' ? '精选推荐' : 'Featured Picks'}
-          </h2>
-          <p className="mt-1 text-xs text-muted-foreground sm:text-sm">
-            {locale === 'zh'
-              ? '以下游戏可从详情页直接打开浏览器播放器，无需下载安装。'
-              : 'Each recommendation opens a browser player from its detail page with no download required.'}
-          </p>
-        </header>
-
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {content.recommendations.map(item => {
-            const game = gameIndex.get(item.slug);
-            const gameTitle =
-              locale === 'zh'
-                ? (game?.title ?? item.slug)
-                : (game?.titleEn ?? game?.title ?? item.slug);
-            const gameDescription =
-              locale === 'zh'
-                ? (game?.description ?? '')
-                : (game?.descriptionEn ?? game?.description ?? '');
+      {detailSections.length > 0 ? (
+        <section id="guide-details" className="mt-10 max-w-3xl space-y-8">
+          {detailSections.map((section, index) => {
+            const bullets = Array.isArray(section.bullets)
+              ? section.bullets
+              : [];
+            const sectionKey = `${page.slug}-${section.title}-${index}`;
 
             return (
-              <article
-                key={item.slug}
-                className="group flex h-full flex-col justify-between overflow-hidden rounded-[8px] border border-[#cbdccf] bg-white transition hover:-translate-y-0.5 hover:border-primary/50 dark:border-border dark:bg-card"
+              <section
+                key={sectionKey}
+                className={index > 0 ? 'border-t border-border pt-6' : undefined}
               >
-                {game?.thumbnailUrl?.startsWith('/game-screenshots/') ? (
-                  <Link
-                    href={getLocalizedPath(locale, `/games/${item.slug}`)}
-                    aria-label={locale === 'zh' ? `打开${gameTitle}` : `Open ${gameTitle}`}
-                    className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
-                  >
-                    <div className="relative aspect-[4/3] overflow-hidden border-b border-border bg-muted">
-                      <Image
-                        src={game.thumbnailUrl}
-                        alt={`${gameTitle} gameplay screenshot`}
-                        fill
-                        sizes="(min-width: 768px) 50vw, 100vw"
-                        className="object-cover transition duration-300 group-hover:scale-[1.03]"
-                      />
-                    </div>
-                  </Link>
+                <h2 className="text-2xl font-semibold text-foreground">
+                  {section.title}
+                </h2>
+                <p className="mt-3 text-base leading-relaxed text-foreground/90">
+                  {section.body}
+                </p>
+                {bullets.length > 0 ? (
+                  <ul className="mt-4 space-y-2 text-sm leading-relaxed text-foreground/85 sm:text-base">
+                    {bullets.map((bullet, bulletIndex) => (
+                      <li
+                        key={`${sectionKey}-b-${bulletIndex}`}
+                        className="flex gap-2"
+                      >
+                        <span className="text-primary">•</span>
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
                 ) : null}
-                <div className="p-3">
-                  <h3 className="text-base font-black text-foreground">
-                    {gameTitle}
-                  </h3>
-                  {gameDescription ? (
-                    <p className="mt-1 line-clamp-2 text-xs leading-5 text-muted-foreground">
-                      {gameDescription}
-                    </p>
-                  ) : null}
-                  <p className="sr-only">{item.pitch}</p>
-                  <div className="mt-2">
-                    <Link
-                      href={getLocalizedPath(locale, `/games/${item.slug}`)}
-                      className="inline-flex items-center text-primary transition hover:text-primary/80"
-                    >
-                      {locale === 'zh'
-                        ? `查看 ${gameTitle} 游戏详情`
-                        : `See ${gameTitle} browser game details`}{' '}
-                      →
-                    </Link>
-                  </div>
-                </div>
-              </article>
+              </section>
             );
           })}
-        </div>
-      </section>
-
-      <section className="mt-14 border-t border-border bg-secondary/60 px-5 py-7 sm:px-7">
-        <h2 className="text-2xl font-semibold text-foreground">
-          {locale === 'zh' ? '常见问题' : 'Frequently Asked Questions'}
-        </h2>
-        <dl className="mt-6 space-y-6">
-          {content.faqs.map((faq, index) => (
-            <div
-              key={index}
-              className="border-b border-border bg-card/60 p-4 last:border-b-0"
-            >
-              <dt className="text-base font-semibold text-foreground">
-                {faq.question}
-              </dt>
-              <dd className="mt-2 text-sm text-foreground/90">{faq.answer}</dd>
-            </div>
-          ))}
-        </dl>
-      </section>
-
-      <section className="mt-12 text-center">
-          <Button
-            asChild
-            size="lg"
-            className="bg-primary text-primary-foreground shadow-md transition hover:bg-primary/90"
-          >
-            <Link href={getLocalizedPath(locale, '/games')}>
-              {content.ctaLabel}
-            </Link>
-          </Button>
-          <p className="mt-3 text-sm text-muted-foreground">
-            {content.ctaDescription}
-          </p>
-      </section>
-
-      {relatedPages.length > 0 ? (
-        <section className="mt-16 border-t border-border pt-10">
-          <h2 className="text-2xl font-semibold text-foreground">
-            {locale === 'zh' ? '相关主题' : 'Related Guides'}
-          </h2>
-          <ul className="mt-4 space-y-3 text-sm">
-            {relatedPages.map(related => (
-              <li key={related.slug}>
-                <Link
-                  href={getLocalizedPath(locale, `/guides/${related.slug}`)}
-                  className="inline-flex items-center text-primary transition hover:text-primary/80"
-                  prefetch
-                >
-                  {related.heading} →
-                </Link>
-              </li>
-            ))}
-          </ul>
         </section>
       ) : null}
 
-      {content.externalLinks?.length ? (
-        <section className="mt-12 border-t border-border pt-10">
-          <h2 className="text-2xl font-semibold text-foreground">
-            {locale === 'zh' ? '官方与参考链接' : 'Official & Reference Links'}
+      {canonicalPlayHref ? (
+        <section className="mt-10 max-w-3xl border-t border-border pt-6">
+          <h2 className="text-xl font-semibold text-foreground">
+            {locale === 'zh' ? '准备好了吗？' : 'Ready to try it?'}
           </h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            {locale === 'zh'
-              ? '这些外部链接用于核对游戏来源和创作者信息，不代表 Luma 与相关站点存在商业合作。'
-              : 'Use these external links to verify the game source and creator context; they do not imply a commercial partnership with Luma.'}
-          </p>
-          <ul className="mt-4 grid gap-3 text-sm md:grid-cols-3">
-            {content.externalLinks.map(link => (
-              <li
-                key={link.href}
-                className="rounded-md border border-border bg-card p-4"
-              >
-                <a
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-medium text-primary transition hover:text-primary/80"
-                >
-                  {link.label} →
-                </a>
-                <p className="mt-2 text-muted-foreground">{link.description}</p>
-              </li>
+          <Button asChild className="mt-3">
+            <Link href={canonicalPlayHref}>
+              {locale === 'zh' ? '前往游戏页面' : 'Go to the game'}
+            </Link>
+          </Button>
+        </section>
+      ) : null}
+
+      {content.faqs.length > 0 ? (
+        <section className="mt-10 max-w-3xl border-t border-border pt-6">
+          <h2 className="text-2xl font-semibold text-foreground">
+            {locale === 'zh' ? '常见问题' : 'Frequently asked questions'}
+          </h2>
+          <dl className="mt-4 divide-y divide-border border-y border-border">
+            {content.faqs.map(faq => (
+              <div key={faq.question} className="py-4">
+                <dt className="font-medium text-foreground">{faq.question}</dt>
+                <dd className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  {faq.answer}
+                </dd>
+              </div>
             ))}
-          </ul>
+          </dl>
+        </section>
+      ) : null}
+
+      {content.recommendations.length > 0 ? (
+        <section
+          id="recommendations"
+          className="mt-10 max-w-5xl border-t border-border pt-6"
+        >
+          <h2 className="text-2xl font-semibold text-foreground">
+            {locale === 'zh' ? '相关游戏推荐' : 'Related games'}
+          </h2>
+          {(() => {
+            const visibleRecommendations = content.recommendations
+              .map(recommendation => ({
+                recommendation,
+                game: gameIndex.get(recommendation.slug),
+              }))
+              .filter(
+                (item): item is typeof item & { game: NonNullable<typeof item.game> } =>
+                  Boolean(
+                    item.game && shouldPromoteGameInCollections(item.game)
+                  )
+              );
+
+            if (visibleRecommendations.length === 0) {
+              return (
+                <p className="mt-3 text-sm text-muted-foreground">
+                  {locale === 'zh'
+                    ? '相关第三方游戏仍在来源与授权审核中，暂不作为可玩推荐展示。'
+                    : 'Related third-party games are still under provenance and rights review, so they are not shown as playable recommendations yet.'}
+                </p>
+              );
+            }
+
+            return (
+              <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+                {visibleRecommendations.map(({ recommendation, game }) => {
+                  const gameTitle =
+                    locale === 'zh'
+                      ? game.title
+                      : game.titleEn || game.title;
+
+                  return (
+                    <Link
+                      key={recommendation.slug}
+                      href={getLocalizedPath(locale, `/games/${game.slug}`)}
+                      className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                    >
+                      <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+                        <Image
+                          src={LUMA_GUIDE_IMAGE}
+                          alt={gameTitle}
+                          fill
+                          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                          className="object-cover transition-transform group-hover:scale-[1.02]"
+                        />
+                      </div>
+                      <h3 className="mt-2 font-semibold text-foreground transition group-hover:text-primary">
+                        {gameTitle}
+                      </h3>
+                      <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                        {recommendation.pitch}
+                      </p>
+                    </Link>
+                  );
+                })}
+              </div>
+            );
+          })()}
+        </section>
+      ) : null}
+
+      {content.externalLinks && content.externalLinks.length > 0 ? (
+        <section className="mt-10 max-w-3xl border-t border-border pt-6">
+          <h2 className="text-2xl font-semibold text-foreground">
+            {locale === 'zh' ? '延伸阅读' : 'Further reading'}
+          </h2>
+          <div className="mt-3 space-y-2">
+            {content.externalLinks.map(link => (
+              <a
+                key={link.href}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between gap-4 rounded-md border border-border bg-card px-4 py-3 transition hover:border-primary/50 hover:bg-accent"
+              >
+                <span>
+                  <span className="block font-medium text-foreground">
+                    {link.label}
+                  </span>
+                  <span className="mt-1 block text-sm text-muted-foreground">
+                    {link.description}
+                  </span>
+                </span>
+                <span aria-hidden className="text-primary">
+                  ↗
+                </span>
+              </a>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      {relatedPages.length > 0 ? (
+        <section className="mt-10 max-w-3xl border-t border-border pt-6">
+          <h2 className="text-2xl font-semibold text-foreground">
+            {locale === 'zh' ? '更多专题' : 'More guides'}
+          </h2>
+          <div className="mt-3 space-y-2">
+            {relatedPages.map(related => (
+              <Link
+                key={related.slug}
+                href={getLocalizedPath(locale, `/guides/${related.slug}`)}
+                className="block rounded-md border border-border bg-card px-4 py-3 text-foreground transition hover:border-primary/50 hover:bg-accent"
+              >
+                {related.heading}
+              </Link>
+            ))}
+          </div>
         </section>
       ) : null}
     </article>

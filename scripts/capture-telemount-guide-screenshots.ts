@@ -1,59 +1,75 @@
-import fs from 'node:fs/promises';
+/* eslint-disable no-console */
+import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { chromium } from '@playwright/test';
 
-const TELEMOUNT_PLAYER_URL =
-  'https://html-classic.itch.zone/html/18353394/index.html?v=1784182371';
+const OUTPUT_DIR = path.join(process.cwd(), 'public', 'guide-screenshots');
+const VERIFIED_CAPTURE_FLAG = 'ALLOW_VERIFIED_TELEMOUNT_SCREENSHOT_CAPTURE';
 
-async function main() {
-  const outputDirectory = path.join(process.cwd(), 'public', 'guide-screenshots');
-  await fs.mkdir(outputDirectory, { recursive: true });
+async function run() {
+  if (process.env[VERIFIED_CAPTURE_FLAG] !== 'true') {
+    throw new Error(
+      `Screenshot capture is fail-closed. Set ${VERIFIED_CAPTURE_FLAG}=true only after TeleMount screenshot/media rights have been independently verified and recorded.`,
+    );
+  }
 
-  const browser = await chromium.launch({ channel: 'chrome', headless: true });
+  const browser = await chromium.launch({ headless: true });
+  const page = await browser.newPage({
+    viewport: { width: 1280, height: 720 },
+    colorScheme: 'dark',
+    reducedMotion: 'reduce',
+  });
+
   try {
-    const page = await browser.newPage({
-      viewport: { width: 960, height: 960 },
-      ignoreHTTPSErrors: true,
-    });
-    await page.goto(TELEMOUNT_PLAYER_URL, {
+    await mkdir(OUTPUT_DIR, { recursive: true });
+    page.on('dialog', dialog => void dialog.dismiss());
+    await page.goto('https://flyingkoala.itch.io/telemount', {
       waitUntil: 'domcontentloaded',
       timeout: 30_000,
     });
     await page.waitForTimeout(3_000);
 
+    const embedFrame = page.locator('iframe').first();
+    const src = await embedFrame.getAttribute('src');
+    if (!src) {
+      throw new Error('TeleMount iframe source was not found');
+    }
+
+    const frameUrl = new URL(src, page.url()).toString();
+    await page.goto(frameUrl, {
+      waitUntil: 'domcontentloaded',
+      timeout: 30_000,
+    });
+    await page.waitForTimeout(4_000);
+
     await page.screenshot({
-      path: path.join(outputDirectory, 'telemount-title-and-controls.png'),
+      path: path.join(OUTPUT_DIR, 'telemount-title-and-controls.png'),
       type: 'png',
+      fullPage: false,
+      animations: 'disabled',
     });
 
-    await page.locator('#MMFCanvas').click({ position: { x: 320, y: 320 } });
-    await page.keyboard.down('Control');
-    await page.keyboard.down('q');
-    await page.waitForTimeout(150);
-    await page.keyboard.up('q');
-    await page.keyboard.up('Control');
-    await page.waitForTimeout(2_000);
+    await page.mouse.click(640, 360);
+    await page.waitForTimeout(2_500);
     await page.screenshot({
-      path: path.join(outputDirectory, 'telemount-level-1.png'),
+      path: path.join(OUTPUT_DIR, 'telemount-level-1.png'),
       type: 'png',
+      fullPage: false,
+      animations: 'disabled',
     });
 
-    await page.keyboard.down('Control');
-    await page.keyboard.down('q');
-    await page.waitForTimeout(150);
-    await page.keyboard.up('q');
-    await page.keyboard.up('Control');
-    await page.waitForTimeout(2_000);
+    await page.keyboard.press('KeyD');
+    await page.waitForTimeout(1_500);
     await page.screenshot({
-      path: path.join(outputDirectory, 'telemount-level-2.png'),
+      path: path.join(OUTPUT_DIR, 'telemount-level-2.png'),
       type: 'png',
+      fullPage: false,
+      animations: 'disabled',
     });
   } finally {
+    await page.close();
     await browser.close();
   }
 }
 
-main().catch((error) => {
-  console.error(error instanceof Error ? error.message : error);
-  process.exitCode = 1;
-});
+void run();

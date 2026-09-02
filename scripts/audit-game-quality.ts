@@ -126,7 +126,6 @@ export function getEditorialCoverage(slug: string): EditorialCoverage {
 export function scoreGame(game: MockGame) {
   let score = 0;
   const reasons: string[] = [];
-  const host = embedHost(game);
   const enWords = wordCount(game.descriptionEn);
   const zhChars = game.description.length;
   const editorialCoverage = getEditorialCoverage(game.slug);
@@ -138,7 +137,7 @@ export function scoreGame(game: MockGame) {
     hasVerifiedEmbedPermission(game)
   ) {
     score += game.developerVerified ? 18 : 13;
-  } else if (game.embedPermissionStatus !== 'verified') {
+  } else if (!hasVerifiedEmbedPermission(game)) {
     reasons.push('embed permission not verified');
   } else {
     score += 5;
@@ -200,12 +199,12 @@ export function scoreGame(game: MockGame) {
 function actionFor(game: MockGame) {
   const tier = getGameQualityTier(game);
   if (tier === 'review') {
-    return 'Noindex; remove from sitemap/recommendations; manual source and content review';
+    return 'Noindex; withhold iframe; remove from sitemap/recommendations; verify rights before publication';
   }
   if (tier === 'core-indexed') {
-    return 'Keep indexed; prioritize content thickening if player/search data appears';
+    return 'Rights verified; keep indexed and prioritize content thickening when search/player data supports it';
   }
-  return 'Catalogue-only; keep playable but noindex until content/source QA is complete';
+  return 'Rights verified but catalogue-only; keep noindex until content/source QA is complete';
 }
 
 export function buildAuditRows(games = mockGames): GameAuditRow[] {
@@ -230,6 +229,15 @@ function isRemoveCandidate(row: GameAuditRow) {
   return /known franchise|Mario-like|trademark confusion/i.test(reason);
 }
 
+function reviewReason(row: GameAuditRow) {
+  const manualReason = getManualReviewReason(row.game.slug);
+  if (manualReason) return manualReason;
+  if (!hasVerifiedEmbedPermission(row.game)) {
+    return 'Embed permission not verified; URL reachability, screenshots, and editorial coverage are not authorization evidence.';
+  }
+  return row.reasons.join('; ') || 'Manual source/content review required';
+}
+
 export function buildDecisionRows(rows: GameAuditRow[]): GameDecisionRow[] {
   return rows.map((row) => {
     const redirectTarget = getGameRedirectTarget(row.game.slug);
@@ -241,8 +249,8 @@ export function buildDecisionRows(rows: GameAuditRow[]): GameDecisionRow[] {
           title: row.game.titleEn || row.game.title,
           tier: row.tier,
           decision: 'remove',
-          reason: getManualReviewReason(row.game.slug) ?? 'Manual review risk',
-          nextStep: 'Keep out of the index surface and route public detail requests to a safer related core page.',
+          reason: reviewReason(row),
+          nextStep: 'Keep out of the index surface and route public detail requests to a safer related verified page.',
         };
       }
 
@@ -251,8 +259,8 @@ export function buildDecisionRows(rows: GameAuditRow[]): GameDecisionRow[] {
         title: row.game.titleEn || row.game.title,
         tier: row.tier,
         decision: 'review',
-        reason: getManualReviewReason(row.game.slug) ?? 'Manual source/content review required',
-        nextStep: 'Keep noindex and withhold iframe until source, IP, theme, and AdSense suitability are reviewed.',
+        reason: reviewReason(row),
+        nextStep: 'Keep noindex and withhold iframe until commercial/embed rights and source identity are verified.',
       };
     }
 
@@ -263,17 +271,22 @@ export function buildDecisionRows(rows: GameAuditRow[]): GameDecisionRow[] {
         tier: row.tier,
         decision: 'merge',
         reason: `Low-value catalogue-only page merged into /games/${redirectTarget}.`,
-        nextStep: 'Keep out of sitemap/search and redirect direct detail requests to the stronger related core page.',
+        nextStep: 'Keep out of sitemap/search and redirect direct detail requests to the stronger related verified page.',
       };
     }
 
-    if (row.tier === 'core-indexed' && row.editorialCoverage.status === 'complete' && row.score >= 80) {
+    if (
+      row.tier === 'core-indexed' &&
+      hasVerifiedEmbedPermission(row.game) &&
+      row.editorialCoverage.status === 'complete' &&
+      row.score >= 80
+    ) {
       return {
         slug: row.game.slug,
         title: row.game.titleEn || row.game.title,
         tier: row.tier,
         decision: 'keep',
-        reason: 'Core-indexed page has complete editorial coverage under current static audit.',
+        reason: 'Embed rights are verified and the core-indexed page has complete editorial coverage under the current static audit.',
         nextStep: 'Keep indexed; improve only when GSC/Clarity shows a concrete query or UX opportunity.',
       };
     }
@@ -289,7 +302,7 @@ export function buildDecisionRows(rows: GameAuditRow[]): GameDecisionRow[] {
           : row.reasons.join('; ') || 'Needs source/content QA before stronger surfacing.',
       nextStep:
         row.tier === 'catalogue-only'
-          ? 'Keep out of sitemap/search until source and original content are strong enough, or merge/remove if low demand.'
+          ? 'Keep out of sitemap/search until original content is strong enough, or merge/remove if low demand.'
           : 'Add complete overview, how-to-play, controls, tips, FAQ, related links, and source notes.',
     };
   });
@@ -314,23 +327,23 @@ export function buildReport(generatedAt = new Date().toISOString()) {
     '',
     `Generated: ${generatedAt}`,
     '',
-    'This is a directional quality and indexing audit for Luma Game Hub. It is not a legal clearance report. Any game with source, IP, iframe, mobile, or content uncertainty still needs manual QA before being treated as AdSense-review-ready.',
+    'This is a directional quality and indexing audit for Luma Game Hub. Rights verification is a hard publication gate: editorial quality, URL reachability, screenshots, or a core slug cannot substitute for verified embed permission. This report is still not legal advice.',
     '',
     '## Summary',
     '',
     `- Total fallback catalogue games: ${rows.length}`,
-    `- Core indexed games: ${counts['core-indexed'] ?? 0}`,
-    `- Catalogue-only games: ${counts['catalogue-only'] ?? 0}`,
-    `- Manual review games: ${counts.review ?? 0}`,
+    `- Core indexed games with verified embed rights: ${counts['core-indexed'] ?? 0}`,
+    `- Rights-verified catalogue-only games: ${counts['catalogue-only'] ?? 0}`,
+    `- Rights/content review games: ${counts.review ?? 0}`,
     `- Noindex game pages under current policy: ${rows.filter((row) => row.noindex).length}`,
     `- Dominant source hosts: ${Object.entries(hostCounts).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([host, count]) => `${host} (${count})`).join(', ')}`,
     '',
     '## Policy Actions',
     '',
-    '- `core-indexed`: included in sitemap and eligible for collection/recommendation surfaces.',
-    '- `catalogue-only`: playable if directly opened or browsed, but kept out of core index until content/source QA is complete.',
-    '- `merge`: a low-value catalogue-only direct URL is retired into a stronger related core page.',
-    '- `review`: noindex, excluded from sitemap, excluded from fallback search/recommendation surfaces, and queued for source/content review.',
+    '- `core-indexed`: verified embed permission, included in sitemap, and eligible for collection/recommendation surfaces.',
+    '- `catalogue-only`: verified embed permission but not yet a core index target.',
+    '- `merge`: a low-value verified catalogue-only direct URL is retired into a stronger related page.',
+    '- `review`: noindex, iframe withheld, excluded from sitemap/search/recommendations, and queued for rights/source/content review.',
     '',
     '## Per-Slug Decision Table',
     '',
@@ -366,7 +379,7 @@ export function buildReport(generatedAt = new Date().toISOString()) {
     '',
     ...rows
       .filter((row) => row.tier === 'review')
-      .map((row) => `- ${row.game.slug}: ${getManualReviewReason(row.game.slug) ?? 'Manual review required'}`),
+      .map((row) => `- ${row.game.slug}: ${reviewReason(row)}`),
     '',
   ];
 

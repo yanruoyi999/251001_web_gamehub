@@ -52,6 +52,8 @@ interface ShelfSectionProps {
   priorityFirstImages?: boolean;
 }
 
+const LUMA_OWNED_SHELF_IMAGE = '/og-gamehub.svg';
+
 function ShelfSection({
   id,
   title,
@@ -72,7 +74,10 @@ function ShelfSection({
     <section aria-labelledby={id} className="mt-7" data-catalog-shelf>
       <div className="mb-3 flex flex-col gap-1 border-b-2 border-[#18251f] pb-2 sm:flex-row sm:items-end sm:justify-between dark:border-border">
         <div>
-          <h2 id={id} className="text-lg font-black tracking-tight text-[#18251f] sm:text-xl dark:text-foreground">
+          <h2
+            id={id}
+            className="text-lg font-black tracking-tight text-[#18251f] sm:text-xl dark:text-foreground"
+          >
             {title}
           </h2>
           <p className="mt-0.5 hidden max-w-2xl text-[11px] leading-4 text-[#66746d] sm:block sm:text-xs dark:text-muted-foreground">
@@ -88,7 +93,9 @@ function ShelfSection({
         </Link>
       </div>
 
-      <div className={`game-shelf-scroll grid grid-cols-2 gap-3 sm:grid-cols-3 ${desktopGridClass}`}>
+      <div
+        className={`game-shelf-scroll grid grid-cols-2 gap-3 sm:grid-cols-3 ${desktopGridClass}`}
+      >
         {entries.map((entry, index) => (
           <Link
             key={entry.href}
@@ -99,7 +106,7 @@ function ShelfSection({
             <div className="relative aspect-[4/3] overflow-hidden bg-muted">
               <Image
                 src={entry.image}
-                alt={`${entry.title} gameplay`}
+                alt={`${entry.title} cover`}
                 fill
                 sizes="(max-width: 640px) 58vw, (max-width: 1024px) 40vw, 33vw"
                 className="object-cover transition duration-300 group-hover:scale-[1.03]"
@@ -113,12 +120,8 @@ function ShelfSection({
               <h3 className="mt-0.5 line-clamp-2 text-sm font-black leading-5 text-foreground sm:text-base">
                 {entry.title}
               </h3>
-              <p className="sr-only">
-                {entry.description}
-              </p>
-              <span className="sr-only">
-                {entry.action}
-              </span>
+              <p className="sr-only">{entry.description}</p>
+              <span className="sr-only">{entry.action}</span>
             </div>
           </Link>
         ))}
@@ -159,12 +162,15 @@ export default async function HomePage({
     : [];
   const faqItems = Array.isArray(faqSection.items) ? faqSection.items : [];
   const recommendationDateKey = getShanghaiDateKey();
+
+  // Editorial links can discuss third-party games, but their cards use Luma-owned
+  // generic artwork rather than captured game screenshots.
   const popularGuideEntries: ShelfEntry[] =
     locale === 'zh'
       ? [
           {
             href: getLocalizedPath(locale, '/guides/google-snake-mods'),
-            image: '/game-screenshots/google-snake.png',
+            image: LUMA_OWNED_SHELF_IMAGE,
             eyebrow: '热门攻略',
             title: 'Google Snake Mods',
             description:
@@ -173,7 +179,7 @@ export default async function HomePage({
           },
           {
             href: getLocalizedPath(locale, '/guides/drive-mad-walkthrough'),
-            image: '/game-screenshots/drive-mad.png',
+            image: LUMA_OWNED_SHELF_IMAGE,
             eyebrow: '热门攻略',
             title: 'Drive Mad Walkthrough',
             description:
@@ -182,7 +188,7 @@ export default async function HomePage({
           },
           {
             href: getLocalizedPath(locale, '/guides/quick-play-guide'),
-            image: '/game-screenshots/tunnel-rush.png',
+            image: LUMA_OWNED_SHELF_IMAGE,
             eyebrow: '场景攻略',
             title: '快速游玩指南',
             description:
@@ -191,15 +197,18 @@ export default async function HomePage({
           },
           {
             href: getLocalizedPath(locale, '/guides/google-snake-level-editor'),
-            image: '/game-screenshots/google-snake.png',
+            image: LUMA_OWNED_SHELF_IMAGE,
             eyebrow: '新攻略',
             title: 'Google Snake Level Editor',
             description: '查看编辑器入口、制作步骤和移动端限制。',
             action: '查看编辑器指南',
           },
           {
-            href: getLocalizedPath(locale, '/guides/big-tower-tiny-square-walkthrough'),
-            image: '/game-screenshots/big-tower-tiny-square.png',
+            href: getLocalizedPath(
+              locale,
+              '/guides/big-tower-tiny-square-walkthrough',
+            ),
+            image: LUMA_OWNED_SHELF_IMAGE,
             eyebrow: '关卡攻略',
             title: 'Big Tower Tiny Square',
             description: '从检查点、跳跃节奏和高塔路线开始。',
@@ -209,7 +218,7 @@ export default async function HomePage({
       : [
           {
             href: getLocalizedPath(locale, '/guides/google-snake-mods'),
-            image: '/game-screenshots/google-snake.png',
+            image: LUMA_OWNED_SHELF_IMAGE,
             eyebrow: 'Popular guide',
             title: 'Google Snake Mods',
             description:
@@ -218,7 +227,7 @@ export default async function HomePage({
           },
           {
             href: getLocalizedPath(locale, '/guides/drive-mad-walkthrough'),
-            image: '/game-screenshots/drive-mad.png',
+            image: LUMA_OWNED_SHELF_IMAGE,
             eyebrow: 'Popular guide',
             title: 'Drive Mad Walkthrough',
             description:
@@ -227,7 +236,7 @@ export default async function HomePage({
           },
           {
             href: getLocalizedPath(locale, '/guides/quick-play-guide'),
-            image: '/game-screenshots/tunnel-rush.png',
+            image: LUMA_OWNED_SHELF_IMAGE,
             eyebrow: 'Play context',
             title: 'Quick Play Guide',
             description:
@@ -236,15 +245,18 @@ export default async function HomePage({
           },
           {
             href: getLocalizedPath(locale, '/guides/google-snake-level-editor'),
-            image: '/game-screenshots/google-snake.png',
+            image: LUMA_OWNED_SHELF_IMAGE,
             eyebrow: 'New guide',
             title: 'Google Snake Level Editor',
             description: 'Find the editor route, build steps, and mobile limits.',
             action: 'Read the editor guide',
           },
           {
-            href: getLocalizedPath(locale, '/guides/big-tower-tiny-square-walkthrough'),
-            image: '/game-screenshots/big-tower-tiny-square.png',
+            href: getLocalizedPath(
+              locale,
+              '/guides/big-tower-tiny-square-walkthrough',
+            ),
+            image: LUMA_OWNED_SHELF_IMAGE,
             eyebrow: 'Level guide',
             title: 'Big Tower Tiny Square',
             description: 'Use checkpoints, jump timing, and a safer tower route.',
@@ -252,63 +264,64 @@ export default async function HomePage({
           },
         ];
 
+  // Homepage playable inventory is intentionally first-party/self-hosted only.
   const moreGameEntries: ShelfEntry[] =
     locale === 'zh'
       ? [
           {
-            href: getLocalizedPath(locale, '/games/big-tower-tiny-square'),
-            image: '/game-screenshots/big-tower-tiny-square.png',
-            eyebrow: '平台跳跃',
-            title: 'Big Tower Tiny Square',
+            href: getLocalizedPath(locale, '/games/2-player-unblocked'),
+            image: LUMA_OWNED_SHELF_IMAGE,
+            eyebrow: 'Luma 自托管',
+            title: '双人同键盘小游戏',
             description:
-              '沿着检查点登上高塔，掌握跳跃时机，避开每一段危险平台。',
-            action: '开始爬塔',
+              '三款有明确来源和许可记录的 Luma 自托管双人浏览器游戏。',
+            action: '开始双人游戏',
           },
           {
-            href: getLocalizedPath(locale, '/games/g-switch-2'),
-            image: '/game-screenshots/g-switch-2.png',
-            eyebrow: '重力跑酷',
-            title: 'G-Switch 2',
-            description:
-              '在地面和天花板之间翻转重力，读懂障碍，保持节奏一路前进。',
-            action: '开始跑酷',
+            href: getLocalizedPath(locale, '/games/spend-bill-gates-money'),
+            image: LUMA_OWNED_SHELF_IMAGE,
+            eyebrow: 'Luma Original',
+            title: 'Spend Bill Gates Money',
+            description: '用 1000 亿美元预算进行可撤销购买的财富模拟器。',
+            action: '开始模拟',
           },
           {
-            href: getLocalizedPath(locale, '/games/solitaire'),
-            image: '/game-screenshots/solitaire.png',
-            eyebrow: '直接游玩',
-            title: 'Solitaire',
-            description: '无需安装或注册，打开后即可开始一局经典纸牌。',
-            action: '开始 Solitaire',
+            href: getLocalizedPath(locale, '/games/snake-3d'),
+            image: LUMA_OWNED_SHELF_IMAGE,
+            eyebrow: 'Luma Original',
+            title: 'Luma Snake 3D',
+            description:
+              '支持键盘与触控的 3D 贪吃蛇，包含 UTC 每日挑战和本地最高分。',
+            action: '开始挑战',
           },
         ]
       : [
           {
-            href: getLocalizedPath(locale, '/games/big-tower-tiny-square'),
-            image: '/game-screenshots/big-tower-tiny-square.png',
-            eyebrow: 'Platform challenge',
-            title: 'Big Tower Tiny Square',
+            href: getLocalizedPath(locale, '/games/2-player-unblocked'),
+            image: LUMA_OWNED_SHELF_IMAGE,
+            eyebrow: 'Luma self-hosted',
+            title: 'Same-keyboard 2 player games',
             description:
-              'Climb through checkpoint-filled tower rooms with careful jumps and well-timed retries.',
-            action: 'Climb the tower',
+              'Three Luma-hosted browser games with explicit provenance and license records.',
+            action: 'Play together',
           },
           {
-            href: getLocalizedPath(locale, '/games/g-switch-2'),
-            image: '/game-screenshots/g-switch-2.png',
-            eyebrow: 'Gravity runner',
-            title: 'G-Switch 2',
+            href: getLocalizedPath(locale, '/games/spend-bill-gates-money'),
+            image: LUMA_OWNED_SHELF_IMAGE,
+            eyebrow: 'Luma Original',
+            title: 'Spend Bill Gates Money',
             description:
-              'Flip between floor and ceiling, read each obstacle, and keep the run moving.',
-            action: 'Start the run',
+              'A reversible $100 billion spending simulator built as a Luma original experience.',
+            action: 'Start spending',
           },
           {
-            href: getLocalizedPath(locale, '/games/solitaire'),
-            image: '/game-screenshots/solitaire.png',
-            eyebrow: 'Play now',
-            title: 'Solitaire',
+            href: getLocalizedPath(locale, '/games/snake-3d'),
+            image: LUMA_OWNED_SHELF_IMAGE,
+            eyebrow: 'Luma Original',
+            title: 'Luma Snake 3D',
             description:
-              'Start a classic card game in the browser with no install or Luma account.',
-            action: 'Play Solitaire',
+              'A keyboard-and-touch snake challenge with UTC daily boards and local high scores.',
+            action: 'Start a run',
           },
         ];
 
@@ -331,193 +344,198 @@ export default async function HomePage({
         <div className="mx-auto grid w-full max-w-7xl md:grid-cols-[52px_minmax(0,1fr)] md:gap-4">
           <PortalRail locale={locale} active="home" />
           <div className="min-w-0">
-          <header className="flex flex-col gap-1 border-b border-[#dce4df] pb-2 md:flex-row md:items-center md:justify-between dark:border-border">
-            <div className="min-w-0 max-w-4xl">
-              <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-emerald-800 dark:text-emerald-400">
-                {locale === 'zh' ? '免费在线小游戏' : 'Free browser games'}
-              </p>
-              <h1 className="mt-0.5 max-w-4xl text-lg font-black tracking-tight text-[#152238] sm:text-xl dark:text-foreground">
-                {heroTitle}
-              </h1>
-              <p className="mt-0.5 hidden max-w-3xl text-xs leading-4 text-[#61766a] sm:block dark:text-muted-foreground">
-                {t('description')}
-              </p>
-            </div>
-            <div className="flex flex-wrap items-center gap-2 md:flex-none md:justify-end">
-              <Link
-                href={getLocalizedPath(locale, '/games')}
-                className="hidden min-h-8 items-center gap-1 text-xs font-bold text-emerald-800 transition hover:text-emerald-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-offset-2 sm:inline-flex dark:text-emerald-400 dark:hover:text-emerald-300"
-              >
-                {locale === 'zh' ? '热门游戏' : 'Popular games'}
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
-              <Link
-                href={getLocalizedPath(locale, '/guides')}
-                className="hidden min-h-8 items-center gap-1 text-xs font-bold text-emerald-800 transition hover:text-emerald-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-offset-2 sm:inline-flex dark:text-emerald-400 dark:hover:text-emerald-300"
-              >
-                {locale === 'zh' ? '攻略' : 'Guides'}
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
-            </div>
-          </header>
-
-          <div className="mt-2 md:hidden">
-            <SearchInput locale={locale} className="w-full" />
-          </div>
-
-          <nav
-            aria-label={locale === 'zh' ? '快速分类' : 'Quick categories'}
-            className="mt-2 flex gap-1.5 overflow-x-auto border-b border-[#dce4df] pb-2 dark:border-border"
-          >
-            {[
-              { href: '/games/category/action', zh: '动作', en: 'Action' },
-              { href: '/games/category/puzzle', zh: '益智', en: 'Puzzle' },
-              {
-                href: '/games/category/adventure',
-                zh: '冒险',
-                en: 'Adventure',
-              },
-              { href: '/games/category/racing', zh: '竞速', en: 'Racing' },
-              { href: '/games/saved', zh: '我的收藏', en: 'Saved games' },
-            ].map(item => (
-              <Link
-                key={item.href}
-                href={getLocalizedPath(locale, item.href)}
-                className="inline-flex min-h-8 shrink-0 items-center rounded-full border border-[#d5e0da] bg-white px-3 text-[11px] font-bold text-[#30483a] transition hover:border-emerald-700/60 hover:text-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:border-border dark:bg-card dark:text-foreground"
-              >
-                {locale === 'zh' ? item.zh : item.en}
-              </Link>
-            ))}
-          </nav>
-
-          <DailyRecommendation
-            dateKey={recommendationDateKey}
-            locale={locale}
-            surface="home"
-          />
-
-          <ShelfSection
-            id="popular-guides"
-            title={locale === 'zh' ? '热门攻略' : 'Popular guides'}
-            description={
-              locale === 'zh'
-                ? '先解决玩法、控制和卡关问题，再决定要不要开始下一局。'
-                : 'Solve controls, walkthrough, and stuck-point questions before starting the next round.'
-            }
-            browseHref={getLocalizedPath(locale, '/guides')}
-            browseLabel={locale === 'zh' ? '查看全部攻略' : 'Browse all guides'}
-            entries={popularGuideEntries}
-          />
-
-          <ShelfSection
-            id="more-games"
-            title={locale === 'zh' ? '更多值得玩的游戏' : 'More games to play'}
-            description={
-              locale === 'zh'
-                ? '再挑几款轻松上手的挑战、益智或街机游戏，找到下一款想玩的。'
-                : 'Pick another quick challenge, puzzle, or arcade game for your next round.'
-            }
-            browseHref={getLocalizedPath(locale, '/games')}
-            browseLabel={locale === 'zh' ? '查看全部游戏' : 'Browse all games'}
-            entries={moreGameEntries}
-            priorityFirstImages
-          />
-          <section className="mt-14 space-y-5 border-t border-border pt-10 text-left">
-            <h2 className="text-2xl font-semibold text-foreground md:text-3xl">
-              {seoSection.title ?? t('seoSection.title')}
-            </h2>
-            <p className="max-w-3xl text-base leading-relaxed text-muted-foreground md:text-lg">
-              {seoSection.description ?? t('seoSection.description')}
-            </p>
-            <ul className="grid gap-3 md:grid-cols-3">
-              {seoPoints.map(point => (
-                <li
-                  key={point}
-                  className="flex gap-3 border-l-2 border-emerald-700/30 bg-card px-4 py-3"
-                >
-                  <span className="mt-0.5 flex h-6 w-6 flex-none items-center justify-center rounded-full bg-emerald-700/10 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-400">
-                    <Check className="h-4 w-4" aria-hidden="true" />
-                  </span>
-                  <p className="text-sm leading-relaxed text-muted-foreground">
-                    {point}
-                  </p>
-                </li>
-              ))}
-            </ul>
-            {seoSection.cta ? (
-              <div className="pt-1">
+            <header className="flex flex-col gap-1 border-b border-[#dce4df] pb-2 md:flex-row md:items-center md:justify-between dark:border-border">
+              <div className="min-w-0 max-w-4xl">
+                <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-emerald-800 dark:text-emerald-400">
+                  {locale === 'zh' ? '免费在线小游戏' : 'Free browser games'}
+                </p>
+                <h1 className="mt-0.5 max-w-4xl text-lg font-black tracking-tight text-[#152238] sm:text-xl dark:text-foreground">
+                  {heroTitle}
+                </h1>
+                <p className="mt-0.5 hidden max-w-3xl text-xs leading-4 text-[#61766a] sm:block dark:text-muted-foreground">
+                  {t('description')}
+                </p>
+              </div>
+              <div className="flex flex-wrap items-center gap-2 md:flex-none md:justify-end">
                 <Link
-                  href={getLocalizedPath(locale, '/guides/free-games-no-ads')}
-                  className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-emerald-700 px-5 py-2.5 font-medium text-emerald-700 transition hover:bg-emerald-700/10 dark:border-emerald-400 dark:text-emerald-400"
+                  href={getLocalizedPath(locale, '/games')}
+                  className="hidden min-h-8 items-center gap-1 text-xs font-bold text-emerald-800 transition hover:text-emerald-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-offset-2 sm:inline-flex dark:text-emerald-400 dark:hover:text-emerald-300"
                 >
-                  {seoSection.cta}
+                  {locale === 'zh' ? '游戏' : 'Games'}
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </Link>
+                <Link
+                  href={getLocalizedPath(locale, '/guides')}
+                  className="hidden min-h-8 items-center gap-1 text-xs font-bold text-emerald-800 transition hover:text-emerald-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-700 focus-visible:ring-offset-2 sm:inline-flex dark:text-emerald-400 dark:hover:text-emerald-300"
+                >
+                  {locale === 'zh' ? '攻略' : 'Guides'}
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </Link>
               </div>
-            ) : null}
-          </section>
+            </header>
 
-          {evilSection.title ||
-          evilSection.description ||
-          evilPoints.length > 0 ? (
+            <div className="mt-2 md:hidden">
+              <SearchInput locale={locale} className="w-full" />
+            </div>
+
+            <nav
+              aria-label={locale === 'zh' ? '快速入口' : 'Quick links'}
+              className="mt-2 flex gap-1.5 overflow-x-auto border-b border-[#dce4df] pb-2 dark:border-border"
+            >
+              {[
+                {
+                  href: '/games/2-player-unblocked',
+                  zh: '双人自托管',
+                  en: '2 player',
+                },
+                { href: '/games/snake-3d', zh: 'Luma Snake', en: 'Luma Snake' },
+                {
+                  href: '/games/spend-bill-gates-money',
+                  zh: '财富模拟',
+                  en: 'Money simulator',
+                },
+                { href: '/guides', zh: '攻略', en: 'Guides' },
+                { href: '/games/saved', zh: '我的收藏', en: 'Saved games' },
+              ].map(item => (
+                <Link
+                  key={item.href}
+                  href={getLocalizedPath(locale, item.href)}
+                  className="inline-flex min-h-8 shrink-0 items-center rounded-full border border-[#d5e0da] bg-white px-3 text-[11px] font-bold text-[#30483a] transition hover:border-emerald-700/60 hover:text-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:border-border dark:bg-card dark:text-foreground"
+                >
+                  {locale === 'zh' ? item.zh : item.en}
+                </Link>
+              ))}
+            </nav>
+
+            <DailyRecommendation
+              dateKey={recommendationDateKey}
+              locale={locale}
+              surface="home"
+            />
+
+            <ShelfSection
+              id="popular-guides"
+              title={locale === 'zh' ? '热门攻略' : 'Popular guides'}
+              description={
+                locale === 'zh'
+                  ? '攻略可以讨论第三方游戏，但卡片只使用 Luma 自有视觉，不复制未验证游戏截图。'
+                  : 'Guides may discuss third-party games, while cards use Luma-owned artwork rather than unverified captured screenshots.'
+              }
+              browseHref={getLocalizedPath(locale, '/guides')}
+              browseLabel={locale === 'zh' ? '查看全部攻略' : 'Browse all guides'}
+              entries={popularGuideEntries}
+            />
+
+            <ShelfSection
+              id="more-games"
+              title={locale === 'zh' ? 'Luma 可直接玩的游戏' : 'Playable on Luma'}
+              description={
+                locale === 'zh'
+                  ? '这里只推荐 Luma 原创或自托管、来源和许可已经记录的可玩体验。'
+                  : 'This shelf is limited to Luma-original or self-hosted playable experiences with documented provenance and license records.'
+              }
+              browseHref={getLocalizedPath(locale, '/games')}
+              browseLabel={locale === 'zh' ? '查看游戏目录' : 'Browse games'}
+              entries={moreGameEntries}
+              priorityFirstImages
+            />
+
             <section className="mt-14 space-y-5 border-t border-border pt-10 text-left">
               <h2 className="text-2xl font-semibold text-foreground md:text-3xl">
-                {evilSection.title ?? t('evilSection.title')}
+                {seoSection.title ?? t('seoSection.title')}
               </h2>
               <p className="max-w-3xl text-base leading-relaxed text-muted-foreground md:text-lg">
-                {evilSection.description ?? t('evilSection.description')}
+                {seoSection.description ?? t('seoSection.description')}
               </p>
-              <div className="grid gap-3 md:grid-cols-3">
-                {evilPoints.map(point => (
-                  <p
+              <ul className="grid gap-3 md:grid-cols-3">
+                {seoPoints.map(point => (
+                  <li
                     key={point}
-                    className="border-l-2 border-primary/30 bg-card px-4 py-3 text-sm leading-relaxed text-muted-foreground"
+                    className="flex gap-3 border-l-2 border-emerald-700/30 bg-card px-4 py-3"
                   >
-                    {point}
-                  </p>
+                    <span className="mt-0.5 flex h-6 w-6 flex-none items-center justify-center rounded-full bg-emerald-700/10 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-400">
+                      <Check className="h-4 w-4" aria-hidden="true" />
+                    </span>
+                    <p className="text-sm leading-relaxed text-muted-foreground">
+                      {point}
+                    </p>
+                  </li>
                 ))}
-              </div>
-              {evilSection.cta ? (
+              </ul>
+              {seoSection.cta ? (
                 <div className="pt-1">
                   <Link
-                    href={getLocalizedPath(
-                      locale,
-                      '/guides/games-to-play-when-bored'
-                    )}
+                    href={getLocalizedPath(locale, '/guides/free-games-no-ads')}
                     className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-emerald-700 px-5 py-2.5 font-medium text-emerald-700 transition hover:bg-emerald-700/10 dark:border-emerald-400 dark:text-emerald-400"
                   >
-                    {evilSection.cta}
+                    {seoSection.cta}
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </Link>
                 </div>
               ) : null}
             </section>
-          ) : null}
 
-          <section className="mt-14 space-y-5 border-t border-border pt-10 text-left">
-            <h2 className="text-2xl font-semibold text-foreground md:text-3xl">
-              {faqSection.title ?? t('faq.title')}
-            </h2>
-            <div className="max-w-4xl space-y-1">
-              {faqItems.map(item => (
-                <details
-                  key={item.question}
-                  className="group border-b border-border py-4"
-                >
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-medium text-foreground">
-                    <span>{item.question}</span>
-                    <ArrowRight
-                      className="h-5 w-5 flex-none text-emerald-700 transition-transform group-open:rotate-90 dark:text-emerald-400"
-                      aria-hidden="true"
-                    />
-                  </summary>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                    {item.answer}
-                  </p>
-                </details>
-              ))}
-            </div>
-          </section>
+            {evilSection.title ||
+            evilSection.description ||
+            evilPoints.length > 0 ? (
+              <section className="mt-14 space-y-5 border-t border-border pt-10 text-left">
+                <h2 className="text-2xl font-semibold text-foreground md:text-3xl">
+                  {evilSection.title ?? t('evilSection.title')}
+                </h2>
+                <p className="max-w-3xl text-base leading-relaxed text-muted-foreground md:text-lg">
+                  {evilSection.description ?? t('evilSection.description')}
+                </p>
+                <div className="grid gap-3 md:grid-cols-3">
+                  {evilPoints.map(point => (
+                    <p
+                      key={point}
+                      className="border-l-2 border-primary/30 bg-card px-4 py-3 text-sm leading-relaxed text-muted-foreground"
+                    >
+                      {point}
+                    </p>
+                  ))}
+                </div>
+                {evilSection.cta ? (
+                  <div className="pt-1">
+                    <Link
+                      href={getLocalizedPath(
+                        locale,
+                        '/guides/games-to-play-when-bored',
+                      )}
+                      className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-emerald-700 px-5 py-2.5 font-medium text-emerald-700 transition hover:bg-emerald-700/10 dark:border-emerald-400 dark:text-emerald-400"
+                    >
+                      {evilSection.cta}
+                      <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                    </Link>
+                  </div>
+                ) : null}
+              </section>
+            ) : null}
+
+            <section className="mt-14 space-y-5 border-t border-border pt-10 text-left">
+              <h2 className="text-2xl font-semibold text-foreground md:text-3xl">
+                {faqSection.title ?? t('faq.title')}
+              </h2>
+              <div className="max-w-4xl space-y-1">
+                {faqItems.map(item => (
+                  <details
+                    key={item.question}
+                    className="group border-b border-border py-4"
+                  >
+                    <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-medium text-foreground">
+                      <span>{item.question}</span>
+                      <ArrowRight
+                        className="h-5 w-5 flex-none text-emerald-700 transition-transform group-open:rotate-90 dark:text-emerald-400"
+                        aria-hidden="true"
+                      />
+                    </summary>
+                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                      {item.answer}
+                    </p>
+                  </details>
+                ))}
+              </div>
+            </section>
           </div>
         </div>
       </div>

@@ -14,8 +14,13 @@ import { isLocalCatalogueMode } from '@/lib/games/catalog-mode';
 const DEFAULT_GAME_LIST_BACKEND_TIMEOUT_MS = 2500;
 
 function gameListBackendTimeoutMs() {
-  const parsed = Number(process.env.GAME_LIST_BACKEND_TIMEOUT_MS ?? process.env.SEARCH_BACKEND_TIMEOUT_MS);
-  return Number.isInteger(parsed) && parsed > 0 ? parsed : DEFAULT_GAME_LIST_BACKEND_TIMEOUT_MS;
+  const parsed = Number(
+    process.env.GAME_LIST_BACKEND_TIMEOUT_MS ??
+      process.env.SEARCH_BACKEND_TIMEOUT_MS,
+  );
+  return Number.isInteger(parsed) && parsed > 0
+    ? parsed
+    : DEFAULT_GAME_LIST_BACKEND_TIMEOUT_MS;
 }
 
 function withGameListTimeout<T>(promise: Promise<T>, label: string): Promise<T> {
@@ -36,10 +41,8 @@ function shouldUsePublicCatalogueFallback() {
   return (
     isLocalCatalogueMode() ||
     !databaseConnection.configured ||
-    (
-      process.env.GAME_LIST_ALLOW_SUPABASE_DIRECT_IN_SERVERLESS !== 'true' &&
-      shouldSkipSupabaseDirectInServerless(databaseConnection)
-    )
+    (process.env.GAME_LIST_ALLOW_SUPABASE_DIRECT_IN_SERVERLESS !== 'true' &&
+      shouldSkipSupabaseDirectInServerless(databaseConnection))
   );
 }
 
@@ -88,6 +91,20 @@ function positiveIntegerArray(value: unknown): number[] | undefined {
   );
 }
 
+function stripPublicListMedia<T extends { games: Array<{ thumbnailUrl: string | null }> }>(
+  result: T,
+  isAdmin: boolean,
+): T {
+  if (isAdmin) return result;
+
+  // The list DTO does not carry per-asset rights evidence. Until it does, the
+  // public endpoint must not infer thumbnail permission from embed permission.
+  return {
+    ...result,
+    games: result.games.map((game) => ({ ...game, thumbnailUrl: null })),
+  };
+}
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const { page, limit } = validatePagination(
@@ -100,8 +117,10 @@ export async function GET(request: NextRequest) {
   const listOptions: ListGamesOptions = {
     page,
     limit,
-    // Unauthenticated callers must never enumerate pending or archived content.
+    // Unauthenticated callers must never enumerate pending, archived, or
+    // unverified third-party catalogue records.
     status: isAdmin ? requestedStatus : 'active',
+    embedPermissionStatus: isAdmin ? undefined : 'verified',
     categoryId: parseIntegerParam(searchParams.get('categoryId')),
     tagId: parseIntegerParam(searchParams.get('tagId')),
     search: sanitizeSearchQuery(searchParams.get('search') ?? '') || undefined,
@@ -117,7 +136,9 @@ export async function GET(request: NextRequest) {
   if (shouldUsePublicCatalogueFallback()) {
     const localCatalogueMode = isLocalCatalogueMode();
     if (!localCatalogueMode) {
-      console.warn('Game database list skipped, using local fallback because database config is not production-safe');
+      console.warn(
+        'Game database list skipped, using local fallback because database config is not production-safe',
+      );
     }
     return NextResponse.json({
       ...listFallbackGames(listOptions),
@@ -125,19 +146,28 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  const favoriteContext = FavoriteService.getContextFromHeaders(request.headers, getClientIp(request));
+  const favoriteContext = FavoriteService.getContextFromHeaders(
+    request.headers,
+    getClientIp(request),
+  );
   try {
     listOptions.favoriteGameIds = await withGameListTimeout(
       FavoriteService.listFavoriteIds(favoriteContext),
       'Favorite list lookup',
     );
   } catch (error) {
-    console.warn('Favorites are unavailable for game list; continuing without favorite state:', error);
+    console.warn(
+      'Favorites are unavailable for game list; continuing without favorite state:',
+      error,
+    );
   }
 
   try {
-    const result = await withGameListTimeout(GameService.listGames(listOptions), 'Game list lookup');
-    return NextResponse.json(result);
+    const result = await withGameListTimeout(
+      GameService.listGames(listOptions),
+      'Game list lookup',
+    );
+    return NextResponse.json(stripPublicListMedia(result, isAdmin));
   } catch (error) {
     console.warn('Game database list failed, using local fallback:', error);
     return NextResponse.json({
@@ -163,33 +193,58 @@ export async function POST(request: NextRequest) {
 
   const payload = body as Record<string, unknown>;
   const title = typeof payload.title === 'string' ? payload.title.trim() : '';
-  const iframeUrl = typeof payload.iframeUrl === 'string' ? payload.iframeUrl.trim() : '';
+  const iframeUrl =
+    typeof payload.iframeUrl === 'string' ? payload.iframeUrl.trim() : '';
 
   if (!title || !iframeUrl) {
-    return NextResponse.json({ error: 'title and iframeUrl are required' }, { status: 400 });
+    return NextResponse.json(
+      { error: 'title and iframeUrl are required' },
+      { status: 400 },
+    );
   }
 
   const createInput: CreateGameInput = {
     title,
     iframeUrl,
-    titleEn: typeof payload.titleEn === 'string' ? payload.titleEn.trim() : undefined,
-    description: typeof payload.description === 'string' ? payload.description : undefined,
-    descriptionEn: typeof payload.descriptionEn === 'string' ? payload.descriptionEn : undefined,
-    instructions: typeof payload.instructions === 'string' ? payload.instructions : undefined,
-    instructionsEn: typeof payload.instructionsEn === 'string' ? payload.instructionsEn : undefined,
-    thumbnailUrl: typeof payload.thumbnailUrl === 'string' ? payload.thumbnailUrl.trim() : undefined,
+    titleEn:
+      typeof payload.titleEn === 'string' ? payload.titleEn.trim() : undefined,
+    description:
+      typeof payload.description === 'string' ? payload.description : undefined,
+    descriptionEn:
+      typeof payload.descriptionEn === 'string'
+        ? payload.descriptionEn
+        : undefined,
+    instructions:
+      typeof payload.instructions === 'string' ? payload.instructions : undefined,
+    instructionsEn:
+      typeof payload.instructionsEn === 'string'
+        ? payload.instructionsEn
+        : undefined,
+    thumbnailUrl:
+      typeof payload.thumbnailUrl === 'string'
+        ? payload.thumbnailUrl.trim()
+        : undefined,
     slug: typeof payload.slug === 'string' ? payload.slug.trim() : undefined,
     isNew: typeof payload.isNew === 'boolean' ? payload.isNew : undefined,
     isHot: typeof payload.isHot === 'boolean' ? payload.isHot : undefined,
     status:
-      payload.status === 'active' || payload.status === 'inactive' || payload.status === 'pending'
+      payload.status === 'active' ||
+      payload.status === 'inactive' ||
+      payload.status === 'pending'
         ? payload.status
         : undefined,
     developerName:
-      typeof payload.developerName === 'string' ? payload.developerName.trim() || null : undefined,
+      typeof payload.developerName === 'string'
+        ? payload.developerName.trim() || null
+        : undefined,
     developerUrl:
-      typeof payload.developerUrl === 'string' ? payload.developerUrl.trim() || null : undefined,
-    sourceUrl: typeof payload.sourceUrl === 'string' ? payload.sourceUrl.trim() || null : undefined,
+      typeof payload.developerUrl === 'string'
+        ? payload.developerUrl.trim() || null
+        : undefined,
+    sourceUrl:
+      typeof payload.sourceUrl === 'string'
+        ? payload.sourceUrl.trim() || null
+        : undefined,
     categoryIds: positiveIntegerArray(payload.categoryIds),
     tagIds: positiveIntegerArray(payload.tagIds),
   };

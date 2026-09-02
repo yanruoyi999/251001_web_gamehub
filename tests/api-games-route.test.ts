@@ -38,18 +38,22 @@ describe('/api/games route fallback', () => {
     shouldSkipSupabaseDirectInServerlessMock.mockReturnValue(false);
   });
 
-  it('returns a degraded local catalogue when the database list fails', async () => {
+  it('returns a degraded fail-closed catalogue when the database list fails', async () => {
     process.env.GAME_CATALOG_MODE = 'remote';
     listGamesMock.mockRejectedValue(new Error('database unavailable'));
 
     const { GET } = await import('@/app/api/games/route');
-    const response = await GET(new Request('http://test.local/api/games?search=snake&limit=5') as any);
+    const response = await GET(
+      new Request('http://test.local/api/games?search=snake&limit=5') as any,
+    );
     const payload = await response.json();
 
     expect(response.status).toBe(200);
     expect(payload.degraded).toBe(true);
     expect(payload.source).toBe('fallback');
-    expect(payload.games.some((game: { slug: string }) => game.slug === 'google-snake')).toBe(true);
+    expect(
+      payload.games.some((game: { slug: string }) => game.slug === 'google-snake'),
+    ).toBe(false);
   });
 
   it('skips the database when configuration is not safe for public runtime', async () => {
@@ -57,26 +61,71 @@ describe('/api/games route fallback', () => {
     getDatabaseConnectionMetadataMock.mockReturnValue({ configured: false });
 
     const { GET } = await import('@/app/api/games/route');
-    const response = await GET(new Request('http://test.local/api/games?search=snake&limit=5') as any);
+    const response = await GET(
+      new Request('http://test.local/api/games?search=snake&limit=5') as any,
+    );
     const payload = await response.json();
 
     expect(response.status).toBe(200);
     expect(payload.degraded).toBe(true);
     expect(payload.source).toBe('fallback');
+    expect(payload.games).toHaveLength(0);
     expect(listGamesMock).not.toHaveBeenCalled();
   });
 
-  it('reports the checked-in catalogue as healthy in explicit local mode', async () => {
+  it('reports the checked-in catalogue as healthy in explicit local mode without exposing unknown-rights games', async () => {
     process.env.GAME_CATALOG_MODE = 'local';
     getDatabaseConnectionMetadataMock.mockReturnValue({ configured: false });
 
     const { GET } = await import('@/app/api/games/route');
-    const response = await GET(new Request('http://test.local/api/games?search=snake&limit=5') as any);
+    const response = await GET(
+      new Request('http://test.local/api/games?search=snake&limit=5') as any,
+    );
     const payload = await response.json();
 
     expect(response.status).toBe(200);
     expect(payload.degraded).toBe(false);
     expect(payload.source).toBe('fallback');
+    expect(payload.games).toHaveLength(0);
     expect(listGamesMock).not.toHaveBeenCalled();
+  });
+
+  it('requires verified embed rights and suppresses unverified list media for public remote catalogue calls', async () => {
+    process.env.GAME_CATALOG_MODE = 'remote';
+    listGamesMock.mockResolvedValue({
+      games: [
+        {
+          id: 1,
+          slug: 'verified-game',
+          title: 'Verified Game',
+          titleEn: 'Verified Game',
+          status: 'active',
+          thumbnailUrl: 'https://third-party.example/thumb.png',
+          featured: false,
+          isNew: false,
+          isHot: false,
+          isFavorite: false,
+        },
+      ],
+      total: 1,
+      page: 1,
+      limit: 5,
+      totalPages: 1,
+    });
+
+    const { GET } = await import('@/app/api/games/route');
+    const response = await GET(
+      new Request('http://test.local/api/games?limit=5') as any,
+    );
+    const payload = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(listGamesMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        status: 'active',
+        embedPermissionStatus: 'verified',
+      }),
+    );
+    expect(payload.games[0].thumbnailUrl).toBeNull();
   });
 });

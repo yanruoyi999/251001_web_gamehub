@@ -11,19 +11,22 @@ export interface DailyRecommendationEntry {
   action: Record<DailyRecommendationLocale, string>;
 }
 
+// Keep retention inventory first-party/self-hosted only. Third-party catalogue
+// records can be discussed editorially, but they must not re-enter a playable
+// recommendation surface while their embed/media rights remain unverified.
 export const DAILY_RECOMMENDATION_POOL: readonly DailyRecommendationEntry[] = [
   {
-    id: 'google-snake',
-    gameId: 80,
-    slug: 'google-snake',
-    image: '/game-screenshots/google-snake.png',
-    title: { zh: 'Google Snake', en: 'Google Snake' },
+    id: '2-player-unblocked',
+    gameId: 0,
+    slug: '2-player-unblocked',
+    image: '/og-gamehub.svg',
+    title: { zh: '双人同键盘小游戏', en: 'Same-keyboard 2 Player Games' },
     description: {
-      zh: '快速开始一局，熟悉转向、加速和高分节奏。',
-      en: 'Start a quick round and practice turns, speed, and high-score rhythm.',
+      zh: '三款 Luma 自托管双人浏览器游戏，来源与许可记录明确。',
+      en: 'Three Luma-hosted two-player browser games with documented provenance and license records.',
     },
-    eyebrow: { zh: '短局挑战', en: 'Short challenge' },
-    action: { zh: '开始游玩', en: 'Play now' },
+    eyebrow: { zh: 'Luma 自托管', en: 'Luma self-hosted' },
+    action: { zh: '一起玩', en: 'Play together' },
   },
   {
     id: 'spend-bill-gates-money',
@@ -39,56 +42,17 @@ export const DAILY_RECOMMENDATION_POOL: readonly DailyRecommendationEntry[] = [
     action: { zh: '开始消费', en: 'Start spending' },
   },
   {
-    id: 'drive-mad',
-    gameId: 57,
-    slug: 'drive-mad',
-    image: '/game-screenshots/drive-mad.png',
-    title: { zh: 'Drive Mad', en: 'Drive Mad' },
+    id: 'snake-3d',
+    gameId: 0,
+    slug: 'snake-3d',
+    image: '/og-gamehub.svg',
+    title: { zh: 'Luma Snake 3D', en: 'Luma Snake 3D' },
     description: {
-      zh: '用更轻的油门和提前刹车处理翻车、桥梁与跳跃。',
-      en: 'Use lighter throttle and earlier braking for flips, bridges, and jumps.',
+      zh: '支持键盘与触控的原创 3D 贪吃蛇，包含 UTC 每日挑战和本地最高分。',
+      en: 'A Luma-original keyboard-and-touch 3D snake challenge with UTC daily boards and local high scores.',
     },
-    eyebrow: { zh: '物理驾驶', en: 'Physics driving' },
-    action: { zh: '继续挑战', en: 'Keep playing' },
-  },
-  {
-    id: 'monkey-mart',
-    gameId: 31,
-    slug: 'monkey-mart',
-    image: '/game-screenshots/monkey-mart.png',
-    title: { zh: 'Monkey Mart', en: 'Monkey Mart' },
-    description: {
-      zh: '补货、收银并扩建摊位，保持商店循环顺畅。',
-      en: 'Restock, check out customers, and expand while keeping the shop moving.',
-    },
-    eyebrow: { zh: '经营节奏', en: 'Management loop' },
-    action: { zh: '经营商店', en: 'Run the shop' },
-  },
-  {
-    id: 'cats-love-cake-2',
-    gameId: 38,
-    slug: 'cats-love-cake-2',
-    image: '/game-screenshots/cats-love-cake-2.png',
-    title: { zh: 'Cats Love Cake 2', en: 'Cats Love Cake 2' },
-    description: {
-      zh: '控制弹跳节奏，绕开障碍并把角色安全送到蛋糕旁。',
-      en: 'Time each bounce, avoid hazards, and guide the character safely to the cake.',
-    },
-    eyebrow: { zh: '弹跳闯关', en: 'Bounce challenge' },
-    action: { zh: '开始闯关', en: 'Start bouncing' },
-  },
-  {
-    id: 'tunnel-rush',
-    gameId: 189,
-    slug: 'tunnel-rush',
-    image: '/game-screenshots/tunnel-rush.png',
-    title: { zh: 'Tunnel Rush', en: 'Tunnel Rush' },
-    description: {
-      zh: '快速识别障碍开口，在高速隧道中保持路线稳定。',
-      en: 'Read obstacle openings quickly and hold a clean line through the tunnel.',
-    },
-    eyebrow: { zh: '反应挑战', en: 'Reaction challenge' },
-    action: { zh: '进入隧道', en: 'Enter the tunnel' },
+    eyebrow: { zh: 'Luma 原创', en: 'Luma original' },
+    action: { zh: '开始挑战', en: 'Start a run' },
   },
 ];
 

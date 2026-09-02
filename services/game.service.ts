@@ -15,6 +15,7 @@ import { getJson, setJson, delKey } from '@/lib/utils/redis-helper';
 import { getRedisClient } from '@/lib/redis';
 import { isValidId, validatePagination, isValidUrl, isValidHttpsUrl } from '@/lib/utils/validation';
 import { isNextProductionBuild } from '@/lib/utils/build-phase';
+import type { EmbedPermissionStatus } from '@/lib/games/quality-policy';
 import {
   normalizeGameUpdateInput,
   type UpdateGameInput,
@@ -39,6 +40,7 @@ export interface ListGamesOptions {
   page?: number;
   limit?: number;
   status?: 'active' | 'inactive' | 'pending' | 'all';
+  embedPermissionStatus?: EmbedPermissionStatus;
   categoryId?: number;
   tagId?: number;
   search?: string;
@@ -96,6 +98,21 @@ export interface CreateGameInput {
   tagIds?: number[];
 }
 
+function buildGameDetail(record: any): GameDetail {
+  return {
+    ...record,
+    // Embedding permission and media permission are independent. Do not expose
+    // a thumbnail or captured screenshot just because the game itself is verified.
+    thumbnailUrl:
+      record.thumbnailPermission === 'verified' ? record.thumbnailUrl : null,
+    stats: record.gameStats ?? null,
+    categories: record.gameCategories.map((item: any) => item.category),
+    tags: record.gameTags.map((item: any) => item.tag),
+    screenshots:
+      record.screenshotPermission === 'verified' ? record.screenshots : [],
+  } as GameDetail;
+}
+
 export class GameService {
   /**
    * 获取游戏详情
@@ -126,13 +143,7 @@ export class GameService {
 
     if (!record) return null;
 
-    const detail: GameDetail = {
-      ...record,
-      stats: record.gameStats ?? null,
-      categories: record.gameCategories.map((item) => item.category),
-      tags: record.gameTags.map((item) => item.tag),
-      screenshots: record.screenshots,
-    };
+    const detail = buildGameDetail(record);
 
     if (useCache) {
       await setJson(getRedisClient(), GameCacheKeys.byId(gameId), detail, CacheTTL.GAME_DETAILS);
@@ -167,13 +178,7 @@ export class GameService {
 
     if (!record) return null;
 
-    const detail: GameDetail = {
-      ...record,
-      stats: record.gameStats ?? null,
-      categories: record.gameCategories.map((item) => item.category),
-      tags: record.gameTags.map((item) => item.tag),
-      screenshots: record.screenshots,
-    };
+    const detail = buildGameDetail(record);
 
     if (useCache) {
       await setJson(getRedisClient(), GameCacheKeys.bySlug(slug), detail, CacheTTL.GAME_DETAILS);
@@ -200,6 +205,10 @@ export class GameService {
       filters.push(eq(games.status, status));
     }
 
+    if (options.embedPermissionStatus) {
+      filters.push(eq(games.embedPermissionStatus, options.embedPermissionStatus));
+    }
+
     if (typeof options.featured === 'boolean') {
       filters.push(eq(games.featured, options.featured));
     }
@@ -220,6 +229,7 @@ export class GameService {
       page,
       limit,
       status,
+      embedPermissionStatus: options.embedPermissionStatus ?? null,
       categoryId: options.categoryId ?? null,
       tagId: options.tagId ?? null,
       search: options.search?.trim() || null,

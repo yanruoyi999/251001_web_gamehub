@@ -15,8 +15,23 @@ const intlMiddleware = createMiddleware({
   alternateLinks: false,
 });
 
+const RESTRICTED_CAPTURE_PREFIXES = ['/game-screenshots/', '/guide-screenshots/'];
+
 export default function middleware(request: NextRequest) {
   const url = new URL(request.url);
+
+  // Historical third-party captures remain in Git only as audit provenance.
+  // They are not a public asset surface unless media rights are separately
+  // verified and a new approved delivery path is introduced.
+  if (RESTRICTED_CAPTURE_PREFIXES.some(prefix => url.pathname.startsWith(prefix))) {
+    return new NextResponse(null, {
+      status: 404,
+      headers: {
+        'Cache-Control': 'private, no-store',
+        'X-Robots-Tag': 'noindex, nofollow, noimageindex',
+      },
+    });
+  }
 
   if (url.pathname.startsWith('/admin')) {
     return isLocalCatalogueMode()
@@ -38,5 +53,9 @@ export default function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|og/|.*\\.\\w+$).*)'],
+  matcher: [
+    '/game-screenshots/:path*',
+    '/guide-screenshots/:path*',
+    '/((?!api|_next/static|_next/image|favicon.ico|og/|.*\\.\\w+$).*)',
+  ],
 };

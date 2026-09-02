@@ -22,6 +22,7 @@
     "verify:services": "tsx scripts/verify-services.ts",
     "meilisearch:setup": "tsx scripts/meilisearch-setup.ts",
     "check:links": "tsx scripts/check-external-links.ts",
+    "audit:game-quality": "tsx scripts/audit-game-quality.ts --write docs/game-quality-audit.md",
     "audit:page-quality": "tsx scripts/audit-page-quality.ts --write docs/page-quality-scorecard.md",
     "audit:runtime-quality": "tsx scripts/audit-runtime-quality.ts",
     "ops:growth": "tsx scripts/growth-metrics.ts",

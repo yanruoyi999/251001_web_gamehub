@@ -15,20 +15,21 @@ describe('game quality audit', () => {
     expect(row?.reasons.join('; ')).not.toContain('thin description');
   });
 
-  it('generates a per-slug decision table for keep, improve, review, and remove work', () => {
+  it('does not let editorial completeness override unverified embed rights', () => {
     const decisions = buildDecisionRows(buildAuditRows());
     const bySlug = new Map(decisions.map((row) => [row.slug, row]));
 
-    expect(bySlug.get('g-switch-2')?.decision).toBe('keep');
+    expect(bySlug.get('g-switch-2')?.decision).toBe('review');
+    expect(bySlug.get('g-switch-2')?.reason.toLowerCase()).toContain('permission');
     expect(bySlug.get('adam-and-eve-8')?.decision).toBe('review');
-    expect(bySlug.get('duo-survival')?.decision).toBe('merge');
-    expect(bySlug.get('fly-car-stunt')?.nextStep).toContain('redirect direct detail requests');
+    expect(bySlug.get('duo-survival')?.decision).toBe('review');
     expect(decisions.every((row) => row.slug && row.decision && row.reason)).toBe(true);
   });
 
-  it('uses real checked-in screenshots for every core indexed game', () => {
+  it('uses real checked-in screenshots without treating them as rights clearance', () => {
     const placeholderRows = buildAuditRows().filter(
-      (row) => row.tier === 'core-indexed' && row.reasons.includes('placeholder thumbnail'),
+      (row) => row.game.thumbnailUrl.startsWith('/game-screenshots/') &&
+        row.reasons.includes('placeholder thumbnail'),
     );
 
     expect(placeholderRows.map((row) => row.game.slug)).toEqual([]);

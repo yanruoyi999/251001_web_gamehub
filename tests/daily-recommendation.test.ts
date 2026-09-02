@@ -7,6 +7,12 @@ import {
   getShanghaiDateKey,
 } from '@/lib/retention/daily-recommendation';
 
+const FIRST_PARTY_RECOMMENDATION_SLUGS = new Set([
+  '2-player-unblocked',
+  'spend-bill-gates-money',
+  'snake-3d',
+]);
+
 describe('daily recommendation', () => {
   it('returns a stable recommendation for the same Shanghai date', () => {
     expect(getDailyRecommendation('2026-08-13')).toEqual(
@@ -15,8 +21,11 @@ describe('daily recommendation', () => {
   });
 
   it('avoids recommending the game currently being viewed when alternatives exist', () => {
-    const recommendation = getDailyRecommendation('2026-08-13', 'google-snake');
-    expect(recommendation.slug).not.toBe('google-snake');
+    const recommendation = getDailyRecommendation(
+      '2026-08-13',
+      'spend-bill-gates-money'
+    );
+    expect(recommendation.slug).not.toBe('spend-bill-gates-money');
     expect(
       DAILY_RECOMMENDATION_POOL.some(
         entry => entry.slug === recommendation.slug
@@ -34,10 +43,17 @@ describe('daily recommendation', () => {
     );
   });
 
-  it('keeps rights-sensitive OvO out and includes the Luma original spending game', () => {
-    expect(DAILY_RECOMMENDATION_POOL.map(entry => entry.slug)).not.toContain(
-      'ovo'
-    );
+  it('keeps recommendation inventory first-party and does not reuse restricted captures', () => {
+    expect(
+      DAILY_RECOMMENDATION_POOL.every(entry =>
+        FIRST_PARTY_RECOMMENDATION_SLUGS.has(entry.slug)
+      )
+    ).toBe(true);
+    expect(
+      DAILY_RECOMMENDATION_POOL.some(entry =>
+        entry.image.startsWith('/game-screenshots/')
+      )
+    ).toBe(false);
     expect(DAILY_RECOMMENDATION_POOL.map(entry => entry.slug)).toContain(
       'spend-bill-gates-money'
     );
@@ -46,13 +62,11 @@ describe('daily recommendation', () => {
   it('excludes the current game from a multi-card recommendation set', () => {
     const recommendations = getDailyRecommendations(
       '2026-08-13',
-      'google-snake',
+      'snake-3d',
       3
     );
 
-    expect(recommendations.map(entry => entry.slug)).not.toContain(
-      'google-snake'
-    );
+    expect(recommendations.map(entry => entry.slug)).not.toContain('snake-3d');
   });
 
   it('uses the Asia/Shanghai calendar date for the rotation key', () => {
