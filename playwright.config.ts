@@ -4,11 +4,19 @@ const isCi = Boolean(process.env.CI);
 const externalBaseURL = process.env.PLAYWRIGHT_BASE_URL;
 const defaultBaseURL = 'http://localhost:3217';
 
+export const getPlaywrightCiOptions = (enabled: boolean) => ({
+  workers: enabled ? 1 : undefined,
+  retries: 0,
+  trace: enabled ? ('retain-on-failure' as const) : ('on-first-retry' as const),
+});
+
+const ciOptions = getPlaywrightCiOptions(isCi);
+
 export default defineConfig({
   testDir: './tests/e2e',
   timeout: 60_000,
-  retries: 0,
-  workers: isCi ? 1 : undefined,
+  retries: ciOptions.retries,
+  workers: ciOptions.workers,
   webServer: externalBaseURL
     ? undefined
     : {
@@ -25,7 +33,7 @@ export default defineConfig({
       },
   use: {
     baseURL: externalBaseURL ?? defaultBaseURL,
-    trace: isCi ? 'retain-on-failure' : 'on-first-retry',
+    trace: ciOptions.trace,
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
   },
