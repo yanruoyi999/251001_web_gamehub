@@ -10,7 +10,7 @@ test.describe('mobile disclosures without hydration', () => {
   test('opens navigation and advanced filters on the first click', async ({
     page,
   }) => {
-    await page.goto('/en');
+    await page.goto('/en', { waitUntil: 'domcontentloaded' });
 
     await page
       .locator('label[for="mobile-navigation-toggle"]')
@@ -24,7 +24,7 @@ test.describe('mobile disclosures without hydration', () => {
         .filter({ hasText: /close navigation menu/i })
     ).toBeVisible();
 
-    await page.goto('/en/games');
+    await page.goto('/en/games', { waitUntil: 'domcontentloaded' });
     await page
       .locator('label[for="game-filter-toggle"]')
       .filter({ hasText: /more filters/i })
@@ -48,7 +48,9 @@ test.describe('mobile disclosures without hydration', () => {
   });
 
   test('keeps guide play intent actionable before hydration', async ({ page }) => {
-    await page.goto('/en/guides/google-snake-mods');
+    await page.goto('/en/guides/google-snake-mods', {
+      waitUntil: 'domcontentloaded',
+    });
 
     const playLink = page.locator('#play').getByRole('link', {
       name: 'Play standard Snake - no mods',
@@ -60,13 +62,17 @@ test.describe('mobile disclosures without hydration', () => {
   });
 
   test('moves focus to guide jump targets before hydration', async ({ page }) => {
-    await page.goto('/en/guides/google-snake-mods');
+    await page.goto('/en/guides/google-snake-mods', {
+      waitUntil: 'domcontentloaded',
+    });
     await page.getByRole('link', { name: 'Read the guide' }).click();
 
     await expect(page).toHaveURL(/#guide-details$/);
     await expect(page.locator('#guide-details')).toBeFocused();
 
-    await page.goto('/en/guides/google-snake-mods');
+    await page.goto('/en/guides/google-snake-mods', {
+      waitUntil: 'domcontentloaded',
+    });
     await page.getByRole('link', { name: 'See similar games' }).click();
 
     await expect(page).toHaveURL(/#recommendations$/);
