@@ -9,10 +9,14 @@ const routes = [
   ['sorting-games', 'SortingLab'],
   ['mahjong-connect', 'MahjongConnect'],
   ['asmr-games', 'AsmrExperiences'],
+  ['draw-a-perfect-circle', 'DrawPerfectCircle'],
+  ['chinese-checkers', 'ChineseCheckers'],
+  ['stacker-game', 'StackerGame'],
+  ['two-player-games', 'TwoPlayerGames'],
 ] as const;
 
-describe('Luma five-page route contract', () => {
-  it('declares static bilingual routes, direct navigation, and no sitemap mutation', () => {
+describe('Luma governed experiment route contract', () => {
+  it('declares the admitted governed batches as static bilingual routes with no sitemap mutation', () => {
     for (const [slug, component] of routes) {
       const routePath = path.join(process.cwd(), 'app', '[locale]', 'games', slug, 'page.tsx');
       expect(existsSync(routePath)).toBe(true);

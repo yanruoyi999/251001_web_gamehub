@@ -4,10 +4,14 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import { AsmrExperiences } from '@/components/game/asmr-experiences';
+import { ChineseCheckers } from '@/components/game/chinese-checkers';
 import { ConnectTheDots } from '@/components/game/connect-the-dots';
 import { DailySolitaire } from '@/components/game/daily-solitaire';
+import { DrawPerfectCircle } from '@/components/game/draw-perfect-circle';
 import { MahjongConnect } from '@/components/game/mahjong-connect';
 import { SortingLab } from '@/components/game/sorting-lab';
+import { StackerGame } from '@/components/game/stacker-game';
+import { TwoPlayerGames } from '@/components/game/two-player-games';
 
 const reactGlobal = globalThis as typeof globalThis & { React?: typeof React };
 const previousReact = reactGlobal.React;
@@ -46,6 +50,26 @@ const games = [
     name: 'ASMR Experiences',
     render: () => renderToStaticMarkup(createElement(AsmrExperiences, { locale: 'en' })),
     controlMarker: 'data-asmr-surface',
+  },
+  {
+    name: 'Draw a Perfect Circle',
+    render: () => renderToStaticMarkup(createElement(DrawPerfectCircle, { locale: 'en' })),
+    controlMarker: 'Practice',
+  },
+  {
+    name: 'Chinese Checkers',
+    render: () => renderToStaticMarkup(createElement(ChineseCheckers, { locale: 'en' })),
+    controlMarker: 'Local 2 players',
+  },
+  {
+    name: 'Stacker Game',
+    render: () => renderToStaticMarkup(createElement(StackerGame, { locale: 'en' })),
+    controlMarker: 'Classic',
+  },
+  {
+    name: 'Two Player Games',
+    render: () => renderToStaticMarkup(createElement(TwoPlayerGames, { locale: 'en' })),
+    controlMarker: 'Tap Duel',
   },
 ] as const;
 

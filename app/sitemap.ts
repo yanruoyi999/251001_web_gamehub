@@ -8,6 +8,7 @@ import {
   shouldIndexTagEntry,
 } from '@/lib/game-taxonomy';
 import { shouldIncludeGameInSitemap } from '@/lib/games/quality-policy';
+import { shouldExcludeNoindexExperimentGame } from '@/lib/games/noindex-experiment-policy';
 import { shouldUseCatalogueDatabase } from '@/lib/games/catalog-mode';
 import {
   SPEND_BILL_GATES_MONEY_PATH,
@@ -64,7 +65,11 @@ interface SitemapGameEntry {
 
 function getFallbackSitemapGames(): SitemapGameEntry[] {
   return mockGames
-    .filter((game) => shouldIncludeGameInSitemap(game))
+    .filter(
+      (game) =>
+        !shouldExcludeNoindexExperimentGame(game.slug) &&
+        shouldIncludeGameInSitemap(game),
+    )
     .map((game) => ({
       slug: game.slug,
       isNew: game.isNew,
@@ -114,12 +119,14 @@ async function getSitemapGames(): Promise<SitemapGameEntry[]> {
 
     if (rows.length > 0) {
       return rows
-        .filter((game) =>
-          shouldIncludeGameInSitemap({
-            slug: game.slug,
-            // Remote catalogue records do not yet carry an auditable embed permission.
-            embedPermissionStatus: null,
-          }),
+        .filter(
+          (game) =>
+            !shouldExcludeNoindexExperimentGame(game.slug) &&
+            shouldIncludeGameInSitemap({
+              slug: game.slug,
+              // Remote catalogue records do not yet carry an auditable embed permission.
+              embedPermissionStatus: null,
+            }),
         )
         .map((game) => ({
           slug: game.slug,

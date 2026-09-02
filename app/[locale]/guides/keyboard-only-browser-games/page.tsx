@@ -21,6 +21,18 @@ interface PageProps {
 
 const picks = [
   {
+    slug: 'stacker-game',
+    title: 'Stacker Game',
+    controls: 'Space or Enter',
+    controlsZh: 'Space 或 Enter',
+    reason:
+      'A Luma-original one-button timing game with visible focus, generated Canvas blocks, Classic play and a sixty-second Sprint.',
+    reasonZh:
+      'Luma 原创单键节奏游戏，提供清晰焦点、Canvas 生成方块、经典模式和六十秒冲刺。',
+    bestFor: 'One-button timing and score chasing.',
+    bestForZh: '单键节奏和挑战本地最高分。',
+  },
+  {
     slug: 'google-snake',
     title: 'Google Snake',
     controls: 'Arrow keys',
@@ -87,7 +99,7 @@ const faqs = {
     {
       question: 'What browser games can I play with only a keyboard?',
       answer:
-        'Good starting points are Google Snake for arrow-key movement, OvO and Big Tower Tiny Square for platforming, Drive Mad for keyboard-controlled physics driving, and G-Switch 3 for one-button play.',
+        'Good starting points are Stacker Game for Space or Enter, Google Snake for arrow-key movement, OvO and Big Tower Tiny Square for platforming, Drive Mad for physics driving, and G-Switch 3 for shared-keyboard play.',
     },
     {
       question: 'Do keyboard-only browser games need a download?',
@@ -114,7 +126,7 @@ const faqs = {
     {
       question: '有哪些只用键盘就能玩的浏览器游戏？',
       answer:
-        '可以先试 Google Snake 的方向键移动、OvO 和 Big Tower Tiny Square 的平台跳跃、Drive Mad 的键盘物理驾驶，以及 G-Switch 3 的单键操作。',
+        '可以先试 Stacker Game 的 Space/Enter 单键落块、Google Snake 的方向键移动、OvO 和 Big Tower Tiny Square 的平台跳跃、Drive Mad 的键盘物理驾驶，以及 G-Switch 3 的同键盘玩法。',
     },
     {
       question: '键盘浏览器游戏需要下载吗？',
