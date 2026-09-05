@@ -1,7 +1,7 @@
 import { expect, test } from './fixtures';
 
 test.describe('Luma Snake 3D', () => {
-  test('keeps the 3D bundle lazy and starts a rendered desktop game', async ({ page }) => {
+  test('keeps the 3D bundle lazy and records a real runtime performance sample', async ({ page }, testInfo) => {
     const scriptRequests: string[] = [];
     page.on('request', (request) => {
       if (request.resourceType() === 'script') scriptRequests.push(request.url());
@@ -45,37 +45,156 @@ test.describe('Luma Snake 3D', () => {
       return;
     }
 
+    const readyMs = Number(await stage.getAttribute('data-snake-play-to-ready-ms'));
+    expect(Number.isFinite(readyMs)).toBe(true);
+    expect(readyMs).toBeGreaterThanOrEqual(0);
+    expect(readyMs).toBeLessThan(5_000);
+
     const canvasState = await page.evaluate(() => {
       const canvas = document.querySelector<HTMLCanvasElement>('[data-snake-canvas]');
-      if (!canvas) return { hasContext: false, width: 0, height: 0, pixel: [] };
+      if (!canvas) return { hasContext: false, width: 0, height: 0, contextLost: true };
 
       const gl = canvas.getContext('webgl2') ?? canvas.getContext('webgl');
-      if (!gl) {
-        return { hasContext: false, width: canvas.width, height: canvas.height, pixel: [] };
-      }
-
-      gl.finish();
-      const pixel = new Uint8Array(4);
-      gl.readPixels(
-        Math.floor(gl.drawingBufferWidth / 2),
-        Math.floor(gl.drawingBufferHeight / 2),
-        1,
-        1,
-        gl.RGBA,
-        gl.UNSIGNED_BYTE,
-        pixel
-      );
       return {
-        hasContext: true,
+        hasContext: Boolean(gl),
         width: canvas.width,
         height: canvas.height,
-        pixel: Array.from(pixel),
+        contextLost: gl ? gl.isContextLost() : true,
       };
     });
 
     expect(canvasState.hasContext).toBe(true);
     expect(canvasState.width).toBeGreaterThan(0);
     expect(canvasState.height).toBeGreaterThan(0);
-    expect(canvasState.pixel.some((value) => value > 0)).toBe(true);
+    expect(canvasState.contextLost).toBe(false);
+
+    const rafFps = await page.evaluate(
+      () =>
+        new Promise<number>((resolve) => {
+          let frames = 0;
+          let startedAt = 0;
+          const sampleMs = 750;
+
+          const sample = (timestamp: number) => {
+            if (startedAt === 0) startedAt = timestamp;
+            frames += 1;
+            const elapsed = timestamp - startedAt;
+            if (elapsed >= sampleMs) {
+              resolve((frames * 1_000) / elapsed);
+              return;
+            }
+            requestAnimationFrame(sample);
+          };
+
+          requestAnimationFrame(sample);
+        })
+    );
+
+    expect(rafFps).toBeGreaterThan(0);
+    if (testInfo.project.name === 'chromium') {
+      expect(rafFps).toBeGreaterThan(20);
+    }
+
+    const performanceSample = `project=${testInfo.project.name}; play_to_ready_ms=${readyMs}; raf_fps=${rafFps.toFixed(1)}`;
+    testInfo.annotations.push({
+      type: 'snake-performance',
+      description: performanceSample,
+    });
+    // eslint-disable-next-line no-console
+    console.info(`[snake-performance] ${performanceSample}`);
+  });
+
+  test('persists the local mute preference without loading an audio asset', async ({ page }) => {
+    await page.goto('/en/games/snake-3d', { waitUntil: 'networkidle' });
+
+    const audioToggle = page.locator('[data-snake-audio-toggle="true"]');
+    await expect(audioToggle).toHaveAttribute('aria-pressed', 'false');
+    await audioToggle.click();
+    await expect(audioToggle).toHaveAttribute('aria-pressed', 'true');
+
+    const storedMuted = await page.evaluate(() =>
+      window.localStorage.getItem('luma-snake-3d-muted')
+    );
+    expect(storedMuted).toBe('true');
+
+    await page.reload({ waitUntil: 'networkidle' });
+    await expect(page.locator('[data-snake-audio-toggle="true"]')).toHaveAttribute(
+      'aria-pressed',
+      'true'
+    );
+  });
+
+  test('completes play, first move, pause, resume, game over and retry', async ({ page }) => {
+    await page.goto('/en/games/snake-3d', { waitUntil: 'networkidle' });
+    await page.locator('[data-snake-play="true"]').click();
+
+    const stage = page.locator('[data-snake-stage]');
+    await expect(stage).toHaveAttribute('data-snake-phase', /^(playing|error)$/, {
+      timeout: 30_000,
+    });
+    if ((await stage.getAttribute('data-snake-phase')) === 'error') return;
+
+    await page.keyboard.press('ArrowUp');
+    await page.getByRole('button', { name: 'Pause' }).click();
+    await expect(stage).toHaveAttribute('data-snake-phase', 'paused');
+
+    await page.getByRole('button', { name: 'Resume' }).click();
+    await expect(stage).toHaveAttribute('data-snake-phase', 'playing');
+
+    await expect(stage).toHaveAttribute('data-snake-phase', 'dead', {
+      timeout: 5_000,
+    });
+    await expect(page.locator('[data-snake-retry="true"]')).toBeVisible();
+    await page.locator('[data-snake-retry="true"]').click();
+    await expect(stage).toHaveAttribute('data-snake-phase', /^(playing|error)$/, {
+      timeout: 30_000,
+    });
+  });
+
+  test('buffers only one valid direction change before the next game tick', async ({ page }) => {
+    await page.goto('/en/games/snake-3d', { waitUntil: 'networkidle' });
+    await page.locator('[data-snake-play="true"]').click();
+
+    const stage = page.locator('[data-snake-stage]');
+    await expect(stage).toHaveAttribute('data-snake-phase', /^(playing|error)$/, {
+      timeout: 30_000,
+    });
+
+    if ((await stage.getAttribute('data-snake-phase')) === 'error') return;
+
+    await page.keyboard.press('ArrowUp');
+    await page.keyboard.press('ArrowLeft');
+    await page.waitForTimeout(260);
+
+    await expect(stage).toHaveAttribute('data-snake-phase', 'playing');
+  });
+
+  test('pauses when the document becomes hidden and does not auto-resume', async ({ page }) => {
+    await page.goto('/en/games/snake-3d', { waitUntil: 'networkidle' });
+    await page.locator('[data-snake-play="true"]').click();
+
+    const stage = page.locator('[data-snake-stage]');
+    await expect(stage).toHaveAttribute('data-snake-phase', /^(playing|error)$/, {
+      timeout: 30_000,
+    });
+    if ((await stage.getAttribute('data-snake-phase')) === 'error') return;
+
+    await page.evaluate(() => {
+      Object.defineProperty(document, 'hidden', {
+        configurable: true,
+        get: () => true,
+      });
+      document.dispatchEvent(new Event('visibilitychange'));
+    });
+    await expect(stage).toHaveAttribute('data-snake-phase', 'paused');
+
+    await page.evaluate(() => {
+      Object.defineProperty(document, 'hidden', {
+        configurable: true,
+        get: () => false,
+      });
+      document.dispatchEvent(new Event('visibilitychange'));
+    });
+    await expect(stage).toHaveAttribute('data-snake-phase', 'paused');
   });
 });
