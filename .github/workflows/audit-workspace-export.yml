@@ -1,0 +1,36 @@
+name: Audit workspace export
+
+on:
+  push:
+    branches: [fix/luma-audit-20260905]
+    paths: [.github/workflows/audit-workspace-export.yml]
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    if: github.repository == 'yanruoyi999/251001_web_gamehub'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Export committed source only
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/audit-export"
+          git bundle create "$RUNNER_TEMP/audit-export/luma-source.bundle" HEAD
+          git rev-parse HEAD > "$RUNNER_TEMP/audit-export/commit.txt"
+          git ls-tree -r HEAD > "$RUNNER_TEMP/audit-export/tree.txt"
+          cd "$RUNNER_TEMP/audit-export"
+          sha256sum luma-source.bundle > SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        with:
+          name: luma-audit-source
+          path: ${{ runner.temp }}/audit-export/
+          retention-days: 1
+          if-no-files-found: error
