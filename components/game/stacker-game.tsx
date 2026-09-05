@@ -5,6 +5,9 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { trackInteraction } from '@/lib/analytics/events';
 import {
   createSeededStackerSetup,
+  projectTowerBlock,
+  advanceStackerClock,
+  type StackerClock,
   dropTowerBlock,
   getBlockSpeed,
   getSprintSecondsRemaining,
@@ -54,8 +57,7 @@ export function StackerGame({ locale }: { locale: 'en' | 'zh' }) {
   const movingRef = useRef<TowerBlock>({ x: -155, z: 0, width: 150, depth: 150 });
   const axisRef = useRef<TowerAxis>('x');
   const directionRef = useRef(1);
-  const lastFrameRef = useRef(0);
-  const elapsedRef = useRef(0);
+  const clockRef = useRef<StackerClock>({ elapsedMs: 0, lastFrameMs: null });
   const colorSeedRef = useRef(188);
   const [mode, setMode] = useState<Mode>('classic');
   const [running, setRunning] = useState(false);
@@ -90,27 +92,34 @@ export function StackerGame({ locale }: { locale: 'en' | 'zh' }) {
     gradient.addColorStop(1, '#020617');
     context.fillStyle = gradient;
     context.fillRect(0, 0, canvas.width, canvas.height);
-    const blocks = blocksRef.current.slice(-11);
-    blocks.forEach((block, index) => {
-      const level = blocks.length - 1 - index;
-      const x = canvas.width / 2 + block.x + block.z * 0.28 - block.width / 2;
-      const y = canvas.height - 36 - level * 25;
-      context.fillStyle = `hsl(${(colorSeedRef.current + index * 17) % 360} 80% ${52 + (index % 3) * 5}%)`;
-      context.fillRect(x, y, block.width, 21);
-      context.strokeStyle = '#e2e8f0';
-      context.lineWidth = 1;
-      context.strokeRect(x, y, block.width, 21);
+    const allBlocks = blocksRef.current;
+    const cameraLevel = Math.max(0, allBlocks.length - 9);
+    const surface = { width: canvas.width, height: canvas.height };
+    const polygon = (points: Array<{ x: number; y: number }>, fill: string, stroke = '#e2e8f0') => {
+      context.beginPath();
+      points.forEach((point, index) => index === 0 ? context.moveTo(point.x, point.y) : context.lineTo(point.x, point.y));
+      context.closePath(); context.fillStyle = fill; context.fill();
+      context.strokeStyle = stroke; context.lineWidth = 1; context.stroke();
+    };
+    const renderBlock = (block: TowerBlock, level: number, hue: number, moving = false) => {
+      const top = projectTowerBlock(block, level, surface, cameraLevel);
+      const down = (point: { x: number; y: number }) => ({ x: point.x, y: point.y + 20 });
+      polygon([top[1], top[2], down(top[2]), down(top[1])], `hsl(${hue} 70% 35%)`);
+      polygon([top[2], top[3], down(top[3]), down(top[2])], `hsl(${hue} 70% 43%)`);
+      polygon(top, moving ? '#fbbf24' : `hsl(${hue} 80% 60%)`);
+    };
+    allBlocks.forEach((block, level) => {
+      if (level >= cameraLevel - 1) renderBlock(block, level, (colorSeedRef.current + level * 17) % 360);
     });
     if (running && !ended) {
-      const moving = movingRef.current;
-      const x = canvas.width / 2 + moving.x + moving.z * 0.28 - moving.width / 2;
-      const y = canvas.height - 36 - blocks.length * 25;
-      context.fillStyle = '#fbbf24';
-      context.fillRect(x, y, moving.width, 21);
-      context.strokeStyle = '#fff7ed';
-      context.lineWidth = 2;
-      context.strokeRect(x, y, moving.width, 21);
+      // A same-height outline makes the actual landing target visible on both axes.
+      const target = projectTowerBlock(allBlocks[allBlocks.length - 1], allBlocks.length, surface, cameraLevel);
+      context.save(); context.setLineDash([5, 5]);
+      polygon(target, 'rgba(255,255,255,0.08)', '#ffffff');
+      context.restore();
+      renderBlock(movingRef.current, allBlocks.length, 42, true);
     }
+
   }, [ended, running]);
 
   useEffect(() => draw(), [draw, height, score]);
@@ -118,12 +127,15 @@ export function StackerGame({ locale }: { locale: 'en' | 'zh' }) {
   useEffect(() => {
     function pause() {
       setPaused(true);
-      lastFrameRef.current = 0;
+      if (running && !ended && clockRef.current.lastFrameMs !== null) {
+        clockRef.current = advanceStackerClock(clockRef.current, performance.now());
+      }
+      clockRef.current.lastFrameMs = null;
     }
 
     function resume() {
       setPaused(document.hidden);
-      lastFrameRef.current = 0;
+      clockRef.current.lastFrameMs = document.hidden ? null : performance.now();
     }
 
     function visibility() {
@@ -139,17 +151,17 @@ export function StackerGame({ locale }: { locale: 'en' | 'zh' }) {
       window.removeEventListener('blur', pause);
       window.removeEventListener('focus', resume);
     };
-  }, []);
+  }, [running, ended]);
 
   useEffect(() => {
     if (!running || ended || paused) return;
     let frame = 0;
     const tick = (now: number) => {
-      const delta = lastFrameRef.current ? Math.min(40, now - lastFrameRef.current) : 0;
-      lastFrameRef.current = now;
-      elapsedRef.current += delta;
+      const tickTime = advanceStackerClock(clockRef.current, now);
+      clockRef.current = tickTime;
+      const delta = tickTime.physicsDeltaMs;
       if (mode === 'sprint') {
-        const remaining = getSprintSecondsRemaining(elapsedRef.current);
+        const remaining = getSprintSecondsRemaining(clockRef.current.elapsedMs);
         setSeconds(remaining);
         if (remaining === 0) {
           setEnded(true);
@@ -185,8 +197,7 @@ export function StackerGame({ locale }: { locale: 'en' | 'zh' }) {
     axisRef.current = setup.axis;
     directionRef.current = setup.direction;
     colorSeedRef.current = setup.hue;
-    elapsedRef.current = 0;
-    lastFrameRef.current = 0;
+    clockRef.current = { elapsedMs: 0, lastFrameMs: paused ? null : performance.now() };
     setHeight(0); setScore(0); setCombo(0); setSeconds(60); setEnded(false); setEndReason(null); setRunning(true);
     trackInteraction('game_start', { game_slug: 'stacker_game', mode });
   }
@@ -242,7 +253,7 @@ export function StackerGame({ locale }: { locale: 'en' | 'zh' }) {
   }
 
   return (
-    <section data-stacker-game data-interactive-ready={hydrated} data-smoke-mode={smokeSeed === null ? 'false' : 'true'} aria-busy={!hydrated} tabIndex={0} onKeyDown={(event) => { if ((event.code === 'Space' || event.code === 'Enter') && event.currentTarget === document.activeElement) { event.preventDefault(); drop(); } }} className="overflow-hidden rounded-2xl border border-slate-700 bg-slate-950 text-white shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300">
+    <section data-stacker-game data-height={height} data-score={score} data-paused={paused} data-ended={ended} data-interactive-ready={hydrated} data-smoke-mode={smokeSeed === null ? 'false' : 'true'} aria-busy={!hydrated} tabIndex={0} onKeyDown={(event) => { if (!event.repeat && (event.code === 'Space' || event.code === 'Enter') && event.currentTarget === document.activeElement) { event.preventDefault(); drop(); } }} className="overflow-hidden rounded-2xl border border-slate-700 bg-slate-950 text-white shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300">
       <header className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 p-4 sm:p-6">
         <div><p className="text-xs font-bold uppercase tracking-[0.16em] text-amber-300">Tower lab</p><p className="mt-1 text-sm text-slate-300">{paused ? text.paused : ended ? endReason === 'timer' ? text.timed : text.missed : text.ready}</p></div>
         <div className="flex flex-wrap gap-2">

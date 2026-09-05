@@ -54,6 +54,9 @@ jobs:
           retention-days: 3
           path: internal-link-output.txt
 
+      - name: Source evidence audit
+        run: pnpm check:source-evidence
+
       - name: Unit tests
         id: unit_tests
         shell: bash
@@ -90,6 +93,9 @@ jobs:
 
       - name: Production build
         run: pnpm build
+
+      - name: Verify regenerated locale HTML
+        run: pnpm check:isr-locale
 
       - name: Install Playwright browsers
         run: pnpm exec playwright install --with-deps chromium firefox webkit

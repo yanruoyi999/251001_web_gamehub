@@ -1,9 +1,13 @@
+import { DocumentShell, documentMetadata, documentViewport } from '@/components/layout/document-shell';
 import { ReactNode } from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { isAdminAuthenticated } from '@/lib/auth/admin';
 import { isLocalCatalogueMode } from '@/lib/games/catalog-mode';
+
+export const viewport = documentViewport;
+export const metadata = { ...documentMetadata, title: 'Luma Admin', robots: { index: false, follow: false }, alternates: undefined };
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -23,10 +27,11 @@ export default async function AdminLayout({ children }: AdminLayoutProps) {
   const authenticated = await isAdminAuthenticated();
 
   if (!authenticated) {
-    return <>{children}</>;
+    return <DocumentShell locale="en">{children}</DocumentShell>;
   }
 
   return (
+    <DocumentShell locale="en">
     <div className="min-h-screen bg-slate-950 text-slate-100">
       <header className="border-b border-slate-800 bg-slate-900/80">
         <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-6">
@@ -52,5 +57,6 @@ export default async function AdminLayout({ children }: AdminLayoutProps) {
       </header>
       <main className="mx-auto w-full max-w-6xl px-6 py-10">{children}</main>
     </div>
+    </DocumentShell>
   );
 }

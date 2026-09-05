@@ -1,3 +1,4 @@
+import { assertReviewedCatalogueSource } from '@/lib/games/source-evidence';
 import { db } from '@/lib/db';
 import {
   games,
@@ -363,6 +364,10 @@ export class GameService {
       throw new Error('Invalid slug format');
     }
 
+    if ((input.status ?? 'active') === 'active') {
+      assertReviewedCatalogueSource({ slug: slugSource, iframeUrl, sourcePageUrl: sanitizedSourceUrl });
+    }
+
     const existingSlugs = await db
       .select({ slug: games.slug })
       .from(games)
@@ -419,13 +424,26 @@ export class GameService {
 
     const { scalarUpdates, categoryIds, tagIds } = normalizeGameUpdateInput(updates);
     const [current] = await db
-      .select({ id: games.id, slug: games.slug })
+      .select({ id: games.id, slug: games.slug, iframeUrl: games.iframeUrl, sourceUrl: games.sourceUrl, status: games.status })
       .from(games)
       .where(eq(games.id, gameId))
       .limit(1);
 
     if (!current) {
       throw new Error('Game not found');
+    }
+
+    const sourceChanged =
+      (scalarUpdates.iframeUrl !== undefined && scalarUpdates.iframeUrl !== current.iframeUrl) ||
+      (scalarUpdates.sourceUrl !== undefined && scalarUpdates.sourceUrl !== current.sourceUrl) ||
+      (scalarUpdates.slug !== undefined && scalarUpdates.slug !== current.slug);
+    const activating = scalarUpdates.status === 'active' && current.status !== 'active';
+    if ((scalarUpdates.status ?? current.status) === 'active' && (sourceChanged || activating)) {
+      assertReviewedCatalogueSource({
+        slug: scalarUpdates.slug ?? current.slug,
+        iframeUrl: scalarUpdates.iframeUrl ?? current.iframeUrl,
+        sourcePageUrl: scalarUpdates.sourceUrl !== undefined ? scalarUpdates.sourceUrl : current.sourceUrl,
+      });
     }
 
     if (scalarUpdates.slug && scalarUpdates.slug !== current.slug) {

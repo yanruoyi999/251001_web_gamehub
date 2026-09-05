@@ -38,12 +38,13 @@ describe('post Two-Player launch hardening contracts', () => {
   test('verifies every English static HTML file instead of counting only replacements', () => {
     expect(existsSync('scripts/static-locale-html.ts')).toBe(true);
     const patchScript = readFileSync(
-      'scripts/patch-static-locale-html.ts',
+      'scripts/verify-static-locale-html.ts',
       'utf8',
     );
 
     expect(patchScript).toContain('verified');
     expect(patchScript).toContain('alreadyCorrect');
+    expect(patchScript).not.toContain('writeFileSync');
   });
 
   test('uses page metadata as the single hreflang source', () => {

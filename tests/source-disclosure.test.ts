@@ -39,9 +39,9 @@ describe('game source disclosure', () => {
     expect(shouldIncludeGameInSitemap(game)).toBe(true);
   });
 
-  it('keeps slug-only policy checks backward-compatible for reviewed callers', () => {
+  it('keeps slug-only metadata checks but requires source identity before playback', () => {
     expect(getGameQualityTier('google-snake')).toBe('core-indexed');
-    expect(canRenderGameIframe('google-snake')).toBe(true);
+    expect(canRenderGameIframe('google-snake')).toBe(false);
   });
 
   it('maps high-risk removed game slugs to safer relevant core pages', () => {

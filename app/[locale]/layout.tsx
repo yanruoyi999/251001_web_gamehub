@@ -1,3 +1,4 @@
+import { DocumentShell, documentMetadata, documentViewport } from '@/components/layout/document-shell';
 import type { Metadata } from 'next';
 import { ReactNode } from 'react';
 import { NextIntlClientProvider } from 'next-intl';
@@ -14,6 +15,8 @@ import { Footer } from '@/components/layout/Footer';
 import { ClarityConsent } from '@/components/analytics/ClarityConsent';
 import { TypeformFeedbackButton } from '@/components/feedback/TypeformFeedbackButton';
 import { SpendBillGatesMoneyContextLinks } from '@/components/seo/spend-bill-gates-money-context-links';
+
+export const viewport = documentViewport;
 
 interface LocaleLayoutProps {
   children: ReactNode;
@@ -45,13 +48,15 @@ export async function generateMetadata({
   const ogLocale = typedLocale === 'zh' ? 'zh-CN' : 'en-US';
 
   return {
-    title: t('title'),
+    ...documentMetadata,
+    title: { default: t('title'), template: '%s | Luma Game Hub' },
     description: t('description'),
     alternates: {
       canonical,
       languages: languageLinks,
     },
     openGraph: {
+      ...documentMetadata.openGraph,
       title: t('title'),
       description: t('description'),
       url: canonical,
@@ -77,6 +82,7 @@ export default async function LocaleLayout({
   const messages = await getMessages({ locale: typedLocale });
 
   return (
+    <DocumentShell locale={typedLocale}>
     <NextIntlClientProvider
       locale={typedLocale ?? defaultLocale}
       messages={messages}
@@ -98,5 +104,6 @@ export default async function LocaleLayout({
         <TypeformFeedbackButton locale={typedLocale} />
       </div>
     </NextIntlClientProvider>
+    </DocumentShell>
   );
 }

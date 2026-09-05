@@ -24,8 +24,22 @@
     scoreTwo: 0,
   };
 
+  let session = null;
+  let parentOrigin = null;
+  let firstInput = false;
+  let inputSent = false;
+
   function signalReady() {
-    window.parent.postMessage({ type: 'luma-game-ready', gameSlug: GAME_SLUG }, '*');
+    if (!session || !parentOrigin) return;
+    window.parent.postMessage({ type: 'luma-game-ready', gameSlug: GAME_SLUG, session }, parentOrigin);
+    signalInput();
+  }
+
+  function signalInput(event) {
+    if (event && event.isTrusted) firstInput = true;
+    if (!firstInput || inputSent || !session || !parentOrigin) return;
+    inputSent = true;
+    window.parent.postMessage({ type: 'luma-game-input', gameSlug: GAME_SLUG, session }, parentOrigin);
   }
 
   function clamp(value, min, max) {
@@ -131,10 +145,15 @@
     const message = event.data;
     if (
       event.source === window.parent &&
-      message &&
+      event.origin === window.location.origin &&
+      message && typeof message === 'object' &&
+      typeof message.session === 'string' && /^[a-zA-Z0-9-]{16,128}$/.test(message.session) &&
       message.type === 'luma-parent-ready' &&
       message.gameSlug === GAME_SLUG
     ) {
+      if (session && session !== message.session) return;
+      session = message.session;
+      parentOrigin = event.origin;
       signalReady();
     }
   });
@@ -143,12 +162,15 @@
     if (['KeyW', 'KeyS', 'ArrowUp', 'ArrowDown'].includes(event.code)) {
       event.preventDefault();
       keys.add(event.code);
+      if (state.running) signalInput(event);
     }
     if (event.code === 'Enter') {
       event.preventDefault();
       start();
     }
   });
+
+  window.addEventListener('blur', () => keys.clear());
 
   window.addEventListener('keyup', (event) => {
     keys.delete(event.code);

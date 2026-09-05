@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { describe, expect, it } from 'vitest';
 
 const layoutSource = await readFile(
-  new URL('../app/layout.tsx', import.meta.url),
+  new URL('../components/layout/document-shell.tsx', import.meta.url),
   'utf8'
 );
 const productionTelemetrySource = await readFile(

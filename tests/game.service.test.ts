@@ -141,3 +141,24 @@ describe('GameService.updateGame', () => {
     expect(result.title).toBe('Updated title');
   });
 });
+
+describe('source publication approval boundary', () => {
+  beforeEach(() => {
+    selectLimitMock.mockReset();
+    updateMock.mockClear();
+  });
+  it('rejects publishing a new unknown source before a database write', async () => {
+    await expect(GameService.createGame({ title: 'Unreviewed', slug: 'unreviewed', iframeUrl: 'https://example.test/game' })).rejects.toThrow(/Source approval required/);
+    expect(updateMock).not.toHaveBeenCalled();
+  });
+  it.each([
+    { iframeUrl: 'https://example.test/replacement' },
+    { sourceUrl: 'https://example.test/changed-owner' },
+    { slug: 'changed-game' },
+    { status: 'active' as const },
+  ])('rejects activating or replacing a source without matching evidence', async (updates) => {
+    selectLimitMock.mockResolvedValueOnce([{ id: 2, slug: 'old-game', status: updates.status ? 'pending' : 'active', iframeUrl: 'https://example.test/old', sourceUrl: null }]);
+    await expect(GameService.updateGame(2, updates)).rejects.toThrow(/Source approval required/);
+    expect(updateMock).not.toHaveBeenCalled();
+  });
+});

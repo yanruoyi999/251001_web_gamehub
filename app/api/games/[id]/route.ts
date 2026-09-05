@@ -7,7 +7,7 @@ import {
 } from '@/lib/db/connection-policy';
 import { buildFallbackGameDetail } from '@/lib/games/fallback-detail';
 import { getMockGameById } from '@/lib/mock-games';
-import { isLocalCatalogueMode } from '@/lib/games/catalog-mode';
+import { isLocalCatalogueMode, shouldUseCatalogueDatabase } from '@/lib/games/catalog-mode';
 
 const DEFAULT_GAME_DETAIL_TIMEOUT_MS = 1500;
 
@@ -38,7 +38,7 @@ function withGameDetailTimeout<T>(promise: Promise<T>, label: string): Promise<T
 function shouldUseGameDetailFallback() {
   const databaseConnection = getDatabaseConnectionMetadata();
   return (
-    !databaseConnection.configured ||
+    !shouldUseCatalogueDatabase(databaseConnection) ||
     (
       process.env.GAME_DETAIL_ALLOW_SUPABASE_DIRECT_IN_SERVERLESS !== 'true' &&
       shouldSkipSupabaseDirectInServerless(databaseConnection)

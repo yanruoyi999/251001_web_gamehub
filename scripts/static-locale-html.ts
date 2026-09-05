@@ -1,5 +1,4 @@
 export type EnglishHtmlNormalizationStatus =
-  | 'patched'
   | 'already-correct'
   | 'next-error-shell';
 
@@ -48,18 +47,13 @@ export function normalizeEnglishStaticHtml(
     return { html, status: 'already-correct' };
   }
 
-  if (!hasLocaleMarker(openingTag, 'zh')) {
-    throw new Error(
-      `Unrecognized locale markers in ${fileLabel}: ${openingTag}`,
-    );
-  }
+  throw new Error(`Incorrect locale markers in ${fileLabel}: ${openingTag}`);
+}
 
-  const normalizedTag = openingTag
-    .replace(/\blang=["']zh["']/i, 'lang="en"')
-    .replace(/\bdata-locale=["']zh["']/i, 'data-locale="en"');
-
-  return {
-    html: html.replace(openingTag, normalizedTag),
-    status: 'patched',
-  };
+export function verifyChineseStaticHtml(html: string, fileLabel: string) {
+  const openingTag = html.match(HTML_TAG)?.[0];
+  if (!openingTag) throw new Error(`Missing <html> tag in ${fileLabel}`);
+  if (isNextErrorShell(openingTag) && fileLabel.replace(/\\/g, '/').endsWith('zh/game/popcorn/how-to-play.html')) return 'next-error-shell' as const;
+  if (!hasLocaleMarker(openingTag, 'zh')) throw new Error(`Incorrect locale markers in ${fileLabel}: ${openingTag}`);
+  return 'already-correct' as const;
 }

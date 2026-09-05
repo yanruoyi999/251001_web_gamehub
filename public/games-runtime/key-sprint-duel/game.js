@@ -19,8 +19,22 @@
     lastTwo: null,
   };
 
+  let session = null;
+  let parentOrigin = null;
+  let firstInput = false;
+  let inputSent = false;
+
   function signalReady() {
-    window.parent.postMessage({ type: 'luma-game-ready', gameSlug: GAME_SLUG }, '*');
+    if (!session || !parentOrigin) return;
+    window.parent.postMessage({ type: 'luma-game-ready', gameSlug: GAME_SLUG, session }, parentOrigin);
+    signalInput();
+  }
+
+  function signalInput(event) {
+    if (event && event.isTrusted) firstInput = true;
+    if (!firstInput || inputSent || !session || !parentOrigin) return;
+    inputSent = true;
+    window.parent.postMessage({ type: 'luma-game-input', gameSlug: GAME_SLUG, session }, parentOrigin);
   }
 
   function render() {
@@ -50,11 +64,12 @@
     status.textContent = `${player} wins · Press Enter to race again`;
   }
 
-  function step(player, code) {
+  function step(player, code, event) {
     if (!state.running || state.finished) return;
 
     if (player === 'P1') {
       if (state.lastOne === code) return;
+      signalInput(event);
       state.lastOne = code;
       state.one = Math.min(GOAL, state.one + 1);
       render();
@@ -63,6 +78,7 @@
     }
 
     if (state.lastTwo === code) return;
+    signalInput(event);
     state.lastTwo = code;
     state.two = Math.min(GOAL, state.two + 1);
     render();
@@ -73,10 +89,15 @@
     const message = event.data;
     if (
       event.source === window.parent &&
-      message &&
+      event.origin === window.location.origin &&
+      message && typeof message === 'object' &&
+      typeof message.session === 'string' && /^[a-zA-Z0-9-]{16,128}$/.test(message.session) &&
       message.type === 'luma-parent-ready' &&
       message.gameSlug === GAME_SLUG
     ) {
+      if (session && session !== message.session) return;
+      session = message.session;
+      parentOrigin = event.origin;
       signalReady();
     }
   });
@@ -92,12 +113,12 @@
 
     if (event.code === 'KeyA' || event.code === 'KeyD') {
       event.preventDefault();
-      step('P1', event.code);
+      step('P1', event.code, event);
     }
 
     if (event.code === 'ArrowLeft' || event.code === 'ArrowRight') {
       event.preventDefault();
-      step('P2', event.code);
+      step('P2', event.code, event);
     }
   });
 
