@@ -15,8 +15,22 @@
     finished: false,
   };
 
+  let session = null;
+  let parentOrigin = null;
+  let firstInput = false;
+  let inputSent = false;
+
   function signalReady() {
-    window.parent.postMessage({ type: 'luma-game-ready', gameSlug: GAME_SLUG }, '*');
+    if (!session || !parentOrigin) return;
+    window.parent.postMessage({ type: 'luma-game-ready', gameSlug: GAME_SLUG, session }, parentOrigin);
+    signalInput();
+  }
+
+  function signalInput(event) {
+    if (event && event.isTrusted) firstInput = true;
+    if (!firstInput || inputSent || !session || !parentOrigin) return;
+    inputSent = true;
+    window.parent.postMessage({ type: 'luma-game-input', gameSlug: GAME_SLUG, session }, parentOrigin);
   }
 
   function score(owner) {
@@ -31,17 +45,20 @@
     return row * SIZE + column;
   }
 
-  function moveCursor(rowDelta, columnDelta) {
+  function moveCursor(rowDelta, columnDelta, event) {
     if (state.finished) return;
     const { row, column } = coordinates(state.cursor);
     const nextRow = Math.max(0, Math.min(SIZE - 1, row + rowDelta));
     const nextColumn = Math.max(0, Math.min(SIZE - 1, column + columnDelta));
-    state.cursor = toIndex(nextRow, nextColumn);
+    const nextCursor = toIndex(nextRow, nextColumn);
+    if (nextCursor !== state.cursor) signalInput(event);
+    state.cursor = nextCursor;
     render();
   }
 
-  function claim() {
+  function claim(event) {
     if (state.finished || state.cells[state.cursor]) return;
+    signalInput(event);
     state.cells[state.cursor] = state.turn;
     state.turn = state.turn === 'one' ? 'two' : 'one';
 
@@ -91,10 +108,15 @@
     const message = event.data;
     if (
       event.source === window.parent &&
-      message &&
+      event.origin === window.location.origin &&
+      message && typeof message === 'object' &&
+      typeof message.session === 'string' && /^[a-zA-Z0-9-]{16,128}$/.test(message.session) &&
       message.type === 'luma-parent-ready' &&
       message.gameSlug === GAME_SLUG
     ) {
+      if (session && session !== message.session) return;
+      session = message.session;
+      parentOrigin = event.origin;
       signalReady();
     }
   });
@@ -116,10 +138,10 @@
       const move = moves[event.code];
       if (move) {
         event.preventDefault();
-        moveCursor(move[0], move[1]);
+        moveCursor(move[0], move[1], event);
       } else if (event.code === 'KeyF') {
         event.preventDefault();
-        claim();
+        claim(event);
       }
       return;
     }
@@ -133,10 +155,10 @@
     const move = moves[event.code];
     if (move) {
       event.preventDefault();
-      moveCursor(move[0], move[1]);
+      moveCursor(move[0], move[1], event);
     } else if (event.code === 'Enter') {
       event.preventDefault();
-      claim();
+      claim(event);
     }
   });
 

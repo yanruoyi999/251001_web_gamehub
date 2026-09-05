@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
+import { parseTrustedRuntimeMessage } from '@/lib/analytics/runtime-message';
 import { trackInteraction } from '@/lib/analytics/events';
 import type { TwoPlayerGame } from '@/lib/games/two-player-unblocked';
 
@@ -13,17 +14,17 @@ interface TwoPlayerCollectionPlayerProps {
 
 type LoadState = 'idle' | 'loading' | 'ready' | 'error';
 
-interface RuntimeMessage {
-  type?: string;
-  gameSlug?: string;
-}
-
 const READY_TIMEOUT_MS = 8_000;
 
 export function TwoPlayerCollectionPlayer({ locale, games }: TwoPlayerCollectionPlayerProps) {
   const [selectedSlug, setSelectedSlug] = useState(games[0]?.slug ?? '');
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
   const [loadState, setLoadState] = useState<LoadState>('idle');
+  const [playVerified, setPlayVerified] = useState(false);
+  const runtimeSessionRef = useRef('');
+  const inputSessionRef = useRef<string | null>(null);
+  const errorSessionRef = useRef<string | null>(null);
+  const observedSessionRef = useRef<string | null>(null);
   const [frameVersion, setFrameVersion] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isViewportFullscreen, setIsViewportFullscreen] = useState(false);
@@ -88,12 +89,11 @@ export function TwoPlayerCollectionPlayer({ locale, games }: TwoPlayerCollection
   useEffect(() => {
     if (!activeSlug) return;
 
-    const handleRuntimeMessage = (event: MessageEvent<RuntimeMessage>) => {
-      if (event.source !== iframeRef.current?.contentWindow) return;
-      const message = event.data;
-      if (!message || message.gameSlug !== activeSlug) return;
+    const handleRuntimeMessage = (event: MessageEvent<unknown>) => {
+      const message = parseTrustedRuntimeMessage(event, iframeRef.current?.contentWindow, activeSlug, runtimeSessionRef.current);
+      if (!message) return;
 
-      const sessionKey = `${activeSlug}:${frameVersion}`;
+      const sessionKey = runtimeSessionRef.current;
       if (message.type === 'luma-game-ready') {
         if (readySessionRef.current === sessionKey) return;
         readySessionRef.current = sessionKey;
@@ -102,10 +102,23 @@ export function TwoPlayerCollectionPlayer({ locale, games }: TwoPlayerCollection
           game_slug: activeSlug,
           locale,
           source: 'two_player_collection',
+          schema_version: 2, evidence: 'validated_runtime_handshake',
+        });
+      }
+
+      if (message.type === 'luma-game-input') {
+        if (readySessionRef.current !== sessionKey || inputSessionRef.current === sessionKey || errorSessionRef.current === sessionKey) return;
+        inputSessionRef.current = sessionKey;
+        setPlayVerified(true);
+        trackInteraction('game_play_start', {
+          game_slug: activeSlug, locale, source: 'two_player_collection',
+          schema_version: 2, evidence: 'validated_first_control_input',
         });
       }
 
       if (message.type === 'luma-game-error') {
+        if (errorSessionRef.current === sessionKey) return;
+        errorSessionRef.current = sessionKey;
         setLoadState('error');
         trackInteraction('game_load_error', {
           game_slug: activeSlug,
@@ -136,33 +149,35 @@ export function TwoPlayerCollectionPlayer({ locale, games }: TwoPlayerCollection
       });
     }, READY_TIMEOUT_MS);
 
-    return () => window.clearTimeout(timeout);
+    // A cached document may acknowledge before an effect listener is attached.
+    // Retry the same challenge, never a new session, until ready or timeout.
+    const handshake = window.setInterval(() => {
+      iframeRef.current?.contentWindow?.postMessage({ type: 'luma-parent-ready', gameSlug: activeSlug, session: runtimeSessionRef.current }, '*');
+    }, 500);
+    return () => { window.clearTimeout(timeout); window.clearInterval(handshake); };
   }, [activeSlug, loadState, locale]);
 
   useEffect(() => {
-    if (!activeSlug || loadState !== 'ready') return;
-
-    const tenSecondTimer = window.setTimeout(() => {
-      trackInteraction('game_play_10s', {
-        game_slug: activeSlug,
-        locale,
-        source: 'two_player_collection',
-      });
-    }, 10_000);
-
-    const thirtySecondTimer = window.setTimeout(() => {
-      trackInteraction('game_play_30s', {
-        game_slug: activeSlug,
-        locale,
-        source: 'two_player_collection',
-      });
-    }, 30_000);
-
-    return () => {
-      window.clearTimeout(tenSecondTimer);
-      window.clearTimeout(thirtySecondTimer);
+    if (!activeSlug || loadState !== 'ready' || !playVerified) return;
+    let elapsed = 0;
+    let previous = performance.now();
+    let visible = !document.hidden;
+    const sent = new Set<number>();
+    const tick = () => {
+      const now = performance.now();
+      if (visible) elapsed += Math.max(0, now - previous);
+      previous = now;
+      visible = !document.hidden;
+      for (const [threshold, name] of [[10_000, 'game_play_10s'], [30_000, 'game_play_30s']] as const) {
+        if (elapsed < threshold || sent.has(threshold)) continue;
+        sent.add(threshold);
+        trackInteraction(name, { game_slug: activeSlug, locale, source: 'two_player_collection', schema_version: 2, evidence: 'visible_time_after_first_input' });
+      }
     };
-  }, [activeSlug, loadState, locale]);
+    const timer = window.setInterval(tick, 250);
+    document.addEventListener('visibilitychange', tick);
+    return () => { window.clearInterval(timer); document.removeEventListener('visibilitychange', tick); };
+  }, [activeSlug, frameVersion, playVerified, loadState, locale]);
 
   const selectGame = (game: TwoPlayerGame) => {
     trackInteraction('two_player_game_click', {
@@ -183,6 +198,8 @@ export function TwoPlayerCollectionPlayer({ locale, games }: TwoPlayerCollection
       setActiveSlug(null);
       setLoadState('idle');
       readySessionRef.current = null;
+      runtimeSessionRef.current = '';
+      setPlayVerified(false);
     }
 
     setSelectedSlug(game.slug);
@@ -192,21 +209,31 @@ export function TwoPlayerCollectionPlayer({ locale, games }: TwoPlayerCollection
     if (!selectedGame) return;
 
     readySessionRef.current = null;
+    runtimeSessionRef.current = window.crypto.randomUUID();
+    inputSessionRef.current = null;
+    errorSessionRef.current = null;
+    observedSessionRef.current = null;
+    setPlayVerified(false);
     setFrameVersion((current) => current + 1);
     setActiveSlug(selectedGame.slug);
     setLoadState('loading');
-    trackInteraction('game_play_start', {
+    trackInteraction('game_start_attempt', {
       game_slug: selectedGame.slug,
       locale,
       source: 'two_player_collection',
       genre: selectedGame.genre,
+      schema_version: 2, evidence: 'user_start_request',
     });
   };
 
   const handleIframeLoad = () => {
     if (!activeGame) return;
+    if (observedSessionRef.current !== runtimeSessionRef.current) {
+      observedSessionRef.current = runtimeSessionRef.current;
+      trackInteraction('game_iframe_load', { game_slug: activeGame.slug, locale, source: 'two_player_collection', schema_version: 2, evidence: 'load_event_only' });
+    }
     iframeRef.current?.contentWindow?.postMessage(
-      { type: 'luma-parent-ready', gameSlug: activeGame.slug },
+      { type: 'luma-parent-ready', gameSlug: activeGame.slug, session: runtimeSessionRef.current },
       '*',
     );
   };
@@ -362,6 +389,8 @@ export function TwoPlayerCollectionPlayer({ locale, games }: TwoPlayerCollection
             : 'overflow-hidden rounded-2xl border border-border bg-slate-950 shadow-lg'
         }
         data-two-player-shell
+        data-play-verified={playVerified}
+        data-load-state={loadState}
         data-viewport-fullscreen={isViewportFullscreen ? 'true' : 'false'}
       >
         <div className="flex min-h-14 flex-wrap items-center justify-between gap-3 border-b border-white/10 bg-slate-950 px-4 py-3 text-white">

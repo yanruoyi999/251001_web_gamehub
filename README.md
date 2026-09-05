@@ -14,12 +14,12 @@ Luma Game Hub is a bilingual browser-game catalogue and editorial guide site bui
 
 ## Current stack
 
-- Next.js 15.5.21
+- Next.js 15.5.25
 - React 19.2.7
 - TypeScript 5.9.3
 - Tailwind CSS 3.4.17
 - next-intl 4.13.1
-- Vitest 3.2.4
+- Vitest 3.2.7
 - Playwright 1.55.1
 - pnpm 10.28.0
 - Optional PostgreSQL/Drizzle, Redis, Meilisearch, and Cloudinary integrations
@@ -46,6 +46,7 @@ The public site is available at `http://localhost:3000`. Optional database, cach
 pnpm lint
 pnpm type-check
 pnpm check:internal-links
+pnpm check:source-evidence
 pnpm test
 pnpm audit --prod
 pnpm build
@@ -99,4 +100,4 @@ Use Conventional Commits and keep changes focused. New public pages should inclu
 
 ## License
 
-MIT — see [`LICENSE`](LICENSE).
+Game and asset rights are source-specific; there is no blanket license for embedded third-party games. See the per-runtime notices in `public/games-runtime/` and the evidence records in [`docs/licenses/`](docs/licenses/). Frozen legacy source exceptions are not verified permissions.

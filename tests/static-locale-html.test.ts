@@ -1,14 +1,11 @@
 import { normalizeEnglishStaticHtml } from '../scripts/static-locale-html';
 
 describe('static English locale HTML normalization', () => {
-  test('patches an English route that was rendered with zh locale markers', () => {
-    const result = normalizeEnglishStaticHtml(
+  test('rejects an English route that was rendered with zh locale markers', () => {
+    expect(() => normalizeEnglishStaticHtml(
       '<!doctype html><html lang="zh" data-locale="zh"><body>page</body></html>',
       'en/example.html',
-    );
-
-    expect(result.status).toBe('patched');
-    expect(result.html).toContain('<html lang="en" data-locale="en">');
+    )).toThrow(/Incorrect locale markers/);
   });
 
   test('accepts an already-correct English route without rewriting it', () => {
@@ -43,6 +40,6 @@ describe('static English locale HTML normalization', () => {
         '<!doctype html><html><body>unexpected</body></html>',
         'en/unexpected.html',
       ),
-    ).toThrow(/Unrecognized locale markers/);
+    ).toThrow(/Incorrect locale markers/);
   });
 });

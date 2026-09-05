@@ -1,3 +1,5 @@
+import { hasFrozenLegacySource, hasReviewedCatalogueSource, isLegacyCatalogueSlug, type CatalogueSourceIdentity } from './source-evidence';
+
 export const MANUAL_REVIEW_GAME_REASONS = {
   'adam-and-eve-zombies': 'Zombie theme; review tone, iframe behavior, and age suitability before indexing.',
   'adam-and-eve-8': 'Duplicate iframe mapping with Adam and Eve 7; keep out of index until the correct playable source is verified.',
@@ -24,10 +26,7 @@ export const MANUAL_REVIEW_GAME_REASONS = {
 
 export type ManualReviewGameSlug = keyof typeof MANUAL_REVIEW_GAME_REASONS;
 
-export type GameSourcePolicyInput = {
-  slug?: string | null;
-  embedPermissionStatus?: 'verified' | 'unknown' | 'blocked' | null;
-};
+export type GameSourcePolicyInput = CatalogueSourceIdentity;
 
 type GamePolicyInput = string | GameSourcePolicyInput | null | undefined;
 
@@ -113,15 +112,14 @@ function getPolicySlug(input: GamePolicyInput) {
 }
 
 function hasSourceApproval(input: GamePolicyInput) {
-  if (typeof input === 'string' || input == null) return true;
-  // The core slug list is a manual public-surface approval. Unknown provenance
-  // remains an audit finding, but must not silently remove the existing core
-  // catalogue until each source record has been individually reviewed.
-  return input.embedPermissionStatus !== 'blocked';
+  // Slug-only checks remain metadata helpers, never iframe authorization.
+  if (typeof input === 'string') return isLegacyCatalogueSlug(normalizeGameSlug(input));
+  if (!input) return false;
+  return hasReviewedCatalogueSource(input) || hasFrozenLegacySource(input);
 }
 
 export function hasVerifiedEmbedPermission(input: GameSourcePolicyInput | null | undefined) {
-  return input?.embedPermissionStatus === 'verified';
+  return hasReviewedCatalogueSource(input);
 }
 
 export function isGameUnderManualReview(input: GamePolicyInput) {
@@ -177,7 +175,7 @@ export function shouldPromoteGameInCollections(input: GamePolicyInput) {
 }
 
 export function canRenderGameIframe(input: GamePolicyInput) {
-  return !isGameUnderManualReview(input) && hasSourceApproval(input);
+  return Boolean(input && typeof input === 'object' && !isGameUnderManualReview(input) && hasSourceApproval(input));
 }
 
 export function getGameQualityTier(input: GamePolicyInput) {

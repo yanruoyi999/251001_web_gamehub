@@ -1,0 +1,1809 @@
+{
+  "基线": "main@bd0abb3",
+  "去重口径": "目录 slug，每条记录同时保存准确的 iframe URL 与来源页面；不与运行时或日志层相加",
+  "说明": "许可记录未获取到不等于侵权结论。存量例外不是授权证明；无联网版权方核实。",
+  "目录数量": 200,
+  "已审核新增来源数": 0,
+  "记录": [
+    {
+      "游戏": "adam-and-eve-4",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp23/gamehwq/20171206/08/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/adam-and-eve-4.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "adam-and-eve-5-part-1",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp26/gamehwq/20181217/07/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/adam-and-eve-5-part-1.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "adam-and-eve-5-part-2",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp27/gamehwq/20190124/01/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/adam-and-eve-5-part-2.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "adam-and-eve-6",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp29/chenling/20190814/10/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/adam-and-eve-6.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "adam-and-eve-7",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp31/chenling/20200218/04/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/adam-and-eve-7.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "adam-and-eve-8",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp31/chenling/20200218/04/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/adam-and-eve-8.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": false,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "adam-and-eve-aliens",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp34/chenling/20201105/08/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/adam-and-eve-aliens.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "adam-and-eve-astronaut",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp29/chenweihong/20191024/4/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/adam-and-eve-astronaut.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "adam-and-eve-go-2",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp35/gamehwq/20210319/02/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/adam-and-eve-go-2.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "adam-and-eve-go-3",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp36/gamehwq/20210603/12/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/adam-and-eve-go-3.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "adam-and-eve-go-xmas",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp34/gamehwq/20201218/11/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/adam-and-eve-go-xmas.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "adam-and-eve-go",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp32/chenling/20200420/04/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/adam-and-eve-go.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "adam-and-eve-night",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp33/gamehwq/20201020/11/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/adam-and-eve-night.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "adam-and-eve-sleepwalker",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp24/gamehwq/20180123/09/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/adam-and-eve-sleepwalker.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "adam-and-eve-snow",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp30/gamehwq/20191203/07/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/adam-and-eve-snow.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "adam-and-eve-zombies",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp24/gamehwq/20180116/04/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/adam-and-eve-zombies.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": false,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "adam-and-eve-adam-the-ghost",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp24/chenling/20180208/12/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/adam-the-ghost.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "apple-knight-mini-dungeons",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/gamehwq/20230808/10a/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/apple-knight-mini-dungeons.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "apple-knight",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/cwb/20211202/02/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/apple-knight.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "assemble-and-drive-road-monsters",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/chenling/20230830/04/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/assemble-and-drive-road-monsters.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "balance-duel",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp43/chenling/20230801/05/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/balance-duel.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": false,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "beat-line",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp36/gamehwq/20210426/15/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/beat-line.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "big-tower-tiny-square-2",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp40/liuxinyu/20221028/2/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/big-tower-tiny-square-2.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "big-tower-tiny-square",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp40/liuxinyu/20221028/1/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/big-tower-tiny-square.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "blast-red",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/gamehwq/20220110/14/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/blast-red.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "blockman-climb",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp42/gamehwq/20230406/11/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/blockman-climb.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "blumgi-ball",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp38/liuxinyu/20220329/7/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/blumgi-ball.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "blumgi-bloom",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/gamehwq/20230817/14/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/blumgi-bloom.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "blumgi-castle",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/gamehwq/20230829/12/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/blumgi-castle.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "blumgi-rocket",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/gamehwq/20211227/13/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/blumgi-rocket.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "monkey-mart",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp41/gamehwq/20221216/09/index.htm",
+      "来源页面": "https://szhong.4399.com/4399swf//upload_swf/ftp41/gamehwq/20221216/09/index.htm",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "boxing-king-ring-champion-fighter-3d",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/chenling/20230921/02/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/boxing-king-ring-champion-fighter-3d.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "bright-lancer",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/liuxinyu/20220224/5/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/bright-lancer.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "castle-crashing-the-beard-hd",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp35/gamehwq/20210416/04a/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/castle-crashing-the-beard-hd.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "castle-defender-saga",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/cwb/20211206/03/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/castle-defender-saga.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "castle-pals",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp35/liuxinyu/20210125/004/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/castle-pals.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "catch-the-candy",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/cwb/20211025/03/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/catch-the-candy.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "cats-love-cake-2",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp41/liuxinyu/20230128/2/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/cats-love-cake-2.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "cats-love-cake",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp41/liuxinyu/20230128/1/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/cats-love-cake.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "city-bike-stunt",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp35/chenling/20210315/05/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/city-bike-stunt.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "city-minibus-driver",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/cwb/20220228/02/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/city-minibus-driver.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "confront",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/gamehwq/20220228/07/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/confront.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "cover-orange-journey",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/liuxinyu/20211217/1/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/cover-orange-journey.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "cover-orange",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp38/liuxinyu/20220415/2/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/cover-orange.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "cow-bay",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/gamehwq/20230804/07/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/cow-bay.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "crazy-kick",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/chenling/20230918/05/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/crazy-kick.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "crazy-runner-in-city",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp38/gamehwq/20220302/14/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/crazy-runner-in-city.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "cyber-cars-punk-racing",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp38/liuxinyu/20220329/5/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/cyber-cars-punk-racing.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "cyber-city-driver",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp41/chenling/20230202/08/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/cyber-city-driver.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "dadish-2",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp38/chenling/20220328/09/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/dadish-2.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "dadish-3",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp39/liuxinyu/20220620/1/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/dadish-3.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "dadish",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/liuxinyu/20220219/1/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/dadish.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "day-of-meat-castle",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/gamehwq/20230807/12a/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/day-of-meat-castle.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "dinosaurs-merge-master",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp42/chenling/20230425/07/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/dinosaurs-merge-master.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "dirt-bike-extreme-parkour",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/gamehwq/20211228/14/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/dirt-bike-extreme-parkour.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "drift-torque",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp36/huangcijin/20210604/12/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/drift-torque.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "drive-mad",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp40/liuxinyu/20220928/1/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/drive-mad.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "duo-survival-2",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/gamehwq/20230809/12/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/duo-survival-2.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "duo-survival-3",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp45/gamehwq/20231120/13a/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/duo-survival-3.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "duo-survival",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/gamehwq/20230809/11/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/duo-survival.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "duo-vikings-2",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/gamehwq/20230815/12/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/duo-vikings-2.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "duo-vikings-3",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/gamehwq/20230918/09/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/duo-vikings-3.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "duo-vikings",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/gamehwq/20230815/11/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/duo-vikings.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "the-fancy-pants-adventure-world-1",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp35/liuxinyu/20210305/jj9/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/fancy-pants-adventure-world-2.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "fantasy-merger",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp42/chenling/20230505/09/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/fantasy-merger.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "fireboy-watergirl-6",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp41/cwb/20221213/01/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/fireboy-and-watergirl-6.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "fish-eat-fish",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/gamehwq/20230807/13/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/fish-eat-fish.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "flip-bottle",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/liuxinyu/20230804/2/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/flip-bottle.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "fly-car-stunt-2",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp29/gamehwq/20190809/14/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/fly-car-stunt-2.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "fly-car-stunt-5",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp33/chenling/20200916/4/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/fly-car-stunt-5.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "fly-car-stunt",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp29/gamehwq/20190808/14/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/fly-car-stunt.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "flying-cars-era",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp36/gamehwq/20210714/14/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/flying-cars-era.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "funny-battle",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/cwb/20220301/01/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/funny-battle.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "g-switch-2",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp41/liuxinyu/20221123/6/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/g-switch-2.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "g-switch-3",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp41/liuxinyu/20221121/2/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/g-switch-3.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "g-switch-4-creator",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp45/gamehwq/20231127/09/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/g-switch-4.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "g-switch",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp41/liuxinyu/20221123/5/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/g-switch.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "glitch-dash",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/cwb/20211028/01/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/glitch-dash.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "gobble",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/gamehwq/20230808/12/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/gobble.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "google-snake",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/chenling/20230830/05/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/google-snake.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "grab-the-apple",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/liuxinyu/20230902/5/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/grab-the-apple.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "grima-monster-dop-story",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/chenling/20230913/8/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/grima-monster-dop-story.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "gun-battle-3",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp38/cwb/20220317/05a/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/gun-battle-3.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": false,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "hammer-flight",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/gamehwq/20220125/15/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/hammer-flight.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "hero-2-super-kick",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/gamehwq/20220112/11a/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/hero-2-super-kick.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "hero-3-flying-robot",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/gamehwq/20211223/14/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/hero-3-flying-robot.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "hero-attack",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/gamehwq/20220222/15/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/hero-attack.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "hero-tower-wars",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp41/gamehwq/20221116/11a/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/hero-tower-wars.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": false,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "hexoboy",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp38/chenling/20220428/66/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/hexoboy.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "hipster-vs-rockers",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/liuxinyu/20220122/5/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/hipster-vs-rockers.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "hit-and-run",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/chenling/20230911/07/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/hit-and-run.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "hospital-hustle",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp43/gamehwq/20230801/12a/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/hospital-hustle.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "hunter-hitman",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp42/gamehwq/20230404/10/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/hunter-hitman.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": false,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "ice-queen",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/gamehwq/20211220/13/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/ice-queen.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "icy-purple-head-3",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/gamehwq/20211230/11/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/icy-purple-head-3.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "idle-ants",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/gamehwq/20211224/13/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/idle-ants.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "idle-mining-empire",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/gamehwq/20230805/04/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/idle-mining-empire.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "idle-pet-business",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/gamehwq/20230926/11/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/idle-pet-business.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "idle-tree-city",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/gamehwq/20211119/14/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/idle-tree-city.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "island-monster-offroad",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp35/chenling/20210219/04/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/island-monster-offroad.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "jet-boat-racing",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp38/gamehwq/20220413/10/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/jet-boat-racing.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "joyrider",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/gamehwq/20211207/12/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/joyrider.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "knights-vs-orcs",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/cwb/20211220/03/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/knights-vs-orcs.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "lands-of-blight",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/gamehwq/20230807/08/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/lands-of-blight.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "laser-cannon-2",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp38/gamehwq/20220324/12a/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/laser-cannon-2.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "laser-cannon",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/gamehwq/20220211/13a/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/laser-cannon.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "like-a-king",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/gamehwq/20211222/15/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/like-a-king.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "lost-yeti",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp35/liuxinyu/20210323/jj8/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/lost-yeti.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "mad-ballz",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/chenling/20231011/08/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/mad-ballz.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "mega-city-missions",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp36/huangcijin/20210820/04a/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/mega-city-missions.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "merge-alphabet-lore",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/chenling/20230905/07/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/merge-alphabet-lore.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": false,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "merge-goo-attacks",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp43/chenling/20230718/4/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/merge-goo-attacks.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "merge-grabber-race-to-2048",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/chenling/20231018/02/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/merge-grabber-race-to-2048.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "metal-black-ops",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp36/liuxinyu/20210927/8/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/metal-black-ops.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": false,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "monkey-mart-2",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp41/gamehwq/20221216/09/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/monkey-mart.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "monster-tracks",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp42/chenling/20230224/05/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/monster-tracks.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "monster-truck-extreme-racing",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp35/chenling/20210303/1/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/monster-truck-extreme-racing.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "moon-city-stunt",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp32/chenling/20200514/7/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/moon-city-stunt.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "mx-offroad-mountain-bike",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp35/chenling/20210406/6/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/mx-offroad-mountain-bike.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "my-pets-shop",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp43/chenling/20230726/05/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/my-pets-shop.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "my-underwater-world",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp43/chenling/20230725/06/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/my-underwater-world.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "ninja-rabbit",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp35/gamehwq/20210326/11/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/ninja-rabbit.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "old-towers",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp35/liuxinyu/20210205/b4/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/old-towers.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "one-escape",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp40/gamehwq/20221107/11/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/one-escape.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "only-up-3d-parkour",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/chenling/20230826/01/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/only-up-3d-parkour.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "ovo-dimensions",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp41/liuxinyu/20221219/8/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/ovo-dimensions.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "ovo",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp41/liuxinyu/20230129/1/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/ovo.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": false,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "paint-strike",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp41/liuxinyu/20221123/8/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/paint-strike.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "parakite-ninja",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/gamehwq/20230805/01/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/parakite-ninja.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "parkour-climb-and-jump",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp38/gamehwq/20220329/11/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/parkour-climb-and-jump.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "perfect-peel",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/gamehwq/20220105/14/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/perfect-peel.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "pogo-runner",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp43/chenling/20230801/1/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/pogo-runner.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "poor-eddie",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/gamehwq/20230817/13a/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/poor-eddie.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "port-bike-stunt",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp33/chenling/20200911/15/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/port-bike-stunt.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "prisonela",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp40/chenling/20220819/06/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/prisonela.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "puffy-cat",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp41/chenling/20221209/07a/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/puffy-cat.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "rabbit-samurai-2",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp29/chenling/20191009/05/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/rabbit-samurai-2.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "rabbit-samurai-3",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp40/gamehwq/20220906/01/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/rabbit-samurai-3.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "rabbit-samurai",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp25/chenling/20180731/01/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/rabbit-samurai.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "raft-wars-2",
+      "嵌入地址": "https://www.friv2018.com/games/html5/raft-wars-2/",
+      "来源页面": "https://ad-freegames.github.io/4399/raft-wars-2.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": false,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "raft-wars",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp35/liuxinyu/20210301/jj8/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/raft-wars.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": false,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "real-cars-in-city",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp39/liuxinyu/20220526/7/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/real-cars-in-city.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "recoil",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp41/liuxinyu/20221123/9/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/recoil.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "red-ball-bounce-adventure",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/chenling/20230817/01/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/red-ball-bounce-adventure.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "rolling-ball",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/cwb/20220115/04a/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/rolling-ball.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "rublox-space-farm",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp39/gamehwq/20220520/14/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/rublox-space-farm.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": false,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "running-fred",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp48/chenling/20240807/08/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/running-fred.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "sausage-flip",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/gamehwq/20230830/11/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/sausage-flip.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "save-the-imposter",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/chenling/20230920/4/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/save-the-imposter.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "scape",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp35/gamehwq/20210115/07/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/scape.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "scrawler",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp38/chenling/20220401/09/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/scrawler.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "shinobi-run",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/chenling/20231007/3/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/shinobi-run.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "sink-it",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/liuxinyu/20220126/6/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/sink-it.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "skibidi-shooter",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/gamehwq/20231018/09/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/skibidi-shooter.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": false,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "sky-city-riders",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp36/gamehwq/20210727/11/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/sky-city-riders.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "slashz",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp39/liuxinyu/20220517/5/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/slashz.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "slice-arena",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/chenling/20230926/04/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/slice-arena.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "slidee",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp43/chenling/20230628/02/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/slidee.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "slimetris",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/chenling/20230826/02/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/slimetris.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "soul-snatcher",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp43/chenling/20230724/03/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/soul-snatcher.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "spiders",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp40/liuxinyu/20221027/4/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/spiders.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "squish-machine",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp35/gamehwq/20210127/05a/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/squish-machine.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "squish-run",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp41/liuxinyu/20221219/07/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/squish-run.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "state-wars-conquer-them-all",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/chenling/20230822/06/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/state-wars-conquer-them-all.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": false,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "stick-fighter",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp41/liuxinyu/20221209/4/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/stick-fighter.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "stick-war-infinity-duel",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/gamehwq/20220127/07/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/stick-war-infinity-duel.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": false,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "stick-warrior",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/chenling/20231023/04/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/stick-warrior.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": false,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "stickman-bike",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/chenling/20230905/06/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/stickman-bike.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "stickman-climb",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/gamehwq/20211221/15/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/stickman-climb.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "stickman-escape",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp42/chenling/20230323/06/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/stickman-escape.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "stickman-hook-christmas-edition",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/gamehwq/20211210/14/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/stickman-hook-christmas-edition.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "stickman-shooter",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/chenling/20230817/02/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/stickman-shooter.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": false,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "string-theory-2-remastered",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/gamehwq/20220124/13/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/string-theory-2-remastered.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "string-theory-remastered",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/gamehwq/20220119/16/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/string-theory-remastered.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "summon-the-dragon",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/cwb/20220104/01/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/summon-the-dragon.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "super-crazy-bunnies",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp43/chenling/20230608/05/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/super-crazy-bunnies.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "super-liquid-soccer",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/gamehwq/20230822/12/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/super-liquid-soccer.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "super-omar-climb",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/chenling/20230919/04/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/super-omar-climb.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": false,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "swingo",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp41/liuxinyu/20221209/5/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/swingo.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "tail-swing",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/gamehwq/20211025/13/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/tail-swing.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "telekinesis",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/gamehwq/20220105/13/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/telekinesis.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "temple-run-2-holi-festival",
+      "嵌入地址": "https://sda.4399.com/4399swf//upload_swf/ftp36/liuxinyu/20210628/jjjj1/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/temple-run-2-holi-festival.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": false,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "temple-run-2",
+      "嵌入地址": "https://sxiao.4399.com/4399swf//upload_swf/ftp35/gamehwq/20210119/11/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/temple-run-2.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": false,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "truck-loader-2",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/cwb/20211025/02b/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/truck-loader-2.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "truck-loader-3",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp41/liuxinyu/20221202/4/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/truck-loader-3.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "truck-loader-4",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/liuxinyu/20211213/4/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/truck-loader-4.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "g-switch-4",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp41/liuxinyu/20221130/01/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/truck-loader-5.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "g-switch-5",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp36/liuxinyu/20210924/11/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/truck-loader.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "tunnel-rush",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/gamehwq/20230830/12a/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/tunnel-rush.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": false
+    },
+    {
+      "游戏": "two-ball-3d-dark",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp36/gamehwq/20210622/15/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/two-ball-3d-dark.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "two-punk-racing",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp31/chenling/20200312/5/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/two-punk-racing.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "ultimate-stunt-car-challenge",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/chenling/20230906/06/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/ultimate-stunt-car-challenge.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "wild-bullets",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/gamehwq/20231017/15/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/wild-bullets.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": false,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "wing-race-3d",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/chenling/20231010/07/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/wing-race-3d.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "woodcutter-master-adventure",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/chenling/20230818/04/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/woodcutter-master-adventure.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "yokai-dungeon",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp37/liuxinyu/20211210/5/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/yokai-dungeon.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "zombotag",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp44/gamehwq/20230823/13/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/zombotag.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "zoom-be-2",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp40/chenling/20220905/05/index.htm",
+      "来源页面": "https://ad-freegames.github.io/4399/zoom-be-2.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "zoom-be-3",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp40/chenling/20220926/11/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/zoom-be-3.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    },
+    {
+      "游戏": "zoom-be",
+      "嵌入地址": "https://szhong.4399.com/4399swf//upload_swf/ftp40/chenling/20220926/10/index.html",
+      "来源页面": "https://ad-freegames.github.io/4399/zoom-be.html",
+      "许可状态": "未获取到授权证据",
+      "存量来源匹配": true,
+      "当前可嵌入": true,
+      "当前禁止索引": true
+    }
+  ]
+}

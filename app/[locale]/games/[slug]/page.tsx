@@ -264,6 +264,8 @@ export async function generateMetadata({
   const sourcePolicy = {
     slug: game.slug,
     embedPermissionStatus: sourceDisclosure.embedPermissionStatus,
+    iframeUrl: game.iframeUrl,
+    sourcePageUrl: sourceDisclosure.sourcePageUrl ?? game.sourceUrl,
   };
   const noIndex = shouldNoIndexGame(sourcePolicy);
   const taxonomyKeywords = [
@@ -641,6 +643,8 @@ export default async function GamePage({ params }: GamePageProps) {
   const sourcePolicy = {
     slug: game.slug,
     embedPermissionStatus: sourceDisclosure.embedPermissionStatus,
+    iframeUrl: game.iframeUrl,
+    sourcePageUrl: sourceDisclosure.sourcePageUrl ?? game.sourceUrl,
   };
   const qualityTier = getGameQualityTier(sourcePolicy);
   const sourceType = sourceDisclosure.sourceType ?? 'unknown';

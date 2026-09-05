@@ -50,6 +50,7 @@ export function GamePlayerFacade({
   const [isViewportFullscreen, setIsViewportFullscreen] = useState(false);
   const [isFullscreenTransitioning, setIsFullscreenTransitioning] = useState(false);
   const fullscreenTransitionRef = useRef(false);
+  const iframeObservedRef = useRef(false);
   const playerRef = useRef<HTMLDivElement>(null);
   const sandbox = 'allow-scripts allow-same-origin allow-pointer-lock allow-popups';
 
@@ -100,11 +101,14 @@ export function GamePlayerFacade({
   const visiblePlayLabel = playLabel ?? (locale === 'zh' ? '开始游戏' : 'Play now');
 
   const startGame = () => {
+    iframeObservedRef.current = false;
     setLoaded(true);
-    trackInteraction('game_play_start', {
+    trackInteraction('game_start_attempt', {
       game_slug: gameSlug ?? title,
       locale,
       source,
+      schema_version: 2,
+      evidence: 'user_start_request',
     });
   };
 
@@ -201,6 +205,12 @@ export function GamePlayerFacade({
         }
       >
         <iframe
+          onLoad={() => {
+            if (iframeObservedRef.current) return;
+            iframeObservedRef.current = true;
+            trackInteraction('game_iframe_load', { game_slug: gameSlug ?? title, locale, source, evidence: 'load_event_only', schema_version: 2 });
+          }}
+          onError={() => trackInteraction('game_load_error', { game_slug: gameSlug ?? title, locale, source, reason: 'iframe_error', schema_version: 2 })}
           src={iframeUrl}
           title={title}
           loading="lazy"

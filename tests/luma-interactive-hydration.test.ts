@@ -28,7 +28,7 @@ afterAll(() => {
 const games = [
   {
     name: 'Daily Solitaire',
-    render: () => renderToStaticMarkup(createElement(DailySolitaire, { locale: 'en' })),
+    render: () => renderToStaticMarkup(createElement(DailySolitaire, { locale: 'en', initialDateKey: '2026-09-05' })),
     controlMarker: 'Play today’s deal',
   },
   {

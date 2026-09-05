@@ -108,6 +108,8 @@ async function getSitemapGames(): Promise<SitemapGameEntry[]> {
     const queryPromise = db
       .select({
         slug: games.slug,
+        iframeUrl: games.iframeUrl,
+        sourceUrl: games.sourceUrl,
         isNew: games.isNew,
         publishedAt: games.publishedAt,
         updatedAt: games.updatedAt,
@@ -124,6 +126,8 @@ async function getSitemapGames(): Promise<SitemapGameEntry[]> {
             !shouldExcludeNoindexExperimentGame(game.slug) &&
             shouldIncludeGameInSitemap({
               slug: game.slug,
+              iframeUrl: game.iframeUrl,
+              sourcePageUrl: game.sourceUrl,
               // Remote catalogue records do not yet carry an auditable embed permission.
               embedPermissionStatus: null,
             }),

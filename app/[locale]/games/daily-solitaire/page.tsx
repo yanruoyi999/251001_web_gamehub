@@ -1,3 +1,4 @@
+import { getDailySolitaireDateKey } from '@/lib/games/daily-solitaire';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
@@ -42,7 +43,7 @@ export default async function DailySolitairePage({ params }: PageProps) {
       locale={locale}
       page={page}
       topLink={<Link href={getLocalizedPath(locale, '/games')}>{page.copy.backToGames}</Link>}
-      game={<DailySolitaire locale={locale} />}
+      game={<DailySolitaire locale={locale} initialDateKey={getDailySolitaireDateKey()} />}
     />
   );
 }

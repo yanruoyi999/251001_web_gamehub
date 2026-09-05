@@ -36,28 +36,51 @@ export function dropTowerBlock(
   axis: TowerAxis,
   perfectTolerance: number,
 ): DropResult {
-  const centerKey = axis === 'x' ? 'x' : 'z';
   const sizeKey = axis === 'x' ? 'width' : 'depth';
-  const offset = moving[centerKey] - previous[centerKey];
-  const absoluteOffset = Math.abs(offset);
-
-  if (absoluteOffset <= Math.max(0, perfectTolerance)) {
+  const valid = (block: TowerBlock) => Object.values(block).every(Number.isFinite) && block.width > 0 && block.depth > 0;
+  if (!valid(previous) || !valid(moving)) return { status: 'missed', block: null, trimmed: Math.max(0, moving[sizeKey] || 0) };
+  const inactive = axis === 'x' ? 'z' : 'x';
+  if (
+    Math.abs(moving[axis] - previous[axis]) <= Math.max(0, perfectTolerance) &&
+    moving[inactive] === previous[inactive] &&
+    moving.width === previous.width && moving.depth === previous.depth
+  ) {
     return { status: 'perfect', block: { ...previous }, trimmed: 0 };
   }
 
-  const overlap = Math.min(previous[sizeKey], moving[sizeKey]) - absoluteOffset;
-  if (overlap <= 0) return { status: 'missed', block: null, trimmed: moving[sizeKey] };
+  const left = Math.max(previous.x - previous.width / 2, moving.x - moving.width / 2);
+  const right = Math.min(previous.x + previous.width / 2, moving.x + moving.width / 2);
+  const back = Math.max(previous.z - previous.depth / 2, moving.z - moving.depth / 2);
+  const front = Math.min(previous.z + previous.depth / 2, moving.z + moving.depth / 2);
+  if (right <= left || front <= back) return { status: 'missed', block: null, trimmed: moving[sizeKey] };
+  const block: TowerBlock = { x: (left + right) / 2, z: (back + front) / 2, width: right - left, depth: front - back };
+  return { status: 'placed', block, trimmed: Math.max(0, moving[sizeKey] - block[sizeKey]) };
+}
 
-  const block: TowerBlock = {
-    ...moving,
-    [sizeKey]: overlap,
-    [centerKey]: previous[centerKey] + offset / 2,
-  };
-  return {
-    status: 'placed',
-    block,
-    trimmed: Math.max(0, moving[sizeKey] - overlap),
-  };
+/** Project the exact collision rectangle, not an unrelated fixed-thickness sprite. */
+export function projectTowerBlock(
+  block: TowerBlock,
+  level: number,
+  surface: { width: number; height: number },
+  cameraLevel = 0,
+): Array<{ x: number; y: number }> {
+  return [
+    [block.x - block.width / 2, block.z - block.depth / 2],
+    [block.x + block.width / 2, block.z - block.depth / 2],
+    [block.x + block.width / 2, block.z + block.depth / 2],
+    [block.x - block.width / 2, block.z + block.depth / 2],
+  ].map(([x, z]) => ({
+    x: surface.width / 2 + (x - z) * 0.7,
+    y: surface.height - 65 + (x + z) * 0.22 - (level - cameraLevel) * 25,
+  }));
+}
+
+export interface StackerClock { elapsedMs: number; lastFrameMs: number | null }
+
+/** Only physics is capped. The competition clock uses all visible elapsed time. */
+export function advanceStackerClock(clock: StackerClock, now: number) {
+  const delta = clock.lastFrameMs === null ? 0 : Math.max(0, now - clock.lastFrameMs);
+  return { elapsedMs: clock.elapsedMs + delta, lastFrameMs: now, physicsDeltaMs: Math.min(40, delta) };
 }
 
 export function getBlockSpeed(height: number) {

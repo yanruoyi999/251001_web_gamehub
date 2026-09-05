@@ -1,8 +1,8 @@
+/* eslint-disable @next/next/no-head-element -- Shared App Router root document, not a Pages Router component. */
 import type { Metadata, Viewport } from 'next';
 import { Suspense } from 'react';
-import { headers } from 'next/headers';
-import './globals.css';
-import { defaultLocale, getLocalizedPath, isLocale, locales } from '@/i18n/config';
+import '@/app/globals.css';
+import { defaultLocale, getLocalizedPath, locales, type Locale } from '@/i18n/config';
 import { ProductionTelemetry } from '@/components/analytics/ProductionTelemetry';
 import LocaleDocumentSync from '@/components/layout/LocaleDocumentSync';
 import { getSiteBaseUrl } from '@/lib/seo';
@@ -23,7 +23,7 @@ const siteJsonLd = {
   },
 };
 
-export const metadata: Metadata = {
+export const documentMetadata: Metadata = {
   metadataBase: new URL(siteBaseUrl),
   title: {
     default: 'Luma Game Hub | Free Browser Games Online',
@@ -91,34 +91,21 @@ export const metadata: Metadata = {
   },
 };
 
-export const viewport: Viewport = {
+export const documentViewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   themeColor: '#0d1117',
 };
 
-export default async function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  const requestHeaders = await headers();
-  const requestLocale = requestHeaders.get('x-next-intl-locale');
-  const documentLocale = isLocale(requestLocale) ? requestLocale : defaultLocale;
-
+export function DocumentShell({ children, locale }: Readonly<{ children: React.ReactNode; locale: Locale }>) {
   return (
-    <html lang={documentLocale} data-locale={documentLocale} suppressHydrationWarning>
+    <html lang={locale} data-locale={locale} suppressHydrationWarning>
       <head>
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="Luma Game Hub" />
         <meta name="format-detection" content="telephone=no" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){var l=location.pathname.split('/')[1];if(l==='en'||l==='zh'){document.documentElement.lang=l;document.documentElement.dataset.locale=l;}})();`,
-          }}
-        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: serializeJsonLd(siteJsonLd) }}
@@ -131,7 +118,7 @@ export default async function RootLayout({
       </head>
       <body className="font-sans antialiased bg-background text-foreground">
         <Suspense fallback={null}>
-          <LocaleDocumentSync />
+          <LocaleDocumentSync defaultDocumentLocale={locale} />
         </Suspense>
         <ProductionTelemetry />
         {children}

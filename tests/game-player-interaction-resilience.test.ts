@@ -38,7 +38,7 @@ describe('search-session interaction resilience', () => {
 
     expect(handlerStart).toBeGreaterThanOrEqual(0);
     expect(handler.indexOf('setLoaded(true)')).toBeGreaterThanOrEqual(0);
-    expect(handler.indexOf("trackInteraction('game_play_start'")).toBeGreaterThan(
+    expect(handler.indexOf("trackInteraction('game_start_attempt'")).toBeGreaterThan(
       handler.indexOf('setLoaded(true)'),
     );
   });

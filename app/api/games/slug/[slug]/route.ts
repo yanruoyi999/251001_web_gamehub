@@ -1,3 +1,4 @@
+import { shouldUseCatalogueDatabase } from '@/lib/games/catalog-mode';
 import { NextRequest, NextResponse } from 'next/server';
 import { GameService } from '@/services';
 import { isAdminRequestAuthenticated } from '@/lib/auth/admin';
@@ -32,7 +33,7 @@ function withGameDetailTimeout<T>(promise: Promise<T>, label: string): Promise<T
 function shouldUseGameDetailFallback() {
   const databaseConnection = getDatabaseConnectionMetadata();
   return (
-    !databaseConnection.configured ||
+    !shouldUseCatalogueDatabase(databaseConnection) ||
     (
       process.env.GAME_DETAIL_ALLOW_SUPABASE_DIRECT_IN_SERVERLESS !== 'true' &&
       shouldSkipSupabaseDirectInServerless(databaseConnection)
