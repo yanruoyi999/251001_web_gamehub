@@ -1,13 +1,14 @@
-name: Audit workspace export
+name: Apply verified audit repairs
 on:
   push:
     branches: [fix/luma-audit-20260905]
     paths: [.github/workflows/audit-workspace-export.yml]
 permissions:
-  contents: read
+  contents: write
+  actions: read
 jobs:
-  export:
-    if: github.repository == 'yanruoyi999/251001_web_gamehub'
+  apply:
+    if: github.repository == 'yanruoyi999/251001_web_gamehub' && github.ref == 'refs/heads/fix/luma-audit-20260905'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
@@ -17,8 +18,10 @@ jobs:
     steps:
       - uses: actions/checkout@v5
         with:
+          ref: ${{ github.sha }}
           fetch-depth: 0
-          persist-credentials: false
+      - name: Assert isolated parent
+        run: test "$(git rev-parse HEAD^)" = 1e68e2a23253bba9533834c5f06c1d187eb1e0ae
       - uses: pnpm/action-setup@v6
         with:
           version: 10.28.0
@@ -26,78 +29,93 @@ jobs:
         with:
           node-version: 22
           cache: pnpm
-      - name: Verify unmodified baseline
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p "$RUNNER_TEMP/audit-export"
-          pnpm install --frozen-lockfile
-          pnpm exec vitest run 2>&1 | tee "$RUNNER_TEMP/audit-export/baseline-unit.log"
-      - name: Resolve security patch dependencies
-        shell: bash
-        run: |
-          set -euo pipefail
-          node - <<'NODE'
-          const fs = require('node:fs');
-          const p = JSON.parse(fs.readFileSync('package.json', 'utf8'));
-          p.dependencies.next = '15.5.25';
-          p.devDependencies['eslint-config-next'] = '15.5.25';
-          p.pnpm.overrides.sharp = '0.35.4';
-          fs.writeFileSync('package.json', JSON.stringify(p, null, 2) + '\n');
-          NODE
-          pnpm install --no-frozen-lockfile
-          cp package.json pnpm-lock.yaml "$RUNNER_TEMP/audit-export/"
-          pnpm audit --prod --json > "$RUNNER_TEMP/audit-export/dependency-audit.json"
-          node - <<'NODE' > "$RUNNER_TEMP/audit-export/runtime-versions.json"
-          const { createRequire } = require('node:module');
-          const r = createRequire(require.resolve('next/package.json'));
-          console.log(JSON.stringify({ node: process.version, next: require('next/package.json').version, sharp: r('sharp').versions }, null, 2));
-          NODE
-          git bundle create "$RUNNER_TEMP/audit-export/luma-source.bundle" HEAD
-          git rev-parse HEAD > "$RUNNER_TEMP/audit-export/commit.txt"
-          cd "$RUNNER_TEMP/audit-export"
-          sha256sum luma-source.bundle package.json pnpm-lock.yaml > SHA256SUMS
-      - uses: actions/upload-artifact@v4
+      - uses: actions/download-artifact@v4
         with:
           name: luma-audit-security-resolution
-          path: ${{ runner.temp }}/audit-export/
-          retention-days: 1
-          if-no-files-found: error
-      - name: Pack offline verification tools
+          run-id: 33941391060
+          github-token: ${{ github.token }}
+          path: ${{ runner.temp }}/prepared-dependencies
+      - name: Freeze original catalogue source tuples
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p "$RUNNER_TEMP/audit-tools"
-          npm pack pnpm@10.28.0 --pack-destination "$RUNNER_TEMP/audit-tools" > /dev/null
-          tar -czf "$RUNNER_TEMP/audit-tools/node_modules.tar.gz" node_modules
-          pnpm exec playwright install chromium
-          tar -czf "$RUNNER_TEMP/audit-tools/chromium.tar.gz" -C "$HOME/.cache" ms-playwright
-          cd "$RUNNER_TEMP/audit-tools"
-          sha256sum *.tgz *.tar.gz > SHA256SUMS
-          split -b 200M node_modules.tar.gz modules.part-
-          split -b 200M chromium.tar.gz browser.part-
-          ls -lh *.part-*
+          pnpm install --frozen-lockfile
+          pnpm exec tsx -e 'import { mockGames } from "./lib/mock-games"; import { writeFileSync } from "node:fs"; writeFileSync("lib/games/legacy-sources-20260905.json", JSON.stringify({baseline:"bd0abb3",note:"Frozen source exceptions, NOT verified licenses. Do not append new sources.",entries:mockGames.map(g=>({slug:g.slug,iframeUrl:g.iframeUrl,sourcePageUrl:g.sourcePageUrl??null}))},null,2)+"\n");'
+      - name: Retrieve and verify exact tested patch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import base64, hashlib, json, lzma, os, pathlib, urllib.request
+          shas = ['2278ee0370cbce6ae5bb09ce085e4f7a677364d5','8b49188005623ec8787257a5fdda4a326033ea6c','efac3d6c1d03d1bf8d152455a1bfc4793eec3550','8568ffa790af1bd624eaf1227b778d99f3ca21f7','e9c27d4a1d87e4d57248688e05b4c0b68dd05760','8cd39124379f4d093262cb98898d24bcbc2f0eaa']
+          chunks = []
+          for sha in shas:
+              req = urllib.request.Request(f'https://api.github.com/repos/yanruoyi999/251001_web_gamehub/git/blobs/{sha}', headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json'})
+              with urllib.request.urlopen(req, timeout=30) as response:
+                  obj = json.load(response)
+              assert obj['encoding'] == 'base64'
+              data = base64.b64decode(obj['content'])
+              assert hashlib.sha1(f'blob {len(data)}\0'.encode()+data).hexdigest() == sha
+              chunks.append(data)
+          packed = b''.join(chunks)
+          assert hashlib.sha256(packed).hexdigest() == 'c5b20737c11c1d0543a9b657f65645506c2ee4bbb0b9e708859d18140581c3f9'
+          patch = lzma.decompress(packed)
+          assert hashlib.sha256(patch).hexdigest() == '4c5dc204b4b9aaa46bce9c5dc62aa6d3f8301b87be3487bf6bf097a794dfda77'
+          pathlib.Path(os.environ['RUNNER_TEMP'],'audit.patch').write_bytes(patch)
+          print('Exact locally tested patch verified')
+          PY
+          git apply --check --index "$RUNNER_TEMP/audit.patch"
+          git apply --index "$RUNNER_TEMP/audit.patch"
+      - name: Restore verified lockfile and generate evidence ledger
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp "$RUNNER_TEMP/prepared-dependencies/pnpm-lock.yaml" pnpm-lock.yaml
+          pnpm install --frozen-lockfile
+          pnpm exec tsx scripts/audit-source-evidence.ts --write docs/licenses/2026-09-05-来源证据缺口清单.json
+          python3 - <<'PY'
+          import hashlib, pathlib
+          expected = {'pnpm-lock.yaml':'9a1639ebe5db171961ad12e515561576694f466480226705b32cdedcd130acf2','lib/games/legacy-sources-20260905.json':'be996c4b568278651dee97651a9ea028f24001b0915aca1fd73c07e6f3293e7d','docs/licenses/2026-09-05-来源证据缺口清单.json':'7f26de171113eeda87224b7ca0410d30f782b77a365221394204d3a4b65e4458'}
+          for name, digest in expected.items():
+              assert hashlib.sha256(pathlib.Path(name).read_bytes()).hexdigest() == digest, name
+          print('All generated files match local verified copies')
+          PY
+          git rm -- .github/workflows/audit-workspace-export.yml
+          git add -A
+          git diff --cached --check
+          test "$(git write-tree)" = 2e608f414e9a564d0db4bca33b3bfc2648592fc3
+      - name: Run pre-commit quality gates
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/audit-delivery"
+          pnpm lint
+          pnpm type-check
+          pnpm check:internal-links
+          pnpm check:source-evidence
+          pnpm exec vitest run 2>&1 | tee "$RUNNER_TEMP/audit-delivery/unit-tests.log"
+          pnpm audit:prod 2>&1 | tee "$RUNNER_TEMP/audit-delivery/dependency-audit.log"
+          test "$(git write-tree)" = 2e608f414e9a564d0db4bca33b3bfc2648592fc3
+      - name: Commit only to audit branch without force
+        shell: bash
+        run: |
+          set -euo pipefail
+          remote_head=$(git ls-remote origin refs/heads/fix/luma-audit-20260905 | cut -f1)
+          test "$remote_head" = "$GITHUB_SHA"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'fix: complete Luma audit repairs and evidence-based quality gates'
+          git push origin HEAD:refs/heads/fix/luma-audit-20260905
+          git rev-parse HEAD > "$RUNNER_TEMP/audit-delivery/commit.txt"
+          git rev-parse HEAD^{tree} > "$RUNNER_TEMP/audit-delivery/tree.txt"
+          git bundle create "$RUNNER_TEMP/audit-delivery/verified-source.bundle" HEAD
+          git diff --stat bd0abb3c5f20807b4ef8246d9d788c7dd0c9abe5 HEAD > "$RUNNER_TEMP/audit-delivery/changes.txt"
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
-          name: luma-audit-tools-part-aa
-          path: |
-            ${{ runner.temp }}/audit-tools/*.part-aa
-            ${{ runner.temp }}/audit-tools/*.tgz
-            ${{ runner.temp }}/audit-tools/SHA256SUMS
-          retention-days: 1
-          compression-level: 0
-          if-no-files-found: error
-      - uses: actions/upload-artifact@v4
-        with:
-          name: luma-audit-tools-part-ab
-          path: ${{ runner.temp }}/audit-tools/*.part-ab
-          retention-days: 1
-          compression-level: 0
-          if-no-files-found: warn
-      - uses: actions/upload-artifact@v4
-        with:
-          name: luma-audit-tools-part-ac
-          path: ${{ runner.temp }}/audit-tools/*.part-ac
-          retention-days: 1
-          compression-level: 0
+          name: luma-verified-audit-delivery
+          path: ${{ runner.temp }}/audit-delivery/
+          retention-days: 3
           if-no-files-found: warn
