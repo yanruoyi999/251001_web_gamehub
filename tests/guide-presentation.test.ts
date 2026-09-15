@@ -36,7 +36,7 @@ describe('guide presentation', () => {
 
     expect(page?.locales.en.quickAnswerLink).toMatchObject({
       href: 'https://googlesnakemods.com/',
-      label: 'Open the maintained Google Snake Mods web version',
+      label: 'Open Google Snake Mods',
     });
     expect(page?.locales.zh.quickAnswerLink).toMatchObject({
       href: 'https://googlesnakemods.com/',
