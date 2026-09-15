@@ -58,9 +58,9 @@ describe('Spend Bill Gates Money SEO v1.2', () => {
     expect(home).not.toContain('开始花光1000亿美元');
     const guides = readSource('app/[locale]/guides/[slug]/page.tsx');
     expect(guides).toContain("page.slug === 'google-snake-mods'");
-    expect(guides).toContain("'/games/spend-bill-gates-money'");
-    expect(guides).toContain('Try the money spending simulator');
-    expect(guides).toContain('试玩花钱模拟游戏');
+    expect(guides).not.toContain("'/games/spend-bill-gates-money'");
+    expect(guides).not.toContain('Try the money spending simulator');
+    expect(guides).not.toContain('试玩花钱模拟游戏');
     expect(games).toContain("'/games/spend-bill-gates-money'");
     expect(games).toContain('const { games, total, totalPages');
   });

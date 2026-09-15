@@ -65,6 +65,7 @@ export interface SeoLandingPage {
   primaryKeyword: string;
   keywords: string[];
   updatedAt: string;
+  documentationCheckedAt?: string;
   relatedSlugs: string[];
   indexable?: boolean;
   embedGame?: SeoLandingEmbedGame;
@@ -2198,7 +2199,8 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       'google snake game menu',
       'google snake unblocked',
     ],
-    updatedAt: seoContentUpdatedAt,
+    updatedAt: '2026-09-15T00:00:00.000Z',
+    documentationCheckedAt: '2026-09-15',
     relatedSlugs: [
       'google-snake-level-editor',
       'best-browser-games-5-minute-break',
@@ -2228,7 +2230,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         sections: [
           {
             title: 'Google Snake Mods 2: Mod Menu, More Menu or Loader?',
-            body: 'Use the maintained Google Snake Mods web version when you want the simplest mod menu with no separate setup. Use the DarkSnakeGang userscript loader only when you specifically want mods inside Google Search Snake and understand browser-extension permissions. “Google Snake Mods 2” is commonly used as a search phrase, not the name of an official sequel.',
+            body: 'Want the mod menu without installing a userscript? Start with the web version linked by DarkSnakeGang. Luma’s embedded Snake is the standard game, not the modded version.',
             bullets: [
               'Want the simplest current route: use the modded web version from the DarkSnakeGang project.',
               'Want mods inside the Google Search game: use the Google Snake Mod Loader userscript.',
@@ -2367,8 +2369,8 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ],
         quickAnswerLink: {
           href: 'https://googlesnakemods.com/',
-          label: 'Open the maintained Google Snake Mods web version',
-          description: 'Maintainer-run no-download web version with the mod panel built in.',
+          label: 'Open Google Snake Mods',
+          description: 'Opens the project-linked website in a new tab.',
         },
         externalLinks: [
           {
@@ -2398,7 +2400,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         sections: [
           {
             title: '快速结论：用 Mod Menu 还是 Snake Mod Loader？',
-            body: '想最简单打开模组菜单，就用维护中的 Google Snake Mods 网页版。只有明确想在 Google Search Snake 里加载模组，并理解扩展权限时，才用 DarkSnakeGang userscript loader。“Google Snake Mods 2”通常是搜索词，不是官方续作名称。',
+            body: '想直接打开模组菜单，不安装用户脚本？先用 DarkSnakeGang 项目链接的网页版。Luma 下方提供的是标准 Snake，不是模组版。',
             bullets: [
               '想要最简单的当前路径:用 DarkSnakeGang 项目的模组网页。',
               '想在 Google Search 的 Snake 游戏里加模组:用 Google Snake Mod Loader 用户脚本。',
@@ -2570,7 +2572,8 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       'google snake custom levels',
       'google snake challenge mode',
     ],
-    updatedAt: '2026-08-15T00:00:00.000Z',
+    updatedAt: '2026-09-15T00:00:00.000Z',
+    documentationCheckedAt: '2026-09-15',
     indexable: true,
     relatedSlugs: [
       'google-snake-mods',
@@ -2593,7 +2596,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           {
             title: 'Quick answer: check the project before trying a setup',
             body:
-              'Start with the DarkSnakeGang Level Editor repository linked above. The README is the primary source for the feature list, but it does not currently provide a finished installation walkthrough. Treat any exact setup sequence on another site as version-specific until the project confirms it.',
+              'The project describes custom boards, presets, and challenge modes, but installation is still marked as work in progress. Check its current instructions before trying a setup; this page does not contain a working editor.',
             bullets: [
               'Use the repository to verify the current feature list and project status.',
               'Do not download an EXE, DMG, APK, or unrelated browser optimizer for a Snake editor mod.',
@@ -2725,9 +2728,9 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ],
         quickAnswerLink: {
           href: 'https://github.com/DarkSnakeGang/GoogleSnakeLevelEditor',
-          label: 'Check the Google Snake Level Editor project status',
+          label: 'Check the Level Editor project',
           description:
-            'Primary source for the editor feature list, work-in-progress status, releases, and current project notes.',
+            'Project documentation, not a verified installation walkthrough.',
         },
         externalLinks: [
           {
@@ -2762,7 +2765,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           {
             title: '快速结论：先核对项目，再尝试设置',
             body:
-              '先打开上方 DarkSnakeGang Level Editor 仓库。README 是功能列表的主要来源，但目前没有完整安装流程。其他网站提供的精确步骤都可能只适用于旧版本，必须以项目当前说明为准。',
+              '项目介绍了自定义棋盘、预设和挑战模式，但安装章节仍未完成。请先核对当前说明；本页只提供指南，没有可直接使用的编辑器。',
             bullets: [
               '用仓库核对当前功能、发布记录和开发状态。',
               '不要为了 Snake 编辑器下载 EXE、DMG、APK 或无关的浏览器优化器。',

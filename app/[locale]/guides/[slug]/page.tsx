@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { getLocalizedPath, locales, type Locale } from '@/i18n/config';
 import { Button } from '@/components/ui/button';
 import { GamePlayerFacade } from '@/components/game/game-player-facade';
+import { GuideIntentLink } from '@/components/seo/guide-intent-link';
 import { DominoesTraining } from '@/components/game/dominoes-training';
 import {
   getSeoLandingPage,
@@ -199,6 +200,10 @@ export default async function GuidePage({ params }: GuidePageProps) {
   };
   const structuredData = [jsonLdArticle, jsonLdFaq, jsonLdBreadcrumb];
   const relatedPages = getRelatedPages(page, locale);
+  const isSnakeGuide = ['google-snake-mods', 'google-snake-level-editor'].includes(page.slug);
+  const counterpartSlug = page.slug === 'google-snake-mods' ? 'google-snake-level-editor' : 'google-snake-mods';
+  const earlyRelatedPage = isSnakeGuide ? relatedPages.find(related => related.slug === counterpartSlug) : undefined;
+  const remainingRelatedPages = relatedPages.filter(related => related.slug !== earlyRelatedPage?.slug);
   const embedGameThumbnail =
     page.embedGame?.thumbnailUrl ??
     (page.embedGame?.playSlug
@@ -213,6 +218,30 @@ export default async function GuidePage({ params }: GuidePageProps) {
       timeZone: 'UTC',
     }
   ).format(new Date(page.updatedAt));
+
+  const primarySourceLink = content.quickAnswerLink ? (
+          <GuideIntentLink
+            guideSlug={page.slug}
+            locale={locale}
+            action={page.slug === 'google-snake-mods' ? 'mod_web' : 'source_status'}
+            href={content.quickAnswerLink.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 flex max-w-xl items-center justify-between gap-4 rounded-md border border-primary/30 bg-background px-3 py-2.5 text-left transition hover:border-primary hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          >
+            <span>
+              <span className="block font-semibold text-primary">
+                {content.quickAnswerLink.label}
+              </span>
+              <span className="mt-1 block text-sm text-muted-foreground">
+                {content.quickAnswerLink.description}
+              </span>
+            </span>
+            <span aria-hidden className="text-primary">
+              ↗
+            </span>
+          </GuideIntentLink>
+  ) : null;
 
   return (
     <article
@@ -259,7 +288,9 @@ export default async function GuidePage({ params }: GuidePageProps) {
           </time>
           <span aria-hidden="true">•</span>
           <span>
-            {locale === 'zh' ? '已对照来源核验' : 'Verified against source'}
+            {page.documentationCheckedAt
+              ? (locale === 'zh' ? `项目文档核对：${page.documentationCheckedAt}（非运行验证）` : `Project documentation checked: ${page.documentationCheckedAt} (not a runtime test)`)
+              : (locale === 'zh' ? '已对照来源核验' : 'Verified against source')}
           </span>
         </div>
       </header>
@@ -294,6 +325,22 @@ export default async function GuidePage({ params }: GuidePageProps) {
         <p className="mt-2 text-sm leading-6 text-foreground/90 sm:text-base">
           {quickAnswer.body}
         </p>
+        {isSnakeGuide ? primarySourceLink : null}
+        {earlyRelatedPage ? (
+          <nav data-snake-next-step aria-label={locale === 'zh' ? '相关 Snake 指南' : 'Related Snake guides'} className="mt-3">
+            <GuideIntentLink
+              guideSlug={page.slug}
+              action={page.slug === 'google-snake-mods' ? 'related_editor' : 'related_mods'}
+              locale={locale}
+              href={getLocalizedPath(locale, `/guides/${earlyRelatedPage.slug}`)}
+              className="inline-flex min-h-11 items-center font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            >
+              {page.slug === 'google-snake-mods'
+                ? (locale === 'zh' ? '自定义棋盘：Level Editor 指南 →' : 'Custom boards: Level Editor guide →')
+                : (locale === 'zh' ? '返回 Google Snake Mods 选择指南 →' : 'Choose a route: Google Snake Mods guide →')}
+            </GuideIntentLink>
+          </nav>
+        ) : null}
         {quickAnswerBullets.length > 0 ? (
           <ul className="mt-4 grid gap-2 text-sm text-foreground/80 md:grid-cols-3">
             {quickAnswerBullets.map(item => (
@@ -306,48 +353,32 @@ export default async function GuidePage({ params }: GuidePageProps) {
             ))}
           </ul>
         ) : null}
-        {content.quickAnswerLink ? (
-          <a
-            href={content.quickAnswerLink.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-4 flex max-w-xl items-center justify-between gap-4 rounded-md border border-primary/30 bg-background px-3 py-2.5 text-left transition hover:border-primary hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-          >
-            <span>
-              <span className="block font-semibold text-primary">
-                {content.quickAnswerLink.label}
-              </span>
-              <span className="mt-1 block text-sm text-muted-foreground">
-                {content.quickAnswerLink.description}
-              </span>
-            </span>
-            <span aria-hidden className="text-primary">
-              ↗
-            </span>
-          </a>
-        ) : null}
+        {!isSnakeGuide ? primarySourceLink : null}
         <div className="mt-5 flex flex-wrap gap-2 text-sm font-medium">
-          <a
+          <GuideIntentLink
+              guideSlug={page.slug} locale={locale} action="read_guide"
             href="#guide-details"
-            className="rounded-md bg-primary px-4 py-2 text-primary-foreground shadow-sm transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="inline-flex min-h-11 items-center rounded-md bg-primary px-4 py-2 text-primary-foreground shadow-sm transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             {locale === 'zh' ? '继续看指南' : 'Read the guide'}
-          </a>
+          </GuideIntentLink>
           {page.embedGame ? (
-            <a
+            <GuideIntentLink
+              guideSlug={page.slug} locale={locale} action="standard_snake"
               href="#play"
-              className="rounded-md border border-primary/30 bg-background px-4 py-2 text-primary transition hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              className="inline-flex min-h-11 items-center rounded-md border border-primary/30 bg-background px-4 py-2 text-primary transition hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
               {page.embedGame.playLabel?.[locale] ??
                 (locale === 'zh' ? '先试玩游戏' : 'Play first')}
-            </a>
+            </GuideIntentLink>
           ) : null}
-          <a
+          <GuideIntentLink
+              guideSlug={page.slug} locale={locale} action="recommendations"
             href="#recommendations"
-            className="rounded-md border border-border bg-background px-4 py-2 text-foreground transition hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="inline-flex min-h-11 items-center rounded-md border border-border bg-background px-4 py-2 text-foreground transition hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             {locale === 'zh' ? '看相似游戏' : 'See similar games'}
-          </a>
+          </GuideIntentLink>
         </div>
       </section>
 
@@ -405,39 +436,6 @@ export default async function GuidePage({ params }: GuidePageProps) {
           <p key={index}>{paragraph}</p>
         ))}
       </section>
-
-      {page.slug === 'google-snake-mods' ? (
-        <section
-          aria-labelledby="related-spend-bill-gates-money"
-          className="mt-10 max-w-3xl border-t border-border pt-7"
-        >
-          <p className="text-sm font-semibold uppercase tracking-wide text-primary">
-            {locale === 'zh' ? '相似浏览器游戏' : 'Similar browser game'}
-          </p>
-          <h2
-            id="related-spend-bill-gates-money"
-            className="mt-2 text-2xl font-semibold text-foreground"
-          >
-            {locale === 'zh'
-              ? '想换个挑战？试试花光1000亿美元'
-              : 'Try a different challenge: spend $100 billion'}
-          </h2>
-          <p className="mt-3 text-base leading-relaxed text-muted-foreground">
-            {locale === 'zh'
-              ? '如果你喜欢快速打开的浏览器挑战，可以试试无需下载、支持撤销购买并生成分享结果的亿万富翁消费模拟器。'
-              : 'If you like quick browser challenges, try a no-download billionaire spending simulator with reversible purchases and a shareable result.'}
-          </p>
-          <Link
-            href={getLocalizedPath(locale, '/games/spend-bill-gates-money')}
-            className="mt-4 inline-flex min-h-11 items-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-          >
-            {locale === 'zh'
-              ? '试玩花钱模拟游戏'
-              : 'Try the money spending simulator'}{' '}
-            →
-          </Link>
-        </section>
-      ) : null}
 
       {page.video ? (
         <section className="mx-auto mt-12 max-w-3xl" data-print-hide>
@@ -661,13 +659,13 @@ export default async function GuidePage({ params }: GuidePageProps) {
           </p>
       </section>
 
-      {relatedPages.length > 0 ? (
+      {remainingRelatedPages.length > 0 ? (
         <section className="mt-16 border-t border-border pt-10">
           <h2 className="text-2xl font-semibold text-foreground">
             {locale === 'zh' ? '相关主题' : 'Related Guides'}
           </h2>
           <ul className="mt-4 space-y-3 text-sm">
-            {relatedPages.map(related => (
+            {remainingRelatedPages.map(related => (
               <li key={related.slug}>
                 <Link
                   href={getLocalizedPath(locale, `/guides/${related.slug}`)}
