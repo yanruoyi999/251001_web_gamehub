@@ -6,6 +6,8 @@ import { getLocalizedPath, locales, type Locale } from '@/i18n/config';
 import { Button } from '@/components/ui/button';
 import { GamePlayerFacade } from '@/components/game/game-player-facade';
 import { GuideIntentLink } from '@/components/seo/guide-intent-link';
+import { GuideQuickPicks } from '@/components/seo/guide-quick-picks';
+import { getGuidePublicationDates } from '@/lib/guide-publication-dates';
 import { DominoesTraining } from '@/components/game/dominoes-training';
 import {
   getSeoLandingPage,
@@ -50,6 +52,7 @@ export async function generateMetadata({
 
   const locale = (localeParam as Locale) ?? 'zh';
   const content = page.locales[locale] ?? page.locales.zh;
+  const publicationDates = getGuidePublicationDates(page);
   const basePath = getLocalizedPath(locale, `/guides/${page.slug}`);
   const description = buildContextualMetaDescription({
     description: content.metaDescription,
@@ -79,7 +82,8 @@ export async function generateMetadata({
       description,
       url: basePath,
       type: 'article',
-      publishedTime: page.updatedAt,
+      publishedTime: publicationDates.datePublished,
+      modifiedTime: publicationDates.dateModified,
       tags: page.keywords,
       images: DEFAULT_OPEN_GRAPH_IMAGES,
     },
@@ -127,6 +131,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
 
   const siteBaseUrl = getSiteBaseUrl();
   const content = page.locales[locale] ?? page.locales.zh;
+  const publicationDates = getGuidePublicationDates(page);
   const pageUrl = buildAbsoluteUrl(
     getLocalizedPath(locale, `/guides/${page.slug}`)
   );
@@ -150,8 +155,8 @@ export default async function GuidePage({ params }: GuidePageProps) {
         url: buildAbsoluteUrl('/og-gamehub.svg'),
       },
     },
-    datePublished: page.updatedAt,
-    dateModified: page.updatedAt,
+    datePublished: publicationDates.datePublished,
+    dateModified: publicationDates.dateModified,
     articleSection: 'Browser Games',
     keywords: page.keywords.join(', '),
     citation: [content.quickAnswerLink, ...(content.externalLinks ?? [])]
@@ -288,7 +293,9 @@ export default async function GuidePage({ params }: GuidePageProps) {
           </time>
           <span aria-hidden="true">•</span>
           <span>
-            {page.documentationCheckedAt
+            {content.quickPicks?.length
+              ? (locale === 'zh' ? '核查环境见入口详情；非物理真机测试' : 'Check details below; not physical-device testing')
+              : page.documentationCheckedAt
               ? (locale === 'zh' ? `项目文档核对：${page.documentationCheckedAt}（非运行验证）` : `Project documentation checked: ${page.documentationCheckedAt} (not a runtime test)`)
               : (locale === 'zh' ? '已对照来源核验' : 'Verified against source')}
           </span>
@@ -325,6 +332,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
         <p className="mt-2 text-sm leading-6 text-foreground/90 sm:text-base">
           {quickAnswer.body}
         </p>
+        {content.quickPicks?.length ? <GuideQuickPicks guideSlug={page.slug} locale={locale} picks={content.quickPicks} /> : null}
         {isSnakeGuide ? primarySourceLink : null}
         {earlyRelatedPage ? (
           <nav data-snake-next-step aria-label={locale === 'zh' ? '相关 Snake 指南' : 'Related Snake guides'} className="mt-3">
