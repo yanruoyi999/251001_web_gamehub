@@ -481,7 +481,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         faqs: [
           {
             question: '无需下载的免费 iPhone 游戏首选哪一个?',
-            answer: '可先试顶部绘图入口，完成一次指针或触摸任务。核查详情标明浏览器模拟环境，不保证所有物理 iPhone 都兼容；其他候选仍需在自己的设备上检查。',
+            answer: '可先试顶部绘图入口，完成一次指针或触摸任务。核查详情标明浏览器模拟环境，不保证所有物理 iPhone 都兼容；其他游戏请先在自己的设备上检查。',
           },
           {
             question: '这些 iPhone 游戏需要 App Store 下载吗？',
