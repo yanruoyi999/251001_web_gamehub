@@ -30,6 +30,18 @@ export interface SeoLandingScreenshot {
   sourceUrl: string;
 }
 
+export interface SeoLandingQuickPick {
+  slug: 'draw-a-perfect-circle';
+  action: 'play_circle';
+  label: string;
+  controls: string;
+  orientation: string;
+  sound: string;
+  saving: string;
+  checkedAt: string;
+  environment: string;
+}
+
 export interface SeoLandingLocaleContent {
   metaTitle: string;
   metaDescription: string;
@@ -40,6 +52,7 @@ export interface SeoLandingLocaleContent {
   recommendations: SeoLandingRecommendation[];
   faqs: SeoLandingFaq[];
   screenshots?: SeoLandingScreenshot[];
+  quickPicks?: SeoLandingQuickPick[];
   quickAnswerLink?: SeoLandingExternalLink;
   externalLinks?: SeoLandingExternalLink[];
   ctaLabel: string;
@@ -65,6 +78,8 @@ export interface SeoLandingPage {
   primaryKeyword: string;
   keywords: string[];
   updatedAt: string;
+  /** Verified first public publication only; unknown dates remain absent. */
+  publishedAt?: string;
   documentationCheckedAt?: string;
   relatedSlugs: string[];
   indexable?: boolean;
@@ -256,7 +271,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       'mobile friendly puzzle games',
       'touch friendly free games',
     ],
-    updatedAt: seoContentUpdatedAt,
+    updatedAt: '2026-09-16T23:45:33Z',
     relatedSlugs: ['best-browser-games-5-minute-break', 'games-to-play-when-bored', 'free-games-no-ads', 'drive-mad-level-tips'],
     locales: {
       en: {
@@ -264,18 +279,31 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         metaDescription:
           'Best free iPhone games you can try in Safari or Chrome with no App Store download: tap controls, portrait fit, short sessions, and safe browser picks.',
         heading: 'Best Free iPhone Games With No Download',
-        subheading: 'A practical Safari and Chrome shortlist for players who want quick browser games, touch-friendly controls, and no App Store install.',
+        subheading: 'Browser games to try without installing an app, with control and storage notes for each checked entry.',
+        quickPicks: [
+          {
+            "slug": "draw-a-perfect-circle",
+            "action": "play_circle",
+            "label": "Draw a Perfect Circle",
+            "controls": "Draw one line, lift, then tap Score stroke. No keyboard needed.",
+            "orientation": "Portrait or landscape; scroll to reach the controls when needed.",
+            "sound": "No audio in this game.",
+            "saving": "Local best in this browser. Clearing browser data or using private sessions may remove it.",
+            "checkedAt": "2026-09-17",
+            "environment": "Chromium Pixel 7 profile: touch drawing. WebKit iPhone 13 profile: pointer drawing and touch buttons. No physical-phone test."
+          }
+        ],
         overview: [
-          'If you search for the best free iPhone games, you are usually not asking for a huge App Store list. You want something that opens now, works in Safari or Chrome, uses simple touch controls, and does not push you into a download before you know whether the game is worth your time.',
-          'This guide is built for that intent. It compares browser games by how they feel on a phone: tap accuracy, portrait or landscape fit, audio prompts, short-session value, and whether a game becomes awkward without a keyboard. Treat it as a no-download test list rather than a claim that every third-party game will behave perfectly on every iPhone model.',
+          'This guide covers browser-play options, not an App Store ranking. Start with a short round and check the controls on your own device before relying on a game for a longer session.',
+          'The quick entry lists the exact browser check and its limits. Other third-party picks below are candidates to test, not a promise of compatibility with every iPhone model. Network access, browser storage, controls and publisher content can change.',
         ],
         sections: [
           {
             title: 'Quick Answer: Best Free iPhone Games Without Downloads',
-            body: 'Start with tap-first puzzle games and short timing games before trying keyboard-heavy platformers. On iPhone, the best no-download browser game is usually the one with one clear action, visible controls, and rounds short enough to restart when Safari reloads the tab.',
+            body: 'Try a simple drawing round first. Open the game, draw one line, and tap Score stroke. Keep the browser online; the check details below distinguish browser simulation from physical-phone testing.',
             bullets: [
-              'Best first pick: point-and-click or tap puzzle games such as Adam and Eve 4.',
-              'Good short-session picks: Catch the Candy and Beat Line if the canvas fits cleanly.',
+              'Checked quick entry: Draw a Perfect Circle, with local best-score storage.',
+              'Other candidates below need a short control check on your own device.',
               'Use caution with platformers or driving games that need precise left/right keys.',
             ],
           },
@@ -291,10 +319,10 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             ],
           },
           {
-            title: 'Best Picks by Situation',
+            title: 'Other candidates to test by control style',
             body: 'Choose the game by control style first. The best free iPhone game for a quick break is usually the one that matches your thumb input, not the one with the most complex mechanics.',
             bullets: [
-              'Simple taps: Adam and Eve 4 is the safest first test because point-and-click puzzles translate well to touch.',
+              'Simple taps: Adam and Eve 4 is a point-and-click candidate; test its current controls before continuing.',
               'Rope physics puzzles: Catch the Candy is useful when you want a quick responsiveness check.',
               'Rhythm and timing: Beat Line works for short attempts if audio and tap timing feel stable.',
               'Driving or platform games: use them as stress tests; if virtual controls feel cramped, move to desktop.',
@@ -318,7 +346,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         recommendations: [
           {
             slug: 'adam-and-eve-4',
-            pitch: 'A point-and-click puzzle adventure and the strongest first candidate for simple tap-based play.',
+            pitch: 'A point-and-click puzzle candidate. Check current touch controls and publisher prompts on your device.',
           },
           {
             slug: 'catch-the-candy',
@@ -337,7 +365,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           {
             question: 'What is the best free iPhone game with no download?',
             answer:
-              'Start with a tap-first browser game such as Adam and Eve 4 or Catch the Candy. They are easier to test in Safari because they do not depend on cramped keyboard-style controls.',
+              'Try the drawing entry near the top for a simple pointer or touch task. Its check details state the browser environments used; physical iPhone compatibility is not guaranteed. Other candidates should be tested on your own device.',
           },
           {
             question: 'Do these iPhone games require App Store downloads?',
@@ -368,18 +396,31 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         metaDescription:
           '精选无需下载的免费 iPhone 浏览器游戏,可在 Safari 或 Chrome 中试玩。对比触控、竖屏适配、短局体验和安全候选。',
         heading: 'Best Free iPhone Games: 无需下载的 Safari 小游戏',
-        subheading: '面向 Safari 和 Chrome 的实用候选:短局、触控友好、无需安装 App,并标出哪些游戏可能更适合桌面端。',
+        subheading: '无需安装 App 的浏览器游戏候选；已核查入口标明控制方式、保存方式和测试边界。',
+        quickPicks: [
+          {
+            "slug": "draw-a-perfect-circle",
+            "action": "play_circle",
+            "label": "画一个完美圆形",
+            "controls": "画一条线，松开，再点“计算分数”；无需键盘。",
+            "orientation": "可用横屏或竖屏；需要时滚动到操作区。",
+            "sound": "该游戏没有音频。",
+            "saving": "最高分仅存于当前浏览器；清理数据或隐私会话可能移除记录。",
+            "checkedAt": "2026-09-17",
+            "environment": "Chromium Pixel 7 模拟：触摸画线；WebKit iPhone 13 模拟：指针画线和触摸按钮。没有物理手机测试。"
+          }
+        ],
         overview: [
-          '搜索 best free iPhone games 时,很多人并不是想看一大串 App Store 榜单,而是想找一个现在就能打开、在 Safari 或 Chrome 里能玩、触控不别扭、并且不用先下载的小游戏。',
-          '本页按真实手机体验来筛选:点击是否准确、横竖屏是否合适、声音提示是否正常、单局是否够短、没有键盘时会不会很难操作。它是一份无需下载的试玩清单,不是承诺每个第三方游戏都能在每台 iPhone 上完美运行。',
+          '本页介绍浏览器试玩选项，不是 App Store 排名。先玩一小局，在自己的设备上确认操作，再决定是否继续。',
+          '快速入口写明具体浏览器核查环境。下方其他第三方游戏仍是待自行检查的候选，不代表每款都经过物理 iPhone 测试；网络、存储、控制方式和发行方内容都可能变化。',
         ],
         sections: [
           {
             title: '快速答案:无需下载的 iPhone 免费游戏怎么选',
-            body: '先试点击解谜和短局时机游戏,再考虑平台跳跃或驾驶类。对 iPhone 来说,最适合的 no download 浏览器游戏通常只有一个清楚动作、按钮可见、单局够短,即使 Safari 重新加载也不会损失太多。',
+            body: '先试一局简单绘图：打开游戏，画一条线，再点“计算分数”。保持浏览器联网；下面明确区分浏览器模拟和物理手机测试。',
             bullets: [
-              '首选:Adam and Eve 4 这类点击解谜,触屏适配通常更稳。',
-              '短局候选:Catch the Candy 和 Beat Line,前提是画面完整显示。',
+              '已核查快速入口：画一个完美圆形，最高分仅保存在当前浏览器。',
+              '下方其他候选需先在自己的设备上检查控制和画面。',
               '谨慎选择:需要精准方向键的平台或驾驶游戏,手机上可能更挤。',
             ],
           },
@@ -395,10 +436,10 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             ],
           },
           {
-            title: '按场景选择首个游戏',
+            title: '按控制方式检查其他候选',
             body: '先按操作方式选,不要只看游戏名。对 iPhone 来说,最好的免费游戏通常是最匹配手指操作的那一款。',
             bullets: [
-              '简单点击:Adam and Eve 4 是最稳的首个测试,点击解谜比较适合触屏。',
+              '简单点击：Adam and Eve 4 是点击解谜候选，继续游玩前先检查当前控制方式。',
               '绳索物理:Catch the Candy 适合快速检查手机上的响应和布局。',
               '节奏时机:Beat Line 适合短局尝试,但要确认声音和点击时机稳定。',
               '驾驶或平台动作:更像压力测试;如果虚拟按钮拥挤,建议换到桌面端。',
@@ -422,7 +463,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         recommendations: [
           {
             slug: 'adam-and-eve-4',
-            pitch: '点击解谜冒险，是尝试简单触控操作的首选候选。',
+            pitch: '点击解谜候选；请自行检查当前触控方式和发行方提示。',
           },
           {
             slug: 'catch-the-candy',
@@ -440,7 +481,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         faqs: [
           {
             question: '无需下载的免费 iPhone 游戏首选哪一个?',
-            answer: '先试 Adam and Eve 4 或 Catch the Candy 这类点击/物理解谜。它们不依赖拥挤的键盘式按钮,更适合在 Safari 中快速判断手感。',
+            answer: '可先试顶部绘图入口，完成一次指针或触摸任务。核查详情标明浏览器模拟环境，不保证所有物理 iPhone 都兼容；其他游戏请先在自己的设备上检查。',
           },
           {
             question: '这些 iPhone 游戏需要 App Store 下载吗？',
