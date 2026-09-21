@@ -1,4 +1,5 @@
 import type { Locale } from '@/i18n/config';
+import { CATEGORIES_GUIDE } from '@/lib/categories-guide-content';
 import { isGameUnderManualReview } from '@/lib/games/quality-policy';
 
 export interface SeoLandingSection {
@@ -86,13 +87,14 @@ export interface SeoLandingPage {
   embedGame?: SeoLandingEmbedGame;
   printablePath?: string;
   video?: SeoLandingVideo;
-  interactiveWidget?: 'dominoes-training';
+  interactiveWidget?: 'dominoes-training' | 'categories-topics';
   locales: Record<Locale, SeoLandingLocaleContent>;
 }
 
 const seoContentUpdatedAt = '2026-07-20T00:00:00.000Z';
 
 const SEO_LANDING_PAGES: SeoLandingPage[] = [
+  CATEGORIES_GUIDE,
   {
     slug: 'free-games-no-ads',
     primaryKeyword: 'free games no ads',
@@ -517,7 +519,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       'short session games',
     ],
     updatedAt: seoContentUpdatedAt,
-    relatedSlugs: ['free-games-no-ads', 'best-free-iphone-games', 'browser-games-for-low-end-pc'],
+    relatedSlugs: ['categories-game-topics', 'free-games-no-ads', 'best-free-iphone-games', 'browser-games-for-low-end-pc'],
     locales: {
       en: {
         metaTitle: 'Games to Play When Bored | Quick Browser Boosters',
@@ -4776,7 +4778,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       'free games for a quick break',
     ],
     updatedAt: seoContentUpdatedAt,
-    relatedSlugs: ['games-to-play-when-bored', 'games-like-ovo', 'browser-games-for-low-end-pc'],
+    relatedSlugs: ['categories-game-topics', 'games-to-play-when-bored', 'games-like-ovo', 'browser-games-for-low-end-pc'],
     locales: {
       en: {
         metaTitle: '5 Browser Games for a Quick 5-Minute Break',

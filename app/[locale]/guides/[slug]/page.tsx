@@ -9,6 +9,7 @@ import { GuideIntentLink } from '@/components/seo/guide-intent-link';
 import { GuideQuickPicks } from '@/components/seo/guide-quick-picks';
 import { getGuidePublicationDates } from '@/lib/guide-publication-dates';
 import { DominoesTraining } from '@/components/game/dominoes-training';
+import { CategoriesTopics } from '@/components/game/categories-topics';
 import {
   getSeoLandingPage,
   getSeoLandingPages,
@@ -380,6 +381,11 @@ export default async function GuidePage({ params }: GuidePageProps) {
                 (locale === 'zh' ? '先试玩游戏' : 'Play first')}
             </GuideIntentLink>
           ) : null}
+          {page.interactiveWidget === 'categories-topics' ? (
+            <a href="#topic-picker" className="inline-flex min-h-11 items-center rounded-md border border-primary/30 px-4 py-2 text-primary focus-visible:ring-2 focus-visible:ring-primary">
+              {locale === 'zh' ? '开始抽题' : 'Build a round'}
+            </a>
+          ) : content.recommendations.length > 0 ? (
           <GuideIntentLink
               guideSlug={page.slug} locale={locale} action="recommendations"
             href="#recommendations"
@@ -387,11 +393,14 @@ export default async function GuidePage({ params }: GuidePageProps) {
           >
             {locale === 'zh' ? '看相似游戏' : 'See similar games'}
           </GuideIntentLink>
+          ) : null}
         </div>
       </section>
 
       {page.interactiveWidget === 'dominoes-training' ? (
         <DominoesTraining locale={locale} />
+      ) : page.interactiveWidget === 'categories-topics' ? (
+        <CategoriesTopics locale={locale} />
       ) : null}
 
       {page.embedGame ? (
@@ -555,6 +564,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
         ))}
       </section>
 
+      {content.recommendations.length > 0 ? (
       <section
         id="recommendations"
         tabIndex={-1}
@@ -632,6 +642,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
           })}
         </div>
       </section>
+      ) : null}
 
       <section className="mt-14 border-t border-border bg-secondary/60 px-5 py-7 sm:px-7">
         <h2 className="text-2xl font-semibold text-foreground">
