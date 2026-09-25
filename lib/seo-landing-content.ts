@@ -1,5 +1,6 @@
 import type { Locale } from '@/i18n/config';
 import { CATEGORIES_GUIDE } from '@/lib/categories-guide-content';
+import { EUCHRE_GUIDE } from '@/lib/euchre-guide-content';
 import { isGameUnderManualReview } from '@/lib/games/quality-policy';
 
 export interface SeoLandingSection {
@@ -95,6 +96,7 @@ const seoContentUpdatedAt = '2026-07-20T00:00:00.000Z';
 
 const SEO_LANDING_PAGES: SeoLandingPage[] = [
   CATEGORIES_GUIDE,
+  EUCHRE_GUIDE,
   {
     slug: 'free-games-no-ads',
     primaryKeyword: 'free games no ads',
