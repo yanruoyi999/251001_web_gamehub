@@ -152,3 +152,14 @@ test.describe('native GET without JavaScript', () => {
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
   });
 });
+
+test('submit icon uses the input foreground in compact and desktop search', async ({ page }) => {
+  await page.goto('/en', { waitUntil: 'domcontentloaded' });
+  for (const width of [820, 1280]) {
+    await page.setViewportSize({ width, height: 900 });
+    if (width < 1024) await openMenu(page).click();
+    const search = page.locator('[data-site-search]:visible');
+    const foreground = await search.locator('input').evaluate(element => getComputedStyle(element).color);
+    await expect(search.locator('button[type="submit"]')).toHaveCSS('color', foreground);
+  }
+});

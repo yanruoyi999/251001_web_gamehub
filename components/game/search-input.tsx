@@ -241,7 +241,10 @@ export function SearchInput({
           type="submit"
           tabIndex={0}
           aria-label={locale === 'zh' ? '提交搜索' : 'Submit search'}
-          className="absolute right-0 top-0 inline-flex h-11 w-11 items-center justify-center rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className={clsx(
+            'absolute right-0 top-0 inline-flex h-11 w-11 items-center justify-center rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+            variant === 'header' ? 'text-white' : 'text-foreground',
+          )}
         >
           <Search className="h-4 w-4" aria-hidden="true" />
         </button>
