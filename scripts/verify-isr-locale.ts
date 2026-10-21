@@ -1,4 +1,4 @@
-import { cp, mkdtemp, readFile, rm, stat, symlink, utimes } from 'node:fs/promises';
+import { cp, readdir, mkdtemp, readFile, rm, stat, symlink, utimes } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
@@ -69,7 +69,17 @@ async function main() {
         await delay(250);
         if ((await stat(file)).mtimeMs > old.getTime() + 1000) { regenerated = true; break; }
       }
-      if (!regenerated) throw new Error(`ISR did not rewrite the expired isolated cache: ${route.url}`);
+      if (!regenerated) {
+        console.error(`Build seed mtime: ${(await stat(file)).mtimeMs}; expired at: ${old.getTime()}`);
+        const scopedRoot = path.join(directory, '.next/server/route-cache');
+        const entries = await readdir(scopedRoot, { recursive: true }).catch(() => [] as string[]);
+        for (const entry of entries.filter(entry => entry.endsWith('.html'))) {
+          console.error(`Scoped cache: ${entry}; mtime: ${(await stat(path.join(scopedRoot, entry))).mtimeMs}`);
+        }
+        const diagnostic = await fetch(`${base}${route.url}`, { signal: AbortSignal.timeout(20_000), redirect: 'manual' });
+        console.error(`Follow-up response: ${diagnostic.status}; x-nextjs-cache: ${diagnostic.headers.get('x-nextjs-cache')}`);
+        throw new Error(`ISR did not rewrite the expired isolated cache: ${route.url}`);
+      }
       verify(await readFile(file, 'utf8'));
       const fresh = await fetch(`${base}${route.url}`, { signal: AbortSignal.timeout(20_000), redirect: 'manual' });
       if (!fresh.ok || fresh.headers.get('x-nextjs-cache') !== 'HIT') throw new Error(`Expected regenerated cache hit: ${route.url}`);
