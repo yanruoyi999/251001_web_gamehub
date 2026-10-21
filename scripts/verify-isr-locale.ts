@@ -1,9 +1,11 @@
-import { cp, readdir, mkdtemp, readFile, rm, stat, symlink, utimes } from 'node:fs/promises';
+import { cp, mkdtemp, readFile, rm, stat, symlink, utimes } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
 import { createServer } from 'node:net';
 import { normalizeEnglishStaticHtml, verifyChineseStaticHtml } from './static-locale-html';
+
+import { scopedHtmlPath, isRegeneratedCache } from './isr-cache-artifact';
 
 const root = process.cwd();
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -63,21 +65,23 @@ async function main() {
       const first = await fetch(`${base}${route.url}`, { signal: AbortSignal.timeout(20_000), redirect: 'manual' });
       if (!first.ok || first.headers.get('x-nextjs-cache') !== 'STALE') throw new Error(`Expected stale cached HTML: ${route.url} / ${first.status} / ${first.headers.get('x-nextjs-cache')} / location=${first.headers.get('location')}`);
       verify(await first.text());
-      const file = path.join(directory, '.next/server/app', `${route.cache}.html`);
+      const seedFile = path.join(directory, '.next/server/app', `${route.cache}.html`);
+      const seedMeta = JSON.parse(await readFile(seedFile.replace(/\.html$/, '.meta'), 'utf8'));
+      const file = scopedHtmlPath(path.join(directory, '.next/server'), route.cache, seedMeta);
       let regenerated = false;
       for (let attempt = 0; attempt < 80; attempt += 1) {
         await delay(250);
-        if ((await stat(file)).mtimeMs > old.getTime() + 1000) { regenerated = true; break; }
+        try {
+          const timestamp = (await stat(file)).mtimeMs;
+          const metadata = JSON.parse(await readFile(file.replace(/\.html$/, '.meta'), 'utf8'));
+          if (isRegeneratedCache(timestamp, metadata, old.getTime())) { regenerated = true; break; }
+        } catch (error) {
+          if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error;
+        }
       }
       if (!regenerated) {
-        console.error(`Build seed mtime: ${(await stat(file)).mtimeMs}; expired at: ${old.getTime()}`);
-        const scopedRoot = path.join(directory, '.next/server/route-cache');
-        const entries = await readdir(scopedRoot, { recursive: true }).catch(() => [] as string[]);
-        for (const entry of entries.filter(entry => entry.endsWith('.html'))) {
-          console.error(`Scoped cache: ${entry}; mtime: ${(await stat(path.join(scopedRoot, entry))).mtimeMs}`);
-        }
-        const diagnostic = await fetch(`${base}${route.url}`, { signal: AbortSignal.timeout(20_000), redirect: 'manual' });
-        console.error(`Follow-up response: ${diagnostic.status}; x-nextjs-cache: ${diagnostic.headers.get('x-nextjs-cache')}`);
+        console.error(`Build seed mtime: ${(await stat(seedFile)).mtimeMs}; expired at: ${old.getTime()}`);
+        console.error(`Expected scoped cache: ${path.relative(directory, file)}`);
         throw new Error(`ISR did not rewrite the expired isolated cache: ${route.url}`);
       }
       verify(await readFile(file, 'utf8'));
