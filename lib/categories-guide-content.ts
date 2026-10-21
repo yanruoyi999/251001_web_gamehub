@@ -5,7 +5,7 @@ export const CATEGORIES_GUIDE: SeoLandingPage = {
   primaryKeyword: 'categories game topics',
   keywords: ['categories game topics', 'category game topics', 'category topics for games'],
   updatedAt: '2026-09-25T02:40:00Z',
-  relatedSlugs: ['best-browser-games-5-minute-break', 'games-to-play-when-bored', 'euchre-strategy'],
+  relatedSlugs: ['best-browser-games-5-minute-break', 'games-to-play-when-bored', 'euchre-strategy', 'word-games-for-seniors'],
   interactiveWidget: 'categories-topics',
   locales: {
     en: {
