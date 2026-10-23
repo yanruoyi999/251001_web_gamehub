@@ -277,6 +277,15 @@ function dateKey(date: Date) {
   return date.toISOString().slice(0, 10);
 }
 
+export function getCurrentDailyStreak(completions: readonly string[], today: string) {
+  const current = parseUtcDate(today);
+  if (!current) return 0;
+  if (completions.includes(today)) return calculateDailyStreak(completions, today);
+  current.setUTCDate(current.getUTCDate() - 1);
+  const yesterday = dateKey(current);
+  return completions.includes(yesterday) ? calculateDailyStreak(completions, yesterday) : 0;
+}
+
 export function calculateDailyStreak(completions: readonly string[], completedDate: string) {
   const completed = parseUtcDate(completedDate);
   if (!completed) return 0;

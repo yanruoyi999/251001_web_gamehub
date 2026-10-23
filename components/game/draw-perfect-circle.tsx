@@ -6,6 +6,7 @@ import { trackInteraction } from '@/lib/analytics/events';
 import {
   buildDrawShareResult,
   calculateDailyStreak,
+  getCurrentDailyStreak,
   getDailyShape,
   scoreDrawingStroke,
   type DrawingScore,
@@ -93,7 +94,7 @@ export function DrawPerfectCircle({ locale }: { locale: 'en' | 'zh' }) {
     try {
       setBest(Number(window.localStorage.getItem('luma-draw-perfect-circle:best')) || 0);
       const completions = JSON.parse(window.localStorage.getItem('luma-draw-perfect-circle:daily') || '[]') as string[];
-      setStreak(calculateDailyStreak(completions, shanghaiDateKey()));
+      setStreak(getCurrentDailyStreak(completions, shanghaiDateKey()));
     } catch {
       setBest(0);
       setStreak(0);

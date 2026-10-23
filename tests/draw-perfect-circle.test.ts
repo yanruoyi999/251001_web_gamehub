@@ -5,6 +5,7 @@ import {
   calculateDailyStreak,
   createCircleFixture,
   createShapeFixture,
+  getCurrentDailyStreak,
   getDailyShape,
   scoreCircleStroke,
   scoreDrawingStroke,
@@ -42,6 +43,11 @@ describe('draw a perfect circle scoring', () => {
     ).toBe(4);
   });
 
+  it('counts a first completion and repeated same-day completion exactly once', () => {
+    expect(calculateDailyStreak([], '2026-10-23')).toBe(1);
+    expect(calculateDailyStreak(['2026-10-23'], '2026-10-23')).toBe(1);
+  });
+
   it('uses shape-specific fixtures instead of applying circle roundness to every guide', () => {
     const surface = { width: 600, height: 400 };
     const shapes = ['circle', 'square', 'triangle', 'spiral'] as const;
@@ -76,5 +82,35 @@ describe('draw a perfect circle scoring', () => {
     expect(Object.values(score).filter((value) => typeof value === 'number').every(Number.isFinite)).toBe(true);
     expect(share).toContain('90-100');
     expect(share).not.toMatch(/\bx\b|\by\b|coordinates|pointer/i);
+  });
+});
+
+describe('saved daily streak', () => {
+  it.each([
+    { completions: [], expected: 0 },
+    { completions: ['2026-10-23'], expected: 1 },
+    { completions: ['2026-10-21', '2026-10-22'], expected: 2 },
+    { completions: ['2026-10-21', '2026-10-22', '2026-10-23'], expected: 3 },
+    { completions: ['2026-10-21'], expected: 0 },
+  ])('reads $completions as $expected days without recording today', ({ completions, expected }) => {
+    expect(getCurrentDailyStreak(completions, '2026-10-23')).toBe(expected);
+  });
+
+  it('counts unsorted duplicate dates once without mutating saved completions', () => {
+    const completions = ['2026-10-22', '2026-10-21', '2026-10-22'];
+
+    expect(getCurrentDailyStreak(completions, '2026-10-23')).toBe(2);
+    expect(completions).toEqual(['2026-10-22', '2026-10-21', '2026-10-22']);
+  });
+
+  it.each([
+    { today: '2026-01-01', completions: ['2025-12-30', '2025-12-31'] },
+    { today: '2026-11-01', completions: ['2026-10-30', '2026-10-31'] },
+  ])('preserves yesterday continuity across the calendar boundary at $today', ({ today, completions }) => {
+    expect(getCurrentDailyStreak(completions, today)).toBe(2);
+  });
+
+  it.each(['2026-1-01', '2026/10/23', 'invalid'])('returns zero for invalid date-key syntax %s', (today) => {
+    expect(getCurrentDailyStreak(['2026-10-22', '2026-10-23'], today)).toBe(0);
   });
 });
