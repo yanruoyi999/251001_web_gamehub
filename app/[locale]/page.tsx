@@ -9,6 +9,7 @@ import { getShanghaiDateKey } from '@/lib/retention/daily-recommendation';
 import { serializeJsonLd } from '@/lib/utils/json-ld';
 import { DailyRecommendation } from '@/components/retention/daily-recommendation';
 import { SearchInput } from '@/components/game/search-input';
+import { HomeGameLink } from '@/components/game/home-game-link';
 import { PortalRail } from '@/components/layout/PortalRail';
 
 type FaqItem = { question: string; answer: string };
@@ -35,6 +36,7 @@ type HomeMessages = {
 
 interface ShelfEntry {
   href: string;
+  gameSlug?: string;
   image: string;
   eyebrow: string;
   title: string;
@@ -50,6 +52,7 @@ interface ShelfSectionProps {
   browseLabel: string;
   entries: ShelfEntry[];
   priorityFirstImages?: boolean;
+  locale?: Locale;
 }
 
 function ShelfSection({
@@ -60,6 +63,7 @@ function ShelfSection({
   browseLabel,
   entries,
   priorityFirstImages = false,
+  locale,
 }: ShelfSectionProps) {
   const desktopGridClass =
     entries.length >= 6
@@ -89,39 +93,53 @@ function ShelfSection({
       </div>
 
       <div className={`game-shelf-scroll grid grid-cols-2 gap-3 sm:grid-cols-3 ${desktopGridClass}`}>
-        {entries.map((entry, index) => (
-          <Link
-            key={entry.href}
-            href={entry.href}
-            data-shelf-card
-            className="group flex h-full min-w-0 snap-start flex-col overflow-hidden rounded-md border border-[#dce4df] bg-white text-left transition hover:-translate-y-0.5 hover:border-emerald-700/60 hover:shadow-[0_8px_20px_-16px_rgba(16,58,38,0.65)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 dark:border-border dark:bg-card"
-          >
-            <div className="relative aspect-[4/3] overflow-hidden bg-muted">
-              <Image
-                src={entry.image}
-                alt={`${entry.title} gameplay`}
-                fill
-                sizes="(max-width: 640px) 58vw, (max-width: 1024px) 40vw, 33vw"
-                className="object-cover transition duration-300 group-hover:scale-[1.03]"
-                priority={priorityFirstImages && index < 2}
-              />
-              <span className="absolute left-2 top-2 rounded-sm bg-[#102033]/90 px-1.5 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-white">
-                {entry.eyebrow}
-              </span>
-            </div>
-            <div className="flex flex-1 flex-col p-2 sm:p-2.5">
-              <h3 className="mt-0.5 line-clamp-2 text-sm font-black leading-5 text-foreground sm:text-base">
-                {entry.title}
-              </h3>
-              <p className="sr-only">
-                {entry.description}
-              </p>
-              <span className="sr-only">
-                {entry.action}
-              </span>
-            </div>
-          </Link>
-        ))}
+        {entries.map((entry, index) => {
+          const className = 'group flex h-full min-w-0 snap-start flex-col overflow-hidden rounded-md border border-[#dce4df] bg-white text-left transition hover:-translate-y-0.5 hover:border-emerald-700/60 hover:shadow-[0_8px_20px_-16px_rgba(16,58,38,0.65)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 dark:border-border dark:bg-card';
+          const content = (
+            <>
+              <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+                <Image
+                  src={entry.image}
+                  alt={`${entry.title} gameplay`}
+                  fill
+                  sizes="(max-width: 640px) 58vw, (max-width: 1024px) 40vw, 33vw"
+                  className="object-cover transition duration-300 group-hover:scale-[1.03]"
+                  priority={priorityFirstImages && index < 2}
+                />
+                <span className="absolute left-2 top-2 rounded-sm bg-[#102033]/90 px-1.5 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-white">
+                  {entry.eyebrow}
+                </span>
+              </div>
+              <div className="flex flex-1 flex-col p-2 sm:p-2.5">
+                <h3 className="mt-0.5 line-clamp-2 text-sm font-black leading-5 text-foreground sm:text-base">
+                  {entry.title}
+                </h3>
+                <p className="sr-only">
+                  {entry.description}
+                </p>
+                <span className="sr-only">
+                  {entry.action}
+                </span>
+              </div>
+            </>
+          );
+
+          return id === 'more-games' && locale === 'en' && entry.gameSlug ? (
+            <HomeGameLink
+              key={entry.href}
+              href={entry.href}
+              gameSlug={entry.gameSlug}
+              locale={locale}
+              className={className}
+            >
+              {content}
+            </HomeGameLink>
+          ) : (
+            <Link key={entry.href} href={entry.href} data-shelf-card className={className}>
+              {content}
+            </Link>
+          );
+        })}
       </div>
     </section>
   );
@@ -287,6 +305,7 @@ export default async function HomePage({
             href: getLocalizedPath(locale, '/games/big-tower-tiny-square'),
             image: '/game-screenshots/big-tower-tiny-square.png',
             eyebrow: 'Platform challenge',
+            gameSlug: 'big-tower-tiny-square',
             title: 'Big Tower Tiny Square',
             description:
               'Climb through checkpoint-filled tower rooms with careful jumps and well-timed retries.',
@@ -296,6 +315,7 @@ export default async function HomePage({
             href: getLocalizedPath(locale, '/games/g-switch-2'),
             image: '/game-screenshots/g-switch-2.png',
             eyebrow: 'Gravity runner',
+            gameSlug: 'g-switch-2',
             title: 'G-Switch 2',
             description:
               'Flip between floor and ceiling, read each obstacle, and keep the run moving.',
@@ -305,6 +325,7 @@ export default async function HomePage({
             href: getLocalizedPath(locale, '/games/solitaire'),
             image: '/game-screenshots/solitaire.png',
             eyebrow: 'Play now',
+            gameSlug: 'solitaire',
             title: 'Solitaire',
             description:
               'Start a classic card game in the browser with no install or Luma account.',
@@ -420,6 +441,7 @@ export default async function HomePage({
             browseHref={getLocalizedPath(locale, '/games')}
             browseLabel={locale === 'zh' ? '查看全部游戏' : 'Browse all games'}
             entries={moreGameEntries}
+            locale={locale}
             priorityFirstImages
           />
           <section className="mt-14 space-y-5 border-t border-border pt-10 text-left">
