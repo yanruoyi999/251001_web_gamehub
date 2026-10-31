@@ -212,7 +212,7 @@ test.describe('游戏浏览流程', () => {
   });
 
   test('英文游戏目录的首方图片资源不返回 4xx', async ({ page, request }) => {
-    const response = await page.goto('/en/games');
+    const response = await page.goto('/en/games', { waitUntil: 'domcontentloaded' });
 
     expect(response?.ok()).toBe(true);
     await expect(page).toHaveURL('/en/games');
