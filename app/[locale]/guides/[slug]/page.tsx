@@ -9,6 +9,7 @@ import { GuideIntentLink } from '@/components/seo/guide-intent-link';
 import { GuideQuickPicks } from '@/components/seo/guide-quick-picks';
 import { getGuidePublicationDates } from '@/lib/guide-publication-dates';
 import { DominoesTraining } from '@/components/game/dominoes-training';
+import { WordChainExamples } from '@/components/seo/word-chain-examples';
 import { CategoriesTopics } from '@/components/game/categories-topics';
 import {
   getSeoLandingPage,
@@ -385,6 +386,10 @@ export default async function GuidePage({ params }: GuidePageProps) {
             <a href="#topic-picker" className="inline-flex min-h-11 items-center rounded-md border border-primary/30 px-4 py-2 text-primary focus-visible:ring-2 focus-visible:ring-primary">
               {locale === 'zh' ? '开始抽题' : 'Build a round'}
             </a>
+          ) : page.interactiveWidget === 'word-chain-examples' ? (
+            <a href="#word-chain-practice" className="inline-flex min-h-11 items-center rounded-md border border-primary/30 px-4 py-2 text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+              {locale === 'zh' ? '开始八题练习' : 'Try the eight puzzles'}
+            </a>
           ) : content.recommendations.length > 0 ? (
           <GuideIntentLink
               guideSlug={page.slug} locale={locale} action="recommendations"
@@ -401,6 +406,8 @@ export default async function GuidePage({ params }: GuidePageProps) {
         <DominoesTraining locale={locale} />
       ) : page.interactiveWidget === 'categories-topics' ? (
         <CategoriesTopics locale={locale} />
+      ) : page.interactiveWidget === 'word-chain-examples' ? (
+        <WordChainExamples locale={locale} />
       ) : null}
 
       {page.embedGame ? (
