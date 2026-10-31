@@ -1,4 +1,5 @@
 import type { Locale } from '@/i18n/config';
+import { WORD_CHAIN_GUIDE } from '@/lib/word-chain-guide-content';
 import { CATEGORIES_GUIDE } from '@/lib/categories-guide-content';
 import { SENIOR_WORD_GUIDE } from '@/lib/senior-word-guide-content';
 import { EUCHRE_GUIDE } from '@/lib/euchre-guide-content';
@@ -89,7 +90,7 @@ export interface SeoLandingPage {
   embedGame?: SeoLandingEmbedGame;
   printablePath?: string;
   video?: SeoLandingVideo;
-  interactiveWidget?: 'dominoes-training' | 'categories-topics';
+  interactiveWidget?: 'dominoes-training' | 'categories-topics' | 'word-chain-examples';
   locales: Record<Locale, SeoLandingLocaleContent>;
 }
 
@@ -99,6 +100,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
   CATEGORIES_GUIDE,
   EUCHRE_GUIDE,
   SENIOR_WORD_GUIDE,
+  WORD_CHAIN_GUIDE,
   {
     slug: 'free-games-no-ads',
     primaryKeyword: 'free games no ads',
