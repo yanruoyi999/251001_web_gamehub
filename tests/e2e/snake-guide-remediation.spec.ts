@@ -48,7 +48,7 @@ test('one guide activation emits one local intent event and keeps the native des
 test.describe('native navigation without JavaScript', () => {
   test.use({ javaScriptEnabled: false });
   test('keeps the real mod and counterpart links available', async ({ page }) => {
-    await page.goto('/en/guides/google-snake-mods');
+    await page.goto('/en/guides/google-snake-mods', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('[data-guide-intent-action="mod_web"]')).toHaveAttribute('href', 'https://googlesnakemods.com/');
     await page.locator('[data-snake-next-step] a').click();
     await expect(page).toHaveURL(/\/en\/guides\/google-snake-level-editor$/);
