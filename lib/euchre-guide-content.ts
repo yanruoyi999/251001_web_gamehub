@@ -51,8 +51,8 @@ const sources = (zh: boolean) => [
 export const EUCHRE_GUIDE: SeoLandingPage = {
   slug: 'euchre-strategy', primaryKeyword: 'euchre strategy',
   keywords: ['euchre strategy', 'euchre strategy for beginners', 'euchre left bower', 'euchre calling trump'],
-  updatedAt: '2026-09-25T02:40:00Z',
-  relatedSlugs: ['categories-game-topics', 'how-to-play-dominoes'],
+  updatedAt: '2026-10-31T19:06:52+08:00',
+  relatedSlugs: ['categories-game-topics', 'how-to-play-dominoes', 'three-player-spades'],
   locales: {
     en: {
       metaTitle: 'Euchre Strategy: Calling Trump, Bowers and Worked Examples',
@@ -83,7 +83,7 @@ export const EUCHRE_GUIDE: SeoLandingPage = {
         { question: 'Can I play a full Euchre game on this page?', answer: 'No. This page contains a strategy checklist and fixed written exercises. Use the linked rules to agree on a version before playing with your own group.' },
       ],
       externalLinks: sources(false),
-      ctaLabel: 'Browse browser games', ctaDescription: 'For a different tabletop activity, see the related Categories and Dominoes guides.',
+      ctaLabel: 'Browse browser games', ctaDescription: 'With three people at the table, the related Spades guide offers a separate 17-card solo setup. Categories and Dominoes provide other tabletop activities.',
     },
     zh: {
       metaTitle: 'Euchre策略：叫主、左右王牌与原创例手',
@@ -113,7 +113,7 @@ export const EUCHRE_GUIDE: SeoLandingPage = {
         { question: '有三张主牌就一定能叫成功吗？', answer: '不一定。主牌大小、副牌、座位、翻牌和未知牌都重要。应考虑本队怎样取得三墩，而不是把张数当成必胜证明。' },
         { question: '本页可以玩完整Euchre吗？', answer: '不可以。这里只提供策略检查表和固定文字练习。实际与朋友开局前，请参考所列规则并约定具体版本。' },
       ],
-      externalLinks: sources(true), ctaLabel: '浏览小游戏', ctaDescription: '想换一种桌面活动，可以查看相关的Categories和Dominoes指南。',
+      externalLinks: sources(true), ctaLabel: '浏览小游戏', ctaDescription: '只有三个人时，可查看相关Spades指南中的17张单打设置；Categories和Dominoes则提供其他桌面活动。',
     },
   },
 };
