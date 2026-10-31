@@ -39,7 +39,7 @@ describe('word chain examples guide', () => {
       );
       expect(route).toHaveLength(1);
       expect(route[0].lastModified).toEqual(
-        new Date('2026-10-31T00:00:00+08:00')
+        new Date('2026-10-31T10:03:11+08:00')
       );
     }
     for (const source of ['word-games-for-seniors', 'categories-game-topics']) {
@@ -48,7 +48,7 @@ describe('word chain examples guide', () => {
         getSeoLandingPage(source)!.relatedSlugs.filter(s => s === slug)
       ).toHaveLength(1);
       expect(getSeoLandingPage(source)!.updatedAt).toBe(
-        '2026-10-31T00:00:00+08:00'
+        '2026-10-31T10:03:11+08:00'
       );
     }
   });

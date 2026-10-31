@@ -8,7 +8,7 @@ export const SENIOR_WORD_GUIDE: SeoLandingPage = {
     "word games for seniors",
     "word games for older adults"
   ],
-  "updatedAt": "2026-10-31T00:00:00+08:00",
+  "updatedAt": "2026-10-31T10:03:11+08:00",
   "relatedSlugs": [
     "word-chain-game-examples",
     "categories-game-topics",

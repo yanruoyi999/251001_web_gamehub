@@ -330,7 +330,7 @@ export const WORD_CHAIN_GUIDE: SeoLandingPage = {
     'word chain puzzles with answers',
     'compound word chain',
   ],
-  updatedAt: '2026-10-31T00:00:00+08:00',
+  updatedAt: '2026-10-31T10:03:11+08:00',
   relatedSlugs: ['word-games-for-seniors', 'categories-game-topics'],
   interactiveWidget: 'word-chain-examples',
   locales: {

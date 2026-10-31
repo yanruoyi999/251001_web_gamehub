@@ -49,14 +49,14 @@ for (const language of languages) {
       await page.locator('script[type="application/ld+json"]').allTextContents()
     ).flatMap(text => JSON.parse(text));
     const article = data.find(item => item['@type'] === 'Article');
-    expect(article.dateModified).toBe('2026-10-31T00:00:00+08:00');
+    expect(article.dateModified).toBe('2026-10-31T10:03:11+08:00');
     expect(article).not.toHaveProperty('datePublished');
     expect(
       data.find(item => item['@type'] === 'FAQPage').mainEntity
     ).toHaveLength(3);
     await expect(page.locator('header time')).toHaveAttribute(
       'datetime',
-      '2026-10-31T00:00:00+08:00'
+      '2026-10-31T10:03:11+08:00'
     );
     for (const width of [320, 390, 1280]) {
       await page.setViewportSize({ width, height: 844 });
@@ -115,7 +115,7 @@ test.describe('Word chains without JavaScript', () => {
         });
         await expect(page.locator('header time')).toHaveAttribute(
           'datetime',
-          '2026-10-31T00:00:00+08:00'
+          '2026-10-31T10:03:11+08:00'
         );
         const link = page.locator(`article a[href="${target}"]`);
         await expect(link).toHaveCount(1);
