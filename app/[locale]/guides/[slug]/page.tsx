@@ -387,9 +387,9 @@ export default async function GuidePage({ params }: GuidePageProps) {
               {locale === 'zh' ? '开始抽题' : 'Build a round'}
             </a>
           ) : page.interactiveWidget === 'word-chain-examples' ? (
-            <a href="#word-chain-practice" className="inline-flex min-h-11 items-center rounded-md border border-primary/30 px-4 py-2 text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+            <GuideIntentLink guideSlug={page.slug} locale={locale} action="practice_entry" href="#word-chain-practice" className="inline-flex min-h-11 items-center rounded-md border border-primary/30 px-4 py-2 text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
               {locale === 'zh' ? '开始八题练习' : 'Try the eight puzzles'}
-            </a>
+            </GuideIntentLink>
           ) : content.recommendations.length > 0 ? (
           <GuideIntentLink
               guideSlug={page.slug} locale={locale} action="recommendations"
@@ -676,9 +676,15 @@ export default async function GuidePage({ params }: GuidePageProps) {
             size="lg"
             className="bg-primary text-primary-foreground shadow-md transition hover:bg-primary/90"
           >
-            <Link href={getLocalizedPath(locale, '/games')}>
-              {content.ctaLabel}
-            </Link>
+            {page.slug === 'word-chain-game-examples' || page.slug === 'three-player-spades' ? (
+              <GuideIntentLink guideSlug={page.slug} locale={locale} action="browse_games" href={getLocalizedPath(locale, '/games')}>
+                {content.ctaLabel}
+              </GuideIntentLink>
+            ) : (
+              <Link href={getLocalizedPath(locale, '/games')}>
+                {content.ctaLabel}
+              </Link>
+            )}
           </Button>
           <p className="mt-3 text-sm text-muted-foreground">
             {content.ctaDescription}
