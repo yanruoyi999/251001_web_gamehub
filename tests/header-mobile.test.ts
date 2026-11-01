@@ -28,7 +28,7 @@ describe('mobile header navigation', () => {
       /<SearchInput\s+locale=\{currentLocaleSegment\}\s+className="block w-full"\s+\/>/
     );
     expect(headerSource).toContain('min-h-11 min-w-11');
-    expect(headerSource).toContain('md:hidden');
+    expect(headerSource).toContain('lg:hidden');
     expect(headerSource).toContain(
       "{ href: '/games/saved', labelKey: 'saved' }"
     );

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { getLocalizedPath } from '@/i18n/config';
 import { useTranslations } from 'next-intl';
 import clsx from 'clsx';
+import { Search } from 'lucide-react';
 import { trackEvent } from '@/lib/gtag';
 
 interface SearchInputProps {
@@ -50,7 +51,9 @@ export function SearchInput({
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const abortRef = useRef<AbortController | null>(null);
-  const blurTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const composingRef = useRef(false);
+  const suppressFocusOpen = useRef(false);
 
   const trimmedQuery = query.trim();
 
@@ -64,7 +67,7 @@ export function SearchInput({
     }
 
     setLoading(true);
-    setOpen(true);
+    setOpen(document.activeElement === inputRef.current);
 
     const controller = new AbortController();
     abortRef.current?.abort();
@@ -119,14 +122,12 @@ export function SearchInput({
   useEffect(() => {
     return () => {
       abortRef.current?.abort();
-      if (blurTimeout.current) {
-        clearTimeout(blurTimeout.current);
-      }
     };
   }, []);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (composingRef.current) return;
     const nextQuery = trimmedQuery;
     if (!nextQuery) return;
     setOpen(false);
@@ -178,9 +179,10 @@ export function SearchInput({
       <li key={item.id}>
         <button
           type="button"
+          tabIndex={0}
           onMouseDown={(event) => event.preventDefault()}
           onClick={() => handleSelect(item)}
-          className="flex w-full items-start gap-2 px-3 py-2 text-left text-sm text-popover-foreground hover:bg-accent"
+          className="flex min-h-11 w-full items-start gap-2 px-3 py-2 text-left text-sm text-popover-foreground hover:bg-accent"
         >
           <span className="line-clamp-1 font-medium text-popover-foreground">
             {locale === 'en' ? item.titleEn ?? item.title : item.title}
@@ -191,45 +193,62 @@ export function SearchInput({
   }, [open, loading, suggestions, locale, t, handleSelect]);
 
   return (
-    <div className={clsx('relative', className)} data-site-search={variant}>
-      <form onSubmit={handleSubmit}>
+    <div
+      className={clsx('relative', className)}
+      data-site-search={variant}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);
+      }}
+      onKeyDown={(event) => {
+        if (event.key !== 'Escape' || composingRef.current || event.nativeEvent.isComposing) return;
+        event.preventDefault();
+        suppressFocusOpen.current = true;
+        inputRef.current?.focus();
+        suppressFocusOpen.current = false;
+        setOpen(false);
+      }}
+    >
+      <form action={getLocalizedPath(locale, '/search')} method="get" onSubmit={handleSubmit} className="relative">
         <input
+          ref={inputRef}
           type="search"
+          name="q"
+          aria-label={t('searchPlaceholder')}
           value={query}
           onChange={(event) => setQuery(event.target.value)}
+          onCompositionStart={() => { composingRef.current = true; }}
+          onCompositionEnd={() => { composingRef.current = false; }}
           onFocus={() => {
-            if (suggestions.length > 0 || loading) {
-              setOpen(true);
-            }
+            if (!suppressFocusOpen.current && (suggestions.length > 0 || loading)) setOpen(true);
           }}
-          onBlur={() => {
-            blurTimeout.current = setTimeout(() => setOpen(false), 120);
-          }}
-          onKeyDown={() => {
-            if (blurTimeout.current) {
-              clearTimeout(blurTimeout.current);
-              blurTimeout.current = null;
-            }
+          onKeyDown={(event) => {
+            if (event.key === 'Enter' && (composingRef.current || event.nativeEvent.isComposing || event.nativeEvent.keyCode === 229)) event.preventDefault();
           }}
           placeholder={t('searchPlaceholder')}
           className={clsx(
-            'w-full rounded-md border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2',
+            'min-h-11 w-full rounded-md border py-2 pl-3 pr-12 text-sm shadow-sm focus:outline-none focus:ring-2',
             variant === 'header'
               ? 'border-white/15 bg-white/10 text-white placeholder:text-white/55 focus:border-emerald-300 focus:ring-emerald-300/30'
               : 'border-input bg-background text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-ring',
           )}
         />
-      </form>
-      {open ? (
-        <ul
+        {open ? (
+          <ul className="absolute left-0 right-0 top-full z-30 mt-2 max-h-72 overflow-y-auto rounded-md border border-border bg-popover text-popover-foreground shadow-lg">
+            {suggestionList}
+          </ul>
+        ) : null}
+        <button
+          type="submit"
+          tabIndex={0}
+          aria-label={locale === 'zh' ? '提交搜索' : 'Submit search'}
           className={clsx(
-            'absolute left-0 right-0 top-full z-30 mt-2 rounded-md border border-border bg-popover text-popover-foreground shadow-lg',
-            'max-h-72 overflow-y-auto',
+            'absolute right-0 top-0 inline-flex h-11 w-11 items-center justify-center rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+            variant === 'header' ? 'text-white' : 'text-foreground',
           )}
         >
-          {suggestionList}
-        </ul>
-      ) : null}
+          <Search className="h-4 w-4" aria-hidden="true" />
+        </button>
+      </form>
     </div>
   );
 }
