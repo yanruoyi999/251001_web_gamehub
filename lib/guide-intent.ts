@@ -3,6 +3,8 @@ const ACTIONS_BY_GUIDE = new Map<string, ReadonlySet<string>>([
   ['google-snake-mods', SNAKE_ACTIONS],
   ['google-snake-level-editor', SNAKE_ACTIONS],
   ['best-free-iphone-games', new Set(['play_circle', 'read_guide', 'recommendations'])],
+  ['word-chain-game-examples', new Set(['read_guide', 'practice_entry', 'browse_games'])],
+  ['three-player-spades', new Set(['read_guide', 'browse_games'])],
 ]);
 
 /** Only bounded editorial context; never destination URLs or browser identifiers. */
