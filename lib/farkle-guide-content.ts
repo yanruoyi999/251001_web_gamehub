@@ -158,7 +158,7 @@ export const FARKLE_GUIDE: SeoLandingPage = {
     'farkle points',
     'Farkle计分',
   ],
-  updatedAt: '2026-11-02T12:32:19+08:00',
+  updatedAt: '2026-11-02T13:07:54+08:00',
   relatedSlugs: ['spades-scoring', 'three-player-spades', 'euchre-strategy'],
   indexable: true,
   locales: {
@@ -261,7 +261,7 @@ export const FARKLE_GUIDE: SeoLandingPage = {
             'Developer-published comparison, modified December 14, 2020: three pairs and other settings differ; those settings are not adopted here.',
         },
       ],
-      ctaLabel: 'Browse other game guides',
+      ctaLabel: 'Browse browser games',
       ctaDescription:
         'For other tabletop scoring tasks, see the related Spades and Euchre guides. This is an independent written reference, with no publisher partnership or Farkle play room.',
     },
@@ -361,7 +361,7 @@ export const FARKLE_GUIDE: SeoLandingPage = {
             '开发者自刊对照，页内修改日期2020-12-14；三对及其他设置存在差异，本页不采用那些设置。',
         },
       ],
-      ctaLabel: '浏览其他游戏指南',
+      ctaLabel: '浏览小游戏',
       ctaDescription:
         '其他桌游计分任务可参考相关Spades与Euchre指南。本页为独立文字参考，没有厂商合作关系或Farkle在线房间。',
     },
