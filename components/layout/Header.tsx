@@ -148,13 +148,13 @@ export function Header() {
         </nav>
 
         {/* Right Side Actions */}
-        <div className="hidden items-center gap-3 md:flex">
+        <div className="hidden items-center gap-3 lg:flex">
           <SearchInput locale={currentLocaleSegment} className="w-64" variant="header" />
           <ThemeToggle />
           <LanguageSwitcher />
         </div>
 
-        <div className="flex items-center gap-1.5 md:hidden">
+        <div className="flex items-center gap-1.5 lg:hidden">
           <Link
             href={getLocalizedPath(currentLocaleSegment, '/games/saved')}
             className="inline-flex size-11 items-center justify-center rounded-md text-white transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300"
@@ -207,7 +207,7 @@ export function Header() {
 
           <div
             id="mobile-navigation"
-            className="absolute left-0 right-0 top-full hidden border-t border-white/10 bg-[#162033] px-4 pb-5 pt-4 shadow-xl peer-checked:block md:hidden"
+            className="absolute left-0 right-0 top-full hidden border-t border-white/10 bg-[#162033] px-4 pb-5 pt-4 shadow-xl peer-checked:block lg:hidden"
           >
             <div className="mx-auto w-full max-w-7xl space-y-4">
               <SearchInput
