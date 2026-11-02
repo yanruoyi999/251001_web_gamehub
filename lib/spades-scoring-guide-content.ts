@@ -218,7 +218,7 @@ export const SPADES_SCORING_GUIDE: SeoLandingPage = {
       ],
       ctaLabel: '浏览小游戏',
       ctaDescription:
-        '三人指南采用独立单打桌规。上方Euchre指南是另一种搭档牌戏，叫墩与计分规则不同，不能套用本页Spades分数。',
+        '三人指南采用独立单打桌规。相关Euchre指南是另一种搭档牌戏，叫墩与计分规则不同，不能套用本页Spades分数。',
     },
   },
 };

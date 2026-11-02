@@ -85,7 +85,9 @@ test.describe('Spades scoring without JavaScript', () => {
         waitUntil: 'domcontentloaded',
       });
       await page.locator(`main a[href="${prefix}/guides/${slug}"]`).click();
-      await expect(page).toHaveURL(new RegExp(`${prefix}/guides/${slug}$`));
+      await expect(page).toHaveURL(
+        url => url.pathname === `${prefix}/guides/${slug}`
+      );
       await expect(page.locator('main')).toContainText('181');
       await expect(page.locator('main')).toContainText(
         prefix === '/en' ? 'Every complete group of ten' : '累计袋数每满10'
@@ -94,7 +96,7 @@ test.describe('Spades scoring without JavaScript', () => {
         .locator(`main a[href="${prefix}/guides/three-player-spades"]`)
         .click();
       await expect(page).toHaveURL(
-        new RegExp(`${prefix}/guides/three-player-spades$`)
+        url => url.pathname === `${prefix}/guides/three-player-spades`
       );
       await expect(page.getByRole('heading', { level: 1 })).toContainText(
         prefix === '/en' ? '3 Players' : '三人'
@@ -104,7 +106,9 @@ test.describe('Spades scoring without JavaScript', () => {
         page.locator(`main a[href="${prefix}/guides/${slug}"]`)
       ).toHaveCount(1);
       await page.locator(`main a[href="${prefix}/guides/${slug}"]`).click();
-      await expect(page).toHaveURL(new RegExp(`${prefix}/guides/${slug}$`));
+      await expect(page).toHaveURL(
+        url => url.pathname === `${prefix}/guides/${slug}`
+      );
     }
     const response = await request.get('/sitemap.xml');
     expect(response.status()).toBe(200);
