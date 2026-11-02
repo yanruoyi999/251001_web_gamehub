@@ -43,7 +43,7 @@ for (const locale of ['en', 'zh'] as const) {
       await page.locator('script[type="application/ld+json"]').allTextContents()
     ).flatMap(t => JSON.parse(t));
     const article = json.find(x => x['@type'] === 'Article');
-    expect(article.dateModified).toBe('2026-10-31T19:06:52+08:00');
+    expect(article.dateModified).toBe('2026-11-02T07:56:48+08:00');
     expect(article).not.toHaveProperty('datePublished');
     const faq = json.find(x => x['@type'] === 'FAQPage');
     expect(faq.mainEntity).toHaveLength(5);

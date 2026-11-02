@@ -46,8 +46,8 @@ export const THREE_PLAYER_SPADES_GUIDE: SeoLandingPage = {
     '3 player spades scoring',
     'spades for three',
   ],
-  updatedAt: '2026-10-31T19:06:52+08:00',
-  relatedSlugs: ['euchre-strategy', 'categories-game-topics'],
+  updatedAt: '2026-11-02T07:56:48+08:00',
+  relatedSlugs: ['spades-scoring', 'euchre-strategy', 'categories-game-topics'],
   indexable: true,
   locales: {
     en: {
