@@ -5,27 +5,24 @@ import {
   type DailySolitaireGameState,
 } from '../../lib/games/daily-solitaire';
 import type { Page } from '@playwright/test';
+import { createSolitaireJourneyDiagnostics, installAuditCapture } from './helpers/solitaire-journey-diagnostics';
 
 const SUITS = { spades: 'Spades', hearts: 'Hearts', diamonds: 'Diamonds', clubs: 'Clubs' };
 const FIXED_TIME = new Date('2026-09-05T04:00:00.000Z');
 
-async function captureEvents(page: Page) {
-  await page.addInitScript(() => {
-    const testWindow = window as typeof window & { auditEvents: string[]; clarity: (...args: string[]) => void };
-    testWindow.auditEvents = [];
-    testWindow.clarity = (command, event) => { if (command === 'event' && typeof event === 'string') testWindow.auditEvents.push(event); };
-  });
+async function captureEvents(page: Page, solitaireDiagnostics = false) {
+  await page.addInitScript(installAuditCapture, { solitaireDiagnostics });
 }
 
-async function completeSolitaire(page: Page, count: 1 | 3) {
+async function completeSolitaire(page: Page, count: 1 | 3, diagnostics: ReturnType<typeof createSolitaireJourneyDiagnostics>) {
   let state: DailySolitaireGameState = createDailySolitaireDeal('2026-09-05');
   let lastCardLabel = '';
   let lastSuit = 'Spades';
   for (let step = 0; step < 300 && !state.completed; step += 1) {
     const waste = state.waste.at(-1);
     if (waste && canMoveToFoundation(waste, state.foundations[waste.suit])) {
-      await page.getByRole('button', { name: `Select ${getSolitaireCardLabel(waste)} from waste`, exact: true }).click();
-      await page.getByRole('button', { name: `${SUITS[waste.suit]} foundation`, exact: true }).click();
+      await diagnostics.click(page.getByRole('button', { name: `Select ${getSolitaireCardLabel(waste)} from waste`, exact: true }), { step, kind: 'waste-select', card: getSolitaireCardLabel(waste) }, state);
+      await diagnostics.click(page.getByRole('button', { name: `${SUITS[waste.suit]} foundation`, exact: true }), { step, kind: 'waste-foundation', card: getSolitaireCardLabel(waste) }, state);
       state = moveWasteToFoundation(state, waste.suit)!;
       continue;
     }
@@ -37,11 +34,11 @@ async function completeSolitaire(page: Page, count: 1 | 3) {
       const card = state.tableau[from].at(-1)!;
       lastCardLabel = getSolitaireCardLabel(card);
       lastSuit = SUITS[card.suit];
-      await page.getByRole('button', { name: lastCardLabel, exact: true }).click();
-      await page.getByRole('button', { name: `${lastSuit} foundation`, exact: true }).click();
+      await diagnostics.click(page.getByRole('button', { name: lastCardLabel, exact: true }), { step, kind: 'tableau-select', card: lastCardLabel }, state);
+      await diagnostics.click(page.getByRole('button', { name: `${lastSuit} foundation`, exact: true }), { step, kind: 'tableau-foundation', card: lastCardLabel }, state);
       state = moveTableauToFoundation(state, from, card.suit)!;
     } else {
-      await page.getByRole('button', { name: 'Draw', exact: true }).click();
+      await diagnostics.click(page.getByRole('button', { name: 'Draw', exact: true }), { step, kind: 'draw' }, state);
       state = drawFromSolitaireStock(state, count);
     }
   }
@@ -50,22 +47,34 @@ async function completeSolitaire(page: Page, count: 1 | 3) {
 }
 
 test.describe('audit regression journeys', () => {
+  const solitaireDiagnostics = new Map<string, { page: Page; diagnostics: ReturnType<typeof createSolitaireJourneyDiagnostics> }>();
+  test.afterEach(async ({}, info) => {
+    const entry = solitaireDiagnostics.get(info.testId);
+    solitaireDiagnostics.delete(info.testId);
+    if (entry && info.status !== info.expectedStatus) await entry.diagnostics.attachFailure(entry.page, info);
+  });
+
   for (const count of [1, 3] as const) {
     test(`Draw ${count}: complete, freeze clock, undo, redo and replay without duplicating streak`, async ({ page }) => {
       test.setTimeout(120_000);
+      const diagnostics = createSolitaireJourneyDiagnostics(count);
+      solitaireDiagnostics.set(test.info().testId, { page, diagnostics });
       await page.clock.install({ time: FIXED_TIME });
-      await captureEvents(page);
+      await captureEvents(page, true);
       await page.addInitScript(() => {
         localStorage.setItem('luma-daily-solitaire:2026-09-05', JSON.stringify({ best: 999, streak: 99 }));
         localStorage.setItem('luma-daily-solitaire:progress:v1', JSON.stringify({ version: 1, completedDates: ['2026-09-04'] }));
       });
       await page.goto('/en/games/daily-solitaire');
+      diagnostics.phase('page-loaded');
       const game = page.locator('[data-daily-solitaire]');
       await expect(game).toHaveAttribute('data-interactive-ready', 'true');
       await expect(page.getByRole('textbox', { name: 'Challenge date' }).or(page.locator('input[type=date]'))).toHaveValue('2026-09-05');
       await page.getByRole('button', { name: `Draw ${count}`, exact: true }).first().click();
       await page.getByRole('button', { name: 'Play today’s deal', exact: true }).click();
-      const last = await completeSolitaire(page, count);
+      diagnostics.phase('helper-start');
+      const last = await completeSolitaire(page, count, diagnostics);
+      diagnostics.phase('helper-complete');
       await expect(game).toHaveAttribute('data-completed', 'true');
       const score = game.getByText('Score', { exact: true }).locator('..');
       const time = game.getByText('Time', { exact: true }).locator('..');
@@ -88,6 +97,7 @@ test.describe('audit regression journeys', () => {
       await expect(game.locator('footer')).toContainText('Local best: 999');
       const progress = await page.evaluate(() => JSON.parse(localStorage.getItem('luma-daily-solitaire:progress:v1')!));
       expect(progress.completedDates).toEqual(['2026-09-04', '2026-09-05']);
+      diagnostics.phase('journey-complete');
     });
   }
 
