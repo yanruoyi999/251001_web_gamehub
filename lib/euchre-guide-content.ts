@@ -28,6 +28,25 @@ export const EUCHRE_EXAMPLES: Example[] = [
     explanation: { en: 'North’s nine of spades has been overtaken by East’s jack of clubs, the left bower. You have no hearts and may trump. Playing the jack of spades, the right bower, wins this trick for your partnership. Saving a high trump is not useful when the immediate trick must be recovered.', zh: '同伴北家的黑桃9已被东家的梅花J压过；梅花J是左王牌。你没有红桃，可以出主牌；打出黑桃J这张右王牌便能为本队赢下这一墩。需要争取眼前这一墩时，不能机械地保存高主牌。' },
   },
 ];
+/** Points added after one hand in this guide's maker-only lone-hand version. */
+export const EUCHRE_SCORING_OUTCOMES = [
+  { makerTricks: 0, partnership: { makers: 0, defenders: 2 }, makerAlone: { makers: 0, defenders: 2 } },
+  { makerTricks: 1, partnership: { makers: 0, defenders: 2 }, makerAlone: { makers: 0, defenders: 2 } },
+  { makerTricks: 2, partnership: { makers: 0, defenders: 2 }, makerAlone: { makers: 0, defenders: 2 } },
+  { makerTricks: 3, partnership: { makers: 1, defenders: 0 }, makerAlone: { makers: 1, defenders: 0 } },
+  { makerTricks: 4, partnership: { makers: 1, defenders: 0 }, makerAlone: { makers: 1, defenders: 0 } },
+  { makerTricks: 5, partnership: { makers: 2, defenders: 0 }, makerAlone: { makers: 4, defenders: 0 } },
+] as const;
+/** Original invented results for cumulative arithmetic, not recorded deals. */
+export const EUCHRE_SCORING_EXAMPLE = {
+  start: { A: 4, B: 3 },
+  hands: [
+    { maker: 'A', mode: 'partnership', makerTricks: 4, total: { A: 5, B: 3 } },
+    { maker: 'B', mode: 'makerAlone', makerTricks: 5, total: { A: 5, B: 7 } },
+    { maker: 'A', mode: 'partnership', makerTricks: 1, total: { A: 5, B: 9 } },
+    { maker: 'B', mode: 'partnership', makerTricks: 3, total: { A: 5, B: 10 } },
+  ],
+} as const;
 const suits: Record<string, Text> = { H: { en: 'hearts', zh: '红桃' }, D: { en: 'diamonds', zh: '方块' }, C: { en: 'clubs', zh: '梅花' }, S: { en: 'spades', zh: '黑桃' } };
 const ranks: Record<string, string> = { J: 'jack', Q: 'queen', K: 'king', A: 'ace', '9': 'nine', '10': 'ten' };
 function cardName(card: string, locale: Locale): string {
@@ -42,6 +61,29 @@ function practiceSections(locale: Locale): SeoLandingSection[] {
     bullets: [`${zh ? '示例选择：' : 'Example play: '}${cardName(example.chosen, locale)}. ${example.explanation[locale]}`],
   }));
 }
+function scoringSections(locale: Locale): SeoLandingSection[] {
+  const zh = locale === 'zh';
+  return [
+    {
+      title: zh ? 'Euchre计分：六种墩数与两种模式' : 'Euchre scoring: all six trick totals in two modes',
+      body: zh
+        ? '打完五墩后，再按叫主方取得的墩数结算。每行分别列出普通搭档和叫主者独打时，叫主方与防守方各增加几分；独打者的同伴不参与这一手。沿用上文四人、24张、无大小王、先到10分的版本，不启用防守方独打或零墩额外奖励。'
+        : 'Count the makers’ tricks after all five tricks have been played. Each line gives the points added to makers and defenders in partnership play or when a maker plays alone and their partner sits out. This is the four-player, 24-card, no-joker game to 10 used above; lone defenders and extra zero-trick bonuses are not used.',
+      bullets: EUCHRE_SCORING_OUTCOMES.map(row => zh
+        ? `叫主方取得${row.makerTricks}墩：普通搭档，叫主方+${row.partnership.makers}、防守方+${row.partnership.defenders}；叫主者独打，叫主方+${row.makerAlone.makers}、防守方+${row.makerAlone.defenders}。`
+        : `Makers take ${row.makerTricks} ${row.makerTricks === 1 ? 'trick' : 'tricks'}: partnership — makers +${row.partnership.makers}, defenders +${row.partnership.defenders}; maker alone — makers +${row.makerAlone.makers}, defenders +${row.makerAlone.defenders}.`),
+    },
+    {
+      title: zh ? '累计记分例：从4比3开始的四手' : 'Worked scoring example: four hands starting at 4–3',
+      body: zh
+        ? `A:B从${EUCHRE_SCORING_EXAMPLE.start.A}:${EUCHRE_SCORING_EXAMPLE.start.B}开始，叫主方可以每手更换。叫主失败是给对方加分，不扣本队已有分数；任一队达到10分或以上便结束。下面是原创的假设结果，只用于练习累计，不代表真实牌局或最佳叫牌。`
+        : `Start with A:B at ${EUCHRE_SCORING_EXAMPLE.start.A}:${EUCHRE_SCORING_EXAMPLE.start.B}. The maker team can change each hand. A failed contract gives points to the opponents without subtracting the makers’ existing score. Stop when either team reaches 10 or more. These invented results teach arithmetic, not actual deals or optimal calls.`,
+      bullets: EUCHRE_SCORING_EXAMPLE.hands.map((hand, index) => zh
+        ? `第${index + 1}手：${hand.maker}队${hand.mode === 'makerAlone' ? '叫主独打' : '普通叫主'}，取得${hand.makerTricks}墩；累计A:B=${hand.total.A}:${hand.total.B}。${index === 3 ? 'B队达到10分，获胜并结束。' : ''}`
+        : `Hand ${index + 1}: ${hand.maker} ${hand.mode === 'makerAlone' ? 'makes trump and plays alone' : 'makes trump with a partner'}, taking ${hand.makerTricks} ${hand.makerTricks === 1 ? 'trick' : 'tricks'}; running total A:B = ${hand.total.A}:${hand.total.B}.${index === 3 ? ' B reaches 10, wins and ends the game.' : ''}`),
+    },
+  ];
+}
 const sources = (zh: boolean) => [
   { href: 'https://bicyclecards.com/how-to-play/euchre', label: zh ? 'Bicycle：Euchre基本规则' : 'Bicycle: Euchre rules', description: zh ? '核对叫主、跟花、独打和基本计分；牌数及目标分按本页版本。' : 'Rules for making trump, following suit, lone hands and scoring; deck and target-score variations are stated separately here.' },
   { href: 'https://www.pagat.com/euchre/euchre.html', label: zh ? 'Pagat：北美Euchre及变体' : 'Pagat: North American Euchre and variations', description: zh ? '区分24张北美版本与正文中的英国带大小王版本；桌规需要提前约定。' : 'Distinguishes North American play from the British joker variant described earlier on that page.' },
@@ -51,7 +93,7 @@ const sources = (zh: boolean) => [
 export const EUCHRE_GUIDE: SeoLandingPage = {
   slug: 'euchre-strategy', primaryKeyword: 'euchre strategy',
   keywords: ['euchre strategy', 'euchre strategy for beginners', 'euchre left bower', 'euchre calling trump'],
-  updatedAt: '2026-10-31T19:06:52+08:00',
+  updatedAt: '2026-11-02T10:56:28+08:00',
   relatedSlugs: ['categories-game-topics', 'how-to-play-dominoes', 'three-player-spades'],
   locales: {
     en: {
@@ -66,6 +108,7 @@ export const EUCHRE_GUIDE: SeoLandingPage = {
       sections: [
         { title: 'Quick strategy: decide what your team needs before choosing a card', body: 'Count the left bower as trump, assess a realistic route to three tricks, and account for who gets the up-card. After the call, follow the effective suit, track the bowers, and avoid using a winner on a trick your partner has already secured. These are decision prompts, not a fixed bidding threshold or guaranteed strategy.' },
         { title: 'Know the contract and the score', body: 'The team naming trump is the maker team and needs at least three of five tricks. Three or four score one point; five together score two. A lone maker taking all five scores four, while three or four alone still score one. Fewer than three gives the defenders two. This guide plays to ten; different decks, lone-defender bonuses and target scores require different agreements.' },
+        ...scoringSections('en'),
         { title: 'Treat the left bower as a suit change', body: 'Without a joker, trump runs from the right bower (jack of trump), to the left bower (the other jack of the same color), then ace, king, queen, ten and nine. There are seven trumps. When hearts are trump, the jack of diamonds belongs to hearts for following suit as well as winning tricks. Its printed diamond does not let you dodge a trump lead.' },
         { title: 'Before calling: count control, not just face cards', body: 'Ask which cards can win, which need a favorable lead, and which depend on your partner. Two bowers are strong, but they are not by themselves a five-trick plan. A side ace can be trumped by a player with no cards of that suit. Passing is allowed in the usual first round, but it does not guarantee that a safer contract will follow.', bullets: ['Who is the dealer, and does ordering up strengthen your team or the opponents?', 'Which higher trumps are outside your hand, and can you regain the lead?', 'Are your side cards supported, or are you counting the same hoped-for trick twice?', 'What happens at this table if everyone passes twice?'] },
         { title: 'Dealer example: evaluate the hand after the pickup and discard', body: 'Suppose you are dealer, the up-card is the nine of hearts, and your five cards are jack of hearts, jack of diamonds, ace of clubs, king of clubs and nine of spades. If hearts become trump, taking the up-card and discarding the nine of spades leaves three trumps and two clubs. You have removed an effective suit and gained trump control. That is a reason to consider a call, not proof of a lone sweep: the remaining trumps and the opening lead still matter.' },
@@ -97,6 +140,7 @@ export const EUCHRE_GUIDE: SeoLandingPage = {
       sections: [
         { title: '快速策略：先想本队需要什么，再选出哪张牌', body: '把左王牌归入主花色，考虑本队怎样取得三墩，并计算翻开的牌会交给哪位庄家。叫主后，先按有效花色跟牌，再关注左右王牌和仍未行动的玩家。同伴已确定赢下的墩，不必再浪费大牌。这是一套检查问题，不是固定叫牌门槛或胜率保证。' },
         { title: '分清叫主任务与当前比分', body: '确定主花色的一队是叫主方，五墩中需要至少三墩。取得三或四墩得1分，搭档拿全五墩得2分；独打拿全五墩得4分，独打三或四墩仍得1分。叫主方不足三墩，对手得2分。本页以10分结束为例；牌数、独守奖励或目标分不同的玩法不能混在一起。' },
+        ...scoringSections('zh'),
         { title: '左王牌不是普通的同色J', body: '无大小王时，主牌从大到小为右王牌（主花色J）、左王牌（同颜色另一花色J）、A、K、Q、10、9，共七张。红桃为主时，方块J的有效花色是红桃，跟花和比大小都如此。它印着方块，不代表你可以在别人领红桃时逃避跟主。' },
         { title: '叫主前：数控制力，不只数人头牌', body: '分别判断哪些牌有机会直接赢、哪些要等合适的领牌、哪些依赖同伴。两张王牌很强，但不能单凭它们保证五墩。副花色A也可能被缺门玩家用主牌压过。通常第一轮可以不叫，但放过这次机会不保证后面会有更安全的主花色。', bullets: ['庄家是谁？叫起翻开的牌，会增强本队还是对手？', '还有哪些更高主牌不在手里？失去出牌权后怎样夺回？', '副花色是否有支撑？有没有把同一个希望重复算成两墩？', '本桌所有人连续两轮不叫时，重发还是强制庄家叫主？'] },
         { title: '庄家例手：捡牌后连同弃牌一起评估', body: '假设你是庄家，翻牌为红桃9，手中是红桃J、方块J、梅花A、梅花K、黑桃9。如果红桃成为主花色，捡红桃9并弃黑桃9后，就有三张主牌与两张梅花，减少了一种有效花色。这给了你考虑叫主的理由，却不能证明独打一定拿全五墩：剩余主牌和谁先领牌仍会改变结果。' },

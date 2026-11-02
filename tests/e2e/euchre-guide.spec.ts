@@ -8,12 +8,23 @@ for (const locale of ['en', 'zh'] as const) {
     const response = await page.goto(path, { waitUntil: 'domcontentloaded' });
     expect(response?.status()).toBe(200);
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(EUCHRE_GUIDE.locales[locale].heading);
+    await expect(page).toHaveTitle(`${EUCHRE_GUIDE.locales[locale].metaTitle} | Luma Game Hub`);
+    for (const selector of ['meta[property="og:title"]', 'meta[name="twitter:title"]']) {
+      await expect(page.locator(selector)).toHaveAttribute('content', EUCHRE_GUIDE.locales[locale].metaTitle);
+    }
+    await expect(page.locator('main time')).toHaveAttribute('datetime', EUCHRE_GUIDE.updatedAt);
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `https://www.lumagamehub.com${path}`);
     await expect(page.locator('link[hreflang="en-US"]')).toHaveAttribute('href', 'https://www.lumagamehub.com/en/guides/euchre-strategy');
     await expect(page.locator('link[hreflang="zh-CN"]')).toHaveAttribute('href', 'https://www.lumagamehub.com/guides/euchre-strategy');
     await expect(page.locator('meta[name="robots"][content*="noindex"]')).toHaveCount(0);
     for (const exercise of EUCHRE_EXAMPLES) await expect(page.getByRole('heading', { name: exercise.title[locale], exact: true })).toBeVisible();
     const data = (await page.locator('script[type="application/ld+json"]').allTextContents()).flatMap(text => JSON.parse(text));
+    expect(data.find(item => item['@type'] === 'Article').dateModified).toBe(EUCHRE_GUIDE.updatedAt);
+    for (const section of EUCHRE_GUIDE.locales[locale].sections.slice(2, 4)) {
+      const rendered = page.locator('#guide-details > div').filter({ has: page.getByRole('heading', { name: section.title, exact: true }) });
+      await expect(rendered.locator('p')).toHaveText(section.body);
+      await expect(rendered.locator('li')).toHaveText(section.bullets!);
+    }
     const faq = data.find(item => item['@type'] === 'FAQPage');
     expect(faq.mainEntity).toHaveLength(5);
     expect(await page.locator('main dl dt').allTextContents()).toEqual(faq.mainEntity.map((item: { name: string }) => item.name));
@@ -26,6 +37,10 @@ for (const locale of ['en', 'zh'] as const) {
     }
     await page.setViewportSize({ width: 390, height: 844 });
     await page.screenshot({ path: info.outputPath(`euchre-${locale}-mobile.png`) });
+    for (const [index, section] of EUCHRE_GUIDE.locales[locale].sections.slice(2, 4).entries()) {
+      await page.locator('#guide-details > div').filter({ has: page.getByRole('heading', { name: section.title, exact: true }) })
+        .screenshot({ path: info.outputPath(`euchre-${locale}-scoring-${index + 1}-mobile.png`) });
+    }
   });
 }
 
@@ -37,6 +52,12 @@ test.describe('Euchre native navigation', () => {
       await page.locator(`main a[href="${prefix}/guides/euchre-strategy"]`).click();
       await expect(page).toHaveURL(new RegExp(`${prefix}/guides/euchre-strategy$`));
       await expect(page.locator('main dl dt')).toHaveCount(5);
+      await expect(page.locator('main time')).toHaveAttribute('datetime', EUCHRE_GUIDE.updatedAt);
+      const locale = prefix ? 'en' : 'zh';
+      for (const section of EUCHRE_GUIDE.locales[locale].sections.slice(2, 4)) {
+        const rendered = page.locator('#guide-details > div').filter({ has: page.getByRole('heading', { name: section.title, exact: true }) });
+        await expect(rendered.locator('li')).toHaveText(section.bullets!);
+      }
       await expect(page.getByRole('heading', { name: EUCHRE_EXAMPLES[3].title[prefix ? 'en' : 'zh'], exact: true })).toBeVisible();
       await page.goto(`${prefix}/guides`, { waitUntil: 'domcontentloaded' });
       await expect(page.locator(`main a[href="${prefix}/guides/euchre-strategy"]`).first()).toBeVisible();
