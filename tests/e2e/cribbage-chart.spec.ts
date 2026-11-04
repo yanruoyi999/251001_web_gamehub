@@ -8,6 +8,26 @@ for (const locale of ['en', 'zh'] as const) {
   const path = `${prefix}/guides/${slug}`;
   const printLabel = locale === 'en' ? 'Print scoring chart' : '打印计分速查表';
 
+  test(`Cribbage ${locale}: visible updated date agrees with documentation date`, async ({
+    page,
+  }) => {
+    await page.goto(path, { waitUntil: 'domcontentloaded' });
+    const updated = page.locator('main > article > header time');
+    await expect(updated).toHaveText(
+      locale === 'en' ? 'Updated Nov 4, 2026' : '更新于 2026年11月4日'
+    );
+    await expect(updated).toHaveAttribute(
+      'datetime',
+      '2026-11-04T00:00:00.000Z'
+    );
+    const schemas = (
+      await page.locator('script[type="application/ld+json"]').allTextContents()
+    ).flatMap(text => JSON.parse(text));
+    expect(schemas.find(item => item['@type'] === 'Article').dateModified).toBe(
+      '2026-11-04T00:00:00.000Z'
+    );
+  });
+
   test(`Cribbage ${locale}: registered metadata, chart placement and mobile last column`, async ({
     page,
   }, testInfo) => {
@@ -49,7 +69,7 @@ for (const locale of ['en', 'zh'] as const) {
       await page.locator('script[type="application/ld+json"]').allTextContents()
     ).flatMap(text => JSON.parse(text));
     const article = schemas.find(item => item['@type'] === 'Article');
-    expect(article.dateModified).toMatch(/^2026-11-04T/);
+    expect(article.dateModified).toBe('2026-11-04T00:00:00.000Z');
     expect(article).not.toHaveProperty('datePublished');
     expect(article.citation).toContain(source);
     await page.setViewportSize({ width: 390, height: 844 });

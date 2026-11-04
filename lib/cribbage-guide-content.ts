@@ -314,7 +314,7 @@ export const CRIBBAGE_GUIDE: SeoLandingPage = {
     'cribbage crib flush',
     'Cribbage计分表',
   ],
-  updatedAt: '2026-11-04T00:00:00+08:00',
+  updatedAt: '2026-11-04T00:00:00.000Z',
   documentationCheckedAt: '2026-11-04',
   indexable: true,
   relatedSlugs: ['spades-scoring', 'euchre-strategy', 'farkle-scoring'],
