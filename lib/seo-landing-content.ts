@@ -2277,7 +2277,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     },
     locales: {
       en: {
-        metaTitle: 'Google Snake Mods: Mod Menu, More Menu, Mods 2 & Loader',
+        metaTitle: 'Google Snake Mods: Web Version, Mod Menu & Loader Guide',
         metaDescription:
           'Google Snake Mods 2 guide to Mod Menu, More Menu, Snake Mod Loader and Level Editor. Compare web and userscript routes, mobile limits, and safe setup.',
         heading: 'Google Snake Mods: Mod Menu, More Menu, Loader & Mods 2',

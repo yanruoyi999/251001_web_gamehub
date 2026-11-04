@@ -96,7 +96,7 @@ export const YAHTZEE_MAX_GUIDE: SeoLandingPage = {
       sections: [
         {
           title: 'Quick answer: 1,575 is the C2406 theoretical result',
-          body: 'For this specified Classic rules PDF, 105 + 35 + 235 + 1,200 = 1,575. A game has 13 turns, with one scoring box filled per turn. Start by scoring 50 in the Yahtzee box, then score 12 further Yahtzees for 100 extra points each while filling the other boxes. Hasbro’s separate FAQ says 1,535; the unresolved conflict prevents treating this as an official answer for every edition.',
+          body: 'For this specified Classic rules PDF, one player’s theoretical maximum is 105 + 35 + 235 + 1,200 = 1,575. Each player has 13 scoring turns on their own scorecard, with one scoring box filled per turn. Start by scoring 50 in the Yahtzee box, then score 12 further Yahtzees for 100 extra points each while filling the other boxes. Hasbro’s separate FAQ says 1,535; the unresolved conflict prevents treating this as an official answer for every edition.',
         },
         {
           title: 'The upper bound: no box or bonus can exceed these amounts',
@@ -104,7 +104,7 @@ export const YAHTZEE_MAX_GUIDE: SeoLandingPage = {
           bullets: [
             'Lower boxes: Three of a Kind 30 + Four of a Kind 30 + Full House 25 + Small Straight 30 + Large Straight 40 + Yahtzee 50 + Chance 30 = 235.',
             'The dice-sum boxes cannot exceed 30 with five six-sided dice; the other lower boxes have the fixed values shown above.',
-            'There are only 13 scoring turns. After the initial 50-point Yahtzee, at most 12 turns can earn an extra 100 each: 1,200.',
+            'Each player has only 13 scoring turns on their own scorecard. After the initial 50-point Yahtzee, at most 12 turns can earn an extra 100 each: 1,200.',
             'Adding these independent ceilings gives 1,575. An upper bound alone is insufficient: the sequence below shows that all ceilings can be reached together.',
           ],
         },
@@ -210,7 +210,7 @@ export const YAHTZEE_MAX_GUIDE: SeoLandingPage = {
       sections: [
         {
           title: '简答：C2406 指定版本的理论结果是1575',
-          body: '按这份Classic规则，105 + 35 + 235 + 1200 = 1575。一局共13回合，每回合填一个计分栏；先在Yahtzee栏记50，之后12次五同点各得额外100，同时填完其余栏。Hasbro另一篇FAQ写1535，两者尚未解释清楚，因此不能把这里的结果当作所有版本通用的官方答案。',
+          body: '按这份Classic规则，单名玩家的理论最高分为105 + 35 + 235 + 1200 = 1575。每名玩家在自己的计分卡中有13个计分回合，每回合填一个计分栏；先在Yahtzee栏记50，之后12次五同点各得额外100，同时填完其余栏。Hasbro另一篇FAQ写1535，两者尚未解释清楚，因此不能把这里的结果当作所有版本通用的官方答案。',
         },
         {
           title: '先证上界：每栏和奖励都不能超过多少',
@@ -218,7 +218,7 @@ export const YAHTZEE_MAX_GUIDE: SeoLandingPage = {
           bullets: [
             '下栏上界：三条30 + 四条30 + 满堂红25 + 小顺30 + 大顺40 + Yahtzee 50 + Chance 30 = 235。',
             '按五骰总和计分的栏最多30；其余下栏采用上述固定分值。',
-            '全局只有13个计分回合。首次Yahtzee记50后，最多再有12次额外奖励，每次100，合计1200。',
+            '每名玩家在自己的计分卡中只有13个计分回合。首次Yahtzee记50后，最多再有12次额外奖励，每次100，合计1200。',
             '这些上界相加为1575。但仅相加还不够；下方构造进一步证明它们可以在同一局同时达到。',
           ],
         },
