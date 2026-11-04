@@ -5,7 +5,7 @@ import { getSeoLandingPage } from '@/lib/seo-landing-content';
 describe('source-first Snake guides', () => {
   it('keeps the winning titles while making the short answer useful', () => {
     const mods = getSeoLandingPage('google-snake-mods')!;
-    expect(mods.locales.en.metaTitle).toBe('Google Snake Mods: Mod Menu, More Menu, Mods 2 & Loader');
+    expect(mods.locales.en.metaTitle).toBe('Google Snake Mods: Web Version, Mod Menu & Loader Guide');
     expect(mods.locales.en.heading).toBe('Google Snake Mods: Mod Menu, More Menu, Loader & Mods 2');
     expect(mods.locales.en.sections[0].body.length).toBeLessThan(250);
     expect(mods.locales.en.sections[0].body).toMatch(/standard.*not.*modded/i);

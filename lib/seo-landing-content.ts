@@ -7,6 +7,7 @@ import { THREE_PLAYER_SPADES_GUIDE } from '@/lib/three-player-spades-guide-conte
 import { SPADES_SCORING_GUIDE } from '@/lib/spades-scoring-guide-content';
 import { FARKLE_GUIDE } from '@/lib/farkle-guide-content';
 import { SHUT_THE_BOX_GUIDE } from '@/lib/shut-the-box-guide-content';
+import { YAHTZEE_MAX_GUIDE } from '@/lib/yahtzee-max-guide-content';
 import { isGameUnderManualReview } from '@/lib/games/quality-policy';
 
 export interface SeoLandingSection {
@@ -109,6 +110,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
   SPADES_SCORING_GUIDE,
   FARKLE_GUIDE,
   SHUT_THE_BOX_GUIDE,
+  YAHTZEE_MAX_GUIDE,
   {
     slug: 'free-games-no-ads',
     primaryKeyword: 'free games no ads',
@@ -2275,7 +2277,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     },
     locales: {
       en: {
-        metaTitle: 'Google Snake Mods: Mod Menu, More Menu, Mods 2 & Loader',
+        metaTitle: 'Google Snake Mods: Web Version, Mod Menu & Loader Guide',
         metaDescription:
           'Google Snake Mods 2 guide to Mod Menu, More Menu, Snake Mod Loader and Level Editor. Compare web and userscript routes, mobile limits, and safe setup.',
         heading: 'Google Snake Mods: Mod Menu, More Menu, Loader & Mods 2',
@@ -7016,7 +7018,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       'pass the popcorn rules',
     ],
     updatedAt: '2026-08-11T00:00:00.000Z',
-    relatedSlugs: ['games-to-play-when-bored', 'best-new-browser-games-july-2026', 'best-free-iphone-games'],
+    relatedSlugs: ['games-to-play-when-bored', 'best-new-browser-games-july-2026', 'best-free-iphone-games', 'highest-scoring-yahtzee-game'],
     printablePath: '/printables/popcorn-game-rules.pdf',
     video: {
       embedUrl: 'https://www.youtube-nocookie.com/embed/Ot40kdLBZhk?rel=0',

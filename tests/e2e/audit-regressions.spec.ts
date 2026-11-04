@@ -4,8 +4,9 @@ import {
   moveTableauToFoundation, drawFromSolitaireStock, getSolitaireCardLabel,
   type DailySolitaireGameState,
 } from '../../lib/games/daily-solitaire';
-import type { Page } from '@playwright/test';
+import type { Locator, Page } from '@playwright/test';
 import { createSolitaireJourneyDiagnostics, installAuditCapture } from './helpers/solitaire-journey-diagnostics';
+import { selectSolitaireCardAndMoveToFoundation } from './helpers/solitaire-journey-actions';
 
 const SUITS = { spades: 'Spades', hearts: 'Hearts', diamonds: 'Diamonds', clubs: 'Clubs' };
 const FIXED_TIME = new Date('2026-09-05T04:00:00.000Z');
@@ -14,16 +15,34 @@ async function captureEvents(page: Page, solitaireDiagnostics = false) {
   await page.addInitScript(installAuditCapture, { solitaireDiagnostics });
 }
 
+async function expectSolitaireWaste(game: Locator, state: DailySolitaireGameState) {
+  const waste = game.locator('p').filter({ hasText: /^Waste$/ }).locator('..');
+  const card = state.waste.at(-1);
+  if (card) {
+    await expect(waste.getByRole('button', { name: `Select ${getSolitaireCardLabel(card)} from waste`, exact: true })).toBeVisible();
+  } else {
+    await expect(waste.getByRole('button')).toHaveCount(0);
+    await expect(waste.getByText('Empty', { exact: true })).toBeVisible();
+  }
+}
+
 async function completeSolitaire(page: Page, count: 1 | 3, diagnostics: ReturnType<typeof createSolitaireJourneyDiagnostics>) {
+  const game = page.locator('[data-daily-solitaire]');
   let state: DailySolitaireGameState = createDailySolitaireDeal('2026-09-05');
   let lastCardLabel = '';
   let lastSuit = 'Spades';
   for (let step = 0; step < 300 && !state.completed; step += 1) {
     const waste = state.waste.at(-1);
     if (waste && canMoveToFoundation(waste, state.foundations[waste.suit])) {
-      await diagnostics.click(page.getByRole('button', { name: `Select ${getSolitaireCardLabel(waste)} from waste`, exact: true }), { step, kind: 'waste-select', card: getSolitaireCardLabel(waste) }, state);
-      await diagnostics.click(page.getByRole('button', { name: `${SUITS[waste.suit]} foundation`, exact: true }), { step, kind: 'waste-foundation', card: getSolitaireCardLabel(waste) }, state);
-      state = moveWasteToFoundation(state, waste.suit)!;
+      const card = game.getByRole('button', { name: `Select ${getSolitaireCardLabel(waste)} from waste`, exact: true });
+      const foundation = game.getByRole('button', { name: `${SUITS[waste.suit]} foundation`, exact: true });
+      const next = moveWasteToFoundation(state, waste.suit)!;
+      await selectSolitaireCardAndMoveToFoundation(card, foundation, waste.rank,
+        () => diagnostics.click(card, { step, kind: 'waste-select', card: getSolitaireCardLabel(waste) }, state),
+        () => diagnostics.click(foundation, { step, kind: 'waste-foundation', card: getSolitaireCardLabel(waste) }, state),
+      );
+      await expectSolitaireWaste(game, next);
+      state = next;
       continue;
     }
     const from = state.tableau.findIndex(pile => {
@@ -34,12 +53,22 @@ async function completeSolitaire(page: Page, count: 1 | 3, diagnostics: ReturnTy
       const card = state.tableau[from].at(-1)!;
       lastCardLabel = getSolitaireCardLabel(card);
       lastSuit = SUITS[card.suit];
-      await diagnostics.click(page.getByRole('button', { name: lastCardLabel, exact: true }), { step, kind: 'tableau-select', card: lastCardLabel }, state);
-      await diagnostics.click(page.getByRole('button', { name: `${lastSuit} foundation`, exact: true }), { step, kind: 'tableau-foundation', card: lastCardLabel }, state);
-      state = moveTableauToFoundation(state, from, card.suit)!;
+      const source = game.getByRole('button', { name: lastCardLabel, exact: true });
+      const foundation = game.getByRole('button', { name: `${lastSuit} foundation`, exact: true });
+      const next = moveTableauToFoundation(state, from, card.suit)!;
+      await selectSolitaireCardAndMoveToFoundation(source, foundation, card.rank,
+        () => diagnostics.click(source, { step, kind: 'tableau-select', card: lastCardLabel }, state),
+        () => diagnostics.click(foundation, { step, kind: 'tableau-foundation', card: lastCardLabel }, state),
+      );
+      await expectSolitaireWaste(game, next);
+      state = next;
     } else {
-      await diagnostics.click(page.getByRole('button', { name: 'Draw', exact: true }), { step, kind: 'draw' }, state);
-      state = drawFromSolitaireStock(state, count);
+      const next = drawFromSolitaireStock(state, count);
+      await diagnostics.click(game.getByRole('button', { name: 'Draw', exact: true }), { step, kind: 'draw' }, state);
+      const stock = game.getByText('Stock', { exact: true }).locator('..').getByRole('button');
+      await expect(stock).toHaveText(next.stock.length > 0 ? `${next.stock.length} · ${count}` : 'Empty');
+      await expectSolitaireWaste(game, next);
+      state = next;
     }
   }
   expect(state.completed).toBe(true);
@@ -69,9 +98,9 @@ test.describe('audit regression journeys', () => {
       diagnostics.phase('page-loaded');
       const game = page.locator('[data-daily-solitaire]');
       await expect(game).toHaveAttribute('data-interactive-ready', 'true');
-      await expect(page.getByRole('textbox', { name: 'Challenge date' }).or(page.locator('input[type=date]'))).toHaveValue('2026-09-05');
-      await page.getByRole('button', { name: `Draw ${count}`, exact: true }).first().click();
-      await page.getByRole('button', { name: 'Play today’s deal', exact: true }).click();
+      await expect(game.getByRole('textbox', { name: 'Challenge date' }).or(game.locator('input[type=date]'))).toHaveValue('2026-09-05');
+      await game.getByLabel('Draw mode', { exact: true }).getByRole('button', { name: `Draw ${count}`, exact: true }).click();
+      await game.getByRole('button', { name: 'Play today’s deal', exact: true }).click();
       diagnostics.phase('helper-start');
       const last = await completeSolitaire(page, count, diagnostics);
       diagnostics.phase('helper-complete');
@@ -83,15 +112,15 @@ test.describe('audit regression journeys', () => {
       expect([await score.innerText(), await time.innerText()]).toEqual(before);
       await expect(game.locator('footer')).toContainText('Local best: 999');
       await expect(game.getByText('Daily streak', { exact: true }).locator('..')).toContainText('2');
-      await page.getByRole('button', { name: 'Undo', exact: true }).click();
+      await game.getByRole('button', { name: 'Undo', exact: true }).click();
       await expect(game).toHaveAttribute('data-completed', 'false');
       await page.clock.fastForward(1500);
-      await page.getByRole('button', { name: last.lastCardLabel, exact: true }).click();
-      await page.getByRole('button', { name: `${last.lastSuit} foundation`, exact: true }).click();
+      await game.getByRole('button', { name: last.lastCardLabel, exact: true }).click();
+      await game.getByRole('button', { name: `${last.lastSuit} foundation`, exact: true }).click();
       await expect(game).toHaveAttribute('data-completed', 'true');
       const finished = await page.evaluate(() => (window as typeof window & { auditEvents: string[] }).auditEvents.filter(name => name === 'daily_solitaire_finished').length);
       expect(finished).toBe(1);
-      await page.getByRole('button', { name: 'Replay this deal', exact: true }).click();
+      await game.getByRole('button', { name: 'Replay this deal', exact: true }).click();
       await expect(game).toHaveAttribute('data-completed', 'false');
       await expect(time).toContainText('0:00');
       await expect(game.locator('footer')).toContainText('Local best: 999');
