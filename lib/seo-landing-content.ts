@@ -8,6 +8,7 @@ import { SPADES_SCORING_GUIDE } from '@/lib/spades-scoring-guide-content';
 import { FARKLE_GUIDE } from '@/lib/farkle-guide-content';
 import { SHUT_THE_BOX_GUIDE } from '@/lib/shut-the-box-guide-content';
 import { YAHTZEE_MAX_GUIDE } from '@/lib/yahtzee-max-guide-content';
+import { CRIBBAGE_GUIDE } from '@/lib/cribbage-guide-content';
 import { isGameUnderManualReview } from '@/lib/games/quality-policy';
 
 export interface SeoLandingSection {
@@ -111,6 +112,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
   FARKLE_GUIDE,
   SHUT_THE_BOX_GUIDE,
   YAHTZEE_MAX_GUIDE,
+  CRIBBAGE_GUIDE,
   {
     slug: 'free-games-no-ads',
     primaryKeyword: 'free games no ads',

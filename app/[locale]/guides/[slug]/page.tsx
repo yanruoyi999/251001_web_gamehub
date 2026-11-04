@@ -10,6 +10,8 @@ import { GuideQuickPicks } from '@/components/seo/guide-quick-picks';
 import { getGuidePublicationDates } from '@/lib/guide-publication-dates';
 import { DominoesTraining } from '@/components/game/dominoes-training';
 import { WordChainExamples } from '@/components/seo/word-chain-examples';
+import { CribbageScoringChart } from '@/components/seo/cribbage-scoring-chart';
+import { CribbagePrintButton } from '@/components/seo/cribbage-print-button';
 import { CategoriesTopics } from '@/components/game/categories-topics';
 import {
   getSeoLandingPage,
@@ -207,6 +209,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
   };
   const structuredData = [jsonLdArticle, jsonLdFaq, jsonLdBreadcrumb];
   const relatedPages = getRelatedPages(page, locale);
+  const isCribbageGuide = page.slug === 'cribbage-scoring-chart';
   const isSnakeGuide = ['google-snake-mods', 'google-snake-level-editor'].includes(page.slug);
   const counterpartSlug = page.slug === 'google-snake-mods' ? 'google-snake-level-editor' : 'google-snake-mods';
   const earlyRelatedPage = isSnakeGuide ? relatedPages.find(related => related.slug === counterpartSlug) : undefined;
@@ -254,6 +257,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
     <article
       className="mx-auto w-full max-w-7xl bg-[#f1f7e9] px-3 py-5 sm:px-4 md:px-6 md:py-7 dark:bg-background"
       data-printable-guide={page.printablePath ? 'true' : undefined}
+      data-cribbage-guide={isCribbageGuide ? 'true' : undefined}
     >
       {structuredData.map((schema, index) => (
         <script
@@ -323,6 +327,8 @@ export default async function GuidePage({ params }: GuidePageProps) {
           </a>
         </div>
       ) : null}
+
+      {isCribbageGuide ? <CribbagePrintButton locale={locale} /> : null}
 
       <section className="mb-7 max-w-5xl border-y border-primary/25 bg-primary/5 px-3 py-4 sm:px-5">
         <p className="text-xs font-semibold uppercase tracking-wide text-primary">
@@ -401,6 +407,8 @@ export default async function GuidePage({ params }: GuidePageProps) {
           ) : null}
         </div>
       </section>
+
+      {isCribbageGuide ? <CribbageScoringChart locale={locale} /> : null}
 
       {page.interactiveWidget === 'dominoes-training' ? (
         <DominoesTraining locale={locale} />
