@@ -189,3 +189,30 @@
     color: #374151 !important;
   }
 }
+
+/* Browser-menu printing also works when this chart is read without JavaScript. */
+@media print {
+  body:has([data-cribbage-guide='true']) {
+    background: #fff !important;
+    color: #111 !important;
+  }
+
+  body:has([data-cribbage-guide='true']) [data-print-hide],
+  body:has([data-cribbage-guide='true']) div:has(> #main-content) > :not(main),
+  [data-cribbage-guide='true'] > :not([data-cribbage-print-root]) {
+    display: none !important;
+  }
+
+  body:has([data-cribbage-guide='true']) div:has(> #main-content),
+  body:has([data-cribbage-guide='true']) #main-content,
+  [data-cribbage-guide='true'] {
+    display: block !important;
+    min-height: 0 !important;
+    max-width: none !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: #fff !important;
+    color: #111 !important;
+  }
+}

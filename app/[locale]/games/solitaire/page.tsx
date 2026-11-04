@@ -119,6 +119,13 @@ export default async function SolitairePage({ params }: SolitairePageProps) {
       title: t('related.items.freeGames.title'),
       description: t('related.items.freeGames.description'),
     },
+    {
+      href: getLocalizedPath(locale, '/guides/cribbage-scoring-chart'),
+      title: locale === 'en' ? 'Physical partner game: Cribbage scoring chart' : '实体双人牌戏：Cribbage计分速查表',
+      description: locale === 'en'
+        ? 'For a two-player card game away from the screen, compare hand, crib and pegging points with an original printable reference.'
+        : '想与另一人离开屏幕玩实体牌？用原创可打印参考核对手牌、底牌与出牌阶段分值。',
+    },
   ];
   const faqJsonLd = {
     '@context': 'https://schema.org',
