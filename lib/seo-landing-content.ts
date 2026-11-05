@@ -6,6 +6,7 @@ import { EUCHRE_GUIDE } from '@/lib/euchre-guide-content';
 import { THREE_PLAYER_SPADES_GUIDE } from '@/lib/three-player-spades-guide-content';
 import { SPADES_SCORING_GUIDE } from '@/lib/spades-scoring-guide-content';
 import { FARKLE_GUIDE } from '@/lib/farkle-guide-content';
+import { LIARS_DICE_GUIDE } from '@/lib/liars-dice-guide-content';
 import { SHUT_THE_BOX_GUIDE } from '@/lib/shut-the-box-guide-content';
 import { YAHTZEE_MAX_GUIDE } from '@/lib/yahtzee-max-guide-content';
 import { CRIBBAGE_GUIDE } from '@/lib/cribbage-guide-content';
@@ -111,6 +112,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
   SPADES_SCORING_GUIDE,
   FARKLE_GUIDE,
   SHUT_THE_BOX_GUIDE,
+  LIARS_DICE_GUIDE,
   YAHTZEE_MAX_GUIDE,
   CRIBBAGE_GUIDE,
   {
