@@ -7,7 +7,7 @@ export const BUNCO_GUIDE: SeoLandingPage = {
   primaryKeyword: 'bunco game rules',
   keywords: ['bunco game rules', 'bunco rules', 'Bunco规则'],
   updatedAt: '2026-11-05T14:24:00+08:00',
-  relatedSlugs: ['farkle-scoring', 'liars-dice-rules'],
+  relatedSlugs: ['farkle-scoring', 'liars-dice-rules', 'left-right-center-rules'],
   indexable: true,
   locales: {
     en: {
