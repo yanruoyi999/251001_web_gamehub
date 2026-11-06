@@ -7,6 +7,7 @@ import { THREE_PLAYER_SPADES_GUIDE } from '@/lib/three-player-spades-guide-conte
 import { SPADES_SCORING_GUIDE } from '@/lib/spades-scoring-guide-content';
 import { FARKLE_GUIDE } from '@/lib/farkle-guide-content';
 import { BUNCO_GUIDE } from '@/lib/bunco-guide-content';
+import { LCR_GUIDE } from '@/lib/lcr-guide-content';
 import { LIARS_DICE_GUIDE } from '@/lib/liars-dice-guide-content';
 import { SHUT_THE_BOX_GUIDE } from '@/lib/shut-the-box-guide-content';
 import { YAHTZEE_MAX_GUIDE } from '@/lib/yahtzee-max-guide-content';
@@ -105,6 +106,7 @@ export interface SeoLandingPage {
 const seoContentUpdatedAt = '2026-07-20T00:00:00.000Z';
 
 const SEO_LANDING_PAGES: SeoLandingPage[] = [
+  LCR_GUIDE,
   CATEGORIES_GUIDE,
   EUCHRE_GUIDE,
   SENIOR_WORD_GUIDE,
