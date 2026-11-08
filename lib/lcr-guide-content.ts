@@ -10,7 +10,7 @@ export const LCR_GUIDE: SeoLandingPage = {
   updatedAt: '2026-11-06',
   documentationCheckedAt: '2026-11-06',
   indexable: true,
-  relatedSlugs: ['bunco-rules', 'liars-dice-rules', 'farkle-scoring'],
+  relatedSlugs: ['chinese-checkers-rules', 'bunco-rules', 'liars-dice-rules', 'farkle-scoring'],
   locales: {
     en: {
       metaTitle: 'Left Right Center Rules: Dice, Chips and Worked Turns',
