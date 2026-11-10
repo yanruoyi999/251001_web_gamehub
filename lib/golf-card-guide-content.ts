@@ -27,7 +27,7 @@ export const GOLF_CARD_GUIDE: SeoLandingPage = {
         { title: 'Try a sample turn', body: 'Suppose your right column shows an 8♣ above a face-down card, and the discard pile shows 8♥. Take the 8♥ and put it in the lower-right slot without peeking first. The old lower-right card becomes the top discard. Both eights stay in your layout, and that column scores zero if it stays unchanged through the end of the hole.' },
         { title: 'End the hole and add the scores', body: 'As soon as someone turns their sixth card face up, stop play. Everyone reveals any cards still face down and scores all six positions. Ace is 1; a two is −2; 3 through 10 count face value; jack and queen count 10; king is 0. For each of the three columns, matching ranks cancel the entire column, even a pair of twos. Matching cards in a row do not cancel. Record each player’s score, then deal the next hole. The lowest total after nine holes wins.' },
         { title: 'Work through a score of 9', body: 'Read across the top row: 7♣, 2♥, A♠. The bottom row is 7♦, K♠, Q♦. The left column is 0 for the pair of sevens. The center is −2 from the two and king. The right is 11 from the ace and queen. Write 0 − 2 + 11 = 9 for this hole. A negative hole is possible and reduces the running total.' },
-        { title: 'Agree on house rules first', body: 'Some tables give every opponent one last turn when a player goes face up; this guide stops immediately. Agree before the deal on what to do if the stock runs out, since the base sources do not give a single procedure. One practical house rule is to keep the visible discard and shuffle the rest of the discard pile into a new stock; if neither pile supplies a move, reveal and score. For four- or nine-card layouts, use that version’s own end and scoring rules.' },
+        { title: 'Agree on house rules first', body: 'Some tables give every opponent one last turn when a player goes face up; this guide stops immediately. Agree before the deal on what to do if the stock runs out, since the base sources do not give a single procedure. One practical house rule is to keep the visible discard and shuffle the rest of the discard pile into a new stock. For four- or nine-card layouts, use that version’s own end and scoring rules.' },
       ],
       recommendations: [],
       faqs: [
@@ -57,7 +57,7 @@ export const GOLF_CARD_GUIDE: SeoLandingPage = {
         { title: '用一回合试试凑同列对子', body: '假设你右列上面是梅花 8，下面是暗牌，弃牌堆顶刚好是红桃 8。你可以拿红桃 8 换到右下角，选定前不能偷看。把换出的旧牌翻开弃掉。若结算前不再动这两张 8，右列就是 0 分。' },
         { title: '六张全开就结算', body: '一旦有人六张都已翻开，本轮立即结束。所有人翻开剩下的暗牌，给自己的六个位置计分。A 是 1 分，2 是 −2 分，3 到 10 按牌面计，J 和 Q 各 10 分，K 为 0。每列的两张若同点数，整列为 0，包括一对 2。同一行里相同的牌不抵消。每洞记下各自得分，九洞累计最低者获胜。' },
         { title: '算一例：这一洞得 9 分', body: '上排从左到右是梅花 7、红桃 2、黑桃 A；下排是方块 7、黑桃 K、方块 Q。左列一对 7 算 0；中列 2 加 K 为 −2；右列 A 加 Q 为 11。这一洞记录 0 − 2 + 11 = 9 分。一洞也可能得负分，会拉低累计总分。' },
-        { title: '开局前说清桌规', body: '有人习惯六张全开后给其他人各一次最后机会，本页采用立即结束版。基础来源没有给出统一的牌堆抽完规则，可以事先约定保留弃牌堆最上面一张，把其余弃牌洗回摸牌堆；如果两边都无牌可用，就翻开结算。四张版和九张版请按各自的结束和计分规则玩。' },
+        { title: '开局前说清桌规', body: '有人习惯六张全开后给其他人各一次最后机会，本页采用立即结束版。基础来源没有给出统一的牌堆抽完规则，可以事先约定保留弃牌堆最上面一张，把其余弃牌洗回摸牌堆。四张版和九张版请按各自的结束和计分规则玩。' },
       ],
       recommendations: [],
       faqs: [
