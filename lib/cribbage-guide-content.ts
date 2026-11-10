@@ -317,7 +317,7 @@ export const CRIBBAGE_GUIDE: SeoLandingPage = {
   updatedAt: '2026-11-04T00:00:00.000Z',
   documentationCheckedAt: '2026-11-04',
   indexable: true,
-  relatedSlugs: ['spades-scoring', 'euchre-strategy', 'farkle-scoring'],
+  relatedSlugs: ['spades-scoring', 'euchre-strategy', 'farkle-scoring', 'golf-card-game-rules'],
   locales: {
     en: {
       metaTitle: 'Cribbage Scoring Chart: Hand, Crib & Pegging + Print',
