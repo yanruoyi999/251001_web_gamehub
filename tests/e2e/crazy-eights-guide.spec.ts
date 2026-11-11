@@ -1,6 +1,6 @@
 import { expect, test } from './fixtures';
 
-test('Crazy Eights pilot works in both languages with trackable links and a printable sheet', async ({ page }) => {
+test('Crazy Eights works in both languages with trackable links and a printable sheet', async ({ page }) => {
   const events: string[] = [];
   await page.exposeFunction('captureGuideEvent', (name: string) => { events.push(name); });
   await page.addInitScript(() => {
@@ -23,7 +23,7 @@ test('Crazy Eights pilot works in both languages with trackable links and a prin
     await expect(inbound).toHaveAttribute('href', path);
     await inbound.click();
     await expect(page).toHaveURL(new RegExp(`${path}$`));
-    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, follow');
+    await expect(page.locator('meta[name="robots"][content*="noindex"]')).toHaveCount(0);
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `https://www.lumagamehub.com${path}`);
     await expect.poll(() => events.filter(name => name === 'guide_intent_view').length).toBe(before + 1);
 
