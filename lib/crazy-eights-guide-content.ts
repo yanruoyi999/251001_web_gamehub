@@ -8,7 +8,7 @@ export const CRAZY_EIGHTS_GUIDE: SeoLandingPage = {
   primaryKeyword: 'crazy eights rules',
   keywords: ['crazy eights rules', 'how to play crazy eights', 'crazy eights scoring'],
   updatedAt: '2026-11-11T00:00:00.000Z',
-  indexable: false,
+  indexable: true,
   relatedSlugs: ['gin-rummy-rules', 'spit-card-game-rules', 'euchre-strategy'],
   locales: {
     en: {

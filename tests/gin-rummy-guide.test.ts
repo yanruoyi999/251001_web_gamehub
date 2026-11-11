@@ -10,7 +10,7 @@ it('publishes one discoverable Gin Rummy guide in each canonical locale', async 
   for (const slug of guide!.relatedSlugs) {
     const related = getSeoLandingPage(slug);
     expect(related, slug).toBeDefined();
-    if (slug !== 'crazy-eights-rules') expect(related?.indexable, slug).not.toBe(false);
+    expect(related?.indexable, slug).not.toBe(false);
   }
   const urls = (await sitemap()).map(entry => entry.url);
   for (const prefix of ['', '/en']) {
