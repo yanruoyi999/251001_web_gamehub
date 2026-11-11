@@ -8,6 +8,7 @@ import { normalizeEnglishStaticHtml, verifyChineseStaticHtml } from './static-lo
 import { scopedHtmlPath, isRegeneratedCache } from './isr-cache-artifact';
 
 const root = process.cwd();
+const loopback = '127.0.0.1';
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 const routes = [
   { url: '/en', cache: 'en', locale: 'en' },
@@ -20,7 +21,7 @@ const routes = [
 
 async function freePort() {
   const server = createServer();
-  await new Promise<void>((resolve, reject) => { server.once('error', reject); server.listen(0, '127.0.0.1', resolve); });
+  await new Promise<void>((resolve, reject) => { server.once('error', reject); server.listen(0, loopback, resolve); });
   const port = (server.address() as { port: number }).port;
   await new Promise<void>((resolve, reject) => server.close(error => error ? reject(error) : resolve()));
   return port;
@@ -43,8 +44,13 @@ async function main() {
       await utimes(file, old, old);
     }
     const port = await freePort();
-    const base = `http://localhost:${port}`;
-    child = spawn(process.execPath, [path.join(root, 'node_modules/next/dist/bin/next'), 'start', '--hostname', 'localhost', '-p', String(port)], {
+    const request = (route: string, timeout: number) => fetch(`http://${loopback}:${port}${route}`, {
+      // Keep the locale middleware's existing localhost origin while using one address family.
+      headers: { host: `localhost:${port}` },
+      redirect: 'manual',
+      signal: AbortSignal.timeout(timeout),
+    });
+    child = spawn(process.execPath, [path.join(root, 'node_modules/next/dist/bin/next'), 'start', '--hostname', loopback, '-p', String(port)], {
       cwd: directory,
       // Whitelist instead of inheriting any developer/production credentials.
       env: { PATH: process.env.PATH, HOME: os.homedir(), NODE_ENV: 'production', GAME_CATALOG_MODE: 'local', CACHE_MODE: 'local', NEXT_TELEMETRY_DISABLED: '1' },
@@ -53,16 +59,23 @@ async function main() {
     child.stdout?.on('data', chunk => { serverLog += String(chunk); });
     child.stderr?.on('data', chunk => { serverLog += String(chunk); });
     let available = false;
+    let healthResult = 'no response';
     for (let attempt = 0; attempt < 60; attempt += 1) {
-      try { available = (await fetch(`${base}/api/health`, { signal: AbortSignal.timeout(1000) })).ok; } catch { /* booting */ }
+      try {
+        const health = await request('/api/health', 1000);
+        available = health.ok;
+        healthResult = `HTTP ${health.status}`;
+      } catch (error) {
+        healthResult = String(error);
+      }
       if (available) break;
       if (child.exitCode !== null) throw new Error('Isolated Next server exited before readiness');
       await delay(250);
     }
-    if (!available) throw new Error('Isolated server readiness timeout');
+    if (!available) throw new Error(`Isolated server readiness timeout (${healthResult})`);
     for (const route of routes) {
       const verify = (html: string) => route.locale === 'en' ? normalizeEnglishStaticHtml(html, `${route.cache}.html`) : verifyChineseStaticHtml(html, `${route.cache}.html`);
-      const first = await fetch(`${base}${route.url}`, { signal: AbortSignal.timeout(20_000), redirect: 'manual' });
+      const first = await request(route.url, 20_000);
       if (!first.ok || first.headers.get('x-nextjs-cache') !== 'STALE') throw new Error(`Expected stale cached HTML: ${route.url} / ${first.status} / ${first.headers.get('x-nextjs-cache')} / location=${first.headers.get('location')}`);
       verify(await first.text());
       const seedFile = path.join(directory, '.next/server/app', `${route.cache}.html`);
@@ -85,7 +98,7 @@ async function main() {
         throw new Error(`ISR did not rewrite the expired isolated cache: ${route.url}`);
       }
       verify(await readFile(file, 'utf8'));
-      const fresh = await fetch(`${base}${route.url}`, { signal: AbortSignal.timeout(20_000), redirect: 'manual' });
+      const fresh = await request(route.url, 20_000);
       if (!fresh.ok || fresh.headers.get('x-nextjs-cache') !== 'HIT') throw new Error(`Expected regenerated cache hit: ${route.url}`);
       verify(await fresh.text());
       console.log(`PASS ${route.url}: STALE -> regenerated HTML -> HIT; document locale=${route.locale}`);
