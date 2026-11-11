@@ -104,6 +104,9 @@ jobs:
       - name: Verify regenerated locale HTML
         run: pnpm check:isr-locale
 
+      - name: Match browser home ownership to the container user
+        run: chown "$(id -u):$(id -g)" /github/home
+
       - name: End-to-end tests
         id: e2e_tests
         shell: bash
