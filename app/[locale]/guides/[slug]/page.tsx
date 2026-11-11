@@ -12,6 +12,7 @@ import { DominoesTraining } from '@/components/game/dominoes-training';
 import { WordChainExamples } from '@/components/seo/word-chain-examples';
 import { CribbageScoringChart } from '@/components/seo/cribbage-scoring-chart';
 import { CribbagePrintButton } from '@/components/seo/cribbage-print-button';
+import { CrazyEightsQuickRules } from '@/components/seo/crazy-eights-quick-rules';
 import { CategoriesTopics } from '@/components/game/categories-topics';
 import {
   getSeoLandingPage,
@@ -210,6 +211,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
   const structuredData = [jsonLdArticle, jsonLdFaq, jsonLdBreadcrumb];
   const relatedPages = getRelatedPages(page, locale);
   const isCribbageGuide = page.slug === 'cribbage-scoring-chart';
+  const isCrazyEights = page.slug === 'crazy-eights-rules';
   const isSnakeGuide = ['google-snake-mods', 'google-snake-level-editor'].includes(page.slug);
   const counterpartSlug = page.slug === 'google-snake-mods' ? 'google-snake-level-editor' : 'google-snake-mods';
   const earlyRelatedPage = isSnakeGuide ? relatedPages.find(related => related.slug === counterpartSlug) : undefined;
@@ -256,8 +258,9 @@ export default async function GuidePage({ params }: GuidePageProps) {
   return (
     <article
       className="mx-auto w-full max-w-7xl bg-[#f1f7e9] px-3 py-5 sm:px-4 md:px-6 md:py-7 dark:bg-background"
-      data-printable-guide={page.printablePath ? 'true' : undefined}
+      data-printable-guide={page.printablePath || isCrazyEights ? 'true' : undefined}
       data-cribbage-guide={isCribbageGuide ? 'true' : undefined}
+      data-crazy-eights-guide={isCrazyEights ? 'true' : undefined}
     >
       {structuredData.map((schema, index) => (
         <script
@@ -307,6 +310,8 @@ export default async function GuidePage({ params }: GuidePageProps) {
           </span>
         </div>
       </header>
+
+      {isCrazyEights ? <CrazyEightsQuickRules locale={locale} /> : null}
 
       {page.printablePath ? (
         <div className="mb-5 flex flex-wrap gap-2" data-print-hide>
@@ -707,13 +712,25 @@ export default async function GuidePage({ params }: GuidePageProps) {
           <ul className="mt-4 space-y-3 text-sm">
             {remainingRelatedPages.map(related => (
               <li key={related.slug}>
-                <Link
-                  href={getLocalizedPath(locale, `/guides/${related.slug}`)}
-                  className="inline-flex items-center text-primary transition hover:text-primary/80"
-                  prefetch
-                >
-                  {related.heading} →
-                </Link>
+                {isCrazyEights || related.slug === 'crazy-eights-rules' ? (
+                  <GuideIntentLink
+                    guideSlug={page.slug}
+                    action={isCrazyEights ? 'read_related_guide' : 'open_crazy_eights_rules'}
+                    locale={locale}
+                    href={getLocalizedPath(locale, `/guides/${related.slug}`)}
+                    className="inline-flex items-center text-primary transition hover:text-primary/80"
+                  >
+                    {related.heading} →
+                  </GuideIntentLink>
+                ) : (
+                  <Link
+                    href={getLocalizedPath(locale, `/guides/${related.slug}`)}
+                    className="inline-flex items-center text-primary transition hover:text-primary/80"
+                    prefetch
+                  >
+                    {related.heading} →
+                  </Link>
+                )}
               </li>
             ))}
           </ul>
