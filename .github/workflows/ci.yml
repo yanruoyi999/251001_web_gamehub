@@ -13,6 +13,13 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-24.04
+    container:
+      # Match the Playwright version in pnpm-lock.yaml.
+      image: mcr.microsoft.com/playwright:v1.55.1-noble@sha256:2f29369043d81d6d69a815ceb80760f55e85f5020371ad06a4d996f18503ad1c
+      options: --ipc=host
+    defaults:
+      run:
+        shell: bash
 
     steps:
       - name: Checkout repository
@@ -96,14 +103,6 @@ jobs:
 
       - name: Verify regenerated locale HTML
         run: pnpm check:isr-locale
-
-      - name: Install Playwright browsers
-        run: |
-          # Use Ubuntu's signed upstream archive if the runner points at the Azure mirror.
-          if [[ -f /etc/apt/apt-mirrors.txt ]]; then
-            sudo sed -E -i 's#https?://azure\.archive\.ubuntu\.com/ubuntu#https://archive.ubuntu.com/ubuntu#g' /etc/apt/apt-mirrors.txt
-          fi
-          pnpm exec playwright install --with-deps chromium firefox webkit
 
       - name: End-to-end tests
         id: e2e_tests
