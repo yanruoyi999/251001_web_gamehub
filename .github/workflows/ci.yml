@@ -13,6 +13,13 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-24.04
+    container:
+      # Match the Playwright version in pnpm-lock.yaml.
+      image: mcr.microsoft.com/playwright:v1.55.1-noble@sha256:2f29369043d81d6d69a815ceb80760f55e85f5020371ad06a4d996f18503ad1c
+      options: --ipc=host
+    defaults:
+      run:
+        shell: bash
 
     steps:
       - name: Checkout repository
@@ -97,8 +104,8 @@ jobs:
       - name: Verify regenerated locale HTML
         run: pnpm check:isr-locale
 
-      - name: Install Playwright browsers
-        run: pnpm exec playwright install --with-deps chromium firefox webkit
+      - name: Match browser home ownership to the container user
+        run: chown "$(id -u):$(id -g)" /github/home
 
       - name: End-to-end tests
         id: e2e_tests
