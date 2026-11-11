@@ -9,7 +9,7 @@ export const PALACE_GUIDE: SeoLandingPage = {
   keywords: ['palace card game rules', 'how to play palace', 'palace card game setup'],
   updatedAt: '2026-11-11T00:00:00.000Z',
   documentationCheckedAt: '2026-11-11',
-  indexable: false,
+  indexable: true,
   relatedSlugs: ['spit-card-game-rules', 'euchre-strategy'],
   locales: {
     en: {

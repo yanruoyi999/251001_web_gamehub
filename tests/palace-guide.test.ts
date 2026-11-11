@@ -7,7 +7,7 @@ import { getSeoLandingPage } from '@/lib/seo-landing-content';
 const slug = 'palace-card-game-rules';
 
 describe('Palace card game rules', () => {
-  it('serves both canonical guide routes with noindex and excludes them from the sitemap', async () => {
+  it('serves both canonical guide routes and includes each once in the sitemap', async () => {
     const paths = { zh: '/guides/' + slug, en: '/en/guides/' + slug };
     expect(generateStaticParams().filter(page => page.slug === slug)).toEqual([
       { locale: 'zh', slug },
@@ -17,11 +17,12 @@ describe('Palace card game rules', () => {
     const urls = (await sitemap()).map(entry => entry.url);
     for (const locale of ['zh', 'en'] as const) {
       const metadata = await generateMetadata({ params: Promise.resolve({ locale, slug }) });
-      expect(metadata.robots).toEqual({ index: false, follow: true });
+      expect(metadata.robots).toBeUndefined();
       expect(metadata.alternates?.canonical).toBe(paths[locale]);
       expect(metadata.alternates?.languages).toEqual({ 'zh-CN': paths.zh, 'en-US': paths.en });
-      expect(urls).not.toContain(buildAbsoluteUrl(paths[locale]));
+      expect(urls.filter(url => url === buildAbsoluteUrl(paths[locale]))).toHaveLength(1);
     }
+    expect(urls).not.toContain(buildAbsoluteUrl('/zh' + paths.zh));
   });
 
   it('provides a bilingual tabletop guide with two reciprocal card-guide links', () => {
