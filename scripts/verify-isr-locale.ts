@@ -50,7 +50,11 @@ async function main() {
       redirect: 'manual',
       signal: AbortSignal.timeout(timeout),
     });
-    child = spawn(process.execPath, [path.join(root, 'node_modules/next/dist/bin/next'), 'start', '--hostname', loopback, '-p', String(port)], {
+    child = spawn(process.execPath, [
+      '--dns-result-order=ipv4first',
+      path.join(root, 'node_modules/next/dist/bin/next'),
+      'start', '--hostname', 'localhost', '-p', String(port),
+    ], {
       cwd: directory,
       // Whitelist instead of inheriting any developer/production credentials.
       env: { PATH: process.env.PATH, HOME: os.homedir(), NODE_ENV: 'production', GAME_CATALOG_MODE: 'local', CACHE_MODE: 'local', NEXT_TELEMETRY_DISABLED: '1' },
