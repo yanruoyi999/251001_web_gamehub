@@ -241,9 +241,12 @@ export function SpendBillGatesMoneyGame({
     });
 
     window.requestAnimationFrame(() => {
+      const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        ? 'instant'
+        : 'smooth';
       document
         .getElementById('billionaire-result')
-        ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        ?.scrollIntoView({ behavior, block: 'start' });
     });
   };
 
