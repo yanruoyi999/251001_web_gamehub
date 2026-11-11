@@ -9,7 +9,7 @@ export const GIN_RUMMY_GUIDE: SeoLandingPage = {
   updatedAt: '2026-11-09T00:00:00.000Z',
   documentationCheckedAt: '2026-11-09',
   indexable: true,
-  relatedSlugs: ['cribbage-scoring-chart', 'euchre-strategy', 'shut-the-box-rules'],
+  relatedSlugs: ['cribbage-scoring-chart', 'euchre-strategy', 'shut-the-box-rules', 'crazy-eights-rules'],
   locales: {
     en: {
       metaTitle: 'Gin Rummy Rules: How to Knock, Go Gin and Score',

@@ -192,6 +192,15 @@
 
 /* Browser-menu printing also works when this chart is read without JavaScript. */
 @media print {
+  body:has([data-crazy-eights-guide='true']) div:has(> #main-content) > :not(main),
+  [data-crazy-eights-guide='true'] > :not([data-crazy-eights-print]) {
+    display: none !important;
+  }
+
+  [data-crazy-eights-print] {
+    color: #111 !important;
+  }
+
   body:has([data-cribbage-guide='true']) {
     background: #fff !important;
     color: #111 !important;
