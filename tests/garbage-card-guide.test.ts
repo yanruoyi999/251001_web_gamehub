@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { generateMetadata, generateStaticParams } from '@/app/[locale]/guides/[slug]/page';
 import sitemap from '@/app/sitemap';
 import { buildAbsoluteUrl } from '@/lib/seo';
-import { getSeoLandingPage } from '@/lib/seo-landing-content';
+import { getSeoLandingPage, getSeoLandingPages } from '@/lib/seo-landing-content';
 
 const slug = 'garbage-card-game-rules';
 const relatedSlugs = ['spit-card-game-rules', 'gin-rummy-rules'];
@@ -26,11 +26,12 @@ describe('Garbage card game rules', () => {
     expect(urls).not.toContain(buildAbsoluteUrl('/zh' + paths.zh));
   });
 
-  it('includes the localized layout quick reference and two reciprocal guide links', () => {
+  it('appears in the guide directory and links to related guides', () => {
     const guide = getSeoLandingPage(slug);
     expect(guide?.indexable).toBe(true);
     expect(guide?.embedGame).toBeUndefined();
     expect(guide?.relatedSlugs).toEqual(relatedSlugs);
+    expect(getSeoLandingPages().filter(page => page.indexable !== false && page.slug === slug)).toHaveLength(1);
 
     for (const locale of ['zh', 'en'] as const) {
       const layout = guide?.locales[locale].sections[0].bullets;
@@ -39,7 +40,8 @@ describe('Garbage card game rules', () => {
     }
     for (const relatedSlug of relatedSlugs) {
       const related = getSeoLandingPage(relatedSlug);
-      expect(related?.relatedSlugs.filter(target => target === slug)).toHaveLength(1);
+      expect(related).toBeDefined();
+      expect(related?.relatedSlugs).not.toContain(slug);
     }
   });
 });

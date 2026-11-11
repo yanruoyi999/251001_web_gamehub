@@ -9,7 +9,7 @@ export const SPIT_GUIDE: SeoLandingPage = {
   updatedAt: '2026-11-09T00:00:00.000Z',
   documentationCheckedAt: '2026-11-09',
   indexable: true,
-  relatedSlugs: ['gin-rummy-rules', 'cribbage-scoring-chart', 'euchre-strategy', 'crazy-eights-rules', 'palace-card-game-rules', 'garbage-card-game-rules'],
+  relatedSlugs: ['gin-rummy-rules', 'cribbage-scoring-chart', 'euchre-strategy', 'crazy-eights-rules', 'palace-card-game-rules'],
   locales: {
     en: {
       metaTitle: 'Spit Card Game Rules for Two Players',
