@@ -13,9 +13,11 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 const routes = [
   { url: '/en', cache: 'en', locale: 'en' },
   { url: '/en/games/stacker-game', cache: 'en/games/stacker-game', locale: 'en' },
+  { url: '/en/games/tunnel-rush', cache: 'en/games/tunnel-rush', locale: 'en' },
   { url: '/en/guides/google-snake-mods', cache: 'en/guides/google-snake-mods', locale: 'en' },
   { url: '/', cache: 'zh', locale: 'zh' },
   { url: '/games/stacker-game', cache: 'zh/games/stacker-game', locale: 'zh' },
+  { url: '/games/tunnel-rush', cache: 'zh/games/tunnel-rush', locale: 'zh' },
   { url: '/guides/google-snake-mods', cache: 'zh/guides/google-snake-mods', locale: 'zh' },
 ] as const;
 
@@ -34,8 +36,13 @@ async function main() {
   let serverLog = '';
   try {
     // Never alter the working build or production. Expire only this throwaway copy.
+    const runtimeCache = path.join(root, '.next', 'server', 'route-cache');
     for (const file of ['.next', 'next.config.js', 'package.json', 'i18n', 'public']) {
-      await cp(path.join(root, file), path.join(directory, file), { recursive: true, preserveTimestamps: true });
+      await cp(path.join(root, file), path.join(directory, file), {
+        recursive: true,
+        preserveTimestamps: true,
+        filter: source => source !== runtimeCache,
+      });
     }
     await symlink(path.join(root, 'node_modules'), path.join(directory, 'node_modules'), 'dir');
     const old = new Date(Date.now() - 3 * 86_400_000);
