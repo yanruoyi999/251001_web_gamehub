@@ -36,8 +36,13 @@ async function main() {
   let serverLog = '';
   try {
     // Never alter the working build or production. Expire only this throwaway copy.
+    const runtimeCache = path.join(root, '.next', 'server', 'route-cache');
     for (const file of ['.next', 'next.config.js', 'package.json', 'i18n', 'public']) {
-      await cp(path.join(root, file), path.join(directory, file), { recursive: true, preserveTimestamps: true });
+      await cp(path.join(root, file), path.join(directory, file), {
+        recursive: true,
+        preserveTimestamps: true,
+        filter: source => source !== runtimeCache,
+      });
     }
     await symlink(path.join(root, 'node_modules'), path.join(directory, 'node_modules'), 'dir');
     const old = new Date(Date.now() - 3 * 86_400_000);
