@@ -13,9 +13,11 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 const routes = [
   { url: '/en', cache: 'en', locale: 'en' },
   { url: '/en/games/stacker-game', cache: 'en/games/stacker-game', locale: 'en' },
+  { url: '/en/games/tunnel-rush', cache: 'en/games/tunnel-rush', locale: 'en' },
   { url: '/en/guides/google-snake-mods', cache: 'en/guides/google-snake-mods', locale: 'en' },
   { url: '/', cache: 'zh', locale: 'zh' },
   { url: '/games/stacker-game', cache: 'zh/games/stacker-game', locale: 'zh' },
+  { url: '/games/tunnel-rush', cache: 'zh/games/tunnel-rush', locale: 'zh' },
   { url: '/guides/google-snake-mods', cache: 'zh/guides/google-snake-mods', locale: 'zh' },
 ] as const;
 

@@ -96,8 +96,13 @@ for (const guide of guides) {
 for (const pageFile of pageFiles) {
   const source = readFileSync(pageFile, 'utf8');
   const relativePath = path.relative(process.cwd(), pageFile);
+  // Tunnel Rush renders the generic detail page through its ISR wrapper.
+  const delegatedSource = relativePath === path.join('app', '[locale]', 'games', 'tunnel-rush', 'page.tsx') &&
+    source.includes("from '../[slug]/page'") && source.includes('<GamePage ')
+    ? readFileSync(path.resolve(path.dirname(pageFile), '../[slug]/page.tsx'), 'utf8')
+    : '';
 
-  const explicitNavigationCount = countInternalNavigation(source);
+  const explicitNavigationCount = countInternalNavigation(`${source}\n${delegatedSource}`);
   const inheritedCount = inheritedNavigationCredit(relativePath);
   const renderedNavigationCount = explicitNavigationCount + inheritedCount;
 
