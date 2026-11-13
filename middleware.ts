@@ -2,6 +2,7 @@ import createMiddleware from 'next-intl/middleware';
 import { NextRequest, NextResponse } from 'next/server';
 import { locales, defaultLocale, localePrefix } from './i18n/config';
 import { isLocalCatalogueMode } from './lib/games/catalog-mode';
+import { isPublicCatalogDocument } from './lib/games/catalog-page-cache';
 
 const intlMiddleware = createMiddleware({
   locales,
@@ -34,6 +35,12 @@ export default function middleware(request: NextRequest) {
     new NextRequest(request, { headers: requestHeaders })
   );
   response.headers.set('Content-Language', locale);
+
+  if (isLocalCatalogueMode() && isPublicCatalogDocument(request)) {
+    response.headers.append('Vary', 'Cookie');
+    response.headers.set('Vercel-CDN-Cache-Control', 's-maxage=120');
+  }
+
   return response;
 }
 
