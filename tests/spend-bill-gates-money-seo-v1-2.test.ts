@@ -13,7 +13,6 @@ describe('Spend Bill Gates Money SEO v1.2', () => {
     const page = readSource(
       'app/[locale]/games/spend-bill-gates-money/page.tsx',
     );
-    const ogRoute = readSource('app/og/spend-bill-gates-money/route.tsx');
 
     expect(page).toContain('spend bill gates money game online');
     expect(page).toContain('money spending game with buy and sell');
@@ -28,9 +27,6 @@ describe('Spend Bill Gates Money SEO v1.2', () => {
     expect(page).toContain('buySellTitle');
     expect(page).toContain('whatCanBuyTitle');
     expect(page).toContain('fixedBalanceTitle');
-    expect(ogRoute).toContain('ImageResponse');
-    expect(ogRoute).toContain('width: 1200');
-    expect(ogRoute).toContain('height: 630');
   });
 
   it('adds contextual inbound links without changing catalogue pagination', () => {

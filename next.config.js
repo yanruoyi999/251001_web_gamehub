@@ -104,6 +104,8 @@ const gameRuntimeSecurityHeaders = [
   },
 ];
 
+const staticShareImages = ['spend-bill-gates-money', 'luma-snake-3d'];
+
 const nextConfig = {
   images: {
     remotePatterns: [
@@ -128,7 +130,21 @@ const nextConfig = {
         source: '/games-runtime/:path*',
         headers: gameRuntimeSecurityHeaders,
       },
+      ...staticShareImages.flatMap(slug =>
+        [`/og/${slug}`, `/og/${slug}.png`].map(source => ({
+          source,
+          headers: [
+            { key: 'Cache-Control', value: 'public, max-age=86400' },
+          ],
+        }))
+      ),
     ];
+  },
+  async rewrites() {
+    return staticShareImages.map(slug => ({
+      source: `/og/${slug}`,
+      destination: `/og/${slug}.png`,
+    }));
   },
   async redirects() {
     return [
