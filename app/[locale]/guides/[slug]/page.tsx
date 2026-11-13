@@ -710,17 +710,26 @@ export default async function GuidePage({ params }: GuidePageProps) {
             {locale === 'zh' ? '相关主题' : 'Related Guides'}
           </h2>
           <ul className="mt-4 space-y-3 text-sm">
-            {remainingRelatedPages.map(related => (
-              <li key={related.slug}>
-                {isCrazyEights || related.slug === 'crazy-eights-rules' ? (
+            {remainingRelatedPages.map(related => {
+              const isEuchreBoorayLink = page.slug === 'euchre-strategy' && related.slug === 'booray-card-game-rules';
+              const action = isEuchreBoorayLink ? 'open_booray_rules'
+                : isCrazyEights ? 'read_related_guide'
+                : related.slug === 'crazy-eights-rules' ? 'open_crazy_eights_rules'
+                : undefined;
+              const label = isEuchreBoorayLink
+                ? (locale === 'zh' ? 'Booray 规则：换牌、压主与赢墩' : 'Booray rules: drawing, overtrumping and winning tricks')
+                : related.heading;
+
+              return <li key={related.slug}>
+                {action ? (
                   <GuideIntentLink
                     guideSlug={page.slug}
-                    action={isCrazyEights ? 'read_related_guide' : 'open_crazy_eights_rules'}
+                    action={action}
                     locale={locale}
                     href={getLocalizedPath(locale, `/guides/${related.slug}`)}
                     className="inline-flex items-center text-primary transition hover:text-primary/80"
                   >
-                    {related.heading} →
+                    {label} →
                   </GuideIntentLink>
                 ) : (
                   <Link
@@ -728,11 +737,11 @@ export default async function GuidePage({ params }: GuidePageProps) {
                     className="inline-flex items-center text-primary transition hover:text-primary/80"
                     prefetch
                   >
-                    {related.heading} →
+                    {label} →
                   </Link>
                 )}
-              </li>
-            ))}
+              </li>;
+            })}
           </ul>
         </section>
       ) : null}
