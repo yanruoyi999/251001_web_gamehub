@@ -8,6 +8,7 @@ const ACTIONS_BY_GUIDE = new Map<string, ReadonlySet<string>>([
   ['crazy-eights-rules', new Set(['view_rules', 'open_round_example', 'print_quick_rules', 'read_related_guide'])],
   ['gin-rummy-rules', new Set(['open_crazy_eights_rules'])],
   ['spit-card-game-rules', new Set(['open_crazy_eights_rules'])],
+  ['euchre-strategy', new Set(['open_booray_rules'])],
 ]);
 
 /** Only bounded editorial context; never destination URLs or browser identifiers. */

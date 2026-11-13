@@ -94,7 +94,7 @@ export const EUCHRE_GUIDE: SeoLandingPage = {
   slug: 'euchre-strategy', primaryKeyword: 'euchre strategy',
   keywords: ['euchre strategy', 'euchre strategy for beginners', 'euchre left bower', 'euchre calling trump'],
   updatedAt: '2026-11-02T10:56:28+08:00',
-  relatedSlugs: ['categories-game-topics', 'how-to-play-dominoes', 'three-player-spades', 'golf-card-game-rules', 'palace-card-game-rules'],
+  relatedSlugs: ['categories-game-topics', 'how-to-play-dominoes', 'three-player-spades', 'golf-card-game-rules', 'palace-card-game-rules', 'booray-card-game-rules'],
   locales: {
     en: {
       metaTitle: 'Euchre Strategy: Calling Trump, Bowers and Worked Examples',
