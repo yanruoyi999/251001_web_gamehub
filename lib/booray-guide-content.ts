@@ -13,7 +13,7 @@ export const BOORAY_GUIDE: SeoLandingPage = {
     en: {
       metaTitle: 'Booray (Bourré) Card Game Rules: Deal, Draw and Play',
       metaDescription:
-        'Learn how to play Louisiana Bourré (Booray): deal five cards, choose trump, draw or pass, and resolve ties and zero-trick hands with worked examples.',
+        'Learn how to play Louisiana Bourré (Booray): deal five cards, reveal trump, draw or pass, and resolve ties and zero-trick hands with worked examples.',
       heading: 'Booray (Bourré) Card Game Rules',
       subheading: 'Learn the Louisiana trick-taking game with five cards each and a bowl of counters.',
       overview: [
@@ -88,7 +88,7 @@ export const BOORAY_GUIDE: SeoLandingPage = {
     zh: {
       metaTitle: 'Booray（Bourré）扑克牌规则｜发牌、换牌与赢墩',
       metaDescription:
-        '学会路易斯安那扑克牌游戏 Booray（Bourré）：每人五张牌，亮牌定主，决定换牌或退出，理解跟花、压主、平局和零墩结算。',
+        '学会路易斯安那扑克牌游戏 Booray（Bourré）：每人五张牌，亮牌定主，决定参加还是退出，学会换牌、跟花、压主和平局与零墩结算。',
       heading: 'Booray（Bourré）扑克牌规则',
       subheading: '每人五张牌，用普通扑克牌和不兑钱的计数筹码练习吃墩。',
       overview: [
