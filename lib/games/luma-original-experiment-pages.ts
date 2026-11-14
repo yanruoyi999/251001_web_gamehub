@@ -19,6 +19,14 @@ const wordLadderPage = {
   qualityScore: 79,
 } as const;
 
+const countryShapePage = {
+  slug: 'country-shape-quiz',
+  path: '/games/country-shape-quiz',
+  keyword: 'country shape quiz',
+  pageType: 'game',
+  qualityScore: 79,
+} as const;
+
 export const ORIGINAL_EXPERIMENT_PAGE_SUMMARIES = [
   {
     slug: 'daily-solitaire',
@@ -57,6 +65,7 @@ export const ORIGINAL_EXPERIMENT_PAGE_SUMMARIES = [
   },
   ...NEW_EXPERIMENT_PAGE_SUMMARIES,
   wordLadderPage,
+  countryShapePage,
 ] as const;
 
 export type OriginalExperimentSlug = (typeof ORIGINAL_EXPERIMENT_PAGE_SUMMARIES)[number]['slug'];
@@ -965,7 +974,10 @@ const pageDefinitions: Record<OriginalExperimentSlug, OriginalExperimentPageDefi
           { question: 'How many puzzles are available?', answer: 'There are 16 practice puzzles. Next puzzle cycles through the set.' },
         ],
         relatedTitle: 'More word play',
-        related: [{ href: '/guides/word-chain-game-examples', title: 'Word Chain Game Examples', description: 'Build a chain of compound words and phrases.' }],
+        related: [
+          { href: '/guides/word-chain-game-examples', title: 'Word Chain Game Examples', description: 'Build a chain of compound words and phrases.' },
+          { href: '/games/country-shape-quiz', title: 'Country Shape Quiz', description: 'Identify 24 countries by their outlines.' },
+        ],
         home: 'Home',
         games: 'Games',
         backToGames: 'Browse games',
@@ -989,10 +1001,62 @@ const pageDefinitions: Record<OriginalExperimentSlug, OriginalExperimentPageDefi
           { question: '有多少道题？', answer: '共有 16 道练习题，「下一题」会在这组题目里循环。' },
         ],
         relatedTitle: '更多英文词语玩法',
-        related: [{ href: '/guides/word-chain-game-examples', title: '英文词语接龙示例', description: '用复合词或短语连接相邻单词。' }],
+        related: [
+          { href: '/guides/word-chain-game-examples', title: '英文词语接龙示例', description: '用复合词或短语连接相邻单词。' },
+          { href: '/games/country-shape-quiz', title: '看轮廓猜国家', description: '用地图轮廓辨认 24 个国家。' },
+        ],
         home: '首页',
         games: '游戏',
         backToGames: '浏览游戏',
+      },
+    },
+  },
+  'country-shape-quiz': {
+    ...countryShapePage,
+    locales: {
+      en: {
+        metaTitle: 'Country Shape Quiz – Guess the Country by Its Outline | Luma',
+        metaDescription: 'Identify 24 countries by their silhouettes. Play a world or regional round, learn a clue for each answer, and retry missed shapes.',
+        keywords: ['country shape quiz', 'country outline quiz', 'guess the country by shape'],
+        eyebrow: 'Luma geography game',
+        title: 'Country Shape Quiz',
+        intro: 'Identify countries from their silhouettes. Pick one of four answers and use the shape clues to improve your next round.',
+        originalNote: 'Luma wrote the game and its clues. The silhouettes use simplified boundary data from Natural Earth, a public-domain map dataset. The shapes are scaled individually for identification.',
+        sections: [
+          { title: 'How to play', body: 'Choose the country that matches the outline. After each guess, the game reveals the name and points out a feature such as a peninsula, a straight border, or an island chain.' },
+          { title: 'World and regional rounds', body: 'World rounds show eight outlines. Choose a region to practice its smaller set. Every round draws from a collection of 24 countries across five regions.' },
+          { title: 'Learn from missed outlines', body: 'Finish your round to see the score and practice just the outlines you missed. Look for features that distinguish two nearby countries, such as the long southward peninsula on Thailand.' },
+        ],
+        faqTitle: 'Country shape quiz questions',
+        faqs: [
+          { question: 'Are country silhouettes drawn at the same scale?', answer: 'Each outline is fitted to the question panel independently. The game tests contours and features, so the image does not show relative land area.' },
+          { question: 'Can I play without a timer?', answer: 'Yes. You can take as long as you like and start another round when ready.' },
+        ],
+        relatedTitle: 'More short puzzles',
+        related: [{ href: '/games/word-ladder', title: 'Word Ladder', description: 'Change one letter at a time to reach the target word.' }],
+        home: 'Home', games: 'Games', backToGames: 'Browse games',
+      },
+      zh: {
+        metaTitle: '看轮廓猜国家 – 在线地理猜图游戏 | Luma',
+        metaDescription: '从国家轮廓猜地名。练习 24 个国家，按地区选题，查看每题的轮廓线索并重练错题。',
+        keywords: ['看轮廓猜国家', '国家轮廓测验', '地理猜图游戏'],
+        eyebrow: 'Luma 地理游戏',
+        title: '看轮廓猜国家',
+        intro: '只看剪影，在四个选项里认出国家。每题作答后都能看到一个轮廓线索，帮助下一轮认得更快。',
+        originalNote: '玩法和线索由 Luma 编写。轮廓来自公有领域地图 Natural Earth 的简化边界数据，每张图独立缩放，方便辨认。',
+        sections: [
+          { title: '怎么玩', body: '选出与轮廓对应的国家。每次作答都会显示正确地名，并指出一个可辨识的特征，例如半岛、平直边界或岛链。' },
+          { title: '全球和地区练习', body: '全球模式每轮八题。只想熟悉某个地区，就切换到该地区的题组。完整题库收录五个地区的 24 个国家。' },
+          { title: '重练错题', body: '完成一轮后可以只练答错的轮廓。试着记住区分相邻国家的形状特征，例如泰国向南延伸的狭长半岛。' },
+        ],
+        faqTitle: '常见问题',
+        faqs: [
+          { question: '图里的国家按同一比例画的吗？', answer: '每张轮廓都按自己的大小适配到答题框。可以用来练习形状，不能据此比较各国面积。' },
+          { question: '答题有时间限制吗？', answer: '没有。你可以慢慢观察，在准备好后开始下一轮。' },
+        ],
+        relatedTitle: '更多短谜题',
+        related: [{ href: '/games/word-ladder', title: '英文单词字梯', description: '每步换一个字母，走到目标词。' }],
+        home: '首页', games: '游戏', backToGames: '浏览游戏',
       },
     },
   },
