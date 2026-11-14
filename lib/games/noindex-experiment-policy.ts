@@ -8,6 +8,7 @@ export const NOINDEX_EXPERIMENT_GAME_SLUGS = [
   'chinese-checkers',
   'stacker-game',
   'two-player-games',
+  'word-ladder',
 ] as const;
 
 const noindexExperimentGameSlugs = new Set<string>(NOINDEX_EXPERIMENT_GAME_SLUGS);

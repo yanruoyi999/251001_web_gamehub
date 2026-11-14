@@ -11,6 +11,14 @@ import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES, buildAbsoluteUrl } f
 export const ORIGINAL_EXPERIMENT_PUBLISHED_AT = '2026-08-26T00:00:00.000Z';
 export const ORIGINAL_EXPERIMENT_UPDATED_AT = '2026-08-30T00:00:00.000Z';
 
+const wordLadderPage = {
+  slug: 'word-ladder',
+  path: '/games/word-ladder',
+  keyword: 'word ladder game',
+  pageType: 'game',
+  qualityScore: 79,
+} as const;
+
 export const ORIGINAL_EXPERIMENT_PAGE_SUMMARIES = [
   {
     slug: 'daily-solitaire',
@@ -48,6 +56,7 @@ export const ORIGINAL_EXPERIMENT_PAGE_SUMMARIES = [
     qualityScore: 90,
   },
   ...NEW_EXPERIMENT_PAGE_SUMMARIES,
+  wordLadderPage,
 ] as const;
 
 export type OriginalExperimentSlug = (typeof ORIGINAL_EXPERIMENT_PAGE_SUMMARIES)[number]['slug'];
@@ -931,6 +940,59 @@ const pageDefinitions: Record<OriginalExperimentSlug, OriginalExperimentPageDefi
         home: '首页',
         games: '游戏',
         backToGames: '返回游戏库',
+      },
+    },
+  },
+  'word-ladder': {
+    ...wordLadderPage,
+    locales: {
+      en: {
+        metaTitle: 'Word Ladder Game – Change One Letter at a Time | Luma',
+        metaDescription: 'Play 16 four-letter word ladders. Change one letter to reach the target, ask for a hint, and try your own route.',
+        keywords: ['word ladder game', 'word ladder puzzles', 'change one letter word game'],
+        eyebrow: 'Luma original word puzzle',
+        title: 'Word Ladder Game',
+        intro: 'Turn the starting word into the target one letter at a time. Every step must form a four-letter English word.',
+        originalNote: 'Luma wrote the game and curated the practice list and puzzle sequence. Game events record progress without the words you type.',
+        sections: [
+          { title: 'How to play', body: 'Keep all four letter positions fixed and change exactly one letter per move. Type the new word and press Enter or Add word. Different valid routes can reach the same target.' },
+          { title: 'A short example', body: 'Try BOOK → BOOT → BOLT → BELT → MELT. Each move changes one letter in place. Shuffling letters or changing two at once does not count.' },
+          { title: 'When a route stalls', body: 'Ask for a next-step hint or undo a move. The hint searches from your current word. The game uses a curated practice list, so some real English words may be outside it.' },
+        ],
+        faqTitle: 'Word Ladder questions',
+        faqs: [
+          { question: 'Do I need the shortest path?', answer: 'Any permitted route to the target completes the puzzle. Restart if you want to finish in fewer moves.' },
+          { question: 'How many puzzles are available?', answer: 'There are 16 practice puzzles. Next puzzle cycles through the set.' },
+        ],
+        relatedTitle: 'More word play',
+        related: [{ href: '/guides/word-chain-game-examples', title: 'Word Chain Game Examples', description: 'Build a chain of compound words and phrases.' }],
+        home: 'Home',
+        games: 'Games',
+        backToGames: 'Browse games',
+      },
+      zh: {
+        metaTitle: '英文单词字梯在线玩 – 每步改一个字母 | Luma',
+        metaDescription: '挑战 16 道四字母英文单词字梯，每步替换一个字母到达目标词，支持提示、撤销和重开。',
+        keywords: ['英文单词字梯', '字母替换游戏', '英语单词谜题'],
+        eyebrow: 'Luma 原创单词谜题',
+        title: '英文单词字梯',
+        intro: '每步改一个字母，把起始单词变成目标单词。中间每一步都要组成四字母英文单词。',
+        originalNote: '玩法代码由 Luma 编写，练习词表和题目顺序由 Luma 编排。游戏埋点只记录进度，省略你输入的单词。',
+        sections: [
+          { title: '怎么玩', body: '每次只替换一个位置上的字母，其他三个位置保持不变。输入新词后按回车或点击「加入单词」。同一个目标可以从不同路径走到。' },
+          { title: '一个完整例子', body: 'BOOK → BOOT → BOLT → BELT → MELT。每次只替换一个位置，调换字母或同时改两个字母不能通过。' },
+          { title: '卡住时怎么做', body: '用「提示」找下一步，或者撤销后换一条路线。提示从当前单词开始找。游戏使用有限的练习词表，部分正确的英文词可能不在其中。' },
+        ],
+        faqTitle: '字梯常见问题',
+        faqs: [
+          { question: '一定要走最短路线吗？', answer: '只要按规则到达目标词就算完成。你可以重开，试试能不能用更少的步数。' },
+          { question: '有多少道题？', answer: '共有 16 道练习题，「下一题」会在这组题目里循环。' },
+        ],
+        relatedTitle: '更多英文词语玩法',
+        related: [{ href: '/guides/word-chain-game-examples', title: '英文词语接龙示例', description: '用复合词或短语连接相邻单词。' }],
+        home: '首页',
+        games: '游戏',
+        backToGames: '浏览游戏',
       },
     },
   },

@@ -420,7 +420,14 @@ export default async function GuidePage({ params }: GuidePageProps) {
       ) : page.interactiveWidget === 'categories-topics' ? (
         <CategoriesTopics locale={locale} />
       ) : page.interactiveWidget === 'word-chain-examples' ? (
-        <WordChainExamples locale={locale} />
+        <>
+          <WordChainExamples locale={locale} />
+          <p className="mb-8">
+            <Link className="font-medium text-primary underline underline-offset-4" href={getLocalizedPath(locale, '/games/word-ladder')}>
+              {locale === 'zh' ? '玩英文单词字梯：每步改一个字母' : 'Play Word Ladder: change one letter at a time'}
+            </Link>
+          </p>
+        </>
       ) : null}
 
       {page.embedGame ? (

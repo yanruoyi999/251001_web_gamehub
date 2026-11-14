@@ -11,8 +11,10 @@ import { buildAbsoluteUrl } from '@/lib/seo';
 
 describe('Luma original experiment page contract', () => {
   it('keeps nine distinct bilingual noindex experiments with complete editorial blocks', async () => {
-    expect(ORIGINAL_EXPERIMENT_PAGE_SUMMARIES).toHaveLength(9);
-    expect(new Set(ORIGINAL_EXPERIMENT_PAGE_SUMMARIES.map((page) => page.path)).size).toBe(9);
+    const previousPages = ORIGINAL_EXPERIMENT_PAGE_SUMMARIES.filter(({ slug }) => slug !== 'word-ladder');
+    expect(previousPages).toHaveLength(9);
+    expect(new Set(ORIGINAL_EXPERIMENT_PAGE_SUMMARIES.map((page) => page.path)).size)
+      .toBe(ORIGINAL_EXPERIMENT_PAGE_SUMMARIES.length);
     expect(ORIGINAL_EXPERIMENT_PAGE_SUMMARIES.map((page) => page.slug)).toEqual(
       expect.arrayContaining([
         'draw-a-perfect-circle',
@@ -23,7 +25,7 @@ describe('Luma original experiment page contract', () => {
     );
     const sitemapUrls = (await sitemap()).map((entry) => entry.url);
 
-    for (const summary of ORIGINAL_EXPERIMENT_PAGE_SUMMARIES) {
+    for (const summary of previousPages) {
       const page = getOriginalExperimentPage(summary.slug, 'en');
       const zhPage = getOriginalExperimentPage(summary.slug, 'zh');
 
@@ -52,6 +54,18 @@ describe('Luma original experiment page contract', () => {
         buildOriginalExperimentMetadata(page, 'zh').alternates?.canonical,
       ).toBe(buildAbsoluteUrl(getLocalizedPath('zh', summary.path)));
       expect(summary.qualityScore).toBeGreaterThanOrEqual(80);
+    }
+  });
+
+  it('keeps both Word Ladder routes outside the sitemap until index review', async () => {
+    const sitemapUrls = (await sitemap()).map((entry) => entry.url);
+    for (const locale of ['en', 'zh'] as const) {
+      const page = getOriginalExperimentPage('word-ladder', locale);
+      const metadata = buildOriginalExperimentMetadata(page, locale);
+      const url = buildAbsoluteUrl(getLocalizedPath(locale, '/games/word-ladder'));
+      expect(metadata.alternates?.canonical).toBe(url);
+      expect(metadata.robots).toMatchObject({ index: false, follow: true });
+      expect(sitemapUrls).not.toContain(url);
     }
   });
 
