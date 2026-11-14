@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { getSeoLandingPage } from '@/lib/seo-landing-content';
 import { getGuideIntentProperties } from '@/lib/guide-intent';
+import { buildOriginalExperimentMetadata, getOriginalExperimentPage } from '@/lib/games/luma-original-experiment-pages';
 
 describe('iPhone guide task entry', () => {
   it('has a bounded, bilingual, evidence-labelled quick pick without changing the title', () => {
@@ -28,8 +29,10 @@ describe('iPhone guide task entry', () => {
     expect(getGuideIntentProperties('google-snake-mods', 'play_circle', 'en')).toBeNull();
   });
   it('preserves experimental noindex and existing player runtime boundaries', () => {
-    const metadata = readFileSync(new URL('../lib/games/luma-original-experiment-pages.ts', import.meta.url), 'utf8');
-    expect(metadata).toContain('index: false');
+    for (const locale of ['en', 'zh'] as const) {
+      const page = getOriginalExperimentPage('draw-a-perfect-circle', locale);
+      expect(buildOriginalExperimentMetadata(page, locale).robots).toMatchObject({ index: false, follow: true });
+    }
     const template = readFileSync(new URL('../app/[locale]/guides/[slug]/page.tsx', import.meta.url), 'utf8');
     expect(template).toContain('GuideQuickPicks');
     expect(template).toContain('playLabel={page.embedGame.playLabel?.[locale]}');
