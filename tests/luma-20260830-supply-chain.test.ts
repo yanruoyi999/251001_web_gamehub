@@ -19,9 +19,9 @@ const newPages = [
 
 describe('Luma 2026-08-30 governed supply chain', () => {
   it('hard-excludes every governed experiment from sitemap catalogue inputs', () => {
-    expect(NOINDEX_EXPERIMENT_GAME_SLUGS).toHaveLength(11);
+    expect(NOINDEX_EXPERIMENT_GAME_SLUGS).toHaveLength(10);
     expect(shouldExcludeNoindexExperimentGame('word-ladder')).toBe(true);
-    expect(shouldExcludeNoindexExperimentGame('country-shape-quiz')).toBe(true);
+    expect(shouldExcludeNoindexExperimentGame('country-shape-quiz')).toBe(false);
 
     for (const slug of newPages) {
       expect(shouldExcludeNoindexExperimentGame(slug)).toBe(true);

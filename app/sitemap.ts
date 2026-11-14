@@ -9,6 +9,7 @@ import {
 } from '@/lib/game-taxonomy';
 import { shouldIncludeGameInSitemap } from '@/lib/games/quality-policy';
 import { shouldExcludeNoindexExperimentGame } from '@/lib/games/noindex-experiment-policy';
+import { ORIGINAL_EXPERIMENT_PAGE_SUMMARIES } from '@/lib/games/luma-original-experiment-pages';
 import { shouldUseCatalogueDatabase } from '@/lib/games/catalog-mode';
 import {
   SPEND_BILL_GATES_MONEY_PATH,
@@ -50,6 +51,11 @@ const standaloneGamePaths = [
     priority: 0.74,
     lastModified: new Date(BRAINROT_REFLEX_UPDATED_AT),
   },
+  ...ORIGINAL_EXPERIMENT_PAGE_SUMMARIES.flatMap(page =>
+    'indexable' in page && page.indexable
+      ? [{ path: page.path, changeFrequency: 'monthly' as const, priority: 0.55 }]
+      : [],
+  ),
 ] satisfies Array<{
   path: string;
   changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'];
@@ -209,7 +215,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const guides = getSeoLandingPages().filter((guide) => guide.indexable !== false);
   const categories = getCategoryEntries();
   const tags = getTagEntries();
-  const sitemapGames = await getSitemapGames();
+  const standalonePaths = new Set<string>(standaloneGamePaths.map(game => game.path));
+  const sitemapGames = (await getSitemapGames()).filter(game => !standalonePaths.has(`/games/${game.slug}`));
 
   for (const locale of locales) {
     for (const staticPath of staticPaths) {
