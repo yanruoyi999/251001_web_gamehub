@@ -24,7 +24,7 @@ const countryShapePage = {
   path: '/games/country-shape-quiz',
   keyword: 'country shape quiz',
   pageType: 'game',
-  qualityScore: 79,
+  qualityScore: 80,
   indexable: true,
 } as const;
 
