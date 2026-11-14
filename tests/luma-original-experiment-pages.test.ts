@@ -11,7 +11,7 @@ import { buildAbsoluteUrl } from '@/lib/seo';
 
 describe('Luma original experiment page contract', () => {
   it('keeps nine distinct bilingual noindex experiments with complete editorial blocks', async () => {
-    const previousPages = ORIGINAL_EXPERIMENT_PAGE_SUMMARIES.filter(({ slug }) => slug !== 'word-ladder');
+    const previousPages = ORIGINAL_EXPERIMENT_PAGE_SUMMARIES.filter(({ slug }) => slug !== 'word-ladder' && slug !== 'country-shape-quiz');
     expect(previousPages).toHaveLength(9);
     expect(new Set(ORIGINAL_EXPERIMENT_PAGE_SUMMARIES.map((page) => page.path)).size)
       .toBe(ORIGINAL_EXPERIMENT_PAGE_SUMMARIES.length);
