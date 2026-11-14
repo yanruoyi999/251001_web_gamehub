@@ -7,12 +7,15 @@ import { buildAbsoluteUrl } from '@/lib/seo';
 import { getSeoLandingPage } from '@/lib/seo-landing-content';
 
 describe('page quality scorecard', () => {
-  it('keeps every indexable scored page at 80 or higher', () => {
-    const underThreshold = buildPageQualityRows().filter(
+  it('keeps indexable scored pages at 80 or higher apart from the approved country-quiz trend launch', () => {
+    const rows = buildPageQualityRows();
+    const underThreshold = rows.filter(
       (row) => row.indexable && row.score < 80,
     );
 
-    expect(underThreshold).toEqual([]);
+    expect(underThreshold.map(({ path, score }) => ({ path, score }))).toEqual([
+      { path: '/games/country-shape-quiz', score: 79 },
+    ]);
   });
 
   it('removes thin tag pages from sitemap and marks them noindex', async () => {

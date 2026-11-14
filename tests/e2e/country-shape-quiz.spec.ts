@@ -6,7 +6,7 @@ for (const locale of ['en', 'zh'] as const) {
     await page.goto(`${prefix}/games/word-ladder`);
     await page.getByRole('link', { name: /Country Shape Quiz|看轮廓猜国家/ }).click();
     await expect(page).toHaveURL(new RegExp(`${prefix}/games/country-shape-quiz$`));
-    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, follow');
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'index, follow');
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `https://www.lumagamehub.com${prefix}/games/country-shape-quiz`);
     await expect(page.locator('link[hreflang="zh-CN"]')).toHaveAttribute('href', 'https://www.lumagamehub.com/games/country-shape-quiz');
     const game = page.getByRole('region', { name: /Country outline game|看轮廓猜国家游戏/ });
@@ -33,8 +33,12 @@ for (const locale of ['en', 'zh'] as const) {
   });
 }
 
-test('country shape quiz stays outside the sitemap', async ({ request }) => {
+test('both canonical country shape quiz routes are in the sitemap exactly once', async ({ request }) => {
   const response = await request.get('/sitemap.xml');
   expect(response.ok()).toBe(true);
-  expect(await response.text()).not.toContain('/games/country-shape-quiz');
+  const xml = await response.text();
+  for (const prefix of ['', '/en']) {
+    expect(xml.split(`<loc>https://www.lumagamehub.com${prefix}/games/country-shape-quiz</loc>`)).toHaveLength(2);
+  }
+  expect(xml).not.toContain('/games/word-ladder');
 });

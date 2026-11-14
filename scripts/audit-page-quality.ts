@@ -217,12 +217,12 @@ function scoreStandalonePages(): PageQualityRow[] {
     path: page.path,
     type: 'game',
     score: page.qualityScore,
-    indexable: false,
-    action: 'noindex',
-    reason:
-      'Original clean-room experiment has a self-hosted interaction, bilingual instructions, FAQ, structured data, related internal links, and an explicit noindex boundary.',
-    nextStep:
-      'Keep noindex,follow and exclude from sitemap until independent runtime, quality, and business evidence supports a separate indexability decision.',
+    indexable: 'indexable' in page && page.indexable,
+    action: 'indexable' in page && page.indexable ? 'keep' : 'noindex',
+    reason: 'Original self-hosted game with bilingual instructions, FAQ, structured data, and contextual internal links.',
+    nextStep: 'indexable' in page && page.indexable
+      ? 'Check canonical indexing and monitor play starts, finishes, and replay.'
+      : 'Keep noindex,follow and exclude from sitemap until a separate indexability decision.',
   }));
 
   return [

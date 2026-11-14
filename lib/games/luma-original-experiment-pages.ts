@@ -25,6 +25,7 @@ const countryShapePage = {
   keyword: 'country shape quiz',
   pageType: 'game',
   qualityScore: 79,
+  indexable: true,
 } as const;
 
 export const ORIGINAL_EXPERIMENT_PAGE_SUMMARIES = [
@@ -110,6 +111,7 @@ export interface OriginalExperimentPageDefinition {
   keyword: string;
   pageType: string;
   qualityScore: number;
+  indexable?: boolean;
   playMode?: 'SinglePlayer' | 'MultiPlayer' | Array<'SinglePlayer' | 'MultiPlayer'>;
   collectionItems?: Array<{ name: string; anchor: string }>;
   locales: Record<Locale, OriginalExperimentLocaleCopy>;
@@ -1015,7 +1017,7 @@ const pageDefinitions: Record<OriginalExperimentSlug, OriginalExperimentPageDefi
     ...countryShapePage,
     locales: {
       en: {
-        metaTitle: 'Country Shape Quiz – Guess the Country by Its Outline | Luma',
+        metaTitle: 'Guess the Country by Shape – Country Shape Quiz | Luma',
         metaDescription: 'Identify 24 countries by their silhouettes. Play a world or regional round, learn a clue for each answer, and retry missed shapes.',
         keywords: ['country shape quiz', 'country outline quiz', 'guess the country by shape'],
         eyebrow: 'Luma geography game',
@@ -1142,16 +1144,17 @@ export function buildOriginalExperimentMetadata(
 ): Metadata {
   const content = page.locales[locale];
   const canonical = getLocalizedPath(locale, page.path);
+  const index = page.indexable === true;
 
   return {
     title: content.metaTitle,
     description: content.metaDescription,
     keywords: content.keywords,
     robots: {
-      index: false,
+      index,
       follow: true,
       googleBot: {
-        index: false,
+        index,
         follow: true,
       },
     },
