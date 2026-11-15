@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { GamePlayerFacade } from '@/components/game/game-player-facade';
 import { GuideIntentLink } from '@/components/seo/guide-intent-link';
 import { GuideQuickPicks } from '@/components/seo/guide-quick-picks';
+import { ThreePlayerCardGameLinks } from '@/components/seo/three-player-card-game-links';
 import { getGuidePublicationDates } from '@/lib/guide-publication-dates';
 import { DominoesTraining } from '@/components/game/dominoes-training';
 import { WordChainExamples } from '@/components/seo/word-chain-examples';
@@ -710,6 +711,8 @@ export default async function GuidePage({ params }: GuidePageProps) {
             {content.ctaDescription}
           </p>
       </section>
+
+      <ThreePlayerCardGameLinks slug={page.slug} locale={locale} />
 
       {remainingRelatedPages.length > 0 ? (
         <section className="mt-16 border-t border-border pt-10">
