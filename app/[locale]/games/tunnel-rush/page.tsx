@@ -1,7 +1,6 @@
 import { isLocalCatalogueMode } from '@/lib/games/catalog-mode';
-import { setRequestLocale } from 'next-intl/server';
 import { connection } from 'next/server';
-import { isLocale, locales } from '@/i18n/config';
+import { locales } from '@/i18n/config';
 import GamePage, { generateMetadata as generateGameMetadata } from '../[slug]/page';
 
 export const revalidate = 3600;
@@ -13,7 +12,6 @@ interface TunnelRushPageProps {
 async function gameParams(params: TunnelRushPageProps['params']) {
   if (!isLocalCatalogueMode()) await connection();
   const { locale } = await params;
-  if (isLocale(locale)) setRequestLocale(locale);
   return { locale, slug: 'tunnel-rush' };
 }
 

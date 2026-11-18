@@ -1,17 +1,20 @@
-import { getRequestConfig } from 'next-intl/server';
+import { createTranslator, type AbstractIntlMessages } from 'use-intl/core';
 import { defaultLocale, isLocale } from './config';
 
-export default getRequestConfig(async ({ requestLocale }) => {
-  // This typically corresponds to the `[locale]` segment
-  let locale = await requestLocale;
+export const translationTimeZone = new Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-  // Ensure that a valid locale is used
-  if (!isLocale(locale)) {
-    locale = defaultLocale;
-  }
+export async function getMessages({ locale }: { locale: string }): Promise<AbstractIntlMessages> {
+  const supportedLocale = isLocale(locale) ? locale : defaultLocale;
+  return (await import(`../messages/${supportedLocale}.json`)).default;
+}
 
-  return {
-    locale,
-    messages: (await import(`../messages/${locale}.json`)).default,
-  };
-});
+export async function getTranslations({ locale, namespace }: { locale: string; namespace: string }) {
+  const supportedLocale = isLocale(locale) ? locale : defaultLocale;
+  const messages = await getMessages({ locale: supportedLocale });
+  return createTranslator<Record<string, any>, string>({
+    locale: supportedLocale,
+    messages,
+    namespace,
+    timeZone: translationTimeZone,
+  });
+}

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations } from '@/i18n/request';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { getLocalizedPath, locales } from '@/i18n/config';
@@ -81,7 +81,7 @@ async function safeSearchGames(query: string, page: number) {
 
 export default async function SearchPage({ params, searchParams }: SearchPageProps) {
   const [{ locale }, resolvedSearchParams] = await Promise.all([params, searchParams]);
-  const t = await getTranslations('Search');
+  const t = await getTranslations({ locale, namespace: 'Search' });
 
   const query = typeof resolvedSearchParams.q === 'string' ? resolvedSearchParams.q : '';
   const pageParam = resolvedSearchParams.page ? Number(resolvedSearchParams.page) : undefined;

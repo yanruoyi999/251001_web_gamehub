@@ -1,22 +1,9 @@
-import createMiddleware from 'next-intl/middleware';
 import { NextRequest, NextResponse } from 'next/server';
-import { locales, defaultLocale, localePrefix } from './i18n/config';
+import { defaultLocale, isLocale, normalizePublicPathname } from './i18n/config';
 import { isLocalCatalogueMode } from './lib/games/catalog-mode';
 
-const intlMiddleware = createMiddleware({
-  locales,
-  defaultLocale,
-  localePrefix,
-  localeCookie: false,
-  localeDetection: false,
-  // Page metadata already emits canonical/hreflang/x-default. Keeping a second
-  // automatic Link header created conflicting x-default targets for as-needed
-  // default-locale routes, so HTML metadata is the single SEO source of truth.
-  alternateLinks: false,
-});
-
 export default function middleware(request: NextRequest) {
-  const url = new URL(request.url);
+  const url = request.nextUrl.clone();
 
   if (url.pathname.startsWith('/admin')) {
     return isLocalCatalogueMode()
@@ -25,14 +12,24 @@ export default function middleware(request: NextRequest) {
   }
 
   const pathLocale = url.pathname.split('/')[1];
-  const locale =
-    locales.find(candidate => candidate === pathLocale) ?? defaultLocale;
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set('x-next-intl-locale', locale);
+  const locale = isLocale(pathLocale) ? pathLocale : defaultLocale;
+  const lowerCaseLocale = pathLocale.toLowerCase();
+  let response: NextResponse;
 
-  const response = intlMiddleware(
-    new NextRequest(request, { headers: requestHeaders })
-  );
+  if (pathLocale === defaultLocale) {
+    url.pathname = normalizePublicPathname(url.pathname);
+    response = NextResponse.redirect(url);
+  } else if (isLocale(pathLocale)) {
+    response = NextResponse.next();
+  } else if (isLocale(lowerCaseLocale)) {
+    url.pathname = `/${lowerCaseLocale}${url.pathname.slice(pathLocale.length + 1)}`;
+    response = NextResponse.redirect(url);
+  } else {
+    url.pathname = `/${defaultLocale}${url.pathname === '/' ? '' : url.pathname}`;
+    response = NextResponse.rewrite(url);
+  }
+
+  // Canonical and hreflang live in the rendered page metadata.
   response.headers.set('Content-Language', locale);
   return response;
 }

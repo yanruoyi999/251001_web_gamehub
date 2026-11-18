@@ -38,8 +38,8 @@ async function completeSolitaire(page: Page, count: 1 | 3, diagnostics: ReturnTy
       const foundation = game.getByRole('button', { name: `${SUITS[waste.suit]} foundation`, exact: true });
       const next = moveWasteToFoundation(state, waste.suit)!;
       await selectSolitaireCardAndMoveToFoundation(card, foundation, waste.rank,
-        () => diagnostics.click(card, { step, kind: 'waste-select', card: getSolitaireCardLabel(waste) }, state),
-        () => diagnostics.click(foundation, { step, kind: 'waste-foundation', card: getSolitaireCardLabel(waste) }, state),
+        () => diagnostics.recordAction({ step, kind: 'waste-select', card: getSolitaireCardLabel(waste) }, state, () => card.click()),
+        () => diagnostics.recordAction({ step, kind: 'waste-foundation', card: getSolitaireCardLabel(waste) }, state, () => foundation.click()),
       );
       await expectSolitaireWaste(game, next);
       state = next;
@@ -57,14 +57,17 @@ async function completeSolitaire(page: Page, count: 1 | 3, diagnostics: ReturnTy
       const foundation = game.getByRole('button', { name: `${lastSuit} foundation`, exact: true });
       const next = moveTableauToFoundation(state, from, card.suit)!;
       await selectSolitaireCardAndMoveToFoundation(source, foundation, card.rank,
-        () => diagnostics.click(source, { step, kind: 'tableau-select', card: lastCardLabel }, state),
-        () => diagnostics.click(foundation, { step, kind: 'tableau-foundation', card: lastCardLabel }, state),
+        () => diagnostics.recordAction({ step, kind: 'tableau-select', card: lastCardLabel }, state, () => source.click()),
+        () => diagnostics.recordAction({ step, kind: 'tableau-foundation', card: lastCardLabel }, state, () => foundation.click()),
       );
       await expectSolitaireWaste(game, next);
       state = next;
     } else {
       const next = drawFromSolitaireStock(state, count);
-      await diagnostics.click(game.getByRole('button', { name: 'Draw', exact: true }), { step, kind: 'draw' }, state);
+      const draw = game.getByRole('button', { name: 'Draw', exact: true });
+      await expect(draw).toBeEnabled();
+      // WebKit can reposition the toolbar between pointer down and up. Activate the same button with Enter.
+      await diagnostics.recordAction({ step, kind: 'draw' }, state, () => draw.press('Enter'));
       const stock = game.getByText('Stock', { exact: true }).locator('..').getByRole('button');
       await expect(stock).toHaveText(next.stock.length > 0 ? `${next.stock.length} · ${count}` : 'Empty');
       await expectSolitaireWaste(game, next);

@@ -3,7 +3,7 @@
 import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getLocalizedPath } from '@/i18n/config';
-import { useTranslations } from 'next-intl';
+import { useTranslations } from 'use-intl/react';
 import clsx from 'clsx';
 import { trackEvent } from '@/lib/gtag';
 

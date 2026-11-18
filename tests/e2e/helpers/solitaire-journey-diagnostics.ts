@@ -1,4 +1,4 @@
-import type { Locator, Page, TestInfo } from '@playwright/test';
+import type { Page, TestInfo } from '@playwright/test';
 
 import type { DailySolitaireGameState } from '../../../lib/games/daily-solitaire';
 
@@ -197,7 +197,7 @@ export function createSolitaireJourneyDiagnostics(drawCount: 1 | 3) {
     phase(name: 'page-loaded' | 'helper-start' | 'helper-complete' | 'journey-complete') {
       if (phases.length < 8) phases.push({ name, atMs: elapsed() });
     },
-    async click(locator: Locator, action: Action, state: DailySolitaireGameState) {
+    async recordAction(action: Action, state: DailySolitaireGameState, perform: () => Promise<void>) {
       const entry: (typeof actions)[number] = {
         ...action,
         card: action.card && /^(?:A|[2-9]|10|J|Q|K) of (?:spades|hearts|diamonds|clubs)$/.test(action.card) ? action.card : undefined,
@@ -212,7 +212,7 @@ export function createSolitaireJourneyDiagnostics(drawCount: 1 | 3) {
       actions.push(entry);
       if (actions.length > 32) actions.shift();
       try {
-        await locator.click();
+        await perform();
         entry.outcome = 'returned';
       } catch (error) {
         entry.outcome = 'threw';

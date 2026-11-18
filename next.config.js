@@ -1,6 +1,3 @@
-const createNextIntlPlugin = require('next-intl/plugin');
-
-const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 function toHttpsSource(hostname) {
@@ -183,4 +180,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withNextIntl(nextConfig);
+module.exports = nextConfig;

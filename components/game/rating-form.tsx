@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useState, useTransition } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations } from 'use-intl/react';
 
 import { Button } from '@/components/ui/button';
 

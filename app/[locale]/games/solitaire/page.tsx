@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations } from '@/i18n/request';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { getLocalizedPath, locales } from '@/i18n/config';
@@ -67,7 +67,7 @@ export async function generateMetadata({ params }: SolitairePageProps): Promise<
 
 export default async function SolitairePage({ params }: SolitairePageProps) {
   const { locale } = await params;
-  const t = await getTranslations('Solitaire');
+  const t = await getTranslations({ locale, namespace: 'Solitaire' });
 
   const tips = [
     t('tips.items.0'),

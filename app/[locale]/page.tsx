@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Script from 'next/script';
 import { ArrowRight, Check } from 'lucide-react';
-import { getMessages, getTranslations } from 'next-intl/server';
+import { getMessages, getTranslations } from '@/i18n/request';
 
 import { getLocalizedPath, locales, type Locale } from '@/i18n/config';
 import { getShanghaiDateKey } from '@/lib/retention/daily-recommendation';
