@@ -15,6 +15,7 @@ import { CribbageScoringChart } from '@/components/seo/cribbage-scoring-chart';
 import { CribbagePrintButton } from '@/components/seo/cribbage-print-button';
 import { CrazyEightsQuickRules } from '@/components/seo/crazy-eights-quick-rules';
 import { FiveHundredScoring } from '@/components/seo/five-hundred-scoring';
+import { BidEuchrePractice } from '@/components/seo/bid-euchre-practice';
 import { CategoriesTopics } from '@/components/game/categories-topics';
 import {
   getSeoLandingPage,
@@ -315,6 +316,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
 
       {isCrazyEights ? <CrazyEightsQuickRules locale={locale} /> : null}
       {page.slug === '500-card-game-rules' ? <FiveHundredScoring locale={locale} /> : null}
+      {page.slug === 'bid-euchre-rules' ? <BidEuchrePractice locale={locale} /> : null}
 
       {page.printablePath ? (
         <div className="mb-5 flex flex-wrap gap-2" data-print-hide>
@@ -724,13 +726,17 @@ export default async function GuidePage({ params }: GuidePageProps) {
           <ul className="mt-4 space-y-3 text-sm">
             {remainingRelatedPages.map(related => {
               const isEuchreBoorayLink = page.slug === 'euchre-strategy' && related.slug === 'booray-card-game-rules';
+              const isBidEuchreLink = page.slug === 'euchre-strategy' && related.slug === 'bid-euchre-rules';
               const action = isEuchreBoorayLink ? 'open_booray_rules'
+                : isBidEuchreLink ? 'open_bid_euchre_rules'
                 : isCrazyEights ? 'read_related_guide'
                 : related.slug === 'crazy-eights-rules' ? 'open_crazy_eights_rules'
                 : undefined;
               const label = isEuchreBoorayLink
                 ? (locale === 'zh' ? 'Booray 规则：换牌、压主与赢墩' : 'Booray rules: drawing, overtrumping and winning tricks')
-                : related.heading;
+                : isBidEuchreLink
+                  ? (locale === 'zh' ? '双副牌 Bid Euchre：竞叫规则和计分练习' : 'Double-deck Bid Euchre rules and scoring practice')
+                  : related.heading;
 
               return <li key={related.slug}>
                 {action ? (
