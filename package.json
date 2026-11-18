@@ -50,12 +50,12 @@
     "lucide-react": "^0.545.0",
     "meilisearch": "^0.38.0",
     "next": "15.5.29",
-    "next-intl": "^4.9.2",
     "postgres": "^3.4.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "tailwind-merge": "^3.3.1",
-    "three": "^0.185.1"
+    "three": "^0.185.1",
+    "use-intl": "4.13.1"
   },
   "devDependencies": {
     "@playwright/test": "^1.55.1",

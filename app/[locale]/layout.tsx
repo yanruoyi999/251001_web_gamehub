@@ -1,13 +1,12 @@
 import { DocumentShell, documentMetadata, documentViewport } from '@/components/layout/document-shell';
 import type { Metadata } from 'next';
 import { ReactNode } from 'react';
-import { NextIntlClientProvider } from 'next-intl';
+import { IntlProvider } from '@/components/layout/intl-provider';
 import { notFound } from 'next/navigation';
-import { getMessages, getTranslations } from 'next-intl/server';
+import { getMessages, getTranslations, translationTimeZone } from '@/i18n/request';
 import {
   getLocalizedPath,
   locales,
-  defaultLocale,
   Locale,
 } from '@/i18n/config';
 import { Header } from '@/components/layout/Header';
@@ -83,9 +82,10 @@ export default async function LocaleLayout({
 
   return (
     <DocumentShell locale={typedLocale}>
-    <NextIntlClientProvider
-      locale={typedLocale ?? defaultLocale}
+    <IntlProvider
+      locale={typedLocale}
       messages={messages}
+      timeZone={translationTimeZone}
     >
       <div className="flex min-h-screen flex-col bg-background text-foreground">
         <a
@@ -103,7 +103,7 @@ export default async function LocaleLayout({
         <ClarityConsent locale={typedLocale} />
         <TypeformFeedbackButton locale={typedLocale} />
       </div>
-    </NextIntlClientProvider>
+    </IntlProvider>
     </DocumentShell>
   );
 }

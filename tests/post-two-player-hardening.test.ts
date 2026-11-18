@@ -47,11 +47,6 @@ describe('post Two-Player launch hardening contracts', () => {
     expect(patchScript).not.toContain('writeFileSync');
   });
 
-  test('uses page metadata as the single hreflang source', () => {
-    const middleware = readFileSync('middleware.ts', 'utf8');
-    expect(middleware).toContain('alternateLinks: false');
-  });
-
   test('hardens the main CSP without breaking required static Next scripts', () => {
     const config = readFileSync('next.config.js', 'utf8');
 

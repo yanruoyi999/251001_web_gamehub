@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useLocale, useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'use-intl/react';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import { Bookmark, Gamepad2, Menu, X } from 'lucide-react';

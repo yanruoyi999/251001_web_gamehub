@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations } from '@/i18n/request';
 
 import { Button } from '@/components/ui/button';
 import {
