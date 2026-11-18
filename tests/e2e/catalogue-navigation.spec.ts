@@ -19,7 +19,9 @@ test('catalogue search, filters and pagination remain distinct from game details
   await detail.first().click();
   await expect(page).toHaveURL(/\/en\/games\/tunnel-rush$/);
   await expect(page.getByRole('heading', { level: 1, name: 'Tunnel Rush', exact: true })).toBeVisible();
-  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://www.lumagamehub.com/en/games/tunnel-rush');
+  const canonical = page.locator('link[rel="canonical"]');
+  await expect(canonical).toHaveCount(1);
+  await expect(canonical).toHaveAttribute('href', 'https://www.lumagamehub.com/en/games/tunnel-rush');
   await page.goBack();
   await expect(filters.locator('input[name="search"]')).toHaveValue('Tunnel Rush');
 
