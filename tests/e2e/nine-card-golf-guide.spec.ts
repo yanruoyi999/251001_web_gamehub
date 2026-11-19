@@ -15,6 +15,8 @@ test('Nine Card Golf exposes rules in both languages and explains only after sco
   const first = practice.getByRole('spinbutton').first();
   await expect(practice.getByRole('table')).toHaveCount(1);
   await expect(practice.getByRole('status')).toHaveText('');
+  await expect(practice.getByText(/Three matching ranks in a column/)).toBeVisible();
+  await expect(page.getByText('Do three eights across a row cancel?')).toHaveCount(0);
   await practice.getByRole('button', { name: 'Check answer' }).click();
   await expect(practice.getByRole('status')).toHaveText('Enter a whole number.');
   await first.fill('30.5');

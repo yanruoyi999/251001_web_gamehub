@@ -70,7 +70,7 @@ export const NINE_CARD_GOLF_GUIDE: SeoLandingPage = {
       recommendations: [],
       faqs: [
         { question: 'Does a pair in one column cancel?', answer: 'In this nine-card version, the full column needs three matching ranks. A pair counts normally. Six-card Golf uses pairs.' },
-        { question: 'Do three eights across a row cancel?', answer: 'Score them individually in this version. Some tables agree to cancel horizontal triples as a house rule.' },
+        { question: 'Who wins after nine deals?', answer: 'Add each player’s nine scores. The player with the lowest total wins.' },
       ],
       externalLinks: [{ href: reference, label: 'Pagat’s Nine Card Golf rules', description: 'The basic setup, column rule, and common variants.' }],
       ctaLabel: 'Browse more games',
@@ -105,7 +105,7 @@ export const NINE_CARD_GOLF_GUIDE: SeoLandingPage = {
       recommendations: [],
       faqs: [
         { question: '同一列只有两张相同能抵消吗？', answer: '九张版要三张同点数才抵消。只有两张照常计分。六张版用对子抵消。' },
-        { question: '三个 8 在一个横排怎么计分？', answer: '本版三个 8 分别在各自的竖列计分。想用横排抵消，要在开局前定为桌规。' },
+        { question: '打满九局后谁赢？', answer: '分别加总每个人的九局分数，总分最低者获胜。' },
       ],
       externalLinks: [{ href: reference, label: 'Pagat 九张 Golf 规则', description: '可核对基础发牌、竖列计分和常见变体。' }],
       ctaLabel: '浏览更多游戏',

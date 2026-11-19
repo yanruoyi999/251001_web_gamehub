@@ -49,6 +49,11 @@ export function NineCardGolfPractice({ locale }: { locale: Locale }) {
       <p className="text-sm">
         {zh ? '牌阵已经翻开。先逐列计分，再把三列相加。核对第一手后就能独立算第二手。' : 'All cards are face up. Score each column and add the three scores. Check the first hand to unlock the second.'}
       </p>
+      <p className="rounded-md bg-muted p-3 text-sm">
+        {zh
+          ? '同一竖列三张同点数记 0。其余逐张计分：A＝1，2＝−2，J/Q＝10，K＝0，3 至 10 按牌面。'
+          : 'Three matching ranks in a column score 0. Otherwise, A = 1, 2 = −2, J/Q = 10, K = 0, and 3 through 10 count at face value.'}
+      </p>
       {golfHands.slice(0, answers.length + 1).map((hand, index) => {
         const answer = answers[index];
         const submitted = answer !== undefined;
