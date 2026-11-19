@@ -10,7 +10,7 @@ export const GOLF_CARD_GUIDE: SeoLandingPage = {
   updatedAt: '2026-11-10T00:00:00.000Z',
   documentationCheckedAt: '2026-11-10',
   indexable: false,
-  relatedSlugs: ['cribbage-scoring-chart', 'euchre-strategy', 'gin-rummy-rules'],
+  relatedSlugs: ['cribbage-scoring-chart', 'euchre-strategy', 'gin-rummy-rules', '9-card-golf-rules'],
   locales: {
     en: {
       metaTitle: 'Golf Card Game Rules: Six-Card Setup, Turns and Scoring',

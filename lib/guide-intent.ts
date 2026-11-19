@@ -10,6 +10,7 @@ const ACTIONS_BY_GUIDE = new Map<string, ReadonlySet<string>>([
   ['spit-card-game-rules', new Set(['open_crazy_eights_rules'])],
   ['euchre-strategy', new Set(['open_booray_rules', 'open_bid_euchre_rules'])],
   ['500-card-game-rules', new Set(['score_first_correct', 'score_first_incorrect', 'score_second_correct', 'score_second_incorrect'])],
+  ['9-card-golf-rules', new Set(['score_first_correct', 'score_first_incorrect', 'score_second_correct', 'score_second_incorrect', 'practice_complete'])],
   ['bid-euchre-rules', new Set(['score_made_correct', 'score_made_incorrect', 'score_missed_correct', 'score_missed_incorrect', 'score_transfer_correct', 'score_transfer_incorrect', 'practice_complete'])],
 ]);
 
