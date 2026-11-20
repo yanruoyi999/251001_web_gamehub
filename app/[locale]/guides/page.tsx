@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getLocalizedPath, locales, type Locale } from '@/i18n/config';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { GuideIntentLink } from '@/components/seo/guide-intent-link';
+import { THROWING_DISC_GUIDE } from '@/lib/minecraft-throwing-disc-guide-content';
 import { getSeoLandingPages } from '@/lib/seo-landing-content';
 import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES } from '@/lib/seo';
 
@@ -101,6 +103,16 @@ export default async function GuidesPage({ params }: GuidesPageProps) {
         <h1 className="text-4xl font-bold text-foreground">{heading}</h1>
         <p className="mt-4 text-base text-muted-foreground">{intro}</p>
       </header>
+
+      <GuideIntentLink
+        guideSlug={THROWING_DISC_GUIDE.slug}
+        locale={locale}
+        action="open_from_guides"
+        href={getLocalizedPath(locale, '/guides/' + THROWING_DISC_GUIDE.slug)}
+        className="mb-5 inline-flex min-h-11 items-center text-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      >
+        {THROWING_DISC_GUIDE.locales[locale].heading}
+      </GuideIntentLink>
 
       <div className="grid gap-6 md:grid-cols-2">
         {extraGuides.map((guide) => (
