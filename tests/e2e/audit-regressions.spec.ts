@@ -26,9 +26,13 @@ async function expectSolitaireWaste(game: Locator, state: DailySolitaireGameStat
   }
 }
 
-async function completeSolitaire(page: Page, count: 1 | 3, diagnostics: ReturnType<typeof createSolitaireJourneyDiagnostics>) {
+async function completeSolitaire(
+  page: Page,
+  count: 1 | 3,
+  diagnostics: ReturnType<typeof createSolitaireJourneyDiagnostics>,
+  activate: (button: Locator) => Promise<void>,
+) {
   const game = page.locator('[data-daily-solitaire]');
-  const webkit = page.context().browser()?.browserType().name() === 'webkit';
   let state: DailySolitaireGameState = createDailySolitaireDeal('2026-09-05');
   let lastCardLabel = '';
   let lastSuit = 'Spades';
@@ -39,10 +43,8 @@ async function completeSolitaire(page: Page, count: 1 | 3, diagnostics: ReturnTy
       const foundation = game.getByRole('button', { name: `${SUITS[waste.suit]} foundation`, exact: true });
       const next = moveWasteToFoundation(state, waste.suit)!;
       await selectSolitaireCardAndMoveToFoundation(card, foundation, waste.rank,
-        () => diagnostics.recordAction({ step, kind: 'waste-select', card: getSolitaireCardLabel(waste) }, state, () => card.click()),
-        // A scrolled WebKit button can receive focus without activating. Keep the same move and assertions through native keyboard activation.
-        () => diagnostics.recordAction({ step, kind: 'waste-foundation', card: getSolitaireCardLabel(waste) }, state, () =>
-          webkit ? foundation.press('Enter') : foundation.click()),
+        () => diagnostics.recordAction({ step, kind: 'waste-select', card: getSolitaireCardLabel(waste) }, state, () => activate(card)),
+        () => diagnostics.recordAction({ step, kind: 'waste-foundation', card: getSolitaireCardLabel(waste) }, state, () => activate(foundation)),
       );
       await expectSolitaireWaste(game, next);
       state = next;
@@ -60,8 +62,8 @@ async function completeSolitaire(page: Page, count: 1 | 3, diagnostics: ReturnTy
       const foundation = game.getByRole('button', { name: `${lastSuit} foundation`, exact: true });
       const next = moveTableauToFoundation(state, from, card.suit)!;
       await selectSolitaireCardAndMoveToFoundation(source, foundation, card.rank,
-        () => diagnostics.recordAction({ step, kind: 'tableau-select', card: lastCardLabel }, state, () => source.click()),
-        () => diagnostics.recordAction({ step, kind: 'tableau-foundation', card: lastCardLabel }, state, () => foundation.click()),
+        () => diagnostics.recordAction({ step, kind: 'tableau-select', card: lastCardLabel }, state, () => activate(source)),
+        () => diagnostics.recordAction({ step, kind: 'tableau-foundation', card: lastCardLabel }, state, () => activate(foundation)),
       );
       await expectSolitaireWaste(game, next);
       state = next;
@@ -90,8 +92,10 @@ test.describe('audit regression journeys', () => {
   });
 
   for (const count of [1, 3] as const) {
-    test(`Draw ${count}: complete, freeze clock, undo, redo and replay without duplicating streak`, async ({ page }) => {
+    test(`Draw ${count}: complete, freeze clock, undo, redo and replay without duplicating streak`, async ({ page, browserName }) => {
       test.setTimeout(120_000);
+      // WebKit has intermittently focused a scrolled button without activating it during the scripted solve.
+      const activate = (button: Locator) => browserName === 'webkit' ? button.press('Enter') : button.click();
       const diagnostics = createSolitaireJourneyDiagnostics(count);
       solitaireDiagnostics.set(test.info().testId, { page, diagnostics });
       await page.clock.install({ time: FIXED_TIME });
@@ -105,10 +109,10 @@ test.describe('audit regression journeys', () => {
       const game = page.locator('[data-daily-solitaire]');
       await expect(game).toHaveAttribute('data-interactive-ready', 'true');
       await expect(game.getByRole('textbox', { name: 'Challenge date' }).or(game.locator('input[type=date]'))).toHaveValue('2026-09-05');
-      await game.getByLabel('Draw mode', { exact: true }).getByRole('button', { name: `Draw ${count}`, exact: true }).click();
-      await game.getByRole('button', { name: 'Play today’s deal', exact: true }).click();
+      await activate(game.getByLabel('Draw mode', { exact: true }).getByRole('button', { name: `Draw ${count}`, exact: true }));
+      await activate(game.getByRole('button', { name: 'Play today’s deal', exact: true }));
       diagnostics.phase('helper-start');
-      const last = await completeSolitaire(page, count, diagnostics);
+      const last = await completeSolitaire(page, count, diagnostics, activate);
       diagnostics.phase('helper-complete');
       await expect(game).toHaveAttribute('data-completed', 'true');
       const score = game.getByText('Score', { exact: true }).locator('..');
@@ -118,15 +122,15 @@ test.describe('audit regression journeys', () => {
       expect([await score.innerText(), await time.innerText()]).toEqual(before);
       await expect(game.locator('footer')).toContainText('Local best: 999');
       await expect(game.getByText('Daily streak', { exact: true }).locator('..')).toContainText('2');
-      await game.getByRole('button', { name: 'Undo', exact: true }).click();
+      await activate(game.getByRole('button', { name: 'Undo', exact: true }));
       await expect(game).toHaveAttribute('data-completed', 'false');
       await page.clock.fastForward(1500);
-      await game.getByRole('button', { name: last.lastCardLabel, exact: true }).click();
-      await game.getByRole('button', { name: `${last.lastSuit} foundation`, exact: true }).click();
+      await activate(game.getByRole('button', { name: last.lastCardLabel, exact: true }));
+      await activate(game.getByRole('button', { name: `${last.lastSuit} foundation`, exact: true }));
       await expect(game).toHaveAttribute('data-completed', 'true');
       const finished = await page.evaluate(() => (window as typeof window & { auditEvents: string[] }).auditEvents.filter(name => name === 'daily_solitaire_finished').length);
       expect(finished).toBe(1);
-      await game.getByRole('button', { name: 'Replay this deal', exact: true }).click();
+      await activate(game.getByRole('button', { name: 'Replay this deal', exact: true }));
       await expect(game).toHaveAttribute('data-completed', 'false');
       await expect(time).toContainText('0:00');
       await expect(game.locator('footer')).toContainText('Local best: 999');
