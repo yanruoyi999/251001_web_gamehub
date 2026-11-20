@@ -4,6 +4,7 @@ import { getLocalizedPath, locales, type Locale } from '@/i18n/config';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { GuideIntentLink } from '@/components/seo/guide-intent-link';
 import { THROWING_DISC_GUIDE } from '@/lib/minecraft-throwing-disc-guide-content';
+import { OKISHIMA_1336_GUIDE } from '@/lib/okishima-1336-guide-content';
 import { getSeoLandingPages } from '@/lib/seo-landing-content';
 import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES } from '@/lib/seo';
 
@@ -104,15 +105,25 @@ export default async function GuidesPage({ params }: GuidesPageProps) {
         <p className="mt-4 text-base text-muted-foreground">{intro}</p>
       </header>
 
-      <GuideIntentLink
-        guideSlug={THROWING_DISC_GUIDE.slug}
-        locale={locale}
-        action="open_from_guides"
-        href={getLocalizedPath(locale, '/guides/' + THROWING_DISC_GUIDE.slug)}
-        className="mb-5 inline-flex min-h-11 items-center text-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-      >
-        {THROWING_DISC_GUIDE.locales[locale].heading}
-      </GuideIntentLink>
+      <ul className="mb-5 flex flex-wrap gap-x-6">
+        {([
+          { guide: THROWING_DISC_GUIDE, eventName: 'guide_intent_click' },
+          { guide: OKISHIMA_1336_GUIDE, eventName: 'okishima_guide_open' },
+        ] as const).map(({ guide, eventName }) => (
+          <li key={guide.slug}>
+            <GuideIntentLink
+              guideSlug={guide.slug}
+              locale={locale}
+              action="open_from_guides"
+              eventName={eventName}
+              href={getLocalizedPath(locale, '/guides/' + guide.slug)}
+              className="inline-flex min-h-11 items-center text-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              {guide.locales[locale].heading}
+            </GuideIntentLink>
+          </li>
+        ))}
+      </ul>
 
       <div className="grid gap-6 md:grid-cols-2">
         {extraGuides.map((guide) => (
