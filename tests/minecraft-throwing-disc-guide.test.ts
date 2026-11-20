@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { generateMetadata } from '@/app/[locale]/guides/[slug]/page';
 import sitemap from '@/app/sitemap';
+import { getGuideIntentProperties } from '@/lib/guide-intent';
 import { getSeoLandingPage } from '@/lib/seo-landing-content';
 
 describe('Throwing Disc guide', () => {
@@ -24,5 +25,23 @@ describe('Throwing Disc guide', () => {
         false
       );
     }
+  });
+
+  it('limits click tracking to the directory entry and read-guide button', () => {
+    for (const locale of ['zh', 'en'] as const) {
+      for (const action of ['open_from_guides', 'read_guide']) {
+        expect(
+          getGuideIntentProperties('minecraft-throwing-disc', action, locale)
+        ).toEqual({
+          guide_slug: 'minecraft-throwing-disc',
+          action,
+          locale,
+          schema_version: 2,
+        });
+      }
+    }
+    expect(
+      getGuideIntentProperties('minecraft-throwing-disc', 'unlisted', 'en')
+    ).toBeNull();
   });
 });

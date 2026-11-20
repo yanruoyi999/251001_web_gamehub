@@ -12,6 +12,7 @@ const ACTIONS_BY_GUIDE = new Map<string, ReadonlySet<string>>([
   ['500-card-game-rules', new Set(['score_first_correct', 'score_first_incorrect', 'score_second_correct', 'score_second_incorrect'])],
   ['9-card-golf-rules', new Set(['score_first_correct', 'score_first_incorrect', 'score_second_correct', 'score_second_incorrect', 'practice_complete'])],
   ['bid-euchre-rules', new Set(['score_made_correct', 'score_made_incorrect', 'score_missed_correct', 'score_missed_incorrect', 'score_transfer_correct', 'score_transfer_incorrect', 'practice_complete'])],
+  ['minecraft-throwing-disc', new Set(['open_from_guides', 'read_guide'])],
 ]);
 
 /** Only bounded editorial context; never destination URLs or browser identifiers. */
