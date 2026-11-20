@@ -1,6 +1,6 @@
 'use client';
 
-import { type FormEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { Locale } from '@/i18n/config';
 import {
   planPokemonGoQuest,
@@ -16,7 +16,6 @@ const messages = {
     date: 'Local date',
     days: 'Lesson days completed before that date',
     joined: 'I already joined the quest',
-    check: 'Check my plan',
     invalid: 'Enter a date and a day count from 0 to 7.',
     'before-start': 'The event has not started on that date.',
     'join-first':
@@ -47,7 +46,6 @@ const messages = {
     date: '当地日期',
     days: '该日期前已完成的学习日',
     joined: '我已经加入了任务',
-    check: '计算剩余时间',
     invalid: '请输入有效日期及 0 至 7 的天数。',
     'before-start': '所选日期活动尚未开始。',
     'join-first': '先在 12 月 21 日前加入多邻国的任务，再开始计算学习日。',
@@ -85,29 +83,30 @@ function localDateKey(date: Date) {
 export function PokemonGoQuestPlanner({ locale }: { locale: Locale }) {
   const message = messages[locale];
   const [date, setDate] = useState<string | null>(null);
-  const [result, setResult] = useState('');
+  const [days, setDays] = useState('0');
+  const [joined, setJoined] = useState(false);
 
   useEffect(() => {
     setDate(localDateKey(new Date()));
   }, []);
 
-  function checkPlan(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const fields = new FormData(event.currentTarget);
-    const firstLocalDate = localDateKey(new Date(POKEMON_GO_QUEST_START));
-    const plan = planPokemonGoQuest(
-      date ?? '',
-      Number(fields.get('days')),
-      fields.has('joined'),
-      firstLocalDate
-    );
-    if (plan.status === 'on-track') {
-      setResult(message[plan.status](plan.remaining, plan.finish, plan.spare));
-    } else if (plan.status === 'not-enough-days') {
-      setResult(message[plan.status](plan.remaining, plan.available));
-    } else {
-      setResult(message[plan.status]);
-    }
+  const firstLocalDate = localDateKey(new Date(POKEMON_GO_QUEST_START));
+  const plan =
+    date === null
+      ? null
+      : planPokemonGoQuest(
+          date,
+          days === '' ? NaN : Number(days),
+          joined,
+          firstLocalDate
+        );
+  let result = '';
+  if (plan?.status === 'on-track') {
+    result = message[plan.status](plan.remaining, plan.finish, plan.spare);
+  } else if (plan?.status === 'not-enough-days') {
+    result = message[plan.status](plan.remaining, plan.available);
+  } else if (plan) {
+    result = message[plan.status];
   }
 
   const inputStyle =
@@ -127,60 +126,45 @@ export function PokemonGoQuestPlanner({ locale }: { locale: Locale }) {
       <p className="mt-2 text-sm text-muted-foreground">
         {message.description}
       </p>
-      <form
-        className="mt-4"
-        onSubmit={checkPlan}
-        onChange={() => setResult('')}
-      >
-        <fieldset className="min-w-0 space-y-4" disabled={date === null}>
-          <div className="grid gap-3 sm:grid-cols-2">
-            <label className="grid gap-1 text-sm font-medium">
-              {message.date}
-              <input
-                className={inputStyle}
-                type="date"
-                value={date ?? ''}
-                onChange={event => setDate(event.target.value)}
-                required
-              />
-            </label>
-            <label className="grid gap-1 text-sm font-medium">
-              {message.days}
-              <input
-                className={inputStyle}
-                name="days"
-                type="number"
-                min={0}
-                max={POKEMON_GO_REQUIRED_DAYS}
-                defaultValue={0}
-                required
-              />
-            </label>
-          </div>
-          <label className="inline-flex min-h-11 items-center gap-2 text-sm">
+      <fieldset className="mt-4 min-w-0 space-y-4" disabled={date === null}>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <label className="grid gap-1 text-sm font-medium">
+            {message.date}
             <input
-              name="joined"
-              type="checkbox"
-              className="h-4 w-4 accent-primary"
+              className={inputStyle}
+              type="date"
+              value={date ?? ''}
+              onChange={event => setDate(event.target.value)}
             />
-            {message.joined}
           </label>
-          <div>
-            <button
-              type="submit"
-              className="min-h-11 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-            >
-              {message.check}
-            </button>
-          </div>
-          <p
-            role="status"
-            className="text-sm font-medium leading-6 text-foreground"
-          >
-            {result}
-          </p>
-        </fieldset>
-      </form>
+          <label className="grid gap-1 text-sm font-medium">
+            {message.days}
+            <input
+              className={inputStyle}
+              type="number"
+              min={0}
+              max={POKEMON_GO_REQUIRED_DAYS}
+              value={days}
+              onChange={event => setDays(event.target.value)}
+            />
+          </label>
+        </div>
+        <label className="inline-flex min-h-11 items-center gap-2 text-sm">
+          <input
+            type="checkbox"
+            className="h-4 w-4 accent-primary"
+            checked={joined}
+            onChange={event => setJoined(event.target.checked)}
+          />
+          {message.joined}
+        </label>
+        <p
+          role="status"
+          className="text-sm font-medium leading-6 text-foreground"
+        >
+          {result}
+        </p>
+      </fieldset>
     </section>
   );
 }

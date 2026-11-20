@@ -28,6 +28,7 @@ async function expectSolitaireWaste(game: Locator, state: DailySolitaireGameStat
 
 async function completeSolitaire(page: Page, count: 1 | 3, diagnostics: ReturnType<typeof createSolitaireJourneyDiagnostics>) {
   const game = page.locator('[data-daily-solitaire]');
+  const webkit = page.context().browser()?.browserType().name() === 'webkit';
   let state: DailySolitaireGameState = createDailySolitaireDeal('2026-09-05');
   let lastCardLabel = '';
   let lastSuit = 'Spades';
@@ -39,7 +40,9 @@ async function completeSolitaire(page: Page, count: 1 | 3, diagnostics: ReturnTy
       const next = moveWasteToFoundation(state, waste.suit)!;
       await selectSolitaireCardAndMoveToFoundation(card, foundation, waste.rank,
         () => diagnostics.recordAction({ step, kind: 'waste-select', card: getSolitaireCardLabel(waste) }, state, () => card.click()),
-        () => diagnostics.recordAction({ step, kind: 'waste-foundation', card: getSolitaireCardLabel(waste) }, state, () => foundation.click()),
+        // A scrolled WebKit button can receive focus without activating. Keep the same move and assertions through native keyboard activation.
+        () => diagnostics.recordAction({ step, kind: 'waste-foundation', card: getSolitaireCardLabel(waste) }, state, () =>
+          webkit ? foundation.press('Enter') : foundation.click()),
       );
       await expectSolitaireWaste(game, next);
       state = next;

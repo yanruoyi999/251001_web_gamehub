@@ -55,9 +55,9 @@ test('Mandy gives a source-backed answer and the event planner handles the last 
   const planner = page.locator('#pokemon-go-quest-planner');
   await planner.getByLabel('Local date').fill('2026-12-23');
   await planner.getByLabel('I already joined the quest').check();
-  await planner.getByRole('button', { name: 'Check my plan' }).click();
   await expect(planner.getByRole('status')).toContainText('2026-12-29');
   await planner.getByLabel('Local date').fill('2026-12-24');
-  await planner.getByRole('button', { name: 'Check my plan' }).click();
   await expect(planner.getByRole('status')).toContainText('Not enough days');
+  await planner.getByLabel('Lesson days completed before that date').fill('1');
+  await expect(planner.getByRole('status')).toContainText('2026-12-29');
 });
