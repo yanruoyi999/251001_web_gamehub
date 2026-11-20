@@ -2,6 +2,8 @@ import type { SeoLandingPage } from '@/lib/seo-landing-content';
 
 const experience = 'https://www.roblox.com/games/86355335942235/Okishima-1336';
 const gameListing = 'https://games.roblox.com/v1/games?universeIds=10769582272';
+const descriptionHistory =
+  'https://rivalducks.com/apps/radar/games/10769582272-okishima-1336';
 const codeGuide = 'https://progameguides.com/roblox/okishima-codes/';
 
 export const OKISHIMA_1336_GUIDE: SeoLandingPage = {
@@ -29,7 +31,7 @@ export const OKISHIMA_1336_GUIDE: SeoLandingPage = {
       sections: [
         {
           title: 'Open the correct Roblox experience',
-          body: 'Use the official experience link above. The place ID is 86355335942235. Match that ID if a search result has a similar title. If the Play button is unavailable, sign in and check the eligibility or device message on Roblox before trying a different device.',
+          body: 'Use the Roblox link on this page. The place ID is 86355335942235. Match that ID if a search result has a similar title. If the Play button is unavailable, sign in and check the eligibility or device message on Roblox before trying a different device.',
         },
         {
           title: 'Give your first session one goal',
@@ -49,7 +51,7 @@ export const OKISHIMA_1336_GUIDE: SeoLandingPage = {
         {
           question: 'Where can I play Okishima:1336?',
           answer:
-            'Open the Roblox experience linked above and launch it from Roblox if Play is available on your account and device.',
+            'Open the Roblox experience linked on this page and launch it from Roblox if Play is available on your account and device.',
         },
         {
           question: 'Which path should I start with?',
@@ -75,6 +77,11 @@ export const OKISHIMA_1336_GUIDE: SeoLandingPage = {
           description: 'The game identity and last update timestamp.',
         },
         {
+          href: descriptionHistory,
+          label: 'Earlier game descriptions',
+          description: 'Rival Ducks’ archive of the creator’s description.',
+        },
+        {
           href: codeGuide,
           label: 'Pro Game Guides code walkthrough',
           description: 'The reported location of the in-game Codes control.',
@@ -95,7 +102,7 @@ export const OKISHIMA_1336_GUIDE: SeoLandingPage = {
       sections: [
         {
           title: '找到正确的 Roblox 体验',
-          body: '用上方官方入口，或对照体验的 Place ID 86355335942235，避开同名结果。若游玩按钮不可用，先登录，并看清 Roblox 显示的账号资格或设备提示。',
+          body: '用本页的 Roblox 官方入口，或对照体验的 Place ID 86355335942235，避开同名结果。若游玩按钮不可用，先登录，并看清 Roblox 显示的账号资格或设备提示。',
         },
         {
           title: '第一局只选一个目标',
@@ -115,7 +122,7 @@ export const OKISHIMA_1336_GUIDE: SeoLandingPage = {
         {
           question: '在哪里玩 Okishima:1336？',
           answer:
-            '打开上方 Roblox 官方体验，账号和设备满足要求时，可以从 Roblox 启动游戏。',
+            '用本页链接打开 Roblox 官方体验，账号和设备满足要求时，可以从 Roblox 启动游戏。',
         },
         {
           question: '新手先选哪条路线？',
@@ -138,6 +145,11 @@ export const OKISHIMA_1336_GUIDE: SeoLandingPage = {
           href: gameListing,
           label: 'Roblox 官方条目数据',
           description: '核对游戏标识与更新时间。',
+        },
+        {
+          href: descriptionHistory,
+          label: '早期体验简介',
+          description: 'Rival Ducks 存档的开发者简介。',
         },
         {
           href: codeGuide,
