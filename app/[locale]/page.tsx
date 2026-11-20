@@ -11,6 +11,7 @@ import { DailyRecommendation } from '@/components/retention/daily-recommendation
 import { SearchInput } from '@/components/game/search-input';
 import { HomeGameLink } from '@/components/game/home-game-link';
 import { PortalRail } from '@/components/layout/PortalRail';
+import { getSeoLandingPages } from '@/lib/seo-landing-content';
 
 type FaqItem = { question: string; answer: string };
 
@@ -177,6 +178,7 @@ export default async function HomePage({
     : [];
   const faqItems = Array.isArray(faqSection.items) ? faqSection.items : [];
   const recommendationDateKey = getShanghaiDateKey();
+  const featuredGuides = getSeoLandingPages().filter(guide => guide.homepageFeatured && guide.indexable !== false);
   const popularGuideEntries: ShelfEntry[] =
     locale === 'zh'
       ? [
@@ -429,6 +431,25 @@ export default async function HomePage({
             browseLabel={locale === 'zh' ? '查看全部攻略' : 'Browse all guides'}
             entries={popularGuideEntries}
           />
+
+          <section id="recent-guides" aria-labelledby="recent-guides-title" className="mt-7 rounded-md border border-border bg-card p-3 sm:p-4">
+            <h2 className="text-lg font-black text-foreground" id="recent-guides-title">
+              {locale === 'zh' ? '新攻略' : 'New guides'}
+            </h2>
+            <ul className="mt-2 grid gap-2 sm:grid-cols-2">
+              {featuredGuides.map(guide => (
+                <li key={guide.slug}>
+                  <a
+                    href={getLocalizedPath(locale, '/guides/' + guide.slug)}
+                    className="flex min-h-11 items-center justify-between gap-2 rounded-md border border-border px-3 py-2 text-sm font-bold text-primary hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    {guide.locales[locale].heading}
+                    <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
 
           <ShelfSection
             id="more-games"

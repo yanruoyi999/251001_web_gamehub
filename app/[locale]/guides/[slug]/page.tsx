@@ -17,6 +17,8 @@ import { CrazyEightsQuickRules } from '@/components/seo/crazy-eights-quick-rules
 import { FiveHundredScoring } from '@/components/seo/five-hundred-scoring';
 import { BidEuchrePractice } from '@/components/seo/bid-euchre-practice';
 import { NineCardGolfPractice } from '@/components/seo/nine-card-golf-practice';
+import { PokemonGoQuestPlanner } from '@/components/seo/pokemon-go-quest-planner';
+import { DUOLINGO_POKEMON_GO_GUIDE } from '@/lib/duolingo-pokemon-go-guide-content';
 import { CategoriesTopics } from '@/components/game/categories-topics';
 import {
   getSeoLandingPage,
@@ -273,7 +275,19 @@ export default async function GuidePage({ params }: GuidePageProps) {
           dangerouslySetInnerHTML={{ __html: serializeJsonLd(schema) }}
         />
       ))}
-      <nav className="mb-4 text-xs text-muted-foreground" data-print-hide>
+      <nav
+        aria-label={locale === 'zh' ? '攻略路径' : 'Guide breadcrumb'}
+        className="mb-4 flex flex-wrap items-center gap-2 text-xs text-muted-foreground"
+        data-print-hide
+      >
+        {page.homepageFeatured ? (
+          <>
+            <a href={getLocalizedPath(locale)} className="hover:text-primary">
+              {breadcrumbLabels[0]}
+            </a>
+            <span aria-hidden="true">/</span>
+          </>
+        ) : null}
         <Link
           href={getLocalizedPath(locale, '/guides')}
           className="hover:text-primary"
@@ -420,6 +434,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
         </div>
       </section>
 
+      {page.slug === DUOLINGO_POKEMON_GO_GUIDE.slug ? <PokemonGoQuestPlanner locale={locale} /> : null}
       {isCribbageGuide ? <CribbageScoringChart locale={locale} /> : null}
 
       {page.interactiveWidget === 'dominoes-training' ? (

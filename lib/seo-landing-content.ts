@@ -24,6 +24,8 @@ import { LIARS_DICE_GUIDE } from '@/lib/liars-dice-guide-content';
 import { SHUT_THE_BOX_GUIDE } from '@/lib/shut-the-box-guide-content';
 import { YAHTZEE_MAX_GUIDE } from '@/lib/yahtzee-max-guide-content';
 import { CRIBBAGE_GUIDE } from '@/lib/cribbage-guide-content';
+import { MANDY_GTA_6_GUIDE } from '@/lib/mandy-gta-6-guide-content';
+import { DUOLINGO_POKEMON_GO_GUIDE } from '@/lib/duolingo-pokemon-go-guide-content';
 import { isGameUnderManualReview } from '@/lib/games/quality-policy';
 
 export interface SeoLandingSection {
@@ -108,6 +110,7 @@ export interface SeoLandingPage {
   documentationCheckedAt?: string;
   relatedSlugs: string[];
   indexable?: boolean;
+  homepageFeatured?: boolean;
   embedGame?: SeoLandingEmbedGame;
   printablePath?: string;
   video?: SeoLandingVideo;
@@ -118,6 +121,8 @@ export interface SeoLandingPage {
 const seoContentUpdatedAt = '2026-07-20T00:00:00.000Z';
 
 const SEO_LANDING_PAGES: SeoLandingPage[] = [
+  MANDY_GTA_6_GUIDE,
+  DUOLINGO_POKEMON_GO_GUIDE,
   GIN_RUMMY_GUIDE,
   SPIT_GUIDE,
   GOLF_CARD_GUIDE,
