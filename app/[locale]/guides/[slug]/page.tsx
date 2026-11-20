@@ -282,9 +282,9 @@ export default async function GuidePage({ params }: GuidePageProps) {
       >
         {page.homepageFeatured ? (
           <>
-            <Link href={getLocalizedPath(locale)} className="hover:text-primary">
+            <a href={getLocalizedPath(locale)} className="hover:text-primary">
               {breadcrumbLabels[0]}
-            </Link>
+            </a>
             <span aria-hidden="true">/</span>
           </>
         ) : null}

@@ -439,13 +439,13 @@ export default async function HomePage({
             <ul className="mt-2 grid gap-2 sm:grid-cols-2">
               {featuredGuides.map(guide => (
                 <li key={guide.slug}>
-                  <Link
+                  <a
                     href={getLocalizedPath(locale, '/guides/' + guide.slug)}
                     className="flex min-h-11 items-center justify-between gap-2 rounded-md border border-border px-3 py-2 text-sm font-bold text-primary hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
                     {guide.locales[locale].heading}
                     <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>

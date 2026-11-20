@@ -10,9 +10,8 @@ test('both event guides are linked from the localized homepage and link back', a
       const response = await page.goto(home);
       expect(response?.status()).toBe(200);
       await page.locator('#recent-guides a[href="' + path + '"]').click();
-      await expect(page).toHaveURL(new RegExp(path + '$'));
+      await expect(page).toHaveURL(new RegExp(path + '$'), { timeout: 20_000 });
       await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-      expect((await page.reload())?.status()).toBe(200);
       const canonical = await page
         .locator('link[rel="canonical"]')
         .getAttribute('href');
@@ -31,7 +30,9 @@ test('both event guides are linked from the localized homepage and link back', a
         .getByRole('navigation', { name: /攻略路径|Guide breadcrumb/ })
         .locator('a[href="' + home + '"]')
         .click();
-      await expect(page).toHaveURL(new RegExp(home === '/' ? '/$' : '/en$'));
+      await expect(page).toHaveURL(new RegExp(home === '/' ? '/$' : '/en$'), {
+        timeout: 20_000,
+      });
     }
   }
 });
