@@ -120,11 +120,11 @@ interface GuidePageProps {
 }
 
 const gameIndex = new Map(mockGames.map(game => [game.slug, game]));
-const publisherPlayLinks: Record<string, { url: string; title: string }> = {
-  'google-snake-mods': { url: 'https://www.google.com/fbx?fbx=snake_arcade', title: 'Google' },
-  'drive-mad-walkthrough': { url: 'https://play.fancade.com/5F084A0BCE06B710', title: 'Fancade' },
-  'drive-mad-level-tips': { url: 'https://play.fancade.com/5F084A0BCE06B710', title: 'Fancade' },
-  'apple-knight-mini-dungeons-guide': { url: 'https://poki.com/en/g/apple-knight-mini-dungeons', title: 'Poki' },
+const publisherPlayLinks: Record<string, { url: string; title: string; action?: 'standard_snake' | 'publisher_play' }> = {
+  'google-snake-mods': { url: 'https://www.google.com/fbx?fbx=snake_arcade', title: 'Google', action: 'standard_snake' },
+  'drive-mad-walkthrough': { url: 'https://play.fancade.com/5F084A0BCE06B710', title: 'Fancade', action: 'publisher_play' },
+  'drive-mad-level-tips': { url: 'https://play.fancade.com/5F084A0BCE06B710', title: 'Fancade', action: 'publisher_play' },
+  'apple-knight-mini-dungeons-guide': { url: 'https://poki.com/en/g/apple-knight-mini-dungeons', title: 'Poki', action: 'publisher_play' },
   'big-tower-tiny-square-walkthrough': { url: 'https://evilobjective.itch.io/bigtowertinysquarefree', title: 'EvilObjective' },
   'tunnel-rush-unblocked': { url: 'https://poki.com/en/g/tunnel-rush', title: 'Poki' },
 };
@@ -414,7 +414,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
           <GuideIntentLink
             guideSlug={page.slug}
             locale={locale}
-            action={page.slug === 'google-snake-mods' ? 'standard_snake' : 'source_status'}
+            action={publisherPlay.action ?? 'source_status'}
             href={publisherPlay.url}
             target="_blank"
             rel="noopener noreferrer"

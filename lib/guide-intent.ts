@@ -1,7 +1,11 @@
 const SNAKE_ACTIONS = new Set(['mod_web', 'source_status', 'standard_snake', 'related_editor', 'related_mods', 'read_guide', 'recommendations']);
+const PUBLISHER_PLAY_ACTIONS = new Set(['publisher_play']);
 const ACTIONS_BY_GUIDE = new Map<string, ReadonlySet<string>>([
   ['google-snake-mods', SNAKE_ACTIONS],
   ['google-snake-level-editor', SNAKE_ACTIONS],
+  ['drive-mad-walkthrough', PUBLISHER_PLAY_ACTIONS],
+  ['drive-mad-level-tips', PUBLISHER_PLAY_ACTIONS],
+  ['apple-knight-mini-dungeons-guide', PUBLISHER_PLAY_ACTIONS],
   ['best-free-iphone-games', new Set(['play_circle', 'read_guide', 'recommendations'])],
   ['word-chain-game-examples', new Set(['read_guide', 'practice_entry', 'browse_games'])],
   ['three-player-spades', new Set(['read_guide', 'browse_games'])],
