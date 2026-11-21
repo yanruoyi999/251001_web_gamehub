@@ -192,6 +192,34 @@ test.describe('游戏浏览流程', () => {
     await expect(page.getByRole('link', { name: 'Play standard Snake on Google (no mods)' })).toHaveAttribute('href', 'https://www.google.com/fbx?fbx=snake_arcade');
   });
 
+  test('OvO 旧址 301 到同语言攻略并可从攻略前往游玩', async ({ page, request }) => {
+    for (const [prefix, target] of [
+      ['', '/guides/ovo-walkthrough'],
+      ['/en', '/en/guides/ovo-walkthrough'],
+      ['/zh', '/guides/ovo-walkthrough'],
+    ]) {
+      const response = await request.get(`${prefix}/games/ovo`, { maxRedirects: 0 });
+      expect(response.status()).toBe(301);
+      expect(response.headers().location).toBe(target);
+    }
+
+    const savedGames = await request.get('/api/games/saved?slugs=ovo');
+    expect(savedGames.ok()).toBe(true);
+    expect(await savedGames.json()).toMatchObject({ games: [] });
+
+    for (const [prefix, label] of [
+      ['', '去 Coolmath Games 玩 OvO'],
+      ['/en', 'Play OvO on Coolmath Games'],
+    ]) {
+      const route = `${prefix}/guides/ovo-walkthrough`;
+      const response = await page.goto(route);
+      expect(response?.status()).toBe(200);
+      await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `https://www.lumagamehub.com${route}`);
+      await expect(page.getByRole('link', { name: label })).toHaveAttribute('href', 'https://www.coolmathgames.com/0-ovo');
+      await expect(page.locator('main iframe')).toHaveCount(0);
+    }
+  });
+
   test('英文游戏目录的首方图片资源不返回 4xx', async ({ page, request }) => {
     const response = await page.goto('/en/games', { waitUntil: 'domcontentloaded' });
 

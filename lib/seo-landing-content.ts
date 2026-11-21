@@ -3680,8 +3680,8 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ],
         quickAnswerLink: {
           href: 'https://www.coolmathgames.com/0-ovo',
-          label: 'Open the current OvO source page',
-          description: 'Use the source page to check the current browser build before applying a numbered route.',
+          label: 'Play OvO on Coolmath Games',
+          description: 'Open the browser game in a new tab and check the level layout before following a numbered route.',
         },
         ctaLabel: 'Browse related precision games',
         ctaDescription: 'The embedded mirror is withheld while the current source permission is being reviewed.',
@@ -3751,8 +3751,8 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ],
         quickAnswerLink: {
           href: 'https://www.coolmathgames.com/0-ovo',
-          label: '打开当前 OvO 来源页面',
-          description: '先核对当前浏览器版本，再使用对应的关卡路线。',
+          label: '去 Coolmath Games 玩 OvO',
+          description: '在新标签页打开浏览器版，核对关卡布局后再按路线挑战。',
         },
         ctaLabel: '浏览相关精准操作游戏',
         ctaDescription: '当前镜像来源仍在复查，暂不在本页加载第三方播放器。',
