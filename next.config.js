@@ -143,7 +143,11 @@ const nextConfig = {
   },
   async redirects() {
     return [
-      ...Object.entries(require('./lib/games/legacy-guide-redirects.json')).flatMap(([game, guide]) =>
+      ...Object.entries({
+        ...require('./lib/games/legacy-guide-redirects.json'),
+        // Keep the OvO mirror retired in catalogue and saved-game data.
+        ovo: 'ovo-walkthrough',
+      }).flatMap(([game, guide]) =>
         ['', '/en', '/zh'].map(prefix => ({
           source: `${prefix}/games/${game}`,
           destination: `${prefix === '/en' ? '/en' : ''}/guides/${guide}`,
