@@ -17,7 +17,7 @@ interface Imported4399Payload {
   games?: Imported4399Game[];
 }
 
-const DATA_FILE = path.join(process.cwd(), 'public/data/4399-sample.json');
+const DATA_FILE = path.join(process.cwd(), 'lib/games/legacy-catalogue-snapshot.json');
 
 export async function loadImported4399Games(limit?: number): Promise<Imported4399Game[]> {
   try {

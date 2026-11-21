@@ -107,7 +107,8 @@ describe('Luma 2026-08-30 governed supply chain', () => {
 
     for (const slug of newPages) expect(gamesHub).toContain(slug);
     expect(keyboardGuide).toContain("slug: 'stacker-game'");
-    expect(keyboardGuide).toContain('`/games/${pick.slug}`');
+    expect(keyboardGuide).toContain('getLocalizedPath(locale, getPickPath(pick.slug))');
+    expect(keyboardGuide).toContain('`/games/${slug}`');
     expect(twoPlayerCollection).toContain('/games/two-player-games');
   });
 });

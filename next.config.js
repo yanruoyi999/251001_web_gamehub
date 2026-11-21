@@ -33,9 +33,7 @@ const securityHeaders = [
       "script-src-attr 'none'",
       "style-src 'self' 'unsafe-inline'",
       "connect-src 'self' https://res.cloudinary.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.google.com https://*.clarity.ms",
-      // sda.4399.com / sxiao.4399.com only backed retired Temple Run
-      // entries, and friv2018 only backed manual-review Raft Wars entries.
-      "frame-src 'self' https://yanruoyi999.github.io https://dj-dk.github.io https://sudoku.tn1ck.com https://playpager.com https://cloud.onlinegames.io https://szhong.4399.com",
+      "frame-src 'self' https://yanruoyi999.github.io https://dj-dk.github.io https://sudoku.tn1ck.com https://playpager.com https://cloud.onlinegames.io",
       "frame-ancestors 'none'",
     ].join('; '),
   },
@@ -145,6 +143,13 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      ...Object.entries(require('./lib/games/legacy-guide-redirects.json')).flatMap(([game, guide]) =>
+        ['', '/en', '/zh'].map(prefix => ({
+          source: `${prefix}/games/${game}`,
+          destination: `${prefix === '/en' ? '/en' : ''}/guides/${guide}`,
+          statusCode: 301,
+        }))
+      ),
       {
         source: '/guides/ad-free-games',
         destination: '/guides/free-games-no-ads',

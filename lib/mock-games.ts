@@ -3,7 +3,7 @@
  * Used for local development fallback before the database is wired up.
  */
 
-import sampleData from '@/public/data/4399-sample.json';
+import sampleData from '@/lib/games/legacy-catalogue-snapshot.json';
 import { shouldPromoteGameInCollections } from '@/lib/games/quality-policy';
 import { getGameEditorialDescription } from '@/lib/games/editorial-content';
 
@@ -99,62 +99,6 @@ const COLOR_PALETTE = [
   'EC4899',
 ];
 
-const LOCAL_SCREENSHOT_SLUGS = new Set([
-  'adam-and-eve-4',
-  'adam-and-eve-5-part-1',
-  'adam-and-eve-5-part-2',
-  'adam-and-eve-6',
-  'adam-and-eve-7',
-  'adam-and-eve-8',
-  'adam-and-eve-adam-the-ghost',
-  'adam-and-eve-aliens',
-  'adam-and-eve-astronaut',
-  'adam-and-eve-go',
-  'adam-and-eve-go-2',
-  'adam-and-eve-go-3',
-  'adam-and-eve-go-xmas',
-  'adam-and-eve-night',
-  'adam-and-eve-sleepwalker',
-  'adam-and-eve-snow',
-  'adam-and-eve-zombies',
-  'apple-knight',
-  'apple-knight-mini-dungeons',
-  'assemble-and-drive-road-monsters',
-  'balance-duel',
-  'beat-line',
-  'big-tower-tiny-square',
-  'big-tower-tiny-square-2',
-  'blockman-climb',
-  'blumgi-ball',
-  'blumgi-bloom',
-  'blumgi-rocket',
-  'castle-pals',
-  'catch-the-candy',
-  'cats-love-cake',
-  'cats-love-cake-2',
-  'city-bike-stunt',
-  'cover-orange',
-  'cover-orange-journey',
-  'cow-bay',
-  'crazy-kick',
-  'dadish',
-  'dadish-2',
-  'dadish-3',
-  'drive-mad',
-  'duo-vikings',
-  'duo-vikings-2',
-  'fireboy-watergirl-6',
-  'g-switch-2',
-  'g-switch-3',
-  'google-snake',
-  'monkey-mart',
-  'monster-tracks',
-  'ovo',
-  'rolling-ball',
-  'string-theory-2-remastered',
-  'tunnel-rush',
-]);
-
 function sanitizeHost(value?: string | null): string | null {
   if (!value) return null;
   try {
@@ -228,29 +172,6 @@ function createScreenshotPlaceholders(title: string, baseIndex: number): MockScr
       order: variant,
     };
   });
-}
-
-function getLocalScreenshotUrl(slug: string): string | null {
-  return LOCAL_SCREENSHOT_SLUGS.has(slug) ? `/game-screenshots/${slug}.png` : null;
-}
-
-function buildScreenshots(slug: string, title: string, baseIndex: number): MockScreenshot[] {
-  const localScreenshotUrl = getLocalScreenshotUrl(slug);
-  const placeholders = createScreenshotPlaceholders(title, baseIndex);
-
-  if (!localScreenshotUrl) return placeholders;
-
-  return [
-    { url: localScreenshotUrl, order: 0 },
-    ...placeholders.slice(0, 2).map((screenshot, index) => ({
-      ...screenshot,
-      order: index + 1,
-    })),
-  ];
-}
-
-function buildThumbnailUrl(slug: string, title: string, color: string): string {
-  return getLocalScreenshotUrl(slug) ?? createSvgPlaceholder(title, color);
 }
 
 const MOCK_CATEGORY_PRESETS: MockCategory[] = [
@@ -644,7 +565,7 @@ function buildMockGamesFromSample(entries: SampleGameEntry[]): MockGame[] {
     // Keep unverified distribution references as audit metadata only. They are
     // not player-facing source links until permission has been confirmed.
     const sourceUrl: string | null = null;
-    const screenshots = buildScreenshots(slug, englishTitle, index);
+    const screenshots = createScreenshotPlaceholders(englishTitle, index);
     const editorialDescription = getGameEditorialDescription(slug, 'zh');
     const editorialDescriptionEn = getGameEditorialDescription(slug, 'en');
 
@@ -658,7 +579,7 @@ function buildMockGamesFromSample(entries: SampleGameEntry[]): MockGame[] {
         editorialDescriptionEn ??
         `Play “${englishTitle}”, a curated HTML5 mini game that runs instantly in your browser.`,
       iframeUrl,
-      thumbnailUrl: buildThumbnailUrl(slug, englishTitle, color),
+      thumbnailUrl: createSvgPlaceholder(englishTitle, color),
       featured: index < FEATURED_COUNT,
       isNew: index < NEW_THRESHOLD,
       isHot: index % 3 === 0,

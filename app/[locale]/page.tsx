@@ -101,7 +101,7 @@ function ShelfSection({
               <div className="relative aspect-[4/3] overflow-hidden bg-muted">
                 <Image
                   src={entry.image}
-                  alt={`${entry.title} gameplay`}
+                  alt=""
                   fill
                   sizes="(max-width: 640px) 58vw, (max-width: 1024px) 40vw, 33vw"
                   className="object-cover transition duration-300 group-hover:scale-[1.03]"
@@ -184,7 +184,7 @@ export default async function HomePage({
       ? [
           {
             href: getLocalizedPath(locale, '/guides/google-snake-mods'),
-            image: '/game-screenshots/google-snake.png',
+            image: '/og-gamehub.svg',
             eyebrow: '热门攻略',
             title: 'Google Snake Mods',
             description:
@@ -193,7 +193,7 @@ export default async function HomePage({
           },
           {
             href: getLocalizedPath(locale, '/guides/drive-mad-walkthrough'),
-            image: '/game-screenshots/drive-mad.png',
+            image: '/og-gamehub.svg',
             eyebrow: '热门攻略',
             title: 'Drive Mad Walkthrough',
             description:
@@ -202,7 +202,7 @@ export default async function HomePage({
           },
           {
             href: getLocalizedPath(locale, '/guides/quick-play-guide'),
-            image: '/game-screenshots/tunnel-rush.png',
+            image: '/og-gamehub.svg',
             eyebrow: '场景攻略',
             title: '快速游玩指南',
             description:
@@ -211,7 +211,7 @@ export default async function HomePage({
           },
           {
             href: getLocalizedPath(locale, '/guides/google-snake-level-editor'),
-            image: '/game-screenshots/google-snake.png',
+            image: '/og-gamehub.svg',
             eyebrow: '新攻略',
             title: 'Google Snake Level Editor',
             description: '查看编辑器入口、制作步骤和移动端限制。',
@@ -219,7 +219,7 @@ export default async function HomePage({
           },
           {
             href: getLocalizedPath(locale, '/guides/big-tower-tiny-square-walkthrough'),
-            image: '/game-screenshots/big-tower-tiny-square.png',
+            image: '/og-gamehub.svg',
             eyebrow: '关卡攻略',
             title: 'Big Tower Tiny Square',
             description: '从检查点、跳跃节奏和高塔路线开始。',
@@ -229,7 +229,7 @@ export default async function HomePage({
       : [
           {
             href: getLocalizedPath(locale, '/guides/google-snake-mods'),
-            image: '/game-screenshots/google-snake.png',
+            image: '/og-gamehub.svg',
             eyebrow: 'Popular guide',
             title: 'Google Snake Mods',
             description:
@@ -238,7 +238,7 @@ export default async function HomePage({
           },
           {
             href: getLocalizedPath(locale, '/guides/drive-mad-walkthrough'),
-            image: '/game-screenshots/drive-mad.png',
+            image: '/og-gamehub.svg',
             eyebrow: 'Popular guide',
             title: 'Drive Mad Walkthrough',
             description:
@@ -247,7 +247,7 @@ export default async function HomePage({
           },
           {
             href: getLocalizedPath(locale, '/guides/quick-play-guide'),
-            image: '/game-screenshots/tunnel-rush.png',
+            image: '/og-gamehub.svg',
             eyebrow: 'Play context',
             title: 'Quick Play Guide',
             description:
@@ -256,7 +256,7 @@ export default async function HomePage({
           },
           {
             href: getLocalizedPath(locale, '/guides/google-snake-level-editor'),
-            image: '/game-screenshots/google-snake.png',
+            image: '/og-gamehub.svg',
             eyebrow: 'New guide',
             title: 'Google Snake Level Editor',
             description: 'Find the editor route, build steps, and mobile limits.',
@@ -264,7 +264,7 @@ export default async function HomePage({
           },
           {
             href: getLocalizedPath(locale, '/guides/big-tower-tiny-square-walkthrough'),
-            image: '/game-screenshots/big-tower-tiny-square.png',
+            image: '/og-gamehub.svg',
             eyebrow: 'Level guide',
             title: 'Big Tower Tiny Square',
             description: 'Use checkpoints, jump timing, and a safer tower route.',
@@ -276,22 +276,22 @@ export default async function HomePage({
     locale === 'zh'
       ? [
           {
-            href: getLocalizedPath(locale, '/games/big-tower-tiny-square'),
-            image: '/game-screenshots/big-tower-tiny-square.png',
+            href: getLocalizedPath(locale, '/guides/big-tower-tiny-square-walkthrough'),
+            image: '/og-gamehub.svg',
             eyebrow: '平台跳跃',
             title: 'Big Tower Tiny Square',
             description:
               '沿着检查点登上高塔，掌握跳跃时机，避开每一段危险平台。',
-            action: '开始爬塔',
+            action: '查看爬塔技巧',
           },
           {
             href: getLocalizedPath(locale, '/games/g-switch-2'),
-            image: '/game-screenshots/g-switch-2.png',
+            image: '/og-gamehub.svg',
             eyebrow: '重力跑酷',
             title: 'G-Switch 2',
             description:
               '在地面和天花板之间翻转重力，读懂障碍，保持节奏一路前进。',
-            action: '开始跑酷',
+            action: '查看操作提示',
           },
           {
             href: getLocalizedPath(locale, '/games/solitaire'),
@@ -304,24 +304,24 @@ export default async function HomePage({
         ]
       : [
           {
-            href: getLocalizedPath(locale, '/games/big-tower-tiny-square'),
-            image: '/game-screenshots/big-tower-tiny-square.png',
+            href: getLocalizedPath(locale, '/guides/big-tower-tiny-square-walkthrough'),
+            image: '/og-gamehub.svg',
             eyebrow: 'Platform challenge',
             gameSlug: 'big-tower-tiny-square',
             title: 'Big Tower Tiny Square',
             description:
               'Climb through checkpoint-filled tower rooms with careful jumps and well-timed retries.',
-            action: 'Climb the tower',
+            action: 'Read the level tips',
           },
           {
             href: getLocalizedPath(locale, '/games/g-switch-2'),
-            image: '/game-screenshots/g-switch-2.png',
+            image: '/og-gamehub.svg',
             eyebrow: 'Gravity runner',
             gameSlug: 'g-switch-2',
             title: 'G-Switch 2',
             description:
               'Flip between floor and ceiling, read each obstacle, and keep the run moving.',
-            action: 'Start the run',
+            action: 'Read the controls',
           },
           {
             href: getLocalizedPath(locale, '/games/solitaire'),
@@ -453,7 +453,7 @@ export default async function HomePage({
 
           <ShelfSection
             id="more-games"
-            title={locale === 'zh' ? '更多值得玩的游戏' : 'More games to play'}
+            title={locale === 'zh' ? '更多游戏和攻略' : 'More games and guides'}
             description={
               locale === 'zh'
                 ? '再挑几款轻松上手的挑战、益智或街机游戏，找到下一款想玩的。'

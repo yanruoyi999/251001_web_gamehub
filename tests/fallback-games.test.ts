@@ -103,13 +103,13 @@ describe('fallback game catalogue', () => {
     expect(result.total).toBe(0);
   });
 
-  it('keeps the verified Monkey Mart source aligned with its title', () => {
+  it('keeps the Monkey Mart record aligned with its title without serving a mirror image', () => {
     const game = mockGames.find((item) => item.slug === 'monkey-mart');
 
     expect(game?.iframeUrl).toBe(
       'https://szhong.4399.com/4399swf//upload_swf/ftp41/gamehwq/20221216/09/index.htm',
     );
     expect(game?.sourcePageUrl).toBe(game?.iframeUrl);
-    expect(game?.thumbnailUrl).toBe('/game-screenshots/monkey-mart.png');
+    expect(game?.thumbnailUrl).toMatch(/^data:image\/svg\+xml/);
   });
 });

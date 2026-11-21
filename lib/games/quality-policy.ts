@@ -1,4 +1,5 @@
-import { hasFrozenLegacySource, hasReviewedCatalogueSource, isLegacyCatalogueSlug, type CatalogueSourceIdentity } from './source-evidence';
+import { hasFrozenLegacySource, hasReviewedCatalogueSource, isLegacyCatalogueSlug, LEGACY_CATALOGUE_SOURCES, type CatalogueSourceIdentity } from './source-evidence';
+import legacyGuideRedirects from './legacy-guide-redirects.json';
 
 export const MANUAL_REVIEW_GAME_REASONS = {
   'adam-and-eve-zombies': 'Zombie theme; review tone, iframe behavior, and age suitability before indexing.',
@@ -102,6 +103,7 @@ export const CORE_INDEXABLE_GAME_SLUGS = [
 ] as const;
 
 const CORE_INDEXABLE_GAME_SLUG_SET = new Set<string>(CORE_INDEXABLE_GAME_SLUGS);
+const RETIRED_LEGACY_ALIASES = ['space-crusade', 'ludum-dare-28', 'ludum-dare-29'];
 
 export function normalizeGameSlug(slug: string | null | undefined) {
   return (slug ?? '').trim().toLowerCase();
@@ -110,6 +112,21 @@ export function normalizeGameSlug(slug: string | null | undefined) {
 function getPolicySlug(input: GamePolicyInput) {
   return normalizeGameSlug(typeof input === 'string' ? input : input?.slug);
 }
+
+export function getLegacyGameDisposition(slug: string) {
+  const normalized = normalizeGameSlug(slug);
+  if (RETIRED_LEGACY_ALIASES.includes(normalized)) return 'retired';
+  if (!isLegacyCatalogueSlug(normalized)) return null;
+  if (Object.hasOwn(legacyGuideRedirects, normalized)) return 'redirect';
+  return CORE_INDEXABLE_GAME_SLUG_SET.has(normalized) && !isGameUnderManualReview(normalized)
+    ? 'editorial'
+    : 'retired';
+}
+
+export const RETIRED_LEGACY_SLUGS = [
+  ...RETIRED_LEGACY_ALIASES,
+  ...LEGACY_CATALOGUE_SOURCES.map(({ slug }) => slug).filter(slug => getLegacyGameDisposition(slug) === 'retired'),
+];
 
 function hasSourceApproval(input: GamePolicyInput) {
   // Slug-only checks remain metadata helpers, never iframe authorization.
@@ -163,7 +180,7 @@ export function isCoreIndexableGame(input: GamePolicyInput) {
 }
 
 export function shouldIncludeGameInSitemap(input: GamePolicyInput) {
-  return isCoreIndexableGame(input);
+  return getLegacyGameDisposition(getPolicySlug(input)) !== 'redirect' && isCoreIndexableGame(input);
 }
 
 export function shouldNoIndexGame(input: GamePolicyInput) {
@@ -175,7 +192,8 @@ export function shouldPromoteGameInCollections(input: GamePolicyInput) {
 }
 
 export function canRenderGameIframe(input: GamePolicyInput) {
-  return Boolean(input && typeof input === 'object' && !isGameUnderManualReview(input) && hasSourceApproval(input));
+  return Boolean(input && typeof input === 'object' && !getLegacyGameDisposition(getPolicySlug(input)) &&
+    !isGameUnderManualReview(input) && hasReviewedCatalogueSource(input));
 }
 
 export function getGameQualityTier(input: GamePolicyInput) {

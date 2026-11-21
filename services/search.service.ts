@@ -8,10 +8,11 @@ import { getMeilisearchClient } from '@/lib/meilisearch';
 import { getRedisClient } from '@/lib/redis';
 import { SearchCacheKeys, CacheTTL } from '@/lib/utils/cache-keys';
 import { sanitizeSearchQuery, validatePagination } from '@/lib/utils/validation';
-import { ilike, or, eq, desc, sql, and } from 'drizzle-orm';
+import { ilike, or, eq, desc, sql, and, notInArray } from 'drizzle-orm';
 import { getJson, setJson } from '@/lib/utils/redis-helper';
 import { searchFallbackGames } from '@/lib/games/fallback-search';
 import { isLocalCatalogueMode } from '@/lib/games/catalog-mode';
+import { getLegacyGameDisposition, RETIRED_LEGACY_SLUGS } from '@/lib/games/quality-policy';
 
 export interface SearchOptions {
   query: string;
@@ -84,7 +85,7 @@ export class SearchService {
     }
 
     const { page, limit, offset } = validatePagination(options.page, options.limit);
-    const cacheKey = SearchCacheKeys.results(query, { page, limit });
+    const cacheKey = SearchCacheKeys.results(query, { page, limit, catalogueRevision: 2 });
 
     const cached = await getJson<SearchResult>(redis, cacheKey);
     if (cached) {
@@ -101,7 +102,7 @@ export class SearchService {
           index.search(query, {
             limit,
             offset,
-            filter: ['status = "active"'],
+            filter: ['status = "active"', `slug NOT IN ${JSON.stringify(RETIRED_LEGACY_SLUGS)}`],
           }),
           'Meilisearch lookup',
         );
@@ -121,7 +122,7 @@ export class SearchService {
               titleEn: toOptionalString(hit.titleEn ?? hit.title_en),
               slug,
               status: toOptionalString(hit.status) ?? 'active',
-              thumbnailUrl: toOptionalString(hit.thumbnailUrl),
+              thumbnailUrl: getLegacyGameDisposition(slug) ? '/og-gamehub.svg' : toOptionalString(hit.thumbnailUrl),
               isNew: toOptionalBoolean(hit.isNew),
               isHot: toOptionalBoolean(hit.isHot),
               playCount: toOptionalNumber(hit.playCount),
@@ -192,11 +193,15 @@ export class SearchService {
   ): Promise<SearchResult> {
     const pattern = `%${query}%`;
 
-    const whereClause = or(
-      ilike(games.title, pattern),
-      ilike(games.titleEn, pattern),
-      ilike(games.description, pattern),
-      ilike(games.descriptionEn, pattern),
+    const whereClause = and(
+      eq(games.status, 'active'),
+      notInArray(games.slug, RETIRED_LEGACY_SLUGS),
+      or(
+        ilike(games.title, pattern),
+        ilike(games.titleEn, pattern),
+        ilike(games.description, pattern),
+        ilike(games.descriptionEn, pattern),
+      ),
     );
 
     const results = await db
@@ -215,7 +220,7 @@ export class SearchService {
       })
       .from(games)
       .leftJoin(gameStats, eq(games.id, gameStats.gameId))
-      .where(and(eq(games.status, 'active'), whereClause))
+      .where(whereClause)
       .orderBy(desc(gameStats.playCount))
       .limit(options.limit)
       .offset(options.offset);
@@ -223,10 +228,12 @@ export class SearchService {
     const [{ count }] = await db
       .select({ count: sql<number>`COUNT(*)` })
       .from(games)
-      .where(and(eq(games.status, 'active'), whereClause));
+      .where(whereClause);
 
     return {
-      games: results,
+      games: results.map(game => getLegacyGameDisposition(game.slug)
+        ? { ...game, thumbnailUrl: '/og-gamehub.svg' }
+        : game),
       total: Number(count || 0),
       page: options.page,
       limit: options.limit,

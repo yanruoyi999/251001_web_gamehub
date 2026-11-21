@@ -9,7 +9,8 @@ import {
   tags,
   screenshots,
 } from '@/db/schema';
-import { eq, and, sql, inArray, ilike } from 'drizzle-orm';
+import { eq, and, sql, inArray, ilike, notInArray } from 'drizzle-orm';
+import { getLegacyGameDisposition, RETIRED_LEGACY_SLUGS } from '@/lib/games/quality-policy';
 import { ensureUniqueSlug, generateSlug, isValidSlug } from '@/lib/utils/slug';
 import { GameCacheKeys, CacheTTL } from '@/lib/utils/cache-keys';
 import { getJson, setJson, delKey } from '@/lib/utils/redis-helper';
@@ -37,6 +38,7 @@ export interface GameDetail extends GameRecord {
 }
 
 export interface ListGamesOptions {
+  publicCatalogue?: boolean;
   page?: number;
   limit?: number;
   status?: 'active' | 'inactive' | 'pending' | 'all';
@@ -196,6 +198,9 @@ export class GameService {
     }
 
     const filters: any[] = [];
+    if (options.publicCatalogue) {
+      filters.push(notInArray(games.slug, RETIRED_LEGACY_SLUGS));
+    }
 
     if (status !== 'all') {
       filters.push(eq(games.status, status));
@@ -221,6 +226,7 @@ export class GameService {
       page,
       limit,
       status,
+      publicCatalogue: options.publicCatalogue ?? false,
       categoryId: options.categoryId ?? null,
       tagId: options.tagId ?? null,
       search: options.search?.trim() || null,
@@ -321,6 +327,9 @@ export class GameService {
     const result = {
       games: rows.map((row) => ({
         ...row,
+        thumbnailUrl: options.publicCatalogue && getLegacyGameDisposition(row.slug)
+          ? '/og-gamehub.svg'
+          : row.thumbnailUrl,
         isFavorite: favoriteSet.has(row.id),
       })),
       total: Number(count || 0),

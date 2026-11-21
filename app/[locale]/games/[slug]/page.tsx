@@ -25,10 +25,13 @@ import type {
   MockGame,
 } from '@/lib/mock-games';
 import { getGameEditorialContent } from '@/lib/games/editorial-content';
+import legacyGuideRedirects from '@/lib/games/legacy-guide-redirects.json';
 import { getRelatedGames } from '@/lib/games/related-games';
 import {
   canRenderGameIframe,
   getGameRedirectTarget,
+  getLegacyGameDisposition,
+  normalizeGameSlug,
   getGameQualityTier,
   shouldNoIndexGame,
   shouldPromoteGameInCollections,
@@ -228,7 +231,24 @@ const resolveGameDetailBySlug = cache(async function resolveGameDetailBySlug(
 export async function generateMetadata({
   params,
 }: GamePageProps): Promise<Metadata> {
-  const { locale, slug } = await params;
+  const { locale, slug: requestedSlug } = await params;
+  const slug = normalizeGameSlug(requestedSlug);
+  const legacy = getLegacyGameDisposition(slug);
+  if (legacy === 'editorial') {
+    const content = getGameEditorialContent(slug, locale);
+    if (!content) return {};
+    const pathname = `/games/${slug}`;
+    return {
+      title: content.title,
+      description: content.summary,
+      alternates: {
+        canonical: getLocalizedPath(locale, pathname),
+        languages: { 'zh-CN': pathname, 'en-US': getLocalizedPath('en', pathname) },
+      },
+      openGraph: { title: content.title, description: content.summary, images: DEFAULT_OPEN_GRAPH_IMAGES },
+    };
+  }
+  if (legacy) return { robots: { index: false, follow: true } };
   const resolved = await resolveGameDetailBySlug(slug, true);
 
   if (!resolved) {
@@ -341,7 +361,66 @@ export async function generateMetadata({
 }
 
 export default async function GamePage({ params }: GamePageProps) {
-  const { locale, slug } = await params;
+  const { locale, slug: requestedSlug } = await params;
+  const slug = normalizeGameSlug(requestedSlug);
+  const legacy = getLegacyGameDisposition(slug);
+  if (legacy === 'retired') notFound();
+  if (legacy === 'redirect') {
+    const target = legacyGuideRedirects[slug as keyof typeof legacyGuideRedirects];
+    if (!target) notFound();
+    permanentRedirect(getLocalizedPath(locale, `/guides/${target}`));
+  }
+  if (legacy === 'editorial') {
+    const content = getGameEditorialContent(slug, locale);
+    if (!content) notFound();
+    const isZh = locale === 'zh';
+    return (
+      <article className="mx-auto max-w-3xl space-y-7 px-4 py-10" data-legacy-game-guide>
+        <Link href={getLocalizedPath(locale, '/guides')} className="text-primary underline">
+          {isZh ? '浏览攻略' : 'Browse guides'}
+        </Link>
+        <header>
+          <h1 className="text-3xl font-bold">{content.title}</h1>
+          <p className="mt-3 leading-relaxed">{content.summary}</p>
+          <p className="mt-3 text-sm text-muted-foreground">
+            {isZh ? '这里提供原创操作和过关建议。站内试玩已停用。' : 'Read our controls and gameplay tips. In-page play is unavailable.'}
+          </p>
+          {slug === 'google-snake' ? (
+            <a href="https://www.google.com/fbx?fbx=snake_arcade" className="mt-3 inline-block text-primary underline" rel="noopener noreferrer" target="_blank">
+              {isZh ? '前往 Google 玩标准版 Snake' : 'Play standard Snake on Google'}
+            </a>
+          ) : null}
+        </header>
+        {content.overview.map(paragraph => <p key={paragraph}>{paragraph}</p>)}
+        <section className="space-y-3">
+          <h2 className="text-xl font-semibold">{isZh ? '操作' : 'Controls'}</h2>
+          <dl className="space-y-2">
+            {content.controls.map(control => (
+              <div key={control.label}>
+                <dt className="font-medium">{control.label}</dt>
+                <dd>{control.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+        <section className="space-y-3">
+          <h2 className="text-xl font-semibold">{isZh ? '过关技巧' : 'Gameplay tips'}</h2>
+          <ul className="list-disc space-y-2 pl-5">
+            {[...content.howToPlay, ...content.tips].map((tip, index) => <li key={index}>{tip}</li>)}
+          </ul>
+        </section>
+        <ul className="space-y-2">
+          {content.relatedGuides.map(guide => (
+            <li key={guide.slug}>
+              <Link href={getLocalizedPath(locale, `/guides/${guide.slug}`)} className="text-primary underline">
+                {guide.title}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </article>
+    );
+  }
   const recommendationDateKey = getShanghaiDateKey();
   const redirectTarget = getGameRedirectTarget(slug);
 

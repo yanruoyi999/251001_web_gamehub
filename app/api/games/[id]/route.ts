@@ -5,7 +5,7 @@ import {
   getDatabaseConnectionMetadata,
   shouldSkipSupabaseDirectInServerless,
 } from '@/lib/db/connection-policy';
-import { buildFallbackGameDetail } from '@/lib/games/fallback-detail';
+import { buildFallbackGameDetail, publicLegacyGameDetail } from '@/lib/games/fallback-detail';
 import { getMockGameById } from '@/lib/mock-games';
 import { isLocalCatalogueMode, shouldUseCatalogueDatabase } from '@/lib/games/catalog-mode';
 
@@ -80,7 +80,10 @@ export async function GET(
     if (!game || (game.status !== 'active' && !isAdminRequestAuthenticated(request))) {
       return NextResponse.json({ error: 'Game not found' }, { status: 404 });
     }
-    return NextResponse.json(game);
+    const detail = isAdminRequestAuthenticated(request) ? game : publicLegacyGameDetail(game);
+    return detail
+      ? NextResponse.json(detail)
+      : NextResponse.json({ error: 'Game not found' }, { status: 404 });
   } catch (error) {
     console.warn('Game detail lookup failed, using local fallback:', error);
     const fallback = getFallbackDetail(gameId);

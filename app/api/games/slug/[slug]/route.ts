@@ -6,7 +6,7 @@ import {
   getDatabaseConnectionMetadata,
   shouldSkipSupabaseDirectInServerless,
 } from '@/lib/db/connection-policy';
-import { buildFallbackGameDetail } from '@/lib/games/fallback-detail';
+import { buildFallbackGameDetail, publicLegacyGameDetail } from '@/lib/games/fallback-detail';
 import { getMockGameBySlug } from '@/lib/mock-games';
 import { isValidSlug } from '@/lib/utils/slug';
 
@@ -55,7 +55,6 @@ export async function GET(
   if (!isValidSlug(slug)) {
     return NextResponse.json({ error: 'Invalid game slug' }, { status: 400 });
   }
-
   if (shouldUseGameDetailFallback()) {
     const fallback = getFallbackDetail(slug);
     return fallback
@@ -71,7 +70,10 @@ export async function GET(
     if (!game || (game.status !== 'active' && !isAdminRequestAuthenticated(request))) {
       return NextResponse.json({ error: 'Game not found' }, { status: 404 });
     }
-    return NextResponse.json(game);
+    const detail = isAdminRequestAuthenticated(request) ? game : publicLegacyGameDetail(game);
+    return detail
+      ? NextResponse.json(detail)
+      : NextResponse.json({ error: 'Game not found' }, { status: 404 });
   } catch (error) {
     console.warn('Game slug lookup failed, using local fallback:', error);
     const fallback = getFallbackDetail(slug);

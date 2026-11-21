@@ -8,7 +8,7 @@ describe('source-first Snake guides', () => {
     expect(mods.locales.en.metaTitle).toBe('Google Snake Mods: Web Version, Mod Menu & Loader Guide');
     expect(mods.locales.en.heading).toBe('Google Snake Mods: Mod Menu, More Menu, Loader & Mods 2');
     expect(mods.locales.en.sections[0].body.length).toBeLessThan(250);
-    expect(mods.locales.en.sections[0].body).toMatch(/standard.*not.*modded/i);
+    expect(mods.locales.en.sections[0].body).toMatch(/Google hosts the standard game separately/i);
     expect(mods.documentationCheckedAt).toBe('2026-09-15');
   });
   it('does not claim to host a working editor or a tested installation', () => {

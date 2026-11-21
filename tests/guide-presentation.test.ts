@@ -12,11 +12,6 @@ const guidePageSource = await readFile(
   new URL('../app/[locale]/guides/[slug]/page.tsx', import.meta.url),
   'utf8',
 );
-const playerSource = await readFile(
-  new URL('../components/game/game-player-facade.tsx', import.meta.url),
-  'utf8',
-);
-
 describe('guide presentation', () => {
   it('uses the first section as the quick answer without repeating it in guide details', () => {
     const page = getSeoLandingPage('google-snake-mods');
@@ -45,12 +40,9 @@ describe('guide presentation', () => {
     expect(page?.locales.en.externalLinks?.map((link) => link.href)).not.toContain(
       'https://googlesnakemods.com/',
     );
-    expect(page?.embedGame?.playLabel).toEqual({
-      en: 'Play standard Snake - no mods',
-      zh: '试玩标准 Snake（无模组）',
-    });
-    expect(guidePageSource).toContain('playLabel={page.embedGame.playLabel?.[locale]}');
-    expect(playerSource).toContain('playLabel?: string;');
+    expect(page?.embedGame).toBeUndefined();
+    expect(page?.retiredMirrorPlayer).toBe(true);
+    expect(guidePageSource).toContain('https://www.google.com/fbx?fbx=snake_arcade');
   });
 
   it('publishes three distinct source-checked Telemount images with a stable date', () => {

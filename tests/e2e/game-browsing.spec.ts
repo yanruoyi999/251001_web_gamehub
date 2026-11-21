@@ -155,7 +155,7 @@ test.describe('游戏浏览流程', () => {
     await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   });
 
-  test('攻略推荐卡片的图片区域也能打开游戏详情', async ({ page }) => {
+  test('攻略推荐保留有用的游戏详情，移除未经核实的图片', async ({ page }) => {
     await page.goto('/en/guides/google-snake-mods');
 
     const recommendations = page.locator('#recommendations');
@@ -165,50 +165,31 @@ test.describe('游戏浏览流程', () => {
       .locator('article')
       .filter({ has: page.locator('a[href="/en/games/tunnel-rush"]') });
     const tunnelRushLink = tunnelRushCard.locator('a[href="/en/games/tunnel-rush"]');
-    await expect(tunnelRushLink).toHaveCount(2);
-    await expect(tunnelRushLink.first()).toHaveAttribute('href', '/en/games/tunnel-rush');
-    await tunnelRushLink.first().scrollIntoViewIfNeeded();
-    await tunnelRushLink.first().click({ position: { x: 24, y: 24 } });
-
-    await page.waitForURL(/\/en\/games\/tunnel-rush$/);
+    await expect(tunnelRushLink).toHaveCount(1);
+    await tunnelRushLink.click();
+    await expect(page).toHaveURL(/\/en\/games\/tunnel-rush$/);
+    await expect(page.locator('[data-legacy-game-guide]')).toBeVisible();
   });
 
-  test('原生全屏被拒绝时无脚本错误并回退到视口全屏', async ({ page }) => {
-    const pageErrors: string[] = [];
-    page.on('pageerror', (error) => pageErrors.push(error.message));
+  test('旧镜像下架、同款攻略跳转与高流量攻略保留', async ({ page, request }) => {
+    for (const prefix of ['', '/en']) {
+      const redirect = await request.get(`${prefix}/games/drive-mad`, { maxRedirects: 0 });
+      expect(redirect.status()).toBe(301);
+      expect(redirect.headers().location).toBe(`${prefix}/guides/drive-mad-walkthrough`);
 
-    await page.route('https://szhong.4399.com/**', async (route) => {
-      await route.fulfill({
-        contentType: 'text/html',
-        body: '<!doctype html><html><body>Snake test player</body></html>',
-      });
-    });
-    await page.goto('/en/guides/google-snake-mods');
-    await page
-      .locator('#play')
-      .getByRole('link', { name: 'Play standard Snake - no mods' })
-      .click();
+      const retired = await request.get(`${prefix}/games/temple-run-2`, { maxRedirects: 0 });
+      expect(retired.status()).toBe(404);
+    }
+    expect((await request.get('/data/4399-sample.json')).status()).toBe(404);
+    expect((await request.get('/game-screenshots/google-snake.png')).status()).toBe(404);
 
-    const player = page.locator('[data-viewport-fullscreen]');
-    await player.evaluate((element) => {
-      Object.defineProperty(element, 'requestFullscreen', {
-        configurable: true,
-        value: () => Promise.reject(new DOMException('Denied for test', 'NotAllowedError')),
-      });
-    });
-
-    const fullscreenButton = player.locator('button[aria-pressed]');
-    await expect(fullscreenButton).toHaveAccessibleName('Play fullscreen');
-    await fullscreenButton.click();
-
-    await expect(fullscreenButton).toHaveAttribute('aria-pressed', 'true');
-    await expect(fullscreenButton).toHaveAccessibleName('Exit fullscreen');
-    await expect(page.locator('[data-viewport-fullscreen="true"]')).toBeVisible();
-
-    await page.keyboard.press('Escape');
-    await expect(player).toHaveAttribute('data-viewport-fullscreen', 'false');
-    await expect(fullscreenButton).toHaveAttribute('aria-pressed', 'false');
-    expect(pageErrors).toEqual([]);
+    const response = await page.goto('/en/guides/google-snake-mods');
+    expect(response?.status()).toBe(200);
+    expect(response?.headers()['content-security-policy']).not.toMatch(/4399|friv2018/);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /\/en\/guides\/google-snake-mods$/);
+    await expect(page.locator('[data-legacy-player-removed]')).toBeVisible();
+    await expect(page.locator('main iframe, #play')).toHaveCount(0);
+    await expect(page.getByRole('link', { name: 'Play standard Snake on Google (no mods)' })).toHaveAttribute('href', 'https://www.google.com/fbx?fbx=snake_arcade');
   });
 
   test('英文游戏目录的首方图片资源不返回 4xx', async ({ page, request }) => {
@@ -230,7 +211,9 @@ test.describe('游戏浏览流程', () => {
       )
     );
 
-    expect(imageUrls.length).toBeGreaterThan(0);
+    const catalogueImage = page.locator('main img[src^="data:image/svg+xml"]').first();
+    await catalogueImage.scrollIntoViewIfNeeded();
+    await expect.poll(() => catalogueImage.evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0);
 
     const imageResponses = await Promise.all(
       imageUrls.map(url => request.get(url))

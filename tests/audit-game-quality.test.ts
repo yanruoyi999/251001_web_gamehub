@@ -1,3 +1,4 @@
+import { readdirSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 
 import {
@@ -26,11 +27,7 @@ describe('game quality audit', () => {
     expect(decisions.every((row) => row.slug && row.decision && row.reason)).toBe(true);
   });
 
-  it('uses real checked-in screenshots for every core indexed game', () => {
-    const placeholderRows = buildAuditRows().filter(
-      (row) => row.tier === 'core-indexed' && row.reasons.includes('placeholder thumbnail'),
-    );
-
-    expect(placeholderRows.map((row) => row.game.slug)).toEqual([]);
+  it('does not ship captured legacy catalogue images', () => {
+    expect(readdirSync('public/game-screenshots')).toEqual(['solitaire.png']);
   });
 });
