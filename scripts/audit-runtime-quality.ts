@@ -17,6 +17,7 @@ interface RuntimeSample {
   path: string;
   type: SampleType;
   requiresPlayableIframe?: boolean;
+  requiresNoIframe?: boolean;
 }
 
 export interface RuntimeResult extends RuntimeSample {
@@ -36,6 +37,7 @@ export interface RuntimeResult extends RuntimeSample {
   playButtonVisible: boolean;
   iframeVisibleAfterPlay: boolean | null;
   fullscreenButtonVisible: boolean | null;
+  hasMainIframe?: boolean;
   reason: string;
 }
 
@@ -48,13 +50,13 @@ export const RUNTIME_QUALITY_DEFAULT_SAMPLES: RuntimeSample[] = [
   { path: '/en/games', type: 'static' },
   { path: '/en/games/2-player-unblocked', type: 'game', requiresPlayableIframe: true },
   { path: '/en/guides/games-like-ovo', type: 'guide' },
-  { path: '/en/guides/google-snake-mods', type: 'guide' },
-  { path: '/en/guides/big-tower-tiny-square-2-walkthrough', type: 'guide' },
+  { path: '/en/guides/google-snake-mods', type: 'guide', requiresNoIframe: true },
+  { path: '/en/guides/big-tower-tiny-square-2-walkthrough', type: 'guide', requiresNoIframe: true },
   { path: '/en/guides/obby-parkour-with-ragdoll-guide', type: 'guide' },
   { path: '/en/guides/rail-cart-buddies-guide', type: 'guide' },
   { path: '/en/guides/telemount-walkthrough', type: 'guide' },
-  { path: '/en/games/drive-mad', type: 'game', requiresPlayableIframe: true },
-  { path: '/en/games/duo-vikings', type: 'game', requiresPlayableIframe: true },
+  { path: '/en/guides/drive-mad-walkthrough', type: 'guide', requiresNoIframe: true },
+  { path: '/en/games/duo-vikings', type: 'guide', requiresNoIframe: true },
   { path: '/en/games/draw-a-perfect-circle', type: 'game' },
   { path: '/en/games/chinese-checkers', type: 'game' },
   { path: '/en/games/stacker-game', type: 'game' },
@@ -135,6 +137,10 @@ function scoreRuntime(result: Omit<RuntimeResult, 'score' | 'reason'>) {
     score -= 8;
     reasons.push('fullscreen control not visible after play');
   }
+  if (result.requiresNoIframe && result.hasMainIframe) {
+    score -= 35;
+    reasons.push('retired guide contains an iframe');
+  }
 
   return {
     score: Math.max(0, score),
@@ -213,12 +219,14 @@ async function samplePage(browser: Browser, baseUrl: string, sample: RuntimeSamp
     robotsMeta,
     hasHorizontalOverflow,
     playButtonVisible,
+    hasMainIframe,
   ] = await Promise.all([
     collectPerformance(page),
     page.evaluate(() => Boolean(document.querySelector('link[rel="canonical"]'))),
     page.evaluate(() => document.querySelector('meta[name="robots"]')?.getAttribute('content') ?? ''),
     page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1),
     playButton.isVisible().catch(() => false),
+    sample.requiresNoIframe ? page.locator('main iframe').count().then(n => n > 0) : undefined,
   ]);
 
   let iframeVisibleAfterPlay: boolean | null = null;
@@ -259,6 +267,7 @@ async function samplePage(browser: Browser, baseUrl: string, sample: RuntimeSamp
     playButtonVisible,
     iframeVisibleAfterPlay,
     fullscreenButtonVisible,
+    hasMainIframe,
   };
   const { score, reason } = scoreRuntime(resultWithoutScore);
 
@@ -282,7 +291,8 @@ export function buildReport(results: RuntimeResult[], baseUrl: string, generated
     '## Thresholds',
     '',
     '- Sampled pages must score 80 or higher before being treated as hardened index targets.',
-    '- Game pages must expose the Play button on mobile, load an iframe after the click, and keep the Luma fullscreen control visible.',
+    '- Samples with an embedded game require a visible Play button, an iframe after activation, and the Luma fullscreen control.',
+    '- Sampled guides with retired players must render without an iframe in their main content.',
     '- Pages are penalized for missing canonical tags, mobile horizontal overflow, slow load/FCP, excessive transfer size, many requests, and console/page errors.',
     '',
     '## Summary',
