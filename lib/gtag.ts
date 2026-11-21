@@ -1,6 +1,7 @@
 import { shouldLoadProductionTelemetry } from '@/lib/analytics/runtime';
 
 export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID ?? '';
+export const GA_READY_EVENT = 'luma:ga-ready';
 
 type GtagParams = {
   page_path: string;
@@ -33,13 +34,29 @@ export const pageview = (url: string) => {
   } satisfies GtagParams);
 };
 
-export const trackEvent = (action: string, params: EventParams = {}) => {
+export const trackEvent = (
+  action: string,
+  params: EventParams = {},
+  { waitForInitialization = false }: { waitForInitialization?: boolean } = {}
+) => {
   if (
     !GA_TRACKING_ID ||
     typeof window === 'undefined' ||
     !shouldLoadProductionTelemetry(window.location?.hostname ?? '')
   ) return;
-  if (typeof window.gtag !== 'function') return;
-
-  window.gtag('event', action, params);
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', action, params);
+  } else if (waitForInitialization) {
+    window.addEventListener(
+      GA_READY_EVENT,
+      () => {
+        try {
+          trackEvent(action, params);
+        } catch {
+          // A queued event must not throw during analytics initialization.
+        }
+      },
+      { once: true }
+    );
+  }
 };

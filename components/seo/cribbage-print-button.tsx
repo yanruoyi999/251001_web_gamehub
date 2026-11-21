@@ -11,7 +11,11 @@ export function CribbagePrintButton({ locale }: { locale: Locale }) {
         type="button"
         onClick={() => {
           try {
-            trackEvent('cribbage_print_click', { locale });
+            trackEvent(
+              'cribbage_print_click',
+              { locale, page_location: window.location.origin + window.location.pathname },
+              { waitForInitialization: true }
+            );
           } catch {
             // A telemetry failure must not interrupt browser printing.
           }
