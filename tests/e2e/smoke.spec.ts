@@ -22,7 +22,7 @@ test.describe('Luma Game Hub smoke tests', () => {
       page.getByRole('heading', { name: 'Popular guides' }),
     ).toBeVisible();
     await expect(
-      page.getByRole('heading', { name: 'More games to play' }),
+      page.getByRole('heading', { name: 'More games and guides' }),
     ).toBeVisible();
     await expect(page.getByRole('link', { name: 'View saved games' })).toHaveAttribute(
       'href',
@@ -36,7 +36,7 @@ test.describe('Luma Game Hub smoke tests', () => {
     ).toHaveCount(5);
     await expect(
       page.locator(
-        'section[aria-labelledby="more-games"] a[href^="/en/games/"]',
+        'section[aria-labelledby="more-games"] a[href^="/en/games/"], section[aria-labelledby="more-games"] a[href^="/en/guides/"]',
       ),
     ).toHaveCount(3);
 

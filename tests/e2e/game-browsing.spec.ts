@@ -211,7 +211,9 @@ test.describe('游戏浏览流程', () => {
       )
     );
 
-    expect(imageUrls.length).toBeGreaterThan(0);
+    const catalogueImage = page.locator('main img[src^="data:image/svg+xml"]').first();
+    await catalogueImage.scrollIntoViewIfNeeded();
+    await expect.poll(() => catalogueImage.evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0);
 
     const imageResponses = await Promise.all(
       imageUrls.map(url => request.get(url))
