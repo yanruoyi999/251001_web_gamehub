@@ -821,22 +821,27 @@ export default async function GuidePage({ params }: GuidePageProps) {
               : 'Use these external links to verify the game source and creator context; they do not imply a commercial partnership with Luma.'}
           </p>
           <ul className="mt-4 grid gap-3 text-sm md:grid-cols-3">
-            {content.externalLinks.map(link => (
-              <li
-                key={link.href}
-                className="rounded-md border border-border bg-card p-4"
-              >
-                <a
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-medium text-primary transition hover:text-primary/80"
-                >
-                  {link.label} →
-                </a>
-                <p className="mt-2 text-muted-foreground">{link.description}</p>
-              </li>
-            ))}
+            {content.externalLinks.map(link => {
+              const anchor = {
+                href: link.href,
+                target: '_blank',
+                rel: 'noopener noreferrer',
+                className: 'font-medium text-primary transition hover:text-primary/80',
+              };
+              const label = `${link.label} →`;
+              const isPublisherPlay = publisherPlay?.action === 'publisher_play' && link.href === publisherPlay.url;
+
+              return (
+                <li key={link.href} className="rounded-md border border-border bg-card p-4">
+                  {isPublisherPlay ? (
+                    <GuideIntentLink guideSlug={page.slug} locale={locale} action="publisher_play" {...anchor}>
+                      {label}
+                    </GuideIntentLink>
+                  ) : <a {...anchor}>{label}</a>}
+                  <p className="mt-2 text-muted-foreground">{link.description}</p>
+                </li>
+              );
+            })}
           </ul>
         </section>
       ) : null}
