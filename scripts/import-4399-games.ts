@@ -100,7 +100,7 @@ function parseArgs(cwd: string): Options {
   const args = process.argv.slice(2);
   const options: Options = {
     inputPath: path.join(cwd, 'game_iframes.tsv'),
-    outputPath: path.join(cwd, 'public/data/4399-sample.json'),
+    outputPath: path.join(cwd, 'lib/games/legacy-catalogue-snapshot.json'),
   };
 
   for (let i = 0; i < args.length; i += 1) {

@@ -94,6 +94,16 @@ const picks = [
   },
 ];
 
+const guidePaths: Record<string, string> = {
+  ovo: '/guides/ovo-walkthrough',
+  'drive-mad': '/guides/drive-mad-walkthrough',
+  'big-tower-tiny-square': '/guides/big-tower-tiny-square-walkthrough',
+};
+
+function getPickPath(slug: string) {
+  return guidePaths[slug] ?? `/games/${slug}`;
+}
+
 const faqs = {
   en: [
     {
@@ -237,7 +247,7 @@ export default async function KeyboardOnlyBrowserGamesPage({ params }: PageProps
         '@type': 'ListItem',
         position: index + 1,
         name: pick.title,
-        url: buildAbsoluteUrl(getLocalizedPath(locale, `/games/${pick.slug}`)),
+        url: buildAbsoluteUrl(getLocalizedPath(locale, getPickPath(pick.slug))),
       })),
     },
     {
@@ -333,11 +343,13 @@ export default async function KeyboardOnlyBrowserGamesPage({ params }: PageProps
                   {isZh ? pick.bestForZh : pick.bestFor}
                 </p>
                 <Link
-                  href={getLocalizedPath(locale, `/games/${pick.slug}`)}
+                  href={getLocalizedPath(locale, getPickPath(pick.slug))}
                   className="font-medium text-primary hover:text-primary/80"
                   prefetch
                 >
-                  {isZh ? `打开 ${pick.title} 游戏页` : `Open ${pick.title}`} →
+                  {pick.slug === 'stacker-game'
+                    ? (isZh ? `开始玩 ${pick.title}` : `Play ${pick.title}`)
+                    : (isZh ? `查看 ${pick.title} 操作` : `See ${pick.title} controls`)} →
                 </Link>
               </CardContent>
             </Card>

@@ -120,6 +120,14 @@ interface GuidePageProps {
 }
 
 const gameIndex = new Map(mockGames.map(game => [game.slug, game]));
+const publisherPlayLinks: Record<string, { url: string; title: string }> = {
+  'google-snake-mods': { url: 'https://www.google.com/fbx?fbx=snake_arcade', title: 'Google' },
+  'drive-mad-walkthrough': { url: 'https://play.fancade.com/5F084A0BCE06B710', title: 'Fancade' },
+  'drive-mad-level-tips': { url: 'https://play.fancade.com/5F084A0BCE06B710', title: 'Fancade' },
+  'apple-knight-mini-dungeons-guide': { url: 'https://poki.com/en/g/apple-knight-mini-dungeons', title: 'Poki' },
+  'big-tower-tiny-square-walkthrough': { url: 'https://evilobjective.itch.io/bigtowertinysquarefree', title: 'EvilObjective' },
+  'tunnel-rush-unblocked': { url: 'https://poki.com/en/g/tunnel-rush', title: 'Poki' },
+};
 
 function getRelatedPages(current: SeoLandingPage, locale: Locale) {
   return current.relatedSlugs
@@ -139,6 +147,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
   if (!page) {
     notFound();
   }
+  const publisherPlay = publisherPlayLinks[page.slug];
 
   const siteBaseUrl = getSiteBaseUrl();
   const content = page.locales[locale] ?? page.locales.zh;
@@ -396,6 +405,26 @@ export default async function GuidePage({ params }: GuidePageProps) {
           </ul>
         ) : null}
         {!isSnakeGuide ? primarySourceLink : null}
+        {page.retiredMirrorPlayer ? (
+          <p className="mt-4 text-sm text-muted-foreground" data-legacy-player-removed>
+            {locale === 'zh' ? '站内试玩已停用，操作与攻略仍可阅读。' : 'In-page play is unavailable. The controls and walkthrough are below.'}
+          </p>
+        ) : null}
+        {publisherPlay ? (
+          <GuideIntentLink
+            guideSlug={page.slug}
+            locale={locale}
+            action={page.slug === 'google-snake-mods' ? 'standard_snake' : 'source_status'}
+            href={publisherPlay.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 inline-block text-sm font-medium text-primary underline underline-offset-4"
+          >
+            {page.slug === 'google-snake-mods'
+              ? (locale === 'zh' ? '前往 Google 玩标准版 Snake（无模组）' : 'Play standard Snake on Google (no mods)')
+              : (locale === 'zh' ? `前往 ${publisherPlay.title} 游玩` : `Play on ${publisherPlay.title}`)}
+          </GuideIntentLink>
+        ) : null}
         <div className="mt-5 flex flex-wrap gap-2 text-sm font-medium">
           <GuideIntentLink
               guideSlug={page.slug} locale={locale} action="read_guide"
@@ -625,8 +654,8 @@ export default async function GuidePage({ params }: GuidePageProps) {
           </h2>
           <p className="mt-1 text-xs text-muted-foreground sm:text-sm">
             {locale === 'zh'
-              ? '以下游戏可从详情页直接打开浏览器播放器，无需下载安装。'
-              : 'Each recommendation opens a browser player from its detail page with no download required.'}
+              ? '查看相关游戏的操作、攻略与游玩方式。'
+              : 'Find controls, guides, and play options for related games.'}
           </p>
         </header>
 
@@ -724,13 +753,13 @@ export default async function GuidePage({ params }: GuidePageProps) {
               </GuideIntentLink>
             ) : (
               <Link href={getLocalizedPath(locale, '/games')}>
-                {content.ctaLabel}
+                {page.retiredMirrorPlayer ? (locale === 'zh' ? '浏览游戏和攻略' : 'Browse games and guides') : content.ctaLabel}
               </Link>
             )}
           </Button>
-          <p className="mt-3 text-sm text-muted-foreground">
-            {content.ctaDescription}
-          </p>
+          {page.retiredMirrorPlayer ? null : (
+            <p className="mt-3 text-sm text-muted-foreground">{content.ctaDescription}</p>
+          )}
       </section>
 
       <ThreePlayerCardGameLinks slug={page.slug} locale={locale} />

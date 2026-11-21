@@ -9,9 +9,10 @@ describe('source provenance gate', () => {
     }
     expect(hasVerifiedEmbedPermission({ slug: 'new-game', embedPermissionStatus: 'verified' })).toBe(false);
   });
-  it('preserves the frozen legacy source but never lets its slug authorize a replacement', () => {
+  it('disables frozen and replacement legacy sources without deindexing the editorial URL', () => {
     const game = getMockGameBySlug('google-snake')!;
-    expect(canRenderGameIframe(game)).toBe(true);
+    expect(canRenderGameIframe(game)).toBe(false);
+    expect(shouldNoIndexGame(game)).toBe(false);
     expect(canRenderGameIframe({ ...game, iframeUrl: 'https://example.test/replacement' })).toBe(false);
     expect(canRenderGameIframe({ slug: game.slug, embedPermissionStatus: 'unknown' })).toBe(false);
     expect(canRenderGameIframe(game.slug)).toBe(false);
@@ -20,6 +21,7 @@ describe('source provenance gate', () => {
   it('never upgrades existing unknown permissions or overrides an explicit block', () => {
     for (const game of mockGames) {
       expect(game.embedPermissionStatus).toBe('unknown');
+      expect(canRenderGameIframe(game)).toBe(false);
       expect(hasVerifiedEmbedPermission(game)).toBe(false);
       expect(canRenderGameIframe({ ...game, embedPermissionStatus: 'blocked' })).toBe(false);
     }

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { defaultLocale, isLocale, normalizePublicPathname } from './i18n/config';
 import { isLocalCatalogueMode } from './lib/games/catalog-mode';
+import { getLegacyGameDisposition } from './lib/games/quality-policy';
 
 export default function middleware(request: NextRequest) {
   const url = request.nextUrl.clone();
@@ -14,6 +15,16 @@ export default function middleware(request: NextRequest) {
   const pathLocale = url.pathname.split('/')[1];
   const locale = isLocale(pathLocale) ? pathLocale : defaultLocale;
   const lowerCaseLocale = pathLocale.toLowerCase();
+  const gamePath = isLocale(lowerCaseLocale)
+    ? url.pathname.slice(pathLocale.length + 1)
+    : url.pathname;
+  const slug = /^\/games\/([^/]+)\/?$/.exec(gamePath)?.[1];
+  if (slug && getLegacyGameDisposition(slug) === 'retired') {
+    return new NextResponse(locale === 'zh' ? '该游戏已下架。' : 'This game has been retired.', {
+      status: 404,
+      headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Content-Language': locale },
+    });
+  }
   let response: NextResponse;
 
   if (pathLocale === defaultLocale) {

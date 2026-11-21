@@ -4,6 +4,7 @@ import path from 'node:path';
 import { chromium, type Browser } from '@playwright/test';
 
 import { buildAuditRows } from '@/scripts/audit-game-quality';
+import { canRenderGameIframe } from '@/lib/games/quality-policy';
 
 const OUTPUT_DIR = path.join(process.cwd(), 'public', 'game-screenshots');
 const VIEWPORT = { width: 960, height: 720 };
@@ -75,6 +76,7 @@ async function run() {
     .filter(
       (row) =>
         row.tier === 'core-indexed' &&
+        canRenderGameIframe(row.game) &&
         (force || row.reasons.includes('placeholder thumbnail')) &&
         (requestedSlugs.size === 0 || requestedSlugs.has(row.game.slug)),
     )

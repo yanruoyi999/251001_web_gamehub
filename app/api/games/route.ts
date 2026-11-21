@@ -102,6 +102,7 @@ export async function GET(request: NextRequest) {
     limit,
     // Unauthenticated callers must never enumerate pending or archived content.
     status: isAdmin ? requestedStatus : 'active',
+    publicCatalogue: !isAdmin,
     categoryId: parseIntegerParam(searchParams.get('categoryId')),
     tagId: parseIntegerParam(searchParams.get('tagId')),
     search: sanitizeSearchQuery(searchParams.get('search') ?? '') || undefined,

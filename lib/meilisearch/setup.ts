@@ -35,6 +35,8 @@ export async function setupGamesIndex(): Promise<boolean> {
 
       // 可过滤字段
       filterableAttributes: [
+        'status',
+        'slug',
         'categoryIds',
         'tagIds',
         'isActive',

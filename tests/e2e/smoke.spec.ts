@@ -54,13 +54,13 @@ test.describe('Luma Game Hub smoke tests', () => {
     expect(layout.shelfOverflow.length).toBeGreaterThanOrEqual(3);
   });
 
-  test('game and guide templates keep the primary action layer visible', async ({
+  test('retained game and guide templates keep the controls and navigation visible', async ({
     page,
   }) => {
-    await page.goto('/en/games/drive-mad');
-    await expect(page.locator('[data-game-player-shell]')).toBeVisible();
-    await expect(page.locator('[data-game-action-bar]')).toBeVisible();
-    await expect(page.getByRole('link', { name: 'View controls' })).toBeVisible();
+    await page.goto('/en/games/tunnel-rush');
+    await expect(page.locator('[data-legacy-game-guide]')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Controls' })).toBeVisible();
+    await expect(page.locator('main iframe')).toHaveCount(0);
 
     await page.goto('/en/guides/google-snake-mods');
     await expect(page.locator('#guide-details')).toBeVisible();

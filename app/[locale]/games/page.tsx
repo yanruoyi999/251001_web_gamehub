@@ -328,6 +328,7 @@ export default async function GamesPage({
           CategoryService.listAll(),
           TagService.listAll(),
           GameService.listGames({
+            publicCatalogue: true,
             page,
             status: 'active',
             categoryId,

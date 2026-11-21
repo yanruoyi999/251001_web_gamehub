@@ -1,9 +1,10 @@
 import type { MockGame } from '@/lib/mock-games';
+import { getLegacyGameDisposition } from './quality-policy';
 
 const FALLBACK_TIMESTAMP = new Date('2024-01-01T00:00:00.000Z');
 
 export function buildFallbackGameDetail(game: MockGame) {
-  return {
+  return publicLegacyGameDetail({
     id: game.id,
     slug: game.slug,
     title: game.title,
@@ -17,7 +18,7 @@ export function buildFallbackGameDetail(game: MockGame) {
     featured: game.featured,
     isNew: game.isNew,
     isHot: game.isHot,
-    status: 'active',
+    status: 'active' as const,
     developerName: game.developerName,
     developerUrl: game.developerUrl,
     sourceUrl: game.sourceUrl,
@@ -43,5 +44,23 @@ export function buildFallbackGameDetail(game: MockGame) {
     })),
     degraded: true,
     source: 'fallback' as const,
+  });
+}
+
+export function publicLegacyGameDetail<T extends { slug: string }>(game: T) {
+  const disposition = getLegacyGameDisposition(game.slug);
+  if (!disposition) return game;
+  if (disposition !== 'editorial') return null;
+  return {
+    ...game,
+    iframeUrl: null,
+    thumbnailUrl: '/og-gamehub.svg',
+    developerUrl: null,
+    sourceUrl: null,
+    sourcePageUrl: null,
+    sourceHost: null,
+    embedHost: null,
+    embedPermissionStatus: 'blocked' as const,
+    screenshots: [],
   };
 }

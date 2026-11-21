@@ -1,5 +1,6 @@
 import { getMockGameBySlug } from '@/lib/mock-games';
 import { DAILY_RECOMMENDATION_POOL } from '@/lib/retention/daily-recommendation';
+import { getLegacyGameDisposition } from '@/lib/games/quality-policy';
 
 export interface SavedGameSummary {
   id: number;
@@ -43,6 +44,7 @@ export function getSavedGameSummaries(slugs: readonly string[]) {
   return slugs
     .map(slug => slug.trim().toLowerCase())
     .filter(Boolean)
+    .filter(slug => getLegacyGameDisposition(slug) !== 'retired')
     .filter((slug, index, values) => values.indexOf(slug) === index)
     .map(slug => fromRecommendation(slug) ?? fromMockGame(slug))
     .filter((game): game is SavedGameSummary => Boolean(game));

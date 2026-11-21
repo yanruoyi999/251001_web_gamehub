@@ -29,12 +29,12 @@ describe('game source disclosure', () => {
     expect(canRenderGameIframe('adam-and-eve-8')).toBe(false);
   });
 
-  it('keeps the manually curated core surface stable while exposing the audit gap', () => {
+  it('keeps the editorial URL indexed with playback disabled', () => {
     const game = getMockGameBySlug('google-snake');
 
     expect(game).toBeDefined();
     expect(getGameQualityTier(game)).toBe('core-indexed');
-    expect(canRenderGameIframe(game)).toBe(true);
+    expect(canRenderGameIframe(game)).toBe(false);
     expect(shouldNoIndexGame(game)).toBe(false);
     expect(shouldIncludeGameInSitemap(game)).toBe(true);
   });

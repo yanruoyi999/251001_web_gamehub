@@ -28,7 +28,7 @@ import { MANDY_GTA_6_GUIDE } from '@/lib/mandy-gta-6-guide-content';
 import { DUOLINGO_POKEMON_GO_GUIDE } from '@/lib/duolingo-pokemon-go-guide-content';
 import { THROWING_DISC_GUIDE } from '@/lib/minecraft-throwing-disc-guide-content';
 import { OKISHIMA_1336_GUIDE } from '@/lib/okishima-1336-guide-content';
-import { isGameUnderManualReview } from '@/lib/games/quality-policy';
+import { getLegacyGameDisposition, isGameUnderManualReview } from '@/lib/games/quality-policy';
 
 export interface SeoLandingSection {
   title: string;
@@ -114,6 +114,7 @@ export interface SeoLandingPage {
   indexable?: boolean;
   homepageFeatured?: boolean;
   embedGame?: SeoLandingEmbedGame;
+  retiredMirrorPlayer?: boolean;
   printablePath?: string;
   video?: SeoLandingVideo;
   interactiveWidget?: 'dominoes-training' | 'categories-topics' | 'word-chain-examples';
@@ -731,11 +732,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     ],
     updatedAt: seoContentUpdatedAt,
     relatedSlugs: ['drive-mad-level-tips', 'ovo-walkthrough', 'games-like-ovo', 'games-to-play-when-bored'],
-    embedGame: {
-      iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp40/liuxinyu/20220928/1/index.html',
-      title: 'Drive Mad',
-      playSlug: 'drive-mad',
-    },
+    retiredMirrorPlayer: true,
     locales: {
       en: {
         metaTitle: 'Drive Mad Walkthrough: Controls, Tips & Hard Level Fixes',
@@ -803,7 +800,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           },
           {
             title: 'How to Play Drive Mad Unblocked & Free',
-            body: 'Drive Mad runs directly in your browser on desktop and mobile — no download, no install, and no account. Because it is a lightweight HTML5 game, it loads on school and work networks where heavier sites are blocked, which is why people search for it as “Drive Mad unblocked.” Just hit play on the embed above and your progress is kept in the browser session.',
+            body: 'Use the developer’s Fancade page for browser play. Access depends on your network policy.',
           },
         ],
         recommendations: [
@@ -847,7 +844,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           {
             question: 'Is Drive Mad free to play and unblocked?',
             answer:
-              'Yes. Drive Mad is a free HTML5 browser game with no downloads or account required. It runs on most school and work networks, so you can play it unblocked directly on this page.',
+              'Drive Mad has a browser release on Fancade. Access depends on your network policy.',
           },
           {
             question: 'Can I play Drive Mad on mobile?',
@@ -946,7 +943,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           },
           {
             title: '怎么免费、在学校网络畅玩 Drive Mad',
-            body: 'Drive Mad 在浏览器里直接运行,电脑和手机都行——免下载、免安装、免注册。因为是轻量的 HTML5 游戏,它能在屏蔽了大型网站的学校和公司网络里加载,这也是大家搜“Drive Mad unblocked(无屏蔽)”的原因。直接点上方嵌入的游戏开玩,进度会保存在浏览器会话里。',
+            body: '可通过开发者发布的 Fancade 页面在浏览器游玩。网络是否允许访问取决于当地设置。',
           },
         ],
         recommendations: [
@@ -990,7 +987,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           {
             question: 'Drive Mad 免费吗?能在学校网络玩吗?',
             answer:
-              '免费。Drive Mad 是免下载、免注册的 HTML5 浏览器游戏,能在大多数学校和公司网络里运行,可以直接在本页畅玩。',
+              '开发者在 Fancade 发布了浏览器版。网络是否允许访问取决于当地设置。',
           },
           {
             question: 'Drive Mad 能在手机上玩吗?',
@@ -1041,11 +1038,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     ],
     updatedAt: seoContentUpdatedAt,
     relatedSlugs: ['drive-mad-walkthrough', 'ovo-walkthrough', 'games-like-ovo', 'best-free-iphone-games'],
-    embedGame: {
-      iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp40/liuxinyu/20220928/1/index.html',
-      title: 'Drive Mad',
-      playSlug: 'drive-mad',
-    },
+    retiredMirrorPlayer: true,
     locales: {
       en: {
         metaTitle: 'Drive Mad Level Tips: Flip Fixes, Jumps and Mobile Controls',
@@ -1056,7 +1049,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           'Use this problem-based guide when a Drive Mad stage keeps flipping your car, dropping you from a bridge, or punishing tiny control mistakes.',
         overview: [
           'Players often search for a single Drive Mad level number, but the game is better solved by failure pattern. A jump stage, a bridge stage, a seesaw stage, and a monster-truck stage all ask for different throttle habits. This page focuses on the repeatable fixes you can apply when you are stuck, without pretending that every version of the game has identical level numbering.',
-          'Keep the game open above, test one fix at a time, and reset only after you know why the last attempt failed. That is faster than full-speed retrying, and it also works better on mobile where a long press can easily become too much throttle.',
+          'Keep the game open in another tab, test one fix at a time, and reset only after you know why the last attempt failed. That is faster than full-speed retrying, and it also works better on mobile where a long press can easily become too much throttle.',
         ],
         sections: [
           {
@@ -1112,7 +1105,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         recommendations: [
           {
             slug: 'drive-mad',
-            pitch: 'Open the full Drive Mad game page if you want the focused playable entry with game details and related browser picks.',
+            pitch: 'Open the full Drive Mad game page if you want the controls and full walkthrough.',
           },
           {
             slug: 'ovo',
@@ -1174,7 +1167,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           '当某一关反复翻车、掉桥、跳不过或手机操作太猛时，用这份按问题分类的攻略快速定位原因。',
         overview: [
           '很多玩家会搜索 Drive Mad 某某关怎么过,但这款游戏更适合按失败类型拆解。跳跃关、桥梁关、跷跷板关、怪兽卡车关需要的油门节奏并不一样。本页不编造未实测的关卡编号,而是整理真正能反复应用的卡关修正。',
-          '建议把上方游戏打开,每次只测试一个修正。先弄清上一次为什么失败,再重开下一次,比一直全油门重试更快。手机端尤其如此,因为长按屏幕踏板很容易变成过度加速。',
+          '建议在另一个标签页打开游戏,每次只测试一个修正。先弄清上一次为什么失败,再重开下一次,比一直全油门重试更快。手机端尤其如此,因为长按屏幕踏板很容易变成过度加速。',
         ],
         sections: [
           {
@@ -2307,15 +2300,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       'games-to-play-when-bored',
       'free-games-no-ads',
     ],
-    embedGame: {
-      iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp44/chenling/20230830/05/index.html',
-      title: 'Google Snake',
-      playSlug: 'google-snake',
-      playLabel: {
-        en: 'Play standard Snake - no mods',
-        zh: '试玩标准 Snake（无模组）',
-      },
-    },
+    retiredMirrorPlayer: true,
     locales: {
       en: {
         metaTitle: 'Google Snake Mods: Web Version, Mod Menu & Loader Guide',
@@ -2330,12 +2315,12 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         sections: [
           {
             title: 'Google Snake Mods 2: Mod Menu, More Menu or Loader?',
-            body: 'Want the mod menu without installing a userscript? Start with the web version linked by DarkSnakeGang. Luma’s embedded Snake is the standard game, not the modded version.',
+            body: 'Want the mod menu without installing a userscript? Start with the web version linked by DarkSnakeGang. Google hosts the standard game separately.',
             bullets: [
               'Want the simplest current route: use the modded web version from the DarkSnakeGang project.',
               'Want mods inside the Google Search game: use the Google Snake Mod Loader userscript.',
               'On mobile: prefer the modded web version, because desktop extensions and userscripts are often unavailable.',
-              'At school, work, or on a locked browser: play standard Snake on Luma instead of bypassing device policies.',
+              'At school, work, or on a locked browser: play standard Snake on Google where your device policy permits it.',
             ],
           },
           {
@@ -2400,8 +2385,8 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             ],
           },
           {
-            title: 'No-Setup Option - Play Standard Snake on Luma',
-            body: 'If you do not want extensions, userscripts, or third-party mod pages, use the embedded standard Snake game above or open the full Google Snake game page from the link under the player. It is not a modded build, but it gives you the same short browser-game loop with no account, no client download, and an easy way back to related games.',
+            title: 'Standard Snake on Google',
+            body: 'Open Google’s standard Snake game if you want a round without extensions or userscripts.',
           },
           {
             title: 'Why an Old Mod Method Stops Working',
@@ -2459,7 +2444,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           {
             question: 'Can I use Google Snake mods on mobile?',
             answer:
-              'Yes, but use the dedicated modded web version first. Desktop extension and userscript workflows are often awkward or unavailable on mobile browsers. On Luma you can also play standard Snake without mods.',
+              'Yes, but use the dedicated modded web version first. Desktop extension and userscript workflows are often awkward or unavailable on mobile browsers. Google also offers the standard game.',
           },
           {
             question: 'Are Google Snake mods free?',
@@ -2500,12 +2485,12 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         sections: [
           {
             title: '快速结论：用 Mod Menu 还是 Snake Mod Loader？',
-            body: '想直接打开模组菜单，不安装用户脚本？先用 DarkSnakeGang 项目链接的网页版。Luma 下方提供的是标准 Snake，不是模组版。',
+            body: '想直接打开模组菜单，不安装用户脚本？先用 DarkSnakeGang 项目链接的网页版。标准版可直接在 Google 打开。',
             bullets: [
               '想要最简单的当前路径:用 DarkSnakeGang 项目的模组网页。',
               '想在 Google Search 的 Snake 游戏里加模组:用 Google Snake Mod Loader 用户脚本。',
               '手机端:优先用模组网页,因为桌面扩展和用户脚本在手机浏览器里通常不好用。',
-              '学校、公司或受管设备:不要绕过设备策略,可以直接玩 Luma 的标准 Snake 版本。',
+              '学校、公司或受管设备:可在设备策略允许时到 Google 玩标准版。',
             ],
           },
           {
@@ -2570,8 +2555,8 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             ],
           },
           {
-            title: '免安装方案 - 在 Luma 玩标准 Snake',
-            body: '如果你不想碰扩展、用户脚本或第三方模组页面,可以直接玩上方嵌入的标准 Snake,也可以点击播放器下方链接打开完整 Google Snake 游戏页。它不是模组版本,但保留了短局浏览器游戏的核心循环:免账号、免客户端下载,玩完还能继续看相关游戏。',
+            title: '在 Google 玩标准 Snake',
+            body: '想直接玩一局，可打开 Google 的标准版 Snake，无需扩展或用户脚本。',
           },
           {
             title: '为什么旧模组方法会失效',
@@ -2629,7 +2614,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           {
             question: 'Google Snake 模组能在手机上用吗?',
             answer:
-              '可以,但优先使用专门的模组网页。桌面扩展和用户脚本流程在手机浏览器里通常不好用。你也可以在 Luma 直接玩不带模组的标准 Snake。',
+              '可以，但优先使用专门的模组网页。桌面扩展和用户脚本在手机浏览器里通常不好用，也可在 Google 打开标准版。',
           },
           {
             question: 'Google Snake 模组免费吗?',
@@ -3027,21 +3012,17 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     ],
     updatedAt: seoContentUpdatedAt,
     relatedSlugs: ['google-snake-mods', 'games-to-play-when-bored'],
-    embedGame: {
-      iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp37/gamehwq/20220124/13/index.htm',
-      title: 'String Theory 2 Remastered',
-      playSlug: 'string-theory-2-remastered',
-    },
+    retiredMirrorPlayer: true,
     locales: {
       en: {
         metaTitle: 'String Theory 2 Remastered: How to Play & Puzzle Tips',
         metaDescription:
-          'Play String Theory 2 Remastered free in your browser and use this guide to understand the controls, timing puzzles, and how to reset your approach when a level feels stuck.',
+          'Learn String Theory 2 Remastered controls, timing puzzles, and how to reset your approach when a level feels stuck.',
         heading: 'String Theory 2 Remastered Guide',
         subheading: 'A focused browser puzzle guide for the String Theory Remastered series: controls, timing, and how to solve levels without guessing.',
         overview: [
           'String Theory 2 Remastered is a physics puzzle game built around timing, elastic movement, and small adjustments. The levels are not about clicking faster; they reward watching how the string, platforms, and targets react after each attempt.',
-          'Use this page as a play-and-read guide: start the game above, test one move, then come back to the sections below when a puzzle feels impossible.',
+          'Try one move at a time and compare the result with the timing tips below.',
         ],
         sections: [
           {
@@ -3092,7 +3073,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           {
             question: 'Is String Theory 2 Remastered free to play?',
             answer:
-              'Yes. You can play it free in your browser on Luma Game Hub with no download or account required.',
+              'Luma provides the walkthrough. Check the developer’s release for play options.',
           },
           {
             question: 'What kind of game is String Theory 2 Remastered?',
@@ -3116,12 +3097,12 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       zh: {
         metaTitle: 'String Theory 2 Remastered 攻略:玩法与解谜技巧',
         metaDescription:
-          '免费在浏览器玩 String Theory 2 Remastered,并用这份攻略理解操作、物理时机和卡关时的调整方法。',
+          '用这份攻略理解 String Theory 2 Remastered 的操作、物理时机和卡关时的调整方法。',
         heading: 'String Theory 2 Remastered 攻略',
         subheading: '围绕 String Theory Remastered 系列的物理解谜指南:操作、时机,以及不靠乱试的解题方法。',
         overview: [
           'String Theory 2 Remastered 是一款物理解谜游戏,核心是时机、弹性运动和细微调整。它不是比谁点得快,而是看你能不能观察每次尝试后绳子、平台和目标的反应。',
-          '建议边玩边看:先启动上方游戏,尝试一个操作,卡住时再回到下面的思路拆解。',
+          '每次只试一个操作，卡住时再回看下方的解谜思路。',
         ],
         sections: [
           {
@@ -3172,7 +3153,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           {
             question: 'String Theory 2 Remastered 免费吗?',
             answer:
-              '免费。你可以在 Luma Game Hub 浏览器里直接玩,无需下载或注册账号。',
+              'Luma 提供攻略。游玩方式以开发者发布页面为准。',
           },
           {
             question: 'String Theory 2 Remastered 是什么类型?',
@@ -3405,17 +3386,13 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     ],
     updatedAt: seoContentUpdatedAt,
     relatedSlugs: ['games-to-play-when-bored', 'ovo-walkthrough'],
-    embedGame: {
-      iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp44/gamehwq/20230808/10a/index.html',
-      title: 'Apple Knight: Mini Dungeons',
-      playSlug: 'apple-knight-mini-dungeons',
-    },
+    retiredMirrorPlayer: true,
     locales: {
       en: {
-        metaTitle: 'Apple Knight Mini Dungeons Unblocked: Play & Tips',
+        metaTitle: 'Apple Knight Mini Dungeons: Controls & Combat Tips',
         metaDescription:
-          'Play Apple Knight: Mini Dungeons unblocked in your browser, learn the controls, and use practical combat tips for short dungeon runs.',
-        heading: 'Apple Knight: Mini Dungeons Unblocked Guide',
+          'Learn the controls and use practical combat tips for short Apple Knight: Mini Dungeons runs.',
+        heading: 'Apple Knight: Mini Dungeons Guide',
         subheading: 'A compact action-platformer guide for quick dungeon runs: controls, combat rhythm, and when to slow down.',
         overview: [
           'Apple Knight: Mini Dungeons takes the Apple Knight formula and compresses it into short action-platforming stages. You move, jump, strike, dodge hazards, collect items, and try to clear a room without wasting health.',
@@ -3455,7 +3432,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           },
           {
             title: 'Unblocked Browser Play Notes',
-            body: 'This version runs in the browser with no app install. Keyboard controls are the best fit on desktop or Chromebook; on mobile, test touch controls before committing to a longer run. If a school or workplace network blocks third-party game embeds, Luma cannot bypass that policy—use a permitted network and avoid unofficial downloads.',
+            body: 'Use the publisher page for the browser version. Keyboard controls are the best fit on desktop or Chromebook; on mobile, test touch controls before committing to a longer run. If a school or workplace network blocks third-party game embeds, Luma cannot bypass that policy—use a permitted network and avoid unofficial downloads.',
           },
         ],
         recommendations: [
@@ -3479,7 +3456,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           {
             question: 'Can I play Apple Knight: Mini Dungeons unblocked?',
             answer:
-              'Yes. The browser version on Luma Game Hub can be opened directly with no download or account required.',
+              'The publisher offers browser play. Access depends on your network policy.',
           },
           {
             question: 'Is Apple Knight: Mini Dungeons better on keyboard or mobile?',
@@ -3494,7 +3471,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           {
             question: 'Does Apple Knight: Mini Dungeons require a download?',
             answer:
-              'No. The Luma version is played in the browser embed. Avoid download mirrors or unofficial installers, because they are not needed for this page.',
+              'The publisher offers browser play. Avoid unofficial installers or download mirrors.',
           },
           {
             question: 'Why does the game feel hard at first?',
@@ -3511,9 +3488,9 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ctaDescription: 'Play Apple Knight: Mini Dungeons, then compare it with other quick action-platform picks.',
       },
       zh: {
-        metaTitle: 'Apple Knight Mini Dungeons 无屏蔽玩法与攻略',
+        metaTitle: 'Apple Knight Mini Dungeons 玩法与攻略',
         metaDescription:
-          '在浏览器免费玩 Apple Knight: Mini Dungeons,了解操作、战斗节奏和短地牢通关技巧。',
+          '了解 Apple Knight: Mini Dungeons 的操作、战斗节奏和短地牢通关技巧。',
         heading: 'Apple Knight: Mini Dungeons 无屏蔽攻略',
         subheading: '面向短地牢闯关的动作平台指南:操作、战斗节奏,以及什么时候该放慢。',
         overview: [
@@ -3789,11 +3766,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     updatedAt: seoContentUpdatedAt,
     indexable: false,
     relatedSlugs: ['ovo-walkthrough'],
-    embedGame: {
-      iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp44/gamehwq/20230830/12a/index.html',
-      title: 'Tunnel Rush',
-      playSlug: 'tunnel-rush',
-    },
+    retiredMirrorPlayer: true,
     locales: {
       en: {
         metaTitle: 'Tunnel Rush Unblocked: Tips for a High Score + How to Play',
@@ -3827,7 +3800,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           },
           {
             title: 'Play Tunnel Rush Unblocked',
-            body: 'Tunnel Rush is a lightweight HTML5 game that runs in any browser with no download or account, including on school and work networks where it is often searched as “Tunnel Rush unblocked.” Press play above to start.',
+            body: 'Use a developer or publisher page to play. Availability depends on your device and network policy.',
           },
         ],
         recommendations: [
@@ -3838,7 +3811,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         faqs: [
           { question: 'How do you get a high score in Tunnel Rush?', answer: 'Stay centered in the tunnel, watch the far end instead of the nearest obstacle, and use tiny steering taps. Most runs end from oversteering, not from being too slow.' },
           { question: 'Is there a Tunnel Rush 2?', answer: 'Yes. Tunnel Rush 2 uses the same gameplay with new obstacle layouts and themes. The same centered-positioning strategy works in both.' },
-          { question: 'Is Tunnel Rush free and unblocked?', answer: 'Yes. Tunnel Rush is a free HTML5 game with no download, and it runs on most restricted networks so you can play it unblocked here.' },
+          { question: 'Is Tunnel Rush free and unblocked?', answer: 'Check the developer or publisher for a browser release. Access depends on your network policy.' },
           { question: 'What are the controls for Tunnel Rush?', answer: 'Use the left and right arrow keys, or A and D, to rotate around the tunnel and dodge the obstacles.' },
         ],
         ctaLabel: 'Play Tunnel Rush now',
@@ -3868,7 +3841,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             ],
           },
           { title: 'Tunnel Rush 2 与变体', body: 'Tunnel Rush 2 保留核心,加了新障碍布局和视觉主题。同样的原则——保持居中,用余光接住从边缘逼近的障碍。玩透原版后,续作是自然的下一关。' },
-          { title: '无屏蔽畅玩 Tunnel Rush', body: 'Tunnel Rush 是轻量 HTML5 游戏,任何浏览器免下载、免账号运行,包括常被搜“Tunnel Rush unblocked”的学校和公司网络。点上方开玩。' },
+          { title: '无屏蔽畅玩 Tunnel Rush', body: 'Tunnel Rush 是轻量 HTML5 游戏,任何浏览器免下载、免账号运行,包括常被搜“Tunnel Rush unblocked”的学校和公司网络。' },
         ],
         recommendations: [
           { slug: 'ovo', pitch: 'OvO 把反应换成精准跑酷——换换节奏,同样的重试循环。' },
@@ -3878,7 +3851,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         faqs: [
           { question: 'Tunnel Rush 怎么冲高分?', answer: '待在隧道中央,盯远端而不是最近的障碍,用极小的转向轻点。大多数失败源于过度修正,而不是太慢。' },
           { question: '有 Tunnel Rush 2 吗?', answer: '有。Tunnel Rush 2 玩法相同,换了新障碍布局和主题。居中站位策略在两代都管用。' },
-          { question: 'Tunnel Rush 免费、无屏蔽吗?', answer: '是。Tunnel Rush 是免下载的 HTML5 游戏,能在大多数受限网络运行,可在本页畅玩。' },
+          { question: 'Tunnel Rush 免费、无屏蔽吗?', answer: '可在开发者或发行方页面确认浏览器版。能否访问取决于设备与网络设置。' },
           { question: 'Tunnel Rush 怎么操作?', answer: '用左右方向键,或 A 和 D,绕隧道旋转躲避障碍。' },
         ],
         ctaLabel: '立即开玩 Tunnel Rush',
@@ -3893,16 +3866,12 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     updatedAt: seoContentUpdatedAt,
     indexable: false,
     relatedSlugs: [],
-    embedGame: {
-      iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp41/gamehwq/20221216/09/index.htm',
-      title: 'Monkey Mart',
-      playSlug: 'monkey-mart',
-    },
+    retiredMirrorPlayer: true,
     locales: {
       en: {
         metaTitle: 'Monkey Mart Guide: Unlock Order, Recipes & Tips to Grow Fast',
         metaDescription:
-          'A Monkey Mart guide covering the best unlock order, every appliance recipe, and tips to earn faster. Play Monkey Mart free and unblocked in your browser.',
+          'A Monkey Mart guide covering the best unlock order, every appliance recipe, and tips to earn faster.',
         heading: 'Monkey Mart Guide: Recipes, Unlocks & Tips',
         subheading: 'Grow your supermarket faster with the right unlock order and every appliance recipe.',
         overview: [
@@ -3937,7 +3906,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           },
           {
             title: 'Play Monkey Mart Unblocked & Free',
-            body: 'Monkey Mart is an HTML5 browser game with no download or account, and it runs on school and work networks where it is often searched as “Monkey Mart unblocked.” Your progress is saved in the browser — press play above.',
+            body: 'Use a developer or publisher page to play. Availability depends on your device and network policy.',
           },
         ],
         recommendations: [
@@ -3949,7 +3918,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           { question: 'How do you unlock everything in Monkey Mart?', answer: 'Keep stocking shelves and serving customers to earn money, then reinvest it into appliances, aisles, and staff. Once everything in your current mart is unlocked, you can move to a new mart.' },
           { question: 'What do appliances do in Monkey Mart?', answer: 'Appliances convert basic crops into higher-value goods — bananas into yoghurt, wheat into baked goods, cocoa into chocolate — which sell for much more than the raw item.' },
           { question: 'Does Monkey Mart have codes?', answer: 'No. Monkey Mart is a self-contained idle game with no promo code system — progress comes from unlocking appliances and hiring helpers, not codes.' },
-          { question: 'Is Monkey Mart free and unblocked?', answer: 'Yes. Monkey Mart is a free HTML5 game with no download, and it runs on most restricted networks so you can play it unblocked here.' },
+          { question: 'Is Monkey Mart free and unblocked?', answer: 'Check the developer or publisher for a browser release. Access depends on your network policy.' },
         ],
         ctaLabel: 'Play Monkey Mart now',
         ctaDescription: 'Start building your supermarket free in your browser.',
@@ -3957,7 +3926,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       zh: {
         metaTitle: 'Monkey Mart 攻略:解锁顺序、配方与快速赚钱技巧',
         metaDescription:
-          'Monkey Mart 猴子超市攻略,涵盖最佳解锁顺序、全部器械配方和快速赚钱技巧。免费、无屏蔽在浏览器畅玩。',
+          'Monkey Mart 猴子超市攻略,涵盖最佳解锁顺序、全部器械配方和快速赚钱技巧。',
         heading: 'Monkey Mart 攻略:配方、解锁与技巧',
         subheading: '用对解锁顺序和全部器械配方,让超市长得更快。',
         overview: [
@@ -3987,7 +3956,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               '顾客排队时,优先补最高价的货架。',
             ],
           },
-          { title: '免费、无屏蔽畅玩 Monkey Mart', body: 'Monkey Mart 是 HTML5 浏览器游戏,免下载、免账号,能在常被搜“Monkey Mart unblocked”的学校和公司网络运行。进度存在浏览器里——点上方开玩。' },
+          { title: '免费、无屏蔽畅玩 Monkey Mart', body: 'Monkey Mart 是 HTML5 浏览器游戏,免下载、免账号,能在常被搜“Monkey Mart unblocked”的学校和公司网络运行。进度存在浏览器里' },
         ],
         recommendations: [
           { slug: 'drive-mad', pitch: '想从经营里抽空玩点动作?Drive Mad 是干脆利落的物理驾驶挑战。' },
@@ -3998,7 +3967,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           { question: 'Monkey Mart 怎么解锁全部?', answer: '持续上货架、招待顾客赚钱,再把钱投回器械、货道和员工。当前超市全部解锁后,就能开新超市。' },
           { question: 'Monkey Mart 的器械有什么用?', answer: '器械把基础作物加工成高价商品——香蕉变酸奶、小麦变烘焙、可可变巧克力——卖得比生货贵得多。' },
           { question: 'Monkey Mart 有兑换码吗?', answer: '没有。Monkey Mart 是自成一体的放置游戏,没有兑换码系统——进度来自解锁器械和雇帮手,而不是码。' },
-          { question: 'Monkey Mart 免费、无屏蔽吗?', answer: '是。Monkey Mart 是免下载的 HTML5 游戏,能在大多数受限网络运行,可在本页畅玩。' },
+          { question: 'Monkey Mart 免费、无屏蔽吗?', answer: '可在开发者或发行方页面确认浏览器版。能否访问取决于设备与网络设置。' },
         ],
         ctaLabel: '立即开玩 Monkey Mart',
         ctaDescription: '在浏览器里免费开始打造你的超市。',
@@ -4019,11 +3988,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     ],
     updatedAt: '2026-08-18T00:00:00.000Z',
     relatedSlugs: ['big-tower-tiny-square-2-walkthrough', 'ovo-walkthrough', 'games-like-ovo', 'games-to-play-when-bored'],
-    embedGame: {
-      iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp40/liuxinyu/20221028/1/index.html',
-      title: 'Big Tower Tiny Square',
-      playSlug: 'big-tower-tiny-square',
-    },
+    retiredMirrorPlayer: true,
     locales: {
       en: {
         metaTitle: 'Big Tower Tiny Square Walkthrough: Save the Pineapple',
@@ -4064,7 +4029,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           },
           {
             title: 'Safe Browser Play',
-            body: 'The developer EvilObjective publishes an official Big Tower Tiny Square page on itch.io. The Luma player is a browser embed; it does not require a plugin or executable. Leave any mirror that asks for an extension, installer, or unrelated permission.',
+            body: 'The developer EvilObjective publishes an official Big Tower Tiny Square page on itch.io. Use the developer’s browser release. Leave any mirror that asks for an extension, installer, or unrelated permission.',
           },
         ],
         recommendations: [
@@ -4079,7 +4044,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           { question: 'Is there a Big Tower Tiny Square 2 walkthrough?', answer: 'The sequel uses different rooms, but the same checkpoint method works: observe a full cycle, test the first jump, and reserve the second jump for a height or distance correction.' },
           { question: 'Does Big Tower Tiny Square have an ending?', answer: 'The documented objective is to climb the tower and save the Pineapple. Treat reaching the summit as the ending goal; Luma does not claim an extra hidden ending or publish an unverified room-by-room order.' },
           { question: 'Which Big Tower Tiny Square game should I play first?', answer: 'Start with Big Tower Tiny Square, then try Big Tower Tiny Square 2. The first game teaches the core checkpoint and double-jump rhythm, while the sequel uses different rooms and tighter hazard combinations.' },
-          { question: 'Do I need to download Big Tower Tiny Square?', answer: 'No download is needed for the browser player on this page. The developer also maintains an official itch.io page; avoid unofficial installers and browser extensions.' },
+          { question: 'Do I need to download Big Tower Tiny Square?', answer: 'The developer offers a browser release. The developer also maintains an official itch.io page; avoid unofficial installers and browser extensions.' },
         ],
         externalLinks: [
           {
@@ -4136,7 +4101,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           { question: 'Big Tower Tiny Square 2 怎么过?', answer: '续作房间不同,但可沿用存档点打法:看完一个障碍周期,先测试基础跳,再把第二跳用于修正高度或距离。' },
           { question: 'Big Tower Tiny Square 有结局吗?', answer: '目前可核对的目标是爬到塔顶救回菠萝。可以把到达塔顶视为通关目标;没有可靠来源时,Luma 不宣称存在额外隐藏结局,也不发布未经验证的逐关顺序。' },
           { question: 'Big Tower Tiny Square 两作先玩哪个?', answer: '建议先玩第一作 Big Tower Tiny Square,再玩 Big Tower Tiny Square 2。第一作先教会存档点和二段跳节奏,续作房间不同、障碍组合更紧。' },
-          { question: 'Big Tower Tiny Square 需要下载吗?', answer: '本页浏览器播放器无需下载。开发者也有 itch.io 官方页面;不要安装非官方安装器或浏览器扩展。' },
+          { question: 'Big Tower Tiny Square 需要下载吗?', answer: '开发者在 itch.io 发布了浏览器版。请避开非官方安装器。' },
         ],
         externalLinks: [
           {
@@ -4163,11 +4128,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     ],
     updatedAt: seoContentUpdatedAt,
     relatedSlugs: ['big-tower-tiny-square-walkthrough', 'ovo-walkthrough', 'browser-games-for-low-end-pc'],
-    embedGame: {
-      iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp40/liuxinyu/20221028/2/index.html',
-      title: 'Big Tower Tiny Square 2',
-      playSlug: 'big-tower-tiny-square-2',
-    },
+    retiredMirrorPlayer: true,
     locales: {
       en: {
         metaTitle: 'Big Tower Tiny Square 2 Walkthrough: Jumps, Checkpoints and Safe Play',
@@ -4236,7 +4197,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         faqs: [
           { question: 'How do you beat Big Tower Tiny Square 2?', answer: 'Break the tower into checkpoint rooms. Watch the hazard cycle, test the first jump, and save the double jump for the final correction. Most rooms become easier when you change only one timing detail after each death.' },
           { question: 'Is Big Tower Tiny Square 2 harder than the first game?', answer: 'It can feel harder because rooms are tighter and retries come faster. The same checkpoint method works, but you need cleaner low jumps and more patience with moving hazards.' },
-          { question: 'Can I play Big Tower Tiny Square 2 unblocked in a browser?', answer: 'You can use Luma as a no-download browser guide and player where the embedded source loads. Network policies can still block third-party frames, so avoid any mirror that asks for installers or extensions.' },
+          { question: 'Can I play Big Tower Tiny Square 2 unblocked in a browser?', answer: 'Use the developer’s page to check browser availability. Avoid mirrors that require installers or extensions.' },
           { question: 'What controls work best for Big Tower Tiny Square 2?', answer: 'Keyboard controls work best. Touch play is possible for basic rooms, but later double-jump corrections are easier with arrow keys or WASD.' },
           { question: 'What should I play after Big Tower Tiny Square 2?', answer: 'Try the original Big Tower Tiny Square for the pineapple rescue route, OvO for faster parkour, G-Switch 3 for gravity flips, or Tunnel Rush for a reflex challenge.' },
         ],
@@ -4318,7 +4279,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         faqs: [
           { question: 'Big Tower Tiny Square 2 怎么过?', answer: '把高塔拆成一个个存档点房间。先看障碍周期,测试第一跳,把二段跳留到最后修正。多数房间只要每次死亡后调整一个时机变量,就会逐渐稳定。' },
           { question: 'Big Tower Tiny Square 2 比第一作难吗?', answer: '会更紧一些,因为房间更窄、重试节奏更快。同样的存档点方法仍然有效,只是需要更干净的小跳和更耐心地等待移动障碍。' },
-          { question: 'Big Tower Tiny Square 2 能在浏览器无屏蔽玩吗?', answer: 'Luma 提供免下载的浏览器攻略和播放器,前提是第三方嵌入源能加载。网络策略仍可能屏蔽 frame;不要使用要求安装器或扩展的镜像。' },
+          { question: 'Big Tower Tiny Square 2 能在浏览器无屏蔽玩吗?', answer: '到开发者页面确认浏览器版本。避开要求安装器或扩展的镜像。' },
           { question: 'Big Tower Tiny Square 2 用什么操作最好?', answer: '键盘最好。触屏可以处理基础房间,但后段二段跳修正用方向键或 WASD 更稳定。' },
           { question: 'Big Tower Tiny Square 2 之后玩什么?', answer: '想看救菠萝路线玩第一作 Big Tower Tiny Square;想要更快跑酷玩 OvO;想练重力翻转玩 G-Switch 3;想换成反应挑战玩 Tunnel Rush。' },
         ],
@@ -4342,16 +4303,12 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     updatedAt: seoContentUpdatedAt,
     indexable: false,
     relatedSlugs: [],
-    embedGame: {
-      iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp41/liuxinyu/20221121/2/index.html',
-      title: 'G-Switch 3',
-      playSlug: 'g-switch-3',
-    },
+    retiredMirrorPlayer: true,
     locales: {
       en: {
         metaTitle: 'G-Switch 3: Controls, Multiplayer & Tips to Survive Longer',
         metaDescription:
-          'How to play G-Switch 3 — flip gravity to run on ceilings, survive the saws, and play up to 8-player local multiplayer. Free and unblocked in your browser.',
+          'How to play G-Switch 3 — flip gravity to run on ceilings, survive the saws, and play up to 8-player local multiplayer.',
         heading: 'G-Switch 3: Controls, Multiplayer & Survival Tips',
         subheading: 'Flip gravity, dodge the saws, and outlast your friends in up to 8-player local multiplayer.',
         overview: [
@@ -4379,7 +4336,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           },
           {
             title: 'Play G-Switch 3 Unblocked & Free',
-            body: 'G-Switch 3 is an HTML5 game that runs in any browser with no download, including on restricted networks where it is searched as “G-Switch 3 unblocked.” Press play above.',
+            body: 'Use a developer or publisher page to play. Availability depends on your device and network policy.',
           },
         ],
         recommendations: [
@@ -4390,7 +4347,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         faqs: [
           { question: 'How do you play G-Switch 3?', answer: 'Tap any key or click to flip gravity between the floor and the ceiling, dodging saws and gaps. Timing your flips for the last safe moment is the whole skill.' },
           { question: 'Does G-Switch 3 have multiplayer?', answer: 'Yes. It supports local multiplayer for up to 8 players on one keyboard, with each player assigned a single key. The last player surviving wins.' },
-          { question: 'Is G-Switch 3 free and unblocked?', answer: 'Yes. It is a free HTML5 browser game with no download and runs on most restricted networks, so you can play it unblocked here.' },
+          { question: 'Is G-Switch 3 free and unblocked?', answer: 'Check the developer or publisher for a browser release. Access depends on your network policy.' },
           { question: 'What are G-Switch 1 and 2?', answer: 'They are the earlier games in the series with the same gravity-flip mechanic. G-Switch 3 expands on them with bigger multiplayer and more modes.' },
         ],
         ctaLabel: 'Play G-Switch 3 now',
@@ -4399,7 +4356,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       zh: {
         metaTitle: 'G-Switch 3:操作、多人模式与生存技巧',
         metaDescription:
-          'G-Switch 3 怎么玩——翻转重力在天花板上奔跑,躲开锯齿,最多 8 人同机多人对战。免费、无屏蔽在浏览器畅玩。',
+          'G-Switch 3 怎么玩——翻转重力在天花板上奔跑,躲开锯齿,最多 8 人同机多人对战。',
         heading: 'G-Switch 3:操作、多人与生存技巧',
         subheading: '翻转重力、躲开锯齿,在最多 8 人同机对战里熬到最后。',
         overview: [
@@ -4419,7 +4376,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             ],
           },
           { title: '多人模式(最多 8 人)', body: 'G-Switch 3 支持同一键盘最多 8 人同机——每人一个键。活到最后者胜。这是它在机房和聚会被疯玩的主要原因,除了分配按键不需要任何设置。' },
-          { title: '免费、无屏蔽畅玩 G-Switch 3', body: 'G-Switch 3 是 HTML5 游戏,任何浏览器免下载运行,包括被搜“G-Switch 3 unblocked”的受限网络。点上方开玩。' },
+          { title: '免费、无屏蔽畅玩 G-Switch 3', body: 'G-Switch 3 是 HTML5 游戏,任何浏览器免下载运行,包括被搜“G-Switch 3 unblocked”的受限网络。' },
         ],
         recommendations: [
           { slug: 'ovo', pitch: 'OvO 是精准跑酷平台游戏,同样快节奏、靠流畅移动。' },
@@ -4429,7 +4386,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         faqs: [
           { question: 'G-Switch 3 怎么玩?', answer: '点任意键或点击,在地面和天花板之间翻转重力,躲避锯齿和缺口。把翻转时机掐到最后安全一刻,就是全部技巧。' },
           { question: 'G-Switch 3 有多人模式吗?', answer: '有。支持同一键盘最多 8 人同机,每人分配一个键。活到最后的玩家获胜。' },
-          { question: 'G-Switch 3 免费、无屏蔽吗?', answer: '是。它是免下载的 HTML5 浏览器游戏,能在大多数受限网络运行,可在本页畅玩。' },
+          { question: 'G-Switch 3 免费、无屏蔽吗?', answer: '可在开发者或发行方页面确认浏览器版。能否访问取决于设备与网络设置。' },
           { question: 'G-Switch 1 和 2 是什么?', answer: '是系列里更早的作品,重力翻转机制相同。G-Switch 3 在它们基础上扩展了更大的多人和更多模式。' },
         ],
         ctaLabel: '立即开玩 G-Switch 3',
@@ -4444,16 +4401,12 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     updatedAt: seoContentUpdatedAt,
     indexable: false,
     relatedSlugs: [],
-    embedGame: {
-      iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp41/cwb/20221213/01/index.htm',
-      title: 'Fireboy & Watergirl 6',
-      playSlug: 'fireboy-watergirl-6',
-    },
+    retiredMirrorPlayer: true,
     locales: {
       en: {
         metaTitle: 'Fireboy and Watergirl: 2-Player Walkthrough, Controls & Tips',
         metaDescription:
-          'How to play Fireboy and Watergirl — controls for both characters, the elements rule, and co-op puzzle tips. Play this 2-player game free and unblocked in your browser.',
+          'How to play Fireboy and Watergirl — controls for both characters, the elements rule, and co-op puzzle tips.',
         heading: 'Fireboy and Watergirl: 2-Player Co-op Guide',
         subheading: 'The classic two-player puzzle — control both elements, dodge the wrong pools, and reach the doors together.',
         overview: [
@@ -4491,7 +4444,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           },
           {
             title: 'Play Free & Unblocked',
-            body: 'Fireboy and Watergirl is a lightweight HTML5 game that runs in any browser with no download, including on school networks where “2 player games” and “Fireboy and Watergirl unblocked” are common searches. Press play above.',
+            body: 'Use a developer or publisher page to play. Availability depends on your device and network policy.',
           },
         ],
         recommendations: [
@@ -4503,7 +4456,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           { question: 'What are the controls for Fireboy and Watergirl?', answer: 'Fireboy uses A, W, D and Watergirl uses the arrow keys, so two players can share one keyboard. Solo, you control one character at a time and switch.' },
           { question: 'What kills Fireboy and Watergirl?', answer: 'Fireboy dies in water, Watergirl dies in lava, and the green goo kills both. Each is safe in their own element’s pool.' },
           { question: 'Can you play Fireboy and Watergirl solo?', answer: 'Yes. You can control one character at a time and swap between them, though it takes more back-and-forth than playing with a partner.' },
-          { question: 'Is it free and unblocked?', answer: 'Yes. It is a free HTML5 browser game with no download and runs on most restricted networks, so you can play it unblocked here.' },
+          { question: 'Is it free and unblocked?', answer: 'Check the developer or publisher for a browser release. Access depends on your network policy.' },
         ],
         ctaLabel: 'Play Fireboy and Watergirl now',
         ctaDescription: 'Grab a friend and start the co-op puzzles free in your browser.',
@@ -4511,7 +4464,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       zh: {
         metaTitle: 'Fireboy and Watergirl 森林冰火人:双人攻略、操作与技巧',
         metaDescription:
-          '森林冰火人怎么玩——双角色操作、元素规则与合作解谜技巧。这款双人游戏免费、无屏蔽在浏览器畅玩。',
+          '森林冰火人怎么玩——双角色操作、元素规则与合作解谜技巧。这款双人游戏',
         heading: 'Fireboy and Watergirl 森林冰火人:双人合作指南',
         subheading: '经典双人解谜——操控两种元素,躲开相克的水池,一起到达出口。',
         overview: [
@@ -4547,7 +4500,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               '两个角色都要到达各自对应的门才算过关——别冲一个、把另一个困住。',
             ],
           },
-          { title: '免费、无屏蔽畅玩', body: '森林冰火人是轻量 HTML5 游戏,任何浏览器免下载运行,包括常被搜“2 player games”和“Fireboy and Watergirl unblocked”的学校网络。点上方开玩。' },
+          { title: '免费、无屏蔽畅玩', body: '森林冰火人是轻量 HTML5 游戏,任何浏览器免下载运行,包括常被搜“2 player games”和“Fireboy and Watergirl unblocked”的学校网络。' },
         ],
         recommendations: [
           { slug: 'ovo', pitch: 'OvO 是快节奏单人平台游戏,想要单人挑战时玩。' },
@@ -4558,7 +4511,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           { question: '森林冰火人怎么操作?', answer: '火男孩用 A、W、D,水女孩用方向键,所以两人能共用一个键盘。单人时一次控一个角色并切换。' },
           { question: '森林冰火人怎么会死?', answer: '火男孩碰水会死,水女孩碰岩浆会死,绿色毒浆两个都杀。各自在自己元素的池子里才安全。' },
           { question: '森林冰火人能单人玩吗?', answer: '能。可以一次控一个角色并来回切换,只是比和搭档一起玩更折腾。' },
-          { question: '免费、无屏蔽吗?', answer: '是。它是免下载的 HTML5 浏览器游戏,能在大多数受限网络运行,可在本页畅玩。' },
+          { question: '免费、无屏蔽吗?', answer: '可在开发者或发行方页面确认浏览器版。能否访问取决于设备与网络设置。' },
         ],
         ctaLabel: '立即开玩森林冰火人',
         ctaDescription: '叫上朋友,在浏览器里免费开始合作解谜。',
@@ -4570,17 +4523,13 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
     primaryKeyword: 'adam and eve game',
     keywords: ['adam and eve game', 'adam and eve walkthrough', 'adam and eve point and click', 'adam and eve all levels'],
     updatedAt: seoContentUpdatedAt,
-    relatedSlugs: [],
-    embedGame: {
-      iframeUrl: 'https://szhong.4399.com/4399swf//upload_swf/ftp32/chenling/20200420/04/index.htm',
-      title: 'Adam and Eve Go',
-      playSlug: 'adam-and-eve-go',
-    },
+    relatedSlugs: ['games-to-play-when-bored', 'free-games-no-ads'],
+    retiredMirrorPlayer: true,
     locales: {
       en: {
         metaTitle: 'Adam and Eve Walkthrough: How to Solve Every Point-and-Click Level',
         metaDescription:
-          'A walkthrough hub for the Adam and Eve point-and-click games — how the puzzles work, the solving method, and tips for getting unstuck. Play free and unblocked in your browser.',
+          'A walkthrough hub for the Adam and Eve point-and-click games — how the puzzles work, the solving method, and tips for getting unstuck.',
         heading: 'Adam and Eve: Point-and-Click Walkthrough',
         subheading: 'Help Adam reach Eve — how to read the puzzles and solve every prehistoric level.',
         overview: [
@@ -4612,18 +4561,19 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           },
           {
             title: 'Play Free & Unblocked',
-            body: 'Adam and Eve games are lightweight HTML5 titles that run in any browser with no download, including on restricted school networks. Press play above to start.',
+            body: 'Use a developer or publisher page to play. Availability depends on your device and network policy.',
           },
         ],
         recommendations: [
           { slug: 'drive-mad', pitch: 'Drive Mad is a physics-driving puzzle if you want a faster, reflex-based challenge.' },
           { slug: 'ovo', pitch: 'OvO is a precision parkour platformer for when you want action over point-and-click.' },
           { slug: 'monkey-mart', pitch: 'Monkey Mart is a relaxed idle management game in the same easygoing spirit.' },
+          { slug: 'cover-orange', pitch: 'Cover Orange is another puzzle about using nearby objects in the right order.' },
         ],
         faqs: [
           { question: 'How do you solve Adam and Eve levels?', answer: 'Click objects on screen to find which ones react, then trigger them in sequence to clear Adam’s path to the right. When stuck, work backwards from whatever is blocking him.' },
           { question: 'How many Adam and Eve games are there?', answer: 'The series has many entries — the main numbered games (2 through 8), the Go runner spin-offs, and seasonal versions like Night, Snow, and Zombies. They share the same point-and-click logic.' },
-          { question: 'Are Adam and Eve games free and unblocked?', answer: 'Yes. They are free HTML5 browser games with no download and run on most restricted networks, so you can play them unblocked here.' },
+          { question: 'Are Adam and Eve games free and unblocked?', answer: 'Check the developer or publisher for a browser release. Access depends on your network policy.' },
           { question: 'What is the goal in Adam and Eve?', answer: 'Guide Adam safely across each level to reunite with Eve, usually by clearing obstacles so he can walk to the right edge of the screen.' },
         ],
         ctaLabel: 'Play Adam and Eve now',
@@ -4632,12 +4582,12 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       zh: {
         metaTitle: 'Adam and Eve 亚当夏娃攻略:点击解谜每一关怎么过',
         metaDescription:
-          '亚当夏娃点击解谜系列攻略中心——谜题怎么运作、解题方法、卡关怎么破。免费、无屏蔽在浏览器畅玩。',
+          '亚当夏娃点击解谜系列攻略中心——谜题怎么运作、解题方法、卡关怎么破。',
         heading: 'Adam and Eve 亚当夏娃:点击解谜攻略',
         subheading: '帮亚当找到夏娃——读懂谜题,解开每一个史前关卡。',
         overview: [
           'Adam and Eve(亚当夏娃)是长寿的点击解谜系列,你引导穴居人亚当穿过史前世界去找夏娃。每关是一个画面,塞满了要按正确顺序点击的物件,用来清除障碍——赶走动物、触发机关、搭出路径。',
-          '因为系列作品很多,这是一份“方法”攻略而非单关清单:学会谜题的思路,你就能解开任何一关。先在下方免费玩一款亚当夏娃。',
+          '因为系列作品很多,这是一份“方法”攻略而非单关清单:学会谜题的思路,你就能解开任何一关。遇到卡关时可按操作顺序逐步排查。',
         ],
         sections: [
           {
@@ -4659,20 +4609,21 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             ],
           },
           { title: '亚当夏娃系列', body: '系列包括主线编号作(Adam and Eve,2–8)、“Go”跑酷衍生作,以及 Night、Snow、Zombies 等节日版。点击解谜的几部共享同一套解题逻辑;Go 系列是更简单的时机跑酷。无论你玩哪一部,上面的方法都适用。' },
-          { title: '免费、无屏蔽畅玩', body: '亚当夏娃是轻量 HTML5 游戏,任何浏览器免下载运行,包括受限的学校网络。点上方开玩。' },
+          { title: '免费、无屏蔽畅玩', body: '亚当夏娃是轻量 HTML5 游戏,任何浏览器免下载运行,包括受限的学校网络。' },
         ],
         recommendations: [
           { slug: 'drive-mad', pitch: 'Drive Mad 是物理驾驶谜题,想要更快、靠反应的挑战就玩它。' },
           { slug: 'ovo', pitch: 'OvO 是精准跑酷平台游戏,想要动作而非点击解谜时玩。' },
           { slug: 'monkey-mart', pitch: 'Monkey Mart 是轻松的放置经营游戏,同样的悠闲气质。' },
+          { slug: 'cover-orange', pitch: 'Cover Orange 同样需要判断附近物件的使用顺序。' },
         ],
         faqs: [
           { question: '亚当夏娃的关卡怎么解?', answer: '点击屏幕上的物件找出哪些会反应,再按顺序触发,为亚当清出向右的路。卡住时,从挡住他的东西倒推。' },
           { question: '亚当夏娃有多少部?', answer: '系列作品很多——主线编号作(2 到 8)、Go 跑酷衍生作,以及 Night、Snow、Zombies 等节日版。它们共享同一套点击解谜逻辑。' },
-          { question: '亚当夏娃免费、无屏蔽吗?', answer: '是。它们是免下载的 HTML5 浏览器游戏,能在大多数受限网络运行,可在本页畅玩。' },
+          { question: '亚当夏娃免费、无屏蔽吗?', answer: '可在开发者或发行方页面确认浏览器版。能否访问取决于设备与网络设置。' },
           { question: '亚当夏娃的目标是什么?', answer: '安全引导亚当通过每一关与夏娃团聚,通常是清除障碍让他能走到屏幕右边。' },
         ],
-        ctaLabel: '立即开玩亚当夏娃',
+        ctaLabel: '浏览原创小游戏',
         ctaDescription: '在浏览器里免费开始解谜。',
       },
     },
@@ -7523,7 +7474,8 @@ function getPublicSeoLandingPage(page: SeoLandingPage): SeoLandingPage {
         {
           ...content,
           recommendations: content.recommendations.filter(
-            (recommendation) => !isGameUnderManualReview(recommendation.slug),
+            (recommendation) => !isGameUnderManualReview(recommendation.slug) &&
+              getLegacyGameDisposition(recommendation.slug) !== 'retired',
           ),
         },
       ]),
