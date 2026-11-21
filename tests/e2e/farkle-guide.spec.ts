@@ -115,11 +115,32 @@ for (const locale of ['en', 'zh'] as const) {
     ])
       await expect(main.locator(`a[href="${href}"]`).first()).toBeVisible();
     await expect(main.locator('iframe')).toHaveCount(0);
+    const zh = locale === 'zh';
+    const checker = main.getByRole('region', { name: zh ? '骰面验算' : 'Dice roll calculator' });
+    const check = checker.getByRole('button', { name: zh ? '验算得分' : 'Check score' });
+    await expect(check).toBeEnabled();
+    for (const die of [1, 2, 3]) {
+      await checker.getByRole('combobox', {
+        name: zh ? `骰子 ${die}` : `Die ${die}`, exact: true,
+      }).selectOption('1');
+    }
+    const result = checker.getByRole('status');
+    await check.click();
+    await expect(result).toContainText(zh ? '本次掷骰得 300 分。' : 'This roll: 300 points.');
+    await expect(result).toContainText(zh ? '首次入账须至少 500 分' : 'Your first bank requires at least 500 points');
+    await checker.getByRole('spinbutton', {
+      name: zh ? '本回合先前累计' : 'Points from earlier rolls this turn',
+    }).fill('200');
+    await expect(result).toHaveCount(0);
+    await check.click();
+    await expect(result).toContainText(zh ? '本回合累计 500 分。' : 'Turn total: 500 points.');
+    await expect(result).toContainText(zh ? '可以入账。' : 'You can bank this turn.');
+
     const json = (
       await page.locator('script[type="application/ld+json"]').allTextContents()
     ).flatMap(text => JSON.parse(text));
     const article = json.find(item => item['@type'] === 'Article');
-    expect(article.dateModified).toMatch(/^2026-11-02T\d\d:\d\d:\d\d\+08:00$/);
+    expect(article.dateModified).toMatch(/^2026-11-21T\d\d:\d\d:\d\d\+08:00$/);
     expect(new Date(article.dateModified).getTime()).toBeLessThanOrEqual(
       Date.now()
     );

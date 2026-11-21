@@ -6,6 +6,7 @@ const ACTIONS_BY_GUIDE = new Map<string, ReadonlySet<string>>([
   ['drive-mad-walkthrough', PUBLISHER_PLAY_ACTIONS],
   ['drive-mad-level-tips', PUBLISHER_PLAY_ACTIONS],
   ['apple-knight-mini-dungeons-guide', PUBLISHER_PLAY_ACTIONS],
+  ['farkle-scoring', new Set(['score_check'])],
   ['best-free-iphone-games', new Set(['play_circle', 'read_guide', 'recommendations'])],
   ['word-chain-game-examples', new Set(['read_guide', 'practice_entry', 'browse_games'])],
   ['three-player-spades', new Set(['read_guide', 'browse_games'])],
