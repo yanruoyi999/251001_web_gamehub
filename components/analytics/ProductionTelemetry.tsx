@@ -7,7 +7,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 
 import AnalyticsListener from '@/components/layout/AnalyticsListener';
 import { shouldLoadProductionTelemetry } from '@/lib/analytics/runtime';
-import { GA_TRACKING_ID } from '@/lib/gtag';
+import { GA_READY_EVENT, GA_TRACKING_ID } from '@/lib/gtag';
 
 const subscribeToHostname = () => () => undefined;
 const getServerTelemetryEnabled = () => false;
@@ -38,6 +38,7 @@ export function ProductionTelemetry() {
               window.gtag = window.gtag || function(){window.dataLayer.push(arguments);};
               window.gtag('js', new Date());
               window.gtag('config', '${GA_TRACKING_ID}', { send_page_view: false });
+              window.dispatchEvent(new Event('${GA_READY_EVENT}'));
             `}
           </Script>
           <Script
