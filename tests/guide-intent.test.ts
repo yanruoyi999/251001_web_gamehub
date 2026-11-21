@@ -37,6 +37,7 @@ describe('bounded guide intent', () => {
     ['drive-mad-walkthrough', 'publisher_play'],
     ['drive-mad-level-tips', 'publisher_play'],
     ['apple-knight-mini-dungeons-guide', 'publisher_play'],
+    ['farkle-scoring', 'score_check'],
   ])('allows the bounded %s / %s entry in both locales', (guideSlug, action) => {
     for (const locale of ['en', 'zh']) {
       expect(getGuideIntentProperties(guideSlug, action, locale)).toEqual({
@@ -55,6 +56,8 @@ describe('bounded guide intent', () => {
     ['drive-mad-walkthrough', 'source_status', 'en'],
     ['big-tower-tiny-square-walkthrough', 'publisher_play', 'en'],
     ['apple-knight-mini-dungeons-guide', 'publisher_play', 'en-US'],
+    ['farkle-scoring', 'score_check', 'en-US'],
+    ['cribbage-scoring-chart', 'score_check', 'en'],
   ])('rejects unapproved entry context %s / %s / %s', (guideSlug, action, locale) => {
     expect(getGuideIntentProperties(guideSlug, action, locale)).toBeNull();
   });

@@ -13,6 +13,7 @@ import { DominoesTraining } from '@/components/game/dominoes-training';
 import { WordChainExamples } from '@/components/seo/word-chain-examples';
 import { CribbageScoringChart } from '@/components/seo/cribbage-scoring-chart';
 import { CribbagePrintButton } from '@/components/seo/cribbage-print-button';
+import { FarkleRollChecker } from '@/components/seo/farkle-roll-checker';
 import { CrazyEightsQuickRules } from '@/components/seo/crazy-eights-quick-rules';
 import { FiveHundredScoring } from '@/components/seo/five-hundred-scoring';
 import { BidEuchrePractice } from '@/components/seo/bid-euchre-practice';
@@ -465,6 +466,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
 
       {page.slug === DUOLINGO_POKEMON_GO_GUIDE.slug ? <PokemonGoQuestPlanner locale={locale} /> : null}
       {isCribbageGuide ? <CribbageScoringChart locale={locale} /> : null}
+      {page.slug === 'farkle-scoring' ? <FarkleRollChecker locale={locale} /> : null}
 
       {page.interactiveWidget === 'dominoes-training' ? (
         <DominoesTraining locale={locale} />

@@ -1,4 +1,5 @@
 import type { Locale } from '@/i18n/config';
+import { FARKLE_POINTS } from '@/lib/farkle-roll-check';
 import type {
   SeoLandingPage,
   SeoLandingSection,
@@ -6,21 +7,21 @@ import type {
 
 // Facts from the linked PlayMonster edition, with original labels and layout.
 const scoringRows = [
-  ['Single 1', '单个1', 100],
-  ['Single 5', '单个5', 50],
-  ['Three 1s', '三个1', 300],
-  ['Three 2s', '三个2', 200],
-  ['Three 3s', '三个3', 300],
-  ['Three 4s', '三个4', 400],
-  ['Three 5s', '三个5', 500],
-  ['Three 6s', '三个6', 600],
-  ['Four of a kind', '四个同点', 1000],
-  ['Five of a kind', '五个同点', 2000],
-  ['Six of a kind', '六个同点', 3000],
-  ['Straight: 1, 2, 3, 4, 5, 6', '顺子：1、2、3、4、5、6', 1500],
-  ['Three pairs', '三对', 1500],
-  ['Four of a kind plus another pair', '四个同点加另一对', 1500],
-  ['Two triplets', '两组三同点', 2500],
+  ['Single 1', '单个1', FARKLE_POINTS.singles[0]],
+  ['Single 5', '单个5', FARKLE_POINTS.singles[4]],
+  ['Three 1s', '三个1', FARKLE_POINTS.triplets[0]],
+  ['Three 2s', '三个2', FARKLE_POINTS.triplets[1]],
+  ['Three 3s', '三个3', FARKLE_POINTS.triplets[2]],
+  ['Three 4s', '三个4', FARKLE_POINTS.triplets[3]],
+  ['Three 5s', '三个5', FARKLE_POINTS.triplets[4]],
+  ['Three 6s', '三个6', FARKLE_POINTS.triplets[5]],
+  ['Four of a kind', '四个同点', FARKLE_POINTS.largerGroups[0]],
+  ['Five of a kind', '五个同点', FARKLE_POINTS.largerGroups[1]],
+  ['Six of a kind', '六个同点', FARKLE_POINTS.largerGroups[2]],
+  ['Straight: 1, 2, 3, 4, 5, 6', '顺子：1、2、3、4、5、6', FARKLE_POINTS.straight],
+  ['Three pairs', '三对', FARKLE_POINTS.threePairs],
+  ['Four of a kind plus another pair', '四个同点加另一对', FARKLE_POINTS.fourAndPair],
+  ['Two triplets', '两组三同点', FARKLE_POINTS.twoTriplets],
 ] as const;
 
 /** Fixed original exercises only; no dice engine or optimal-selection claim. */
@@ -158,7 +159,7 @@ export const FARKLE_GUIDE: SeoLandingPage = {
     'farkle points',
     'Farkle计分',
   ],
-  updatedAt: '2026-11-02T13:07:54+08:00',
+  updatedAt: '2026-11-21T22:40:26+08:00',
   relatedSlugs: ['spades-scoring', 'three-player-spades', 'euchre-strategy'],
   indexable: true,
   locales: {
@@ -201,7 +202,7 @@ export const FARKLE_GUIDE: SeoLandingPage = {
         },
         {
           title: 'Six original exercises',
-          body: 'These fixed dice and scoring choices were constructed for this guide. They are arithmetic exercises, not recorded games or claims of optimal strategy. Read each selection as stated; there is no scoring calculator on this page.',
+          body: 'These six arithmetic exercises use fixed dice and scoring choices. Follow the stated choices in each example, or use the calculator to check the highest legal score from one throw.',
         },
         ...exercises('en'),
         {
@@ -301,7 +302,7 @@ export const FARKLE_GUIDE: SeoLandingPage = {
         },
         {
           title: '六个原创练习',
-          body: '以下固定骰面与选择专为本页构造，只用于核算规则，不是真实对局记录或最优策略承诺。按每例指定的骰子计分；本页没有通用计分计算器。',
+          body: '六个算例使用固定骰面和计分选择。可按例中指定的组合练习，也可以用上方验算器核对单次掷骰的最高合法得分。',
         },
         ...exercises('zh'),
         {
