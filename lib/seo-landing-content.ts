@@ -2310,7 +2310,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         subheading: 'A current guide for Google Snake Mods 2, mod menu, and loader searches: what those terms mean, which route still works, and when to choose no-download standard Snake.',
         overview: [
           'Google Snake mods are community-made changes for the classic Snake game. The useful ones add a menu, extra apple modes, mouse controls, level editing, custom boards, visibility changes, and practice settings that the normal game does not expose.',
-          'The old bookmark-import method is no longer the clean first recommendation. The DarkSnakeGang projects now point players toward the modded web version or a userscript loader, so this page is written as a decision guide rather than a download page. Luma does not host the mods here; we explain the options and provide a standard browser Snake fallback if you simply want to play.',
+          'The old bookmark-import method is no longer the clean first recommendation. The DarkSnakeGang projects now point players toward the modded web version or a userscript loader, so this page is written as a decision guide rather than a download page. Luma does not host the mods here; we explain the options and link to standard Snake on Google for a quick round.',
         ],
         sections: [
           {
@@ -2381,7 +2381,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               'Do not download EXE, DMG, APK, or browser “optimizer” packages for a Snake mod.',
               'Do not paste code from comments, video descriptions, or unknown mirrors into the browser console.',
               'Prefer the official DarkSnakeGang web version or its linked loader project.',
-              'Remember that Luma is not affiliated with Google or DarkSnakeGang; this is an editorial guide and a standard Snake play fallback.',
+              'Remember that Luma is not affiliated with Google or DarkSnakeGang; this walkthrough links to each source separately.',
             ],
           },
           {
@@ -2397,7 +2397,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
           {
             slug: 'google-snake',
             pitch:
-              'Skip the setup and play standard Google Snake right now in your browser, no mods or installs required.',
+              'Read the standard Snake controls and find Google’s browser version.',
           },
           {
             slug: 'tunnel-rush',
@@ -2551,7 +2551,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               '不要为了 Snake mod 下载 EXE、DMG、APK 或“浏览器优化器”。',
               '不要把评论区、视频简介或未知镜像里的代码粘到浏览器控制台。',
               '优先使用 DarkSnakeGang 官方模组网页或它链接的 loader 项目。',
-              'Luma 与 Google 或 DarkSnakeGang 没有关联;本页是编辑指南和标准 Snake 试玩备选。',
+              'Luma 与 Google 或 DarkSnakeGang 没有关联;本页是编辑指南，并分开列出社区模组与 Google 标准版。',
             ],
           },
           {
@@ -3776,7 +3776,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         subheading: 'A 3D reflex gauntlet — here is how to last longer, plus where Tunnel Rush 2 fits in.',
         overview: [
           'Tunnel Rush hurls you down a spinning 3D tunnel of gates, barriers, and color zones that get faster the longer you survive. There are no levels to memorise — it is pure reflex and pattern reading, which is exactly why a few habits dramatically raise your score.',
-          'These tips come down to positioning and focus, not faster fingers. Play Tunnel Rush free below and try them on your next run.',
+          'These tips focus on positioning and reading openings. Try one change at a time on your next run.',
         ],
         sections: [
           {
@@ -3825,7 +3825,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         subheading: '3D 反应挑战——教你撑得更久,以及 Tunnel Rush 2 的定位。',
         overview: [
           'Tunnel Rush 把你抛进一个旋转的 3D 隧道,闸门、障碍和色区随着你存活越久变得越快。没有关卡要背——纯反应和读规律,所以几个习惯能大幅提高你的分数。',
-          '这些技巧靠的是站位和注意力,不是更快的手指。先在下方免费玩,下一局试试看。',
+          '这些技巧着重站位和辨认空隙。下一局每次只调整一项。',
         ],
         sections: [
           { title: '操作', body: '用左右方向键(或 A 和 D)绕隧道旋转、穿过空隙。整个操作就这些——其余全是读障碍。' },
@@ -3876,7 +3876,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         subheading: 'Grow your supermarket faster with the right unlock order and every appliance recipe.',
         overview: [
           'Monkey Mart is an idle management game where your monkey plants crops, stocks shelves, serves customers, and hires helpers to automate it all. It has passed 300 million plays, and the loop is simple — but the order you unlock things in decides how fast you grow.',
-          'This guide covers what to unlock first, every appliance recipe, and the habits that keep your money climbing. Play Monkey Mart free below while you read.',
+          'This guide covers what to unlock first, every appliance recipe, and the habits that keep your money climbing.',
         ],
         sections: [
           {
@@ -3931,7 +3931,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         subheading: '用对解锁顺序和全部器械配方,让超市长得更快。',
         overview: [
           'Monkey Mart(猴子超市)是一款放置经营游戏,你的猴子种作物、上货架、招待顾客、雇帮手把一切自动化。它已突破 3 亿次游玩,循环简单——但你解锁东西的顺序决定了成长速度。',
-          '这份攻略讲清先解锁什么、全部器械配方,以及让收入持续上涨的习惯。边看边在下方免费玩。',
+          '这份攻略讲清先解锁什么、全部器械配方,以及让收入持续上涨的习惯。',
         ],
         sections: [
           { title: '进度机制', body: '上货架、招待顾客赚钱,再花钱解锁新货道、新商品、器械和员工。要开新超市,得先把当前超市的所有东西解锁完。' },
@@ -3998,7 +3998,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         subheading: 'Fix the jump that keeps failing, climb to the summit, and use the same pattern-reading method in the sequel.',
         overview: [
           'Big Tower Tiny Square is a precision platformer where a tiny square climbs a deadly tower to rescue its pineapple from Big Square. It is famous for being hard but fair — every death teaches you the pattern, and generous checkpoints keep you moving.',
-          'This guide covers the controls and the techniques that clear the sections players rage-quit on. Play it free below and climb.',
+          'This guide covers the controls and the techniques that clear the sections players rage-quit on. Use the developer link to open the game.',
         ],
         sections: [
           {
@@ -4064,7 +4064,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         subheading: '修正最常见的二段跳错误,逐个存档点爬到塔顶,并把读规律方法用于续作。',
         overview: [
           'Big Tower Tiny Square 是一款精准平台游戏,小方块爬上致命高塔,从大方块手里救回菠萝。它以“又难又公平”著称——每次死亡都在教你规律,而密集的存档点让你不断前进。',
-          '这份攻略讲操作,以及能破掉玩家暴怒退出段落的技巧。先在下方免费玩,开爬。',
+          '这份攻略讲操作,以及能破掉玩家暴怒退出段落的技巧。游玩入口指向开发者的发布页面。',
         ],
         sections: [
           {
@@ -4177,7 +4177,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             body:
               'Some players search for Big Tower Tiny Square 2 unblocked because they want a no-download browser version. Luma pages do not ask for an executable, APK, extension, or login. Mobile play can work for short practice, but precision jumps are easier on a keyboard.',
             bullets: [
-              'If the embedded frame asks for an unrelated install, leave the mirror and use another source.',
+              'Avoid mirror sites that ask you to install unrelated software.',
               'If touch controls feel delayed, practice on desktop before attempting late rooms.',
               'If a school or work network blocks the frame, use the guide text and return from a personal network later.',
             ],
@@ -4313,7 +4313,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         subheading: 'Flip gravity, dodge the saws, and outlast your friends in up to 8-player local multiplayer.',
         overview: [
           'G-Switch 3 is a gravity-switching endless runner: tap to flip between floor and ceiling, dodging buzzsaws and gaps as the speed climbs. Its signature feature is local multiplayer for up to 8 players on one keyboard, which is why it is a school and party favourite.',
-          'This guide covers the controls, the survival mindset, and how the multiplayer works. Play G-Switch 3 free below.',
+          'This guide covers the controls, the survival mindset, and how the multiplayer works.',
         ],
         sections: [
           {
@@ -4361,7 +4361,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         subheading: '翻转重力、躲开锯齿,在最多 8 人同机对战里熬到最后。',
         overview: [
           'G-Switch 3 是一款重力翻转的无尽跑酷:点击翻转地面与天花板,随着速度提升躲避锯齿和缺口。它的招牌是同一键盘最多 8 人同机多人,所以是学校和聚会的热门。',
-          '这份指南讲操作、生存心法,以及多人怎么玩。先在下方免费玩。',
+          '这份指南讲操作、生存心法,以及多人怎么玩。',
         ],
         sections: [
           { title: '操作', body: '单人模式下,点击或按任意键翻转重力——只有这一个操作。你会在地面跑和天花板跑之间瞬间切换,所以整个游戏就是选对翻转的时机。' },
@@ -4411,7 +4411,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         subheading: 'The classic two-player puzzle — control both elements, dodge the wrong pools, and reach the doors together.',
         overview: [
           'Fireboy and Watergirl is the definitive 2-player co-op puzzle series: one player guides Fireboy, the other Watergirl, through temple levels full of switches, levers, and elemental hazards. You can also play both characters solo by switching between them.',
-          'This guide covers the controls, the one rule that kills careless players, and the co-op habits that clear levels fast. Play it free below — grab a friend or take both sides yourself.',
+          'This guide covers the controls, the one rule that kills careless players, and the co-op habits that clear levels fast.',
         ],
         sections: [
           {
@@ -4464,12 +4464,12 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       zh: {
         metaTitle: 'Fireboy and Watergirl 森林冰火人:双人攻略、操作与技巧',
         metaDescription:
-          '森林冰火人怎么玩——双角色操作、元素规则与合作解谜技巧。这款双人游戏',
+          '森林冰火人怎么玩——双角色操作、元素规则与合作解谜技巧。',
         heading: 'Fireboy and Watergirl 森林冰火人:双人合作指南',
         subheading: '经典双人解谜——操控两种元素,躲开相克的水池,一起到达出口。',
         overview: [
           'Fireboy and Watergirl(森林冰火人)是双人合作解谜的标杆系列:一个玩家带冰火人中的火男孩,另一个带水女孩,穿过满是开关、拉杆和元素陷阱的神庙关卡。也可以一人切换操控两个角色。',
-          '这份指南讲操作、坑死粗心玩家的那一条规则,以及快速通关的合作习惯。先在下方免费玩——叫上朋友,或自己一人分饰两角。',
+          '这份指南讲操作、坑死粗心玩家的那一条规则,以及快速通关的合作习惯。',
         ],
         sections: [
           {
@@ -4534,7 +4534,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         subheading: 'Help Adam reach Eve — how to read the puzzles and solve every prehistoric level.',
         overview: [
           'Adam and Eve is a long-running point-and-click puzzle series where you guide caveman Adam through a prehistoric world to find Eve. Each level is a single screen packed with objects you click in the right order to clear obstacles — move an animal, trigger a trap, build a path.',
-          'Because the series has many entries, this is a method guide rather than one level list: learn how the puzzles think and you can solve any of them. Play an Adam and Eve game free below.',
+          'Because the series has many entries, this is a method guide rather than one level list: learn how the puzzles think and you can solve any of them.',
         ],
         sections: [
           {
