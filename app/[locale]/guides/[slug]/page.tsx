@@ -120,11 +120,11 @@ interface GuidePageProps {
 }
 
 const gameIndex = new Map(mockGames.map(game => [game.slug, game]));
-const publisherPlayLinks: Record<string, { url: string; title: string }> = {
-  'google-snake-mods': { url: 'https://www.google.com/fbx?fbx=snake_arcade', title: 'Google' },
-  'drive-mad-walkthrough': { url: 'https://play.fancade.com/5F084A0BCE06B710', title: 'Fancade' },
-  'drive-mad-level-tips': { url: 'https://play.fancade.com/5F084A0BCE06B710', title: 'Fancade' },
-  'apple-knight-mini-dungeons-guide': { url: 'https://poki.com/en/g/apple-knight-mini-dungeons', title: 'Poki' },
+const publisherPlayLinks: Record<string, { url: string; title: string; action?: 'standard_snake' | 'publisher_play' }> = {
+  'google-snake-mods': { url: 'https://www.google.com/fbx?fbx=snake_arcade', title: 'Google', action: 'standard_snake' },
+  'drive-mad-walkthrough': { url: 'https://play.fancade.com/5F084A0BCE06B710', title: 'Fancade', action: 'publisher_play' },
+  'drive-mad-level-tips': { url: 'https://play.fancade.com/5F084A0BCE06B710', title: 'Fancade', action: 'publisher_play' },
+  'apple-knight-mini-dungeons-guide': { url: 'https://poki.com/en/g/apple-knight-mini-dungeons', title: 'Poki', action: 'publisher_play' },
   'big-tower-tiny-square-walkthrough': { url: 'https://evilobjective.itch.io/bigtowertinysquarefree', title: 'EvilObjective' },
   'tunnel-rush-unblocked': { url: 'https://poki.com/en/g/tunnel-rush', title: 'Poki' },
 };
@@ -414,7 +414,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
           <GuideIntentLink
             guideSlug={page.slug}
             locale={locale}
-            action={page.slug === 'google-snake-mods' ? 'standard_snake' : 'source_status'}
+            action={publisherPlay.action ?? 'source_status'}
             href={publisherPlay.url}
             target="_blank"
             rel="noopener noreferrer"
@@ -821,22 +821,27 @@ export default async function GuidePage({ params }: GuidePageProps) {
               : 'Use these external links to verify the game source and creator context; they do not imply a commercial partnership with Luma.'}
           </p>
           <ul className="mt-4 grid gap-3 text-sm md:grid-cols-3">
-            {content.externalLinks.map(link => (
-              <li
-                key={link.href}
-                className="rounded-md border border-border bg-card p-4"
-              >
-                <a
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-medium text-primary transition hover:text-primary/80"
-                >
-                  {link.label} →
-                </a>
-                <p className="mt-2 text-muted-foreground">{link.description}</p>
-              </li>
-            ))}
+            {content.externalLinks.map(link => {
+              const anchor = {
+                href: link.href,
+                target: '_blank',
+                rel: 'noopener noreferrer',
+                className: 'font-medium text-primary transition hover:text-primary/80',
+              };
+              const label = `${link.label} →`;
+              const isPublisherPlay = publisherPlay?.action === 'publisher_play' && link.href === publisherPlay.url;
+
+              return (
+                <li key={link.href} className="rounded-md border border-border bg-card p-4">
+                  {isPublisherPlay ? (
+                    <GuideIntentLink guideSlug={page.slug} locale={locale} action="publisher_play" {...anchor}>
+                      {label}
+                    </GuideIntentLink>
+                  ) : <a {...anchor}>{label}</a>}
+                  <p className="mt-2 text-muted-foreground">{link.description}</p>
+                </li>
+              );
+            })}
           </ul>
         </section>
       ) : null}

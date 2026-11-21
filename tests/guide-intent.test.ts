@@ -34,6 +34,9 @@ describe('bounded guide intent', () => {
     ['word-chain-game-examples', 'browse_games'],
     ['three-player-spades', 'read_guide'],
     ['three-player-spades', 'browse_games'],
+    ['drive-mad-walkthrough', 'publisher_play'],
+    ['drive-mad-level-tips', 'publisher_play'],
+    ['apple-knight-mini-dungeons-guide', 'publisher_play'],
   ])('allows the bounded %s / %s entry in both locales', (guideSlug, action) => {
     for (const locale of ['en', 'zh']) {
       expect(getGuideIntentProperties(guideSlug, action, locale)).toEqual({
@@ -49,6 +52,9 @@ describe('bounded guide intent', () => {
     ['categories-game-topics', 'browse_games', 'en'],
     ['word-chain-game-examples', 'https://unknown.test/', 'en'],
     ['word-chain-game-examples', 'practice_entry', 'en-US'],
+    ['drive-mad-walkthrough', 'source_status', 'en'],
+    ['big-tower-tiny-square-walkthrough', 'publisher_play', 'en'],
+    ['apple-knight-mini-dungeons-guide', 'publisher_play', 'en-US'],
   ])('rejects unapproved entry context %s / %s / %s', (guideSlug, action, locale) => {
     expect(getGuideIntentProperties(guideSlug, action, locale)).toBeNull();
   });
