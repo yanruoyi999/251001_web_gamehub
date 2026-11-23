@@ -24,8 +24,11 @@ for (const prefix of ['/en', '']) {
     await page.goto(`${prefix}/guides`, { waitUntil: 'load' });
     const entry = page.locator(`a[href="${url}"][data-guide-intent-action="open_from_guides"]`);
     await expect(entry).toHaveCount(1);
-    await entry.press('Enter');
+    await page.evaluate(() => { document.body.dataset.scopaNavigationProbe = 'ready'; });
+    if (zh) await entry.click();
+    else await entry.press('Enter');
     await expect(page).toHaveURL(new RegExp(`${url}$`));
+    await expect(page.locator('body')).toHaveAttribute('data-scopa-navigation-probe', 'ready');
     await expect(page.getByRole('heading', { level: 1, name: zh ? 'Scopa 纸牌规则与计分' : 'Scopa Card Game Rules and Scoring' })).toBeVisible();
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex.*follow/);
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', new RegExp(`^https?://[^/]+${url}$`));

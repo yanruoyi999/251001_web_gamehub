@@ -118,6 +118,7 @@ export default async function GuidesPage({ params }: GuidesPageProps) {
               locale={locale}
               action="open_from_guides"
               eventName={eventName}
+              clientNavigation={guide.slug === SCOPA_GUIDE.slug}
               href={getLocalizedPath(locale, '/guides/' + guide.slug)}
               className="inline-flex min-h-11 items-center text-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
