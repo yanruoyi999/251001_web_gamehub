@@ -130,6 +130,7 @@ export function PokemonGoQuestPlanner({ locale }: { locale: Locale }) {
   return (
     <section
       id="pokemon-go-quest-planner"
+      data-instant-scroll
       aria-labelledby="pokemon-go-planner-title"
       className="mb-8 max-w-3xl rounded-md border border-border bg-card p-4 sm:p-5"
     >

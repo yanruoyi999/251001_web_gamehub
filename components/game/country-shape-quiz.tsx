@@ -74,7 +74,7 @@ export function CountryShapeQuiz({ locale }: { locale: Locale }) {
   }
 
   return (
-    <section aria-label={text.label} className="max-w-2xl space-y-4 rounded-xl border border-border bg-card p-4 sm:p-6">
+    <section data-instant-scroll aria-label={text.label} className="max-w-2xl space-y-4 rounded-xl border border-border bg-card p-4 sm:p-6">
       <label className="flex flex-wrap items-center gap-2 text-sm font-medium">
         {text.region}
         <select value={region} onChange={event => {

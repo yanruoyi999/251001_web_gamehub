@@ -32,7 +32,16 @@ for (const locale of ['en', 'zh'] as const) {
     await expect(game.getByRole('status')).toContainText('2/3');
     await game.getByRole('button', { name: /Practice missed outlines|重练错题/ }).click();
     await expect(image).toHaveAttribute('src', '/images/country-shapes/AUS.png');
-    await game.getByRole('button', { name: /Australia|澳大利亚/ }).click();
+    const answer = game.getByRole('button', { name: /Australia|澳大利亚/ });
+    await expect(answer).toBeVisible();
+    const answerIsInViewport = await answer.evaluate(button => {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      button.scrollIntoView({ block: 'center' });
+      const { top, bottom } = button.getBoundingClientRect();
+      return top >= 0 && bottom <= window.innerHeight;
+    });
+    expect(answerIsInViewport).toBe(true);
+    await answer.click();
     await game.getByRole('button', { name: /See score|查看得分/ }).click();
     await expect(game.getByRole('status')).toContainText('1/1');
     await game.getByRole('button', { name: /New round|再玩一轮/ }).click();
