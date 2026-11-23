@@ -75,8 +75,8 @@
   html {
     scroll-behavior: smooth;
   }
-  /* Keep the planner's form controls stationary when scrolled into view. */
-  html:has(#pokemon-go-quest-planner) {
+  /* Keep controls on interactive pages stationary when scrolled into view. */
+  html:has([data-instant-scroll]) {
     scroll-behavior: auto;
   }
   body {
