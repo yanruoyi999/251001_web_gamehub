@@ -109,7 +109,11 @@ export function PokemonGoQuestPlanner({ locale }: { locale: Locale }) {
     if (planStatus !== 'on-track' && planStatus !== 'not-enough-days' && planStatus !== 'claim-code') return;
 
     resultTracked.current = true;
-    trackInteraction('pokemon_quest_plan_result', { locale, result: planStatus });
+    trackInteraction(
+      'pokemon_quest_plan_result',
+      { locale, result: planStatus },
+      { waitForInitialization: true }
+    );
   }, [hasUserInput, locale, planStatus]);
 
   let result = '';

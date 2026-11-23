@@ -63,24 +63,28 @@ test('Mandy gives a source-backed answer and the event planner handles the last 
 });
 
 test('records one usable quest plan after interaction', async ({ page }) => {
-  await page.goto('/en/guides/duolingo-pokemon-go');
-  await page.evaluate(() => {
-    document.body.dataset.questResults = '0';
+  await page.clock.setFixedTime(new Date('2026-11-25T12:00:00Z'));
+  await page.context().addInitScript(() => {
     (window as Window & { clarity?: (...args: unknown[]) => void }).clarity = (command, name) => {
       if (command === 'event' && name === 'pokemon_quest_plan_result') {
-        document.body.dataset.questResults = String(Number(document.body.dataset.questResults) + 1);
+        document.body.dataset.questResults = String(Number(document.body.dataset.questResults ?? '0') + 1);
       }
     };
   });
+  await page.goto('/en/guides/duolingo-pokemon-go');
 
   const planner = page.locator('#pokemon-go-quest-planner');
   const resultCount = page.locator('body');
-  await planner.getByLabel('Local date').fill('2026-12-23');
-  await expect(resultCount).toHaveAttribute('data-quest-results', '0');
+  await expect(planner.getByRole('status')).toContainText('Join the quest');
+  await expect(resultCount).not.toHaveAttribute('data-quest-results', /.+/);
+  await planner.getByLabel('Local date').fill('');
   await planner.getByLabel('I already joined the quest').check();
+  await expect(planner.getByRole('status')).toContainText('Enter a date');
+  await expect(resultCount).not.toHaveAttribute('data-quest-results', /.+/);
+  await planner.getByLabel('Local date').fill('2026-12-23');
   await expect(planner.getByRole('status')).toContainText('2026-12-29');
   await expect(resultCount).toHaveAttribute('data-quest-results', '1');
-  await planner.getByLabel('Lesson days completed before that date').fill('1');
-  await expect(planner.getByRole('status')).toContainText('2026-12-28');
+  await planner.getByLabel('Local date').fill('2026-12-24');
+  await expect(planner.getByRole('status')).toContainText('Not enough days');
   await expect(resultCount).toHaveAttribute('data-quest-results', '1');
 });
