@@ -275,6 +275,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
   return (
     <article
       className="mx-auto w-full max-w-7xl bg-[#f1f7e9] px-3 py-5 sm:px-4 md:px-6 md:py-7 dark:bg-background"
+      data-pvuv-public-path={getLocalizedPath(locale, `/guides/${page.slug}`)}
       data-printable-guide={page.printablePath || isCrazyEights ? 'true' : undefined}
       data-cribbage-guide={isCribbageGuide ? 'true' : undefined}
       data-crazy-eights-guide={isCrazyEights ? 'true' : undefined}

@@ -12,6 +12,7 @@ import {
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { ClarityConsent } from '@/components/analytics/ClarityConsent';
+import { PvuvPageCount } from '@/components/analytics/PvuvPageCount';
 import { TypeformFeedbackButton } from '@/components/feedback/TypeformFeedbackButton';
 import { SpendBillGatesMoneyContextLinks } from '@/components/seo/spend-bill-gates-money-context-links';
 
@@ -95,6 +96,7 @@ export default async function LocaleLayout({
           {typedLocale === 'zh' ? '跳到主要内容' : 'Skip to main content'}
         </a>
         <Header />
+          <PvuvPageCount />
         <main id="main-content" className="flex-1">
           {children}
         </main>

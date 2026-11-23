@@ -29,6 +29,7 @@ export function isPlaywrightTelemetryRequest(requestUrl: string) {
   const pathname = url.pathname.toLowerCase();
 
   if (
+    (hostname === 'in.pvuv.ai' && pathname === '/in') ||
     isHostOrSubdomain(hostname, 'google-analytics.com') ||
     hostname === 'stats.g.doubleclick.net' ||
     (isHostOrSubdomain(hostname, 'google.com') && pathname.startsWith('/g/collect'))

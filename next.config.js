@@ -32,7 +32,7 @@ const securityHeaders = [
       `script-src 'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ''} https://*.googletagmanager.com https://www.clarity.ms https://scripts.clarity.ms`,
       "script-src-attr 'none'",
       "style-src 'self' 'unsafe-inline'",
-      "connect-src 'self' https://res.cloudinary.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.google.com https://*.clarity.ms",
+      "connect-src 'self' https://in.pvuv.ai https://res.cloudinary.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.google.com https://*.clarity.ms",
       "frame-src 'self' https://yanruoyi999.github.io https://dj-dk.github.io https://sudoku.tn1ck.com https://playpager.com https://cloud.onlinegames.io",
       "frame-ancestors 'none'",
     ].join('; '),

@@ -375,7 +375,7 @@ export default async function GamePage({ params }: GamePageProps) {
     if (!content) notFound();
     const isZh = locale === 'zh';
     return (
-      <article className="mx-auto max-w-3xl space-y-7 px-4 py-10" data-legacy-game-guide>
+      <article className="mx-auto max-w-3xl space-y-7 px-4 py-10" data-legacy-game-guide data-pvuv-public-path={getLocalizedPath(locale, `/games/${slug}`)}>
         <Link href={getLocalizedPath(locale, '/guides')} className="text-primary underline">
           {isZh ? '浏览攻略' : 'Browse guides'}
         </Link>
@@ -741,7 +741,7 @@ export default async function GamePage({ params }: GamePageProps) {
   const canRenderIframe = canRenderGameIframe(sourcePolicy);
 
   return (
-    <div className="w-full bg-[#f1f7e9] dark:bg-background">
+    <div className="w-full bg-[#f1f7e9] dark:bg-background" data-pvuv-public-path={getLocalizedPath(locale, `/games/${game.slug}`)}>
       <div className="mx-auto w-full max-w-[1480px] px-3 py-4 sm:px-4 md:px-6 md:py-6">
         {structuredData.map((schema, index) => (
           <script

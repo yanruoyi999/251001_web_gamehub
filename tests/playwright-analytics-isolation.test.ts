@@ -14,6 +14,7 @@ describe('Playwright analytics isolation', () => {
     expect(matcher).toBeTypeOf('function');
     if (!matcher) return;
 
+    expect(matcher('https://in.pvuv.ai/in')).toBe(true);
     expect(matcher('https://www.google-analytics.com/g/collect?v=2')).toBe(true);
     expect(matcher('https://region1.google-analytics.com/g/collect?v=2')).toBe(true);
     expect(matcher('https://www.google.com/g/collect?v=2')).toBe(true);
