@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { GuideIntentLink } from '@/components/seo/guide-intent-link';
 import { THROWING_DISC_GUIDE } from '@/lib/minecraft-throwing-disc-guide-content';
 import { OKISHIMA_1336_GUIDE } from '@/lib/okishima-1336-guide-content';
+import { SCOPA_GUIDE } from '@/lib/scopa-guide-content';
 import { getSeoLandingPages } from '@/lib/seo-landing-content';
 import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES } from '@/lib/seo';
 
@@ -109,6 +110,7 @@ export default async function GuidesPage({ params }: GuidesPageProps) {
         {([
           { guide: THROWING_DISC_GUIDE, eventName: 'guide_intent_click' },
           { guide: OKISHIMA_1336_GUIDE, eventName: 'okishima_guide_open' },
+          { guide: SCOPA_GUIDE, eventName: 'guide_intent_click' },
         ] as const).map(({ guide, eventName }) => (
           <li key={guide.slug}>
             <GuideIntentLink
