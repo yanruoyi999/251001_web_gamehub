@@ -61,3 +61,41 @@ test('Mandy gives a source-backed answer and the event planner handles the last 
   await planner.getByLabel('Lesson days completed before that date').fill('1');
   await expect(planner.getByRole('status')).toContainText('2026-12-29');
 });
+
+test('records one usable quest plan after interaction', async ({ page }) => {
+  await page.clock.setFixedTime(new Date('2026-11-25T12:00:00Z'));
+  await page.context().addInitScript(() => {
+    (window as Window & { clarity?: (...args: unknown[]) => void }).clarity = (command, name) => {
+      if (command === 'event' && name === 'pokemon_quest_plan_result') {
+        document.body.dataset.questResults = String(Number(document.body.dataset.questResults ?? '0') + 1);
+      }
+    };
+  });
+  await page.goto('/en/guides/duolingo-pokemon-go');
+
+  const planner = page.locator('#pokemon-go-quest-planner');
+  const resultCount = page.locator('body');
+  const joined = planner.getByRole('checkbox', { name: 'I already joined the quest' });
+  await expect(planner.getByRole('status')).toContainText('Join the quest');
+  await expect(resultCount).not.toHaveAttribute('data-quest-results', /.+/);
+
+  const position = await joined.evaluate(input => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    input.scrollIntoView({ block: 'center' });
+    const { top, bottom } = input.getBoundingClientRect();
+    return { top, bottom, viewportHeight: window.innerHeight };
+  });
+  expect(position.top).toBeGreaterThanOrEqual(0);
+  expect(position.bottom).toBeLessThanOrEqual(position.viewportHeight);
+
+  await planner.getByLabel('Local date').fill('');
+  await joined.check();
+  await expect(planner.getByRole('status')).toContainText('Enter a date');
+  await expect(resultCount).not.toHaveAttribute('data-quest-results', /.+/);
+  await planner.getByLabel('Local date').fill('2026-12-23');
+  await expect(planner.getByRole('status')).toContainText('2026-12-29');
+  await expect(resultCount).toHaveAttribute('data-quest-results', '1');
+  await planner.getByLabel('Local date').fill('2026-12-24');
+  await expect(planner.getByRole('status')).toContainText('Not enough days');
+  await expect(resultCount).toHaveAttribute('data-quest-results', '1');
+});

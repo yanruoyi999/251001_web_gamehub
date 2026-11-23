@@ -20,6 +20,16 @@ describe('trackInteraction', () => {
     vi.unstubAllGlobals();
   });
 
+  it('lets a one-time result wait for the GA4 tag', () => {
+    const properties = { locale: 'en', result: 'on-track' };
+    const options = { waitForInitialization: true };
+
+    trackInteraction('pokemon_quest_plan_result', properties, options);
+
+    expect(gaTrackEvent).toHaveBeenCalledOnce();
+    expect(gaTrackEvent).toHaveBeenCalledWith('pokemon_quest_plan_result', properties, options);
+  });
+
   it('keeps UI source context out of GA4 traffic attribution', () => {
     trackInteraction('game_play_start', {
       game_slug: 'duo-vikings',

@@ -36,7 +36,11 @@ function getGa4Properties(properties: Record<string, AnalyticsValue>) {
   return ga4Properties;
 }
 
-export function trackInteraction(eventName: string, properties?: AnalyticsProperties) {
+export function trackInteraction(
+  eventName: string,
+  properties?: AnalyticsProperties,
+  ...gaOptions: [options?: Parameters<typeof trackEvent>[2]]
+) {
   const cleanedProperties = cleanProperties(properties);
 
   const canSendBrowserTelemetry =
@@ -46,7 +50,7 @@ export function trackInteraction(eventName: string, properties?: AnalyticsProper
   if (canSendBrowserTelemetry) {
     runTelemetrySafely(() => track(eventName, cleanedProperties));
   }
-  runTelemetrySafely(() => trackEvent(eventName, getGa4Properties(cleanedProperties)));
+  runTelemetrySafely(() => trackEvent(eventName, getGa4Properties(cleanedProperties), ...gaOptions));
 
   if (typeof window !== 'undefined') {
     const clarity = (window as WindowWithClarity).clarity;

@@ -75,6 +75,10 @@
   html {
     scroll-behavior: smooth;
   }
+  /* Keep the planner's form controls stationary when scrolled into view. */
+  html:has(#pokemon-go-quest-planner) {
+    scroll-behavior: auto;
+  }
   body {
     @apply min-w-0 bg-background text-foreground antialiased;
   }
