@@ -5,6 +5,7 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import {
   canCountHere,
   hasPageCountPermission,
+  onPageCountGrant,
   reportPageCount,
   setPageCountPermission,
 } from '@/lib/analytics/pvuv';
@@ -28,6 +29,7 @@ function PageCountListener() {
         current.current.sent = reportPageCount(pathname);
       }
     };
+    const stopWatchingGrants = onPageCountGrant(countVisiblePage);
     countVisiblePage();
     const navigation = (window as Window & { navigation?: EventTarget })
       .navigation;
@@ -36,6 +38,7 @@ function PageCountListener() {
     window.addEventListener('popstate', countVisiblePage);
     document.addEventListener('visibilitychange', countVisiblePage);
     return () => {
+      stopWatchingGrants();
       navigation?.removeEventListener('currententrychange', countVisiblePage);
       window.removeEventListener('hashchange', countVisiblePage);
       window.removeEventListener('popstate', countVisiblePage);
