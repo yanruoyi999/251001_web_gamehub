@@ -13,6 +13,7 @@ import { GIN_RUMMY_GUIDE } from '@/lib/gin-rummy-guide-content';
 import { SPIT_GUIDE } from '@/lib/spit-guide-content';
 import { GOLF_CARD_GUIDE } from '@/lib/golf-card-guide-content';
 import { NINE_CARD_GOLF_GUIDE } from '@/lib/nine-card-golf-guide-content';
+import { SCOPA_GUIDE } from '@/lib/scopa-guide-content';
 import { CRAZY_EIGHTS_GUIDE } from '@/lib/crazy-eights-guide-content';
 import { PALACE_GUIDE } from '@/lib/palace-guide-content';
 import { GARBAGE_CARD_GUIDE } from '@/lib/garbage-card-guide-content';
@@ -132,6 +133,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
   SPIT_GUIDE,
   GOLF_CARD_GUIDE,
   NINE_CARD_GOLF_GUIDE,
+  SCOPA_GUIDE,
   CRAZY_EIGHTS_GUIDE,
   PALACE_GUIDE,
   GARBAGE_CARD_GUIDE,
