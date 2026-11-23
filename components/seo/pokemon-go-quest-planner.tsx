@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { Locale } from '@/i18n/config';
+import { trackInteraction } from '@/lib/analytics/events';
 import {
   planPokemonGoQuest,
   POKEMON_GO_QUEST_START,
@@ -85,6 +86,8 @@ export function PokemonGoQuestPlanner({ locale }: { locale: Locale }) {
   const [date, setDate] = useState<string | null>(null);
   const [days, setDays] = useState('0');
   const [joined, setJoined] = useState(false);
+  const [hasUserInput, setHasUserInput] = useState(false);
+  const resultTracked = useRef(false);
 
   useEffect(() => {
     setDate(localDateKey(new Date()));
@@ -100,6 +103,15 @@ export function PokemonGoQuestPlanner({ locale }: { locale: Locale }) {
           joined,
           firstLocalDate
         );
+  const planStatus = plan?.status;
+  useEffect(() => {
+    if (!hasUserInput || resultTracked.current) return;
+    if (planStatus !== 'on-track' && planStatus !== 'not-enough-days' && planStatus !== 'claim-code') return;
+
+    resultTracked.current = true;
+    trackInteraction('pokemon_quest_plan_result', { locale, result: planStatus });
+  }, [hasUserInput, locale, planStatus]);
+
   let result = '';
   if (plan?.status === 'on-track') {
     result = message[plan.status](plan.remaining, plan.finish, plan.spare);
@@ -126,7 +138,11 @@ export function PokemonGoQuestPlanner({ locale }: { locale: Locale }) {
       <p className="mt-2 text-sm text-muted-foreground">
         {message.description}
       </p>
-      <fieldset className="mt-4 min-w-0 space-y-4" disabled={date === null}>
+      <fieldset
+        className="mt-4 min-w-0 space-y-4"
+        disabled={date === null}
+        onChange={() => setHasUserInput(true)}
+      >
         <div className="grid gap-3 sm:grid-cols-2">
           <label className="grid gap-1 text-sm font-medium">
             {message.date}

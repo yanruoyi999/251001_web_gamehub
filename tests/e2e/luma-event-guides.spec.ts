@@ -61,3 +61,26 @@ test('Mandy gives a source-backed answer and the event planner handles the last 
   await planner.getByLabel('Lesson days completed before that date').fill('1');
   await expect(planner.getByRole('status')).toContainText('2026-12-29');
 });
+
+test('records one usable quest plan after interaction', async ({ page }) => {
+  await page.goto('/en/guides/duolingo-pokemon-go');
+  await page.evaluate(() => {
+    document.body.dataset.questResults = '0';
+    (window as Window & { clarity?: (...args: unknown[]) => void }).clarity = (command, name) => {
+      if (command === 'event' && name === 'pokemon_quest_plan_result') {
+        document.body.dataset.questResults = String(Number(document.body.dataset.questResults) + 1);
+      }
+    };
+  });
+
+  const planner = page.locator('#pokemon-go-quest-planner');
+  const resultCount = page.locator('body');
+  await planner.getByLabel('Local date').fill('2026-12-23');
+  await expect(resultCount).toHaveAttribute('data-quest-results', '0');
+  await planner.getByLabel('I already joined the quest').check();
+  await expect(planner.getByRole('status')).toContainText('2026-12-29');
+  await expect(resultCount).toHaveAttribute('data-quest-results', '1');
+  await planner.getByLabel('Lesson days completed before that date').fill('1');
+  await expect(planner.getByRole('status')).toContainText('2026-12-28');
+  await expect(resultCount).toHaveAttribute('data-quest-results', '1');
+});
