@@ -28,6 +28,25 @@ describe('bounded guide intent', () => {
     expect(trackInteraction).not.toHaveBeenCalled();
   });
 
+  it('queues the Scopa hub event on same-tab navigation only', () => {
+    trackInteraction.mockClear();
+    const link = GuideIntentLink({
+      guideSlug: 'scopa-card-game-rules',
+      action: 'open_from_guides',
+      locale: 'en',
+      href: '/en/guides/scopa-card-game-rules',
+      clientNavigation: true,
+      children: 'Scopa',
+    });
+    expect(link.props.onClick).toBeUndefined();
+    expect(link.props.prefetch).toBe(false);
+    expect(trackInteraction).not.toHaveBeenCalled();
+    link.props.onNavigate();
+    expect(trackInteraction).toHaveBeenCalledExactlyOnceWith('guide_intent_click', {
+      guide_slug: 'scopa-card-game-rules', action: 'open_from_guides', locale: 'en', schema_version: 2,
+    }, { waitForInitialization: true });
+  });
+
   it.each([
     ['word-chain-game-examples', 'read_guide'],
     ['word-chain-game-examples', 'practice_entry'],
