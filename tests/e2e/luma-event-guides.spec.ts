@@ -75,10 +75,21 @@ test('records one usable quest plan after interaction', async ({ page }) => {
 
   const planner = page.locator('#pokemon-go-quest-planner');
   const resultCount = page.locator('body');
+  const joined = planner.getByRole('checkbox', { name: 'I already joined the quest' });
   await expect(planner.getByRole('status')).toContainText('Join the quest');
   await expect(resultCount).not.toHaveAttribute('data-quest-results', /.+/);
+
+  const position = await joined.evaluate(input => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    input.scrollIntoView({ block: 'center' });
+    const { top, bottom } = input.getBoundingClientRect();
+    return { top, bottom, viewportHeight: window.innerHeight };
+  });
+  expect(position.top).toBeGreaterThanOrEqual(0);
+  expect(position.bottom).toBeLessThanOrEqual(position.viewportHeight);
+
   await planner.getByLabel('Local date').fill('');
-  await planner.getByLabel('I already joined the quest').check();
+  await joined.check();
   await expect(planner.getByRole('status')).toContainText('Enter a date');
   await expect(resultCount).not.toHaveAttribute('data-quest-results', /.+/);
   await planner.getByLabel('Local date').fill('2026-12-23');
