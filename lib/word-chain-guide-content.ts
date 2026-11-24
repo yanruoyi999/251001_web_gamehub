@@ -331,7 +331,7 @@ export const WORD_CHAIN_GUIDE: SeoLandingPage = {
     'compound word chain',
   ],
   updatedAt: '2026-10-31T10:03:11+08:00',
-  relatedSlugs: ['word-games-for-seniors', 'categories-game-topics'],
+  relatedSlugs: ['word-games-for-seniors', 'categories-game-topics', 'stuttgarter-meaning'],
   interactiveWidget: 'word-chain-examples',
   locales: {
     en: {

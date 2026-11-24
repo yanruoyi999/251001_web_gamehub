@@ -1,4 +1,5 @@
 import type { Locale } from '@/i18n/config';
+import { STUTTGARTER_GUIDE } from '@/lib/stuttgarter-guide-content';
 import { WORD_CHAIN_GUIDE } from '@/lib/word-chain-guide-content';
 import { CATEGORIES_GUIDE } from '@/lib/categories-guide-content';
 import { SENIOR_WORD_GUIDE } from '@/lib/senior-word-guide-content';
@@ -115,6 +116,7 @@ export interface SeoLandingPage {
   relatedSlugs: string[];
   indexable?: boolean;
   homepageFeatured?: boolean;
+  documentNavigation?: boolean;
   embedGame?: SeoLandingEmbedGame;
   retiredMirrorPlayer?: boolean;
   printablePath?: string;
@@ -149,6 +151,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
   EUCHRE_GUIDE,
   SENIOR_WORD_GUIDE,
   WORD_CHAIN_GUIDE,
+  STUTTGARTER_GUIDE,
   THREE_PLAYER_SPADES_GUIDE,
   SPADES_SCORING_GUIDE,
   FARKLE_GUIDE,
