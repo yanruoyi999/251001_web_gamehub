@@ -1,4 +1,5 @@
 import type { Locale } from '@/i18n/config';
+import { townfallAuxGuide } from '@/lib/guides/townfall-aux';
 import { krillionGuide } from '@/lib/guides/krillion';
 import { mw4Guide } from '@/lib/guides/mw4';
 import { vickiGuide } from '@/lib/guides/vicki-gta-6';
@@ -139,6 +140,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
   OKISHIMA_1336_GUIDE,
   THROWING_DISC_GUIDE,
   krillionGuide,
+  townfallAuxGuide,
   mw4Guide,
   vickiGuide,
   gtaCastGuide,
@@ -3210,7 +3212,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
       '0hh1',
     ],
     updatedAt: seoContentUpdatedAt,
-    relatedSlugs: ['free-games-no-ads', 'games-to-play-when-bored', 'best-free-iphone-games'],
+    relatedSlugs: ['silent-hill-townfall-aux-valve-puzzle', 'free-games-no-ads', 'games-to-play-when-bored', 'best-free-iphone-games'],
     embedGame: {
       iframeUrl: 'https://0hh1.com/',
       title: '0h h1',

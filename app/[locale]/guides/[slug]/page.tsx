@@ -10,6 +10,7 @@ import { GuideQuickPicks } from '@/components/seo/guide-quick-picks';
 import { ThreePlayerCardGameLinks } from '@/components/seo/three-player-card-game-links';
 import { getGuidePublicationDates } from '@/lib/guide-publication-dates';
 import { DominoesTraining } from '@/components/game/dominoes-training';
+import { TownfallAuxPractice } from '@/components/seo/townfall-aux-practice';
 import { StuttgarterPractice } from '@/components/seo/stuttgarter-practice';
 import { WordChainExamples } from '@/components/seo/word-chain-examples';
 import { CribbageScoringChart } from '@/components/seo/cribbage-scoring-chart';
@@ -481,6 +482,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
       {isCribbageGuide ? <CribbageScoringChart locale={locale} /> : null}
       {page.slug === 'farkle-scoring' ? <FarkleRollChecker locale={locale} /> : null}
 
+      {page.slug === 'silent-hill-townfall-aux-valve-puzzle' ? <TownfallAuxPractice key={locale} locale={locale} /> : null}
       {page.slug === 'stuttgarter-meaning' ? <StuttgarterPractice key={locale} locale={locale} /> : null}
       {page.interactiveWidget === 'dominoes-training' ? (
         <DominoesTraining locale={locale} />

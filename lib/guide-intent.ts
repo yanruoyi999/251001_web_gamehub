@@ -9,6 +9,11 @@ const ACTIONS_BY_GUIDE = new Map<string, ReadonlySet<string>>([
   ['apple-knight-mini-dungeons-guide', PUBLISHER_PLAY_ACTIONS],
   ['farkle-scoring', new Set(['score_check'])],
   ['best-free-iphone-games', new Set(['play_circle', 'read_guide', 'recommendations'])],
+  ['silent-hill-townfall-aux-valve-puzzle', new Set([
+    'hint_1', 'hint_2', 'first_correct_0', 'first_correct_1', 'first_correct_2',
+    'first_incorrect_0', 'first_incorrect_1', 'first_incorrect_2',
+    'practice_solved_0', 'practice_solved_1', 'practice_solved_2',
+  ])],
   ['krillion', new Set(['open_daily', 'open_roblox'])],
   ['mw4', REFERENCE_ACTIONS],
   ['vicki-gta-6', REFERENCE_ACTIONS],
