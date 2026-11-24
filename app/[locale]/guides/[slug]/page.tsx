@@ -260,6 +260,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
             guideSlug={page.slug}
             locale={locale}
             key={link.href}
+            waitForInitialization={Boolean(link.entryAction)}
             action={link.entryAction ?? (page.slug === 'google-snake-mods' ? 'mod_web' : 'source_status')}
             href={link.href}
             target="_blank"
@@ -855,7 +856,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
               return (
                 <li key={link.href} className="rounded-md border border-border bg-card p-4">
                   {isPublisherPlay || link.entryAction ? (
-                    <GuideIntentLink guideSlug={page.slug} locale={locale} action={link.entryAction ?? 'publisher_play'} {...anchor}>
+                    <GuideIntentLink guideSlug={page.slug} locale={locale} action={link.entryAction ?? 'publisher_play'} waitForInitialization={Boolean(link.entryAction)} {...anchor}>
                       {label}
                     </GuideIntentLink>
                   ) : <a {...anchor}>{label}</a>}

@@ -11,10 +11,11 @@ type Props = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'onClick'> & {
   locale: string;
   eventName?: 'guide_intent_click' | 'okishima_guide_open';
   clientNavigation?: boolean;
+  waitForInitialization?: boolean;
 };
 
 /** Render a usable anchor during SSR and optionally keep same-tab navigation in the app router. */
-export function GuideIntentLink({ guideSlug, action, locale, eventName = 'guide_intent_click', clientNavigation, href, children, ...linkProps }: Props) {
+export function GuideIntentLink({ guideSlug, action, locale, eventName = 'guide_intent_click', clientNavigation, waitForInitialization = false, href, children, ...linkProps }: Props) {
   const properties = getGuideIntentProperties(guideSlug, action, locale);
 
   if (clientNavigation && href) {
@@ -39,7 +40,7 @@ export function GuideIntentLink({ guideSlug, action, locale, eventName = 'guide_
       href={href}
       data-guide-intent-action={action}
       onClick={() => {
-        if (properties) trackInteraction(eventName, properties);
+        if (properties) trackInteraction(eventName, properties, { waitForInitialization });
       }}
     >
       {children}
