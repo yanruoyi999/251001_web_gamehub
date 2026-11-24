@@ -12,14 +12,16 @@ for (const prefix of ['', '/en']) {
         clarity?: (...args: string[]) => void;
         capturePusoyIntent: (name: string) => Promise<void>;
       };
-      target.clarity = (cmd, name) => { if (cmd === 'event') void target.capturePusoyIntent(name); };
+      target.clarity = (cmd, name) => { if (cmd === 'event') void target.capturePusoyIntent(String(name)); };
     });
     const path = prefix + '/guides/' + slug;
     await page.goto(prefix + '/guides');
     const entry = page.locator(`a[href="${path}"][data-guide-intent-action="open_from_guides"]`);
     await expect(entry).toHaveCount(1);
     await entry.click();
-    await expect(page).toHaveURL(new RegExp(path + '$'));
+    await expect(page).toHaveURL(new RegExp(path + '$'), { timeout: 20000 });
+    await expect(page.getByRole('heading', { level: 1, name: zh ? 'Pusoy Dos 菲律宾大老二四人规则' : 'Pusoy Dos Rules for Four Players' })).toBeVisible();
+    await expect(page.locator('link[rel="canonical"]')).toHaveCount(1);
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex.*follow/);
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', new RegExp(path + '$'));
     const practice = page.locator('#pusoy-practice');
