@@ -1,4 +1,5 @@
 import type { Locale } from '@/i18n/config';
+import { krillionGuide } from '@/lib/guides/krillion';
 import { mw4Guide } from '@/lib/guides/mw4';
 import { vickiGuide } from '@/lib/guides/vicki-gta-6';
 import { gtaCastGuide } from '@/lib/guides/gta-6-voice-actors';
@@ -56,6 +57,7 @@ export interface SeoLandingFaq {
 }
 
 export interface SeoLandingExternalLink {
+  entryAction?: string;
   href: string;
   label: string;
   description: string;
@@ -136,6 +138,7 @@ const seoContentUpdatedAt = '2026-07-20T00:00:00.000Z';
 const SEO_LANDING_PAGES: SeoLandingPage[] = [
   OKISHIMA_1336_GUIDE,
   THROWING_DISC_GUIDE,
+  krillionGuide,
   mw4Guide,
   vickiGuide,
   gtaCastGuide,

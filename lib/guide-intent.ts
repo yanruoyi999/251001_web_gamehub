@@ -9,6 +9,7 @@ const ACTIONS_BY_GUIDE = new Map<string, ReadonlySet<string>>([
   ['apple-knight-mini-dungeons-guide', PUBLISHER_PLAY_ACTIONS],
   ['farkle-scoring', new Set(['score_check'])],
   ['best-free-iphone-games', new Set(['play_circle', 'read_guide', 'recommendations'])],
+  ['krillion', new Set(['open_daily', 'open_roblox'])],
   ['mw4', REFERENCE_ACTIONS],
   ['vicki-gta-6', REFERENCE_ACTIONS],
   ['gta-6-voice-actors', REFERENCE_ACTIONS],

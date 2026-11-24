@@ -253,29 +253,33 @@ export default async function GuidePage({ params }: GuidePageProps) {
     }
   ).format(new Date(page.updatedAt));
 
-  const primarySourceLink = content.quickAnswerLink ? (
+  const entries = content.externalLinks?.filter(link => link.entryAction) ?? [];
+  const quickLinks = entries.length ? entries : content.quickAnswerLink ? [content.quickAnswerLink] : [];
+  const primarySourceLink = quickLinks.map(link => (
           <GuideIntentLink
             guideSlug={page.slug}
             locale={locale}
-            action={page.slug === 'google-snake-mods' ? 'mod_web' : 'source_status'}
-            href={content.quickAnswerLink.href}
+            key={link.href}
+            waitForInitialization={Boolean(link.entryAction)}
+            action={link.entryAction ?? (page.slug === 'google-snake-mods' ? 'mod_web' : 'source_status')}
+            href={link.href}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-4 flex max-w-xl items-center justify-between gap-4 rounded-md border border-primary/30 bg-background px-3 py-2.5 text-left transition hover:border-primary hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             <span>
               <span className="block font-semibold text-primary">
-                {content.quickAnswerLink.label}
+                {link.label}
               </span>
               <span className="mt-1 block text-sm text-muted-foreground">
-                {content.quickAnswerLink.description}
+                {link.description}
               </span>
             </span>
             <span aria-hidden className="text-primary">
               ↗
             </span>
           </GuideIntentLink>
-  ) : null;
+  ));
 
   return (
     <article
@@ -851,8 +855,8 @@ export default async function GuidePage({ params }: GuidePageProps) {
 
               return (
                 <li key={link.href} className="rounded-md border border-border bg-card p-4">
-                  {isPublisherPlay ? (
-                    <GuideIntentLink guideSlug={page.slug} locale={locale} action="publisher_play" {...anchor}>
+                  {isPublisherPlay || link.entryAction ? (
+                    <GuideIntentLink guideSlug={page.slug} locale={locale} action={link.entryAction ?? 'publisher_play'} waitForInitialization={Boolean(link.entryAction)} {...anchor}>
                       {label}
                     </GuideIntentLink>
                   ) : <a {...anchor}>{label}</a>}

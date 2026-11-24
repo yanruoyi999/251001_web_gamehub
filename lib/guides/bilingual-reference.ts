@@ -3,7 +3,7 @@ import type { Locale } from '@/i18n/config';
 
 type Pair = [en: string, zh: string];
 type Section = [heading: Pair, body: Pair];
-type Source = [url: string, title: Pair, description: Pair];
+type Source = [url: string, title: Pair, description: Pair, entryAction?: string];
 interface Reference {
   slug: string;
   keywords: string[];
@@ -21,7 +21,7 @@ interface Reference {
 export function bilingualReference(input: Reference): SeoLandingPage {
   function localize(locale: Locale): SeoLandingLocaleContent {
     const i = locale === 'en' ? 0 : 1;
-    const sources = input.sources.map(([href, title, description]) => ({ href, label: title[i], description: description[i] }));
+    const sources = input.sources.map(([href, title, description, entryAction]) => ({ href, label: title[i], description: description[i], entryAction }));
     return {
       heading: input.heading[i], metaTitle: input.title[i], metaDescription: input.summary[i],
       subheading: input.summary[i], overview: [input.introduction[i]],
