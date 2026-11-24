@@ -17,7 +17,7 @@ for (const locale of ['en', 'zh'] as const) {
     await page.exposeFunction('captureGuideAction', (name: string) => events.push(name));
     await page.evaluate(() => {
       const qa = window as typeof window & { clarity?: (...args: string[]) => void; captureGuideAction: (name: string) => void };
-      qa.clarity = (command, name) => { if (command === 'event') qa.captureGuideAction(name); };
+      qa.clarity = (command, name) => { if (command === 'event') qa.captureGuideAction(String(name)); };
     });
     const details = page.locator('details').filter({ has: page.locator('[data-nosnippet]') });
     await expect(details.locator('strong')).toBeHidden();
