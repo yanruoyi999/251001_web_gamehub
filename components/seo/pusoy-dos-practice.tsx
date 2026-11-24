@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import type { Locale } from '@/i18n/config';
+import { getLocalizedPath, type Locale } from '@/i18n/config';
 import { getGuideIntentProperties } from '@/lib/guide-intent';
 import { trackInteraction } from '@/lib/analytics/events';
 
@@ -40,7 +40,18 @@ export function PusoyDosPractice({ locale }: { locale: Locale }) {
   const [ready, setReady] = useState(false);
   const [answers, setAnswers] = useState<number[]>([]);
   const recorded = useRef(new Set<string>());
-  useEffect(() => setReady(true), []);
+  useEffect(() => {
+    setReady(true);
+    // Measure a completed directory navigation on the destination, where GA can finish loading.
+    if (!document.referrer || recorded.current.has('entry')) return;
+    const referrer = new URL(document.referrer);
+    const nav = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined;
+    if (nav?.type !== 'navigate' || referrer.origin !== location.origin ||
+        referrer.pathname !== getLocalizedPath(locale, '/guides')) return;
+    recorded.current.add('entry');
+    const properties = getGuideIntentProperties('pusoy-dos-rules', 'open_from_guides', locale);
+    if (properties) trackInteraction('guide_intent_click', properties, { waitForInitialization: true });
+  }, [locale]);
 
   function track(action: string) {
     const properties = getGuideIntentProperties('pusoy-dos-rules', action, locale);

@@ -47,5 +47,8 @@ for (const prefix of ['', '/en']) {
     await summaries.first().click();
     await expect.poll(() => events.filter(name => name === 'guide_intent_click').length).toBe(5);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(page.viewportSize()!.width);
+    await page.reload();
+    await expect(practice.getByRole('button').first()).toBeEnabled();
+    expect(events.filter(name => name === 'guide_intent_click')).toHaveLength(5);
   });
 }
