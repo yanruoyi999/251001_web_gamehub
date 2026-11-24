@@ -40,7 +40,9 @@ export function GuideIntentLink({ guideSlug, action, locale, eventName = 'guide_
       href={href}
       data-guide-intent-action={action}
       onClick={() => {
-        if (properties) trackInteraction(eventName, properties, { waitForInitialization });
+        if (!properties) return;
+        if (waitForInitialization) trackInteraction(eventName, properties, { waitForInitialization: true });
+        else trackInteraction(eventName, properties);
       }}
     >
       {children}

@@ -22,6 +22,14 @@ describe('bounded guide intent', () => {
     expect(trackInteraction).toHaveBeenCalledTimes(1);
     expect(trackInteraction).toHaveBeenCalledWith('guide_intent_click', { guide_slug: 'google-snake-mods', action: 'mod_web', locale: 'en', schema_version: 2 });
   });
+  it.each(['open_daily', 'open_roblox'])('keeps early Krillion selection %s until GA is ready', action => {
+    trackInteraction.mockClear();
+    const link = GuideIntentLink({ guideSlug: 'krillion', locale: 'en', action, waitForInitialization: true, children: 'Play' });
+    link.props.onClick();
+    expect(trackInteraction).toHaveBeenCalledExactlyOnceWith('guide_intent_click', {
+      guide_slug: 'krillion', action, locale: 'en', schema_version: 2,
+    }, { waitForInitialization: true });
+  });
   it('does not collect events on unrelated guides', () => {
     trackInteraction.mockClear();
     GuideIntentLink({ guideSlug: 'other-guide', action: 'source_status', locale: 'en', href: '#details', children: 'Read' }).props.onClick();
