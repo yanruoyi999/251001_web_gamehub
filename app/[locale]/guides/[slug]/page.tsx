@@ -10,6 +10,7 @@ import { GuideQuickPicks } from '@/components/seo/guide-quick-picks';
 import { ThreePlayerCardGameLinks } from '@/components/seo/three-player-card-game-links';
 import { getGuidePublicationDates } from '@/lib/guide-publication-dates';
 import { DominoesTraining } from '@/components/game/dominoes-training';
+import { StuttgarterPractice } from '@/components/seo/stuttgarter-practice';
 import { WordChainExamples } from '@/components/seo/word-chain-examples';
 import { CribbageScoringChart } from '@/components/seo/cribbage-scoring-chart';
 import { CribbagePrintButton } from '@/components/seo/cribbage-print-button';
@@ -138,6 +139,7 @@ function getRelatedPages(current: SeoLandingPage, locale: Locale) {
     .filter((page): page is SeoLandingPage => Boolean(page))
     .map(page => ({
       slug: page.slug,
+      documentNavigation: page.documentNavigation,
       heading: page.locales[locale]?.heading ?? page.locales.zh.heading,
     }));
 }
@@ -475,6 +477,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
       {isCribbageGuide ? <CribbageScoringChart locale={locale} /> : null}
       {page.slug === 'farkle-scoring' ? <FarkleRollChecker locale={locale} /> : null}
 
+      {page.slug === 'stuttgarter-meaning' ? <StuttgarterPractice key={locale} locale={locale} /> : null}
       {page.interactiveWidget === 'dominoes-training' ? (
         <DominoesTraining locale={locale} />
       ) : page.interactiveWidget === 'categories-topics' ? (
@@ -798,6 +801,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
                   ? (locale === 'zh' ? '双副牌 Bid Euchre：竞叫规则和计分练习' : 'Double-deck Bid Euchre rules and scoring practice')
                   : related.heading;
 
+              const RelatedLink = related.documentNavigation ? 'a' : Link;
               return <li key={related.slug}>
                 {action ? (
                   <GuideIntentLink
@@ -810,13 +814,13 @@ export default async function GuidePage({ params }: GuidePageProps) {
                     {label} →
                   </GuideIntentLink>
                 ) : (
-                  <Link
+                  <RelatedLink
                     href={getLocalizedPath(locale, `/guides/${related.slug}`)}
                     className="inline-flex items-center text-primary transition hover:text-primary/80"
-                    prefetch
+                    {...(related.documentNavigation ? {} : { prefetch: true })}
                   >
                     {label} →
-                  </Link>
+                  </RelatedLink>
                 )}
               </li>;
             })}

@@ -8,6 +8,7 @@ const ACTIONS_BY_GUIDE = new Map<string, ReadonlySet<string>>([
   ['apple-knight-mini-dungeons-guide', PUBLISHER_PLAY_ACTIONS],
   ['farkle-scoring', new Set(['score_check'])],
   ['best-free-iphone-games', new Set(['play_circle', 'read_guide', 'recommendations'])],
+  ['stuttgarter-meaning', new Set(['reveal_clue', 'first_correct', 'first_incorrect'])],
   ['word-chain-game-examples', new Set(['read_guide', 'practice_entry', 'browse_games'])],
   ['three-player-spades', new Set(['read_guide', 'browse_games'])],
   ['crazy-eights-rules', new Set(['view_rules', 'open_round_example', 'print_quick_rules', 'read_related_guide'])],

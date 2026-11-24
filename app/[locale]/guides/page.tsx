@@ -157,6 +157,7 @@ export default async function GuidesPage({ params }: GuidesPageProps) {
         {pages.map((page) => {
           const content = page.locales[locale] ?? page.locales.zh;
           const href = getLocalizedPath(locale, `/guides/${page.slug}`);
+          const EntryLink = page.documentNavigation ? 'a' : Link;
           const summary = content.overview[0] ?? '';
 
           return (
@@ -169,13 +170,13 @@ export default async function GuidesPage({ params }: GuidesPageProps) {
               <CardContent className="flex flex-1 flex-col justify-between gap-6 text-sm text-muted-foreground">
                 <p>{summary}</p>
                 <div className="mt-auto">
-                  <Link
+                  <EntryLink
                     href={href}
                     className="inline-flex items-center text-primary transition hover:text-primary/80"
-                    prefetch
+                    {...(page.documentNavigation ? {} : { prefetch: true })}
                   >
                     {locale === 'zh' ? '阅读完整攻略' : 'Read the full guide'} →
-                  </Link>
+                  </EntryLink>
                 </div>
               </CardContent>
             </Card>
