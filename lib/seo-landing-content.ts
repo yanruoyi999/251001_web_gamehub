@@ -1,4 +1,10 @@
 import type { Locale } from '@/i18n/config';
+import { mw4Guide } from '@/lib/guides/mw4';
+import { vickiGuide } from '@/lib/guides/vicki-gta-6';
+import { gtaCastGuide } from '@/lib/guides/gta-6-voice-actors';
+import { gellhornGuide } from '@/lib/guides/gta-6-port-gellhorn';
+import { platformGuide } from '@/lib/guides/gta-6-platforms';
+import { tenebraeGuide } from '@/lib/guides/tenebrae-lux-gta-6';
 import { STUTTGARTER_GUIDE } from '@/lib/stuttgarter-guide-content';
 import { WORD_CHAIN_GUIDE } from '@/lib/word-chain-guide-content';
 import { CATEGORIES_GUIDE } from '@/lib/categories-guide-content';
@@ -130,6 +136,12 @@ const seoContentUpdatedAt = '2026-07-20T00:00:00.000Z';
 const SEO_LANDING_PAGES: SeoLandingPage[] = [
   OKISHIMA_1336_GUIDE,
   THROWING_DISC_GUIDE,
+  mw4Guide,
+  vickiGuide,
+  gtaCastGuide,
+  gellhornGuide,
+  platformGuide,
+  tenebraeGuide,
   MANDY_GTA_6_GUIDE,
   DUOLINGO_POKEMON_GO_GUIDE,
   GIN_RUMMY_GUIDE,

@@ -15,7 +15,7 @@ export const MANDY_GTA_6_GUIDE: SeoLandingPage = {
   ],
   updatedAt: '2026-11-20',
   homepageFeatured: true,
-  relatedSlugs: ['drive-mad-walkthrough', 'apple-knight-mini-dungeons-guide'],
+  relatedSlugs: ['vicki-gta-6', 'gta-6-voice-actors', 'drive-mad-walkthrough', 'apple-knight-mini-dungeons-guide'],
   locales: {
     en: {
       metaTitle: 'Mandy in GTA 6 | Actor and Pipework Mission Guide',

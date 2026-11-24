@@ -1,5 +1,6 @@
 const SNAKE_ACTIONS = new Set(['mod_web', 'source_status', 'standard_snake', 'related_editor', 'related_mods', 'read_guide', 'recommendations']);
 const PUBLISHER_PLAY_ACTIONS = new Set(['publisher_play']);
+const REFERENCE_ACTIONS = new Set(['source_status']);
 const ACTIONS_BY_GUIDE = new Map<string, ReadonlySet<string>>([
   ['google-snake-mods', SNAKE_ACTIONS],
   ['google-snake-level-editor', SNAKE_ACTIONS],
@@ -8,6 +9,12 @@ const ACTIONS_BY_GUIDE = new Map<string, ReadonlySet<string>>([
   ['apple-knight-mini-dungeons-guide', PUBLISHER_PLAY_ACTIONS],
   ['farkle-scoring', new Set(['score_check'])],
   ['best-free-iphone-games', new Set(['play_circle', 'read_guide', 'recommendations'])],
+  ['mw4', REFERENCE_ACTIONS],
+  ['vicki-gta-6', REFERENCE_ACTIONS],
+  ['gta-6-voice-actors', REFERENCE_ACTIONS],
+  ['gta-6-port-gellhorn', REFERENCE_ACTIONS],
+  ['gta-6-platforms', REFERENCE_ACTIONS],
+  ['tenebrae-lux-gta-6', REFERENCE_ACTIONS],
   ['stuttgarter-meaning', new Set(['reveal_clue', 'first_correct', 'first_incorrect'])],
   ['word-chain-game-examples', new Set(['read_guide', 'practice_entry', 'browse_games'])],
   ['three-player-spades', new Set(['read_guide', 'browse_games'])],
