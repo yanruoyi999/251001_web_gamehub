@@ -56,8 +56,8 @@ export const platformGuide = bilingualReference({
         "手机视频和 ViceRide 演示里看到的是什么"
       ],
       [
-        "A clip can show console footage on a phone-sized screen. Look for the destination of the play button before assuming the phone is running the game. ViceRide describes an independent concept that makes a short video and uses a demo checkout. It is a separate product with its own description. To buy GTA VI, return to the publisher’s platform selector.",
-        "手机比例的视频里可以放主机画面。判断能不能在手机本机玩，先看播放按钮最终跳到哪里。ViceRide 自己说明它是独立概念演示，生成的是短视频，结账也是示范。如果目的是购买 GTA VI，就从 Rockstar 的平台选项继续。"
+        "A clip can show console footage on a phone-sized screen. Look for the destination of the play button before assuming the phone is running the game. ViceRide describes an independent concept that plays a 15-second prerecorded preview and uses a demo checkout. It is a separate product with its own description. To buy GTA VI, return to the publisher’s platform selector.",
+        "手机比例的视频里可以放主机画面。判断能不能在手机本机玩，先看播放按钮最终跳到哪里。ViceRide 自己说明它是独立概念演示，播放的是 15 秒预录片段，结账也是示范。如果目的是购买 GTA VI，就从 Rockstar 的平台选项继续。"
       ]
     ]
   ],

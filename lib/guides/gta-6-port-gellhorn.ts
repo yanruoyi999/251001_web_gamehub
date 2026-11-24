@@ -57,8 +57,8 @@ export const gellhornGuide = bilingualReference({
         "完成目标后，怎样接上第三章？"
       ],
       [
-        "Check the Prepare for Vice City objective and the $15,000 target. After the relevant jobs, look for Cal’s message about the news. Return to the motel room, approach the bathroom door and look for Get Case. The job is called Checking Out. Welcome to Vice City is the first Chapter 3 mission; seeing that title is a better progress check than merely crossing a map boundary.",
-        "核对 Prepare for Vice City 的 15,000 美元目标和相应主线，再看 Cal 是否发来与新闻有关的短信。回旅馆房间，在浴室门附近找 Get Case 提示。此处接上的是 Checking Out；之后看到 Welcome to Vice City 才是第三章开场。只跨过地图边界无法替代该剧情节点。"
+        "Check the Prepare for Vice City objective and the $15,000 target. Finish the remaining Chapter 2 story jobs, including Afternoon Delight, then look for Cal’s message about the news. Return to the motel room, approach the bathroom door and look for Get Case. The job is called Checking Out. Welcome to Vice City is the first Chapter 3 mission; seeing that title is a better progress check than merely crossing a map boundary.",
+        "核对 Prepare for Vice City 的 15,000 美元目标，完成包括 Afternoon Delight 在内的第二章剩余主线，再看 Cal 是否发来与新闻有关的短信。回旅馆房间，在浴室门附近找 Get Case 提示。此处接上的是 Checking Out；之后看到 Welcome to Vice City 才是第三章开场。只跨过地图边界无法替代该剧情节点。"
       ]
     ]
   ],
