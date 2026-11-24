@@ -341,12 +341,12 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         metaDescription:
           'Best free iPhone games you can try in Safari or Chrome with no App Store download: tap controls, portrait fit, short sessions, and safe browser picks.',
         heading: 'Best Free iPhone Games With No Download',
-        subheading: 'Browser games to try without installing an app, with control and storage notes for each checked entry.',
+        subheading: 'Play a drawing game in your browser, or read the controls and strategies for four other games.',
         quickPicks: [
           {
             "slug": "draw-a-perfect-circle",
             "action": "play_circle",
-            "label": "Draw a Perfect Circle",
+            "label": "Play now: Draw a Perfect Circle",
             "controls": "Draw one line, lift, then tap Score stroke. No keyboard needed.",
             "orientation": "Portrait or landscape; scroll to reach the controls when needed.",
             "sound": "No audio in this game.",
@@ -357,7 +357,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ],
         overview: [
           'This guide covers browser-play options, not an App Store ranking. Start with a short round and check the controls on your own device before relying on a game for a longer session.',
-          'The quick entry lists the exact browser check and its limits. Other third-party picks below are candidates to test, not a promise of compatibility with every iPhone model. Network access, browser storage, controls and publisher content can change.',
+          'The drawing game includes notes on the controls and local saving. The four gameplay guides below explain how their games work.',
         ],
         sections: [
           {
@@ -365,7 +365,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             body: 'Try a simple drawing round first. Open the game, draw one line, and tap Score stroke. Keep the browser online; the check details below distinguish browser simulation from physical-phone testing.',
             bullets: [
               'Checked quick entry: Draw a Perfect Circle, with local best-score storage.',
-              'Other candidates below need a short control check on your own device.',
+              'The other four links open gameplay guides.',
               'Use caution with platformers or driving games that need precise left/right keys.',
             ],
           },
@@ -381,13 +381,13 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             ],
           },
           {
-            title: 'Other candidates to test by control style',
-            body: 'Choose the game by control style first. The best free iPhone game for a quick break is usually the one that matches your thumb input, not the one with the most complex mechanics.',
+            title: 'Which gameplay guide should I read?',
+            body: 'Choose a guide by the skill you want to practise.',
             bullets: [
-              'Simple taps: Adam and Eve 4 is a point-and-click candidate; test its current controls before continuing.',
-              'Rope physics puzzles: Catch the Candy is useful when you want a quick responsiveness check.',
-              'Rhythm and timing: Beat Line works for short attempts if audio and tap timing feel stable.',
-              'Driving or platform games: use them as stress tests; if virtual controls feel cramped, move to desktop.',
+              'Adam and Eve 4: plan the order in which to interact with objects.',
+              'Catch the Candy: use the rope and nearby objects to reach the candy.',
+              'Beat Line: time your turns to the beat.',
+              'Apple Knight: plan your jumps and attacks.',
             ],
           },
           {
@@ -401,38 +401,38 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               'Do not download APK files for iPhone; iOS apps come through the App Store.',
               'Avoid pages that require a profile install, configuration file, or unknown browser extension.',
               'Avoid mirrors that cover the play area with fake start buttons or app-install prompts.',
-              'Use Luma links as browser-play candidates, not as a guarantee that every third-party save system will work on your device.',
+              'Use the play link at the top to try the drawing game.',
             ],
           },
         ],
         recommendations: [
           {
             slug: 'adam-and-eve-4',
-            pitch: 'A point-and-click puzzle candidate. Check current touch controls and publisher prompts on your device.',
+            pitch: 'Read how to solve point-and-click puzzles by trying objects in sequence.',
           },
           {
             slug: 'catch-the-candy',
-            pitch: 'Short physics puzzles make it easy to test responsiveness without committing to a long session.',
+            pitch: 'Read how to use the rope to move around obstacles.',
           },
           {
             slug: 'beat-line',
-            pitch: 'A timing-focused option for quick rounds; confirm audio and tap response on your device.',
+            pitch: 'Learn when to turn on a rhythm-based course.',
           },
           {
             slug: 'apple-knight',
-            pitch: 'A platform game included as a control test; desktop may be better if mobile controls feel cramped.',
+            pitch: 'Read about movement, jumping and combat.',
           },
         ],
         faqs: [
           {
             question: 'What is the best free iPhone game with no download?',
             answer:
-              'Try the drawing entry near the top for a simple pointer or touch task. Its check details state the browser environments used; physical iPhone compatibility is not guaranteed. Other candidates should be tested on your own device.',
+              'Try the drawing entry near the top for a simple pointer or touch task. Its check details state the browser environments used; physical iPhone compatibility is not guaranteed. The other links lead to guides.',
           },
           {
             question: 'Do these iPhone games require App Store downloads?',
             answer:
-              'No. The picks here are browser games, so you can launch them in Safari or Chrome without installing an App Store app. Avoid pages that turn a browser game into an APK, profile, or plugin download.',
+              'No. Draw a Perfect Circle runs in your browser. The other four links open reading guides. Avoid pages that turn a browser game into an APK, profile, or plugin download.',
           },
           {
             question: 'Do browser games work in both Safari and Chrome on iPhone?',
@@ -458,12 +458,12 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         metaDescription:
           '精选无需下载的免费 iPhone 浏览器游戏,可在 Safari 或 Chrome 中试玩。对比触控、竖屏适配、短局体验和安全候选。',
         heading: 'Best Free iPhone Games: 无需下载的 Safari 小游戏',
-        subheading: '无需安装 App 的浏览器游戏候选；已核查入口标明控制方式、保存方式和测试边界。',
+        subheading: '直接在浏览器里画圆，或看另外四款游戏的操作和玩法攻略。',
         quickPicks: [
           {
             "slug": "draw-a-perfect-circle",
             "action": "play_circle",
-            "label": "画一个完美圆形",
+            "label": "直接玩：画一个完美圆形",
             "controls": "画一条线，松开，再点“计算分数”；无需键盘。",
             "orientation": "可用横屏或竖屏；需要时滚动到操作区。",
             "sound": "该游戏没有音频。",
@@ -474,7 +474,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
         ],
         overview: [
           '本页介绍浏览器试玩选项，不是 App Store 排名。先玩一小局，在自己的设备上确认操作，再决定是否继续。',
-          '快速入口写明具体浏览器核查环境。下方其他第三方游戏仍是待自行检查的候选，不代表每款都经过物理 iPhone 测试；网络、存储、控制方式和发行方内容都可能变化。',
+          '画圆入口附有操作、存档和测试环境说明。下方四篇攻略介绍各款游戏的玩法。',
         ],
         sections: [
           {
@@ -482,7 +482,7 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             body: '先试一局简单绘图：打开游戏，画一条线，再点“计算分数”。保持浏览器联网；下面明确区分浏览器模拟和物理手机测试。',
             bullets: [
               '已核查快速入口：画一个完美圆形，最高分仅保存在当前浏览器。',
-              '下方其他候选需先在自己的设备上检查控制和画面。',
+              '另外四个入口均为玩法攻略。',
               '谨慎选择:需要精准方向键的平台或驾驶游戏,手机上可能更挤。',
             ],
           },
@@ -498,13 +498,13 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
             ],
           },
           {
-            title: '按控制方式检查其他候选',
-            body: '先按操作方式选,不要只看游戏名。对 iPhone 来说,最好的免费游戏通常是最匹配手指操作的那一款。',
+            title: '四篇玩法攻略怎么选',
+            body: '按想了解的操作选择攻略。',
             bullets: [
-              '简单点击：Adam and Eve 4 是点击解谜候选，继续游玩前先检查当前控制方式。',
-              '绳索物理:Catch the Candy 适合快速检查手机上的响应和布局。',
-              '节奏时机:Beat Line 适合短局尝试,但要确认声音和点击时机稳定。',
-              '驾驶或平台动作:更像压力测试;如果虚拟按钮拥挤,建议换到桌面端。',
+              'Adam and Eve 4：观察场景，决定依次点击哪些物件。',
+              'Catch the Candy：利用绳索和身边的物体靠近糖果。',
+              'Beat Line：跟着节奏把握转弯时机。',
+              'Apple Knight：掌握跳跃和攻击的时机。',
             ],
           },
           {
@@ -518,37 +518,37 @@ const SEO_LANDING_PAGES: SeoLandingPage[] = [
               '不要为 iPhone 下载 APK;iOS 应用应通过 App Store。',
               '避免要求安装描述文件、配置文件或未知浏览器扩展的页面。',
               '避开用假开始按钮、应用安装弹窗覆盖游戏区域的镜像站。',
-              'Luma 链接代表可在浏览器测试的候选,不保证每个第三方游戏都能在你的设备上保存进度。',
+              '想马上试玩时，使用页首的画圆入口。',
             ],
           },
         ],
         recommendations: [
           {
             slug: 'adam-and-eve-4',
-            pitch: '点击解谜候选；请自行检查当前触控方式和发行方提示。',
+            pitch: '了解如何按顺序点击物件，解开场景谜题。',
           },
           {
             slug: 'catch-the-candy',
-            pitch: '短局物理解谜，方便快速检查手机上的响应与画面适配。',
+            pitch: '了解如何用绳索绕开障碍。',
           },
           {
             slug: 'beat-line',
-            pitch: '节奏与时机挑战，适合短局；请确认声音和点击响应。',
+            pitch: '了解如何把握节奏赛道上的转弯时机。',
           },
           {
             slug: 'apple-knight',
-            pitch: '平台动作游戏，可用于测试复杂控制；若按钮拥挤，桌面端更合适。',
+            pitch: '了解移动、跳跃和战斗的操作。',
           },
         ],
         faqs: [
           {
             question: '无需下载的免费 iPhone 游戏首选哪一个?',
-            answer: '可先试顶部绘图入口，完成一次指针或触摸任务。核查详情标明浏览器模拟环境，不保证所有物理 iPhone 都兼容；其他游戏请先在自己的设备上检查。',
+            answer: '可先试顶部绘图入口，完成一次指针或触摸任务。核查详情标明浏览器模拟环境，不保证所有物理 iPhone 都兼容。其他四个入口可阅读玩法攻略。',
           },
           {
             question: '这些 iPhone 游戏需要 App Store 下载吗？',
             answer:
-              '不需要。这里推荐的是浏览器游戏,可在 Safari 或 Chrome 中打开。请避开把网页游戏包装成 APK、描述文件或插件下载的页面。',
+              '不需要。画圆可直接在浏览器里玩，另外四个入口打开玩法攻略。请避开把网页游戏包装成 APK、描述文件或插件下载的页面。',
           },
           {
             question: 'Safari 和 Chrome 都能玩吗?',
