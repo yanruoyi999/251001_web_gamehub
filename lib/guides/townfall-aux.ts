@@ -3,7 +3,7 @@ import { bilingualReference } from './bilingual-reference';
 export const townfallAuxGuide = bilingualReference({
   slug: 'silent-hill-townfall-aux-valve-puzzle',
   keywords: ['Silent Hill Townfall AUX valve puzzle', 'auxiliary lines puzzle', 'AUX Disk'],
-  related: ['0h-h1-binary-puzzle-guide'],
+  related: ['0h-h1-binary-puzzle-guide', 'string-theory-2-remastered-guide'],
   title: ['Silent Hill: Townfall AUX Valve Puzzle — Two Spoiler-Light Hints', '寂静岭：Townfall 辅助管线阀门谜题｜两层轻提示'],
   heading: ['Read the AUX wall in Silent Hill: Townfall', '寂静岭：Townfall 的 AUX 阀门墙怎么看？'],
   summary: ['At the wall of levers in Part 6? Try the AUX Disk puzzle with two optional hints, then check your reading on a short practice wall.', '第六部的 AUX 房里有一面手柄墙。先自己读磁盘图，卡住时再展开提示，也可以用一道小题练习辨认方向。'],
