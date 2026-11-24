@@ -8,6 +8,13 @@ test('iPhone guide exposes one evidence-labelled entry in the first mobile scree
       const pick = page.locator('[data-guide-pick-action="play_circle"]');
       await expect(pick).toHaveCount(1);
       await expect(pick).toHaveAttribute('href', `${locale === 'en' ? '/en' : ''}/games/draw-a-perfect-circle`);
+      await expect(pick).toHaveAccessibleName(locale === 'en' ? /Play now: Draw a Perfect Circle/ : /直接玩：画一个完美圆形/);
+      const guides = page.locator('#recommendations');
+      await expect(guides.getByRole('heading', { level: 2 })).toHaveText(locale === 'en' ? 'Gameplay guides' : '玩法攻略');
+      for (const slug of ['adam-and-eve-4', 'catch-the-candy', 'beat-line', 'apple-knight']) {
+        const card = guides.getByRole('link', { name: locale === 'en' ? /Read the gameplay guide/ : /看玩法攻略/ });
+        await expect(card.and(guides.locator(`a[href="${locale === 'en' ? '/en' : ''}/games/${slug}"]`)).first()).toBeVisible();
+      }
       const box = await pick.boundingBox();
       expect(box).not.toBeNull();
       expect(box!.height).toBeGreaterThanOrEqual(44);

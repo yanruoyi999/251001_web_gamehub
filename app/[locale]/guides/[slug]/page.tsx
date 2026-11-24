@@ -150,6 +150,8 @@ export default async function GuidePage({ params }: GuidePageProps) {
     notFound();
   }
   const publisherPlay = publisherPlayLinks[page.slug];
+  const iphoneGuide = page.slug === 'best-free-iphone-games';
+  const gameplayGuideHeading = locale === 'zh' ? '玩法攻略' : 'Gameplay guides';
 
   const siteBaseUrl = getSiteBaseUrl();
   const content = page.locales[locale] ?? page.locales.zh;
@@ -461,7 +463,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
             href="#recommendations"
             className="inline-flex min-h-11 items-center rounded-md border border-border bg-background px-4 py-2 text-foreground transition hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
-            {locale === 'zh' ? '看相似游戏' : 'See similar games'}
+            {iphoneGuide ? gameplayGuideHeading : (locale === 'zh' ? '看相似游戏' : 'See similar games')}
           </GuideIntentLink>
           ) : null}
         </div>
@@ -655,10 +657,12 @@ export default async function GuidePage({ params }: GuidePageProps) {
       >
         <header className="mb-4 border-b border-[#cbdccf] pb-3 dark:border-border">
           <h2 className="text-xl font-black text-foreground sm:text-2xl">
-            {locale === 'zh' ? '精选推荐' : 'Featured Picks'}
+            {iphoneGuide ? gameplayGuideHeading : (locale === 'zh' ? '精选推荐' : 'Featured Picks')}
           </h2>
           <p className="mt-1 text-xs text-muted-foreground sm:text-sm">
-            {locale === 'zh'
+            {iphoneGuide
+              ? (locale === 'zh' ? '以下四个入口提供操作说明与玩法提示。' : 'Read controls and strategy tips for these four games.')
+              : locale === 'zh'
               ? '查看相关游戏的操作、攻略与游玩方式。'
               : 'Find controls, guides, and play options for related games.'}
           </p>
@@ -676,6 +680,9 @@ export default async function GuidePage({ params }: GuidePageProps) {
                 ? (game?.description ?? '')
                 : (game?.descriptionEn ?? game?.description ?? '');
 
+            const guideLabel = locale === 'zh'
+              ? `看玩法攻略：${gameTitle}`
+              : `Read the gameplay guide for ${gameTitle}`;
             return (
               <article
                 key={item.slug}
@@ -684,7 +691,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
                 {game?.thumbnailUrl?.startsWith('/game-screenshots/') ? (
                   <Link
                     href={getLocalizedPath(locale, `/games/${item.slug}`)}
-                    aria-label={locale === 'zh' ? `打开${gameTitle}` : `Open ${gameTitle}`}
+                    aria-label={iphoneGuide ? guideLabel : (locale === 'zh' ? `打开${gameTitle}` : `Open ${gameTitle}`)}
                     className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
                   >
                     <div className="relative aspect-[4/3] overflow-hidden border-b border-border bg-muted">
@@ -702,18 +709,18 @@ export default async function GuidePage({ params }: GuidePageProps) {
                   <h3 className="text-base font-black text-foreground">
                     {gameTitle}
                   </h3>
-                  {gameDescription ? (
+                  {iphoneGuide || gameDescription ? (
                     <p className="mt-1 line-clamp-2 text-xs leading-5 text-muted-foreground">
-                      {gameDescription}
+                      {iphoneGuide ? item.pitch : gameDescription}
                     </p>
                   ) : null}
-                  <p className="sr-only">{item.pitch}</p>
+                  {!iphoneGuide && <p className="sr-only">{item.pitch}</p>}
                   <div className="mt-2">
                     <Link
                       href={getLocalizedPath(locale, `/games/${item.slug}`)}
                       className="inline-flex items-center text-primary transition hover:text-primary/80"
                     >
-                      {locale === 'zh'
+                      {iphoneGuide ? guideLabel : locale === 'zh'
                         ? `查看 ${gameTitle} 游戏详情`
                         : `See ${gameTitle} browser game details`}{' '}
                       →
