@@ -18,6 +18,7 @@ import { CrazyEightsQuickRules } from '@/components/seo/crazy-eights-quick-rules
 import { FiveHundredScoring } from '@/components/seo/five-hundred-scoring';
 import { BidEuchrePractice } from '@/components/seo/bid-euchre-practice';
 import { NineCardGolfPractice } from '@/components/seo/nine-card-golf-practice';
+import { PusoyDosPractice } from '@/components/seo/pusoy-dos-practice';
 import { ScopaPractice } from '@/components/seo/scopa-practice';
 import { PokemonGoQuestPlanner } from '@/components/seo/pokemon-go-quest-planner';
 import { DUOLINGO_POKEMON_GO_GUIDE } from '@/lib/duolingo-pokemon-go-guide-content';
@@ -347,6 +348,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
       {page.slug === '500-card-game-rules' ? <FiveHundredScoring locale={locale} /> : null}
       {page.slug === 'bid-euchre-rules' ? <BidEuchrePractice locale={locale} /> : null}
       {page.slug === '9-card-golf-rules' ? <NineCardGolfPractice locale={locale} /> : null}
+      {page.slug === 'pusoy-dos-rules' ? <PusoyDosPractice locale={locale} /> : null}
       {page.slug === 'scopa-card-game-rules' ? <ScopaPractice locale={locale} /> : null}
 
       {page.printablePath ? (

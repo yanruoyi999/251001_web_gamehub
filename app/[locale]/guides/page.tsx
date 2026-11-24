@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { GuideIntentLink } from '@/components/seo/guide-intent-link';
 import { THROWING_DISC_GUIDE } from '@/lib/minecraft-throwing-disc-guide-content';
 import { OKISHIMA_1336_GUIDE } from '@/lib/okishima-1336-guide-content';
+import { PUSOY_DOS_GUIDE } from '@/lib/pusoy-dos-guide-content';
 import { SCOPA_GUIDE } from '@/lib/scopa-guide-content';
 import { getSeoLandingPages } from '@/lib/seo-landing-content';
 import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES } from '@/lib/seo';
@@ -110,6 +111,7 @@ export default async function GuidesPage({ params }: GuidesPageProps) {
         {([
           { guide: THROWING_DISC_GUIDE, eventName: 'guide_intent_click' },
           { guide: OKISHIMA_1336_GUIDE, eventName: 'okishima_guide_open' },
+          { guide: PUSOY_DOS_GUIDE, eventName: 'guide_intent_click' },
           { guide: SCOPA_GUIDE, eventName: 'guide_intent_click' },
         ] as const).map(({ guide, eventName }) => (
           <li key={guide.slug}>
@@ -118,7 +120,7 @@ export default async function GuidesPage({ params }: GuidesPageProps) {
               locale={locale}
               action="open_from_guides"
               eventName={eventName}
-              clientNavigation={guide.slug === SCOPA_GUIDE.slug}
+              clientNavigation={guide.slug === SCOPA_GUIDE.slug || guide.slug === PUSOY_DOS_GUIDE.slug}
               href={getLocalizedPath(locale, '/guides/' + guide.slug)}
               className="inline-flex min-h-11 items-center text-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
