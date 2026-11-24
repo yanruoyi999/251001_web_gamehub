@@ -43,12 +43,14 @@ export function PusoyDosPractice({ locale }: { locale: Locale }) {
   useEffect(() => {
     setReady(true);
     // Measure a completed directory navigation on the destination, where GA can finish loading.
-    if (!document.referrer || recorded.current.has('entry')) return;
+    const entryMark = 'luma-pusoy-directory-entry';
+    if (!document.referrer || performance.getEntriesByName(entryMark, 'mark').length) return;
     const referrer = new URL(document.referrer);
     const nav = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined;
-    if (nav?.type !== 'navigate' || referrer.origin !== location.origin ||
+    if (nav?.type !== 'navigate' || new URL(nav.name).pathname !== location.pathname ||
+        referrer.origin !== location.origin ||
         referrer.pathname !== getLocalizedPath(locale, '/guides')) return;
-    recorded.current.add('entry');
+    performance.mark(entryMark);
     const properties = getGuideIntentProperties('pusoy-dos-rules', 'open_from_guides', locale);
     if (properties) trackInteraction('guide_intent_click', properties, { waitForInitialization: true });
   }, [locale]);
