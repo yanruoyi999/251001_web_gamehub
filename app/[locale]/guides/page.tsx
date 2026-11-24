@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { GuideIntentLink } from '@/components/seo/guide-intent-link';
 import { THROWING_DISC_GUIDE } from '@/lib/minecraft-throwing-disc-guide-content';
 import { OKISHIMA_1336_GUIDE } from '@/lib/okishima-1336-guide-content';
+import { PUSOY_DOS_GUIDE } from '@/lib/pusoy-dos-guide-content';
 import { SCOPA_GUIDE } from '@/lib/scopa-guide-content';
 import { getSeoLandingPages } from '@/lib/seo-landing-content';
 import { DEFAULT_OPEN_GRAPH_IMAGES, DEFAULT_TWITTER_IMAGES } from '@/lib/seo';
@@ -72,6 +73,7 @@ export default async function GuidesPage({ params }: GuidesPageProps) {
     locale === 'zh'
       ? '从低干扰玩法到移动端体验，我们按不同场景整理并复核浏览器游戏。选择一个主题，查看适配说明后开始游玩。'
       : 'From lower-interruption picks to mobile browser games, these guides organize games by real play scenarios. Check the device notes, choose a theme, and start playing.';
+  const pilotLinkClass = 'inline-flex min-h-11 items-center text-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring';
   const extraGuides = [
     {
       href: getLocalizedPath(locale, '/guides/keyboard-only-browser-games'),
@@ -107,6 +109,12 @@ export default async function GuidesPage({ params }: GuidesPageProps) {
       </header>
 
       <ul className="mb-5 flex flex-wrap gap-x-6">
+        <li>
+          <a className={pilotLinkClass} data-guide-intent-action="open_from_guides"
+            href={getLocalizedPath(locale, '/guides/' + PUSOY_DOS_GUIDE.slug)}>
+            {PUSOY_DOS_GUIDE.locales[locale].heading}
+          </a>
+        </li>
         {([
           { guide: THROWING_DISC_GUIDE, eventName: 'guide_intent_click' },
           { guide: OKISHIMA_1336_GUIDE, eventName: 'okishima_guide_open' },
@@ -120,7 +128,7 @@ export default async function GuidesPage({ params }: GuidesPageProps) {
               eventName={eventName}
               clientNavigation={guide.slug === SCOPA_GUIDE.slug}
               href={getLocalizedPath(locale, '/guides/' + guide.slug)}
-              className="inline-flex min-h-11 items-center text-sm font-semibold text-primary underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className={pilotLinkClass}
             >
               {guide.locales[locale].heading}
             </GuideIntentLink>
