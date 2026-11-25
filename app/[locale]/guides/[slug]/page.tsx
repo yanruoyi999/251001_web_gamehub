@@ -378,6 +378,14 @@ export default async function GuidePage({ params }: GuidePageProps) {
         </div>
       ) : null}
 
+      {isCribbageGuide && locale === 'en' ? (
+        <p className="mb-3 text-sm leading-6" data-print-hide>
+          <a className="font-semibold text-primary underline underline-offset-2" href="#cribbage-four-kind">
+            Four of a kind scores 12 points
+          </a>
+          {' '}because four cards of the same rank form six pairs worth 2 points each.
+        </p>
+      ) : null}
       {isCribbageGuide ? <CribbagePrintButton locale={locale} /> : null}
 
       <section className="mb-7 max-w-5xl border-y border-primary/25 bg-primary/5 px-3 py-4 sm:px-5">

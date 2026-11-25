@@ -182,6 +182,7 @@ describe('Cribbage original scoring reference', () => {
         createElement(CribbageScoringChart, { locale })
       );
       expect(html).toContain('data-cribbage-print-root');
+      expect(html.includes('id="cribbage-four-kind"')).toBe(locale === 'en');
       expect(html.match(/<table\b/g)).toHaveLength(2);
       expect(html.match(/<caption\b/g)).toHaveLength(2);
       expect(html.match(/<thead\b/g)).toHaveLength(2);

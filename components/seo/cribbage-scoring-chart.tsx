@@ -59,7 +59,13 @@ export function CribbageScoringChart({ locale }: { locale: Locale }) {
           <tbody>
             {CRIBBAGE_CHART_ROWS.map(row => (
               <tr key={row.id}>
-                <th scope="row">{row.label[locale]}</th>
+                <th
+                  scope="row"
+                  id={en && row.id === 'four-kind' ? 'cribbage-four-kind' : undefined}
+                  className="scroll-mt-20"
+                >
+                  {row.label[locale]}
+                </th>
                 <td>{cell(row.hand, locale)}</td>
                 <td>{cell(row.crib, locale)}</td>
                 <td>{cell(row.pegging, locale)}</td>
