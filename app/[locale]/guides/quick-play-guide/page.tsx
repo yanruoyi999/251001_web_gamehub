@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { GuideIntentLink } from '@/components/seo/guide-intent-link';
 import { getLocalizedPath, locales, type Locale } from '@/i18n/config';
 
 const PATH = '/guides/quick-play-guide';
@@ -62,6 +63,13 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
           <li>{isZh ? '页面应在点击游玩前给出足够背景。' : 'The page should give enough context before play starts.'}</li>
         </ul>
       </section>
+      <p className="mt-8">
+        <GuideIntentLink guideSlug="quick-play-guide" action="open_gaming_era_quiz" locale={locale}
+          href={getLocalizedPath(locale, '/games/gaming-era-quiz')} clientNavigation
+          className="font-semibold text-primary underline underline-offset-4">
+          {isZh ? '五道题测测你的游戏年代偏好' : 'Find your gaming era in five questions'}
+        </GuideIntentLink>
+      </p>
       <footer className="mt-10 flex flex-wrap gap-3">
         <Link href={getLocalizedPath(locale, '/games')} className="rounded-lg bg-primary px-6 py-3 font-semibold text-primary-foreground hover:bg-primary/90">
           {isZh ? '浏览全部游戏' : 'Browse all games'}

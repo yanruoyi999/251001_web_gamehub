@@ -2,6 +2,7 @@ const SNAKE_ACTIONS = new Set(['mod_web', 'source_status', 'standard_snake', 're
 const PUBLISHER_PLAY_ACTIONS = new Set(['publisher_play']);
 const REFERENCE_ACTIONS = new Set(['source_status']);
 const ACTIONS_BY_GUIDE = new Map<string, ReadonlySet<string>>([
+  ['quick-play-guide', new Set(['open_gaming_era_quiz'])],
   ['google-snake-mods', SNAKE_ACTIONS],
   ['google-snake-level-editor', SNAKE_ACTIONS],
   ['drive-mad-walkthrough', PUBLISHER_PLAY_ACTIONS],
