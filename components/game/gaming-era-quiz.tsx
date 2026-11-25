@@ -71,7 +71,8 @@ export function GamingEraQuiz({ locale }: { locale: Locale }) {
       event,
       {
         locale: active.startLocale,
-        round_type: active.replay ? 'replay' : 'first',
+        // The existing GA4 event-scoped action dimension is reportable.
+        action: active.replay ? 'replay' : 'first',
       },
       { waitForInitialization: true }
     );
