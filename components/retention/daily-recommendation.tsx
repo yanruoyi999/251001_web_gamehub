@@ -150,7 +150,7 @@ export function DailyRecommendation({
               >
                 <Image
                   src={recommendation.image}
-                  alt={`${recommendation.title[locale]} gameplay`}
+                  alt=""
                   fill
                   sizes={
                     isHome
