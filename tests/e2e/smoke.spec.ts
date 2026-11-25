@@ -54,6 +54,22 @@ test.describe('Luma Game Hub smoke tests', () => {
     expect(layout.shelfOverflow.length).toBeGreaterThanOrEqual(3);
   });
 
+  test('recommendation thumbnails have named links in both languages', async ({ page }) => {
+    for (const prefix of ['', '/en']) {
+      await page.goto(prefix || '/');
+      const cards = page.locator('[data-recommendation-card]');
+      await expect(cards.first()).toBeVisible();
+      for (const card of await cards.all()) {
+        const title = await card.locator('h3 a').innerText();
+        const slug = await card.getAttribute('data-recommendation-card');
+        const thumbnailLink = card.locator('a').filter({ has: page.locator('img') });
+        await expect(thumbnailLink.locator('img')).toHaveAttribute('alt', '');
+        await expect(thumbnailLink).toHaveAccessibleName(title);
+        await expect(thumbnailLink).toHaveAttribute('href', `${prefix}/games/${slug}`);
+      }
+    }
+  });
+
   test('retained game and guide templates keep the controls and navigation visible', async ({
     page,
   }) => {
